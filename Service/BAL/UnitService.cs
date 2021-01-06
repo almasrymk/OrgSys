@@ -1,0 +1,113 @@
+﻿using Entity.Model;
+using Entity.ModelView;
+using PagedList;
+using PagedList.Core;
+using Repository;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace Service.BAL
+{
+    public class UnitService : BaseService<UnitModelView>
+    {
+        UnitOfWork repo;
+        public UnitService()
+        {
+            repo = new UnitOfWork();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ob"></param>
+        /// <returns></returns>
+        public UnitModelView Save(UnitModelView ob)
+        {
+            return new UnitModelView(repo.unitRepo.AddOrUpdate(ob.Model));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public bool Delete(long id)
+        {
+            return repo.unitRepo.Delete(id);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public List<UnitModelView> GetAll()
+        {
+            return repo.unitRepo.GetList(e => e.OrderBy(e => e.Id), "", Utility.Status.New).Select(e => new UnitModelView(e)).ToList();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="textSearch"></param>
+        /// <returns></returns>
+        public List<UnitModelView> GetAll(string textSearch)
+        {
+            return repo.unitRepo.GetList(e => e.Name.Contains("" + textSearch), e => e.OrderBy(e => e.Id), "", Utility.Status.New).Select(e => new UnitModelView(e)).ToList();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        public IPagedList<UnitModelView> GetAll(int page, int pageSize)
+        {
+            return repo.unitRepo.GetList(e => e.OrderBy(e => e.Id), "", Utility.Status.New).Select(e => new UnitModelView(e)).ToPagedList(page, pageSize);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="textSearch"></param>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        public IPagedList<UnitModelView> GetAll(string textSearch, int page, int pageSize)
+        {
+            return repo.unitRepo.GetList(e => "" + textSearch == "" || e.Name.Contains("" + textSearch), e => e.OrderBy(e => e.Id), "", Utility.Status.New).Select(e => new UnitModelView(e)).ToPagedList(page, pageSize);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public UnitModelView Get(long Id)
+        {
+            return new UnitModelView(repo.unitRepo.Get(e => e.Id == Id));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="textSearch"></param>
+        /// <returns></returns>
+        public UnitModelView Get(string textSearch)
+        {
+            return new UnitModelView(repo.unitRepo.Get(e => e.Name.Contains("" + textSearch)));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ids"></param>
+        /// <returns></returns>
+        public bool Delete(List<long> ids)
+        {
+            return repo.unitRepo.Delete(ids);
+        }
+    }
+}
