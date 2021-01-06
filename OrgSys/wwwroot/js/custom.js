@@ -152,7 +152,9 @@ function search(_page) {
             url: url + "?search=" + $('#txtSearch').val() + Search2 + "&page=" + page,
             success: function (result) {
                 $('#List').empty();
-                $('#List').html(result);    
+                $('#List').html(result);   
+                $(".group-add").hide();
+                $(".btn-add").show();
                 LiskChk();
                 DefulatMode();               
             }
@@ -195,9 +197,7 @@ function DeleteList() {
             data: { ids: ids },
             success: function (result) {
                 search(page);
-                ids = [];
-                $(".group-add").hide();
-                $(".btn-add").show();
+                ids = [];              
             }
         });
     }, 300);
