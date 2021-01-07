@@ -117,6 +117,15 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddressRange" xml:space="preserve">
+    <value>العنوان عدد حرف بين 3  الى 500</value>
+  </data>
+  <data name="AddressRequired" xml:space="preserve">
+    <value>يجب ادخال العنوان</value>
+  </data>
+  <data name="CodeRange" xml:space="preserve">
+    <value>الكود عدد حرف بين ٣   الى 10</value>
+  </data>
   <data name="CodeRequired" xml:space="preserve">
     <value>يجب ادخال الكود</value>
   </data>
@@ -126,7 +135,25 @@
   <data name="DoYouWantDeleteFile" xml:space="preserve">
     <value>هل تريد حذف الملف ؟</value>
   </data>
+  <data name="EmailFromate" xml:space="preserve">
+    <value>يجب ادخال تنسيق الايميل</value>
+  </data>
+  <data name="EmailRange" xml:space="preserve">
+    <value>الايميل عدد حرف بين 3  الى 20</value>
+  </data>
+  <data name="EmailRequired" xml:space="preserve">
+    <value>يجب ادخال الايميل</value>
+  </data>
+  <data name="NameRange" xml:space="preserve">
+    <value>الاسم عدد حرف بين ٣   الى 50</value>
+  </data>
   <data name="NameRequired" xml:space="preserve">
     <value>يجب ادخال الاسم</value>
+  </data>
+  <data name="PhoneRange" xml:space="preserve">
+    <value>التليفون عدد حرف بين 8   الى 25</value>
+  </data>
+  <data name="PhoneRequired" xml:space="preserve">
+    <value>يجب ادخال التليفون</value>
   </data>
 </root>

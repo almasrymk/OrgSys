@@ -6,9 +6,9 @@ using Entity.ModelView;
 using Microsoft.AspNetCore.Mvc;
 using OrgSys.Controllers;
 
-namespace OrgSys.Areas.Sales.Controllers
+namespace OrgSys.Areas.Setting.Controllers
 {
-    [Area("Sales")]
+    [Area("Setting")]
     public class UnitController : BaseController<UnitModelView>
     {
      

@@ -19,8 +19,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Sales\Controllers\" />
     <Folder Include="Areas\Sales\Data\" />
     <Folder Include="Areas\Sales\Models\" />
+    <Folder Include="Areas\Sales\Views\" />
+    <Folder Include="Areas\Setting\Data\" />
+    <Folder Include="Areas\Setting\Models\" />
   </ItemGroup>
 
 </Project>

@@ -73,9 +73,16 @@ namespace OrgSys
                     pattern: "{controller=Home}/{action=Index}/{id?}");
 
                 endpoints.MapAreaControllerRoute(
+                    name: "Setting",
+                    areaName: "Setting",
+                    pattern: "Setting/{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapAreaControllerRoute(
                     name: "Sales",
                     areaName: "Sales",
                     pattern: "Sales/{controller=Home}/{action=Index}/{id?}");
+
+              
             });
         }
     }

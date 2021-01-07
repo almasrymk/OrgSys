@@ -61,6 +61,33 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The address is a letter number between 3 to 500.
+        /// </summary>
+        public static string AddressRange {
+            get {
+                return ResourceManager.GetString("AddressRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Address Required.
+        /// </summary>
+        public static string AddressRequired {
+            get {
+                return ResourceManager.GetString("AddressRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The code is a letter number between 3 to 10.
+        /// </summary>
+        public static string CodeRange {
+            get {
+                return ResourceManager.GetString("CodeRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Code Required.
         /// </summary>
         public static string CodeRequired {
@@ -88,11 +115,65 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Email format must be entered.
+        /// </summary>
+        public static string EmailFromate {
+            get {
+                return ResourceManager.GetString("EmailFromate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The email is a letter number between 3 to 20.
+        /// </summary>
+        public static string EmailRange {
+            get {
+                return ResourceManager.GetString("EmailRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email Required.
+        /// </summary>
+        public static string EmailRequired {
+            get {
+                return ResourceManager.GetString("EmailRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The name is a letter number between 3 to 50.
+        /// </summary>
+        public static string NameRange {
+            get {
+                return ResourceManager.GetString("NameRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Name Required.
         /// </summary>
         public static string NameRequired {
             get {
                 return ResourceManager.GetString("NameRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The phone is a letter number between 8 to 25.
+        /// </summary>
+        public static string PhoneRange {
+            get {
+                return ResourceManager.GetString("PhoneRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Phone Required.
+        /// </summary>
+        public static string PhoneRequired {
+            get {
+                return ResourceManager.GetString("PhoneRequired", resourceCulture);
             }
         }
     }

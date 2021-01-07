@@ -25,7 +25,7 @@
                         <p class="text-muted">@Model[i].Name</p>
                     </td>
                     <td style="width:150px;">
-                        <a href="/Sales/Unit/Save?id=@Model[i].Id"> <i class="iconsminds-folder-edit"></i> @Utility.Resource.Title_Designer.Edit</a>
+                        <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id"> <i class="iconsminds-folder-edit"></i> @Utility.Resource.Title_Designer.Edit</a>
                         <span> &nbsp; | &nbsp; </span>
                         <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete</a>
                     </td>
@@ -58,7 +58,7 @@
                                 <small class="text-muted text-small w-15">@x</small>  &nbsp; &nbsp; &nbsp; @Model[i].Name
                             </a>
                             <div class="w-15 w-xs-100">
-                                <a href="/Sales/Unit/Save?id=@Model[i].Id"> <i class="iconsminds-folder-edit"></i> @Utility.Resource.Title_Designer.Edit</a>
+                                <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id"> <i class="iconsminds-folder-edit"></i> @Utility.Resource.Title_Designer.Edit</a>
                                 <span> &nbsp; | &nbsp; </span>
                                 <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete</a>
                             </div>
@@ -97,7 +97,7 @@
                     <h3 class="card-text badge badge-pill badge-theme-1 mb-2 text-small">@x</h3>
                     <p class="lead text-center" style="font-size:x-large;">@Model[i].Name</p>
                     <div>
-                        <a href="/Sales/Unit/Save?id=@Model[i].Id"> <i class="iconsminds-folder-edit"></i> @Utility.Resource.Title_Designer.Edit</a>
+                        <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id"> <i class="iconsminds-folder-edit"></i> @Utility.Resource.Title_Designer.Edit</a>
                         <span> &nbsp; | &nbsp; </span>
                         <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete</a>
                     </div>

@@ -117,6 +117,15 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddressRange" xml:space="preserve">
+    <value>The address is a letter number between 3 to 500</value>
+  </data>
+  <data name="AddressRequired" xml:space="preserve">
+    <value>Address Required</value>
+  </data>
+  <data name="CodeRange" xml:space="preserve">
+    <value>The code is a letter number between 3 to 10</value>
+  </data>
   <data name="CodeRequired" xml:space="preserve">
     <value>Code Required</value>
   </data>
@@ -126,7 +135,25 @@
   <data name="DoYouWantDeleteFile" xml:space="preserve">
     <value>Do you want to delete the file?</value>
   </data>
+  <data name="EmailFromate" xml:space="preserve">
+    <value>Email format must be entered</value>
+  </data>
+  <data name="EmailRange" xml:space="preserve">
+    <value>The email is a letter number between 3 to 20</value>
+  </data>
+  <data name="EmailRequired" xml:space="preserve">
+    <value>Email Required</value>
+  </data>
+  <data name="NameRange" xml:space="preserve">
+    <value>The name is a letter number between 3 to 50</value>
+  </data>
   <data name="NameRequired" xml:space="preserve">
     <value>Name Required</value>
+  </data>
+  <data name="PhoneRange" xml:space="preserve">
+    <value>The phone is a letter number between 8 to 25</value>
+  </data>
+  <data name="PhoneRequired" xml:space="preserve">
+    <value>Phone Required</value>
   </data>
 </root>

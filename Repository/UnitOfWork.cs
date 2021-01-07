@@ -19,5 +19,18 @@ namespace Repository
                 return _unitRepo;
             }
         }
+
+        private DealerRepo _dealerRepo;
+        public DealerRepo dealerRepo
+        {
+            get
+            {
+
+                if (this._dealerRepo == null)
+                    this._dealerRepo = new DealerRepo();
+
+                return _dealerRepo;
+            }
+        }
     }
 }

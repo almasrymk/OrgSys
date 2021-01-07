@@ -23,5 +23,6 @@ namespace Repository
         }
 
         public virtual DbSet<Unit> Units { get; set; }
+        public virtual DbSet<Dealer> Dealers { get; set; }
     }
 }

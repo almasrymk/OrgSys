@@ -16,7 +16,7 @@
                             <a href="/">@Utility.Resource.Title_Designer.Home</a>
                         </li>
                         <li class="breadcrumb-item">
-                            @Utility.Resource.Title_Designer.Sales
+                            @Utility.Resource.Title_Designer.Setting
                         </li>
                         <li class="breadcrumb-item active" aria-current="page">@Utility.Resource.Title_Designer.UnitsMeasure</li>
                     </ol>
@@ -33,9 +33,9 @@
                     {
                         <div class="d-md-block" id="displayOptions">
                             <span class="mr-3 mb-2 d-inline-block float-md-left">
-                                <a href="/Sales/Unit/Save" class="btn btn-outline-primary btn-add"><i class="iconsminds-folder-add--"></i> @Utility.Resource.Title_Designer.Add </a>
+                                <a href="/@ViewBag.area/@ViewBag.PageTitle/Save" class="btn btn-outline-primary btn-add"><i class="iconsminds-folder-add--"></i> @Utility.Resource.Title_Designer.Add </a>
                                 <span class="btn-group group-add" role="group" aria-label="Basic example" style="display:none">
-                                    <button onclick="location.href='/Sales/Unit/Save'" class="btn  btn-outline-primary"><i class="iconsminds-folder-add--"></i> @Utility.Resource.Title_Designer.Add</button>
+                                    <button onclick="location.href='/@ViewBag.area/@ViewBag.PageTitle/Save'" class="btn  btn-outline-primary"><i class="iconsminds-folder-add--"></i> @Utility.Resource.Title_Designer.Add</button>
                                     <button data-toggle="modal" data-target="#MsgModel" type="button" class="btn  btn-outline-danger btn-deleteList"><i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete</button>
                                 </span>
                                 &nbsp; &nbsp; &nbsp;
@@ -82,7 +82,7 @@
                     {
                         <div class="d-md-block" id="displayOptions">
                             <span class="mr-3 mb-2 d-inline-block float-md-left">
-                                <a href="/Sales/Unit/Save" class="btn btn-outline-primary btn-add"><i class="iconsminds-folder-add--"></i> @Utility.Resource.Title_Designer.Add </a>                              
+                                <a href="/@ViewBag.area/@ViewBag.PageTitle/Save" class="btn btn-outline-primary btn-add"><i class="iconsminds-folder-add--"></i> @Utility.Resource.Title_Designer.Add </a>                              
                             </span>                          
                         </div>
                     }
