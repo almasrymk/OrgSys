@@ -118,6 +118,7 @@ namespace Repository
             var ob = db.Set<entity>().Find(Id);
             if (ob == null || ob.Id == 0)
                 return false;
+            ob.ImgPath = null;
             ob.Status = Status.Deleted;
             db.Entry<entity>(db.Set<entity>().Find(ob.Id)).CurrentValues.SetValues(ob);
             db.SaveChanges();
@@ -134,6 +135,7 @@ namespace Repository
             var obs = db.Set<entity>().Where(e => Ids.Contains(e.Id)).ToList();
             foreach (var ob in obs)
             {
+                ob.ImgPath = null;
                 ob.Status = Status.Deleted;
                 db.Entry<entity>(db.Set<entity>().Find(ob.Id)).CurrentValues.SetValues(ob);
             }

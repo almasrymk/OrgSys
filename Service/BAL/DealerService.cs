@@ -1,7 +1,6 @@
 ﻿using Entity.Model;
 using Entity.ModelView;
-using PagedList;
-using PagedList.Core;
+using X.PagedList;
 using Repository;
 using System;
 using System.Collections.Generic;
@@ -108,6 +107,11 @@ namespace Service.BAL
         public bool Delete(List<long> ids)
         {
             return repo.dealerRepo.Delete(ids);
+        }
+
+        public List<DealerModelView> GetAll(List<long> ids)
+        {
+            return repo.dealerRepo.GetList(e => ids.Contains(e.Id), e => e.OrderBy(e => e.Id), "", Utility.Status.New).Select(e => new DealerModelView(e)).ToList();
         }
     }
 }

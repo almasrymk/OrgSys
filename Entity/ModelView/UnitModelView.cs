@@ -21,6 +21,7 @@ namespace Entity.ModelView
             this.Status = ob.Status;
             this.ParentId = ob.ParentId;
             this.TypeId = ob.TypeId;
+            this.ImgPath = ob.ImgPath;
         }
 
         public Unit Model
@@ -34,7 +35,8 @@ namespace Entity.ModelView
                     Status = this.Status,
                     MaskText = this.MaskText,
                     ParentId = this.ParentId,
-                    TypeId = this.TypeId
+                    TypeId = this.TypeId,
+                    ImgPath = this.ImgPath
                 };
             }
         }

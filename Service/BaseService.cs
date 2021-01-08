@@ -1,5 +1,4 @@
-﻿using PagedList;
-using PagedList.Core;
+﻿using X.PagedList;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -20,6 +19,8 @@ namespace Service
         entity Get(string textSearch);
 
         List<entity> GetAll(long parentId =0 , long TypeId = 0);
+
+        List<entity> GetAll(List<long> ids);
 
         List<entity> GetAll(string textSearch , long parentId = 0, long TypeId = 0);
 

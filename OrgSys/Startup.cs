@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Globalization;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace OrgSys
 {
@@ -28,6 +29,7 @@ namespace OrgSys
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
             services.AddMvc(options => options.EnableEndpointRouting = false);           
 
             services.AddLocalization(options => options.ResourcesPath = "Resources");

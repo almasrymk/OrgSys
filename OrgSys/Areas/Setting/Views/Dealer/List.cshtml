@@ -1,5 +1,4 @@
-﻿@using PagedList.Core
-@model PagedList.Core.IPagedList<Entity.ModelView.DealerModelView>
+﻿@model X.PagedList.IPagedList<Entity.ModelView.DealerModelView>
 @{
     Layout = null;
 }
@@ -20,34 +19,42 @@
                 <tbody>
                     @for (int i = 0, x = ((Model.PageNumber - 1) * Model.PageSize) + 1; i < Model.Count; i++, x++)
                     {
-                    <tr>
-                        <td style="width:50px;vertical-align: middle;text-align:center">
-                            <p class="list-item-heading">@x</p>
-                        </td>
-                        <td style="width:80px;padding:7px; vertical-align: middle;">
-                            <img alt="Thumbnail" src="~/img/profiles/ClientCard.jpg"
-                                 class="list-thumbnail responsive border-0 rounded-circle m-0" style="height:60px;" />
-                        </td>
-                        <td style="vertical-align: middle;">
-                            <p class="text-muted">@Model[i].Name</p>
-                        </td>
-                        <td style="width:70px;vertical-align: middle;">
-                            <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit"></i> @Utility.Resource.Title_Designer.Edit</a>                           
-                        </td>
-                        <td style="width:80px;vertical-align: middle;">                           
-                            <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete</a>
-                        </td>
-                        <td style="width:40px;text-align:center;vertical-align: middle;">
-                            @if (Model[i].Status == Utility.Status.All)
-                            {
-                                <label class="custom-control custom-checkbox">
-                                    <input id="chk_@Model[i].Id" type="checkbox" class="custom-control-input chk">
-                                    <input type="hidden" value="@Model[i].Id" />
-                                    <span class="custom-control-label">&nbsp;</span>
-                                </label>
-                            }
-                        </td>
-                    </tr>
+                        <tr>
+                            <td style="width:50px;vertical-align: middle;text-align:center">
+                                <p class="list-item-heading">@x</p>
+                            </td>
+                            <td style="width:80px;padding:7px; vertical-align: middle;">
+                                @if ("" + Model[i].ImgPath != "")
+                                {
+                                    <img alt="Thumbnail" src="@Model[i].ImgPath"
+                                         class="list-thumbnail responsive border-0 rounded-circle m-0" style="height:60px;width:60px;" />
+                                }
+                                else
+                                {
+                                    <img alt="Thumbnail" src="~/img/profiles/ClientCard.jpg"
+                                         class="list-thumbnail responsive border-0 rounded-circle m-0" style="height:60px;width:60px;" />
+                                }
+                            </td>
+                            <td style="vertical-align: middle;">
+                                <p class="text-muted">@Model[i].Name</p>
+                            </td>
+                            <td style="width:70px;vertical-align: middle;">
+                                <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit"></i> @Utility.Resource.Title_Designer.Edit</a>
+                            </td>
+                            <td style="width:80px;vertical-align: middle;">
+                                <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete</a>
+                            </td>
+                            <td style="width:40px;text-align:center;vertical-align: middle;">
+                                @if (Model[i].Status == Utility.Status.All)
+                                {
+                                    <label class="custom-control custom-checkbox">
+                                        <input id="chk_@Model[i].Id" type="checkbox" class="custom-control-input chk">
+                                        <input type="hidden" value="@Model[i].Id" />
+                                        <span class="custom-control-label">&nbsp;</span>
+                                    </label>
+                                }
+                            </td>
+                        </tr>
                     }
                 </tbody>
             </table>
@@ -59,9 +66,16 @@
             {
                 <div class="card d-flex flex-row mb-3">
                     <div class="d-flex flex-grow-1 min-width-zero">
-                        <img alt="Thumbnail" src="~/img/profiles/ClientCard.jpg"
-                             class="list-thumbnail responsive border-0 card-img-left" />
-
+                        @if ("" + Model[i].ImgPath != "")
+                        {
+                            <img alt="Thumbnail" src="@Model[i].ImgPath"
+                                 class="list-thumbnail responsive border-0 card-img-left" style="height:85px;width:85px;" />
+                        }
+                        else
+                        {
+                            <img alt="Thumbnail" src="~/img/profiles/ClientCard.jpg"
+                                 class="list-thumbnail responsive border-0 card-img-left" style="height:85px;width:85px;" />
+                        }
                         <div class="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
                             <a class="list-item-heading mb-0 p-0 truncate w-20 w-xs-100 d-inline-block" href="Pages.Product.Detail.html">
                                 <p class="list-item-heading mb-1 color-theme-1">@Model[i].Name</p>
@@ -94,134 +108,42 @@
     <div id="obList" class="row list disable-text-selection pt-2" data-check-all="checkAll" style="display:none;">
         @for (int i = 0, x = ((Model.PageNumber - 1) * Model.PageSize) + 1; i < Model.Count; i++, x++)
         {
-            <div href="#" class="card m-1 p-1">
-                    <label class="custom-control custom-checkbox mr-1 ml-1">
-                        @if (Model[i].Status == Utility.Status.All)
+            <div href="#" class="card m-2 p-1">
+                <label class="custom-control custom-checkbox mr-1 ml-1">
+                    @if (Model[i].Status == Utility.Status.All)
+                    {
+                        <input id="chk_@Model[i].Id" type="checkbox" class="custom-control-input chk">
+                        <input type="hidden" value="@Model[i].Id" />
+                        <span class="custom-control-label">&nbsp;</span>
+                    }
+                </label>
+                <div class="position-absolute card-top-buttons m-0 p-2">
+                    <h3 class="card-text badge badge-pill badge-theme-1 text-small">@x</h3>
+                </div>
+                <div class="card-body text-center m-0 p-2">
+                    <p>
+                        @if ("" + Model[i].ImgPath != "")
                         {
-                            <input id="chk_@Model[i].Id" type="checkbox" class="custom-control-input chk">
-                            <input type="hidden" value="@Model[i].Id" />
-                            <span class="custom-control-label">&nbsp;</span>
+                            <img alt="Profile" src="@Model[i].ImgPath" class="img-thumbnail border-0 rounded-circle m-0 list-thumbnail" style="height:85px;width:85px;">
                         }
-                    </label>
-                    <div class="card-body text-center m-0">
-                        @*<h3 class="card-text badge badge-pill badge-theme-1 mb-2 text-small">@x</h3>*@
-                        <img alt="Profile" src="~/img/profiles/ClientCard.jpg" class="img-thumbnail border-0 rounded-circle mb-4 list-thumbnail">
-                        <p class="lead text-center" style="font-size:large;">@Model[i].Name</p>
-                        <div class="m-0 p-0">
-                            <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit"></i> @Utility.Resource.Title_Designer.Edit</a>
-                            <span> &nbsp; | &nbsp; </span>
-                            <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete</a>
-                        </div>
+                        else
+                        {
+                            <img alt="Profile" src="~/img/profiles/ClientCard.jpg" class="img-thumbnail border-0 rounded-circle m-0 list-thumbnail" style="height:85px;width:85px;">
+                        }
+                    </p>
+                    <p class="lead text-center" style="font-size:large;">
+                        @Model[i].Name
+                    </p>
+                    <div class="m-0 p-0">
+                        <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit"></i> @Utility.Resource.Title_Designer.Edit</a>
+                        <span> &nbsp; | &nbsp; </span>
+                        <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete</a>
                     </div>
                 </div>
+            </div>
 
-            @*<div class="col-xl-3 col-lg-4 col-12 col-sm-6 mb-4">
-                <div class="card m-1">
-                    <div class="position-relative">
-                        <div>
-                            <img class="card-img-top" src="~/img/cards/6a0133f5884316970b01a511cae5c9970c.jpg"
-                                 alt="Card image cap">
-                        </div>
-                        <span class="badge badge-pill badge-theme-1 position-absolute badge-top-left">@x</span>
-                    </div>
-                    <div class="card-body m-0">
-                        <div class="row">
-                            <div class="col-2">
-                                <div class="custom-control custom-checkbox pl-1">
-                                    <label class="custom-control custom-checkbox  mb-0">
-                                        <input type="checkbox" class="custom-control-input">
-                                        <span class="custom-control-label">&nbsp;</span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-10">
-                                <div>
-                                    <p class="list-item-heading mb-4 pt-1">@Model[i].Name</p>
-                                </div>
-                                <footer>
-                                    <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit"></i> @Utility.Resource.Title_Designer.Edit</a>
-                                    <span> &nbsp; | &nbsp; </span>
-                                    <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete</a>
-                                </footer>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>*@
         }
     </div>
 }
-@if (Model != null && Model.PageCount > 1)
-{
-    <nav class="mt-4 mb-3">
-        <ul class="pagination justify-content-center mb-0">
-            @if (Model.PageNumber > 1)
-            {
-                <li class="page-item ">
-                    <button class="page-link first" onclick="search(1)">
-                        <i class="simple-icon-control-start"></i>
-                    </button>
-                </li>
-                <li class="page-item">
-                    <button class="page-link prev" onclick="search(@Model.PageNumber - 1)">
-                        <i class="simple-icon-arrow-left"></i>
-                    </button>
-                </li>
-            }
-            else
-            {
-                <li class="page-item diabled">
-                    <a class="page-link first">
-                        <i class="simple-icon-control-start"></i>
-                    </a>
-                </li>
-                <li class="page-item ">
-                    <a class="page-link prev">
-                        <i class="simple-icon-arrow-left"></i>
-                    </a>
-                </li>
-            }
-            @for (int i = 1; i <= Model.PageCount; i++)
-            {
-                if (i == Model.PageNumber)
-                {
-                    <li class="page-item active">
-                        <a class="page-link">@i</a>
-                    </li>
-                }
-                else
-                {
-                    <li class="page-item ">
-                        <button class="page-link" onclick="search(@i)">@i</button>
-                    </li>
-                }
-            }
-            @if (Model.PageNumber < Model.PageCount)
-            {
-                <li class="page-item ">
-                    <button class="page-link next" aria-label="Next" onclick="search( @Model.PageNumber + 1)">
-                        <i class="simple-icon-arrow-right"></i>
-                    </button>
-                </li>
-                <li class="page-item ">
-                    <button class="page-link last" onclick="search(@Model.PageCount)">
-                        <i class="simple-icon-control-end"></i>
-                    </button>
-                </li>
-            }
-            else
-            {
-                <li class="page-item ">
-                    <a class="page-link next" aria-label="Next">
-                        <i class="simple-icon-arrow-right"></i>
-                    </a>
-                </li>
-                <li class="page-item ">
-                    <a class="page-link last">
-                        <i class="simple-icon-control-end"></i>
-                    </a>
-                </li>
-            }
-        </ul>
-    </nav>
-}
+
+@Html.Partial("PagedList", Model)

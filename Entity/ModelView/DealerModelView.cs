@@ -27,6 +27,7 @@ namespace Entity.ModelView
             this.Status = ob.Status;
             this.TypeId = ob.TypeId;
             this.ParentId = ob.ParentId;
+            this.ImgPath = ob.ImgPath;
         }
 
         public Dealer Model
@@ -45,7 +46,8 @@ namespace Entity.ModelView
                     MaskText = this.MaskText,
                     Status = this.Status,
                     TypeId = this.TypeId,
-                    ParentId = this.ParentId
+                    ParentId = this.ParentId,
+                    ImgPath = this.ImgPath
                 };
             }
         }
@@ -69,6 +71,6 @@ namespace Entity.ModelView
         public string Email { get; set; }
 
         [StringLength(500, MinimumLength = 3, ErrorMessageResourceName = nameof(Message_Designer.AddressRange), ErrorMessageResourceType = typeof(Message_Designer))]
-        public string Address { get; set; }              
+        public string Address { get; set; }        
     }
 }
