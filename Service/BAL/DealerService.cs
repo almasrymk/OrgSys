@@ -42,9 +42,9 @@ namespace Service.BAL
         /// 
         /// </summary>
         /// <returns></returns>
-        public List<DealerModelView> GetAll()
+        public List<DealerModelView> GetAll(long parentId = 0, long TypeId = 0)
         {
-            return repo.dealerRepo.GetList(e => e.OrderBy(e => e.Id), "", Utility.Status.New).Select(e => new DealerModelView(e)).ToList();
+            return repo.dealerRepo.GetList(e=>e.TypeId == TypeId , e => e.OrderBy(e => e.Id), "", Utility.Status.New).Select(e => new DealerModelView(e)).ToList();
         }
 
         /// <summary>
@@ -52,9 +52,9 @@ namespace Service.BAL
         /// </summary>
         /// <param name="textSearch"></param>
         /// <returns></returns>
-        public List<DealerModelView> GetAll(string textSearch)
+        public List<DealerModelView> GetAll(string textSearch , long parentId = 0, long TypeId = 0)
         {
-            return repo.dealerRepo.GetList(e => e.Name.Contains("" + textSearch), e => e.OrderBy(e => e.Id), "", Utility.Status.New).Select(e => new DealerModelView(e)).ToList();
+            return repo.dealerRepo.GetList(e => e.TypeId == TypeId && e.Name.Contains("" + textSearch), e => e.OrderBy(e => e.Id), "", Utility.Status.New).Select(e => new DealerModelView(e)).ToList();
         }
 
         /// <summary>
@@ -63,9 +63,9 @@ namespace Service.BAL
         /// <param name="page"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public IPagedList<DealerModelView> GetAll(int page, int pageSize)
+        public IPagedList<DealerModelView> GetAll(long parentId = 0, long TypeId = 0 , int page = 1, int pageSize = 20)
         {
-            return repo.dealerRepo.GetList(e => e.OrderBy(e => e.Id), "", Utility.Status.New).Select(e => new DealerModelView(e)).ToPagedList(page, pageSize);
+            return repo.dealerRepo.GetList(e=> e.TypeId == TypeId , e => e.OrderBy(e => e.Id), "", Utility.Status.New).Select(e => new DealerModelView(e)).ToPagedList(page, pageSize);
         }
 
         /// <summary>
@@ -75,9 +75,9 @@ namespace Service.BAL
         /// <param name="page"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public IPagedList<DealerModelView> GetAll(string textSearch, int page, int pageSize)
+        public IPagedList<DealerModelView> GetAll(string textSearch, long parentId = 0, long TypeId = 0, int page = 1, int pageSize = 20)
         {
-            return repo.dealerRepo.GetList(e => "" + textSearch == "" || e.Name.Contains("" + textSearch), e => e.OrderBy(e => e.Id), "", Utility.Status.New).Select(e => new DealerModelView(e)).ToPagedList(page, pageSize);
+            return repo.dealerRepo.GetList(e => e.TypeId == TypeId &&( "" + textSearch == "" || e.Name.Contains("" + textSearch)), e => e.OrderBy(e => e.Id), "", Utility.Status.New).Select(e => new DealerModelView(e)).ToPagedList(page, pageSize);
         }
 
         /// <summary>

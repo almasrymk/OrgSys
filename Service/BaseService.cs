@@ -19,12 +19,12 @@ namespace Service
 
         entity Get(string textSearch);
 
-        List<entity> GetAll();
+        List<entity> GetAll(long parentId =0 , long TypeId = 0);
 
-        List<entity> GetAll(string textSearch);
+        List<entity> GetAll(string textSearch , long parentId = 0, long TypeId = 0);
 
-        IPagedList<entity> GetAll(int page, int pageSize);
+        IPagedList<entity> GetAll(long parentId = 0, long TypeId = 0 , int page = 1, int pageSize = 20);
 
-        IPagedList<entity> GetAll(string textSearch , int page, int pageSize);
+        IPagedList<entity> GetAll(string textSearch , long parentId = 0, long TypeId = 0, int page = 1, int pageSize = 20);
     }
 }

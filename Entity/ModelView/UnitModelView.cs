@@ -7,18 +7,20 @@ namespace Entity.ModelView
 {
     public class UnitModelView : BaseModel
     {
-        public UnitModelView() 
-        { 
+        public UnitModelView()
+        {
 
         }
 
         public UnitModelView(Unit ob)
         {
-            if (ob == null) 
+            if (ob == null)
                 ob = new Unit();
             this.Id = ob.Id;
             this.Name = ob.Name;
             this.Status = ob.Status;
+            this.ParentId = ob.ParentId;
+            this.TypeId = ob.TypeId;
         }
 
         public Unit Model
@@ -29,7 +31,10 @@ namespace Entity.ModelView
                 {
                     Id = this.Id,
                     Name = this.Name,
-                    Status = this.Status
+                    Status = this.Status,
+                    MaskText = this.MaskText,
+                    ParentId = this.ParentId,
+                    TypeId = this.TypeId
                 };
             }
         }

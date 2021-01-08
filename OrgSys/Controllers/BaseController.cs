@@ -16,23 +16,29 @@ namespace OrgSys.Controllers
         string ControllerName = "";
         BaseService<entity> service;
         [HttpGet]
-        public virtual ActionResult Index(string search, int page = 1, int pageSize = 20, ResultStatus Status = ResultStatus.nothing, string MsgError = "")
+        public virtual ActionResult Index(string search , long ParentId = 0, long TypeId = 0, int page = 1, int pageSize = 24, ResultStatus Status = ResultStatus.nothing, string MsgError = "")
         {
             if ("" + MsgError != "")
                 ViewBag.message = MsgError;
             ViewBag.status = Status.ToString();
             ViewBag.pageNumber = page;
+            ViewBag.ParentId = ParentId;
+            ViewBag.TypeId = TypeId;
             LoadViewBagIndex();
-            var list = service.GetAll(search, page, pageSize);
+            var list = service.GetAll(search , ParentId, TypeId , page, pageSize);
             return Request.Headers["X-Requested-With"] == "XMLHttpRequest" ? (ActionResult)PartialView("List", list) : View("Index", list);
         }
 
         [HttpGet]
-        public virtual ActionResult Save(long id = 0, ResultStatus status = ResultStatus.nothing, string MsgError = "")
-        {
+        public virtual ActionResult Save(long id = 0, long ParentId = 0, long TypeId = 0, ResultStatus status = ResultStatus.nothing, string MsgError = "")
+        {  
             var ob = service.Get(id);
             if (ob == null || ob.Id == 0)
+            {
                 ob = (entity)Activator.CreateInstance(typeof(entity));
+                ob.ParentId = ParentId;
+                ob.TypeId = TypeId;
+            }
             LoadViewBag(ob);
             return View(ob);
         }
@@ -43,7 +49,7 @@ namespace OrgSys.Controllers
             if (ModelState.IsValid)
             {
                 model = service.Save(model);
-                return Redirect("/" + AreaName + "/" + ControllerName + "?status=" + ResultStatus.success + "&MsgError=Success");
+                return Redirect("/" + AreaName + "/" + ControllerName + "?ParentId="+ model.ParentId + "&TypeId=" + model.TypeId + "&status=" + ResultStatus.success + "&MsgError=Success");
             }
             LoadViewBag(model);
             return View(model);

@@ -219,6 +219,12 @@
   <data name="Shifts" xml:space="preserve">
     <value>الورديات</value>
   </data>
+  <data name="Supplier" xml:space="preserve">
+    <value>المورد</value>
+  </data>
+  <data name="Suppliers" xml:space="preserve">
+    <value>الموردين</value>
+  </data>
   <data name="TextSearch" xml:space="preserve">
     <value>نص البحث</value>
   </data>

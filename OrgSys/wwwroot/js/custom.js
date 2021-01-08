@@ -127,8 +127,8 @@ function showNotification(message, status) {
 
 function ChangeUrl() {
     if (typeof (history.pushState) != "undefined") {
-        var obj = { area: area, Url: url };
-        history.pushState(null, obj.area, obj.Url);
+        var obj = { area: area, Url: url + "?ParentId=" + $("#ParentId").val() + "&TypeId=" + $("#TypeId").val()};
+        history.pushState(null, obj.area, obj.Url );
     } else {
         alert("Browser does not support HTML5.");
     }
@@ -149,7 +149,7 @@ function search(_page) {
     //alert(Search2);
     setTimeout(() => {
         $.ajax({
-            url: url + "?search=" + $('#txtSearch').val() + Search2 + "&page=" + page,
+            url: url + "?search=" + $('#txtSearch').val() + Search2 + "&page=" + page + "&ParentId=" + $("#ParentId").val() + "&TypeId=" + $("#TypeId").val(),
             success: function (result) {
                 $('#List').empty();
                 $('#List').html(result);   

@@ -367,6 +367,24 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Supplier.
+        /// </summary>
+        public static string Supplier {
+            get {
+                return ResourceManager.GetString("Supplier", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Suppliers.
+        /// </summary>
+        public static string Suppliers {
+            get {
+                return ResourceManager.GetString("Suppliers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to TextSearch.
         /// </summary>
         public static string TextSearch {

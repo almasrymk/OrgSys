@@ -42,7 +42,7 @@ namespace Service.BAL
         /// 
         /// </summary>
         /// <returns></returns>
-        public List<UnitModelView> GetAll()
+        public List<UnitModelView> GetAll(long parentId = 0, long TypeId = 0)
         {
             return repo.unitRepo.GetList(e => e.OrderBy(e => e.Id), "", Utility.Status.New).Select(e => new UnitModelView(e)).ToList();
         }
@@ -52,7 +52,7 @@ namespace Service.BAL
         /// </summary>
         /// <param name="textSearch"></param>
         /// <returns></returns>
-        public List<UnitModelView> GetAll(string textSearch)
+        public List<UnitModelView> GetAll(string textSearch , long parentId = 0, long TypeId = 0)
         {
             return repo.unitRepo.GetList(e => e.Name.Contains("" + textSearch), e => e.OrderBy(e => e.Id), "", Utility.Status.New).Select(e => new UnitModelView(e)).ToList();
         }
@@ -63,7 +63,7 @@ namespace Service.BAL
         /// <param name="page"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public IPagedList<UnitModelView> GetAll(int page, int pageSize)
+        public IPagedList<UnitModelView> GetAll(long parentId = 0, long TypeId = 0 ,int page = 1, int pageSize = 20)
         {
             return repo.unitRepo.GetList(e => e.OrderBy(e => e.Id), "", Utility.Status.New).Select(e => new UnitModelView(e)).ToPagedList(page, pageSize);
         }
@@ -75,7 +75,7 @@ namespace Service.BAL
         /// <param name="page"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public IPagedList<UnitModelView> GetAll(string textSearch, int page, int pageSize)
+        public IPagedList<UnitModelView> GetAll(string textSearch , long parentId = 0, long TypeId = 0, int page = 1, int pageSize = 20)
         {
             return repo.unitRepo.GetList(e => "" + textSearch == "" || e.Name.Contains("" + textSearch), e => e.OrderBy(e => e.Id), "", Utility.Status.New).Select(e => new UnitModelView(e)).ToPagedList(page, pageSize);
         }

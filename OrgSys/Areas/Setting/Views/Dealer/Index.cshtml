@@ -1,5 +1,5 @@
 ﻿@using PagedList.Core
-@model PagedList.Core.IPagedList<Entity.ModelView.UnitModelView>
+@model PagedList.Core.IPagedList<Entity.ModelView.DealerModelView>
 @{
     ViewData["Title_Designer"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -9,7 +9,14 @@
     <div class="row">
         <div class="col-12">
             <div class="mb-3">
-                <h1>@Utility.Resource.Title_Designer.UnitsMeasure</h1>
+                @if (ViewBag.TypeId == 1)
+                {
+                    <h1>@Utility.Resource.Title_Designer.Clients</h1>
+                }
+                else if (ViewBag.TypeId == 2)
+                {
+                    <h1>@Utility.Resource.Title_Designer.Suppliers</h1>
+                }
                 <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
                     <ol class="breadcrumb pt-0">
                         <li class="breadcrumb-item">
@@ -18,7 +25,14 @@
                         <li class="breadcrumb-item">
                             @Utility.Resource.Title_Designer.Setting
                         </li>
-                        <li class="breadcrumb-item active" aria-current="page">@Utility.Resource.Title_Designer.UnitsMeasure</li>
+                        @if (ViewBag.TypeId == 1)
+                        {
+                            <li class="breadcrumb-item active" aria-current="page">@Utility.Resource.Title_Designer.Clients</li>
+                        }
+                        else if (ViewBag.TypeId == 2)
+                        {
+                            <li class="breadcrumb-item active" aria-current="page">@Utility.Resource.Title_Designer.Suppliers</li>
+                        }
                     </ol>
                 </nav>
             </div>

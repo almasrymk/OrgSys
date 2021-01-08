@@ -23,9 +23,10 @@ namespace Entity.ModelView
             this.Phone = ob.Phone;
             this.Email = ob.Email;
             this.Address = ob.Address;
-            this.DealerType = ob.DealerType;
             this.MaskText = ob.MaskText;
             this.Status = ob.Status;
+            this.TypeId = ob.TypeId;
+            this.ParentId = ob.ParentId;
         }
 
         public Dealer Model
@@ -41,16 +42,17 @@ namespace Entity.ModelView
                     Phone = this.Phone,
                     Email = this.Email,
                     Address = this.Address,
-                    DealerType = this.DealerType,
                     MaskText = this.MaskText,
-                    Status = this.Status
+                    Status = this.Status,
+                    TypeId = this.TypeId,
+                    ParentId = this.ParentId
                 };
             }
         }
       
         public long CodeNumber { get; set; }
 
-        [StringLength(10, MinimumLength = 3, ErrorMessageResourceName = nameof(Message_Designer.CodeRequired), ErrorMessageResourceType = typeof(Message_Designer))]
+        [StringLength(10, MinimumLength = 3, ErrorMessageResourceName = nameof(Message_Designer.CodeRange), ErrorMessageResourceType = typeof(Message_Designer))]
         [Required(ErrorMessageResourceName = nameof(Message_Designer.CodeRequired), ErrorMessageResourceType = typeof(Message_Designer))]
         public string Code { get; set; }
 
@@ -63,12 +65,10 @@ namespace Entity.ModelView
         public string Phone { get; set; }
 
         [StringLength(20, MinimumLength =3, ErrorMessageResourceName = nameof(Message_Designer.EmailRange), ErrorMessageResourceType = typeof(Message_Designer))]
-        [EmailAddress(ErrorMessageResourceName = nameof(Message_Designer.EmailRange), ErrorMessageResourceType = typeof(Message_Designer))]
+        [EmailAddress(ErrorMessageResourceName = nameof(Message_Designer.EmailFromate), ErrorMessageResourceType = typeof(Message_Designer))]
         public string Email { get; set; }
 
         [StringLength(500, MinimumLength = 3, ErrorMessageResourceName = nameof(Message_Designer.AddressRange), ErrorMessageResourceType = typeof(Message_Designer))]
-        public string Address { get; set; }      
-        
-        public DealerType DealerType { get; set; }
+        public string Address { get; set; }              
     }
 }

@@ -28,7 +28,5 @@ namespace Entity.Model
 
         [StringLength(500, MinimumLength = 3)]        
         public string Address { get; set; }
-
-        public DealerType DealerType { get; set; }
     }
 }
