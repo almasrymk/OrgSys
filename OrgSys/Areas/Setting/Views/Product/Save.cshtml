@@ -1,0 +1,188 @@
+﻿@model Entity.ModelView.ProductModelView
+@{
+    ViewData["Title_Designer"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div id="HPage" class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="mb-3">
+                <h1>@Utility.Resource.Title_Designer.Product</h1>
+                <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
+                    <ol class="breadcrumb pt-0">
+                        <li class="breadcrumb-item">
+                            <a href="/">@Utility.Resource.Title_Designer.Home</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            @Utility.Resource.Title_Designer.Setting
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">  <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId">@Utility.Resource.Title_Designer.Product</a></li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 mb-4">
+            <div class="card h-100">
+
+                <div class="card pt-4 pb-4 pl-4 pr-4">
+                    <div class="d-md-block" id="displayOptions">
+                        <h2 class="mr-4 mb-2 ml-4 d-inline-block float-md-left">
+                            @if (Model != null || Model.Id == 0)
+                            {
+                                <span class="mb-4"> @Utility.Resource.Title_Designer.New ...</span>
+                            }
+                            else
+                            {
+                                <span class="mb-4"> @Utility.Resource.Title_Designer.Edit ...</span>
+                            }
+                        </h2>
+                        <div class="position-absolute card-top-buttons">
+                            <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId" class="btn btn-primary"><i class="simple-icon-action-undo"></i>  @Utility.Resource.Title_Designer.Back</a>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <form action="Save" method="post" enctype="multipart/form-data" class="tooltip-label-right " novalidate>
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-lg-9">
+                                    @Html.HiddenFor(model => model.Id)
+                                    @Html.HiddenFor(model => model.TypeId)
+                                    @Html.HiddenFor(model => model.ParentId)
+                                    @Html.HiddenFor(model => model.ImgPath)
+
+                                    <div class="form-group position-relative error-l-50">
+                                        @Html.LabelFor(model => model.ClassificationName)                                        
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="simple-icon-layers"></i></span>
+                                            </div>
+                                            @Html.DropDownListFor(model => model.ClassificationId, null, " ... ", new { @class = "form-control" })
+                                        </div>
+                                        <small class="form-text text-muted"> @Utility.Resource.Message_Designer.ClassificationRequired!</small>
+                                        @Html.ValidationMessageFor(model => model.ClassificationId, "", new { @class = "text-danger " })
+                                    </div>
+
+                                    <div class="form-group position-relative error-l-50">
+                                        @Html.LabelFor(model => model.Code)
+                                        @Html.TextBoxFor(model => model.Code, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Code })
+                                        <small class="form-text text-muted"> @Utility.Resource.Message_Designer.CodeRequired!</small>
+                                        @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger " })
+                                    </div>
+
+                                    <div class="form-group position-relative error-l-50">
+                                        @Html.LabelFor(model => model.Name)
+                                        @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Name })
+                                        <small class="form-text text-muted"> @Utility.Resource.Message_Designer.NameRequired!</small>
+                                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                    </div>
+
+                                    <div class="form-group position-relative error-l-50">
+                                        @Html.LabelFor(model => model.Nickname)
+                                        @Html.TextBoxFor(model => model.Nickname, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Nickname })
+                                        <small class="form-text text-muted"> @Utility.Resource.Message_Designer.NicknameRequired!</small>
+                                        @Html.ValidationMessageFor(model => model.Nickname, "", new { @class = "text-danger " })
+                                    </div>
+
+                                    <div class="form-group position-relative error-l-50">
+                                        @Html.LabelFor(model => model.Barcode)
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="iconsminds-qr-code"></i></span>
+                                            </div>
+                                            @Html.TextBoxFor(model => model.Barcode, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Barcode })
+                                        </div>                                        
+                                        <small class="form-text text-muted"> @Utility.Resource.Message_Designer.BarcodeRequired!</small>
+                                        @Html.ValidationMessageFor(model => model.Barcode, "", new { @class = "text-danger " })
+                                    </div>
+
+                                    <div class="form-group position-relative error-l-50">
+                                        @Html.LabelFor(model => model.Price)
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">$</span>                                               
+                                            </div>
+                                            @Html.TextBoxFor(model => model.Price, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Price })
+                                        </div>
+                                        <small class="form-text text-muted"> @Utility.Resource.Message_Designer.PriceRequired!</small>
+                                        @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger " })
+                                    </div>
+
+                                    <div class="form-group position-relative error-l-50">
+                                        @Html.LabelFor(model => model.Cost)                                        
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">$</span>
+                                            </div>
+                                            @Html.TextBoxFor(model => model.Cost, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Cost })
+                                        </div>
+                                        <small class="form-text text-muted"> @Utility.Resource.Message_Designer.CostRequired!</small>
+                                        @Html.ValidationMessageFor(model => model.Cost, "", new { @class = "text-danger " })
+                                    </div>
+
+                                    <div class="form-group position-relative error-l-50">
+                                        @Html.LabelFor(model => model.DealerName)
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="simple-icon-people"></i></span>
+                                            </div>
+                                            @Html.DropDownListFor(model => model.DealerId, null, " ... ", new { @class = "form-control" })
+                                        </div>                                        
+                                        <small class="form-text text-muted"> @Utility.Resource.Message_Designer.NameRequired!</small>
+                                        @Html.ValidationMessageFor(model => model.DealerId, "", new { @class = "text-danger " })
+                                    </div>
+
+                                    <div class="form-group position-relative error-l-50">
+                                        @Html.LabelFor(model => model.Description)
+                                        @Html.TextBoxFor(model => model.Description, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Description })
+                                        <small class="form-text text-muted"> @Utility.Resource.Message_Designer.DescriptionRequired!</small>
+                                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger mt-3 m-1" })
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-12 col-lg-3 pt-4 pb-4">
+                                    <div class="card mb-4 p-3">
+                                        <div class="position-absolute card-top-buttons">
+                                            <button type="button" onclick="document.getElementById('flImage').click();" class="btn btn-outline-white icon-button ">
+                                                <i class="simple-icon-pencil"></i>
+                                            </button>
+                                            <input id="flImage" type="file" name="file" onchange="SelectImage(this)" style="display:none" accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*" />
+                                            <button type="button" class="btn btn-outline-white icon-button" onclick="document.getElementById('flImage').value ='' ;$('#img').attr('src', '/img/profiles/ClientCard.png')">
+                                                X
+                                            </button>
+                                        </div>
+                                        @if ("" + Model.ImgPath != "")
+                                        {
+                                            <img id="img" src="@Model.ImgPath" alt="Fruitcake" class="list-thumbnail border-0  badge-theme-1" style="height:200px;width:200px;">
+                                        }
+                                        else
+                                        {
+                                            <img id="img" src="~/img/profiles/ProductCard.png" alt="Fruitcake" class="list-thumbnail border-0  badge-theme-1" style="height:200px;width:200px;">
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary mb-0">@Utility.Resource.Title_Designer.Save</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function SelectImage(input) {
+        //$("#data_PhotoPath").val("sdf");
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $("#img").attr("src", e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>

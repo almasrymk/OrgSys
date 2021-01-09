@@ -28,7 +28,7 @@ namespace Entity.ModelView
             this.ClassificationId = ob.ClassificationId;
             this.ClassificationName = ob.Classification?.Name;
             this.DealerId = ob.DealerId;
-            this.DealerName = ob.Dealer.Name;
+            this.DealerName = ob.Dealer?.Name;
             this.Status = ob.Status;
             this.ParentId = ob.ParentId;
             this.TypeId = ob.TypeId;
@@ -99,8 +99,10 @@ namespace Entity.ModelView
         [Display(Name = nameof(Title_Designer.Classification), ResourceType = typeof(Title_Designer))]
         public string ClassificationName { get; set; }
 
+        [Display(Name = nameof(Title_Designer.Supplier), ResourceType = typeof(Title_Designer))]
         public long? DealerId { get; set; }
 
+        [Display(Name = nameof(Title_Designer.Supplier), ResourceType = typeof(Title_Designer))]
         public string DealerName { get; set; }
     }
 }
