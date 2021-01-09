@@ -1362,6 +1362,40 @@ button {
       cursor: pointer; }
       .navbar .search .search-icon:hover {
         color: #008ecc; }
+.navbar .search-text {
+    position: relative;
+    width: 230px;
+    border-radius: 20px;
+    background: white;
+}
+
+    .navbar .search-text input {
+        border: initial;
+        background: transparent;
+        outline: initial !important;
+        font-size: 0.8rem;
+        width: 93%;
+        color: #3a3a3a;
+        padding: 0.4rem 1rem;
+        line-height: 2;
+    }
+
+    .navbar .search-text .search-icon {
+        font-size: 17px;
+        border-radius: 10px;
+        color: #d7d7d7;
+        position: absolute;
+        width: 40px;
+        height: 40px;
+        bottom: -10px;
+        right: 3px;
+        text-align: center;
+        cursor: pointer;
+    }
+
+        .navbar .search-text .search-icon:hover {
+            color: #ed7117;
+        }
     @media (max-width: 991px) {
       .navbar .search {
         width: 115px; }
