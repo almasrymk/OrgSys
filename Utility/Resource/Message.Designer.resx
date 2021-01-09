@@ -123,14 +123,29 @@
   <data name="AddressRequired" xml:space="preserve">
     <value>Address Required</value>
   </data>
+  <data name="BarcodeRange" xml:space="preserve">
+    <value>The barcode is a letter number between 5 to 15</value>
+  </data>
+  <data name="BarcodeRequired" xml:space="preserve">
+    <value>Barcode Required</value>
+  </data>
+  <data name="ClassificationRequired" xml:space="preserve">
+    <value>Classification Required</value>
+  </data>
   <data name="CodeRange" xml:space="preserve">
     <value>The code is a letter number between 3 to 10</value>
   </data>
   <data name="CodeRequired" xml:space="preserve">
     <value>Code Required</value>
   </data>
+  <data name="CostRequired" xml:space="preserve">
+    <value>Cost Required</value>
+  </data>
   <data name="DeleteConfirmation" xml:space="preserve">
     <value>Delete confirmation</value>
+  </data>
+  <data name="DescriptionRequired" xml:space="preserve">
+    <value>Description Required</value>
   </data>
   <data name="DoYouWantDeleteFile" xml:space="preserve">
     <value>Do you want to delete the file?</value>
@@ -150,10 +165,22 @@
   <data name="NameRequired" xml:space="preserve">
     <value>Name Required</value>
   </data>
+  <data name="NicknameRange" xml:space="preserve">
+    <value>The nickname is a letter number between 3 to 15</value>
+  </data>
+  <data name="NicknameRequired" xml:space="preserve">
+    <value>Nickname Required</value>
+  </data>
   <data name="PhoneRange" xml:space="preserve">
     <value>The phone is a letter number between 8 to 25</value>
   </data>
   <data name="PhoneRequired" xml:space="preserve">
     <value>Phone Required</value>
+  </data>
+  <data name="PriceRequired" xml:space="preserve">
+    <value>Price Required</value>
+  </data>
+  <data name="RateRequired" xml:space="preserve">
+    <value>Rate Required</value>
   </data>
 </root>

@@ -126,6 +126,18 @@
   <data name="Back" xml:space="preserve">
     <value>Back</value>
   </data>
+  <data name="Barcode" xml:space="preserve">
+    <value>Barcode</value>
+  </data>
+  <data name="BeManufactured" xml:space="preserve">
+    <value>Be Manufactured</value>
+  </data>
+  <data name="BePurchased" xml:space="preserve">
+    <value>Be Purchased</value>
+  </data>
+  <data name="BeSold" xml:space="preserve">
+    <value>Be Sold</value>
+  </data>
   <data name="Classification" xml:space="preserve">
     <value>Classification</value>
   </data>
@@ -141,8 +153,17 @@
   <data name="Code" xml:space="preserve">
     <value>Code</value>
   </data>
+  <data name="Cost" xml:space="preserve">
+    <value>Cost</value>
+  </data>
+  <data name="DefaultUnit" xml:space="preserve">
+    <value>Default Unit</value>
+  </data>
   <data name="Delete" xml:space="preserve">
     <value>Delete</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
   </data>
   <data name="Edit" xml:space="preserve">
     <value>Edit</value>
@@ -165,11 +186,17 @@
   <data name="New" xml:space="preserve">
     <value>New</value>
   </data>
+  <data name="Nickname" xml:space="preserve">
+    <value>Nickname</value>
+  </data>
   <data name="Ok" xml:space="preserve">
     <value>Ok</value>
   </data>
   <data name="Phone" xml:space="preserve">
     <value>Phone</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>Price</value>
   </data>
   <data name="ProdectSalesDetails" xml:space="preserve">
     <value>Prodect sales of details</value>
@@ -179,6 +206,9 @@
   </data>
   <data name="Products" xml:space="preserve">
     <value>Products</value>
+  </data>
+  <data name="Rate" xml:space="preserve">
+    <value>Rate</value>
   </data>
   <data name="Report" xml:space="preserve">
     <value>Report</value>

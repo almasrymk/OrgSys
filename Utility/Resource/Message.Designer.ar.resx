@@ -123,14 +123,29 @@
   <data name="AddressRequired" xml:space="preserve">
     <value>يجب ادخال العنوان</value>
   </data>
+  <data name="BarcodeRange" xml:space="preserve">
+    <value>الباركود عدد حرف بين 5 الى 15</value>
+  </data>
+  <data name="BarcodeRequired" xml:space="preserve">
+    <value>يجب ادخال الباركود</value>
+  </data>
+  <data name="ClassificationRequired" xml:space="preserve">
+    <value>يجب ادخال التصنيف</value>
+  </data>
   <data name="CodeRange" xml:space="preserve">
-    <value>الكود عدد حرف بين ٣   الى 10</value>
+    <value>الكود عدد حرف بين 3   الى 10</value>
   </data>
   <data name="CodeRequired" xml:space="preserve">
     <value>يجب ادخال الكود</value>
   </data>
+  <data name="CostRequired" xml:space="preserve">
+    <value>يجب ادخال التكلفة</value>
+  </data>
   <data name="DeleteConfirmation" xml:space="preserve">
     <value>تاكيد الحذف</value>
+  </data>
+  <data name="DescriptionRequired" xml:space="preserve">
+    <value>يجب ادخال الوصف</value>
   </data>
   <data name="DoYouWantDeleteFile" xml:space="preserve">
     <value>هل تريد حذف الملف ؟</value>
@@ -145,15 +160,27 @@
     <value>يجب ادخال الايميل</value>
   </data>
   <data name="NameRange" xml:space="preserve">
-    <value>الاسم عدد حرف بين ٣   الى 50</value>
+    <value>الاسم عدد حرف بين 3 الى 50</value>
   </data>
   <data name="NameRequired" xml:space="preserve">
     <value>يجب ادخال الاسم</value>
+  </data>
+  <data name="NicknameRange" xml:space="preserve">
+    <value>الاسم المستعار عدد حرف بين 3   الى 15</value>
+  </data>
+  <data name="NicknameRequired" xml:space="preserve">
+    <value>يجب ادخال الاسم المستعار</value>
   </data>
   <data name="PhoneRange" xml:space="preserve">
     <value>التليفون عدد حرف بين 8   الى 25</value>
   </data>
   <data name="PhoneRequired" xml:space="preserve">
     <value>يجب ادخال التليفون</value>
+  </data>
+  <data name="PriceRequired" xml:space="preserve">
+    <value>يجب ادخال السعر</value>
+  </data>
+  <data name="RateRequired" xml:space="preserve">
+    <value>يجب ادخال معدل التحويل</value>
   </data>
 </root>

@@ -79,6 +79,33 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The barcode is a letter number between 5 to 15.
+        /// </summary>
+        public static string BarcodeRange {
+            get {
+                return ResourceManager.GetString("BarcodeRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Barcode Required.
+        /// </summary>
+        public static string BarcodeRequired {
+            get {
+                return ResourceManager.GetString("BarcodeRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Classification Required.
+        /// </summary>
+        public static string ClassificationRequired {
+            get {
+                return ResourceManager.GetString("ClassificationRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The code is a letter number between 3 to 10.
         /// </summary>
         public static string CodeRange {
@@ -97,11 +124,29 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cost Required.
+        /// </summary>
+        public static string CostRequired {
+            get {
+                return ResourceManager.GetString("CostRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete confirmation.
         /// </summary>
         public static string DeleteConfirmation {
             get {
                 return ResourceManager.GetString("DeleteConfirmation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description Required.
+        /// </summary>
+        public static string DescriptionRequired {
+            get {
+                return ResourceManager.GetString("DescriptionRequired", resourceCulture);
             }
         }
         
@@ -160,6 +205,24 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The nickname is a letter number between 3 to 15.
+        /// </summary>
+        public static string NicknameRange {
+            get {
+                return ResourceManager.GetString("NicknameRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nickname Required.
+        /// </summary>
+        public static string NicknameRequired {
+            get {
+                return ResourceManager.GetString("NicknameRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The phone is a letter number between 8 to 25.
         /// </summary>
         public static string PhoneRange {
@@ -174,6 +237,24 @@ namespace Utility.Resource {
         public static string PhoneRequired {
             get {
                 return ResourceManager.GetString("PhoneRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Price Required.
+        /// </summary>
+        public static string PriceRequired {
+            get {
+                return ResourceManager.GetString("PriceRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rate Required.
+        /// </summary>
+        public static string RateRequired {
+            get {
+                return ResourceManager.GetString("RateRequired", resourceCulture);
             }
         }
     }

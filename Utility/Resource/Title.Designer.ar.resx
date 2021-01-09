@@ -126,6 +126,18 @@
   <data name="Back" xml:space="preserve">
     <value>عودة</value>
   </data>
+  <data name="Barcode" xml:space="preserve">
+    <value>الباركود</value>
+  </data>
+  <data name="BeManufactured" xml:space="preserve">
+    <value>يتم تصنيعها</value>
+  </data>
+  <data name="BePurchased" xml:space="preserve">
+    <value>يتم شرائها</value>
+  </data>
+  <data name="BeSold" xml:space="preserve">
+    <value>يتم بيعها</value>
+  </data>
   <data name="Classification" xml:space="preserve">
     <value>تصنيف</value>
   </data>
@@ -141,8 +153,17 @@
   <data name="Code" xml:space="preserve">
     <value>الكود</value>
   </data>
+  <data name="Cost" xml:space="preserve">
+    <value>التكلفة</value>
+  </data>
+  <data name="DefaultUnit" xml:space="preserve">
+    <value>الوحدة الافتراضية</value>
+  </data>
   <data name="Delete" xml:space="preserve">
     <value>حذف</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>الوصف</value>
   </data>
   <data name="Edit" xml:space="preserve">
     <value>تعديل</value>
@@ -165,11 +186,17 @@
   <data name="New" xml:space="preserve">
     <value>جديد</value>
   </data>
+  <data name="Nickname" xml:space="preserve">
+    <value>الاسم المستعار</value>
+  </data>
   <data name="Ok" xml:space="preserve">
     <value>موافق</value>
   </data>
   <data name="Phone" xml:space="preserve">
     <value>التليفون</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>السعر</value>
   </data>
   <data name="ProdectSalesDetails" xml:space="preserve">
     <value>تفاصيل البيع بالاصناف</value>
@@ -179,6 +206,9 @@
   </data>
   <data name="Products" xml:space="preserve">
     <value>المنتجات</value>
+  </data>
+  <data name="Rate" xml:space="preserve">
+    <value>معدل التحويل</value>
   </data>
   <data name="Report" xml:space="preserve">
     <value>التقارير</value>
