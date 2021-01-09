@@ -32,5 +32,44 @@ namespace Repository
                 return _dealerRepo;
             }
         }
+
+        private ClassificationRepo _classificationRepo;
+        public ClassificationRepo classificationRepo
+        {
+            get
+            {
+
+                if (this._classificationRepo == null)
+                    this._classificationRepo = new ClassificationRepo();
+
+                return _classificationRepo;
+            }
+        }
+
+        private ProductRepo _productRepo;
+        public ProductRepo productRepo
+        {
+            get
+            {
+
+                if (this._productRepo == null)
+                    this._productRepo = new ProductRepo();
+
+                return _productRepo;
+            }
+        }
+
+        private ProductUnitRepo _productUnitRepo;
+        public ProductUnitRepo productUnitRepo
+        {
+            get
+            {
+
+                if (this._productUnitRepo == null)
+                    this._productUnitRepo = new ProductUnitRepo();
+
+                return _productUnitRepo;
+            }
+        }
     }
 }

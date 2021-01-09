@@ -14,10 +14,10 @@ namespace Entity.Model
         [StringLength(50, MinimumLength = 3)]
         public string Name { get; set; }
 
-        public bool? BePurchased { get; set; }
+        public bool BePurchased { get; set; }
 
-        public bool? BeSold { get; set; }
+        public bool BeSold { get; set; }
 
-        public bool? BeManufactured { get; set; }
+        public bool BeManufactured { get; set; }
     }
 }

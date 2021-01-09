@@ -53,12 +53,12 @@ namespace Entity.ModelView
         public string Name { get; set; }
 
         [Display(Name = nameof(Title_Designer.BePurchased), ResourceType = typeof(Title_Designer))]
-        public bool? BePurchased { get; set; }
+        public bool BePurchased { get; set; }
 
         [Display(Name = nameof(Title_Designer.BeSold), ResourceType = typeof(Title_Designer))]
-        public bool? BeSold { get; set; }
+        public bool BeSold { get; set; }
 
         [Display(Name = nameof(Title_Designer.BeManufactured), ResourceType = typeof(Title_Designer))]
-        public bool? BeManufactured { get; set; }
+        public bool BeManufactured { get; set; }
     }
 }

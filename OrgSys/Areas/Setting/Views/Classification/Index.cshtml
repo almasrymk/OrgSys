@@ -1,4 +1,4 @@
-﻿@model X.PagedList.IPagedList<Entity.ModelView.UnitModelView>
+﻿@model X.PagedList.IPagedList<Entity.ModelView.ClassificationModelView>
 @{
     ViewData["Title_Designer"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col-12">
             <div class="mb-3">
-                <h1>@Utility.Resource.Title_Designer.UnitsMeasure</h1>
+                <h1>@Utility.Resource.Title_Designer.Classifications</h1>
                 <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
                     <ol class="breadcrumb pt-0">
                         <li class="breadcrumb-item">
@@ -17,7 +17,7 @@
                         <li class="breadcrumb-item">
                             @Utility.Resource.Title_Designer.Setting
                         </li>
-                        <li class="breadcrumb-item active" aria-current="page">@Utility.Resource.Title_Designer.UnitsMeasure</li>
+                        <li class="breadcrumb-item active" aria-current="page">@Utility.Resource.Title_Designer.Classifications</li>
                     </ol>
                 </nav>
             </div>
@@ -65,7 +65,7 @@
                     </div>
                     <div class="float-md-right">
                         <div class="navbar p-0 m-0" style="height:50px;background-color:transparent;box-shadow:none;">
-                            <div class="search m-0 p-0" style="box-shadow: 0 1px 15px rgba(0,0,0,.04), 0 1px 6px rgba(0,0,0,.04);">
+                            <div class="search  m-0 p-0" style="box-shadow: 0 1px 15px rgba(0,0,0,.04), 0 1px 6px rgba(0,0,0,.04);">
                                 <input id="txtSearch" placeholder='@Utility.Resource.Title_Designer.TextSearch...' onkeyup="change(event , 1)">
                                 <span class="search-icon" onclick="search(1)">
                                     <i class="simple-icon-magnifier"></i>

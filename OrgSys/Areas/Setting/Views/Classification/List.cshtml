@@ -1,4 +1,4 @@
-﻿@model X.PagedList.IPagedList<Entity.ModelView.UnitModelView>
+﻿@model X.PagedList.IPagedList<Entity.ModelView.ClassificationModelView>
 @{
     Layout = null;
 }
@@ -23,8 +23,16 @@
                                 <p class="list-item-heading">@x</p>
                             </td>
                             <td style="width:80px;padding:7px; vertical-align: middle;">
-                                <img alt="Thumbnail" src="~/img/profiles/UnitCard.png"
-                                     class="list-thumbnail responsive border-0 rounded-circle m-0 badge-theme-1" style="height:60px;" />
+                                @if ("" + Model[i].ImgPath != "")
+                                {
+                                    <img alt="Thumbnail" src="@Model[i].ImgPath"
+                                         class="list-thumbnail responsive border-0 rounded-circle badge-theme-1 m-0" style="height:60px;width:60px;" />
+                                }
+                                else
+                                {
+                                    <img alt="Thumbnail" src="~/img/profiles/ClassificationCard.png"
+                                         class="list-thumbnail responsive border-0 rounded-circle badge-theme-1 m-0" style="height:60px;width:60px;" />
+                                }
                             </td>
                             <td>
                                 <p class="text-muted">@Model[i].Name</p>
@@ -58,8 +66,16 @@
             {
                 <div class="card d-flex flex-row mb-3">
                     <div class="d-flex flex-grow-1 min-width-zero">
-                        <img alt="Thumbnail" src="~/img/profiles/UnitCard.png"
-                             class="list-thumbnail responsive border-0 card-img-left badge-theme-1" />
+                        @if ("" + Model[i].ImgPath != "")
+                        {
+                            <img alt="Thumbnail" src="@Model[i].ImgPath"
+                                 class="list-thumbnail responsive border-0 card-img-left badge-theme-1" style="height:85px;width:85px;" />
+                        }
+                        else
+                        {
+                            <img alt="Thumbnail" src="~/img/profiles/ClassificationCard.png"
+                                 class="list-thumbnail responsive border-0 card-img-left badge-theme-1" style="height:85px;width:85px;" />
+                        }
 
                         <div class="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
                             <a class="list-item-heading mb-0 truncate w-40 w-xs-100 d-inline-block" href="Pages.Product.Detail.html">
@@ -104,7 +120,14 @@
                 </div>
                 <div class="card-body text-center m-0 p-2">
                     <p>
-                        <img alt="Profile" src="~/img/profiles/UnitCard.png" class="img-thumbnail border-0 rounded-circle m-0 list-thumbnail badge-theme-1">
+                        @if ("" + Model[i].ImgPath != "")
+                        {
+                            <img alt="Profile" src="@Model[i].ImgPath" class="img-thumbnail border-0 rounded-circle m-0 list-thumbnail badge-theme-1" style="height:85px;width:85px;">
+                        }
+                        else
+                        {
+                            <img alt="Profile" src="~/img/profiles/ClassificationCard.png" class="img-thumbnail border-0 rounded-circle m-0 list-thumbnail badge-theme-1" style="height:85px;width:85px;">
+                        }
                     </p>
                     <p class="lead text-center" style="font-size:large;">
                         @Model[i].Name
