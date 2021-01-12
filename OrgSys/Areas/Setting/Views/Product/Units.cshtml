@@ -1,0 +1,43 @@
+﻿@model Entity.ModelView.ProductUnitModelView
+@{
+    Layout = null;
+}
+
+    <td>
+        <input type="hidden" id="RowId" value="@Model.Id" />
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="simple-icon-pie-chart"></i></span>
+            </div>
+            @Html.DropDownListFor(model => Model.UnitId, null, " - " + Utility.Resource.Title_Designer.SelectUnit + " - ", new { @class = "form-control select2-single", @onchange = "AddNewRow(this)" })
+        </div>
+    </td>
+    <td style="width:150px;">
+        @Html.EditorFor(modelItem => Model.Rate, new { htmlAttributes = new { @class = "form-control", @type = "text" , @onchange = "AddNewRow(this)" } })
+    </td>
+    <td style="width:100px;text-align:center;vertical-align:middle;">
+        @if (Model.DefaultUnit)
+        {
+            <div class="custom-switch custom-switch-primary-inverse custom-switch-small">
+                <input class="custom-switch-input" id="switchS1" type="checkbox"checked>
+                <label class="custom-switch-btn" for="switchS1"></label>
+            </div>
+        }
+        else
+        {
+            <div class="custom-switch custom-switch-primary-inverse custom-switch-small">
+                <input class="custom-switch-input" id="switchS1" type="checkbox">
+                <label class="custom-switch-btn" for="switchS1"></label>
+            </div>
+        }
+    </td>
+    <td style="width:100px;vertical-align:middle;">
+        @if (Model != null && Model.Id >= 0)
+        {
+            <a href="#" class="btn btn-danger" onclick="RemoveRow(this)">  <i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete  </a>
+        }
+        else
+        {
+            <a href="#" class="btn btn-danger" onclick="RemoveRow(this)" style="display:none">  <i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete </a>
+        }
+    </td>

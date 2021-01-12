@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="~/css/vendor/glide.core.min.css" />
     <link rel="stylesheet" href="~/css/vendor/bootstrap-stars.css" />
     <link rel="stylesheet" href="~/css/vendor/nouislider.min.css" />
+    <link rel="stylesheet" href="~/css/vendor/smart_wizard.min.css" />
     <link rel="stylesheet" href="~/css/vendor/bootstrap-datepicker3.min.css" />
     <link rel="stylesheet" href="~/css/vendor/component-custom-switch.min.css" />
     <link rel="stylesheet" href="~/css/main.css" />
@@ -876,6 +877,8 @@
     <script src="~/js/vendor/select2.full.js"></script>
     <script src="~/js/vendor/nouislider.min.js"></script>
     <script src="~/js/vendor/bootstrap-datepicker.js"></script>
+    <script src="~/js/vendor/jquery.smartWizard.min.js"></script>
+    <script src="~/js/vendor/jquery.validate/jquery.validate.min.js"></script>
     <script src="~/js/vendor/Sortable.js"></script>
     <script src="~/js/vendor/bootstrap-notify.min.js"></script>
     <script src="~/js/vendor/mousetrap.min.js"></script>
@@ -883,13 +886,15 @@
     <script src="~/js/dore.script.js"></script>
     <script src="~/js/scripts.js"></script>
     <script src="~/js/custom.js"></script>
+    <script src="~/js/vendor/ckeditor5-build-classic/ckeditor.js"></script>
+
     <script>
         jQuery(function ($) {
             url = '@ViewBag.page';
             page = '@ViewBag.pageNumber';
             pageTitle = '@ViewBag.PageTitle'
 
-            DefulatMode();        
+            DefulatMode();
 
             $(".btn-deleteList").on("click", function (event) {
                 event.preventDefault();
@@ -898,7 +903,7 @@
                     '@Utility.Resource.Message_Designer.DeleteConfirmation',
                     '@Utility.Resource.Message_Designer.DoYouWantDeleteFile',
                     '@Utility.Resource.Title_Designer.Ok');
-            });          
+            });
 
             if ('@ViewBag.message' != '') {
                 showNotification(

@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AbbreviatedNameProduct" xml:space="preserve">
+    <value>اسم مختصر للمنتج</value>
+  </data>
   <data name="AddressRange" xml:space="preserve">
     <value>العنوان عدد حرف بين 3  الى 500</value>
   </data>
@@ -131,6 +134,12 @@
   </data>
   <data name="ClassificationRequired" xml:space="preserve">
     <value>يجب ادخال التصنيف</value>
+  </data>
+  <data name="ClassificationWhichProductBelongs" xml:space="preserve">
+    <value>التصنيف الذى ينتمى الية المنتج</value>
+  </data>
+  <data name="CodeIncreasedAutomaticallyCanBechanged" xml:space="preserve">
+    <value>يتم زيادة الكود تلقائي و يمكن تغييره</value>
   </data>
   <data name="CodeRange" xml:space="preserve">
     <value>الكود عدد حرف بين 3   الى 10</value>
@@ -159,6 +168,12 @@
   <data name="EmailRequired" xml:space="preserve">
     <value>يجب ادخال الايميل</value>
   </data>
+  <data name="IngredientsThatProductMadeOf" xml:space="preserve">
+    <value>المقادير التى يصنع منها المنتج</value>
+  </data>
+  <data name="ItConsists13Numbers" xml:space="preserve">
+    <value>يتكون من ١٣ رقم</value>
+  </data>
   <data name="NameRange" xml:space="preserve">
     <value>الاسم عدد حرف بين 3 الى 50</value>
   </data>
@@ -180,7 +195,22 @@
   <data name="PriceRequired" xml:space="preserve">
     <value>يجب ادخال السعر</value>
   </data>
+  <data name="PurchasePriceFromSuppliers" xml:space="preserve">
+    <value>سعر الشراء من الموردين</value>
+  </data>
+  <data name="PutYourNotesProduc" xml:space="preserve">
+    <value>ضع ملاحظاتك على المنتج</value>
+  </data>
   <data name="RateRequired" xml:space="preserve">
     <value>يجب ادخال معدل التحويل</value>
+  </data>
+  <data name="SellingPriceProduct" xml:space="preserve">
+    <value>سعر بيع المنتج</value>
+  </data>
+  <data name="SupplierFromWhomProductPurchased" xml:space="preserve">
+    <value>مورد الذى يتم شراء المنتج منه</value>
+  </data>
+  <data name="UnitsWhichProductMeasured" xml:space="preserve">
+    <value>الوحدات التى يقاس بها المنتج</value>
   </data>
 </root>

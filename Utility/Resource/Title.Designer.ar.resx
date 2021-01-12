@@ -156,6 +156,9 @@
   <data name="Cost" xml:space="preserve">
     <value>التكلفة</value>
   </data>
+  <data name="Default" xml:space="preserve">
+    <value>افتراضي</value>
+  </data>
   <data name="DefaultUnit" xml:space="preserve">
     <value>الوحدة الافتراضية</value>
   </data>
@@ -204,6 +207,9 @@
   <data name="Product" xml:space="preserve">
     <value>منتج</value>
   </data>
+  <data name="ProductRecipe" xml:space="preserve">
+    <value>وصفة المنتج</value>
+  </data>
   <data name="Products" xml:space="preserve">
     <value>المنتجات</value>
   </data>
@@ -240,6 +246,9 @@
   <data name="Search" xml:space="preserve">
     <value>البحث</value>
   </data>
+  <data name="SelectUnit" xml:space="preserve">
+    <value>اختار الوحدة</value>
+  </data>
   <data name="Setting" xml:space="preserve">
     <value>الاعدادات</value>
   </data>
@@ -264,8 +273,14 @@
   <data name="TotalSalesProdects" xml:space="preserve">
     <value>اجمالى البيع بالاصناف</value>
   </data>
+  <data name="Unit" xml:space="preserve">
+    <value>الوحدة</value>
+  </data>
   <data name="UnitMeasure" xml:space="preserve">
     <value>وحدة قياس</value>
+  </data>
+  <data name="Units" xml:space="preserve">
+    <value>الوحدات</value>
   </data>
   <data name="UnitsMeasure" xml:space="preserve">
     <value>وحدات القياس</value>

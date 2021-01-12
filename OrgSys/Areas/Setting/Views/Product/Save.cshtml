@@ -49,98 +49,146 @@
                     <div class="card-body">
                         <form action="Save" method="post" enctype="multipart/form-data" class="tooltip-label-right " novalidate>
                             <div class="row">
-                                <div class="col-md-12 col-sm-12 col-lg-9">
+                                <div class="col-md-12 col-sm-12 col-lg-9 pl-4 pr-4">
                                     @Html.HiddenFor(model => model.Id)
                                     @Html.HiddenFor(model => model.TypeId)
                                     @Html.HiddenFor(model => model.ParentId)
                                     @Html.HiddenFor(model => model.ImgPath)
-
-                                    <div class="form-group position-relative error-l-50">
-                                        @Html.LabelFor(model => model.ClassificationName)                                        
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><i class="simple-icon-layers"></i></span>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            @Html.LabelFor(model => model.ClassificationName)
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="simple-icon-layers"></i></span>
+                                                </div>
+                                                @Html.DropDownListFor(model => model.ClassificationId, null, " ... ", new { @class = "form-control  select2-single" })
                                             </div>
-                                            @Html.DropDownListFor(model => model.ClassificationId, null, " ... ", new { @class = "form-control" })
+                                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.ClassificationWhichProductBelongs</small>
+                                            @Html.ValidationMessageFor(model => model.ClassificationId, "", new { @class = "text-danger " })
                                         </div>
-                                        <small class="form-text text-muted"> @Utility.Resource.Message_Designer.ClassificationRequired!</small>
-                                        @Html.ValidationMessageFor(model => model.ClassificationId, "", new { @class = "text-danger " })
-                                    </div>
-
-                                    <div class="form-group position-relative error-l-50">
-                                        @Html.LabelFor(model => model.Code)
-                                        @Html.TextBoxFor(model => model.Code, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Code })
-                                        <small class="form-text text-muted"> @Utility.Resource.Message_Designer.CodeRequired!</small>
-                                        @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger " })
-                                    </div>
-
-                                    <div class="form-group position-relative error-l-50">
-                                        @Html.LabelFor(model => model.Name)
-                                        @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Name })
-                                        <small class="form-text text-muted"> @Utility.Resource.Message_Designer.NameRequired!</small>
-                                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-                                    </div>
-
-                                    <div class="form-group position-relative error-l-50">
-                                        @Html.LabelFor(model => model.Nickname)
-                                        @Html.TextBoxFor(model => model.Nickname, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Nickname })
-                                        <small class="form-text text-muted"> @Utility.Resource.Message_Designer.NicknameRequired!</small>
-                                        @Html.ValidationMessageFor(model => model.Nickname, "", new { @class = "text-danger " })
-                                    </div>
-
-                                    <div class="form-group position-relative error-l-50">
-                                        @Html.LabelFor(model => model.Barcode)
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><i class="iconsminds-qr-code"></i></span>
-                                            </div>
-                                            @Html.TextBoxFor(model => model.Barcode, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Barcode })
-                                        </div>                                        
-                                        <small class="form-text text-muted"> @Utility.Resource.Message_Designer.BarcodeRequired!</small>
-                                        @Html.ValidationMessageFor(model => model.Barcode, "", new { @class = "text-danger " })
-                                    </div>
-
-                                    <div class="form-group position-relative error-l-50">
-                                        @Html.LabelFor(model => model.Price)
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text">$</span>                                               
-                                            </div>
-                                            @Html.TextBoxFor(model => model.Price, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Price })
+                                        <div class="form-group col-md-6">
+                                            @Html.LabelFor(model => model.Code)
+                                            @Html.TextBoxFor(model => model.Code, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Code })
+                                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.CodeIncreasedAutomaticallyCanBechanged</small>
+                                            @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger " })
                                         </div>
-                                        <small class="form-text text-muted"> @Utility.Resource.Message_Designer.PriceRequired!</small>
-                                        @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger " })
                                     </div>
 
-                                    <div class="form-group position-relative error-l-50">
-                                        @Html.LabelFor(model => model.Cost)                                        
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text">$</span>
-                                            </div>
-                                            @Html.TextBoxFor(model => model.Cost, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Cost })
+
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            @Html.LabelFor(model => model.Name)
+                                            @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Name })
+                                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.NameRequired</small>
+                                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                                         </div>
-                                        <small class="form-text text-muted"> @Utility.Resource.Message_Designer.CostRequired!</small>
-                                        @Html.ValidationMessageFor(model => model.Cost, "", new { @class = "text-danger " })
+                                        <div class="form-group col-md-6">
+                                            @Html.LabelFor(model => model.Nickname)
+                                            @Html.TextBoxFor(model => model.Nickname, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Nickname })
+                                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.AbbreviatedNameProduct</small>
+                                            @Html.ValidationMessageFor(model => model.Nickname, "", new { @class = "text-danger " })
+                                        </div>
                                     </div>
-
-                                    <div class="form-group position-relative error-l-50">
-                                        @Html.LabelFor(model => model.DealerName)
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><i class="simple-icon-people"></i></span>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            @Html.LabelFor(model => model.Barcode)
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="iconsminds-qr-code"></i></span>
+                                                </div>
+                                                @Html.TextBoxFor(model => model.Barcode, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Barcode })
                                             </div>
-                                            @Html.DropDownListFor(model => model.DealerId, null, " ... ", new { @class = "form-control" })
-                                        </div>                                        
-                                        <small class="form-text text-muted"> @Utility.Resource.Message_Designer.NameRequired!</small>
-                                        @Html.ValidationMessageFor(model => model.DealerId, "", new { @class = "text-danger " })
+                                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.ItConsists13Numbers</small>
+                                            @Html.ValidationMessageFor(model => model.Barcode, "", new { @class = "text-danger " })
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            @Html.LabelFor(model => model.Price)
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">$</span>
+                                                </div>
+                                                @Html.TextBoxFor(model => model.Price, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Price })
+                                            </div>
+                                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SellingPriceProduct</small>
+                                            @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger " })
+                                        </div>
                                     </div>
-
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            @Html.LabelFor(model => model.Cost)
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">$</span>
+                                                </div>
+                                                @Html.TextBoxFor(model => model.Cost, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Cost })
+                                            </div>
+                                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.PurchasePriceFromSuppliers</small>
+                                            @Html.ValidationMessageFor(model => model.Cost, "", new { @class = "text-danger " })
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            @Html.LabelFor(model => model.DealerName)
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="simple-icon-people"></i></span>
+                                                </div>
+                                                @Html.DropDownListFor(model => model.DealerId, null, " ... ", new { @class = "form-control select2-single" })
+                                            </div>
+                                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                                            @Html.ValidationMessageFor(model => model.DealerId, "", new { @class = "text-danger " })
+                                        </div>
+                                    </div>
                                     <div class="form-group position-relative error-l-50">
                                         @Html.LabelFor(model => model.Description)
                                         @Html.TextBoxFor(model => model.Description, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Description })
-                                        <small class="form-text text-muted"> @Utility.Resource.Message_Designer.DescriptionRequired!</small>
+                                        <small class="form-text text-muted"> @Utility.Resource.Message_Designer.PutYourNotesProduc</small>
                                         @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger mt-3 m-1" })
+                                    </div>
+
+                                    <div class="form-group position-relative error-l-50 mb-4">
+                                        <div class="card">
+                                            <div id="smartWizardClickable">
+                                                <ul class="card-header">
+                                                    <li>
+                                                        <a href="#checkStep1">
+                                                            @Utility.Resource.Title_Designer.UnitsMeasure<br />
+                                                            <small>@Utility.Resource.Message_Designer.UnitsWhichProductMeasured</small>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#checkStep2">
+                                                            @Utility.Resource.Title_Designer.ProductRecipe<br />
+                                                            <small>@Utility.Resource.Message_Designer.IngredientsThatProductMadeOf</small>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+
+                                                <div class="card-body">
+                                                    <div id="checkStep1">
+                                                        <table class="table table-hover">
+                                                            <thead>
+                                                                <tr>                                                                    
+                                                                    <th scope="col">@Utility.Resource.Title_Designer.Unit</th>
+                                                                    <th scope="col">@Utility.Resource.Title_Designer.Rate</th>
+                                                                    <th scope="col" style="width:100px;text-align:center;">@Utility.Resource.Title_Designer.Default</th>
+                                                                    <th scope="col"></th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach (var ob in Model.ProductUnits)
+                                                                {
+                                                                    <tr>
+                                                                        @Html.Partial("Units", ob)
+                                                                    </tr>
+                                                                }
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div id="checkStep2">
+                                                        @Html.TextAreaFor(model => model.Recipe, new { @class = "form-control" , @rows = "5", @placeholder = @Utility.Resource.Title_Designer.ProductRecipe })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-12 col-md-12 col-lg-3 pt-4 pb-4">
@@ -165,7 +213,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary mb-0">@Utility.Resource.Title_Designer.Save</button>
+                            <div class="pl-2 pr-2">
+                                <button type="submit" class="btn btn-primary mb-0">@Utility.Resource.Title_Designer.Save</button>
+                            </div>
                         </form>
                     </div>
                 </div>

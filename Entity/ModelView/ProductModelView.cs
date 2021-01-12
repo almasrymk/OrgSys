@@ -2,6 +2,8 @@
 using Entity.Model;
 using Utility.Resource;
 using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Entity.ModelView
 {
@@ -29,10 +31,12 @@ namespace Entity.ModelView
             this.ClassificationName = ob.Classification?.Name;
             this.DealerId = ob.DealerId;
             this.DealerName = ob.Dealer?.Name;
+            this.Recipe = ob.Recipe;
             this.Status = ob.Status;
             this.ParentId = ob.ParentId;
             this.TypeId = ob.TypeId;
             this.ImgPath = ob.ImgPath;
+            this.ProductUnits = ob.ProductUnits.Select(e => new ProductUnitModelView(e)).ToList();
         }
 
         public Product Model
@@ -54,9 +58,11 @@ namespace Entity.ModelView
                     DealerId = this.DealerId,
                     Status = this.Status,
                     MaskText = this.MaskText,
+                    Recipe = this.Recipe,
                     ParentId = this.ParentId,
                     TypeId = this.TypeId,
-                    ImgPath = this.ImgPath
+                    ImgPath = this.ImgPath,
+                    ProductUnits = this.ProductUnits.Select(e => e.Model).ToList()
                 };
             }
         }
@@ -104,5 +110,10 @@ namespace Entity.ModelView
 
         [Display(Name = nameof(Title_Designer.Supplier), ResourceType = typeof(Title_Designer))]
         public string DealerName { get; set; }
+
+        [Display(Name = nameof(Title_Designer.ProductRecipe), ResourceType = typeof(Title_Designer))]
+        public string Recipe { get; set; }
+
+        public List<ProductUnitModelView> ProductUnits { get; set; }
     }
 }

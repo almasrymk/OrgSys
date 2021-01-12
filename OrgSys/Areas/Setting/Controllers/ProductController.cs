@@ -18,6 +18,15 @@ namespace OrgSys.Areas.Setting.Controllers
         {
             ViewBag.ClassificationId = new SelectList(new ClassificationService().GetAll(model.ParentId , model.TypeId), "Id", "Name" , model.ClassificationId);
             ViewBag.DealerId = new SelectList(new DealerService().GetAll(model.ParentId, (int)DealerType.Supplier), "Id", "Name", model.DealerId);
+            ViewBag.UnitId = new SelectList(new UnitService().GetAll(model.ParentId, (int)DealerType.Supplier), "Id", "Name");
+        }
+
+        public override ProductModelView InitializeData(ProductModelView ob)
+        {
+            if (ob.ProductUnits == null)
+                 ob.ProductUnits = new List<ProductUnitModelView>();
+            ob.ProductUnits = new List<ProductUnitModelView> { new ProductUnitModelView { Id = -1 } };
+            return ob;
         }
     }
 }

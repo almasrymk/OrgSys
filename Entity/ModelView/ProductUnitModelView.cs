@@ -2,6 +2,7 @@
 using Entity.Model;
 using Utility.Resource;
 using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 
 namespace Entity.ModelView
 {
@@ -26,7 +27,7 @@ namespace Entity.ModelView
             this.Status = ob.Status;
             this.ParentId = ob.ParentId;
             this.TypeId = ob.TypeId;
-            this.ImgPath = ob.ImgPath;
+            this.ImgPath = ob.ImgPath;            
         }
 
         public ProductUnit Model
@@ -66,6 +67,6 @@ namespace Entity.ModelView
         public decimal Rate { get; set; }
 
         [Display(Name = nameof(Title_Designer.DefaultUnit), ResourceType = typeof(Title_Designer))]
-        public bool DefaultUnit { get; set; }
+        public bool DefaultUnit { get; set; }    
     }
 }

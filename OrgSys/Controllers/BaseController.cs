@@ -42,6 +42,7 @@ namespace OrgSys.Controllers
                 ob.ParentId = ParentId;
                 ob.TypeId = TypeId;
             }
+            ob = InitializeData(ob);
             LoadViewBag(ob);
             return View(ob);
         }
@@ -120,6 +121,11 @@ namespace OrgSys.Controllers
         public virtual void LoadViewBagIndex()
         {
 
+        }
+
+        public virtual entity InitializeData(entity ob)
+        {
+            return ob;
         }
 
         public virtual string SaveFile(string LastPath)

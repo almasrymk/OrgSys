@@ -156,6 +156,9 @@
   <data name="Cost" xml:space="preserve">
     <value>Cost</value>
   </data>
+  <data name="Default" xml:space="preserve">
+    <value>Default</value>
+  </data>
   <data name="DefaultUnit" xml:space="preserve">
     <value>Default Unit</value>
   </data>
@@ -204,6 +207,9 @@
   <data name="Product" xml:space="preserve">
     <value>Product</value>
   </data>
+  <data name="ProductRecipe" xml:space="preserve">
+    <value>Product recipe</value>
+  </data>
   <data name="Products" xml:space="preserve">
     <value>Products</value>
   </data>
@@ -240,6 +246,9 @@
   <data name="Search" xml:space="preserve">
     <value>Search</value>
   </data>
+  <data name="SelectUnit" xml:space="preserve">
+    <value>Select Unit</value>
+  </data>
   <data name="Setting" xml:space="preserve">
     <value>Setting</value>
   </data>
@@ -264,8 +273,14 @@
   <data name="TotalSalesProdects" xml:space="preserve">
     <value>Total sales of prodects</value>
   </data>
+  <data name="Unit" xml:space="preserve">
+    <value>Unit</value>
+  </data>
   <data name="UnitMeasure" xml:space="preserve">
     <value>Unit Measure</value>
+  </data>
+  <data name="Units" xml:space="preserve">
+    <value>Units</value>
   </data>
   <data name="UnitsMeasure" xml:space="preserve">
     <value>Units Measure</value>

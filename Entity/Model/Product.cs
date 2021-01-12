@@ -10,6 +10,11 @@ namespace Entity.Model
     [Table("Product")]
     public class Product : BaseModel
     {
+        public Product()
+        {
+            ProductUnits = new HashSet<ProductUnit>();
+        }
+
         public long CodeNumber { get; set; }
 
         [Required]
@@ -29,9 +34,9 @@ namespace Entity.Model
 
         [StringLength(500, MinimumLength = 5)]
         public string Description { get; set; }
-        
+
         public decimal Price { get; set; }
-        
+
         public decimal Cost { get; set; }
 
         [Required]
@@ -42,5 +47,8 @@ namespace Entity.Model
         public long? DealerId { get; set; }
 
         public virtual Dealer Dealer { get; set; }
+
+        public string Recipe { get; set; }
+        public ICollection<ProductUnit> ProductUnits { get; set; }
     }
 }

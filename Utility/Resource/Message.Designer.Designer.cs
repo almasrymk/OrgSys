@@ -61,6 +61,15 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to An abbreviated name of the product.
+        /// </summary>
+        public static string AbbreviatedNameProduct {
+            get {
+                return ResourceManager.GetString("AbbreviatedNameProduct", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The address is a letter number between 3 to 500.
         /// </summary>
         public static string AddressRange {
@@ -102,6 +111,24 @@ namespace Utility.Resource {
         public static string ClassificationRequired {
             get {
                 return ResourceManager.GetString("ClassificationRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The classification to which the product belongs.
+        /// </summary>
+        public static string ClassificationWhichProductBelongs {
+            get {
+                return ResourceManager.GetString("ClassificationWhichProductBelongs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The code is increased automatically and can be changed.
+        /// </summary>
+        public static string CodeIncreasedAutomaticallyCanBechanged {
+            get {
+                return ResourceManager.GetString("CodeIncreasedAutomaticallyCanBechanged", resourceCulture);
             }
         }
         
@@ -187,6 +214,24 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The ingredients that the product is made of.
+        /// </summary>
+        public static string IngredientsThatProductMadeOf {
+            get {
+                return ResourceManager.GetString("IngredientsThatProductMadeOf", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to It consists of 13 numbers.
+        /// </summary>
+        public static string ItConsists13Numbers {
+            get {
+                return ResourceManager.GetString("ItConsists13Numbers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The name is a letter number between 3 to 50.
         /// </summary>
         public static string NameRange {
@@ -250,11 +295,56 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Purchase price from suppliers.
+        /// </summary>
+        public static string PurchasePriceFromSuppliers {
+            get {
+                return ResourceManager.GetString("PurchasePriceFromSuppliers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Put your notes on the produc.
+        /// </summary>
+        public static string PutYourNotesProduc {
+            get {
+                return ResourceManager.GetString("PutYourNotesProduc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rate Required.
         /// </summary>
         public static string RateRequired {
             get {
                 return ResourceManager.GetString("RateRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The selling price of the product.
+        /// </summary>
+        public static string SellingPriceProduct {
+            get {
+                return ResourceManager.GetString("SellingPriceProduct", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A supplier from whom the product is purchased.
+        /// </summary>
+        public static string SupplierFromWhomProductPurchased {
+            get {
+                return ResourceManager.GetString("SupplierFromWhomProductPurchased", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Units by which the product is measured.
+        /// </summary>
+        public static string UnitsWhichProductMeasured {
+            get {
+                return ResourceManager.GetString("UnitsWhichProductMeasured", resourceCulture);
             }
         }
     }
