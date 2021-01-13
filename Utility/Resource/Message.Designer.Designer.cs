@@ -214,6 +214,15 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter the rate please.
+        /// </summary>
+        public static string EnterRate {
+            get {
+                return ResourceManager.GetString("EnterRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The ingredients that the product is made of.
         /// </summary>
         public static string IngredientsThatProductMadeOf {
@@ -322,6 +331,15 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select unit please.
+        /// </summary>
+        public static string SelectUnit {
+            get {
+                return ResourceManager.GetString("SelectUnit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The selling price of the product.
         /// </summary>
         public static string SellingPriceProduct {
@@ -336,6 +354,15 @@ namespace Utility.Resource {
         public static string SupplierFromWhomProductPurchased {
             get {
                 return ResourceManager.GetString("SupplierFromWhomProductPurchased", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This unit has already been selected.
+        /// </summary>
+        public static string ThisUnitWasSelected {
+            get {
+                return ResourceManager.GetString("ThisUnitWasSelected", resourceCulture);
             }
         }
         

@@ -168,6 +168,9 @@
   <data name="EmailRequired" xml:space="preserve">
     <value>يجب ادخال الايميل</value>
   </data>
+  <data name="EnterRate" xml:space="preserve">
+    <value>ادخال المعدل من فضلك</value>
+  </data>
   <data name="IngredientsThatProductMadeOf" xml:space="preserve">
     <value>المقادير التى يصنع منها المنتج</value>
   </data>
@@ -204,11 +207,17 @@
   <data name="RateRequired" xml:space="preserve">
     <value>يجب ادخال معدل التحويل</value>
   </data>
+  <data name="SelectUnit" xml:space="preserve">
+    <value>اختار وحدة من فضلك</value>
+  </data>
   <data name="SellingPriceProduct" xml:space="preserve">
     <value>سعر بيع المنتج</value>
   </data>
   <data name="SupplierFromWhomProductPurchased" xml:space="preserve">
     <value>مورد الذى يتم شراء المنتج منه</value>
+  </data>
+  <data name="ThisUnitWasSelected" xml:space="preserve">
+    <value>هذة الوحدة بالفعل تم اختيارها</value>
   </data>
   <data name="UnitsWhichProductMeasured" xml:space="preserve">
     <value>الوحدات التى يقاس بها المنتج</value>

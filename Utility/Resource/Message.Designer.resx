@@ -168,6 +168,9 @@
   <data name="EmailRequired" xml:space="preserve">
     <value>Email Required</value>
   </data>
+  <data name="EnterRate" xml:space="preserve">
+    <value>Enter the rate please</value>
+  </data>
   <data name="IngredientsThatProductMadeOf" xml:space="preserve">
     <value>The ingredients that the product is made of</value>
   </data>
@@ -204,11 +207,17 @@
   <data name="RateRequired" xml:space="preserve">
     <value>Rate Required</value>
   </data>
+  <data name="SelectUnit" xml:space="preserve">
+    <value>Select unit please</value>
+  </data>
   <data name="SellingPriceProduct" xml:space="preserve">
     <value>The selling price of the product</value>
   </data>
   <data name="SupplierFromWhomProductPurchased" xml:space="preserve">
     <value>A supplier from whom the product is purchased</value>
+  </data>
+  <data name="ThisUnitWasSelected" xml:space="preserve">
+    <value>This unit has already been selected</value>
   </data>
   <data name="UnitsWhichProductMeasured" xml:space="preserve">
     <value>Units by which the product is measured</value>

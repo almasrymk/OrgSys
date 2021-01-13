@@ -189,6 +189,9 @@
   <data name="New" xml:space="preserve">
     <value>جديد</value>
   </data>
+  <data name="Next" xml:space="preserve">
+    <value>القادم</value>
+  </data>
   <data name="Nickname" xml:space="preserve">
     <value>الاسم المستعار</value>
   </data>
@@ -197,6 +200,9 @@
   </data>
   <data name="Phone" xml:space="preserve">
     <value>التليفون</value>
+  </data>
+  <data name="Previous" xml:space="preserve">
+    <value>السابق</value>
   </data>
   <data name="Price" xml:space="preserve">
     <value>السعر</value>

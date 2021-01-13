@@ -4,7 +4,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
 <div id="HPage" class="container-fluid">
     <div class="row">
         <div class="col-12">
@@ -164,9 +163,9 @@
 
                                                 <div class="card-body">
                                                     <div id="checkStep1">
-                                                        <table class="table table-hover">
+                                                        <table id="tblUnit" class="table table-hover">
                                                             <thead>
-                                                                <tr>                                                                    
+                                                                <tr>
                                                                     <th scope="col">@Utility.Resource.Title_Designer.Unit</th>
                                                                     <th scope="col">@Utility.Resource.Title_Designer.Rate</th>
                                                                     <th scope="col" style="width:100px;text-align:center;">@Utility.Resource.Title_Designer.Default</th>
@@ -177,14 +176,75 @@
                                                                 @foreach (var ob in Model.ProductUnits)
                                                                 {
                                                                     <tr>
-                                                                        @Html.Partial("Units", ob)
+                                                                        <td>
+                                                                            <input type="hidden" id="RowId" value="@Model.Id" />
+                                                                            <div id="divUnitId" class="input-group">
+                                                                                <div class="input-group-prepend">
+                                                                                    <span class="input-group-text"><i class="simple-icon-pie-chart"></i></span>
+                                                                                </div>
+                                                                                @Html.DropDownListFor(model => ob.UnitId, (SelectList)ViewBag.UnitList, " - " + Utility.Resource.Title_Designer.SelectUnit + " - ", new { @class = "form-control select2-single", @onchange = "AddNewRowUnit($(this).parent().parent())" })
+                                                                            </div>
+                                                                        </td>
+                                                                        <td style="width:150px;">
+                                                                            @Html.EditorFor(modelItem => ob.Rate, new { htmlAttributes = new { @class = "form-control", @type = "text", @onkeyup = "AddNewRowUnit($(this).parent().parent())" } })
+                                                                        </td>
+                                                                        <td style="width:100px;text-align:center;vertical-align:middle;">
+                                                                            @if (ob.DefaultUnit)
+                                                                            {
+                                                                                <div id="DefaultUnit" class="custom-switch custom-switch-primary-inverse custom-switch-small" style="display:none">
+                                                                                    <input onchange="CheckDefaultUnit($(this).parent().parent().parent())" class="custom-switch-input" id="chkUnit_@ob.UnitId" type="checkbox" checked>
+                                                                                    <label class="custom-switch-btn" for="chkUnit_@ob.UnitId"></label>
+                                                                                </div>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <div id="DefaultUnit" class="custom-switch custom-switch-primary-inverse custom-switch-small" style="display:none">
+                                                                                    <input onchange="CheckDefaultUnit($(this).parent().parent().parent())" class="custom-switch-input" id="chkUnit_@ob.UnitId" type="checkbox">
+                                                                                    <label class="custom-switch-btn" for="chkUnit_@ob.UnitId"></label>
+                                                                                </div>
+                                                                            }
+                                                                        </td>
+                                                                        <td style="width:100px;vertical-align:middle;">
+                                                                            @if (ob != null && ob.Id >= 0)
+                                                                            {
+                                                                                <a id="btDelete" href="javascript:;" class="btn btn-danger" onclick="RemoveRowUnit($(this).parent().parent())">  <i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete  </a>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <a id="btDelete" href="javascript:;" class="btn btn-danger" onclick="RemoveRowUnit($(this).parent().parent())" style="display:none">  <i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete </a>
+                                                                            }
+                                                                        </td>
                                                                     </tr>
                                                                 }
+
+                                                                <tr class="trNew">
+                                                                    <td>
+                                                                        <input type="hidden" id="RowId" value="-1" />
+                                                                        <div id="divUnitId" class="input-group">
+                                                                            <div class="input-group-prepend">
+                                                                                <span class="input-group-text"><i class="simple-icon-pie-chart"></i></span>
+                                                                            </div>
+                                                                            @Html.DropDownList("UnitId", (SelectList)ViewBag.UnitList, " - " + Utility.Resource.Title_Designer.SelectUnit + " - ", new { @id = "UnitId", @name = "UnitId", @class = "form-control", @onchange = "AddNewRowUnit($(this).parent().parent())" })
+                                                                        </div>
+                                                                    </td>
+                                                                    <td style="width:150px;">
+                                                                        @Html.Editor("Rate", new { htmlAttributes = new { @id = "Rate", @name = "Rate", placeholder = "0.0", @class = "form-control", @type = "text", @onkeyup = "AddNewRowUnit($(this).parent().parent())" } })
+                                                                    </td>
+                                                                    <td style="width:100px;text-align:center;vertical-align:middle;">
+                                                                        <div id="DefaultUnit" class="custom-switch custom-switch-primary-inverse custom-switch-small" style="display:none">
+                                                                            <input onchange="CheckDefaultUnit($(this).parent().parent().parent())" class="custom-switch-input" id="chkUnit" type="checkbox">
+                                                                            <label class="custom-switch-btn" for="chkUnit"></label>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td style="width:100px;vertical-align:middle;">
+                                                                        <a id="btDelete" href="javascript:;" onclick="RemoveRowUnit($(this).parent().parent())" style="display:none">  <i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete </a>
+                                                                    </td>
+                                                                </tr>
                                                             </tbody>
                                                         </table>
                                                     </div>
                                                     <div id="checkStep2">
-                                                        @Html.TextAreaFor(model => model.Recipe, new { @class = "form-control" , @rows = "5", @placeholder = @Utility.Resource.Title_Designer.ProductRecipe })
+                                                        @Html.TextAreaFor(model => model.Recipe, new { @class = "form-control", @rows = "5", @placeholder = @Utility.Resource.Title_Designer.ProductRecipe })
                                                     </div>
                                                 </div>
                                             </div>
@@ -224,15 +284,100 @@
     </div>
 </div>
 
+<script src="~/js/vendor/jquery-3.3.1.min.js"></script>
 <script>
+
+    setTimeout(() => {
+        $(".sw-btn-prev").empty();
+        $(".sw-btn-prev").append('@Utility.Resource.Title_Designer.Previous');
+        $(".sw-btn-next").empty();
+        $(".sw-btn-next").append('@Utility.Resource.Title_Designer.Next');
+    }, 600);
+
     function SelectImage(input) {
-        //$("#data_PhotoPath").val("sdf");
         if (input.files && input.files[0]) {
             var reader = new FileReader();
             reader.onload = function (e) {
                 $("#img").attr("src", e.target.result);
             }
             reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function AddNewRowUnit(data) {
+        $(data).find("#errorUnitId").remove();
+        $(data).find("#errorRate").remove();
+        var valied = validUnit(data);
+        if ($(data).find("#RowId").val() < 0 && valied == true) {
+            var Current = $('.trNew');
+            var NewRow = Current.clone();
+            NewRow.find("#Rate").val("");
+            $("#tblUnit").find('tbody').append(NewRow);
+            Current.removeClass("trNew");
+            Current.find("#RowId").val(0);
+            Current.find("#Rate").focus();
+            Current.find("#DefaultUnit").css("display", "block");
+            Current.find("#btDelete").css("display", "block");
+            var defaultUnit = Current.find("#chkUnit");
+            defaultUnit.attr("id", "chkUnit_" + Current.find("#UnitId").val());
+            defaultUnit.next().attr("for", "chkUnit_" + Current.find("#UnitId").val());
+            if ($("#tblUnit").find("input:checked").length == 0)
+                defaultUnit.prop("checked", true);
+        }
+    }
+
+    function validUnit(data) {
+        var countRepeated = 0;
+        var valid = true;
+        var NewRow = $('.trNew');
+        $('#tblUnit > tbody > tr').each(function () {
+            var currentRow = $(this);
+            if (!currentRow.hasClass('trNew')) {
+                currentRow.find("td:eq(0) #errorUnitId").remove();
+                if (!(currentRow.find("td:eq(0) #UnitId").val() > 0)) {
+                    currentRow.find("td:eq(0) #UnitId").focus();
+                    currentRow.find("td:eq(0) #divUnitId").after('<span id="errorUnitId" class="error" style="color:red">@Utility.Resource.Message_Designer.SelectUnit</span>');
+                    NewRow.find("#UnitId").val("");
+                    NewRow.find("#Rate").val("");
+                    valid = false;
+                }
+                currentRow.find("td:eq(1) #errorRate").remove();
+                if (parseFloat("0" + currentRow.find("td:eq(1) #Rate").val()) == 0) {
+                    currentRow.find("td:eq(1) #Rate").focus()
+                    currentRow.find("td:eq(1) #Rate").after('<span id="errorRate" class="error" style="color:red">@Utility.Resource.Message_Designer.EnterRate</span>');
+                    NewRow.find("#UnitId").val("");
+                    NewRow.find("#Rate").val("");
+                    valid = false;
+                }
+            }
+            if (currentRow.find("td:eq(0) #UnitId").val() > 0 && currentRow.find("td:eq(0) #UnitId").val() == $(data).find("#UnitId").val()) {
+                countRepeated++;
+                if (countRepeated == 2) {
+                    $(data).find("#divUnitId").after('<span id="errorUnitId" class="error" style="color:red">@Utility.Resource.Message_Designer.ThisUnitWasSelected</span>');
+                    valid = false;
+                }
+            }
+        });
+        return valid;
+    }
+
+    function RemoveRowUnit(data) {
+        $(data).remove();
+    }
+
+    function CheckDefaultUnit(data) {
+        if (!$(data).find("#chkUnit_" + $(data).find("#UnitId").val()).is(':checked')) {
+            $(data).find("#chkUnit_" + $(data).find("#UnitId").val()).prop("checked", true);
+        }
+        else {
+            $('#tblUnit > tbody > tr').each(function () {
+                var currentRow = $(this);
+                if (!currentRow.hasClass('trNew')) {
+                    if (currentRow.find("td:eq(0) #UnitId").val() != $(data).find("#UnitId").val()) {
+                        currentRow.find("td:eq(2) #chkUnit_" + currentRow.find("td:eq(0) #UnitId").val()).prop("checked", false);
+                    }
+                }
+            });
         }
     }
 </script>
