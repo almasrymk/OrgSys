@@ -26,7 +26,7 @@ namespace Entity.ModelView
             this.Barcode = ob.Barcode;
             this.Description = ob.Description;
             this.Price = ob.Price;
-            this.Code = ob.Code;
+            this.Cost = ob.Cost;
             this.ClassificationId = ob.ClassificationId;
             this.ClassificationName = ob.Classification?.Name;
             this.DealerId = ob.DealerId;
@@ -62,7 +62,7 @@ namespace Entity.ModelView
                     ParentId = this.ParentId,
                     TypeId = this.TypeId,
                     ImgPath = this.ImgPath,
-                    ProductUnits = this.ProductUnits.Select(e => e.Model).ToList()
+                    ProductUnits = null
                 };
             }
         }
@@ -89,7 +89,7 @@ namespace Entity.ModelView
         public string Barcode { get; set; }
 
         [Display(Name = nameof(Title_Designer.Description), ResourceType = typeof(Title_Designer))]
-        [StringLength(500, MinimumLength = 5, ErrorMessageResourceName = nameof(Message_Designer.DescriptionRequired), ErrorMessageResourceType = typeof(Message_Designer))]
+        [StringLength(500, MinimumLength = 5, ErrorMessageResourceName = nameof(Message_Designer.DescriptionRange), ErrorMessageResourceType = typeof(Message_Designer))]
         public string Description { get; set; }
 
         [Display(Name = nameof(Title_Designer.Price), ResourceType = typeof(Title_Designer))]

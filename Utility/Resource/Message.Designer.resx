@@ -132,6 +132,9 @@
   <data name="BarcodeRequired" xml:space="preserve">
     <value>Barcode Required</value>
   </data>
+  <data name="BranchRequired" xml:space="preserve">
+    <value>Branch Required</value>
+  </data>
   <data name="ClassificationRequired" xml:space="preserve">
     <value>Classification Required</value>
   </data>
@@ -152,6 +155,9 @@
   </data>
   <data name="DeleteConfirmation" xml:space="preserve">
     <value>Delete confirmation</value>
+  </data>
+  <data name="DescriptionRange" xml:space="preserve">
+    <value>The descriptionis a letter number between 5 to 500</value>
   </data>
   <data name="DescriptionRequired" xml:space="preserve">
     <value>Description Required</value>
@@ -218,6 +224,9 @@
   </data>
   <data name="ThisUnitWasSelected" xml:space="preserve">
     <value>This unit has already been selected</value>
+  </data>
+  <data name="UnitRequired" xml:space="preserve">
+    <value>Unit Required</value>
   </data>
   <data name="UnitsWhichProductMeasured" xml:space="preserve">
     <value>Units by which the product is measured</value>

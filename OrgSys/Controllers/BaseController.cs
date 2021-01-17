@@ -54,9 +54,13 @@ namespace OrgSys.Controllers
             {
                 model.ImgPath = SaveFile(model.ImgPath);
                 model = service.Save(model);
+                if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+                    return Json(data: new { status = "success" , id = model.Id , url = "/" + AreaName + "/" + ControllerName + "?ParentId=" + model.ParentId + "&TypeId=" + model.TypeId + "&status=" + ResultStatus.success + "&MsgError=Success" });
                 return Redirect("/" + AreaName + "/" + ControllerName + "?ParentId=" + model.ParentId + "&TypeId=" + model.TypeId + "&status=" + ResultStatus.success + "&MsgError=Success");
             }
             LoadViewBag(model);
+            if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+                return Json("Error");
             return View(model);
         }
 
@@ -128,11 +132,58 @@ namespace OrgSys.Controllers
             return ob;
         }
 
+        [HttpPost]
+        public virtual JsonResult SaveFile(int id)
+        {
+            try
+            {
+                var ob = service.Get(id);
+                if (ob == null || ob.Id == 0)
+                    return Json("error");
+                var LastPath = ob.ImgPath;
+                string NewPath = null;
+                string path = Path.GetFullPath("~/wwwroot").Replace("~\\", "");
+                string oldPath = Path.GetFullPath("~/wwwroot" + LastPath).Replace("~\\", "").Replace(@"\\", @"\");
+                if ("" + LastPath != "" && System.IO.File.Exists(oldPath))
+                    System.IO.File.Delete(oldPath);
+
+                foreach (var formFile in Request.Form.Files)
+                {
+                    if (formFile.Length > 0)
+                    {
+                        if ("" + formFile.FileName != "")
+                        {
+                            NewPath = "/Files/" + ControllerContext.ActionDescriptor.ControllerName + string.Format("{0:000000000}", new Random().Next(999999999)) + Path.GetExtension(formFile.FileName);
+                            using (var inputStream = new FileStream(path + NewPath, FileMode.Create))
+                            {
+                                // read file to stream
+                                formFile.CopyTo(inputStream);
+                                // stream to byte array
+                                byte[] array = new byte[inputStream.Length];
+                                inputStream.Seek(0, SeekOrigin.Begin);
+                                inputStream.Read(array, 0, array.Length);
+                                // get file name
+                                string fName = formFile.FileName;
+                            }
+                        }
+                    }
+                }
+
+                ob.ImgPath = NewPath;
+                service.Save(ob);
+                return Json("Ok");
+            }
+            catch (Exception ex)
+            {
+                return Json(ex.Message);
+            }
+        }
+
         public virtual string SaveFile(string LastPath)
         {
             string NewPath = null;
             string path = Path.GetFullPath("~/wwwroot").Replace("~\\", "");
-            string oldPath = Path.GetFullPath("~/wwwroot" + LastPath).Replace("~\\", "").Replace(@"\\" , @"\");
+            string oldPath = Path.GetFullPath("~/wwwroot" + LastPath).Replace("~\\", "").Replace(@"\\", @"\");
             if ("" + LastPath != "" && System.IO.File.Exists(oldPath))
                 System.IO.File.Delete(oldPath);
 
@@ -142,7 +193,7 @@ namespace OrgSys.Controllers
                 {
                     if ("" + formFile.FileName != "")
                     {
-                        NewPath = "/Files/" + ControllerContext.ActionDescriptor.ControllerName + string.Format("{0:000000000}", new Random().Next(999999999)) +  Path.GetExtension(formFile.FileName);
+                        NewPath = "/Files/" + ControllerContext.ActionDescriptor.ControllerName + string.Format("{0:000000000}", new Random().Next(999999999)) + Path.GetExtension(formFile.FileName);
                         using (var inputStream = new FileStream(path + NewPath, FileMode.Create))
                         {
                             // read file to stream
@@ -176,7 +227,7 @@ namespace OrgSys.Controllers
                 if ("" + LastPath != "" && System.IO.File.Exists(oldPath))
                     System.IO.File.Delete(oldPath);
             }
-           
+
             return true;
         }
     }

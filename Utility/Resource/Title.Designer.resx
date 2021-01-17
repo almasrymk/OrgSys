@@ -138,6 +138,12 @@
   <data name="BeSold" xml:space="preserve">
     <value>Be Sold</value>
   </data>
+  <data name="Branch" xml:space="preserve">
+    <value>Branch</value>
+  </data>
+  <data name="Branchs" xml:space="preserve">
+    <value>Branchs</value>
+  </data>
   <data name="Classification" xml:space="preserve">
     <value>Classification</value>
   </data>
@@ -219,6 +225,12 @@
   <data name="Products" xml:space="preserve">
     <value>Products</value>
   </data>
+  <data name="Purchase" xml:space="preserve">
+    <value>Purchase</value>
+  </data>
+  <data name="Purchases" xml:space="preserve">
+    <value>Purchases</value>
+  </data>
   <data name="Rate" xml:space="preserve">
     <value>Rate</value>
   </data>
@@ -264,6 +276,12 @@
   <data name="Shifts" xml:space="preserve">
     <value>Shifts</value>
   </data>
+  <data name="Store" xml:space="preserve">
+    <value>Store</value>
+  </data>
+  <data name="Stores" xml:space="preserve">
+    <value>Stores</value>
+  </data>
   <data name="Supplier" xml:space="preserve">
     <value>Supplier</value>
   </data>
@@ -296,5 +314,11 @@
   </data>
   <data name="Users" xml:space="preserve">
     <value>Users</value>
+  </data>
+  <data name="Warehouse" xml:space="preserve">
+    <value>Warehouse</value>
+  </data>
+  <data name="Warehouses" xml:space="preserve">
+    <value>Warehouses</value>
   </data>
 </root>

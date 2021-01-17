@@ -71,5 +71,57 @@ namespace Repository
                 return _productUnitRepo;
             }
         }
+
+        private BranchRepo _branchRepo;
+        public BranchRepo branchRepo
+        {
+            get
+            {
+
+                if (this._branchRepo == null)
+                    this._branchRepo = new BranchRepo();
+
+                return _branchRepo;
+            }
+        }
+
+        private StoreRepo _storeRepo;
+        public StoreRepo storeRepo
+        {
+            get
+            {
+
+                if (this._storeRepo == null)
+                    this._storeRepo = new StoreRepo();
+
+                return _storeRepo;
+            }
+        }
+
+        private RolechRepo _roleRepo;
+        public RolechRepo roleRepo
+        {
+            get
+            {
+
+                if (this._roleRepo == null)
+                    this._roleRepo = new RolechRepo();
+
+                return _roleRepo;
+            }
+        }
+
+        private ShiftRepo _shiftRepo;
+        public ShiftRepo shiftRepo
+        {
+            get
+            {
+
+                if (this._shiftRepo == null)
+                    this._shiftRepo = new ShiftRepo();
+
+                return _shiftRepo;
+            }
+        }
     }
 }

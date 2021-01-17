@@ -106,6 +106,15 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Branch Required.
+        /// </summary>
+        public static string BranchRequired {
+            get {
+                return ResourceManager.GetString("BranchRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Classification Required.
         /// </summary>
         public static string ClassificationRequired {
@@ -165,6 +174,15 @@ namespace Utility.Resource {
         public static string DeleteConfirmation {
             get {
                 return ResourceManager.GetString("DeleteConfirmation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The descriptionis a letter number between 5 to 500.
+        /// </summary>
+        public static string DescriptionRange {
+            get {
+                return ResourceManager.GetString("DescriptionRange", resourceCulture);
             }
         }
         
@@ -363,6 +381,15 @@ namespace Utility.Resource {
         public static string ThisUnitWasSelected {
             get {
                 return ResourceManager.GetString("ThisUnitWasSelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unit Required.
+        /// </summary>
+        public static string UnitRequired {
+            get {
+                return ResourceManager.GetString("UnitRequired", resourceCulture);
             }
         }
         

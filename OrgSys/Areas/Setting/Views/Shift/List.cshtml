@@ -1,0 +1,149 @@
+﻿@model X.PagedList.IPagedList<Entity.ModelView.ShiftModelView>
+@{
+    Layout = null;
+}
+
+@if (Model != null && Model.Count > 0)
+{
+    <div id="tbList" class="card" style="display:none;">
+        <div class="card-body">
+            <table class="table table-bordered responsive nowrap mt-3" data-order="[[ 1, &quot;desc&quot; ]]">
+                <thead>
+                    <tr>
+                        <th style="text-align: center">#</th>
+                        <th style="text-align: center">Image</th>
+                        <th>@Utility.Resource.Title_Designer.Name</th>
+                        <th colspan="3"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0, x = ((Model.PageNumber - 1) * Model.PageSize) + 1; i < Model.Count; i++, x++)
+                    {
+                        <tr>
+                            <td style="width:50px;vertical-align: middle;text-align:center">
+                                <p class="list-item-heading">@x</p>
+                            </td>
+                            <td style="width:80px;padding:7px; vertical-align: middle;">
+                                @if ("" + Model[i].ImgPath != "")
+                                {
+                                    <img alt="Thumbnail" src="@Model[i].ImgPath"
+                                         class="list-thumbnail responsive border-0 rounded-circle badge-theme-1 m-0" style="height:60px;width:60px;" />
+                                }
+                                else
+                                {
+                                    <img alt="Thumbnail" src="~/img/profiles/ShiftCard.png"
+                                         class="list-thumbnail responsive border-0 rounded-circle badge-theme-1 m-0" style="height:60px;width:60px;" />
+                                }
+                            </td>
+                            <td>
+                                <p class="text-muted">@Model[i].Name</p>
+                            </td>
+                            <td style="width:70px;vertical-align: middle;">
+                                <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit"></i> @Utility.Resource.Title_Designer.Edit</a>
+                            </td>
+                            <td style="width:80px;vertical-align: middle;">
+                                <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete</a>
+                            </td>
+                            <td style="width:40px;text-align:center;vertical-align: middle;">
+                                @if (Model[i].Status == Utility.Status.All)
+                                {
+                                    <label class="custom-control custom-checkbox">
+                                        <input id="chk_@Model[i].Id" type="checkbox" class="custom-control-input chk">
+                                        <input type="hidden" value="@Model[i].Id" />
+                                        <span class="custom-control-label">&nbsp;</span>
+                                    </label>
+                                }
+                            </td>
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="rowList" style="display:none;">
+        <div class="col-12 list m-0 p-0 pt-3" data-check-all="checkAll">
+            @for (int i = 0, x = ((Model.PageNumber - 1) * Model.PageSize) + 1; i < Model.Count; i++, x++)
+            {
+                <div class="card d-flex flex-row mb-3">
+                    <div class="d-flex flex-grow-1 min-width-zero">
+                        @if ("" + Model[i].ImgPath != "")
+                        {
+                            <img alt="Thumbnail" src="@Model[i].ImgPath"
+                                 class="list-thumbnail responsive border-0 card-img-left badge-theme-1" style="height:85px;width:85px;" />
+                        }
+                        else
+                        {
+                            <img alt="Thumbnail" src="~/img/profiles/ShiftCard.png"
+                                 class="list-thumbnail responsive border-0 card-img-left badge-theme-1" style="height:85px;width:85px;" />
+                        }
+
+                        <div class="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
+                            <a class="list-item-heading mb-0 truncate w-40 w-xs-100 d-inline-block" href="Pages.Product.Detail.html">
+                                @Model[i].Name
+                            </a>
+                            <div class="w-15 w-xs-100">
+                                <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit"></i> @Utility.Resource.Title_Designer.Edit</a>
+                                <span> &nbsp; | &nbsp; </span>
+                                <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete</a>
+                            </div>
+                        </div>
+
+                        <label class="custom-control custom-checkbox mb-1 align-self-center pr-4">
+                            @if (Model[i].Status == Utility.Status.All)
+                            {
+                                <input id="chk_@Model[i].Id" type="checkbox" class="custom-control-input chk">
+                                <input type="hidden" value="@Model[i].Id" />
+                                <span class="custom-control-label">&nbsp;</span>
+                            }
+                        </label>
+
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div id="obList" class="row list disable-text-selection pt-2" data-check-all="checkAll" style="display:none;">
+        @for (int i = 0, x = ((Model.PageNumber - 1) * Model.PageSize) + 1; i < Model.Count; i++, x++)
+        {
+            <div href="#" class="card m-2 p-1">
+                <label class="custom-control custom-checkbox mr-1 ml-1">
+                    @if (Model[i].Status == Utility.Status.All)
+                    {
+                        <input id="chk_@Model[i].Id" type="checkbox" class="custom-control-input chk">
+                        <input type="hidden" value="@Model[i].Id" />
+                        <span class="custom-control-label">&nbsp;</span>
+                    }
+                </label>
+                <div class="position-absolute card-top-buttons m-0 p-2">
+                    <h3 class="card-text badge badge-pill badge-theme-1 text-small">@x</h3>
+                </div>
+                <div class="card-body text-center m-0 p-2">
+                    <div class="pb-3">
+                        @if ("" + Model[i].ImgPath != "")
+                        {
+                        <img alt="Profile" src="@Model[i].ImgPath" class="img-thumbnail border-0 rounded-circle m-0 list-thumbnail badge-theme-1" style="height:120px;width:120px;">
+                        }
+                        else
+                        {
+                    <img alt="Profile" src="~/img/profiles/ShiftCard.png" class="img-thumbnail border-0 rounded-circle m-0 list-thumbnail badge-theme-1" style="height:120px;width:120px;">
+                        }
+                    </div>
+                    <div class="lead text-center">
+                        <p style="text-align:center;font-size:large;">
+                            @Model[i].Name
+                        </p>
+                    </div>
+                    <div class="m-0 p-0">
+                        <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit"></i> @Utility.Resource.Title_Designer.Edit</a>
+                        <span> &nbsp; | &nbsp; </span>
+                        <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+@Html.Partial("PagedList", Model)

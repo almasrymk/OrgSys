@@ -246,3 +246,48 @@ function ShowConfirmMsgById(icon, title, massage, ok, Id) {
     $(".MsgBox").empty();
     $(".MsgBox").append(msg);
 }
+
+function CheckRequired(control, dvivControl , message) {
+    $("#error" + control).remove();
+    if ($("#" + control).val() == "") {
+        $("#" + dvivControl).after('<span id="error' + control + '" class="error" style="color:red">' + message + '</span>');
+        $("#" + control).focus();
+        $("#" + control).on("change", function () {
+            $("#error" + control).remove();
+        });
+        return true;
+    }
+    return false;
+}
+
+function CheckRage(control, dvivControl , min , max , message) {
+    $("#error" + control).remove();
+    if ("" + $("#" + control).val() != "") {
+        if (($("#" + control).val().length < min && min != 0) || ($("#" + control).val().length > max && max != 0)) {
+            $("#" + dvivControl).after('<span id="error' + control + '" class="error" style="color:red">' + message + '</span>');
+            $("#" + control).focus();
+            $("#" + control).on("change", function () {
+                $("#error" + control).remove();
+            });
+            return true;
+        }
+    }
+    return false;
+}
+
+function CheckRowCount(control, dvivControl, message) {
+    $("#error" + control).remove();
+    var count = 0;
+    $('#' + control +' > tbody > tr').each(function () {
+        var currentRow = $(this);
+        if (!currentRow.hasClass('trNew')) {
+            count++;
+        }
+    });
+    if (count == 0) {
+        $("#" + dvivControl).after('<span id="error' + control + '" class="error" style="color:red">' + message + '</span>');
+        $("#" + control).focus();
+        return true;
+    }
+    return false;
+}

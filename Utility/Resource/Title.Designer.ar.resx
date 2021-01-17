@@ -138,6 +138,12 @@
   <data name="BeSold" xml:space="preserve">
     <value>يتم بيعها</value>
   </data>
+  <data name="Branch" xml:space="preserve">
+    <value>الفرع</value>
+  </data>
+  <data name="Branchs" xml:space="preserve">
+    <value>الفروع</value>
+  </data>
   <data name="Classification" xml:space="preserve">
     <value>تصنيف</value>
   </data>
@@ -219,6 +225,12 @@
   <data name="Products" xml:space="preserve">
     <value>المنتجات</value>
   </data>
+  <data name="Purchase" xml:space="preserve">
+    <value>شراء</value>
+  </data>
+  <data name="Purchases" xml:space="preserve">
+    <value>المشتريات</value>
+  </data>
   <data name="Rate" xml:space="preserve">
     <value>معدل التحويل</value>
   </data>
@@ -264,6 +276,12 @@
   <data name="Shifts" xml:space="preserve">
     <value>الورديات</value>
   </data>
+  <data name="Store" xml:space="preserve">
+    <value>المخزن</value>
+  </data>
+  <data name="Stores" xml:space="preserve">
+    <value>المخازن</value>
+  </data>
   <data name="Supplier" xml:space="preserve">
     <value>المورد</value>
   </data>
@@ -296,5 +314,11 @@
   </data>
   <data name="Users" xml:space="preserve">
     <value>المستخدمين</value>
+  </data>
+  <data name="Warehouse" xml:space="preserve">
+    <value>مخزن</value>
+  </data>
+  <data name="Warehouses" xml:space="preserve">
+    <value>الخازن</value>
   </data>
 </root>

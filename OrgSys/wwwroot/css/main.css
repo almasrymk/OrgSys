@@ -44,4 +44,8 @@ body.show-spinner::after {
   }
 }
 
+.rtl .search-icon {
+    right: initial !important;
+    left: 5px !important;
+}
 

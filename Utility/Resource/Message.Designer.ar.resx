@@ -132,6 +132,9 @@
   <data name="BarcodeRequired" xml:space="preserve">
     <value>يجب ادخال الباركود</value>
   </data>
+  <data name="BranchRequired" xml:space="preserve">
+    <value>يجب ادخال الفرع</value>
+  </data>
   <data name="ClassificationRequired" xml:space="preserve">
     <value>يجب ادخال التصنيف</value>
   </data>
@@ -152,6 +155,9 @@
   </data>
   <data name="DeleteConfirmation" xml:space="preserve">
     <value>تاكيد الحذف</value>
+  </data>
+  <data name="DescriptionRange" xml:space="preserve">
+    <value>الوصف عدد حرف بين 5 الى 500</value>
   </data>
   <data name="DescriptionRequired" xml:space="preserve">
     <value>يجب ادخال الوصف</value>
@@ -218,6 +224,9 @@
   </data>
   <data name="ThisUnitWasSelected" xml:space="preserve">
     <value>هذة الوحدة بالفعل تم اختيارها</value>
+  </data>
+  <data name="UnitRequired" xml:space="preserve">
+    <value>يجب ادخال الوحدة</value>
   </data>
   <data name="UnitsWhichProductMeasured" xml:space="preserve">
     <value>الوحدات التى يقاس بها المنتج</value>

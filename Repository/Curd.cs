@@ -125,6 +125,16 @@ namespace Repository
             return true;
         }
 
+        public virtual bool ShiftDelete(long Id)
+        {
+            var ob = db.Set<entity>().Find(Id);
+            if (ob == null || ob.Id == 0)
+                return false;
+            db.Set<entity>().Remove(ob);
+            db.SaveChanges();
+            return true;
+        }
+
         /// <summary>
         /// Delete object from database
         /// </summary>
@@ -139,6 +149,15 @@ namespace Repository
                 ob.Status = Status.Deleted;
                 db.Entry<entity>(db.Set<entity>().Find(ob.Id)).CurrentValues.SetValues(ob);
             }
+            db.SaveChanges();
+            return true;
+        }
+
+        public virtual bool ShiftDelete(List<long> Ids)
+        {
+            var obs = db.Set<entity>().Where(e => Ids.Contains(e.Id)).ToList();
+            if   (obs!= null && obs.Count > 0)
+                db.Set<entity>().RemoveRange(obs);
             db.SaveChanges();
             return true;
         }

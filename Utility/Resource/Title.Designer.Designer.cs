@@ -124,6 +124,24 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Branch.
+        /// </summary>
+        public static string Branch {
+            get {
+                return ResourceManager.GetString("Branch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Branchs.
+        /// </summary>
+        public static string Branchs {
+            get {
+                return ResourceManager.GetString("Branchs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Classification.
         /// </summary>
         public static string Classification {
@@ -367,6 +385,24 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Purchase.
+        /// </summary>
+        public static string Purchase {
+            get {
+                return ResourceManager.GetString("Purchase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Purchases.
+        /// </summary>
+        public static string Purchases {
+            get {
+                return ResourceManager.GetString("Purchases", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rate.
         /// </summary>
         public static string Rate {
@@ -502,6 +538,24 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Store.
+        /// </summary>
+        public static string Store {
+            get {
+                return ResourceManager.GetString("Store", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stores.
+        /// </summary>
+        public static string Stores {
+            get {
+                return ResourceManager.GetString("Stores", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Supplier.
         /// </summary>
         public static string Supplier {
@@ -597,6 +651,24 @@ namespace Utility.Resource {
         public static string Users {
             get {
                 return ResourceManager.GetString("Users", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warehouse.
+        /// </summary>
+        public static string Warehouse {
+            get {
+                return ResourceManager.GetString("Warehouse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warehouses.
+        /// </summary>
+        public static string Warehouses {
+            get {
+                return ResourceManager.GetString("Warehouses", resourceCulture);
             }
         }
     }

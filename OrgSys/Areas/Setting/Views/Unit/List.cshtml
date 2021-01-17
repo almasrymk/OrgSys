@@ -103,12 +103,14 @@
                     <h3 class="card-text badge badge-pill badge-theme-1 text-small">@x</h3>
                 </div>
                 <div class="card-body text-center m-0 p-2">
-                    <p>
-                        <img alt="Profile" src="~/img/profiles/UnitCard.png" class="img-thumbnail border-0 rounded-circle m-0 list-thumbnail badge-theme-1">
-                    </p>
-                    <p class="lead text-center" style="font-size:large;">
-                        @Model[i].Name
-                    </p>
+                    <div class="pb-3">
+                        <img alt="Profile" src="~/img/profiles/UnitCard.png" class="img-thumbnail border-0 rounded-circle m-0 list-thumbnail badge-theme-1" style="height:120px;width:120px;">
+                    </div>
+                    <div class="lead text-center">
+                        <p style="text-align:center;font-size:large;">
+                            @Model[i].Name
+                        </p>
+                    </div>
                     <div class="m-0 p-0">
                         <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit"></i> @Utility.Resource.Title_Designer.Edit</a>
                         <span> &nbsp; | &nbsp; </span>
