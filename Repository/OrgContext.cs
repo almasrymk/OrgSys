@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Utility;
 
 namespace Repository
 {
@@ -78,6 +79,10 @@ namespace Repository
                             new Permission { Id = 20403, Key = "Edit", Value = "Clients.Edit", ParentId = 204 },
                             new Permission { Id = 20404, Key = "Delete", Value = "Clients.Delete", ParentId = 204 }
                 );
+
+            modelBuilder.Entity<Role>().HasData(new Role { Id = 1 , Name = "Owner", Hide = true });
+
+            modelBuilder.Entity<User>().HasData(new User { Id = 1, Name = "Owner" , UserName = "Owner", Password = Security.Encrypt("OwnerAbc@123") , RoleId = 1, Hide = true });
         }
 
         public virtual DbSet<Unit> Units { get; set; }

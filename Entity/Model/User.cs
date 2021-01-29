@@ -18,8 +18,7 @@ namespace Entity.Model
         [StringLength(15, MinimumLength = 5)]
         public string UserName { get; set; }
 
-        [Required]
-        [StringLength(15, MinimumLength = 8)]
+        [Required]       
         public string Password { get; set; }
 
         [Required]

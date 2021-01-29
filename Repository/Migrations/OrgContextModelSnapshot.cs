@@ -773,6 +773,17 @@ namespace Repository.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Role");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            Hide = true,
+                            Name = "Owner",
+                            ParentId = 0L,
+                            Status = 0,
+                            TypeId = 0L
+                        });
                 });
 
             modelBuilder.Entity("Entity.Model.Shift", b =>
@@ -911,8 +922,7 @@ namespace Repository.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("RoleId")
                         .HasColumnType("bigint");
@@ -935,6 +945,20 @@ namespace Repository.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("User");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            Hide = true,
+                            Name = "Owner",
+                            ParentId = 0L,
+                            Password = "iebLM3YfOZ4fcXYL1jInxA==",
+                            RoleId = 1L,
+                            Status = 0,
+                            TypeId = 0L,
+                            UserName = "Owner"
+                        });
                 });
 
             modelBuilder.Entity("Entity.Model.Product", b =>
