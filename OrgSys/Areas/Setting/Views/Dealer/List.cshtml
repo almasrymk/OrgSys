@@ -31,8 +31,9 @@
                                 }
                                 else
                                 {
-                                    <img alt="Thumbnail" src="~/img/profiles/ClientCard.png"
-                                         class="list-thumbnail responsive border-0 rounded-circle badge-theme-1 m-0" style="height:60px;width:60px;" />
+                                    <div class="list-thumbnail responsive border-0 rounded-circle badge-theme-1 m-0" style="height:60px;width:60px;font-size:x-large;text-align:center;padding-top:13px;">
+                                        <i class="simple-icon-people"></i>
+                                    </div>
                                 }
                             </td>
                             <td style="vertical-align: middle;">
@@ -73,8 +74,9 @@
                         }
                         else
                         {
-                            <img alt="Thumbnail" src="~/img/profiles/ClientCard.png"
-                                 class="list-thumbnail responsive border-0 card-img-left badge-theme-1" style="height:85px;width:85px;" />
+                            <div class="list-thumbnail responsive border-0 card-img-left badge-theme-1" style="height:85px; width:85px; font-size:40px;text-align:center; padding-top:16px;">
+                                <i class="simple-icon-people"></i>
+                            </div>
                         }
                         <div class="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
                             <a class="list-item-heading mb-0 p-0 truncate w-20 w-xs-100 d-inline-block" href="Pages.Product.Detail.html">
@@ -124,11 +126,13 @@
                     <div class="pb-3">
                         @if ("" + Model[i].ImgPath != "")
                         {
-                        <img alt="Profile" src="@Model[i].ImgPath" class="img-thumbnail border-0 rounded-circle m-0 list-thumbnail badge-theme-1" style="height:120px;width:120px;">
+                            <img alt="Profile" src="@Model[i].ImgPath" class="img-thumbnail border-0 rounded-circle m-0 list-thumbnail badge-theme-1" style="height:120px;width:120px;">
                         }
                         else
                         {
-                    <img alt="Profile" src="~/img/profiles/ClientCard.png" class="img-thumbnail border-0 rounded-circle m-0 list-thumbnail badge-theme-1" style="height:120px;width:120px;">
+                            <div class="img-thumbnail border-0 rounded-circle m-0 list-thumbnail badge-theme-1" style="height: 120px; width: 120px; font-size:50px;text-align:center; padding-top:24px;">
+                                <i class="simple-icon-people"></i>
+                            </div>
                         }
                     </div>
                     <div class="lead text-center">

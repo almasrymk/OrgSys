@@ -1,11 +1,10 @@
-﻿@model X.PagedList.IPagedList<Entity.ModelView.ShiftModelView>
+﻿@model X.PagedList.IPagedList<Entity.ModelView.UserModelView>
 @{
     Layout = null;
 }
 
 @if (Model != null && Model.Count > 0)
-{
-    <div id="tbList" class="card" style="display:none;">
+{<div id="tbList" class="card" style="display:none;">
         <div class="card-body">
             <table class="table table-bordered responsive nowrap mt-3" data-order="[[ 1, &quot;desc&quot; ]]">
                 <thead>
@@ -24,9 +23,17 @@
                                 <p class="list-item-heading">@x</p>
                             </td>
                             <td style="width:80px;padding:7px; vertical-align: middle;">
-                                <div class="list-thumbnail responsive border-0 rounded-circle badge-theme-1 m-0" style="height:60px;width:60px;font-size:x-large;text-align:center;padding-top:11px;">
-                                    <i class="iconsminds-clock-back"></i>
-                                </div>
+                                @if ("" + Model[i].ImgPath != "")
+                                {
+                                    <img alt="Thumbnail" src="@Model[i].ImgPath"
+                                         class="list-thumbnail responsive border-0 rounded-circle badge-theme-1 m-0" style="height:60px;width:60px;" />
+                                }
+                                else
+                                {
+                                    <div class="list-thumbnail responsive border-0 rounded-circle badge-theme-1 m-0" style="height:60px;width:60px;font-size:x-large;text-align:center;padding-top:10px;">
+                                        <i class="iconsminds-add-user"></i>
+                                    </div>
+                                }
                             </td>
                             <td>
                                 <p class="text-muted">@Model[i].Name</p>
@@ -60,9 +67,17 @@
             {
                 <div class="card d-flex flex-row mb-3">
                     <div class="d-flex flex-grow-1 min-width-zero">
-                        <div class="list-thumbnail responsive border-0 card-img-left badge-theme-1" style="height:85px; width:85px; font-size:xx-large; text-align:center;padding-top:20px;">
-                            <i class="iconsminds-clock-back"></i>
-                        </div>
+                        @if ("" + Model[i].ImgPath != "")
+                        {
+                            <img alt="Thumbnail" src="@Model[i].ImgPath"
+                                 class="list-thumbnail responsive border-0 card-img-left badge-theme-1" style="height:85px;width:85px;" />
+                        }
+                        else
+                        {
+                            <div class="list-thumbnail responsive border-0 card-img-left badge-theme-1" style="height:85px; width:85px; font-size:xx-large; text-align:center; padding-top:18px;">
+                                <i class="iconsminds-add-user"></i>
+                            </div>
+                        }
 
                         <div class="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
                             <a class="list-item-heading mb-0 truncate w-40 w-xs-100 d-inline-block" href="Pages.Product.Detail.html">
@@ -107,9 +122,16 @@
                 </div>
                 <div class="card-body text-center m-0 p-2">
                     <div class="pb-3">
-                        <div class="img-thumbnail border-0 rounded-circle m-0 list-thumbnail badge-theme-1" style="height:120px;width:120px; font-size:45px;text-align:center;padding-top:25px;">
-                            <i class="iconsminds-clock-back"></i>
-                        </div>
+                        @if ("" + Model[i].ImgPath != "")
+                        {
+                            <img alt="Profile" src="@Model[i].ImgPath" class="img-thumbnail border-0 rounded-circle m-0 list-thumbnail badge-theme-1" style="height:120px;width:120px;">
+                        }
+                        else
+                        {
+                            <div class="img-thumbnail border-0 rounded-circle m-0 list-thumbnail badge-theme-1" style="height: 120px; width: 120px; font-size:45px; text-align:center;padding-top:25px;">
+                                <i class="iconsminds-add-user"></i>
+                            </div>
+                        }
                     </div>
                     <div class="lead text-center">
                         <p style="text-align:center;font-size:large;">

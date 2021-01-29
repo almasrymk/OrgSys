@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repository;
 
 namespace Repository.Migrations
 {
     [DbContext(typeof(OrgContext))]
-    partial class OrgContextModelSnapshot : ModelSnapshot
+    [Migration("20210128212929_InsertPermissions")]
+    partial class InsertPermissions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -25,9 +27,6 @@ namespace Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
-
-                    b.Property<bool>("Hide")
-                        .HasColumnType("bit");
 
                     b.Property<string>("ImgPath")
                         .HasColumnType("nvarchar(max)");
@@ -67,9 +66,6 @@ namespace Repository.Migrations
                         .HasColumnType("bit");
 
                     b.Property<bool>("BeSold")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Hide")
                         .HasColumnType("bit");
 
                     b.Property<string>("ImgPath")
@@ -120,9 +116,6 @@ namespace Repository.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.Property<bool>("Hide")
-                        .HasColumnType("bit");
-
                     b.Property<string>("ImgPath")
                         .HasColumnType("nvarchar(max)");
 
@@ -159,9 +152,6 @@ namespace Repository.Migrations
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
 
-                    b.Property<bool>("Hide")
-                        .HasColumnType("bit");
-
                     b.Property<string>("ImgPath")
                         .HasColumnType("nvarchar(max)");
 
@@ -191,432 +181,200 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1L,
-                            Hide = false,
                             Key = "AllPage",
                             ParentId = 0L,
                             Status = 0,
                             TypeId = 0L,
-                            Value = "AllPage.All"
+                            Value = "AllPage"
                         },
                         new
                         {
                             Id = 10L,
-                            Hide = false,
                             Key = "Setting",
                             ParentId = 1L,
                             Status = 0,
                             TypeId = 0L,
-                            Value = "Setting.All"
+                            Value = "Setting"
                         },
                         new
                         {
                             Id = 101L,
-                            Hide = false,
                             Key = "Branchs",
                             ParentId = 10L,
                             Status = 0,
                             TypeId = 0L,
-                            Value = "Branchs.All"
+                            Value = "Branchs"
                         },
                         new
                         {
                             Id = 10101L,
-                            Hide = false,
                             Key = "View",
                             ParentId = 101L,
                             Status = 0,
                             TypeId = 0L,
-                            Value = "Branchs.View"
+                            Value = "View"
                         },
                         new
                         {
                             Id = 10102L,
-                            Hide = false,
                             Key = "Add",
                             ParentId = 101L,
                             Status = 0,
                             TypeId = 0L,
-                            Value = "Branchs.Add"
+                            Value = "Add"
                         },
                         new
                         {
                             Id = 10103L,
-                            Hide = false,
                             Key = "Edit",
                             ParentId = 101L,
                             Status = 0,
                             TypeId = 0L,
-                            Value = "Branchs.Edit"
+                            Value = "Edit"
                         },
                         new
                         {
                             Id = 10104L,
-                            Hide = false,
                             Key = "Delete",
                             ParentId = 101L,
                             Status = 0,
                             TypeId = 0L,
-                            Value = "Branchs.Delete"
+                            Value = "Delete"
                         },
                         new
                         {
                             Id = 102L,
-                            Hide = false,
                             Key = "Roles",
                             ParentId = 10L,
                             Status = 0,
                             TypeId = 0L,
-                            Value = "Roles.All"
+                            Value = "Roles"
                         },
                         new
                         {
                             Id = 10201L,
-                            Hide = false,
                             Key = "View",
                             ParentId = 102L,
                             Status = 0,
                             TypeId = 0L,
-                            Value = "Roles.View"
+                            Value = "View"
                         },
                         new
                         {
                             Id = 10202L,
-                            Hide = false,
                             Key = "Add",
                             ParentId = 102L,
                             Status = 0,
                             TypeId = 0L,
-                            Value = "Roles.Add"
+                            Value = "Add"
                         },
                         new
                         {
                             Id = 10203L,
-                            Hide = false,
                             Key = "Edit",
                             ParentId = 102L,
                             Status = 0,
                             TypeId = 0L,
-                            Value = "Roles.Edit"
+                            Value = "Edit"
                         },
                         new
                         {
                             Id = 10204L,
-                            Hide = false,
                             Key = "Delete",
                             ParentId = 102L,
                             Status = 0,
                             TypeId = 0L,
-                            Value = "Roles.Delete"
+                            Value = "Delete"
                         },
                         new
                         {
                             Id = 103L,
-                            Hide = false,
                             Key = "Users",
                             ParentId = 10L,
                             Status = 0,
                             TypeId = 0L,
-                            Value = "Users.All"
+                            Value = "Users"
                         },
                         new
                         {
                             Id = 10301L,
-                            Hide = false,
                             Key = "View",
                             ParentId = 103L,
                             Status = 0,
                             TypeId = 0L,
-                            Value = "Users.View"
+                            Value = "View"
                         },
                         new
                         {
                             Id = 10302L,
-                            Hide = false,
                             Key = "Add",
                             ParentId = 103L,
                             Status = 0,
                             TypeId = 0L,
-                            Value = "Users.Add"
+                            Value = "Add"
                         },
                         new
                         {
                             Id = 10303L,
-                            Hide = false,
                             Key = "Edit",
                             ParentId = 103L,
                             Status = 0,
                             TypeId = 0L,
-                            Value = "Users.Edit"
+                            Value = "Edit"
                         },
                         new
                         {
                             Id = 10304L,
-                            Hide = false,
                             Key = "Delete",
                             ParentId = 103L,
                             Status = 0,
                             TypeId = 0L,
-                            Value = "Users.Delete"
+                            Value = "Delete"
                         },
                         new
                         {
                             Id = 104L,
-                            Hide = false,
                             Key = "Shifts",
                             ParentId = 10L,
                             Status = 0,
                             TypeId = 0L,
-                            Value = "Shifts.All"
+                            Value = "Shifts"
                         },
                         new
                         {
                             Id = 10401L,
-                            Hide = false,
                             Key = "View",
                             ParentId = 104L,
                             Status = 0,
                             TypeId = 0L,
-                            Value = "Shifts.View"
+                            Value = "View"
                         },
                         new
                         {
                             Id = 10402L,
-                            Hide = false,
                             Key = "Add",
                             ParentId = 104L,
                             Status = 0,
                             TypeId = 0L,
-                            Value = "Shifts.Add"
+                            Value = "Add"
                         },
                         new
                         {
                             Id = 10403L,
-                            Hide = false,
                             Key = "Edit",
                             ParentId = 104L,
                             Status = 0,
                             TypeId = 0L,
-                            Value = "Shifts.Edit"
+                            Value = "Edit"
                         },
                         new
                         {
                             Id = 10404L,
-                            Hide = false,
                             Key = "Delete",
                             ParentId = 104L,
                             Status = 0,
                             TypeId = 0L,
-                            Value = "Shifts.Delete"
-                        },
-                        new
-                        {
-                            Id = 20L,
-                            Hide = false,
-                            Key = "Sales",
-                            ParentId = 1L,
-                            Status = 0,
-                            TypeId = 0L,
-                            Value = "Sales.All"
-                        },
-                        new
-                        {
-                            Id = 201L,
-                            Hide = false,
-                            Key = "Products",
-                            ParentId = 20L,
-                            Status = 0,
-                            TypeId = 0L,
-                            Value = "Products.All"
-                        },
-                        new
-                        {
-                            Id = 20101L,
-                            Hide = false,
-                            Key = "View",
-                            ParentId = 201L,
-                            Status = 0,
-                            TypeId = 0L,
-                            Value = "Products.View"
-                        },
-                        new
-                        {
-                            Id = 20102L,
-                            Hide = false,
-                            Key = "Add",
-                            ParentId = 201L,
-                            Status = 0,
-                            TypeId = 0L,
-                            Value = "Products.Add"
-                        },
-                        new
-                        {
-                            Id = 20103L,
-                            Hide = false,
-                            Key = "Edit",
-                            ParentId = 201L,
-                            Status = 0,
-                            TypeId = 0L,
-                            Value = "Products.Edit"
-                        },
-                        new
-                        {
-                            Id = 20104L,
-                            Hide = false,
-                            Key = "Delete",
-                            ParentId = 201L,
-                            Status = 0,
-                            TypeId = 0L,
-                            Value = "Products.Delete"
-                        },
-                        new
-                        {
-                            Id = 202L,
-                            Hide = false,
-                            Key = "Classifications",
-                            ParentId = 20L,
-                            Status = 0,
-                            TypeId = 0L,
-                            Value = "Classifications.All"
-                        },
-                        new
-                        {
-                            Id = 20201L,
-                            Hide = false,
-                            Key = "View",
-                            ParentId = 202L,
-                            Status = 0,
-                            TypeId = 0L,
-                            Value = "Classifications.View"
-                        },
-                        new
-                        {
-                            Id = 20202L,
-                            Hide = false,
-                            Key = "Add",
-                            ParentId = 202L,
-                            Status = 0,
-                            TypeId = 0L,
-                            Value = "Classifications.Add"
-                        },
-                        new
-                        {
-                            Id = 20203L,
-                            Hide = false,
-                            Key = "Edit",
-                            ParentId = 202L,
-                            Status = 0,
-                            TypeId = 0L,
-                            Value = "Classifications.Edit"
-                        },
-                        new
-                        {
-                            Id = 20204L,
-                            Hide = false,
-                            Key = "Delete",
-                            ParentId = 202L,
-                            Status = 0,
-                            TypeId = 0L,
-                            Value = "Classifications.Delete"
-                        },
-                        new
-                        {
-                            Id = 203L,
-                            Hide = false,
-                            Key = "UnitsMeasure",
-                            ParentId = 20L,
-                            Status = 0,
-                            TypeId = 0L,
-                            Value = "UnitsMeasure.All"
-                        },
-                        new
-                        {
-                            Id = 20301L,
-                            Hide = false,
-                            Key = "View",
-                            ParentId = 203L,
-                            Status = 0,
-                            TypeId = 0L,
-                            Value = "UnitsMeasure.View"
-                        },
-                        new
-                        {
-                            Id = 20302L,
-                            Hide = false,
-                            Key = "Add",
-                            ParentId = 203L,
-                            Status = 0,
-                            TypeId = 0L,
-                            Value = "UnitsMeasure.Add"
-                        },
-                        new
-                        {
-                            Id = 20303L,
-                            Hide = false,
-                            Key = "Edit",
-                            ParentId = 203L,
-                            Status = 0,
-                            TypeId = 0L,
-                            Value = "UnitsMeasure.Edit"
-                        },
-                        new
-                        {
-                            Id = 20304L,
-                            Hide = false,
-                            Key = "Delete",
-                            ParentId = 203L,
-                            Status = 0,
-                            TypeId = 0L,
-                            Value = "UnitsMeasure.Delete"
-                        },
-                        new
-                        {
-                            Id = 204L,
-                            Hide = false,
-                            Key = "Clients",
-                            ParentId = 20L,
-                            Status = 0,
-                            TypeId = 0L,
-                            Value = "Clients.All"
-                        },
-                        new
-                        {
-                            Id = 20401L,
-                            Hide = false,
-                            Key = "View",
-                            ParentId = 204L,
-                            Status = 0,
-                            TypeId = 0L,
-                            Value = "Clients.View"
-                        },
-                        new
-                        {
-                            Id = 20402L,
-                            Hide = false,
-                            Key = "Add",
-                            ParentId = 204L,
-                            Status = 0,
-                            TypeId = 0L,
-                            Value = "Clients.Add"
-                        },
-                        new
-                        {
-                            Id = 20403L,
-                            Hide = false,
-                            Key = "Edit",
-                            ParentId = 204L,
-                            Status = 0,
-                            TypeId = 0L,
-                            Value = "Clients.Edit"
-                        },
-                        new
-                        {
-                            Id = 20404L,
-                            Hide = false,
-                            Key = "Delete",
-                            ParentId = 204L,
-                            Status = 0,
-                            TypeId = 0L,
-                            Value = "Clients.Delete"
+                            Value = "Delete"
                         });
                 });
 
@@ -652,9 +410,6 @@ namespace Repository.Migrations
                     b.Property<string>("Description")
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
-
-                    b.Property<bool>("Hide")
-                        .HasColumnType("bit");
 
                     b.Property<string>("ImgPath")
                         .HasColumnType("nvarchar(max)");
@@ -705,9 +460,6 @@ namespace Repository.Migrations
                     b.Property<bool>("DefaultUnit")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("Hide")
-                        .HasColumnType("bit");
-
                     b.Property<string>("ImgPath")
                         .HasColumnType("nvarchar(max)");
 
@@ -748,9 +500,6 @@ namespace Repository.Migrations
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
 
-                    b.Property<bool>("Hide")
-                        .HasColumnType("bit");
-
                     b.Property<string>("ImgPath")
                         .HasColumnType("nvarchar(max)");
 
@@ -781,9 +530,6 @@ namespace Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
-
-                    b.Property<bool>("Hide")
-                        .HasColumnType("bit");
 
                     b.Property<string>("ImgPath")
                         .HasColumnType("nvarchar(max)");
@@ -819,9 +565,6 @@ namespace Repository.Migrations
                     b.Property<long>("BranchId")
                         .HasColumnType("bigint");
 
-                    b.Property<bool>("Hide")
-                        .HasColumnType("bit");
-
                     b.Property<string>("ImgPath")
                         .HasColumnType("nvarchar(max)");
 
@@ -854,9 +597,6 @@ namespace Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
-
-                    b.Property<bool>("Hide")
-                        .HasColumnType("bit");
 
                     b.Property<string>("ImgPath")
                         .HasColumnType("nvarchar(max)");
@@ -891,9 +631,6 @@ namespace Repository.Migrations
 
                     b.Property<long?>("BranchId")
                         .HasColumnType("bigint");
-
-                    b.Property<bool>("Hide")
-                        .HasColumnType("bit");
 
                     b.Property<string>("ImgPath")
                         .HasColumnType("nvarchar(max)");

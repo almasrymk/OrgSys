@@ -2,6 +2,8 @@
 using Entity.Model;
 using Utility.Resource;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
 
 namespace Entity.ModelView
 {
@@ -49,8 +51,8 @@ namespace Entity.ModelView
         [Required(ErrorMessageResourceName = nameof(Message_Designer.NameRequired), ErrorMessageResourceType = typeof(Message_Designer))]
         public string Name { get; set; }
 
-        [Display(Name = nameof(Title_Designer.Branch), ResourceType = typeof(Title_Designer))]
-        [Required(ErrorMessageResourceName = nameof(Message_Designer.BranchRequired), ErrorMessageResourceType = typeof(Message_Designer))]
+        //[Display(Name = nameof(Title_Designer.Branch), ResourceType = typeof(Title_Designer))]
+        //[Required(ErrorMessageResourceName = nameof(Message_Designer.BranchRequired), ErrorMessageResourceType = typeof(Message_Designer))]
         public long BranchId { get; set; }
 
         [Display(Name = nameof(Title_Designer.Branch), ResourceType = typeof(Title_Designer))]

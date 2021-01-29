@@ -123,5 +123,18 @@ namespace Repository
                 return _shiftRepo;
             }
         }
+
+        private UserRepo _userRepo;
+        public UserRepo userRepo
+        {
+            get
+            {
+
+                if (this._userRepo == null)
+                    this._userRepo = new UserRepo();
+
+                return _userRepo;
+            }
+        }
     }
 }

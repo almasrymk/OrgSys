@@ -195,6 +195,9 @@
   <data name="NicknameRequired" xml:space="preserve">
     <value>Nickname Required</value>
   </data>
+  <data name="PasswordRequired" xml:space="preserve">
+    <value>Password Required</value>
+  </data>
   <data name="PhoneRange" xml:space="preserve">
     <value>The phone is a letter number between 8 to 25</value>
   </data>
@@ -213,6 +216,9 @@
   <data name="RateRequired" xml:space="preserve">
     <value>Rate Required</value>
   </data>
+  <data name="RoleRequired" xml:space="preserve">
+    <value>Role Required</value>
+  </data>
   <data name="SelectUnit" xml:space="preserve">
     <value>Select unit please</value>
   </data>
@@ -230,5 +236,8 @@
   </data>
   <data name="UnitsWhichProductMeasured" xml:space="preserve">
     <value>Units by which the product is measured</value>
+  </data>
+  <data name="UsernameRequired" xml:space="preserve">
+    <value>Username / Email is Required</value>
   </data>
 </root>

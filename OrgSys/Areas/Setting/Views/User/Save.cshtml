@@ -1,0 +1,279 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model Entity.ModelView.UserModelView
+@{
+    ViewData["Title_Designer"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<link href="~/css/jquery.bonsai.css" rel="stylesheet" />
+
+<div id="HPage" class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="mb-3">
+                <h1> @Utility.Resource.Title_Designer.User</h1>
+                <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
+                    <ol class="breadcrumb pt-0">
+                        <li class="breadcrumb-item">
+                            <a href="/">@Utility.Resource.Title_Designer.Home</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            @Utility.Resource.Title_Designer.Setting
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">  <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId">@Utility.Resource.Title_Designer.User</a></li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-12 col-lg-12 mb-4">
+            <div class="card h-100">
+
+                <div class="card pt-4 pb-4 pl-4 pr-4">
+                    <div class="d-md-block" id="displayOptions">
+                        <h3 class="mr-4 mb-2 ml-4 d-inline-block float-md-left">
+                            @if (Model != null || Model.Id == 0)
+                            {
+                                <span class="mb-4"> @Utility.Resource.Title_Designer.New ...</span>
+                            }
+                            else
+                            {
+                                <span class="mb-4"> @Utility.Resource.Title_Designer.Edit ...</span>
+                            }
+                        </h3>
+                        <div class="position-absolute card-top-buttons">
+                            <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId" class="btn btn-primary"><i class="simple-icon-action-undo"></i>  @Utility.Resource.Title_Designer.Back</a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form id="frmId" action="Save" method="post" enctype="multipart/form-data" class="tooltip-label-right " novalidate>
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-lg-8 pl-4 pr-4">
+                                    <input type="hidden" asp-for="Id" />
+                                    <input type="hidden" asp-for="TypeId" />
+                                    <input type="hidden" asp-for="ParentId" />
+
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            @Html.LabelFor(model => model.BranchId)
+                                            <div id="divBranch" class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="simple-icon-organization"></i></span>
+                                                </div>
+                                                <select asp-for="BranchId" asp-items="@ViewBag.BranchList" class="form-control">
+                                                    <option value=""> ... </option>
+                                                </select>
+                                            </div>
+                                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.BranchRequired</small>
+                                            @Html.ValidationMessageFor(model => model.BranchId, "", new { @class = "text-danger " })
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            @Html.LabelFor(model => model.Name)
+                                            <input asp-for="Name" class="form-control" placeholder="@Utility.Resource.Title_Designer.Name" />
+                                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.NameRequired</small>
+                                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger " })
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            @Html.LabelFor(model => model.UserName)
+                                            <input asp-for="UserName" class="form-control" placeholder="@Utility.Resource.Title_Designer.UserName" />
+                                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.UsernameRequired</small>
+                                            @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger " })
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            @Html.LabelFor(model => model.Password)
+                                            <input asp-for="Password" type="password" class="form-control" placeholder="@Utility.Resource.Title_Designer.Password" />
+                                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.PasswordRequired</small>
+                                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger " })
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12 col-md-12 col-lg-4 pb-4">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.RoleId)
+                                        <div id="divRole" class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="simple-icon-lock-open"></i></span>
+                                            </div>
+                                            <select asp-for="RoleId" asp-items="@ViewBag.RoleList" class="form-control">
+                                                <option value=""> ... </option>
+                                            </select>
+                                        </div>
+                                        <small class="form-text text-muted"> @Utility.Resource.Message_Designer.RoleRequired</small>
+                                        @Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "text-danger " })
+                                    </div>
+                                    
+                                    <div>
+                                        <ol id="auto-checkboxes" data-name="foo">
+                                            <li class="expanded" data-value="0">
+                                                &nbsp; All Pages
+                                                <ol>
+                                                    <li data-value="1">
+                                                        &nbsp; Home
+                                                        <ol>
+                                                            <li data-value="6">&nbsp; Add </li>
+                                                            <li data-value="7">&nbsp; Edit </li>
+                                                            <li data-value="8">&nbsp; Delete </li>
+                                                        </ol>
+                                                    </li>
+                                                    <li data-value="2" data-id="2">
+                                                        &nbsp; Setting
+                                                        <ol>
+                                                            <li data-name="blacktea" data-value="3">
+                                                                &nbsp; Branchs
+                                                                <ol>
+                                                                    <li data-value="6">&nbsp; View </li>
+                                                                    <li data-value="6">&nbsp; Add </li>
+                                                                    <li data-value="7">&nbsp; Edit </li>
+                                                                    <li data-value="8">&nbsp; Delete </li>
+                                                                </ol>
+                                                            </li>
+                                                            <li data-name="blacktea" data-value="3">
+                                                                &nbsp; Roles
+                                                                <ol>
+                                                                    <li data-value="6">&nbsp; View </li>
+                                                                    <li data-value="6">&nbsp; Add </li>
+                                                                    <li data-value="7">&nbsp; Edit </li>
+                                                                    <li data-value="8">&nbsp; Delete </li>
+                                                                </ol>
+                                                            </li>
+                                                            <li data-name="blacktea" data-value="3">
+                                                                &nbsp; Users
+                                                                <ol>
+                                                                    <li data-value="6">&nbsp; View </li>
+                                                                    <li data-value="6">&nbsp; Add </li>
+                                                                    <li data-value="7">&nbsp; Edit </li>
+                                                                    <li data-value="8">&nbsp; Delete </li>
+                                                                </ol>
+                                                            </li>
+                                                            <li data-name="blacktea" data-value="3">
+                                                                &nbsp; Shifts
+                                                                <ol>
+                                                                    <li data-value="6">&nbsp; View </li>
+                                                                    <li data-value="6">&nbsp; Add </li>
+                                                                    <li data-value="7">&nbsp; Edit </li>
+                                                                    <li data-value="8">&nbsp; Delete </li>
+                                                                </ol>
+                                                            </li>                                                            
+                                                        </ol>
+                                                    </li>
+                                                    <li data-value="5">&nbsp; Milk</li>
+                                                </ol>
+                                            </li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pl-2 pr-2">
+                                <button type="button" onclick="Save()" class="btn btn-primary mb-0">@Utility.Resource.Title_Designer.Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/vendor/jquery-3.3.1.min.js"></script>
+<script src="~/js/jquery.bonsai.js"></script>
+<script src="~/js/jquery.json-list.js"></script>
+<script src="~/js/jquery.qubit.js"></script>
+
+<script>
+
+    function Save() {
+        var Valid = true;
+
+        if (CheckRequired("BranchId", "divBranch", '@Utility.Resource.Message_Designer.BranchRequired'))
+            Valid = false;
+
+          if (CheckRequired("RoleId", "divRole", '@Utility.Resource.Message_Designer.RoleRequired'))
+            Valid = false;
+
+        if (CheckRequired("Name", "Name", '@Utility.Resource.Message_Designer.NameRequired'))
+            Valid = false;
+
+        else if (CheckRage("Name", "Name", 3, 50, '@Utility.Resource.Message_Designer.NameRange'))
+            Valid = false;
+
+        if (CheckRequired("UserName", "UserName", '@Utility.Resource.Message_Designer.UsernameRequired'))
+            Valid = false;
+
+        else if (CheckRage("UserName", "UserName", 5, 15, '@Utility.Resource.Message_Designer.UsernameRequired'))
+            Valid = false;
+
+        if (CheckRequired("Password", "Password", '@Utility.Resource.Message_Designer.PasswordRequired'))
+            Valid = false;
+
+        else if (CheckRage("Password", "Password", 8, 15, '@Utility.Resource.Message_Designer.PasswordRequired'))
+            Valid = false;
+
+        if (Valid == true) {
+
+            var data = {
+                Id: $('#Id').val(),
+                BranchId: $('#BranchId').val().trim(),
+                Name: $('#Name').val().trim(),
+                UserName: $('#UserName').val().trim(),
+                Password: $('#Password').val().trim(),
+                RoleId: $('#RoleId').val().trim(),
+                ParentId: $('#ParentId').val(),
+                TypeId: $('#TypeId').val()
+            };
+
+            $.ajax({
+                type: 'POST',
+                url: "/Setting/User/Save",
+                data: { model: data},
+                success: function (res) {
+                    if (res.status == "success") {
+                        window.location.replace(res.url);
+                    }
+                    else {
+                        LogError(data.Error);
+                    }
+                }
+            });
+        }
+    }
+
+
+
+    $('.demo1').bonsai();
+    $('#auto-checkboxes').bonsai({
+        expandAll: false,
+        checkboxes: true, // depends on jquery.qubit plugin
+        createInputs: 'checkbox' // takes values from data-name and data-value, and data-name is inherited
+    });
+   
+    $('#from-JSON').jsonList({
+        url: 'json.js',
+        type: 'groupedItems',
+        groups: 'locationGroups',
+        items: 'locations',
+        // onListItem: called for each list item created from the JSON
+        onListItem: function (event, listItem, data, isGroup) {
+            if (!isGroup) {
+                // set the id into a data value so that Bonsai createInputs
+                // can set the checkbox value
+                listItem.attr('data-value', data.id);
+            }
+        },
+        // success: called after the list is created
+        onSuccess: function (event, jsonList) {
+            // turn the list into a tree
+            $(this.el).find('> ol').bonsai({
+                checkboxes: true,
+                createInputs: 'checkbox',
+                handleDuplicateCheckboxes: true,
+                expandAll: true
+            });
+        }
+    });
+</script>

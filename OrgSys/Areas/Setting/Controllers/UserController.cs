@@ -7,15 +7,18 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using OrgSys.Controllers;
 using Service.BAL;
+using Utility;
 
 namespace OrgSys.Areas.Setting.Controllers
 {
     [Area("Setting")]
-    public class StoreController : BaseController<StoreModelView>
+    public class UserController : BaseController<UserModelView>
     {
-        public override void LoadViewBag(StoreModelView model)
+        public override void LoadViewBag(UserModelView model)
         {
             ViewBag.BranchList = new SelectList(new BranchService().GetAll(model.ParentId, model.TypeId), "Id", "Name", model.BranchId);
+            ViewBag.RoleList = new SelectList(new RoleService().GetAll(model.ParentId, model.TypeId), "Id", "Name", model.RoleId);
         }
+
     }
 }

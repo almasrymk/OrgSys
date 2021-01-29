@@ -10,6 +10,7 @@ namespace Utility
         public string MaskText { get; set; }
         public long ParentId { get; set; }
         public long TypeId { get; set; }
+        public bool Hide { get; set; }
         public string ImgPath { get; set; }
         public Status Status { get; set; }
     }

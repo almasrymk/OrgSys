@@ -195,6 +195,9 @@
   <data name="NicknameRequired" xml:space="preserve">
     <value>يجب ادخال الاسم المستعار</value>
   </data>
+  <data name="PasswordRequired" xml:space="preserve">
+    <value>يجب ادخال كلمة المرور</value>
+  </data>
   <data name="PhoneRange" xml:space="preserve">
     <value>التليفون عدد حرف بين 8   الى 25</value>
   </data>
@@ -213,6 +216,9 @@
   <data name="RateRequired" xml:space="preserve">
     <value>يجب ادخال معدل التحويل</value>
   </data>
+  <data name="RoleRequired" xml:space="preserve">
+    <value>يجب ادخال الصلاحية</value>
+  </data>
   <data name="SelectUnit" xml:space="preserve">
     <value>اختار وحدة من فضلك</value>
   </data>
@@ -230,5 +236,8 @@
   </data>
   <data name="UnitsWhichProductMeasured" xml:space="preserve">
     <value>الوحدات التى يقاس بها المنتج</value>
+  </data>
+  <data name="UsernameRequired" xml:space="preserve">
+    <value>يجب ادخال اسم المستخدم / البريد الالكتروني</value>
   </data>
 </root>

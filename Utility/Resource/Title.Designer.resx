@@ -204,6 +204,9 @@
   <data name="Ok" xml:space="preserve">
     <value>Ok</value>
   </data>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
   <data name="Phone" xml:space="preserve">
     <value>Phone</value>
   </data>
@@ -311,6 +314,9 @@
   </data>
   <data name="User" xml:space="preserve">
     <value>User</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>UserName / Email</value>
   </data>
   <data name="Users" xml:space="preserve">
     <value>Users</value>

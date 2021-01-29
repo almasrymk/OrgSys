@@ -20,45 +20,46 @@
                 <tbody>
                     @for (int i = 0, x = ((Model.PageNumber - 1) * Model.PageSize) + 1; i < Model.Count; i++, x++)
                     {
-                    <tr>
-                        <td style="width:50px;vertical-align: middle;text-align:center">
-                            <p class="list-item-heading">@x</p>
-                        </td>
-                        <td style="width:80px;padding:7px; vertical-align: middle;">
-                            @if ("" + Model[i].ImgPath != "")
-                            {
-                                <img alt="Thumbnail" src="@Model[i].ImgPath"
-                                     class="list-thumbnail responsive border-0 rounded-circle badge-theme-1 m-0" style="height:60px;width:60px;" />
-                            }
-                            else
-                            {
-                                <img alt="Thumbnail" src="~/img/profiles/ProductCard.png"
-                                     class="list-thumbnail responsive border-0 rounded-circle badge-theme-1 m-0" style="height:60px;width:60px;" />
-                            }
-                        </td>
-                        <td style="vertical-align: middle;">
-                            <p class="text-muted">@Model[i].Name</p>
-                        </td>
-                        <td style="vertical-align: middle;">
-                            <p class="text-muted">@Model[i].ClassificationName</p>
-                        </td>
-                        <td style="width:70px;vertical-align: middle;">
-                            <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit"></i> @Utility.Resource.Title_Designer.Edit</a>
-                        </td>
-                        <td style="width:80px;vertical-align: middle;">
-                            <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete</a>
-                        </td>
-                        <td style="width:40px;text-align:center;vertical-align: middle;">
-                            @if (Model[i].Status == Utility.Status.All)
-                            {
-                                <label class="custom-control custom-checkbox">
-                                    <input id="chk_@Model[i].Id" type="checkbox" class="custom-control-input chk">
-                                    <input type="hidden" value="@Model[i].Id" />
-                                    <span class="custom-control-label">&nbsp;</span>
-                                </label>
-                            }
-                        </td>
-                    </tr>
+                        <tr>
+                            <td style="width:50px;vertical-align: middle;text-align:center">
+                                <p class="list-item-heading">@x</p>
+                            </td>
+                            <td style="width:80px;padding:7px; vertical-align: middle;">
+                                @if ("" + Model[i].ImgPath != "")
+                                {
+                                    <img alt="Thumbnail" src="@Model[i].ImgPath"
+                                         class="list-thumbnail responsive border-0 rounded-circle badge-theme-1 m-0" style="height:60px;width:60px;" />
+                                }
+                                else
+                                {
+                                    <div class="list-thumbnail responsive border-0 rounded-circle badge-theme-1 m-0" style="height:60px;width:60px;font-size:35px;text-align:center;padding-top:6px;">
+                                        <i class="iconsminds-shopping-basket"></i>
+                                    </div>
+                                }
+                            </td>
+                            <td style="vertical-align: middle;">
+                                <p class="text-muted">@Model[i].Name</p>
+                            </td>
+                            <td style="vertical-align: middle;">
+                                <p class="text-muted">@Model[i].ClassificationName</p>
+                            </td>
+                            <td style="width:70px;vertical-align: middle;">
+                                <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit"></i> @Utility.Resource.Title_Designer.Edit</a>
+                            </td>
+                            <td style="width:80px;vertical-align: middle;">
+                                <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete</a>
+                            </td>
+                            <td style="width:40px;text-align:center;vertical-align: middle;">
+                                @if (Model[i].Status == Utility.Status.All)
+                                {
+                                    <label class="custom-control custom-checkbox">
+                                        <input id="chk_@Model[i].Id" type="checkbox" class="custom-control-input chk">
+                                        <input type="hidden" value="@Model[i].Id" />
+                                        <span class="custom-control-label">&nbsp;</span>
+                                    </label>
+                                }
+                            </td>
+                        </tr>
                     }
                 </tbody>
             </table>
@@ -77,8 +78,9 @@
                         }
                         else
                         {
-                            <img alt="Thumbnail" src="~/img/profiles/ProductCard.png"
-                                 class="list-thumbnail responsive border-0 card-img-left badge-theme-1" style="height:85px;width:85px;" />
+                            <div class="list-thumbnail responsive border-0 card-img-left badge-theme-1" style="height:85px; width:85px; font-size:50px; text-align:center; padding-top:8px;">
+                                <i class="iconsminds-shopping-basket"></i>
+                            </div>
                         }
                         <div class="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
                             <a class="list-item-heading mb-0 p-0 truncate w-20 w-xs-100 d-inline-block" href="Pages.Product.Detail.html">
@@ -132,7 +134,9 @@
                         }
                         else
                         {
-                    <img alt="Profile" src="~/img/profiles/ProductCard.png" class="img-thumbnail border-0 rounded-circle m-0 list-thumbnail badge-theme-1" style="height:120px;width:120px;">
+                            <div class="img-thumbnail border-0 rounded-circle m-0 list-thumbnail badge-theme-1" style="height: 120px; width: 120px; font-size:70px;text-align:center; padding-top:10px;">
+                                <i class="iconsminds-shopping-basket"></i>
+                            </div>
                         }
                     </div>
                     <div class="lead text-center">

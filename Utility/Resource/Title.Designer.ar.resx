@@ -204,6 +204,9 @@
   <data name="Ok" xml:space="preserve">
     <value>موافق</value>
   </data>
+  <data name="Password" xml:space="preserve">
+    <value>كلمة المرور</value>
+  </data>
   <data name="Phone" xml:space="preserve">
     <value>التليفون</value>
   </data>
@@ -311,6 +314,9 @@
   </data>
   <data name="User" xml:space="preserve">
     <value>مستخدم</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>اسم المستخدم / البريد الالكتروني</value>
   </data>
   <data name="Users" xml:space="preserve">
     <value>المستخدمين</value>

@@ -1,4 +1,5 @@
-﻿@model Entity.ModelView.StoreModelView
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model Entity.ModelView.StoreModelView
 @{
     ViewData["Title_Designer"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -45,33 +46,34 @@
                         </div>
                     </div>
                     <div class="card-body">
+                        <form action="Save" method="post" enctype="multipart/form-data" class="tooltip-label-right">
+                            <input type="hidden" asp-for="Id" />
+                            <input type="hidden" asp-for="TypeId" />
+                            <input type="hidden" asp-for="ParentId" />
 
-                        <form action="Save" method="post" enctype="multipart/form-data" class="tooltip-label-right" novalidate>
-                            @Html.HiddenFor(model => model.Id)
-                            @Html.HiddenFor(model => model.TypeId)
-                            @Html.HiddenFor(model => model.ParentId)
-                          
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     @Html.LabelFor(model => model.BranchId)
-                                    <div class="input-group">
+                                    <div id="divBranch" class="input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="simple-icon-layers"></i></span>
                                         </div>
-                                        @Html.DropDownListFor(model => model.BranchId, null, " ... ", new { @class = "form-control" })
+                                        <select asp-for="BranchId" asp-items="@ViewBag.BranchList" class="form-control">
+                                            <option value=""> ... </option>
+                                        </select>
                                     </div>
                                     <small class="form-text text-muted"> @Utility.Resource.Message_Designer.BranchRequired</small>
                                     @Html.ValidationMessageFor(model => model.BranchId, "", new { @class = "text-danger " })
                                 </div>
                                 <div class="form-group col-md-6">
                                     @Html.LabelFor(model => model.Name)
-                                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Name })
+                                    <input asp-for="Name" class="form-control" placeholder="@Utility.Resource.Title_Designer.Name" />
                                     <small class="form-text text-muted"> @Utility.Resource.Message_Designer.NameRequired</small>
                                     @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger " })
                                 </div>
                             </div>
 
-                            <button type="submit" class="btn btn-primary mb-0">@Utility.Resource.Title_Designer.Save</button>
+                            <button type="button" onclick="Save()" class="btn btn-primary mb-0">@Utility.Resource.Title_Designer.Save</button>
                         </form>
                     </div>
 
@@ -80,3 +82,45 @@
         </div>
     </div>
 </div>
+
+<script src="~/js/vendor/jquery-3.3.1.min.js"></script>
+<script>
+
+    function Save() {
+        var Valid = true;
+
+        if (CheckRequired("BranchId", "divBranch", '@Utility.Resource.Message_Designer.BranchRequired'))
+            Valid = false;
+
+        if (CheckRequired("Name", "Name", '@Utility.Resource.Message_Designer.NameRequired'))
+            Valid = false;
+
+        else if (CheckRage("Name", "Name", 3, 50, '@Utility.Resource.Message_Designer.NameRange'))
+            Valid = false;
+
+        if (Valid == true) {
+
+            var data = {
+                Id: $('#Id').val(),
+                BranchId: $('#BranchId').val().trim(),
+                Name: $('#Name').val().trim(),
+                ParentId: $('#ParentId').val(),
+                TypeId: $('#TypeId').val()
+            };
+
+            $.ajax({
+                type: 'POST',
+                url: "/Setting/Store/Save",
+                data: { model: data},
+                success: function (res) {
+                    if (res.status == "success") {
+                        window.location.replace(res.url);
+                    }
+                    else {
+                        LogError(data.Error);
+                    }
+                }
+            });
+        }
+    }
+</script>
