@@ -196,6 +196,15 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Doublicat is UserName / Email.
+        /// </summary>
+        public static string DoublicatUserName {
+            get {
+                return ResourceManager.GetString("DoublicatUserName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Do you want to delete the file?.
         /// </summary>
         public static string DoYouWantDeleteFile {

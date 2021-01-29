@@ -136,5 +136,18 @@ namespace Repository
                 return _userRepo;
             }
         }
+
+        private PermissionRepo _permissionRepo;
+        public PermissionRepo permissionRepo
+        {
+            get
+            {
+
+                if (this._permissionRepo == null)
+                    this._permissionRepo = new PermissionRepo();
+
+                return _permissionRepo;
+            }
+        }
     }
 }

@@ -162,6 +162,9 @@
   <data name="DescriptionRequired" xml:space="preserve">
     <value>يجب ادخال الوصف</value>
   </data>
+  <data name="DoublicatUserName" xml:space="preserve">
+    <value>تم ادخال اسم المستخدم / البريد الالكتروني من قيل</value>
+  </data>
   <data name="DoYouWantDeleteFile" xml:space="preserve">
     <value>هل تريد حذف الملف ؟</value>
   </data>

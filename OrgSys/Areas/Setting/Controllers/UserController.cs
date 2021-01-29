@@ -20,5 +20,11 @@ namespace OrgSys.Areas.Setting.Controllers
             ViewBag.RoleList = new SelectList(new RoleService().GetAll(model.ParentId, model.TypeId), "Id", "Name", model.RoleId);
         }
 
+        [HttpGet]
+        public JsonResult CheckUDoublicat(string userName , int id)
+        {
+            return Json(new UserService().CheckDoublicat(userName , id));
+        }
+
     }
 }

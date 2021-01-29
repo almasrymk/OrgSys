@@ -38,7 +38,8 @@ namespace OrgSys.Controllers
             var ob = service.Get(id);
             if (ob == null || ob.Id == 0)
             {
-                ob = (entity)Activator.CreateInstance(typeof(entity));
+                if (ob == null)
+                    ob = (entity)Activator.CreateInstance(typeof(entity));
                 ob.ParentId = ParentId;
                 ob.TypeId = TypeId;
             }

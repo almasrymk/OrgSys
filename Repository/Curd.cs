@@ -53,11 +53,11 @@ namespace Repository
 
             if (orderBy != null)
             {
-                return orderBy(query.Where(e => e.Status != Status.Deleted || status == Status.All));
+                return orderBy(query.Where(e => (e.Status != Status.Deleted || status == Status.All) && e.Hide != true));
             }
             else
             {
-                return query.Where(e => e.Status != Status.Deleted || status == Status.All);
+                return query.Where(e => (e.Status != Status.Deleted || status == Status.All) && e.Hide != true);
             }
         }
 
@@ -85,11 +85,11 @@ namespace Repository
 
             if (orderBy != null)
             {
-                return orderBy(query.Where(e => e.Status != Status.Deleted || status == Status.All));
+                return orderBy(query.Where(e => (e.Status != Status.Deleted || status == Status.All) && e.Hide != true));
             }
             else
             {
-                return query.Where(e => e.Status != Status.Deleted || status == Status.All);
+                return query.Where(e => (e.Status != Status.Deleted || status == Status.All) && e.Hide != true);
             }
         }
 

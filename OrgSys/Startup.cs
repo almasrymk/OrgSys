@@ -14,6 +14,8 @@ using System.Globalization;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.AspNetCore.Mvc.Localization;
 
 namespace OrgSys
 {
@@ -35,9 +37,24 @@ namespace OrgSys
             services.AddLocalization(options => options.ResourcesPath = "Resources");
             services.AddMvc().AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix).AddDataAnnotationsLocalization();
 
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                options.SetDefaultCulture("en-Us");
+                options.AddSupportedUICultures("en-US", "ar-EG");
+                options.FallBackToParentUICultures = true;
+            });
             services.AddRazorPages().AddRazorRuntimeCompilation();
+            services.AddRazorPages().AddViewLocalization();
+           
+
             services.AddDbContext<OrgContext>(options => options.UseSqlServer(Configuration.GetConnectionString("OrgConnection")));
             services.AddControllersWithViews();
+
+            services.Configure<RequestLocalizationOptions>(options =>
+            {              
+                options.AddSupportedUICultures("en-US", "ar-EG");
+                options.FallBackToParentUICultures = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -59,7 +76,7 @@ namespace OrgSys
                 .AddSupportedCultures(supportedCultures)
                 .AddSupportedUICultures(supportedCultures);
 
-            app.UseRequestLocalization(localizationOptions);
+            app.UseRequestLocalization(localizationOptions );
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

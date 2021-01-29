@@ -86,7 +86,11 @@ namespace Service.BAL
         /// <returns></returns>
         public UserModelView Get(long Id)
         {
-            return new UserModelView(repo.userRepo.Get(e => e.Id == Id));
+            var ob =  new UserModelView(repo.userRepo.Get(e => e.Id == Id));
+            if (ob == null)
+                ob = new UserModelView();
+            ob.Permissions = repo.permissionRepo.GetList(e=>e.OrderBy(e=>e.Id) , "").Select(e => new TreeView { Id = e.Id , Key = e.Key , Value = e.Value , ParentId = e.ParentId }).ToList();
+            return ob;
         }
 
         /// <summary>
@@ -96,7 +100,22 @@ namespace Service.BAL
         /// <returns></returns>
         public UserModelView Get(string textSearch)
         {
-            return new UserModelView(repo.userRepo.Get(e => e.Name.Contains("" + textSearch)));
+            var ob = new UserModelView(repo.userRepo.Get(e => e.Name.Equals("" + textSearch)));
+            if (ob == null)
+                ob = new UserModelView();
+            ob.Permissions = repo.permissionRepo.GetList(e => e.OrderBy(e => e.Id), "").Select(e => new TreeView { Id = e.Id, Key = e.Key, Value = e.Value, ParentId = e.ParentId }).ToList();
+            return ob;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="textSearch"></param>
+        /// <returns></returns>
+        public bool CheckDoublicat(string userName , long id)
+        {
+            var ob = new UserModelView(repo.userRepo.Get(e => e.UserName.Equals("" + userName) && (id == 0 || e.Id != id))) ;
+            return ob != null && ob.Id > 0;
         }
 
         /// <summary>

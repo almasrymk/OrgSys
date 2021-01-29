@@ -62,9 +62,7 @@ namespace Entity.ModelView
         [Required(ErrorMessageResourceName = nameof(Message_Designer.UsernameRequired), ErrorMessageResourceType = typeof(Message_Designer))]
         public string UserName { get; set; }
 
-        [Display(Name = nameof(Title_Designer.Password), ResourceType = typeof(Title_Designer))]
-        [StringLength(15, MinimumLength = 8)]
-        [Required(ErrorMessageResourceName = nameof(Message_Designer.PasswordRequired), ErrorMessageResourceType = typeof(Message_Designer))]
+        [Display(Name = nameof(Title_Designer.Password), ResourceType = typeof(Title_Designer))]               
         public string Password { get; set; }
 
         [Display(Name = nameof(Title_Designer.Role), ResourceType = typeof(Title_Designer))]
@@ -79,5 +77,7 @@ namespace Entity.ModelView
 
         [Display(Name = nameof(Title_Designer.Branch), ResourceType = typeof(Title_Designer))]
         public string BranchName { get; set; }
+
+        public List<TreeView> Permissions { get; set; }
     }
 }
