@@ -48,6 +48,7 @@ namespace OrgSysApp.Tools
             // 
             // imgImage
             // 
+            this.imgImage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.imgImage.Dock = System.Windows.Forms.DockStyle.Fill;
             this.imgImage.Location = new System.Drawing.Point(0, 0);
             this.imgImage.Name = "imgImage";

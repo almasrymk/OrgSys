@@ -38,7 +38,7 @@ namespace OrgSysApp.Forms.Data
             this.btnProduct = new OrgSysApp.Tools.ButtonImage();
             this.btnCategory = new OrgSysApp.Tools.ButtonImage();
             this.btnUnit = new OrgSysApp.Tools.ButtonImage();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.pnlDataPages = new System.Windows.Forms.Panel();
             this.tblMainData.SuspendLayout();
             this.pnlMainDataMenu.SuspendLayout();
             this.SuspendLayout();
@@ -68,7 +68,7 @@ namespace OrgSysApp.Forms.Data
             this.tblMainData.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
             this.tblMainData.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 85.71429F));
             this.tblMainData.Controls.Add(this.pnlMainDataMenu, 0, 1);
-            this.tblMainData.Controls.Add(this.panel1, 1, 1);
+            this.tblMainData.Controls.Add(this.pnlDataPages, 1, 1);
             this.tblMainData.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tblMainData.Location = new System.Drawing.Point(0, 2);
             this.tblMainData.Name = "tblMainData";
@@ -195,15 +195,15 @@ namespace OrgSysApp.Forms.Data
             this.btnUnit.Title = "Units";
             this.btnUnit.click += new System.EventHandler(this.btn_click);
             // 
-            // panel1
+            // pnlDataPages
             // 
-            this.panel1.BackColor = System.Drawing.Color.White;
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(114, 13);
-            this.panel1.Margin = new System.Windows.Forms.Padding(0, 0, 5, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(681, 419);
-            this.panel1.TabIndex = 1;
+            this.pnlDataPages.BackColor = System.Drawing.Color.White;
+            this.pnlDataPages.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlDataPages.Location = new System.Drawing.Point(114, 13);
+            this.pnlDataPages.Margin = new System.Windows.Forms.Padding(0, 0, 5, 0);
+            this.pnlDataPages.Name = "pnlDataPages";
+            this.pnlDataPages.Size = new System.Drawing.Size(681, 419);
+            this.pnlDataPages.TabIndex = 1;
             // 
             // MainData
             // 
@@ -230,7 +230,7 @@ namespace OrgSysApp.Forms.Data
         private System.Windows.Forms.TableLayoutPanel tblMainData;
         private System.Windows.Forms.Panel pnlMainDataMenu;
         private Tools.ButtonImage btnUnit;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel pnlDataPages;
         private Tools.ButtonImage btnCategory;
         private Tools.ButtonImage btnSetting;
         private Tools.ButtonImage btnUser;

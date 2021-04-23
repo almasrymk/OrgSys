@@ -21,7 +21,7 @@ namespace OrgSysApp.Tools
         }
 
         private void this_Click(object sender, EventArgs e)
-        {            
+        {
             foreach (var Control in this.Controls)
             {
                 if (Control == sender)

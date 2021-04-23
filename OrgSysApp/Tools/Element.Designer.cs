@@ -37,6 +37,7 @@ namespace OrgSysApp.Tools
             // 
             // imgImage
             // 
+            this.imgImage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.imgImage.Dock = System.Windows.Forms.DockStyle.Fill;
             this.imgImage.Location = new System.Drawing.Point(0, 0);
             this.imgImage.Name = "imgImage";
@@ -67,6 +68,7 @@ namespace OrgSysApp.Tools
             this.lblDescription.Name = "lblDescription";
             this.lblDescription.Size = new System.Drawing.Size(100, 25);
             this.lblDescription.TabIndex = 3;
+            this.lblDescription.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lblDescription.Click += new System.EventHandler(this.this_Click);
             this.lblDescription.MouseEnter += new System.EventHandler(this.this_MouseEnter);
             this.lblDescription.MouseLeave += new System.EventHandler(this.this_MouseLeave);

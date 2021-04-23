@@ -25,10 +25,14 @@ namespace OrgSysApp.Tools
         string _description = "";
         Font _font = null;
         Font _fontDescription = null;
+        Font _fontActive = null;
+        Font _fontActiveDescription = null;
         Color _fontColor = Color.Black;
         Color _fontColorActive = Color.Black;
         Color _fontColorDescription = Color.Black;
-        Color _fontColorActiveDescription = Color.Black;        
+        Color _fontColorActiveDescription = Color.Black;
+        Color _backgroundColor = Color.Transparent;
+        Color _backgroundColorActive = Color.Transparent;
         bool _active = false;
 
         [Category("Org.Image")]
@@ -85,6 +89,24 @@ namespace OrgSysApp.Tools
         [Category("Org")]
         public string ButtonName { get; set; }
 
+        [Category("Org")]
+        public Color BackgroundColor
+        {
+            get { return _backgroundColor; }
+            set
+            {
+                _backgroundColor = value;
+                this.ForeColor = _backgroundColor;
+            }
+        }
+
+        [Category("Org")]
+        public Color BackgroundColorActive
+        {
+            get { return _backgroundColorActive; }
+            set { _backgroundColorActive = value; }
+        }
+
         [Category("Org.Title")]
         public Font font
         {
@@ -108,6 +130,13 @@ namespace OrgSysApp.Tools
         }
 
         [Category("Org.Title")]
+        public Font fontActive
+        {
+            get { return _fontActive; }
+            set {_fontActive = value;}
+        }
+        
+        [Category("Org.Title")]
         public Color fontColorActive
         {
             get { return _fontColorActive; }
@@ -123,6 +152,13 @@ namespace OrgSysApp.Tools
                 _fontDescription = value;
                 lblDescription.Font = value;
             }
+        }
+
+        [Category("Org.Title")]
+        public Font fontActiveDescription
+        {
+            get { return _fontActiveDescription; }
+            set { _fontActiveDescription = value; }
         }
 
         [Category("Org.Title")]
@@ -153,12 +189,16 @@ namespace OrgSysApp.Tools
                 if (_active)
                 {
                     imgImage.BackgroundImage = _imageActive;
+                    this.BackColor = _backgroundColorActive;
+                    lblTitle.Font = _fontActive;
                     lblTitle.ForeColor = _fontColorActive;
                     lblDescription.ForeColor = _fontColorActiveDescription;
                 }
                 else
                 {
                     imgImage.BackgroundImage = _image;
+                    this.BackColor = _backgroundColor;
+                    lblTitle.Font = _font;
                     lblTitle.ForeColor = _fontColor;
                     lblDescription.ForeColor = _fontColorDescription;
                 }
@@ -168,6 +208,8 @@ namespace OrgSysApp.Tools
         private void this_MouseEnter(object sender, EventArgs e)
         {
             imgImage.BackgroundImage = _imageActive;
+            this.BackColor = _backgroundColorActive;
+            lblTitle.Font = _fontActive;
             lblTitle.ForeColor = _fontColorActive;
             lblDescription.ForeColor = _fontColorActiveDescription;
         }
@@ -177,6 +219,8 @@ namespace OrgSysApp.Tools
             if (!_active)
             {
                 imgImage.BackgroundImage = _image;
+                this.BackColor = _backgroundColor;
+                lblTitle.Font = _font;
                 lblTitle.ForeColor = _fontColor;
                 lblDescription.ForeColor = _fontColorDescription;
             }
