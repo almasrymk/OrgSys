@@ -33,7 +33,11 @@ namespace OrgSysApp.Forms.Data
             this.pnl2 = new System.Windows.Forms.Panel();
             this.tblMainData = new System.Windows.Forms.TableLayoutPanel();
             this.pnlMainDataMenu = new System.Windows.Forms.Panel();
-            this.btnData = new OrgSysApp.Tools.ButtonImage();
+            this.btnSetting = new OrgSysApp.Tools.ButtonImage();
+            this.btnUser = new OrgSysApp.Tools.ButtonImage();
+            this.btnProduct = new OrgSysApp.Tools.ButtonImage();
+            this.btnCategory = new OrgSysApp.Tools.ButtonImage();
+            this.btnUnit = new OrgSysApp.Tools.ButtonImage();
             this.panel1 = new System.Windows.Forms.Panel();
             this.tblMainData.SuspendLayout();
             this.pnlMainDataMenu.SuspendLayout();
@@ -59,12 +63,10 @@ namespace OrgSysApp.Forms.Data
             // 
             // tblMainData
             // 
-            this.tblMainData.BackColor = System.Drawing.Color.White;
+            this.tblMainData.BackColor = System.Drawing.Color.WhiteSmoke;
             this.tblMainData.ColumnCount = 2;
-            this.tblMainData.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tblMainData.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 90F));
-            this.tblMainData.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tblMainData.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tblMainData.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            this.tblMainData.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 85.71429F));
             this.tblMainData.Controls.Add(this.pnlMainDataMenu, 0, 1);
             this.tblMainData.Controls.Add(this.panel1, 1, 1);
             this.tblMainData.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -81,41 +83,126 @@ namespace OrgSysApp.Forms.Data
             // 
             this.pnlMainDataMenu.AutoScroll = true;
             this.pnlMainDataMenu.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.pnlMainDataMenu.Controls.Add(this.btnData);
+            this.pnlMainDataMenu.Controls.Add(this.btnSetting);
+            this.pnlMainDataMenu.Controls.Add(this.btnUser);
+            this.pnlMainDataMenu.Controls.Add(this.btnProduct);
+            this.pnlMainDataMenu.Controls.Add(this.btnCategory);
+            this.pnlMainDataMenu.Controls.Add(this.btnUnit);
             this.pnlMainDataMenu.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlMainDataMenu.Location = new System.Drawing.Point(10, 13);
             this.pnlMainDataMenu.Margin = new System.Windows.Forms.Padding(10, 0, 0, 0);
             this.pnlMainDataMenu.Name = "pnlMainDataMenu";
-            this.pnlMainDataMenu.Size = new System.Drawing.Size(70, 419);
+            this.pnlMainDataMenu.Size = new System.Drawing.Size(104, 419);
             this.pnlMainDataMenu.TabIndex = 0;
             // 
-            // btnData
+            // btnSetting
             // 
-            this.btnData.active = false;
-            this.btnData.activeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(150)))), ((int)(((byte)(250)))));
-            this.btnData.BackColor = System.Drawing.Color.Transparent;
-            this.btnData.ButtonName = "Data";
-            this.btnData.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnData.font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnData.fontColor = System.Drawing.Color.Gray;
-            this.btnData.fontColorActive = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(150)))), ((int)(((byte)(250)))));
-            this.btnData.image = global::OrgSysApp.Properties.Resources.Data1;
-            this.btnData.imageActive = global::OrgSysApp.Properties.Resources.Data;
-            this.btnData.layOut = System.Windows.Forms.ImageLayout.Zoom;
-            this.btnData.Location = new System.Drawing.Point(0, 0);
-            this.btnData.Name = "btnData";
-            this.btnData.Size = new System.Drawing.Size(70, 78);
-            this.btnData.TabIndex = 1;
-            this.btnData.Title = "Data";
+            this.btnSetting.active = false;
+            this.btnSetting.activeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(150)))), ((int)(((byte)(250)))));
+            this.btnSetting.BackColor = System.Drawing.Color.Transparent;
+            this.btnSetting.ButtonName = "Setting";
+            this.btnSetting.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnSetting.font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnSetting.fontColor = System.Drawing.Color.Gray;
+            this.btnSetting.fontColorActive = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(150)))), ((int)(((byte)(250)))));
+            this.btnSetting.image = global::OrgSysApp.Properties.Resources.output_ico;
+            this.btnSetting.imageActive = global::OrgSysApp.Properties.Resources.outpu;
+            this.btnSetting.layOut = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnSetting.Location = new System.Drawing.Point(0, 320);
+            this.btnSetting.Name = "btnSetting";
+            this.btnSetting.Size = new System.Drawing.Size(104, 80);
+            this.btnSetting.TabIndex = 5;
+            this.btnSetting.Title = "Setting";
+            this.btnSetting.click += new System.EventHandler(this.btn_click);
+            // 
+            // btnUser
+            // 
+            this.btnUser.active = false;
+            this.btnUser.activeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(150)))), ((int)(((byte)(250)))));
+            this.btnUser.BackColor = System.Drawing.Color.Transparent;
+            this.btnUser.ButtonName = "User";
+            this.btnUser.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnUser.font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnUser.fontColor = System.Drawing.Color.Gray;
+            this.btnUser.fontColorActive = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(150)))), ((int)(((byte)(250)))));
+            this.btnUser.image = global::OrgSysApp.Properties.Resources.Users__1_;
+            this.btnUser.imageActive = global::OrgSysApp.Properties.Resources.Users;
+            this.btnUser.layOut = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnUser.Location = new System.Drawing.Point(0, 240);
+            this.btnUser.Name = "btnUser";
+            this.btnUser.Size = new System.Drawing.Size(104, 80);
+            this.btnUser.TabIndex = 4;
+            this.btnUser.Title = "Users";
+            this.btnUser.click += new System.EventHandler(this.btn_click);
+            // 
+            // btnProduct
+            // 
+            this.btnProduct.active = false;
+            this.btnProduct.activeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(150)))), ((int)(((byte)(250)))));
+            this.btnProduct.BackColor = System.Drawing.Color.Transparent;
+            this.btnProduct.ButtonName = "Product";
+            this.btnProduct.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnProduct.font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnProduct.fontColor = System.Drawing.Color.Gray;
+            this.btnProduct.fontColorActive = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(150)))), ((int)(((byte)(250)))));
+            this.btnProduct.image = global::OrgSysApp.Properties.Resources.item114a;
+            this.btnProduct.imageActive = global::OrgSysApp.Properties.Resources.item1141;
+            this.btnProduct.layOut = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnProduct.Location = new System.Drawing.Point(0, 160);
+            this.btnProduct.Name = "btnProduct";
+            this.btnProduct.Size = new System.Drawing.Size(104, 80);
+            this.btnProduct.TabIndex = 3;
+            this.btnProduct.Title = "Products";
+            this.btnProduct.click += new System.EventHandler(this.btn_click);
+            // 
+            // btnCategory
+            // 
+            this.btnCategory.active = false;
+            this.btnCategory.activeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(150)))), ((int)(((byte)(250)))));
+            this.btnCategory.BackColor = System.Drawing.Color.Transparent;
+            this.btnCategory.ButtonName = "Category";
+            this.btnCategory.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnCategory.font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnCategory.fontColor = System.Drawing.Color.Gray;
+            this.btnCategory.fontColorActive = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(150)))), ((int)(((byte)(250)))));
+            this.btnCategory.image = global::OrgSysApp.Properties.Resources.itemgroup3;
+            this.btnCategory.imageActive = global::OrgSysApp.Properties.Resources.itemgroup3b;
+            this.btnCategory.layOut = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnCategory.Location = new System.Drawing.Point(0, 80);
+            this.btnCategory.Name = "btnCategory";
+            this.btnCategory.Size = new System.Drawing.Size(104, 80);
+            this.btnCategory.TabIndex = 2;
+            this.btnCategory.Title = "Categories";
+            this.btnCategory.click += new System.EventHandler(this.btn_click);
+            // 
+            // btnUnit
+            // 
+            this.btnUnit.active = false;
+            this.btnUnit.activeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(150)))), ((int)(((byte)(250)))));
+            this.btnUnit.BackColor = System.Drawing.Color.Transparent;
+            this.btnUnit.ButtonName = "Unit";
+            this.btnUnit.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnUnit.font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnUnit.fontColor = System.Drawing.Color.Gray;
+            this.btnUnit.fontColorActive = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(150)))), ((int)(((byte)(250)))));
+            this.btnUnit.image = global::OrgSysApp.Properties.Resources.unit;
+            this.btnUnit.imageActive = global::OrgSysApp.Properties.Resources.unitb;
+            this.btnUnit.layOut = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnUnit.Location = new System.Drawing.Point(0, 0);
+            this.btnUnit.Name = "btnUnit";
+            this.btnUnit.Size = new System.Drawing.Size(104, 80);
+            this.btnUnit.TabIndex = 1;
+            this.btnUnit.Title = "Units";
+            this.btnUnit.click += new System.EventHandler(this.btn_click);
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.White;
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(80, 13);
+            this.panel1.Location = new System.Drawing.Point(114, 13);
             this.panel1.Margin = new System.Windows.Forms.Padding(0, 0, 5, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(715, 419);
+            this.panel1.Size = new System.Drawing.Size(681, 419);
             this.panel1.TabIndex = 1;
             // 
             // MainData
@@ -142,7 +229,11 @@ namespace OrgSysApp.Forms.Data
         private System.Windows.Forms.Panel pnl2;
         private System.Windows.Forms.TableLayoutPanel tblMainData;
         private System.Windows.Forms.Panel pnlMainDataMenu;
-        private Tools.ButtonImage btnData;
+        private Tools.ButtonImage btnUnit;
         private System.Windows.Forms.Panel panel1;
+        private Tools.ButtonImage btnCategory;
+        private Tools.ButtonImage btnSetting;
+        private Tools.ButtonImage btnUser;
+        private Tools.ButtonImage btnProduct;
     }
 }
