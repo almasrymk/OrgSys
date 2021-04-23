@@ -79,6 +79,15 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Amount.
+        /// </summary>
+        public static string Amount {
+            get {
+                return ResourceManager.GetString("Amount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Back.
         /// </summary>
         public static string Back {
@@ -268,6 +277,24 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invoice details.
+        /// </summary>
+        public static string InvoiceDetails {
+            get {
+                return ResourceManager.GetString("InvoiceDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invoice products.
+        /// </summary>
+        public static string InvoiceProducts {
+            get {
+                return ResourceManager.GetString("InvoiceProducts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invoices.
         /// </summary>
         public static string Invoices {
@@ -412,6 +439,15 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Quantity.
+        /// </summary>
+        public static string Quantity {
+            get {
+                return ResourceManager.GetString("Quantity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rate.
         /// </summary>
         public static string Rate {
@@ -435,6 +471,15 @@ namespace Utility.Resource {
         public static string Return {
             get {
                 return ResourceManager.GetString("Return", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Return Invoices.
+        /// </summary>
+        public static string ReturnInvoices {
+            get {
+                return ResourceManager.GetString("ReturnInvoices", resourceCulture);
             }
         }
         

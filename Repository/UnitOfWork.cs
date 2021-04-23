@@ -149,5 +149,45 @@ namespace Repository
                 return _permissionRepo;
             }
         }
+
+        private InvoiceRepo _invoiceRepo;
+        public InvoiceRepo invoiceRepo
+        {
+            get
+            {
+
+                if (this._invoiceRepo == null)
+                    this._invoiceRepo = new InvoiceRepo();
+
+                return _invoiceRepo;
+            }
+        }
+
+        private PaymentTypeRepo _paymentTypeRepo;
+        public PaymentTypeRepo paymentTypeRepo
+        {
+            get
+            {
+
+                if (this._paymentTypeRepo == null)
+                    this._paymentTypeRepo = new PaymentTypeRepo();
+
+                return _paymentTypeRepo;
+            }
+        }
+
+        private InvoiceProductRepo _invoiceProductRepo;
+        public InvoiceProductRepo invoiceProductRepo
+        {
+            get
+            {
+
+                if (this._invoiceProductRepo == null)
+                    this._invoiceProductRepo = new InvoiceProductRepo();
+
+                return _invoiceProductRepo;
+            }
+        }
+        
     }
 }

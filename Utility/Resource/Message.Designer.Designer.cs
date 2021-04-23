@@ -169,6 +169,24 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Customer Required.
+        /// </summary>
+        public static string CustomerRequired {
+            get {
+                return ResourceManager.GetString("CustomerRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date Required.
+        /// </summary>
+        public static string DateRequired {
+            get {
+                return ResourceManager.GetString("DateRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete confirmation.
         /// </summary>
         public static string DeleteConfirmation {
@@ -313,6 +331,15 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Payment Type Required.
+        /// </summary>
+        public static string PaymentTypeRequired {
+            get {
+                return ResourceManager.GetString("PaymentTypeRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The phone is a letter number between 8 to 25.
         /// </summary>
         public static string PhoneRange {
@@ -394,11 +421,29 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Store Required.
+        /// </summary>
+        public static string StoreRequired {
+            get {
+                return ResourceManager.GetString("StoreRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A supplier from whom the product is purchased.
         /// </summary>
         public static string SupplierFromWhomProductPurchased {
             get {
                 return ResourceManager.GetString("SupplierFromWhomProductPurchased", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Supplier Required.
+        /// </summary>
+        public static string SupplierRequired {
+            get {
+                return ResourceManager.GetString("SupplierRequired", resourceCulture);
             }
         }
         

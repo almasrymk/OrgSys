@@ -123,6 +123,9 @@
   <data name="Address" xml:space="preserve">
     <value>العنوان</value>
   </data>
+  <data name="Amount" xml:space="preserve">
+    <value>المبلغ</value>
+  </data>
   <data name="Back" xml:space="preserve">
     <value>عودة</value>
   </data>
@@ -186,6 +189,12 @@
   <data name="Invoice" xml:space="preserve">
     <value>فاتورة</value>
   </data>
+  <data name="InvoiceDetails" xml:space="preserve">
+    <value>تفاصيل الفاتورة</value>
+  </data>
+  <data name="InvoiceProducts" xml:space="preserve">
+    <value>منتجات الفاتورة</value>
+  </data>
   <data name="Invoices" xml:space="preserve">
     <value>الفواتير</value>
   </data>
@@ -234,6 +243,9 @@
   <data name="Purchases" xml:space="preserve">
     <value>المشتريات</value>
   </data>
+  <data name="Quantity" xml:space="preserve">
+    <value>الكمية</value>
+  </data>
   <data name="Rate" xml:space="preserve">
     <value>معدل التحويل</value>
   </data>
@@ -242,6 +254,9 @@
   </data>
   <data name="Return" xml:space="preserve">
     <value>مرتجع</value>
+  </data>
+  <data name="ReturnInvoice" xml:space="preserve">
+    <value>مرتد فواتير البيع</value>
   </data>
   <data name="Returns" xml:space="preserve">
     <value>مرتجعات</value>

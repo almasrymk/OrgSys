@@ -12,6 +12,7 @@ using OrgSys.Models;
 
 namespace OrgSys.Controllers
 {
+    //[Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -48,6 +49,13 @@ namespace OrgSys.Controllers
             );
 
             return Json(culture);
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public IActionResult LogIn()
+        {            
+            return View();
         }
     }
 }

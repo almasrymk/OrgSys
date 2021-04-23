@@ -153,6 +153,12 @@
   <data name="CostRequired" xml:space="preserve">
     <value>يجب ادخال التكلفة</value>
   </data>
+  <data name="CustomerRequired" xml:space="preserve">
+    <value>يجب ادخال العميل</value>
+  </data>
+  <data name="DateRequired" xml:space="preserve">
+    <value>يجب ادخال التاريخ</value>
+  </data>
   <data name="DeleteConfirmation" xml:space="preserve">
     <value>تاكيد الحذف</value>
   </data>
@@ -230,6 +236,9 @@
   </data>
   <data name="SupplierFromWhomProductPurchased" xml:space="preserve">
     <value>مورد الذى يتم شراء المنتج منه</value>
+  </data>
+  <data name="SupplierRequired" xml:space="preserve">
+    <value>يجب ادخال المورد</value>
   </data>
   <data name="ThisUnitWasSelected" xml:space="preserve">
     <value>هذة الوحدة بالفعل تم اختيارها</value>

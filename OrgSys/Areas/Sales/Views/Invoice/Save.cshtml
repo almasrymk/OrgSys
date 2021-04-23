@@ -1,0 +1,441 @@
+﻿@model Entity.ModelView.InvoiceModelView
+@{
+    ViewData["Title_Designer"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="HPage" class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="mb-3">
+                <h1>@Utility.Resource.Title_Designer.Invoice</h1>
+                <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
+                    <ol class="breadcrumb pt-0">
+                        <li class="breadcrumb-item">
+                            <a href="/">@Utility.Resource.Title_Designer.Home</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            @Utility.Resource.Title_Designer.Setting
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">  <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId">@Utility.Resource.Title_Designer.Invoice</a></li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+
+        <div class="card pl-1 pr-1">
+            <form action="Save" method="post" enctype="multipart/form-data" class="tooltip-label-right" novalidate>
+                <div class="d-md-block" id="displayOptions">
+                    <div id="smartWizardClickable">
+                        <ul class="card-header">
+                            <li>
+                                <a href="#checkStep1">
+                                    @Utility.Resource.Title_Designer.InvoiceProducts<br />
+                                    <small>@Utility.Resource.Message_Designer.UnitsWhichProductMeasured</small>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#checkStep2">
+                                    @Utility.Resource.Title_Designer.InvoiceDetails<br />
+                                    <small>@Utility.Resource.Message_Designer.IngredientsThatProductMadeOf</small>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="card-body">
+                            @Html.HiddenFor(model => model.Id)
+                            @Html.HiddenFor(model => model.TypeId)
+                            @Html.HiddenFor(model => model.ParentId)
+                            <div id="checkStep1">
+                                <div class="card">
+                                    <table id="tblUnit" class="table table-hover ">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">@Utility.Resource.Title_Designer.Product</th>
+                                                <th scope="col">@Utility.Resource.Title_Designer.Unit</th>
+                                                <th scope="col">@Utility.Resource.Title_Designer.Price</th>
+                                                <th scope="col">@Utility.Resource.Title_Designer.Quantity</th>
+                                                <th scope="col">@Utility.Resource.Title_Designer.Amount</th>
+                                                <th scope="col"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @for (int i = 0, index = 1; i < 7; i++, index++)
+                                            {
+                                                <tr class="product-empty">
+                                                    <td style="width:35px;padding:0px;text-align:center;vertical-align:middle;">
+                                                        @index
+                                                    </td>
+                                                    <td class="input-group typeahead-container" style="min-width:100px;padding:0px;">
+                                                        @*@Html.TextBoxFor(model => model.Total, new { @class = "form-control", @style = "border-top:none;border-bottom:none;border-right:none;", @placeholder = "0.0" })*@
+                                                        @*@Html.DropDownList("ProductId", null, " ... ", new { @class = "form-control select2-multiple", @style = "border-top:none;border-bottom:none;border-right:none;" })*@
+                                                        <input type="text" class="form-control typeahead" name="query1" id="query1"
+                                                               data-provide="typeahead"
+                                                               style="border-top:none;border-bottom:none;border-right:none;"
+                                                               autocomplete="off">
+                                                    </td>
+                                                    <td style="width:150px;padding:0px;">
+                                                        @Html.TextBoxFor(model => model.Total, new { @class = "form-control", @style = "border-top:none;border-bottom:none;border-right:none;", @placeholder = "0.0" })
+                                                    </td>
+                                                    <td style="width:100px;padding:0px;">
+                                                        @Html.TextBoxFor(model => model.Total, new { @class = "form-control", @style = "border-top:none;border-bottom:none;border-right:none;", @placeholder = "0.0" })
+                                                    </td>
+                                                    <td style="width:100px;padding:0px;">
+                                                        @Html.TextBoxFor(model => model.Total, new { @class = "form-control", @style = "border-top:none;border-bottom:none;border-right:none;", @placeholder = "0.0" })
+                                                    </td>
+                                                    <td style="width:100px;padding:0px;">
+                                                        @Html.TextBoxFor(model => model.Total, new { @class = "form-control", @style = "border-top:none;border-bottom:none;", @placeholder = "0.0" })
+                                                    </td>
+                                                    <td style="width:100px;padding:0px;text-align:center;vertical-align:middle;">
+                                                        <a href="javascript:Deleted();" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete</a>
+                                                    </td>
+                                                </tr>
+                                            }
+
+                                            <tr style="margin-top:5px !important;">
+                                                <td style="min-width:100px;padding:0px;" colspan="2">
+                                                </td>
+                                                <td style="width:100px;padding:0px;text-align:center;vertical-align:middle;">
+                                                    @Html.LabelFor(model => model.Paid)
+                                                </td>
+                                                <td style="width:100px;padding:0px;">
+                                                    @Html.TextBoxFor(model => model.Paid, new { @class = "form-control", @style = "border-top:none;border-bottom:none;border-right:none;", @placeholder = "0.0" })
+                                                </td>
+                                                <td style="width:100px;padding:0px;text-align:center;vertical-align:middle;">
+                                                    @Html.LabelFor(model => model.Total)
+                                                </td>
+                                                <td style="width:100px;padding:0px;">
+                                                    @Html.TextBoxFor(model => model.Total, new { @class = "form-control", @style = "border-top:none;border-bottom:none;border-right:none;", @placeholder = "0.0" })
+                                                </td>
+                                                <td style="width:100px;padding:0px;">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="min-width:100px;padding:0px;" colspan="2">
+                                                </td>
+                                                <td style="width:100px;padding:0px;text-align:center;vertical-align:middle;">
+                                                    @Html.LabelFor(model => model.Remaining)
+                                                </td>
+                                                <td style="width:100px;padding:0px;">
+                                                    @Html.TextBoxFor(model => model.Remaining, new { @class = "form-control", @style = "border-top:none;border-bottom:none;border-right:none;", @placeholder = "0.0" })
+                                                </td>
+                                                <td style="width:100px;padding:0px;text-align:center;vertical-align:middle;">
+                                                    @Html.LabelFor(model => model.Discount)
+                                                </td>
+                                                <td style="width:100px;padding:0px;">
+                                                    @Html.TextBoxFor(model => model.Discount, new { @class = "form-control", @style = "border-top:none;border-bottom:none;border-right:none;", @placeholder = "0.0" })
+                                                </td>
+                                                <td style="width:100px;padding:0px;">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="min-width:100px;padding:0px;" colspan="4">
+                                                </td>
+
+                                                <td style="width:100px;padding:0px;text-align:center;vertical-align:middle;">
+                                                    @Html.LabelFor(model => model.Tax)
+                                                </td>
+                                                <td style="width:100px;padding:0px;">
+                                                    @Html.TextBoxFor(model => model.Tax, new { @class = "form-control", @style = "border-top:none;border-bottom:none;border-right:none;", @placeholder = "0.0" })
+                                                </td>
+                                                <td style="width:100px;padding:0px;">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="min-width:100px;padding:0px;" colspan="4">
+                                                </td>
+
+                                                <td style="width:100px;padding:0px;text-align:center;vertical-align:middle;">
+                                                    @Html.LabelFor(model => model.Net)
+                                                </td>
+                                                <td style="width:100px;padding:0px;">
+                                                    @Html.TextBoxFor(model => model.Net, new { @class = "form-control", @style = "border-top:none;border-bottom:none;border-right:none;", @placeholder = "0.0" })
+                                                </td>
+                                                <td style="width:100px;padding:0px;">
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div id="checkStep2">
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        @Html.LabelFor(model => model.Code)
+                                        <div id="divCode">
+                                            @Html.TextBoxFor(model => model.Code, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Code })
+                                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.CodeIncreasedAutomaticallyCanBechanged</small>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger " })
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        @Html.LabelFor(model => model.Date)
+                                        <div id="divDealerId">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="simple-icon-calendar"></i></span>
+                                                </div>
+                                                @Html.TextBoxFor(model => model.Date, new { @class = "form-control datepicker", @placeholder = "0.0" })
+                                            </div>
+                                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        @Html.LabelFor(model => model.DealerName)
+                                        <div id="divDealerId">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="simple-icon-people"></i></span>
+                                                </div>
+                                                @Html.DropDownListFor(model => model.DealerId, null, " ... ", new { @class = "form-control" })
+                                            </div>
+                                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.DealerId, "", new { @class = "text-danger " })
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        @Html.LabelFor(model => model.StoreName)
+                                        <div id="divStoreId">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="iconsminds-clothing-store"></i></span>
+                                                </div>
+                                                @Html.DropDownListFor(model => model.StoreId, null, " ... ", new { @class = "form-control" })
+                                            </div>
+                                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.StoreId, "", new { @class = "text-danger " })
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        @Html.LabelFor(model => model.PaymentTypeName)
+                                        <div id="divDealerId">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="iconsminds-financial"></i></span>
+                                                </div>
+                                                @Html.DropDownListFor(model => model.PaymentTypeId, null, " ... ", new { @class = "form-control" })
+                                            </div>
+                                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.PaymentTypeId, "", new { @class = "text-danger " })
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        @Html.LabelFor(model => model.Total)
+                                        <div id="divStoreId">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="iconsminds-coins"></i></span>
+                                                </div>
+                                                @Html.TextBoxFor(model => model.Total, new { @class = "form-control", @placeholder = "0.0" })
+                                            </div>
+                                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.Total, "", new { @class = "text-danger " })
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        @Html.LabelFor(model => model.Discount)
+                                        <div id="divDealerId">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="iconsminds-dollar-sign-2"></i></span>
+                                                </div>
+                                                @Html.TextBoxFor(model => model.Discount, new { @class = "form-control", @placeholder = "0.0" })
+                                            </div>
+                                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.Discount, "", new { @class = "text-danger " })
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        @Html.LabelFor(model => model.Tax)
+                                        <div id="divStoreId">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fa fa-percent"></i></span>
+                                                </div>
+                                                @Html.TextBoxFor(model => model.Tax, new { @class = "form-control", @placeholder = "0.0" })
+                                            </div>
+                                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.Tax, "", new { @class = "text-danger " })
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        @Html.LabelFor(model => model.Net)
+                                        <div id="divDealerId">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="iconsminds-coins"></i></span>
+                                                </div>
+                                                @Html.TextBoxFor(model => model.Net, new { @class = "form-control", @placeholder = "0.0" })
+                                            </div>
+                                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.Net, "", new { @class = "text-danger " })
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        @Html.LabelFor(model => model.Notes)
+                                        <div id="divStoreId">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="simple-icon-notebook"></i></span>
+                                                </div>
+                                                @Html.TextBoxFor(model => model.Notes, new { @class = "form-control" })
+                                            </div>
+                                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.Notes, "", new { @class = "text-danger " })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="position-absolute card-top-buttons">
+                        <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId" class="btn btn-primary"><i class="simple-icon-action-undo"></i>  @Utility.Resource.Title_Designer.Back</a>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary ml-4 mr-4 mb-4">@Utility.Resource.Title_Designer.Save</button>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="~/js/vendor/jquery-3.3.1.min.js"></script>
+
+<script src="~/js/vendor/bootstrap3-typeahead.js"></script>
+
+<script>
+    var testData = [{ id: 1, name: 'asd as', index: 0 }]
+
+
+    $("#query1").on("change", function () {
+        $.ajax({
+            url: "/Sales/Invoice/SearchItems",
+            type: "Get",
+            dataType: "json",
+            data: { phrase: "d" },
+            success: function (data) {
+                $("#query1").typeahead({
+                    source: data,
+                    afterSelect: function (data) {
+                        $(this.$element[0]).data("id", data.id);
+                        $(this.$element[0]).data("index", data.index);
+                        $(this.$element[0]).data("name", data.name);
+                    }
+                });
+            }
+        });
+    })
+
+   
+
+    //$(".search-box").autocomplete({
+    //    minLength: 2,
+    //    source: function (request, response) {
+    //        /*  var storeId = $("#StoreID").val();*/
+    //        var searchPhrase = request.term.trim().toLowerCase();
+    //        var noResultsLabel = 'NoResultsFound';
+
+    //        $.ajax({
+    //            url: "/Sales/Invoice/SearchItems",
+    //            type: "Get",
+    //            dataType: "json",
+    //            data: { phrase: searchPhrase },
+    //            success: function (data) {
+    //                if (!data.length) {
+    //                    data = [{ Name: noResultsLabel }];
+    //                }
+
+    //                response($.map(data, function (item) {
+    //                    return {
+    //                        label: item.Name,
+    //                        value: item.Name,
+    //                        id: item.Id,
+    //                        Price: item.Price
+    //                    };
+    //                }));
+
+    //            }
+    //        });
+    //    },
+
+    //    select: function (event, ui) {
+    //        if (ui.item.label === 'NoResultsFound') {
+    //            event.preventDefault();
+    //            return;
+    //        }
+    //        /* var storeId = $("#StoreID").val();*/
+    //        $.ajax({
+    //            url: "/Sales/Invoice/checkStock",
+    //            type: "Get",
+    //            data: { id: ui.item.id },
+    //            success: function (data) {
+
+    //                //var $row = $(event.target).parents('tr');
+    //                //$row.find("#ValidQTY").val(qty);
+
+    //                //var pDiscount = data.PDiscount;
+
+    //                //if (data.ItemDiscount > 0) {
+    //                //    $row.find("#DiscountPercentage").val(data.ItemDiscount);
+    //                //}
+    //                //else if (IsFixed === 1) {
+    //                //    $row.find("#DiscountPercentage").val($("#DiscountClient").val());
+    //                //}
+    //                //else {
+    //                //    if (parseFloat(pDiscount - $("#DiscountClient").val()).toFixed(0) < 0) {
+    //                //        var sDicount = parseFloat(pDiscount).toFixed(0);
+    //                //        $row.find("#DiscountPercentage").val(sDicount);
+    //                //    }
+    //                //    else {
+    //                //        var sDicount = parseFloat(pDiscount - $("#DiscountClient").val()).toFixed(0);
+    //                //        $row.find("#DiscountPercentage").val(sDicount);
+    //                //    }
+
+    //                //}
+    //            }
+    //        });
+
+
+    //        //let check = 0;
+    //        //$('#Details > tbody > tr').not(':first').each(function () {
+
+    //        //    let currentRow = $(this);
+    //        //    let colvalue = currentRow.find("#ItemID").val();
+    //        //    if (colvalue == ui.item.id) {
+    //        //        alert("تنبيه !! هذا الصنف مضاف للفاتوره");
+    //        //        check = 1;
+    //        //    }
+    //        //});
+
+    //        //if (check == 0) {
+    //        //    CheckLastInv(ui.item.id);
+    //        //    var $row = $(event.target).parents('tr');
+    //        //    $row.find('#ItemID').val(ui.item.id);
+    //        //    $row.find("#Item_BarCode").val(ui.item.barCode);
+    //        //    $row.find("#UnitPrice").val(ui.item.unitPrice);
+    //        //    $row.find('#UnitID').val(ui.item.unitId).trigger("change", SkipCallingAction = true);
+    //        //    $row.find("#UnitQuantity").focus();
+    //        //    AddRow();
+    //        //}
+    //    },
+    //    focus: function (event, ui) {
+    //        if (ui.item.label === 'NoResultsFound') {
+    //            event.preventDefault();
+    //        }
+    //    },
+    //});
+</script>

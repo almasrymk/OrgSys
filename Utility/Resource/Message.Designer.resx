@@ -153,6 +153,12 @@
   <data name="CostRequired" xml:space="preserve">
     <value>Cost Required</value>
   </data>
+  <data name="CustomerRequired" xml:space="preserve">
+    <value>Customer Required</value>
+  </data>
+  <data name="DateRequired" xml:space="preserve">
+    <value>Date Required</value>
+  </data>
   <data name="DeleteConfirmation" xml:space="preserve">
     <value>Delete confirmation</value>
   </data>
@@ -201,6 +207,9 @@
   <data name="PasswordRequired" xml:space="preserve">
     <value>Password Required</value>
   </data>
+  <data name="PaymentTypeRequired" xml:space="preserve">
+    <value>Payment Type Required</value>
+  </data>
   <data name="PhoneRange" xml:space="preserve">
     <value>The phone is a letter number between 8 to 25</value>
   </data>
@@ -228,8 +237,14 @@
   <data name="SellingPriceProduct" xml:space="preserve">
     <value>The selling price of the product</value>
   </data>
+  <data name="StoreRequired" xml:space="preserve">
+    <value>Store Required</value>
+  </data>
   <data name="SupplierFromWhomProductPurchased" xml:space="preserve">
     <value>A supplier from whom the product is purchased</value>
+  </data>
+  <data name="SupplierRequired" xml:space="preserve">
+    <value>Supplier Required</value>
   </data>
   <data name="ThisUnitWasSelected" xml:space="preserve">
     <value>This unit has already been selected</value>

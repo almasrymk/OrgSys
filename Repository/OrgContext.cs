@@ -80,9 +80,21 @@ namespace Repository
                             new Permission { Id = 20404, Key = "Delete", Value = "Clients.Delete", ParentId = 204 }
                 );
 
-            modelBuilder.Entity<Role>().HasData(new Role { Id = 1 , Name = "Owner", Hide = true });
+            modelBuilder.Entity<Role>().HasData(new Role { Id = 1, Name = "Owner", Hide = true });
 
-            modelBuilder.Entity<User>().HasData(new User { Id = 1, Name = "Owner" , UserName = "Owner", Password = Security.Encrypt("OwnerAbc@123") , RoleId = 1, Hide = true });
+            modelBuilder.Entity<User>().HasData(new User { Id = 1, Name = "Owner", UserName = "Owner", Password = Security.Encrypt("OwnerAbc@123"), RoleId = 1, Hide = true });
+
+            modelBuilder.Entity<InvoiceType>().HasData(
+                new InvoiceType { Id = 1, Name = "Sales", Hide = true },
+                new InvoiceType { Id = 2, Name = "Purchase", Hide = true },
+                new InvoiceType { Id = 3, Name = "Return Sales", Hide = true },
+                new InvoiceType { Id = 4, Name = "Return Purchase", Hide = true }
+                );
+
+            modelBuilder.Entity<PaymentType>().HasData(
+                new PaymentType { Id = 1, Name = "Cash", Hide = true },
+                new PaymentType { Id = 2, Name = "Check", Hide = true }
+                );
         }
 
         public virtual DbSet<Unit> Units { get; set; }
@@ -94,7 +106,14 @@ namespace Repository
         public virtual DbSet<Store> Stores { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Shift> Shifts { get; set; }
-        public virtual DbSet<User>  Users { get; set; }
-        public virtual DbSet<Permission> Permissions { get; set; }        
+        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Permission> Permissions { get; set; }
+        public virtual DbSet<Invoice> Invoices { get; set; }
+        public virtual DbSet<InvoiceProduct> InvoiceProducts { get; set; }
+        public virtual DbSet<InvoiceType> InvoiceTypes { get; set; }
+        public virtual DbSet<Order> Orders { get; set; }
+        public virtual DbSet<OrderProduct> OrderProducts { get; set; }
+        public virtual DbSet<PaymentType> PaymentTypes { get; set; }
+        public virtual DbSet<LogSys> LogSys { get; set; }
     }
 }

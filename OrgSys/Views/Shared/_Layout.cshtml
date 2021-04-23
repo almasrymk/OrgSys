@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="~/css/vendor/dataTables.bootstrap4.min.css" />
     <link rel="stylesheet" href="~/css/vendor/datatables.responsive.bootstrap4.min.css" />
     <link rel="stylesheet" href="~/css/vendor/select2.min.css" />
+    <link rel="stylesheet" href="~/css/vendor/select2-bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/vendor/perfect-scrollbar.css" />
     <link rel="stylesheet" href="~/css/vendor/glide.core.min.css" />
     <link rel="stylesheet" href="~/css/vendor/bootstrap-stars.css" />
@@ -28,7 +29,9 @@
     <link rel="stylesheet" href="~/css/vendor/bootstrap-datepicker3.min.css" />
     <link rel="stylesheet" href="~/css/vendor/component-custom-switch.min.css" />
     <link rel="stylesheet" href="~/css/main.css" />
-    <link href="~/css/jquery.bonsai.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/jquery.bonsai.css" />
+    <link rel="stylesheet" href="~/fontawesome-free-5.15.3-web/css/all.css" />
+    <link rel="stylesheet" href="~/fontawesome-free-5.15.3-web/css/fontawesome.css" />
 </head>
 
 <body id="app-container" class="menu-default show-spinner">
@@ -61,8 +64,10 @@
             </div>
         </div>
         <a class="navbar-logo" href="Dashboard.Default.html">
-            <span class="logo d-none d-xs-block"></span>
-            <span class="logo-mobile d-block d-xs-none"></span>
+            <img src="~/logos/black.svg" style="margin-top:-15px;margin-bottom:0px;" />
+
+            @*<span class="logo d-none d-xs-block"></span>
+                <span class="logo-mobile d-block d-xs-none"></span>*@
         </a>
         <div class="navbar-right">
             <div class="header-icons d-inline-block align-middle">
@@ -317,14 +322,14 @@
                         <div id="collapseProduct" class="collapse show">
                             <ul class="list-unstyled inner-level-menu">
                                 <li>
-                                    <a href="Pages.Product.List.html">
+                                    <a href="/Sales/Invoice?TypeId=1">
                                         <i class="simple-icon-basket-loaded"></i> <span class="d-inline-block">
                                             @Utility.Resource.Title_Designer.Invoices
                                         </span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="Pages.Product.Thumbs.html">
+                                    <a href="/Sales/ReturnInvoice?TypeId=3">
                                         <i class="simple-icon-action-undo"></i> <span class="d-inline-block">
                                             @Utility.Resource.Title_Designer.Returns
                                         </span>
@@ -387,14 +392,14 @@
                         <div id="collapseProfile" class="collapse show">
                             <ul class="list-unstyled inner-level-menu">
                                 <li>
-                                    <a href="Pages.Product.List.html">
+                                    <a href="/Purchases/Invoice?TypeId=2">
                                         <i class="simple-icon-basket-loaded"></i> <span class="d-inline-block">
                                             @Utility.Resource.Title_Designer.Invoices
                                         </span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="Pages.Product.Thumbs.html">
+                                    <a href="/Purchases/ReturnInvoice?TypeId=4">
                                         <i class="simple-icon-action-undo"></i> <span class="d-inline-block">
                                             @Utility.Resource.Title_Designer.Returns
                                         </span>
@@ -1032,7 +1037,10 @@
     <script src="~/js/scripts.js"></script>
     <script src="~/js/custom.js"></script>
     <script src="~/js/vendor/ckeditor5-build-classic/ckeditor.js"></script>
-
+    <script src="~/fontawesome-free-5.15.3-web/js/all.js"></script>
+    <script src="~/fontawesome-free-5.15.3-web/js/fontawesome.js"></script>
+  
+    @*<script src="~/js/vendor/typeahead.bundle.js"></script>*@
     <script>
         jQuery(function ($) {
             url = '@ViewBag.page';

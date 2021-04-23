@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.AspNetCore.Mvc.Localization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 namespace OrgSys
 {
@@ -38,23 +39,20 @@ namespace OrgSys
             services.AddMvc().AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix).AddDataAnnotationsLocalization();
 
             services.Configure<RequestLocalizationOptions>(options =>
-            {
-                options.SetDefaultCulture("en-Us");
+            {                
                 options.AddSupportedUICultures("en-US", "ar-EG");
                 options.FallBackToParentUICultures = true;
             });
             services.AddRazorPages().AddRazorRuntimeCompilation();
-            services.AddRazorPages().AddViewLocalization();
-           
+            services.AddRazorPages().AddViewLocalization();          
 
             services.AddDbContext<OrgContext>(options => options.UseSqlServer(Configuration.GetConnectionString("OrgConnection")));
             services.AddControllersWithViews();
 
-            services.Configure<RequestLocalizationOptions>(options =>
-            {              
-                options.AddSupportedUICultures("en-US", "ar-EG");
-                options.FallBackToParentUICultures = true;
-            });
+            //services.AddMvc(options =>
+            //{
+            //    options.Filters.Add(new AuthorizeFilter());
+            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -84,9 +82,9 @@ namespace OrgSys
             app.UseRouting();
 
             app.UseAuthorization();
-
+          
             app.UseEndpoints(endpoints =>
-            {
+            {                
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
@@ -101,7 +99,11 @@ namespace OrgSys
                     areaName: "Sales",
                     pattern: "Sales/{controller=Home}/{action=Index}/{id?}");
 
-              
+                endpoints.MapAreaControllerRoute(
+                   name: "Purchases",
+                   areaName: "Purchases",
+                   pattern: "Purchases/{controller=Home}/{action=Index}/{id?}");
+                //endpoints.MapRazorPages();
             });
         }
     }

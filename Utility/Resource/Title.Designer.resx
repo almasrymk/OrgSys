@@ -123,6 +123,9 @@
   <data name="Address" xml:space="preserve">
     <value>Address</value>
   </data>
+  <data name="Amount" xml:space="preserve">
+    <value>Amount</value>
+  </data>
   <data name="Back" xml:space="preserve">
     <value>Back</value>
   </data>
@@ -186,6 +189,12 @@
   <data name="Invoice" xml:space="preserve">
     <value>Invoice</value>
   </data>
+  <data name="InvoiceDetails" xml:space="preserve">
+    <value>Invoice details</value>
+  </data>
+  <data name="InvoiceProducts" xml:space="preserve">
+    <value>Invoice products</value>
+  </data>
   <data name="Invoices" xml:space="preserve">
     <value>Invoices</value>
   </data>
@@ -234,6 +243,9 @@
   <data name="Purchases" xml:space="preserve">
     <value>Purchases</value>
   </data>
+  <data name="Quantity" xml:space="preserve">
+    <value>Quantity</value>
+  </data>
   <data name="Rate" xml:space="preserve">
     <value>Rate</value>
   </data>
@@ -242,6 +254,9 @@
   </data>
   <data name="Return" xml:space="preserve">
     <value>Return</value>
+  </data>
+  <data name="ReturnInvoices" xml:space="preserve">
+    <value>Return Invoices</value>
   </data>
   <data name="Returns" xml:space="preserve">
     <value>Returns</value>
