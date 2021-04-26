@@ -1,4 +1,5 @@
-﻿using OrgSysApp.Forms.Data;
+﻿using Entity.ModelView;
+using OrgSysApp.Forms.Data;
 using OrgSysApp.Tools;
 using System;
 using System.Collections.Generic;
