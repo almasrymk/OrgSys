@@ -15,7 +15,7 @@ namespace Repository
         public Curd()
         {
             if (this.db == null)
-                this.db = new OrgContext(new DbContextOptions<OrgContext>());
+                this.db = new OrgContext(new DbContextOptions<OrgContext>());            
         }
 
         /// <summary>

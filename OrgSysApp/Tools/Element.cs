@@ -34,6 +34,7 @@ namespace OrgSysApp.Tools
         Color _backgroundColor = Color.Transparent;
         Color _backgroundColorActive = Color.Transparent;
         bool _active = false;
+        bool _withDescription = false;
 
         [Category("Org.Image")]
         public Image image
@@ -202,6 +203,17 @@ namespace OrgSysApp.Tools
                     lblTitle.ForeColor = _fontColor;
                     lblDescription.ForeColor = _fontColorDescription;
                 }
+            }
+        }
+
+        [Category("Org")]
+        public bool WithDescription
+        {
+            get { return _withDescription; }
+            set
+            {
+                _withDescription = value;
+                lblDescription.Visible = value;
             }
         }
 
