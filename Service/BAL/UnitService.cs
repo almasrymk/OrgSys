@@ -113,5 +113,19 @@ namespace Service.BAL
         {
             return repo.unitRepo.GetList(e => ids.Contains(e.Id), e => e.OrderBy(e => e.Id), "", Utility.Status.New).Select(e => new UnitModelView(e)).ToList();
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="textSearch"></param>
+        /// <returns></returns>
+        public List<UnitModelView> GetAllByProductId(long ProductId = 0)
+        {
+            var itemUnits =  repo.productUnitRepo.GetList(e=>e.ProductId == ProductId, null, "", Utility.Status.New).ToList();
+            if (itemUnits == null)
+                itemUnits = new List<ProductUnit>();
+            List<long> ids = itemUnits.Select(e => e.UnitId).ToList();
+            return repo.unitRepo.GetList(e => ids.Contains(e.Id), e => e.OrderBy(e => e.Id), "", Utility.Status.New).Select(e => new UnitModelView(e)).ToList();
+        }
     }
 }

@@ -9,7 +9,8 @@
     1
 </td>
 <td style="min-width:100px;padding:0px;">
-    @Html.TextBoxFor(model => model.ProductId, new { @class = "form-control", @style = "border-top:none;border-bottom:none;border-right:none;", @placeholder = "0.0" })
+    <input type="text" class="form-control search-box" name="query" id="query" style = "border-top:none;border-bottom:none;border-right:none;" placeholder = "0.0" value="@Model.ProductName"/>
+    @Html.HiddenFor(model => model.ProductId)
 </td>
 <td style="width:150px;padding:0px;">
     @Html.TextBoxFor(model => model.UnitId, new { @class = "form-control", @style = "border-top:none;border-bottom:none;border-right:none;", @placeholder = "0.0" })

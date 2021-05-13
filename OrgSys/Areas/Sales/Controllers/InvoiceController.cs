@@ -48,12 +48,13 @@ namespace OrgSys.Areas.Sales.Controllers
 
         public JsonResult checkStock(int id)
         {
-
-            var data = new ProductService().GetAll(0, 0).Select(_ => new
+            var product = new ProductService().Get(id);
+            var data = new
             {
-                qty = _.Price
-            }).FirstOrDefault();
-
+                price = product.Price,
+                selectunitid = product.ProductUnits.FirstOrDefault(e=>e.DefaultUnit).UnitId,
+                unitlist = new UnitService().GetAllByProductId(id)
+            };           
             return Json(data);
         }
     }

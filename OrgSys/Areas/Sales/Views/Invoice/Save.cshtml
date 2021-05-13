@@ -70,27 +70,33 @@
                                                         @index
                                                     </td>
                                                     <td class="input-group typeahead-container" style="min-width:100px;padding:0px;">
-                                                        @*@Html.TextBoxFor(model => model.Total, new { @class = "form-control", @style = "border-top:none;border-bottom:none;border-right:none;", @placeholder = "0.0" })*@
-                                                        @*@Html.DropDownList("ProductId", null, " ... ", new { @class = "form-control select2-multiple", @style = "border-top:none;border-bottom:none;border-right:none;" })*@
-                                                        <input type="text" class="form-control typeahead" name="query1" id="query1"
-                                                               data-provide="typeahead"
-                                                               style="border-top:none;border-bottom:none;border-right:none;"
-                                                               autocomplete="off">
+                                                        <div class="input-group typeahead-container">
+                                                            <div class="input-group-append " style="border-top:none;border-bottom:none;border-right:none;border-left:none;">
+                                                                <a href="#" class="btn btn-primary" style="width:30px;padding:0px;padding-top:10px;">
+                                                                    <i class="simple-icon-magnifier"></i>
+                                                                </a>
+                                                            </div>
+                                                            <input type="text" class="form-control search-box" name="query" id="query"
+                                                                   placeholder="Start typing product to search..."
+                                                                   autocomplete="off" style="border-top:none;border-bottom:none;border-right:none;">
+                                                            <input type="hidden" id="ProductId" name="ProductId" />
+                                                        </div>
                                                     </td>
                                                     <td style="width:150px;padding:0px;">
-                                                        @Html.TextBoxFor(model => model.Total, new { @class = "form-control", @style = "border-top:none;border-bottom:none;border-right:none;", @placeholder = "0.0" })
+
+                                                       <select type="text" id="UnitId" name="UnitId"  class="form-control" style="border-top:none;border-bottom:none;border-right:none;"></select>
                                                     </td>
                                                     <td style="width:100px;padding:0px;">
-                                                        @Html.TextBoxFor(model => model.Total, new { @class = "form-control", @style = "border-top:none;border-bottom:none;border-right:none;", @placeholder = "0.0" })
+                                                        <input type="text" id="Price" name="Price" class="form-control" style="border-top:none;border-bottom:none;border-right:none;" placeholder="0.0" />
                                                     </td>
                                                     <td style="width:100px;padding:0px;">
-                                                        @Html.TextBoxFor(model => model.Total, new { @class = "form-control", @style = "border-top:none;border-bottom:none;border-right:none;", @placeholder = "0.0" })
+                                                        <input type="text" id="Quantity" name="Quantity" class="form-control" style="border-top:none;border-bottom:none;border-right:none;" placeholder="0.0" />
                                                     </td>
                                                     <td style="width:100px;padding:0px;">
-                                                        @Html.TextBoxFor(model => model.Total, new { @class = "form-control", @style = "border-top:none;border-bottom:none;", @placeholder = "0.0" })
+                                                        <input type="text" id="Total" name="Total" class="form-control" style ="border-top:none;border-bottom:none;" placeholder="0.0" />
                                                     </td>
                                                     <td style="width:100px;padding:0px;text-align:center;vertical-align:middle;">
-                                                        <a href="javascript:Deleted();" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete</a>
+                                                        <a id="btnDelete" href="javascript:Deleted();" data-toggle="modal" data-target="#MsgModelId" style="display:none"><i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete</a>
                                                     </td>
                                                 </tr>
                                             }
@@ -313,10 +319,11 @@
         </div>
     </div>
 </div>
+
 <script src="~/js/vendor/jquery-3.3.1.min.js"></script>
-
 <script src="~/js/vendor/bootstrap3-typeahead.js"></script>
-
+<link href="~/css/jquery-ui.css" rel="stylesheet" />
+<script src="~/js/jquery-ui.js"></script>
 <script>
     var testData = [{ id: 1, name: 'asd as', index: 0 }]
 
@@ -340,102 +347,112 @@
         });
     })
 
-   
+    jQuery(function ($) {
 
-    //$(".search-box").autocomplete({
-    //    minLength: 2,
-    //    source: function (request, response) {
-    //        /*  var storeId = $("#StoreID").val();*/
-    //        var searchPhrase = request.term.trim().toLowerCase();
-    //        var noResultsLabel = 'NoResultsFound';
+        RefreshSomeEventListener();
 
-    //        $.ajax({
-    //            url: "/Sales/Invoice/SearchItems",
-    //            type: "Get",
-    //            dataType: "json",
-    //            data: { phrase: searchPhrase },
-    //            success: function (data) {
-    //                if (!data.length) {
-    //                    data = [{ Name: noResultsLabel }];
-    //                }
+        function RefreshSomeEventListener() {
+            $(".search-box").autocomplete({
+                minLength: 1,
+                source: function (request, response) {
+                    var searchPhrase = request.term.trim().toLowerCase();
+                    var noResultsLabel = 'NoResultsFound';
 
-    //                response($.map(data, function (item) {
-    //                    return {
-    //                        label: item.Name,
-    //                        value: item.Name,
-    //                        id: item.Id,
-    //                        Price: item.Price
-    //                    };
-    //                }));
+                    $.ajax({
+                        url: "/Sales/Invoice/SearchItems",
+                        type: "Get",
+                        dataType: "json",
+                        data: { phrase: searchPhrase },
+                        success: function (data) {
+                            if (!data.length) {
+                                data = [{ Name: noResultsLabel }];
+                            }
 
-    //            }
-    //        });
-    //    },
+                            response($.map(data, function (item) {                                
+                                return {
+                                    label: item.name, value: item.name, id: item.id,
+                                    barcode: item.barcode, price: item.price
+                                };
+                            }));
+                        }
+                    });
+                },
+                select: function (event, ui) {
+                    if (ui.item.label === 'NoResultsFound') {
+                        event.preventDefault();
+                        return;
+                    }
+                    $.ajax({
+                        url: "/Sales/Invoice/checkStock",
+                        type: "Get",
+                        data: { id: ui.item.id},
+                        success: function (data) {
+                            var price = parseInt(data.price);
+                            var $row = $(event.target).parents('tr');
+                            $row.find("#ProductId").val(ui.item.id);
+                            $row.find("#Price").val(price);
+                            $row.find("#Quantity").val(1);
+                            $row.find("#Total").val(price);
+                            $row.find("#btnDelete").css("display", "block");;
 
-    //    select: function (event, ui) {
-    //        if (ui.item.label === 'NoResultsFound') {
-    //            event.preventDefault();
-    //            return;
-    //        }
-    //        /* var storeId = $("#StoreID").val();*/
-    //        $.ajax({
-    //            url: "/Sales/Invoice/checkStock",
-    //            type: "Get",
-    //            data: { id: ui.item.id },
-    //            success: function (data) {
+                            var $UnitID = $row.find('#UnitId');
+                            $UnitID.find('option').remove();
+                            $(data.unitlist).each(function (index, unit) {
+                                $UnitID.append($('<option></option>').val(unit.id).html(unit.name));
+                            });
+                            $UnitID.val(data.selectunitid).trigger("change", SkipCallingAction = true);
 
-    //                //var $row = $(event.target).parents('tr');
-    //                //$row.find("#ValidQTY").val(qty);
+                            //var pDiscount = data.PDiscount;
 
-    //                //var pDiscount = data.PDiscount;
+                            //if (data.ItemDiscount > 0) {
+                            //    $row.find("#DiscountPercentage").val(data.ItemDiscount);
+                            //}
+                            //else if (IsFixed === 1) {
+                            //    $row.find("#DiscountPercentage").val($("#DiscountClient").val());
+                            //}
+                            //else {
+                            //    if (parseFloat(pDiscount - $("#DiscountClient").val()).toFixed(0) < 0) {
+                            //        var sDicount = parseFloat(pDiscount).toFixed(0);
+                            //        $row.find("#DiscountPercentage").val(sDicount);
+                            //    }
+                            //    else {
+                            //        var sDicount = parseFloat(pDiscount - $("#DiscountClient").val()).toFixed(0);
+                            //        $row.find("#DiscountPercentage").val(sDicount);
+                            //    }
 
-    //                //if (data.ItemDiscount > 0) {
-    //                //    $row.find("#DiscountPercentage").val(data.ItemDiscount);
-    //                //}
-    //                //else if (IsFixed === 1) {
-    //                //    $row.find("#DiscountPercentage").val($("#DiscountClient").val());
-    //                //}
-    //                //else {
-    //                //    if (parseFloat(pDiscount - $("#DiscountClient").val()).toFixed(0) < 0) {
-    //                //        var sDicount = parseFloat(pDiscount).toFixed(0);
-    //                //        $row.find("#DiscountPercentage").val(sDicount);
-    //                //    }
-    //                //    else {
-    //                //        var sDicount = parseFloat(pDiscount - $("#DiscountClient").val()).toFixed(0);
-    //                //        $row.find("#DiscountPercentage").val(sDicount);
-    //                //    }
-
-    //                //}
-    //            }
-    //        });
+                            //}
+                        }
+                    });
 
 
-    //        //let check = 0;
-    //        //$('#Details > tbody > tr').not(':first').each(function () {
+                    //let check = 0;
+                    //$('#Details > tbody > tr').not(':first').each(function () {
 
-    //        //    let currentRow = $(this);
-    //        //    let colvalue = currentRow.find("#ItemID").val();
-    //        //    if (colvalue == ui.item.id) {
-    //        //        alert("تنبيه !! هذا الصنف مضاف للفاتوره");
-    //        //        check = 1;
-    //        //    }
-    //        //});
+                    //    let currentRow = $(this);
+                    //    let colvalue = currentRow.find("#ItemID").val();
+                    //    if (colvalue == ui.item.id) {
+                    //        alert("تنبيه !! هذا الصنف مضاف للفاتوره");
+                    //        check = 1;
+                    //    }
+                    //});
 
-    //        //if (check == 0) {
-    //        //    CheckLastInv(ui.item.id);
-    //        //    var $row = $(event.target).parents('tr');
-    //        //    $row.find('#ItemID').val(ui.item.id);
-    //        //    $row.find("#Item_BarCode").val(ui.item.barCode);
-    //        //    $row.find("#UnitPrice").val(ui.item.unitPrice);
-    //        //    $row.find('#UnitID').val(ui.item.unitId).trigger("change", SkipCallingAction = true);
-    //        //    $row.find("#UnitQuantity").focus();
-    //        //    AddRow();
-    //        //}
-    //    },
-    //    focus: function (event, ui) {
-    //        if (ui.item.label === 'NoResultsFound') {
-    //            event.preventDefault();
-    //        }
-    //    },
-    //});
+                    //if (check == 0) {
+                    //    CheckLastInv(ui.item.id);
+                    //    var $row = $(event.target).parents('tr');
+                    //    $row.find('#ItemID').val(ui.item.id);
+                    //    $row.find("#Item_BarCode").val(ui.item.barCode);
+                    //    $row.find("#UnitPrice").val(ui.item.unitPrice);
+                    //    $row.find('#UnitID').val(ui.item.unitId).trigger("change", SkipCallingAction = true);
+                    //    $row.find("#UnitQuantity").focus();
+                    //    AddRow();
+                    //}
+                },
+                focus: function (event, ui) {
+                    if (ui.item.label === 'NoResultsFound') {
+                        event.preventDefault();
+                    }
+                },
+            });
+        }
+    });
 </script>
