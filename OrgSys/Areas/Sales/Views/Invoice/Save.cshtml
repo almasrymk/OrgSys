@@ -50,7 +50,7 @@
                             @Html.HiddenFor(model => model.ParentId)
                             <div id="checkStep1">
                                 <div class="card">
-                                    <table id="tblUnit" class="table table-hover ">
+                                    <table id="tbl" class="table table-hover ">
                                         <thead>
                                             <tr>
                                                 <th scope="col">#</th>
@@ -63,11 +63,11 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @for (int i = 0, index = 1; i < 7; i++, index++)
+                                            @for (int i = 0, index = 1; i < 6; i++, index++)
                                             {
-                                                <tr class="product-empty">
+                                                <tr class="product-empty ProductRow">
                                                     <td style="width:35px;padding:0px;text-align:center;vertical-align:middle;">
-                                                        @index
+                                                        <span id="Index">  </span>
                                                     </td>
                                                     <td class="input-group typeahead-container" style="min-width:100px;padding:0px;">
                                                         <div class="input-group typeahead-container">
@@ -84,7 +84,7 @@
                                                     </td>
                                                     <td style="width:150px;padding:0px;">
 
-                                                       <select type="text" id="UnitId" name="UnitId"  class="form-control" style="border-top:none;border-bottom:none;border-right:none;"></select>
+                                                        <select type="text" id="UnitId" name="UnitId" class="form-control" style="border-top:none;border-bottom:none;border-right:none;"></select>
                                                     </td>
                                                     <td style="width:100px;padding:0px;">
                                                         <input type="text" id="Price" name="Price" class="form-control" style="border-top:none;border-bottom:none;border-right:none;" placeholder="0.0" />
@@ -93,15 +93,50 @@
                                                         <input type="text" id="Quantity" name="Quantity" class="form-control" style="border-top:none;border-bottom:none;border-right:none;" placeholder="0.0" />
                                                     </td>
                                                     <td style="width:100px;padding:0px;">
-                                                        <input type="text" id="Total" name="Total" class="form-control" style ="border-top:none;border-bottom:none;" placeholder="0.0" />
+                                                        <input type="text" id="Amount" name="Amount" class="form-control" style="border-top:none;border-bottom:none;" placeholder="0.0" />
                                                     </td>
                                                     <td style="width:100px;padding:0px;text-align:center;vertical-align:middle;">
-                                                        <a id="btnDelete" href="javascript:Deleted();" data-toggle="modal" data-target="#MsgModelId" style="display:none"><i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete</a>
+                                                        <a id="btnDelete" class="btnDelete" href="javascript:;" data-toggle="modal" data-target="#MsgModelId" style="display:none"><i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete</a>
                                                     </td>
                                                 </tr>
                                             }
 
-                                            <tr style="margin-top:5px !important;">
+                                            <tr class="product-empty ProductRow trNew">
+                                                <td style="width:35px;padding:0px;text-align:center;vertical-align:middle;">
+                                                    <span id="Index">  </span>                                                    
+                                                </td>
+                                                <td class="input-group typeahead-container" style="min-width:100px;padding:0px;">
+                                                    <div class="input-group typeahead-container">
+                                                        <div class="input-group-append " style="border-top:none;border-bottom:none;border-right:none;border-left:none;">
+                                                            <a href="#" class="btn btn-primary" style="width:30px;padding:0px;padding-top:10px;">
+                                                                <i class="simple-icon-magnifier"></i>
+                                                            </a>
+                                                        </div>
+                                                        <input type="text" class="form-control search-box" name="query" id="query"
+                                                               placeholder="Start typing product to search..."
+                                                               autocomplete="off" style="border-top:none;border-bottom:none;border-right:none;">
+                                                        <input type="hidden" id="ProductId" name="ProductId" />
+                                                    </div>
+                                                </td>
+                                                <td style="width:150px;padding:0px;">
+
+                                                    <select type="text" id="UnitId" name="UnitId" class="form-control" style="border-top:none;border-bottom:none;border-right:none;"></select>
+                                                </td>
+                                                <td style="width:100px;padding:0px;">
+                                                    <input type="text" id="Price" name="Price" class="form-control" style="border-top:none;border-bottom:none;border-right:none;" placeholder="0.0" />
+                                                </td>
+                                                <td style="width:100px;padding:0px;">
+                                                    <input type="text" id="Quantity" name="Quantity" class="form-control" style="border-top:none;border-bottom:none;border-right:none;" placeholder="0.0" />
+                                                </td>
+                                                <td style="width:100px;padding:0px;">
+                                                    <input type="text" id="Amount" name="Amount" class="form-control" style="border-top:none;border-bottom:none;" placeholder="0.0" />
+                                                </td>
+                                                <td style="width:100px;padding:0px;text-align:center;vertical-align:middle;">
+                                                    <a id="btnDelete" class="btnDelete" href="javascript:;"  data-toggle="modal" data-target="#MsgModelId" style="display:none"><i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete</a>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="tblFooter" style="margin-top:5px !important;">
                                                 <td style="min-width:100px;padding:0px;" colspan="2">
                                                 </td>
                                                 <td style="width:100px;padding:0px;text-align:center;vertical-align:middle;">
@@ -324,40 +359,37 @@
 <script src="~/js/vendor/bootstrap3-typeahead.js"></script>
 <link href="~/css/jquery-ui.css" rel="stylesheet" />
 <script src="~/js/jquery-ui.js"></script>
-<script>
-    var testData = [{ id: 1, name: 'asd as', index: 0 }]
-
-
-    $("#query1").on("change", function () {
-        $.ajax({
-            url: "/Sales/Invoice/SearchItems",
-            type: "Get",
-            dataType: "json",
-            data: { phrase: "d" },
-            success: function (data) {
-                $("#query1").typeahead({
-                    source: data,
-                    afterSelect: function (data) {
-                        $(this.$element[0]).data("id", data.id);
-                        $(this.$element[0]).data("index", data.index);
-                        $(this.$element[0]).data("name", data.name);
-                    }
-                });
-            }
-        });
-    })
-
+<script>   
     jQuery(function ($) {
+
+        function AddNewRow() {
+            //ProductRow ProductRowNew
+            var Current = $('.trNew');
+            var NewRow = Current.clone();
+            //$("#tbl").find('tbody').append(NewRow);  
+
+            NewRow.insertAfter(".trNew")
+            Current.removeClass("trNew");
+            Current.addClass("ProductRow")
+            NewRow.find("#query").val("");
+            NewRow.find("#UnitId").find('option').remove();
+            NewRow.find("#Index").empty();
+            NewRow.find("#Index").append();
+            NewRow.find("#Price").val("");
+            NewRow.find("#Quantity").val("");
+            NewRow.find("#Amount").val("");
+            NewRow.find("#btnDelete").css("display", "none");
+            RefreshSomeEventListener();
+        }
 
         RefreshSomeEventListener();
 
         function RefreshSomeEventListener() {
             $(".search-box").autocomplete({
-                minLength: 1,
+                minLength: 0,
                 source: function (request, response) {
                     var searchPhrase = request.term.trim().toLowerCase();
-                    var noResultsLabel = 'NoResultsFound';
-
+                    var noResultsLabel = 'NoResultsFound';                  
                     $.ajax({
                         url: "/Sales/Invoice/SearchItems",
                         type: "Get",
@@ -365,10 +397,10 @@
                         data: { phrase: searchPhrase },
                         success: function (data) {
                             if (!data.length) {
-                                data = [{ Name: noResultsLabel }];
+                                data = [{ name: noResultsLabel }];
                             }
 
-                            response($.map(data, function (item) {                                
+                            response($.map(data, function (item) {
                                 return {
                                     label: item.name, value: item.name, id: item.id,
                                     barcode: item.barcode, price: item.price
@@ -385,15 +417,11 @@
                     $.ajax({
                         url: "/Sales/Invoice/checkStock",
                         type: "Get",
-                        data: { id: ui.item.id},
+                        data: { id: ui.item.id },
                         success: function (data) {
                             var price = parseInt(data.price);
                             var $row = $(event.target).parents('tr');
                             $row.find("#ProductId").val(ui.item.id);
-                            $row.find("#Price").val(price);
-                            $row.find("#Quantity").val(1);
-                            $row.find("#Total").val(price);
-                            $row.find("#btnDelete").css("display", "block");;
 
                             var $UnitID = $row.find('#UnitId');
                             $UnitID.find('option').remove();
@@ -402,57 +430,60 @@
                             });
                             $UnitID.val(data.selectunitid).trigger("change", SkipCallingAction = true);
 
-                            //var pDiscount = data.PDiscount;
+                            $row.find("#Price").val(price);
+                            $row.find("#Quantity").val(1);
+                            $row.find("#Amount").val(price);
+                            $row.find("#btnDelete").css("display", "block");                           
 
-                            //if (data.ItemDiscount > 0) {
-                            //    $row.find("#DiscountPercentage").val(data.ItemDiscount);
-                            //}
-                            //else if (IsFixed === 1) {
-                            //    $row.find("#DiscountPercentage").val($("#DiscountClient").val());
-                            //}
-                            //else {
-                            //    if (parseFloat(pDiscount - $("#DiscountClient").val()).toFixed(0) < 0) {
-                            //        var sDicount = parseFloat(pDiscount).toFixed(0);
-                            //        $row.find("#DiscountPercentage").val(sDicount);
-                            //    }
-                            //    else {
-                            //        var sDicount = parseFloat(pDiscount - $("#DiscountClient").val()).toFixed(0);
-                            //        $row.find("#DiscountPercentage").val(sDicount);
-                            //    }
+                            if ($row.hasClass("trNew") == true) {
+                                $row.find("#Index").append($("#tbl").find('.ProductRow').length);
+                                AddNewRow();
+                            }   
 
-                            //}
+                            ReIndex();
+                            ReCalc();
                         }
                     });
-
-
-                    //let check = 0;
-                    //$('#Details > tbody > tr').not(':first').each(function () {
-
-                    //    let currentRow = $(this);
-                    //    let colvalue = currentRow.find("#ItemID").val();
-                    //    if (colvalue == ui.item.id) {
-                    //        alert("تنبيه !! هذا الصنف مضاف للفاتوره");
-                    //        check = 1;
-                    //    }
-                    //});
-
-                    //if (check == 0) {
-                    //    CheckLastInv(ui.item.id);
-                    //    var $row = $(event.target).parents('tr');
-                    //    $row.find('#ItemID').val(ui.item.id);
-                    //    $row.find("#Item_BarCode").val(ui.item.barCode);
-                    //    $row.find("#UnitPrice").val(ui.item.unitPrice);
-                    //    $row.find('#UnitID').val(ui.item.unitId).trigger("change", SkipCallingAction = true);
-                    //    $row.find("#UnitQuantity").focus();
-                    //    AddRow();
-                    //}
                 },
                 focus: function (event, ui) {
                     if (ui.item.label === 'NoResultsFound') {
                         event.preventDefault();
                     }
                 },
+            });    
+
+            $('.btnDelete').click(function () {
+                $(this).parent().parent().remove();
+                if ($("#tbl").find('.ProductRow').length < 7) {
+                    AddNewRow();
+                }
+                ReIndex();
+                ReCalc();
+            });
+        }   
+
+        ReIndex();
+
+        function ReIndex()
+        {
+            $("#tbl").find('.ProductRow').not(".trNew").each(function (index) {
+                $(this).find("#Index").empty();
+                $(this).find("#Index").append(index + 1);                
             });
         }
+
+        ReCalc();
+        function ReCalc() {
+            var total = Number(0);
+            $("#tbl").find('.ProductRow').not(".trNew").each(function (index) {
+                total +=  Number($(this).find("#Amount").val());
+            });
+            $("#Total").val(total);
+        }
     });
+
+    //function RemoveRow(data) {
+    //    $(data).remove();
+    //    if($("#tbl").find('.ProductRow').length
+    //}
 </script>
