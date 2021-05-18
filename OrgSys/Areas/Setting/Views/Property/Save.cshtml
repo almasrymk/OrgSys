@@ -1,0 +1,231 @@
+﻿@model Entity.ModelView.PropertyModelView
+@{
+    ViewData["Title_Designer"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div id="HPage" class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="mb-3">
+                <h1>@Utility.Resource.Title_Designer.Properties</h1>
+                <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
+                    <ol class="breadcrumb pt-0">
+                        <li class="breadcrumb-item">
+                            <a href="/">@Utility.Resource.Title_Designer.Home</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            @Utility.Resource.Title_Designer.Setting
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">  <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId">@Utility.Resource.Title_Designer.Properties</a></li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-12 col-lg-12 mb-4">
+            <div class="card h-100">
+                <div class="card pt-4 pb-4 pl-4 pr-4">
+                    <div class="d-md-block" id="displayOptions">
+                        <h3 class="mr-4 mb-2 ml-4 d-inline-block float-md-left">
+                            @if (Model != null || Model.Id == 0)
+                            {
+                                <span class="mb-4"> @Utility.Resource.Title_Designer.New ...</span>
+                            }
+                            else
+                            {
+                                <span class="mb-4"> @Utility.Resource.Title_Designer.Edit ...</span>
+                            }
+                        </h3>
+                        <div class="position-absolute card-top-buttons">
+                            <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId" class="btn btn-primary"><i class="simple-icon-action-undo"></i>  @Utility.Resource.Title_Designer.Back</a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+
+                        <form action="Save" method="post" enctype="multipart/form-data" class="tooltip-label-right" novalidate>
+
+                            @Html.HiddenFor(model => model.Id)
+                            @Html.HiddenFor(model => model.TypeId)
+                            @Html.HiddenFor(model => model.ParentId)
+                            @Html.HiddenFor(model => model.ImgPath)
+                            @Html.HiddenFor(model => model.Status)
+                            <div class="form-group position-relative error-l-50">
+                                @Html.LabelFor(model => model.Name)
+                                @Html.TextBoxFor(model => model.Name, new { @id = "PropertyName", @Name = "PropertyName", @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Name })
+                                <small class="form-text text-muted"> @Utility.Resource.Message_Designer.NameRequired!</small>
+                                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger mt-3 m-1" })
+                            </div>
+                        </form>
+                    </div>
+                    <hr />
+                    <div class="form-group position-relative error-l-50 mb-4">
+                        <div class="card">
+                            @*<div id="smartWizardClickable">*@
+                                @*<ul class="card-header">
+                                    <li>
+                                        <a href="#checkStep1">
+                                            @Utility.Resource.Title_Designer.PropertyElement<br />
+                                            <small>@Utility.Resource.Message_Designer.ElementsUnderProperty</small>
+                                            <div class="divtblPropertyElement" ></div>
+                                        </a>
+                                    </li>
+                                </ul>*@
+
+                                <div class="card-body">
+                                    <div >
+                                        <table id="tblPropertyElement" class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">@Utility.Resource.Title_Designer.PropertyElement</th>
+                                                    <th scope="col"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var ob in Model.PropertyElements)
+                                                {
+                                                <tr>
+                                                    <td style="width:100px;">
+                                                        <input type="hidden" id="RowId" value="@ob.Id" />
+                                                        <div id="divName" class="input-group">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text"><i class="simple-icon-settings"></i></span>
+                                                            </div>
+                                                            @Html.EditorFor(modelItem => ob.Name, new { htmlAttributes = new { @id = "Name", @name = "Name", @class = "form-control", @type = "text", @onkeyup = "AddNewRowUnit($(this).parent().parent())" } })
+                                                        </div>
+                                                    </td>
+
+                                                    <td style="width:100px;vertical-align:middle;">
+                                                        @if (ob != null && ob.Id >= 0)
+                                                        {
+                                                            <a id="btDelete" href="javascript:;" onclick="RemoveRowUnit($(this).parent().parent())">  <i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete  </a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a id="btDelete" href="javascript:;" onclick="RemoveRowUnit($(this).parent().parent())" style="display:none">  <i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete </a>
+                                                        }
+                                                    </td>
+                                                </tr>
+                                                }
+
+                                                <tr class="trNew">
+                                                    <td style="width:100px;">
+                                                        <input type="hidden" id="RowId" value="-1" />
+                                                        <div id="divName" class="input-group">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text"><i class="simple-icon-settings"></i></span>
+                                                            </div>
+                                                            @Html.Editor("Name", new { htmlAttributes = new { @id = "Name", @name = "Name", placeholder = Utility.Resource.Message_Designer.EnterPropertyElement, @class = "form-control", @type = "text", @onkeyup = "AddNewRowUnit($(this).parent().parent())" } })
+                                                        </div>
+                                                    </td>
+                                                    <td style="width:100px;vertical-align:middle;">
+                                                        <a id="btDelete" href="javascript:;" onclick="RemoveRowUnit($(this).parent().parent())" style="display:none">  <i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete </a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            @*</div>*@
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="pl-2 pr-2">
+        <button type="button" onclick="Save()" class="btn btn-primary mb-0">@Utility.Resource.Title_Designer.Save</button>
+    </div>
+</div>
+<script src="~/js/vendor/jquery-3.3.1.min.js"></script>
+<script>
+ function AddNewRowUnit(data) {
+     $("#errortblPropertyElement").remove();
+        $(data).find("#errorName").remove();
+        var valied = validUnit(data);
+        if ($(data).find("#RowId").val() < 0 && valied == true) {
+            var Current = $('.trNew');
+            var NewRow = Current.clone();
+            NewRow.find("#Name").val("");
+            $("#tblPropertyElement").find('tbody').append(NewRow);
+            Current.removeClass("trNew");
+            Current.find("#RowId").val(0);
+            Current.find("#Name").focus();
+            Current.find("#btDelete").css("display", "block");
+        }
+    }
+    function validUnit(data) {
+        var valid = true;
+        var NewRow = $('.trNew');
+        $('#tblPropertyElement > tbody > tr').each(function () {
+            var currentRow = $(this);
+            if (!currentRow.hasClass('trNew')) {
+                currentRow.find("td:eq(0) #errorName").remove();
+                if (currentRow.find("td:eq(0) #Name").val() == 0) {
+                    currentRow.find("td:eq(0) #Name").focus()
+                    currentRow.find("td:eq(0) #Name").after('<span id="errorName" class="error" style="color:red">@Utility.Resource.Message_Designer.EnterName</span>');
+                    NewRow.find("#Name").val("");
+                    valid = false;
+                }
+                    }
+                    });
+                    return valid;
+                    }
+
+                    function RemoveRowUnit(data) {
+                    $(data).remove();
+    }
+
+    function Save() {
+        var Valid = true;
+
+        if (CheckRowCount("tblPropertyElement", "divtblPropertyElement", '@Utility.Resource.Message_Designer.ClassificationRequired'))
+            Valid = false;
+
+        if (CheckRequired("PropertyName", "divPropertyName", '@Utility.Resource.Message_Designer.NameRequired'))
+            Valid = false;
+
+        else if (CheckRage("PropertyName", "divPropertyName", 3, 50, '@Utility.Resource.Message_Designer.NameRange'))
+            Valid = false;
+
+
+            var list = [];
+        $('#tblPropertyElement > tbody > tr').each(function () {
+                var currentRow = $(this);
+                if (!currentRow.hasClass('trNew')) {
+                    list.push({
+                        PropertyId: $('#Id').val(),
+                        Id: currentRow.find("td:eq(0) #RowId").val(),
+                        Name: currentRow.find("td:eq(0) #Name").val(),
+                    });
+                }
+            });
+            var data = {
+
+                Name: $('#PropertyName').val().trim(),
+                PropertyElements: list,
+            };
+
+            $.ajax({
+                type: 'POST',
+                url: "/Setting/Property/Save",
+                data: { model: data},
+                success: function (res) {
+                    if (res.status == "success") {
+                        window.location.replace(res.url);
+                    }
+                    else {
+                        $("#divLoader").hide();
+                        LogError(data.Error);
+                    }
+
+                }
+            });
+        }
+
+
+</script>

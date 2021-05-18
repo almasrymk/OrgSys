@@ -237,6 +237,12 @@
   <data name="Products" xml:space="preserve">
     <value>Products</value>
   </data>
+  <data name="Properties" xml:space="preserve">
+    <value>Properties</value>
+  </data>
+  <data name="PropertyElement" xml:space="preserve">
+    <value>Property Element</value>
+  </data>
   <data name="Purchase" xml:space="preserve">
     <value>Purchase</value>
   </data>
@@ -281,6 +287,9 @@
   </data>
   <data name="Search" xml:space="preserve">
     <value>Search</value>
+  </data>
+  <data name="SelectProduct" xml:space="preserve">
+    <value>Select Product</value>
   </data>
   <data name="SelectUnit" xml:space="preserve">
     <value>Select Unit</value>

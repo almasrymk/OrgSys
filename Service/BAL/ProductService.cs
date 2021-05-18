@@ -23,7 +23,9 @@ namespace Service.BAL
         /// <param name="ob"></param>
         /// <returns></returns>
         public ProductModelView Save(ProductModelView ob)
-        {
+        {    // Save
+            var Nwob = repo.productRepo.AddOrUpdate(ob.Model);
+
             var ids = ob.ProductUnits.Select(e => e.Id).ToList();
             if (ids == null) ids = new List<long>();
 
@@ -31,9 +33,11 @@ namespace Service.BAL
             var deleted = repo.productUnitRepo.GetList(e => e.ProductId == ob.Id && !ids.Contains(e.Id), e => e.OrderBy(e => e.Id), "", Utility.Status.All).ToList();
             if (deleted != null && deleted.Count > 0)
                 repo.productUnitRepo.ShiftDelete(deleted.Select(e => e.Id).ToList());
-          
-            // Save
-            var Nwob = repo.productRepo.AddOrUpdate(ob.Model);
+            //RecipeDelete from DataBase
+            var RecipeDeleted = repo.recipeRepo.GetList(e => e.ProductId == ob.Id, e => e.OrderBy(e => e.Id), "", Utility.Status.All).ToList();
+            if (RecipeDeleted != null && RecipeDeleted.Count > 0)
+                repo.recipeRepo.ShiftDelete(RecipeDeleted.Select(e => e.Id).ToList());
+        
             foreach (var productUnit in ob.ProductUnits)
             {
                 var model = productUnit.Model;
@@ -41,6 +45,15 @@ namespace Service.BAL
                 repo.productUnitRepo.AddOrUpdate(model);
             }
             Nwob.ProductUnits = repo.productUnitRepo.GetList(e=>e.ProductId == Nwob.Id, e => e.OrderBy(e => e.Id), "", Utility.Status.All).ToList();
+
+            //Save Recipe            
+            foreach (var productRecipe in ob.ProductRecipes)
+            {
+                var model = productRecipe.Model;
+                model.ProductId = Nwob.Id;
+                repo.recipeRepo.AddOrUpdate(model);
+            }
+            Nwob.ProductRecipes = repo.recipeRepo.GetList(e => e.ProductId == Nwob.Id, e => e.OrderBy(e => e.Id), "", Utility.Status.All).ToList();
             return new ProductModelView(Nwob);
         }
 
@@ -105,8 +118,13 @@ namespace Service.BAL
         {
             var ob = repo.productRepo.Get(e => e.Id == Id);
             if (ob != null)
-                ob.ProductUnits = repo.productUnitRepo.GetList(e=>e.ProductId == Id, e => e.OrderBy(e => e.Id), "", Utility.Status.All).ToList();
-            return new ProductModelView(ob);
+            {
+                ob.ProductUnits = repo.productUnitRepo.GetList(e => e.ProductId == Id, e => e.OrderBy(e => e.Id), "", Utility.Status.All).ToList();
+                ob.ProductRecipes = repo.recipeRepo.GetList(e => e.ProductId == Id, e => e.OrderBy(e => e.Id), "", Utility.Status.All).ToList();
+            }
+            var obMw = new ProductModelView(ob);
+            obMw.ProductPropertyTree = GetProperties(obMw.Id);
+            return obMw;
         }
 
         /// <summary>
@@ -118,8 +136,13 @@ namespace Service.BAL
         {
             var ob = repo.productRepo.Get(e => e.Name.Contains(textSearch) || e.Code == textSearch || "" + textSearch == "");
             if (ob != null)
+            {
                 ob.ProductUnits = repo.productUnitRepo.GetList(e => e.ProductId == ob.Id, e => e.OrderBy(e => e.Id), "", Utility.Status.All).ToList();
-            return new ProductModelView(ob);
+                ob.ProductRecipes = repo.recipeRepo.GetList(e => e.ProductId == ob.Id, e => e.OrderBy(e => e.Id), "", Utility.Status.All).ToList();
+            }
+            var obMw = new ProductModelView(ob);
+            obMw.ProductPropertyTree = GetProperties(obMw.Id);
+            return obMw;
         }
 
         /// <summary>
@@ -135,6 +158,20 @@ namespace Service.BAL
         public List<ProductModelView> GetAll(List<long> ids)
         {
             return repo.productRepo.GetList(e => ids.Contains(e.Id), e => e.OrderBy(e => e.Id), "", Utility.Status.New).Select(e => new ProductModelView(e)).ToList();
+        }
+
+        public List<TreeView> GetProperties(long productId)
+        {
+            List<TreeView> obList = new List<TreeView>();
+            var pro = repo.propertyRepo.GetList(null, "", Utility.Status.New).ToList();
+            foreach (var item in pro)
+            {
+                obList.Add(new TreeView { Id = item.Id, Value = item.Name, Key = "" + item.Id });
+                var proElement = repo.propertyelementRepo.GetList(e => e.PropertyId == item.Id, null, "", Utility.Status.New).ToList();
+                foreach (var item2 in proElement)
+                    obList.Add(new TreeView { Id = item2.Id, Value = item2.Name, Key = "" + item2.Id, ParentId = item.Id });
+            }
+            return obList;
         }
     }
 }

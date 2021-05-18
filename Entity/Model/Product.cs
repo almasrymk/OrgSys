@@ -13,6 +13,8 @@ namespace Entity.Model
         public Product()
         {
             ProductUnits = new HashSet<ProductUnit>();
+            ProductRecipes = new HashSet<ProductRecipe>();
+            ProductPropertyElements = new HashSet<ProductPropertyElement>();
         }
 
         public long CodeNumber { get; set; }
@@ -49,6 +51,10 @@ namespace Entity.Model
         public virtual Dealer Dealer { get; set; }
 
         public string Recipe { get; set; }
+
         public ICollection<ProductUnit> ProductUnits { get; set; }
+        public ICollection<ProductRecipe> ProductRecipes { get; set; }
+        public ICollection<ProductPropertyElement> ProductPropertyElements { get; set; }
+
     }
 }

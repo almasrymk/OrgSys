@@ -237,6 +237,12 @@
   <data name="Products" xml:space="preserve">
     <value>المنتجات</value>
   </data>
+  <data name="Properties" xml:space="preserve">
+    <value>الخصائص</value>
+  </data>
+  <data name="PropertyElement" xml:space="preserve">
+    <value>عنصر الخاصية</value>
+  </data>
   <data name="Purchase" xml:space="preserve">
     <value>شراء</value>
   </data>
@@ -281,6 +287,9 @@
   </data>
   <data name="Search" xml:space="preserve">
     <value>البحث</value>
+  </data>
+  <data name="SelectProduct" xml:space="preserve">
+    <value>اختر المنتج</value>
   </data>
   <data name="SelectUnit" xml:space="preserve">
     <value>اختار الوحدة</value>

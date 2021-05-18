@@ -232,6 +232,15 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Elements Under Property.
+        /// </summary>
+        public static string ElementsUnderProperty {
+            get {
+                return ResourceManager.GetString("ElementsUnderProperty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Email format must be entered.
         /// </summary>
         public static string EmailFromate {
@@ -255,6 +264,33 @@ namespace Utility.Resource {
         public static string EmailRequired {
             get {
                 return ResourceManager.GetString("EmailRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter Name.
+        /// </summary>
+        public static string EnterName {
+            get {
+                return ResourceManager.GetString("EnterName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter Property Element.
+        /// </summary>
+        public static string EnterPropertyElement {
+            get {
+                return ResourceManager.GetString("EnterPropertyElement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter The Quantity Please.
+        /// </summary>
+        public static string EnterQuantity {
+            get {
+                return ResourceManager.GetString("EnterQuantity", resourceCulture);
             }
         }
         
@@ -403,6 +439,15 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select The Product.
+        /// </summary>
+        public static string SelectProduct {
+            get {
+                return ResourceManager.GetString("SelectProduct", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select unit please.
         /// </summary>
         public static string SelectUnit {
@@ -444,6 +489,15 @@ namespace Utility.Resource {
         public static string SupplierRequired {
             get {
                 return ResourceManager.GetString("SupplierRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Product Was Selected.
+        /// </summary>
+        public static string TheProductWasSelected {
+            get {
+                return ResourceManager.GetString("TheProductWasSelected", resourceCulture);
             }
         }
         
