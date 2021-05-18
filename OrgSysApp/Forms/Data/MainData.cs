@@ -1,4 +1,5 @@
-﻿using OrgSysApp.Tools;
+﻿using OrgSysApp.Forms.Data.Unit;
+using OrgSysApp.Tools;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,9 +12,11 @@ namespace OrgSysApp.Forms.Data
 {
     public partial class MainData : Form
     {
+        frmUnit frmUnit;
         public MainData()
         {
             InitializeComponent();
+            frmUnit = new frmUnit();
         }
 
         private void btn_click(object sender, EventArgs e)
@@ -28,36 +31,36 @@ namespace OrgSysApp.Forms.Data
                     ((ButtonImage)Control).active = false;
             }
 
-            //if (Application.OpenForms["MainData1"] != null)
-            //{
-            //    pnlBody.Controls.Remove(pnlBody.Controls["MainData1"]);
-            //    Application.OpenForms["MainData1"].Close();
-            //}
+            if (Application.OpenForms["frmUnit1"] != null)
+            {
+                pnlDataPages.Controls.Remove(pnlDataPages.Controls["frmUnit1"]);
+                Application.OpenForms["frmUnit1"].Close();
+            }
 
-            //switch (((MainMenu)sender).ButtonSelectedName)
-            //{
-            //    case "Data":
-            //        if (pnlBody.Controls["MainData1"] == null)
-            //        {
-            //            mainData = new MainData();
-            //            mainData.Name = "MainData1";
-            //            mainData.TopLevel = false;
-            //            mainData.Height = 0;
-            //            mainData.Size = pnlBody.Size;
-            //            mainData.Dock = DockStyle.Fill;
-            //            pnlBody.Controls.Add(mainData);
-            //            mainData.Show();
-            //        }
-            //        break;
-            //    case "Invoice":
-            //        break;
-            //    case "Return":
-            //        break;
-            //    case "Report":
-            //        break;
-            //    default:
-            //        break;
-            //}
+            switch (((ButtonImage)sender).ButtonName)
+            {
+                case "Unit":
+                    if (pnlDataPages.Controls["frmUnit1"] == null)
+                    {
+                        frmUnit = new frmUnit();
+                        frmUnit.Name = "frmUnit1";
+                        frmUnit.TopLevel = false;
+                        frmUnit.Height = 0;
+                        frmUnit.Size = pnlDataPages.Size;
+                        frmUnit.Dock = DockStyle.Fill;
+                        pnlDataPages.Controls.Add(frmUnit);
+                        frmUnit.Show();
+                    }
+                    break;
+                case "Invoice":
+                    break;
+                case "Return":
+                    break;
+                case "Report":
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

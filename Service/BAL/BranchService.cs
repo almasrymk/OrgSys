@@ -14,7 +14,8 @@ namespace Service.BAL
         UnitOfWork repo;
         public BranchService()
         {
-            repo = new UnitOfWork();
+            if (repo == null)
+                repo = new UnitOfWork();
         }
 
         /// <summary>

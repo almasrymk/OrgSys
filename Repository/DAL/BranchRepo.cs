@@ -7,6 +7,6 @@ namespace Repository.DAL
 {
     public class BranchRepo : Curd<Branch>
     {
-
+        
     }
 }

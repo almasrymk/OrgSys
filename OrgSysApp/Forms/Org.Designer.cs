@@ -64,7 +64,7 @@ namespace OrgSysApp.Forms
             // 
             // tblHeader
             // 
-            this.tblHeader.BackColor = System.Drawing.SystemColors.Control;
+            this.tblHeader.BackColor = System.Drawing.Color.WhiteSmoke;
             this.tblHeader.ColumnCount = 4;
             this.tblHeader.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.tblHeader.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
@@ -161,6 +161,7 @@ namespace OrgSysApp.Forms
             // 
             // pnlBody
             // 
+            this.pnlBody.BackColor = System.Drawing.Color.White;
             this.pnlBody.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlBody.Location = new System.Drawing.Point(0, 92);
             this.pnlBody.Margin = new System.Windows.Forms.Padding(0);
