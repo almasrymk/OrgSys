@@ -103,7 +103,7 @@
 
                                             <tr class="product-empty ProductRow trNew">
                                                 <td style="width:35px;padding:0px;text-align:center;vertical-align:middle;">
-                                                    <span id="Index">  </span>                                                    
+                                                    <span id="Index">  </span>
                                                 </td>
                                                 <td class="input-group typeahead-container" style="min-width:100px;padding:0px;">
                                                     <div class="input-group typeahead-container">
@@ -132,7 +132,7 @@
                                                     <input type="text" id="Amount" name="Amount" class="form-control" style="border-top:none;border-bottom:none;" placeholder="0.0" />
                                                 </td>
                                                 <td style="width:100px;padding:0px;text-align:center;vertical-align:middle;">
-                                                    <a id="btnDelete" class="btnDelete" href="javascript:;"  data-toggle="modal" data-target="#MsgModelId" style="display:none"><i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete</a>
+                                                    <a id="btnDelete" class="btnDelete" href="javascript:;" data-toggle="modal" data-target="#MsgModelId" style="display:none"><i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete</a>
                                                 </td>
                                             </tr>
 
@@ -170,6 +170,10 @@
                                                     @Html.TextBoxFor(model => model.Discount, new { @class = "form-control", @style = "border-top:none;border-bottom:none;border-right:none;", @placeholder = "0.0" })
                                                 </td>
                                                 <td style="width:100px;padding:0px;">
+                                                    <select class="form-control" style="border-top:none;border-bottom:none;border-right:none;">
+                                                        <option>Amount</option>
+                                                        <option>Persentage</option>
+                                                    </select>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -183,6 +187,28 @@
                                                     @Html.TextBoxFor(model => model.Tax, new { @class = "form-control", @style = "border-top:none;border-bottom:none;border-right:none;", @placeholder = "0.0" })
                                                 </td>
                                                 <td style="width:100px;padding:0px;">
+                                                    <select class="form-control" style="border-top:none;border-bottom:none;border-right:none;">
+                                                        <option>Amount</option>
+                                                        <option>Persentage</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="min-width:100px;padding:0px;" colspan="4">
+                                                </td>
+
+                                                <td style="width:100px;padding:0px;text-align:center;vertical-align:middle;">
+                                                    @*@Html.LabelFor(model => model.Ser)*@
+                                                    Service
+                                                </td>
+                                                <td style="width:100px;padding:0px;">
+                                                    @Html.TextBoxFor(model => model.Tax, new { @class = "form-control", @style = "border-top:none;border-bottom:none;border-right:none;", @placeholder = "0.0" })
+                                                </td>
+                                                <td style="width:100px;padding:0px;">
+                                                    <select class="form-control" style="border-top:none;border-bottom:none;border-right:none;">
+                                                        <option>Amount</option>
+                                                        <option>Persentage</option>
+                                                    </select>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -419,7 +445,7 @@
                         type: "Get",
                         data: { id: ui.item.id },
                         success: function (data) {
-                            var price = parseInt(data.price);
+                            var price = Number(data.price);
                             var $row = $(event.target).parents('tr');
                             $row.find("#ProductId").val(ui.item.id);
 
@@ -481,9 +507,4 @@
             $("#Total").val(total);
         }
     });
-
-    //function RemoveRow(data) {
-    //    $(data).remove();
-    //    if($("#tbl").find('.ProductRow').length
-    //}
 </script>
