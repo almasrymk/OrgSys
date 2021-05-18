@@ -9,22 +9,21 @@ using System.Text;
 
 namespace Service.BAL
 {
-    public class ProductUnitService : BaseService<ProductUnitModelView>
+   public class PropertyElementService :BaseService<PropertyElementModelView>
     {
         UnitOfWork repo;
-        public ProductUnitService()
+        public PropertyElementService()
         {
             repo = new UnitOfWork();
         }
-
         /// <summary>
         /// 
         /// </summary>
         /// <param name="ob"></param>
         /// <returns></returns>
-        public ProductUnitModelView Save(ProductUnitModelView ob)
+        public PropertyElementModelView Save(PropertyElementModelView ob)
         {
-            return new ProductUnitModelView(repo.productUnitRepo.AddOrUpdate(ob.Model));
+            return new PropertyElementModelView(repo.propertyelementRepo.AddOrUpdate(ob.Model));
         }
 
         /// <summary>
@@ -34,16 +33,16 @@ namespace Service.BAL
         /// <returns></returns>
         public bool Delete(long id)
         {
-            return repo.productUnitRepo.Delete(id);
+            return repo.propertyelementRepo.Delete(id);
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public List<ProductUnitModelView> GetAll(long parentId = 0, long TypeId = 0)
+        public List<PropertyElementModelView> GetAll(long parentId = 0, long TypeId = 0)
         {
-            return repo.productUnitRepo.GetList(e => e.OrderBy(e => e.Id), "", Utility.Status.New).Select(e => new ProductUnitModelView(e)).ToList();
+            return repo.propertyelementRepo.GetList(e => e.OrderBy(e => e.Id), "", Utility.Status.New).Select(e => new PropertyElementModelView(e)).ToList();
         }
         //public List<ProductUnitModelView> GetByProductId(long productId = 0)
         //{
@@ -56,9 +55,9 @@ namespace Service.BAL
         /// </summary>
         /// <param name="textSearch"></param>
         /// <returns></returns>
-        public List<ProductUnitModelView> GetAll(string textSearch , long parentId = 0, long TypeId = 0)
+        public List<PropertyElementModelView> GetAll(string textSearch, long parentId = 0, long TypeId = 0)
         {
-            return repo.productUnitRepo.GetList( null , e => e.OrderBy(e => e.Id), "", Utility.Status.New).Select(e => new ProductUnitModelView(e)).ToList();
+            return repo.propertyelementRepo.GetList(null, e => e.OrderBy(e => e.Id), "", Utility.Status.New).Select(e => new PropertyElementModelView(e)).ToList();
         }
 
         /// <summary>
@@ -67,9 +66,9 @@ namespace Service.BAL
         /// <param name="page"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public IPagedList<ProductUnitModelView> GetAll(long parentId = 0, long TypeId = 0 ,int page = 1, int pageSize = 20)
+        public IPagedList<PropertyElementModelView> GetAll(long parentId = 0, long TypeId = 0, int page = 1, int pageSize = 20)
         {
-            return repo.productUnitRepo.GetList(e => e.OrderBy(e => e.Id), "", Utility.Status.New).Select(e => new ProductUnitModelView(e)).ToPagedList(page, pageSize);
+            return repo.propertyelementRepo.GetList(e => e.OrderBy(e => e.Id), "", Utility.Status.New).Select(e => new PropertyElementModelView(e)).ToPagedList(page, pageSize);
         }
 
         /// <summary>
@@ -79,9 +78,9 @@ namespace Service.BAL
         /// <param name="page"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public IPagedList<ProductUnitModelView> GetAll(string textSearch , long parentId = 0, long TypeId = 0, int page = 1, int pageSize = 20)
+        public IPagedList<PropertyElementModelView> GetAll(string textSearch, long parentId = 0, long TypeId = 0, int page = 1, int pageSize = 20)
         {
-            return repo.productUnitRepo.GetList(null, e => e.OrderBy(e => e.Id), "", Utility.Status.New).Select(e => new ProductUnitModelView(e)).ToPagedList(page, pageSize);
+            return repo.propertyelementRepo.GetList(null, e => e.OrderBy(e => e.Id), "", Utility.Status.New).Select(e => new PropertyElementModelView(e)).ToPagedList(page, pageSize);
         }
 
         /// <summary>
@@ -89,9 +88,9 @@ namespace Service.BAL
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public ProductUnitModelView Get(long Id)
+        public PropertyElementModelView Get(long Id)
         {
-            return new ProductUnitModelView(repo.productUnitRepo.Get(e => e.Id == Id));
+            return new PropertyElementModelView(repo.propertyelementRepo.Get(e => e.Id == Id));
         }
 
         /// <summary>
@@ -99,9 +98,9 @@ namespace Service.BAL
         /// </summary>
         /// <param name="textSearch"></param>
         /// <returns></returns>
-        public ProductUnitModelView Get(string textSearch)
+        public PropertyElementModelView Get(string textSearch)
         {
-            return new ProductUnitModelView(repo.productUnitRepo.Get(null));
+            return new PropertyElementModelView(repo.propertyelementRepo.Get(null));
         }
 
         /// <summary>
@@ -111,12 +110,12 @@ namespace Service.BAL
         /// <returns></returns>
         public bool Delete(List<long> ids)
         {
-            return repo.productUnitRepo.Delete(ids);
+            return repo.propertyelementRepo.Delete(ids);
         }
 
-        public List<ProductUnitModelView> GetAll(List<long> ids)
+        public List<PropertyElementModelView> GetAll(List<long> ids)
         {
-            return repo.productUnitRepo.GetList(e => ids.Contains(e.Id), e => e.OrderBy(e => e.Id), "", Utility.Status.New).Select(e => new ProductUnitModelView(e)).ToList();
+            return repo.propertyelementRepo.GetList(e => ids.Contains(e.Id), e => e.OrderBy(e => e.Id), "", Utility.Status.New).Select(e => new PropertyElementModelView(e)).ToList();
         }
     }
 }

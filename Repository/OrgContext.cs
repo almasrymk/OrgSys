@@ -98,6 +98,7 @@ namespace Repository
         }
 
         public virtual DbSet<Unit> Units { get; set; }
+        public virtual DbSet<Property> Properties { get; set; }
         public virtual DbSet<Dealer> Dealers { get; set; }
         public virtual DbSet<Classification> Classifications { get; set; }
         public virtual DbSet<Product> Products { get; set; }
@@ -115,5 +116,10 @@ namespace Repository
         public virtual DbSet<OrderProduct> OrderProducts { get; set; }
         public virtual DbSet<PaymentType> PaymentTypes { get; set; }
         public virtual DbSet<LogSys> LogSys { get; set; }
+        public virtual DbSet<ProductRecipe> ProductRecipes { get; set; }
+        public virtual DbSet<PropertyElement> PropertyElements { get; set; }
+        public virtual DbSet<ProductPropertyElement> ProductPropertyElements { get; set; }
+
+
     }
 }

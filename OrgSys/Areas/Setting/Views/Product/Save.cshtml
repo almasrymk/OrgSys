@@ -2,7 +2,9 @@
 @{
     ViewData["Title_Designer"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var Propertyelement = new Service.BAL.PropertyElementService().GetAll(0, 0);
 }
+
 
 <div id="HPage" class="container-fluid">
     <div class="row">
@@ -167,9 +169,9 @@
                                             <div id="smartWizardClickable">
                                                 <ul class="card-header">
                                                     <li>
-                                                        <a  href="#checkStep1">
+                                                        <a href="#checkStep1">
                                                             @Utility.Resource.Title_Designer.UnitsMeasure<br />
-                                                            <small >@Utility.Resource.Message_Designer.UnitsWhichProductMeasured</small>
+                                                            <small>@Utility.Resource.Message_Designer.UnitsWhichProductMeasured</small>
                                                             <div id="divtblUnit"></div>
                                                         </a>
                                                     </li>
@@ -177,6 +179,12 @@
                                                         <a href="#checkStep2">
                                                             @Utility.Resource.Title_Designer.ProductRecipe<br />
                                                             <small>@Utility.Resource.Message_Designer.IngredientsThatProductMadeOf</small>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#checkStep3">
+                                                            @Utility.Resource.Title_Designer.PropertyElement<br />
+                                                            <small>@Utility.Resource.Message_Designer.ElementsUnderProperty</small>
                                                         </a>
                                                     </li>
                                                 </ul>
@@ -237,34 +245,134 @@
                                                                     </tr>
                                                                 }
 
-                                                            <tr class="trNew">
-                                                                <td style="min-width:100px;">
-                                                                    <input type="hidden" id="RowId" value="-1" />
-                                                                    <div id="divUnitId" class="input-group">
-                                                                        <div class="input-group-prepend">
-                                                                            <span class="input-group-text"><i class="simple-icon-pie-chart"></i></span>
+                                                                <tr class="trNew">
+                                                                    <td style="min-width:100px;">
+                                                                        <input type="hidden" id="RowId" value="-1" />
+                                                                        <div id="divUnitId" class="input-group">
+                                                                            <div class="input-group-prepend">
+                                                                                <span class="input-group-text"><i class="simple-icon-pie-chart"></i></span>
+                                                                            </div>
+                                                                            @Html.DropDownList("UnitId", (SelectList)ViewBag.UnitList, " - " + Utility.Resource.Title_Designer.SelectUnit + " - ", new { @id = "UnitId", @name = "UnitId", @class = "form-control", @onchange = "AddNewRowUnit($(this).parent().parent())" })
                                                                         </div>
-                                                                        @Html.DropDownList("UnitId", (SelectList)ViewBag.UnitList, " - " + Utility.Resource.Title_Designer.SelectUnit + " - ", new { @id = "UnitId", @name = "UnitId", @class = "form-control", @onchange = "AddNewRowUnit($(this).parent().parent())" })
-                                                                    </div>
-                                                                </td>
-                                                                <td style="width:100px;">
-                                                                    @Html.Editor("Rate", new { htmlAttributes = new { @id = "Rate", @name = "Rate", placeholder = "0.0", @class = "form-control", @type = "text", @onkeyup = "AddNewRowUnit($(this).parent().parent())" } })
-                                                                </td>
-                                                                <td style="width:100px;text-align:center;vertical-align:middle;">
-                                                                    <div id="DefaultUnit" class="custom-switch custom-switch-primary-inverse custom-switch-small" style="display:none">
-                                                                        <input onchange="CheckDefaultUnit($(this).parent().parent().parent())" class="custom-switch-input chkUnit" id="chkUnit" type="checkbox">
-                                                                        <label class="custom-switch-btn" for="chkUnit"></label>
-                                                                    </div>
-                                                                </td>
-                                                                <td style="width:100px;vertical-align:middle;">
-                                                                    <a id="btDelete" href="javascript:;" onclick="RemoveRowUnit($(this).parent().parent())" style="display:none">  <i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete </a>
-                                                                </td>
-                                                            </tr>
+                                                                    </td>
+                                                                    <td style="width:100px;">
+                                                                        @Html.Editor("Rate", new { htmlAttributes = new { @id = "Rate", @name = "Rate", placeholder = "0.0", @class = "form-control", @type = "text", @onkeyup = "AddNewRowUnit($(this).parent().parent())" } })
+                                                                    </td>
+                                                                    <td style="width:100px;text-align:center;vertical-align:middle;">
+                                                                        <div id="DefaultUnit" class="custom-switch custom-switch-primary-inverse custom-switch-small" style="display:none">
+                                                                            <input onchange="CheckDefaultUnit($(this).parent().parent().parent())" class="custom-switch-input chkUnit" id="chkUnit" type="checkbox">
+                                                                            <label class="custom-switch-btn" for="chkUnit"></label>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td style="width:100px;vertical-align:middle;">
+                                                                        <a id="btDelete" href="javascript:;" onclick="RemoveRowUnit($(this).parent().parent())" style="display:none">  <i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete </a>
+                                                                    </td>
+                                                                </tr>
                                                             </tbody>
                                                         </table>
                                                     </div>
                                                     <div id="checkStep2">
+                                                        <table id="tblRecipe" class="table table-hover">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th scope="col">@Utility.Resource.Title_Designer.Product</th>
+                                                                    <th scope="col">@Utility.Resource.Title_Designer.UnitMeasure</th>
+                                                                    <th scope="col">@Utility.Resource.Title_Designer.Quantity</th>
+                                                                    <th scope="col"></th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach (var ob in Model.ProductRecipes)
+                                                                {
+                                                                    <tr>
+                                                                        <td style="width:100px;">
+                                                                            <input type="hidden" id="RowId2" value="@ob.Id" />
+                                                                            @Html.DropDownListFor(model => ob.ProductId, (SelectList)ViewBag.ProductList, " - " + Utility.Resource.Title_Designer.SelectProduct + " - ", new { @id = "ProductId", @name = "ProductId", @class = "form-control", @onchange = "AddNewRowUnit2($(this).parent().parent())" })
+                                                                        </td>
+                                                                        <td style="width:50px;">
+                                                                            @Html.DropDownListFor(model => ob.UnitId, new SelectList(" "), " - " + Utility.Resource.Title_Designer.SelectUnit + " - ", new { @id = "UnitId2", @name = "UnitId2", @class = "form-control", @onchange = "AddNewRowUnit2($(this).parent().parent())" })
+
+                                                                        </td>
+                                                                        <td style="width:50px;">
+                                                                            @Html.EditorFor(modelItem => ob.Quantity, new { htmlAttributes = new { @id = "Quantity", @name = "Quantity", @class = "form-control", @type = "text", @onkeyup = "AddNewRowUnit2($(this).parent().parent())" } })
+                                                                        </td>
+                                                                        <td style="width:100px;vertical-align:middle;">
+                                                                            @if (ob != null && ob.Id >= 0)
+                                                                            {
+                                                                                <a id="btDelete2" href="javascript:;" onclick="RemoveRowUnit2($(this).parent().parent())">  <i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete  </a>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <a id="btDelete2" href="javascript:;" onclick="RemoveRowUnit2($(this).parent().parent())" style="display:none">  <i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete </a>
+                                                                            }
+                                                                        </td>
+                                                                    </tr>
+                                                                }
+                                                                <tr class="tnew">
+                                                                    <td style="min-width:100px;">
+                                                                        <input type="hidden" id="RowId" value="-1" />
+                                                                        <div id="divProductId" class="input-group">
+                                                                            <div class="input-group-prepend">
+                                                                                <span class="input-group-text"><i class="iconsminds-shopping-basket"></i></span>
+                                                                            </div>
+                                                                            @Html.DropDownList("ProductId", (SelectList)ViewBag.ProductList, " - " + Utility.Resource.Title_Designer.SelectProduct + " - ", new { @id = "ProductId", @name = "ProductId", @class = "form-control", @onchange = "AddNewRowUnit2($(this).parent().parent())" })
+                                                                        </div>
+                                                                    </td>
+                                                                    <td style="width:200px;">
+                                                                        <input type="hidden" id="RowId2" value="-1" />
+                                                                        <div id="divUnitId2" class="input-group">
+                                                                            <div class="input-group-prepend">
+                                                                                <span class="input-group-text"><i class="simple-icon-pie-chart"></i></span>
+                                                                            </div>
+                                                                            @Html.DropDownList("ProductUnitId", new SelectList(" "), " - " + Utility.Resource.Title_Designer.SelectUnit + " - ", new { @id = "UnitId2", @name = "UnitId2", @class = "form-control", @onchange = "AddNewRowUnit2($(this).parent().parent())" })
+                                                                        </div>
+                                                                    </td>
+                                                                    <td style="width:50px;">
+                                                                        @Html.Editor("Quantity", new { htmlAttributes = new { @id = "Quantity", @name = "Quantity", placeholder = "0.0", @class = "form-control", @type = "text", @onkeyup = "AddNewRowUnit2($(this).parent().parent())" } })
+                                                                    </td>
+                                                                    <td style="width:100px;vertical-align:middle;">
+                                                                        <a id="btDelete2" href="javascript:;" onclick="RemoveRowUnit2($(this).parent().parent())" style="display:none">  <i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete </a>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
                                                         @Html.TextAreaFor(model => model.Recipe, new { @class = "form-control", @rows = "5", @placeholder = @Utility.Resource.Title_Designer.ProductRecipe })
+                                                    </div>
+                                                    <div id="checkStep3">
+                                                        <div>
+                                                            <table id="tblPropertyElement" class="table table-hover">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th scope="col">@Utility.Resource.Title_Designer.Properties</th>
+                                                                        <th scope="col">@Utility.Resource.Title_Designer.PropertyElement</th>
+                                                                        <th scope="col"></th>               
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach (var ob in Propertyelement)
+                                                                    {
+                                                                        <tr>
+                                                                            <td style="width:100px;">
+                                                                                <input type="hidden" id="RowId3" value="@ob.Id" />
+                                                                                <input type="hidden" id="PropertyId" value="@ob.PropertyId" />
+
+                                                                                @Html.EditorFor(modelItem => ob.PropertyName, new { htmlAttributes = new { @id = "PropName", @name = "PropName", @class = "form-control", @type = "text", @readonly = "readonly" } })
+                                                                            </td>
+                                                                            <td style="width:50px;">
+                                                                                <input type="hidden" id="RowId3" value="@ob.Id" />
+
+                                                                                @Html.EditorFor(modelItem => ob.Name, new { htmlAttributes = new { @id = "PropElementName", @name = "PropElementName", @class = "form-control", @type = "text", @readonly = "readonly" } })
+                                                                            </td>
+                                                                            <td style="width:50px;">
+                                                                            </td>
+                                                                            <td style="width:100px;vertical-align:middle;">
+                                                                                <input type="checkbox" id="CheckBox_@ob.Id" name="Checkbox">
+                                                                            </td>
+                                                                        </tr>
+                                                                    }                                                             
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -345,7 +453,6 @@
                 defaultUnit.prop("checked", true);
         }
     }
-
     function validUnit(data) {
         var countRepeated = 0;
         var valid = true;
@@ -400,11 +507,91 @@
             });
         }
     }
+    $(document).ready(function () {
+        $("#ProductId").change(function () {
+            $.get("/Setting/Product/GetList", { ProductId: $("#ProductId").val() }, function (data) {
+                $("#UnitId2").empty();
+                $.each(data, function (index, row) {
+                    $("#UnitId2").append("<option value='" + row.Id + "'>" + row.Rate + "</option>")
+                });
+            });
+        })
+    });
+     function AddNewRowUnit2(data) {
+        $("#errortblRecipe").remove();
+        $(data).find("#errorProductId").remove();
+        $(data).find("#errorUnitId2").remove();
+        $(data).find("#errorQuantity").remove();
+        var valied = validUnit2(data);
+        if ($(data).find("#RowId2").val() < 0 && valied == true) {
+            var Current = $('.tnew');
+            var NewRow = Current.clone();
+            NewRow.find("#Quantity").val("");
+            $("#tblRecipe").find('tbody').append(NewRow);
+            Current.removeClass("tnew");
+            Current.find("#RowId2").val(0);
+            Current.find("#Quantity").focus();
+            Current.find("#btDelete2").css("display", "block");
+        }
+    }
+    function validUnit2(data) {
+        var countRepeated = 0;
+        var count = 0;
+        var valid = true;
+        var NewRow = $('.tnew');
+        $('#tblRecipe > tbody > tr').each(function () {
+            var currentRow = $(this);
+            if (!currentRow.hasClass('tnew')) {
+                      currentRow.find("td:eq(0) #errorProductId").remove();
+                if (!(currentRow.find("td:eq(0) #ProductId").val() > 0)) {
+                    currentRow.find("td:eq(0) #ProductId").focus()
+                    currentRow.find("td:eq(0) #ProductId").after('<span id="errorProductId" class="error" style="color:red">@Utility.Resource.Message_Designer.SelectProduct</span>');
+                    NewRow.find("#ProductId").val("");
+                    NewRow.find("#UnitId").val("");
+                    NewRow.find("#Quantity").val("");
+                    valid = false;
+                }
+                currentRow.find("td:eq(1) #errorUnitId2").remove();
+                if (!(currentRow.find("td:eq(1) #UnitId2").val() > 0)) {
+                    currentRow.find("td:eq(1) #UnitId2").focus();
+                    currentRow.find("td:eq(1) #divUnitId2").after('<span id="errorUnitId2" class="error" style="color:red">@Utility.Resource.Message_Designer.SelectUnit</span>');
+                    NewRow.find("#ProductId").val("");
+                    NewRow.find("#UnitId2").val("");
+                    NewRow.find("#Quantity").val("");
+                    valid = false;
+                }
+                currentRow.find("td:eq(2) #errorQuantity").remove();
+                if (parseFloat("0" + currentRow.find("td:eq(2) #Quantity").val()) == 0) {
+                    currentRow.find("td:eq(2) #Quantity").focus()
+                    currentRow.find("td:eq(2) #Quantity").after('<span id="errorQuantity" class="error" style="color:red">@Utility.Resource.Message_Designer.EnterQuantity</span>');
+                    NewRow.find("#ProductId").val("");
+                    NewRow.find("#UnitId").val("");
+                    NewRow.find("#Quantity").val("");
+                    valid = false;
+                }
 
+            }
+            if (currentRow.find("td:eq(0) #ProductId").val() > 0 && currentRow.find("td:eq(0) #ProductId").val() == $(data).find("#ProductId").val()){
+                countRepeated++;
+                if (countRepeated == 2) {
+                    $(data).find("#divProductId").after('<span id="errorProductId" class="error" style="color:red">@Utility.Resource.Message_Designer.TheProductWasSelected</span>');
+                    valid = false;
+                }
+            }
+        });
+        return valid;
+    }
+
+    function RemoveRowUnit2(data) {
+        $(data).remove();
+    }
     function Save() {
         var Valid = true;
 
         if (CheckRowCount("tblUnit", "divtblUnit", '@Utility.Resource.Message_Designer.ClassificationRequired'))
+            Valid = false;
+
+        if (CheckRowCount("tblRecipe", "divtblRecipe", '@Utility.Resource.Message_Designer.ClassificationRequired'))
             Valid = false;
 
         if (CheckRage("Description", "divDescription", 5, 500, '@Utility.Resource.Message_Designer.DescriptionRange'))
@@ -440,7 +627,7 @@
             var files = $("#flImage").get(0).files;
             for (var i = 0; i < files.length; i++) {
                 fileData.append(files[i].name, files[i]);
-            }  
+            }
 
 
             var list = [];
@@ -456,7 +643,30 @@
                     });
                 }
             });
-
+            var RecipeList = [];
+            $('#tblRecipe > tbody > tr').each(function () {
+                var currentRow = $(this);
+                if (!currentRow.hasClass('tnew')) {
+                    RecipeList.push({
+                        RecipeId: currentRow.find("td:eq(0) #ProductId").val(),
+                        Id: currentRow.find("td:eq(0) #RowId2").val(),
+                        ProductId: $("Id").val(),
+                        UnitId: currentRow.find("td:eq(1) #UnitId2").val(),
+                        Quantity: currentRow.find("td:eq(2) #Quantity").val(),
+                    });
+                }
+            });
+            var PropertyElementList = [];
+            $('#tblPropertyElement > tbody > tr').each(function () {
+                var currentRow = $(this);
+                PropertyElementList.push({
+                    ProductId: $("Id").val(),
+                    Id: currentRow.find("td:eq(0) #RowId3").val(),
+                    PropertyId: currentRow.find("#PropertyId").val(),
+                    PropertyElementId: currentRow.find("#RowId3").val(),
+                    IsChecked: currentRow.find("td:eq(2) .chk").val(),
+                    });
+            });
             var data = {
                 Id: $('#Id').val(),
                 Code: $('#Code').val().trim(),
@@ -474,13 +684,14 @@
                 TypeId: $('#TypeId').val(),
                 ImgPath: $('#ImgPath').val(),
                 CodeNumber: $('#CodeNumber').val(),
-                ProductUnits: list
+                ProductUnits: list,
+                ProductRecipes: RecipeList
             };
 
             $.ajax({
                 type: 'POST',
                 url: "/Setting/Product/Save",
-                data: { model: data},              
+                data: { model: data},
                 success: function (res) {
                     if (res.status == "success") {
                         $.ajax({
@@ -492,7 +703,7 @@
                             success: function (resImg) {
                                 window.location.replace(res.url);
                             }
-                        });                      
+                        });
                     }
                     else {
                         $("#divLoader").hide();

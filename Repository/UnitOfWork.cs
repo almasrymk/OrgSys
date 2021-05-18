@@ -19,6 +19,30 @@ namespace Repository
                 return _unitRepo;
             }
         }
+        private PropertyRepo _propertyRepo;
+        public PropertyRepo propertyRepo
+        {
+            get
+            {
+
+                if (this._propertyRepo == null)
+                    this._propertyRepo = new PropertyRepo();
+
+                return _propertyRepo;
+            }
+        }
+        private ProductPropertyElementRepo _productpropertyelementRepo;
+        public ProductPropertyElementRepo productpropertyelementRepo
+        {
+            get
+            {
+
+                if (this._productpropertyelementRepo == null)
+                    this._productpropertyelementRepo = new ProductPropertyElementRepo();
+
+                return _productpropertyelementRepo;
+            }
+        }
 
         private DealerRepo _dealerRepo;
         public DealerRepo dealerRepo
@@ -30,6 +54,18 @@ namespace Repository
                     this._dealerRepo = new DealerRepo();
 
                 return _dealerRepo;
+            }
+        }
+        private PropertyElementRepo _propertyElementRepo;
+        public PropertyElementRepo propertyelementRepo
+        {
+            get
+            {
+
+                if (this._propertyElementRepo == null)
+                    this._propertyElementRepo = new PropertyElementRepo();
+
+                return _propertyElementRepo;
             }
         }
 
@@ -71,6 +107,19 @@ namespace Repository
                 return _productUnitRepo;
             }
         }
+        private RecipeRepo _recipeRepo;
+        public RecipeRepo recipeRepo
+        {
+            get
+            {
+
+                if (this._recipeRepo == null)
+                    this._recipeRepo = new RecipeRepo();
+
+                return _recipeRepo;
+            }
+        }
+
 
         private BranchRepo _branchRepo;
         public BranchRepo branchRepo

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repository;
 
 namespace Repository.Migrations
 {
     [DbContext(typeof(OrgContext))]
-    partial class OrgContextModelSnapshot : ModelSnapshot
+    [Migration("20210503111504_AddProductRecipe")]
+    partial class AddProductRecipe
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1186,51 +1188,6 @@ namespace Repository.Migrations
                     b.ToTable("Product");
                 });
 
-            modelBuilder.Entity("Entity.Model.ProductPropertyElement", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
-
-                    b.Property<bool>("Hide")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ImgPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MaskText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("ParentId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("ProductId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("PropertyElementId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("PropertyId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<long>("TypeId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasIndex("PropertyElementId");
-
-                    b.HasIndex("PropertyId");
-
-                    b.ToTable("ProductPropertyElement");
-                });
-
             modelBuilder.Entity("Entity.Model.ProductRecipe", b =>
                 {
                     b.Property<long>("Id")
@@ -1319,80 +1276,6 @@ namespace Repository.Migrations
                     b.HasIndex("UnitId");
 
                     b.ToTable("ProductUnit");
-                });
-
-            modelBuilder.Entity("Entity.Model.Property", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
-
-                    b.Property<bool>("Hide")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ImgPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MaskText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<long>("ParentId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<long>("TypeId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Property");
-                });
-
-            modelBuilder.Entity("Entity.Model.PropertyElement", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
-
-                    b.Property<bool>("Hide")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ImgPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MaskText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<long>("ParentId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("PropertyId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<long>("TypeId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PropertyId");
-
-                    b.ToTable("PropertyElement");
                 });
 
             modelBuilder.Entity("Entity.Model.Role", b =>
@@ -1727,33 +1610,6 @@ namespace Repository.Migrations
                     b.Navigation("Dealer");
                 });
 
-            modelBuilder.Entity("Entity.Model.ProductPropertyElement", b =>
-                {
-                    b.HasOne("Entity.Model.Product", "Product")
-                        .WithMany("ProductPropertyElements")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Entity.Model.PropertyElement", "PropertyElement")
-                        .WithMany()
-                        .HasForeignKey("PropertyElementId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Entity.Model.Property", "Property")
-                        .WithMany()
-                        .HasForeignKey("PropertyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-
-                    b.Navigation("Property");
-
-                    b.Navigation("PropertyElement");
-                });
-
             modelBuilder.Entity("Entity.Model.ProductRecipe", b =>
                 {
                     b.HasOne("Entity.Model.Product", null)
@@ -1780,17 +1636,6 @@ namespace Repository.Migrations
                     b.Navigation("Product");
 
                     b.Navigation("Unit");
-                });
-
-            modelBuilder.Entity("Entity.Model.PropertyElement", b =>
-                {
-                    b.HasOne("Entity.Model.Property", "Property")
-                        .WithMany("propertyElements")
-                        .HasForeignKey("PropertyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Property");
                 });
 
             modelBuilder.Entity("Entity.Model.Store", b =>
@@ -1823,16 +1668,9 @@ namespace Repository.Migrations
 
             modelBuilder.Entity("Entity.Model.Product", b =>
                 {
-                    b.Navigation("ProductPropertyElements");
-
                     b.Navigation("ProductRecipes");
 
                     b.Navigation("ProductUnits");
-                });
-
-            modelBuilder.Entity("Entity.Model.Property", b =>
-                {
-                    b.Navigation("propertyElements");
                 });
 #pragma warning restore 612, 618
         }

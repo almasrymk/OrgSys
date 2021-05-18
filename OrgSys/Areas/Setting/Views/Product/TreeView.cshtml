@@ -1,0 +1,90 @@
+﻿@model List<Entity.ModelView.TreeView>
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<Utility.Resource.Title_Designer> localizer
+@{
+    Layout = null;
+}
+
+<link href="~/css/jquery.bonsai.css" rel="stylesheet" />
+
+<ol id="auto-checkboxes">
+    @foreach (var ob in Model.Where(e => e.ParentId == ViewBag.parentId).ToList())
+    {
+        if (ob.ParentId >= 1)
+        {
+            <li class="" data-value="@ob.Id">
+                &nbsp; @localizer[ob.Key].Value
+                @if (Model.Any(e => e.ParentId == ob.Id))
+                {
+                    ViewBag.parentId = ob.Id;
+                    @Html.Partial("TreeView", Model)
+                }
+            </li>
+        }
+        else
+        {
+            <li class="expanded" data-value="@ob.Id">
+                &nbsp; @localizer[ob.Key].Value
+                @if (Model.Any(e => e.ParentId == ob.Id))
+                {
+                    ViewBag.parentId = ob.Id;
+                    @Html.Partial("TreeView", Model)
+                }
+            </li>
+        }
+    }
+</ol>
+
+@*<ol id="auto-checkboxes" data-name="foo">
+        <li class="expanded" data-value="0">
+            &nbsp; All Pages
+            <ol>
+                <li data-value="1">
+                    &nbsp; Home
+
+                </li>
+                <li data-value="2" data-id="2">
+                    &nbsp; Setting
+                    <ol>
+                        <li data-name="blacktea" data-value="3">
+                            &nbsp; Branchs
+                            <ol>
+                                <li data-value="6">&nbsp; View </li>
+                                <li data-value="6">&nbsp; Add </li>
+                                <li data-value="7">&nbsp; Edit </li>
+                                <li data-value="8">&nbsp; Delete </li>
+                            </ol>
+                        </li>
+                        <li data-name="blacktea" data-value="3">
+                            &nbsp; Roles
+                            <ol>
+                                <li data-value="6">&nbsp; View </li>
+                                <li data-value="6">&nbsp; Add </li>
+                                <li data-value="7">&nbsp; Edit </li>
+                                <li data-value="8">&nbsp; Delete </li>
+                            </ol>
+                        </li>
+                        <li data-name="blacktea" data-value="3">
+                            &nbsp; Users
+                            <ol>
+                                <li data-value="6">&nbsp; View </li>
+                                <li data-value="6">&nbsp; Add </li>
+                                <li data-value="7">&nbsp; Edit </li>
+                                <li data-value="8">&nbsp; Delete </li>
+                            </ol>
+                        </li>
+                        <li data-name="blacktea" data-value="3">
+                            &nbsp; Shifts
+                            <ol>
+                                <li data-value="6">&nbsp; View </li>
+                                <li data-value="6">&nbsp; Add </li>
+                                <li data-value="7">&nbsp; Edit </li>
+                                <li data-value="8">&nbsp; Delete </li>
+                            </ol>
+                        </li>
+                    </ol>
+                </li>
+                <li data-value="5">&nbsp; Milk</li>
+            </ol>
+        </li>
+    </ol>*@

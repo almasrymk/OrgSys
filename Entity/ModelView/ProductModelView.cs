@@ -37,6 +37,8 @@ namespace Entity.ModelView
             this.TypeId = ob.TypeId;
             this.ImgPath = ob.ImgPath;
             this.ProductUnits = ob.ProductUnits.Select(e => new ProductUnitModelView(e)).ToList();
+            this.ProductRecipes = ob.ProductRecipes.Select(e => new ProductRecipeModelView(e)).ToList();
+            this.ProductPropertyElements = ob.ProductPropertyElements.Select(e => new ProductPropertyElementModelView(e)).ToList();
         }
 
         public Product Model
@@ -62,7 +64,11 @@ namespace Entity.ModelView
                     ParentId = this.ParentId,
                     TypeId = this.TypeId,
                     ImgPath = this.ImgPath,
-                    ProductUnits = null
+                    ProductUnits = null,
+                    ProductRecipes = null,
+                    ProductPropertyElements = null
+
+
                 };
             }
         }
@@ -115,5 +121,9 @@ namespace Entity.ModelView
         public string Recipe { get; set; }
 
         public List<ProductUnitModelView> ProductUnits { get; set; }
+        public List<ProductRecipeModelView> ProductRecipes { get; set; }
+        public List<ProductPropertyElementModelView> ProductPropertyElements { get; set; }
+
+        public List<TreeView> ProductPropertyTree { get; set; }
     }
 }
