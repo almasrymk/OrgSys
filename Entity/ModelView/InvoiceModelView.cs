@@ -40,6 +40,10 @@ namespace Entity.ModelView
             this.ImgPath = ob.ImgPath;
             this.Remaining = ob.Remaining;
             this.Paid = ob.Paid;
+            this.Service = ob.Service;
+            this.ServiceType = ob.ServiceType;
+            this.TaxType = ob.TaxType;
+            this.DiscountType = ob.DiscountType;
         }
 
         public Invoice Model
@@ -68,7 +72,12 @@ namespace Entity.ModelView
                     TypeId = this.TypeId,
                     ImgPath = this.ImgPath,
                     Remaining = this.Remaining,
-                    Paid = this.Paid
+                    Paid = this.Paid,
+                    Service=this.Service,
+                    ServiceType=this.ServiceType,
+                    TaxType=this.TaxType,
+                    DiscountType=this.DiscountType
+
                 };
             }
         }
@@ -96,13 +105,17 @@ namespace Entity.ModelView
 
         public string StoreName { get; set; }
 
-        public long? OrderId { get; set; }       
+        public long? OrderId { get; set; }
 
         public decimal Total { get; set; }
 
         public decimal Discount { get; set; }
-
+        public int DiscountType { get; set; }
         public decimal Tax { get; set; }
+        public int TaxType { get; set; }
+        public decimal Service { get; set; }
+        public int ServiceType { get; set; }
+
 
         public decimal Net { get; set; }
 

@@ -24,13 +24,13 @@ namespace OrgSys.Areas.Sales.Controllers
 
         public JsonResult SearchItems(string phrase = "")
         {
-            if (phrase != null)
+            if ( phrase != null)
                 phrase = phrase.Trim().ToLower();
 
             var itemsList = new ProductService().GetAll(0,0);
             if (phrase != "*")
             {
-                itemsList = itemsList.Where(_ => _.Name.StartsWith(phrase)).ToList();
+                itemsList = itemsList.Where(_ => _.Name.ToLower().StartsWith("" + phrase)).ToList();
 
             }
             var list = itemsList.Distinct().OrderBy(_ => _.Name)

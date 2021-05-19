@@ -44,10 +44,15 @@ namespace Entity.Model
         public decimal Total { get; set; }
 
         public decimal Discount { get; set; }
-
+        public int DiscountType { get; set; }
         public decimal Tax { get; set; }
+        public int TaxType { get; set; }
+        public decimal Service { get; set; }
+        public int ServiceType { get; set; }
+
 
         public decimal Net { get; set; }
+        
 
         [StringLength(500)]
         public string Notes { get; set; }

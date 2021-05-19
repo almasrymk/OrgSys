@@ -84,7 +84,7 @@
                                                     </td>
                                                     <td style="width:150px;padding:0px;">
 
-                                                        <select type="text" id="UnitId" name="UnitId" class="form-control" style="border-top:none;border-bottom:none;border-right:none;"></select>
+                                                        <select type="text" id="UnitId" name="UnitId" class="form-control" style="border-top:none;border-bottom:none;border-right:none;" ></select>
                                                     </td>
                                                     <td style="width:100px;padding:0px;">
                                                         <input type="text" id="Price" name="Price" class="form-control" style="border-top:none;border-bottom:none;border-right:none;" placeholder="0.0" />
@@ -143,7 +143,7 @@
                                                     @Html.LabelFor(model => model.Paid)
                                                 </td>
                                                 <td style="width:100px;padding:0px;">
-                                                    @Html.TextBoxFor(model => model.Paid, new { @class = "form-control", @style = "border-top:none;border-bottom:none;border-right:none;", @placeholder = "0.0" })
+                                                    @Html.TextBoxFor(model => model.Paid, new { @class = "form-control", @style = "border-top:none;border-bottom:none;border-right:none;", @placeholder = "0.0" ,@id="paid" })
                                                 </td>
                                                 <td style="width:100px;padding:0px;text-align:center;vertical-align:middle;">
                                                     @Html.LabelFor(model => model.Total)
@@ -161,18 +161,18 @@
                                                     @Html.LabelFor(model => model.Remaining)
                                                 </td>
                                                 <td style="width:100px;padding:0px;">
-                                                    @Html.TextBoxFor(model => model.Remaining, new { @class = "form-control", @style = "border-top:none;border-bottom:none;border-right:none;", @placeholder = "0.0" })
+                                                    @Html.TextBoxFor(model => model.Remaining, new { @class = "form-control", @style = "border-top:none;border-bottom:none;border-right:none;", @placeholder = "0.0" ,@id="remaining" })
                                                 </td>
                                                 <td style="width:100px;padding:0px;text-align:center;vertical-align:middle;">
                                                     @Html.LabelFor(model => model.Discount)
                                                 </td>
                                                 <td style="width:100px;padding:0px;">
-                                                    @Html.TextBoxFor(model => model.Discount, new { @class = "form-control", @style = "border-top:none;border-bottom:none;border-right:none;", @placeholder = "0.0" })
+                                                    @Html.TextBoxFor(model => model.Discount, new { @id="discount" ,@class = "form-control", @style = "border-top:none;border-bottom:none;border-right:none;", @placeholder = "0.0"})
                                                 </td>
                                                 <td style="width:100px;padding:0px;">
-                                                    <select class="form-control" style="border-top:none;border-bottom:none;border-right:none;">
-                                                        <option>Amount</option>
-                                                        <option>Persentage</option>
+                                                    <select class="form-control" id="paymentType" style="border-top:none;border-bottom:none;border-right:none;">
+                                                        <option value="1">Amount</option>
+                                                        <option value="2">Persentage</option>
                                                     </select>
                                                 </td>
                                             </tr>
@@ -184,12 +184,12 @@
                                                     @Html.LabelFor(model => model.Tax)
                                                 </td>
                                                 <td style="width:100px;padding:0px;">
-                                                    @Html.TextBoxFor(model => model.Tax, new { @class = "form-control", @style = "border-top:none;border-bottom:none;border-right:none;", @placeholder = "0.0" })
+                                                    @Html.TextBoxFor(model => model.Tax, new { @class = "form-control", @style = "border-top:none;border-bottom:none;border-right:none;", @placeholder = "0.0" ,@id="tax" })
                                                 </td>
                                                 <td style="width:100px;padding:0px;">
-                                                    <select class="form-control" style="border-top:none;border-bottom:none;border-right:none;">
-                                                        <option>Amount</option>
-                                                        <option>Persentage</option>
+                                                    <select class="form-control" id="taxtype"  style="border-top:none;border-bottom:none;border-right:none;">
+                                                        <option value="1">Amount</option>
+                                                        <option value="2">Persentage</option>
                                                     </select>
                                                 </td>
                                             </tr>
@@ -198,16 +198,16 @@
                                                 </td>
 
                                                 <td style="width:100px;padding:0px;text-align:center;vertical-align:middle;">
-                                                    @*@Html.LabelFor(model => model.Ser)*@
+                                                    @Html.LabelFor(model => model.Service)
                                                     Service
                                                 </td>
                                                 <td style="width:100px;padding:0px;">
-                                                    @Html.TextBoxFor(model => model.Tax, new { @class = "form-control", @style = "border-top:none;border-bottom:none;border-right:none;", @placeholder = "0.0" })
+                                                    @Html.TextBoxFor(model => model.Service, new {@id="service", @class = "form-control", @style = "border-top:none;border-bottom:none;border-right:none;", @placeholder = "0.0" })
                                                 </td>
                                                 <td style="width:100px;padding:0px;">
-                                                    <select class="form-control" style="border-top:none;border-bottom:none;border-right:none;">
-                                                        <option>Amount</option>
-                                                        <option>Persentage</option>
+                                                    <select class="form-control" id="servicetype" style="border-top:none;border-bottom:none;border-right:none;">
+                                                        <option value="1">Amount</option>
+                                                        <option value="2">Persentage</option>
                                                     </select>
                                                 </td>
                                             </tr>
@@ -219,7 +219,7 @@
                                                     @Html.LabelFor(model => model.Net)
                                                 </td>
                                                 <td style="width:100px;padding:0px;">
-                                                    @Html.TextBoxFor(model => model.Net, new { @class = "form-control", @style = "border-top:none;border-bottom:none;border-right:none;", @placeholder = "0.0" })
+                                                    @Html.TextBoxFor(model => model.Net, new {@id="Net", @class = "form-control", @style = "border-top:none;border-bottom:none;border-right:none;", @placeholder = "0.0" })
                                                 </td>
                                                 <td style="width:100px;padding:0px;">
                                                 </td>
@@ -289,7 +289,7 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="iconsminds-financial"></i></span>
                                                 </div>
-                                                @Html.DropDownListFor(model => model.PaymentTypeId, null, " ... ", new { @class = "form-control" })
+                                                @Html.DropDownListFor(model => model.PaymentTypeId, null, " ... ", new {@class = "form-control" })
                                             </div>
                                             <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
                                         </div>
@@ -318,7 +318,7 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="iconsminds-dollar-sign-2"></i></span>
                                                 </div>
-                                                @Html.TextBoxFor(model => model.Discount, new { @class = "form-control", @placeholder = "0.0" })
+                                                @Html.TextBoxFor(model => model.Discount, new {@class = "form-control", @placeholder = "0.0" })
                                             </div>
                                             <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
                                         </div>
@@ -486,6 +486,32 @@
                 ReIndex();
                 ReCalc();
             });
+
+
+            $("#discount").keyup(function () {               
+                ReCalc();
+            });
+            $("#tax").keyup(function () {
+                ReCalc();
+            });
+            $("#service").keyup(function () {
+                ReCalc();
+            });
+            $("#paid").keyup(function () {
+                ReCalc();
+            });
+            $("#Quantity").keyup(function () {
+                ReCalc();
+            });
+            $("#paymentType").change(function () {
+                ReCalc();
+            });
+            $("#taxtype").change(function () {
+                ReCalc();
+            });
+            $("#servicetype").change(function () {
+                ReCalc();
+            });
         }   
 
         ReIndex();
@@ -501,10 +527,56 @@
         ReCalc();
         function ReCalc() {
             var total = Number(0);
+            var TotalAfterDiscount = Number(0);
+            var totalafterTax = Number(0);
+            var totalafterservice = Number(0);
+            var Remianing = Number(0);
+            
             $("#tbl").find('.ProductRow').not(".trNew").each(function (index) {
-                total +=  Number($(this).find("#Amount").val());
+                total += Number($(this).find("#Amount").val() * parseInt($("#Quantity").val()));
+                if ($("#paymentType").val() == 1) {
+                     TotalAfterDiscount = total - $('#discount').val();
+
+                }
+                else if ($("#paymentType").val() == 2) {
+                     TotalAfterDiscount = (total * $('#discount').val()) / 100;
+
+                }
+                var total2 = TotalAfterDiscount
+                $("#Net").val(TotalAfterDiscount);
+
+                if ($("#taxtype").val() == 1) {
+                    totalafterTax = total2 + parseInt($('#tax').val());
+
+                }
+                else if ($("#taxtype").val() == 2) {
+                    totalafterTax += (total2 * parseInt($('#tax').val())) / 100;
+
+                }
+                var total3 = totalafterTax;
+                $("#Net").val(totalafterTax);
+                if ($("#servicetype").val() == 1) {
+                    totalafterservice = total3 + parseInt($('#service').val());
+
+                }
+                else if ($("#servicetype").val() == 2) {
+                    totalafterservice += (total3 * parseInt($('#service').val())) / 100;
+
+                }
+                $("#Net").val(totalafterservice);
             });
             $("#Total").val(total);
+            Remianing = parseInt($("#paid").val()) - totalafterservice;
+            if (Remianing < 0) {
+                $("#remaining").val(0);
+            }
+            else {
+                $("#remaining").val(Remianing);
+            }
+
+            //if (parseInt($("#paid").val()) < totalafterservice) {
+            //    window.alert("The Paid Is Lower Than Total");
+            //}
         }
     });
 </script>
