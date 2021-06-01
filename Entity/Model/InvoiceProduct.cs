@@ -14,6 +14,11 @@ namespace Entity.Model
         public long RowNumber { get; set; }
 
         [Required]
+        public long InvoiceId { get; set; }
+
+        public virtual Invoice Invoice { get; set; }
+
+        [Required]
         public long ProductId { get; set; }
 
         public virtual Product Product { get; set; }

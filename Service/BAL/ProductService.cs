@@ -106,7 +106,19 @@ namespace Service.BAL
         /// <returns></returns>
         public IPagedList<ProductModelView> GetAll(string textSearch , long parentId = 0, long TypeId = 0, int page = 1, int pageSize = 20)
         {
-            return repo.productRepo.GetList(e => "" + textSearch == "" || e.Name.Contains("" + textSearch), e => e.OrderBy(e => e.Id), "Classification", Utility.Status.New).Select(e => new ProductModelView(e)).ToPagedList(page, pageSize);
+            return repo.productRepo.GetList(e => "" + textSearch == "" || e.Name.Contains("" + textSearch) || e.Code.Contains("" + textSearch) || e.Barcode.Contains("" + textSearch) || e.Classification.Name.Contains("" + textSearch), e => e.OrderBy(e => e.Id), "Classification", Utility.Status.New).Select(e => new ProductModelView(e)).ToPagedList(page, pageSize);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="textSearch"></param>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        public IPagedList<ProductModelView> GetAllOrderByName(string textSearch, int page = 1, int pageSize = 20)
+        {
+            return repo.productRepo.GetList(e => "" + textSearch == "" || e.Name.Contains("" + textSearch) || e.Code.Contains("" + textSearch) || e.Barcode.Contains("" + textSearch) || e.Classification.Name.Contains("" + textSearch), e => e.OrderBy(e => e.Name), "Classification", Utility.Status.New).Select(e => new ProductModelView(e)).ToPagedList(page, pageSize);
         }
 
         /// <summary>
@@ -134,7 +146,7 @@ namespace Service.BAL
         /// <returns></returns>
         public ProductModelView Get(string textSearch)
         {
-            var ob = repo.productRepo.Get(e => e.Name.Contains(textSearch) || e.Code == textSearch || "" + textSearch == "");
+            var ob = repo.productRepo.Get(e => e.Name.Contains(textSearch) || e.Code == textSearch || e.Barcode == textSearch || "" + textSearch == "");
             if (ob != null)
             {
                 ob.ProductUnits = repo.productUnitRepo.GetList(e => e.ProductId == ob.Id, e => e.OrderBy(e => e.Id), "", Utility.Status.All).ToList();

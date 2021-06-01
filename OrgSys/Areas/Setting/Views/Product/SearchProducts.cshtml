@@ -1,0 +1,83 @@
+﻿@model X.PagedList.IPagedList<Entity.ModelView.ProductModelView>
+@{
+    ViewData["Title_Designer"] = "Index";
+}
+
+<div class="modal-content" style="border-radius:12px;">
+    <div class="modal-header" style="padding:15px;">
+        <h5 class="modal-title">Search Product</h5>        
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div  class="modal-body" style="padding: 10px 20px 10px 20px;background-color:#f8f8f8;">
+        <div class="card" style="background-color:white;padding:10px 20px 0px 20px;">
+            <div class="row" style="margin-left:2px;margin-right:2px;">
+                <div class="float-md-right">
+                    <div class="navbar p-0 m-0" style="height:50px;background-color:transparent;box-shadow:none;">
+                        <div class="search-text  m-0 p-0" style="box-shadow: 0 1px 15px rgba(0,0,0,.04), 0 1px 6px rgba(0,0,0,.04);">
+                            <input id="txtSearchProduct" placeholder='@Utility.Resource.Title_Designer.TextSearch...' onkeyup="changeProduct(event , 1)">
+                            <span class="search-icon" onclick="searchProduct(1)">
+                                <i class="simple-icon-magnifier"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-8 ml-0 mr-0" style="padding-top:2px;">
+                    <a id="btn" href="/Setting/Product/Save" class="btn btn-primary btn-circle mb-2 mt-2 p-1 text-white" style="width:30px;height:30px;"><i class="fa fa-plus text-small mt-1"></i></a>
+                </div>
+            </div>
+            <div id="ProductList">
+                @Html.Partial("SearchProductsList", Model)
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer" style="padding:12px;">
+        <span class="btn-group group-add" role="group" aria-label="Basic example">
+            <button class="btn btn-primary">
+                <i class="fa fa-check"></i>
+                @Utility.Resource.Title_Designer.Ok
+            </button>           
+            <button class="btn btn-primary ">
+                <i class="simple-icon-action-undo"> </i>
+                @Utility.Resource.Title_Designer.Back
+            </button>
+        </span>
+    </div>
+</div>
+
+<script>
+    ReIndex(1);
+
+    function ReIndex(page) {
+        $("#tblSearch").find('tr').each(function (index) {
+            $(this).find("#Index").empty();
+            $(this).find("#Index").append(((page -1) * 7) + index);
+        });
+    }
+
+    function changeProduct(event, _page) {
+        if ("" + $('#txtSearchProduct').val() == "" || event.keyCode == '13') {
+            searchProduct(_page);
+        }
+    }
+
+    function searchProduct(_page) {
+        page = _page;
+        var Search2 = "";
+        //if ($("#HTypeId").length) {
+        //    Search2 = "&TypeId=" + $("#HTypeId").val();
+        //}
+        //alert(Search2);
+        setTimeout(() => {
+            $.ajax({
+                url: "/Setting/Product/SearchProducts" + "?txt=" + $('#txtSearchProduct').val() + Search2 + "&page=" + page + "&Type=2",
+                success: function (result) {
+                    $('#ProductList').empty();
+                    $('#ProductList').html(result);
+                    ReIndex(_page);
+                }
+            });
+        }, 300);
+    }
+</script>

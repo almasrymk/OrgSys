@@ -267,6 +267,9 @@ namespace Repository.Migrations
                     b.Property<string>("ImgPath")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<long>("InvoiceId")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("MaskText")
                         .HasColumnType("nvarchar(max)");
 
@@ -310,6 +313,8 @@ namespace Repository.Migrations
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("InvoiceId");
 
                     b.HasIndex("ProductId");
 
@@ -1670,6 +1675,12 @@ namespace Repository.Migrations
 
             modelBuilder.Entity("Entity.Model.InvoiceProduct", b =>
                 {
+                    b.HasOne("Entity.Model.Invoice", "Invoice")
+                        .WithMany("InvoiceProducts")
+                        .HasForeignKey("InvoiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Entity.Model.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
@@ -1687,6 +1698,8 @@ namespace Repository.Migrations
                         .HasForeignKey("UnitId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Invoice");
 
                     b.Navigation("Product");
 
@@ -1834,6 +1847,11 @@ namespace Repository.Migrations
                     b.Navigation("Branch");
 
                     b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("Entity.Model.Invoice", b =>
+                {
+                    b.Navigation("InvoiceProducts");
                 });
 
             modelBuilder.Entity("Entity.Model.Product", b =>

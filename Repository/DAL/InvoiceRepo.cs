@@ -7,6 +7,6 @@ namespace Repository.DAL
 {
     public class InvoiceRepo : Curd<Invoice>
     {
-
+       
     }
 }

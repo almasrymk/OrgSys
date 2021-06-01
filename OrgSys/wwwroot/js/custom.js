@@ -291,3 +291,20 @@ function CheckRowCount(control, dvivControl, message) {
     }
     return false;
 }
+
+function CheckRowCount(control , checkVal, dvivControl, message) {
+    $("#error" + control).remove();
+    var count = 0;
+    $('#' + control + ' > tbody > tr').each(function () {
+        var currentRow = $(this);
+        if (!currentRow.hasClass('trNew') && currentRow.find("#" + checkVal).val() > 0 ) {
+            count++;
+        }
+    });
+    if (count == 0) {
+        $("#" + dvivControl).after('<span id="error' + control + '" class="error" style="color:red">' + message + '</span>');
+        $("#" + control).focus();
+        return true;
+    }
+    return false;
+}

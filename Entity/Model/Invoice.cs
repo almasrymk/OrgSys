@@ -58,5 +58,7 @@ namespace Entity.Model
         public string Notes { get; set; }
         public decimal Remaining { get; set; }
         public decimal Paid { get; set; }
+
+        public virtual List<InvoiceProduct> InvoiceProducts { get; set; }
     }
 }

@@ -3,6 +3,8 @@ using Entity.Model;
 using Utility.Resource;
 using System.ComponentModel.DataAnnotations;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Entity.ModelView
 {
@@ -44,6 +46,9 @@ namespace Entity.ModelView
             this.ServiceType = ob.ServiceType;
             this.TaxType = ob.TaxType;
             this.DiscountType = ob.DiscountType;
+            if (ob.InvoiceProducts == null)
+                ob.InvoiceProducts = new List<InvoiceProduct>();
+            this.InvoiceProducts = ob.InvoiceProducts.Select(e => new InvoiceProductModelView(e)).ToList();
         }
 
         public Invoice Model
@@ -76,8 +81,8 @@ namespace Entity.ModelView
                     Service=this.Service,
                     ServiceType=this.ServiceType,
                     TaxType=this.TaxType,
-                    DiscountType=this.DiscountType
-
+                    DiscountType=this.DiscountType,
+                    InvoiceProducts = this.InvoiceProducts != null ? this.InvoiceProducts.Select(e => e.Model).ToList() : new List<InvoiceProduct>()
                 };
             }
         }
@@ -93,6 +98,7 @@ namespace Entity.ModelView
         [Required]
         public long DealerId { get; set; }
 
+        [Display(Name = nameof(Title_Designer.Client), ResourceType = typeof(Title_Designer))]
         public string DealerName { get; set; }
 
         [Required]
@@ -100,9 +106,10 @@ namespace Entity.ModelView
 
         public string PaymentTypeName { get; set; }
 
-        [Required]
+        [Required]       
         public long StoreId { get; set; }
 
+        [Display(Name = nameof(Title_Designer.Store), ResourceType = typeof(Title_Designer))]
         public string StoreName { get; set; }
 
         public long? OrderId { get; set; }
@@ -123,5 +130,7 @@ namespace Entity.ModelView
         public string Notes { get; set; }
         public decimal Remaining { get; set; }
         public decimal Paid { get; set; }
+
+        public List<InvoiceProductModelView> InvoiceProducts { get; set; }
     }
 }

@@ -22,17 +22,19 @@ namespace OrgSys.Areas.Sales.Controllers
             ViewBag.ProductId = new SelectList(new ProductService().GetAll(model.ParentId, 0), "Id", "Name");
         }
 
+        public override InvoiceModelView InitializeData(InvoiceModelView ob)
+        {
+            if (ob == null)
+                ob = new InvoiceModelView();
+            ob.Date = DateTime.Now;
+            return ob;
+        }
         public JsonResult SearchItems(string phrase = "")
         {
             if ( phrase != null)
                 phrase = phrase.Trim().ToLower();
 
-            var itemsList = new ProductService().GetAll(0,0);
-            if (phrase != "*")
-            {
-                itemsList = itemsList.Where(_ => _.Name.ToLower().StartsWith("" + phrase)).ToList();
-
-            }
+            var itemsList = new ProductService().GetAll(phrase ,0, 0 , 1 ,10);          
             var list = itemsList.Distinct().OrderBy(_ => _.Name)
                 .Select(_ => new
                 {
@@ -40,8 +42,7 @@ namespace OrgSys.Areas.Sales.Controllers
                     _.Name,
                     _.Barcode,
                     _.Price
-                })
-                .Take(20)
+                })               
                 .ToList();
             return Json(list);
         }
@@ -56,6 +57,6 @@ namespace OrgSys.Areas.Sales.Controllers
                 unitlist = new UnitService().GetAllByProductId(id)
             };           
             return Json(data);
-        }
+        }        
     }
 }

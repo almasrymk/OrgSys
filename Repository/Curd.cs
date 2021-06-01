@@ -10,7 +10,7 @@ namespace Repository
 {
     public class Curd<entity> where entity : BaseModel
     {
-        OrgContext db;
+       public OrgContext db;
 
         public Curd()
         {

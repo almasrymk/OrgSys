@@ -36,5 +36,11 @@ namespace OrgSys.Areas.Setting.Controllers
             var ProductUnitList = new SelectList(new ProductUnitService().GetAll(0,0).Where(e=>e.ProductId==ProductId).Select(e=>e.UnitName));
             return Json(new { success = true, ProductUnitList });
         }
+
+        public ActionResult SearchProducts(string txt = "", int page = 1 , int Type = 1)
+        {
+            var list = new ProductService().GetAll(txt, 0, 0, page, 7);
+            return Type != 1 ? (ActionResult)PartialView("SearchProductsList", list) : View("SearchProducts", list);
+        }
     }
 }

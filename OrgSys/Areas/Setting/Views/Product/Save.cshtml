@@ -181,12 +181,12 @@
                                                             <small>@Utility.Resource.Message_Designer.IngredientsThatProductMadeOf</small>
                                                         </a>
                                                     </li>
-                                                    <li>
+                                                    @*<li>
                                                         <a href="#checkStep3">
                                                             @Utility.Resource.Title_Designer.PropertyElement<br />
                                                             <small>@Utility.Resource.Message_Designer.ElementsUnderProperty</small>
                                                         </a>
-                                                    </li>
+                                                    </li>*@
                                                 </ul>
 
                                                 <div class="card-body">
@@ -272,7 +272,7 @@
                                                         </table>
                                                     </div>
                                                     <div id="checkStep2">
-                                                        <table id="tblRecipe" class="table table-hover">
+                                                        @*<table id="tblRecipe" class="table table-hover">
                                                             <thead>
                                                                 <tr>
                                                                     <th scope="col">@Utility.Resource.Title_Designer.Product</th>
@@ -335,10 +335,10 @@
                                                                     </td>
                                                                 </tr>
                                                             </tbody>
-                                                        </table>
+                                                        </table>*@
                                                         @Html.TextAreaFor(model => model.Recipe, new { @class = "form-control", @rows = "5", @placeholder = @Utility.Resource.Title_Designer.ProductRecipe })
                                                     </div>
-                                                    <div id="checkStep3">
+                                                    @*<div id="checkStep3">
                                                         <div>
                                                             <table id="tblPropertyElement" class="table table-hover">
                                                                 <thead>
@@ -373,7 +373,7 @@
                                                                 </tbody>
                                                             </table>
                                                         </div>
-                                                    </div>
+                                                    </div>*@
                                                 </div>
                                             </div>
                                         </div>

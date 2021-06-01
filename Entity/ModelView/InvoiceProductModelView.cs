@@ -3,6 +3,8 @@ using Entity.Model;
 using Utility.Resource;
 using System.ComponentModel.DataAnnotations;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Entity.ModelView
 {
@@ -18,6 +20,7 @@ namespace Entity.ModelView
             if (ob == null)
                 ob = new InvoiceProduct();
             this.Id = ob.Id;
+            this.InvoiceId = ob.InvoiceId;
             this.RowNumber = ob.RowNumber;
             this.ProductId = ob.ProductId;
             this.ProductName = ob.Product?.Name;
@@ -30,15 +33,16 @@ namespace Entity.ModelView
             this.Discount = ob.Discount;
             this.Hide = ob.Hide;
             this.Net = ob.Net;
-            this.Notes = ob.Notes;
-            this.StoreId = ob.StoreId;
-            this.StoreName = ob.Store?.Name;
+            this.Notes = ob.Notes;         
             this.Tax = ob.Tax;
             this.Total = ob.Total;           
             this.Status = ob.Status;
             this.ParentId = ob.ParentId;
             this.TypeId = ob.TypeId;
             this.ImgPath = ob.ImgPath;
+            this.Units = new List<UnitModelView>();
+            if (ob.Product != null && ob.Product.ProductUnits != null)
+                this.Units = ob.Product.ProductUnits.Select(e => new UnitModelView(e.Unit)).ToList();           
         }
 
         public InvoiceProduct Model
@@ -48,6 +52,7 @@ namespace Entity.ModelView
                 return new InvoiceProduct
                 {
                     Id = this.Id,
+                    InvoiceId = this.InvoiceId,
                     ProductId = this.ProductId,
                     StoreId = this.StoreId,
                     UnitId = this.UnitId,
@@ -71,6 +76,7 @@ namespace Entity.ModelView
 
         public long RowNumber { get; set; }
 
+        public long InvoiceId { get; set; }
         public long ProductId { get; set; }
 
         public string ProductName { get; set; }
@@ -96,5 +102,6 @@ namespace Entity.ModelView
         public decimal Net { get; set; }
 
         public string Notes { get; set; }
+        public List<UnitModelView> Units { get; set; }
     }
 }
