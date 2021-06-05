@@ -15,48 +15,61 @@ namespace OrgSys.Areas.Sales.Controllers
     public class InvoiceController : BaseController<InvoiceModelView>
     {
         public override void LoadViewBag(InvoiceModelView model)
-        {
+        {           
             ViewBag.DealerId = new SelectList(new DealerService().GetAll(model.ParentId, (int)DealerType.Client), "Id", "Name", model.DealerId);
             ViewBag.StoreId = new SelectList(new StoreService().GetAll(model.ParentId, model.StoreId), "Id", "Name", model.StoreId);
             ViewBag.PaymentTypeId = new SelectList(new PaymentTypeService().GetAll(model.ParentId, model.PaymentTypeId), "Id", "Name", model.PaymentTypeId);
             ViewBag.ProductId = new SelectList(new ProductService().GetAll(model.ParentId, 0), "Id", "Name");
+            List<SelectListItem> selectListItems = new List<SelectListItem>();
+            selectListItems.Add(new SelectListItem { Value = "1", Text = "Amount" });
+            selectListItems.Add(new SelectListItem { Value = "2", Text = "Percentage" });
+
+            ViewBag.DiscountType = new SelectList(selectListItems, "Value", "Text");
+            ViewBag.ServiceType = new SelectList(selectListItems, "Value", "Text");
+            ViewBag.TaxType = new SelectList(selectListItems, "Value", "Text");
         }
 
         public override InvoiceModelView InitializeData(InvoiceModelView ob)
         {
+            var setting = new PreferenceService();
+            var StoreId = long.Parse("0" + setting.GetByKey("DefaultStore", "Invoice", 1, 0)?.Value);
+            var CustomerId = long.Parse("0" + setting.GetByKey("DefaultCustomer", "Invoice", 1, 0)?.Value);
+            var PaymentTypeId = long.Parse("0" + setting.GetByKey("DefaultPaymentType", "Invoice", 1, 0)?.Value);
+            var DefaultDiscountType = int.Parse("0" + setting.GetByKey("DefaultDiscountType", "Invoice", 1, 0)?.Value);
+            var DefaultServiceType = int.Parse("0" + setting.GetByKey("DefaultServiceType", "Invoice", 1, 0)?.Value);
+            var DefaultTaxType = int.Parse("0" + setting.GetByKey("DefaultTaxType", "Invoice", 1, 0)?.Value);
+            var DiscountValue = decimal.Parse("0" + setting.GetByKey("DiscountValue", "Invoice", 1, 0)?.Value);
+            var ServiceValue = decimal.Parse("0" + setting.GetByKey("ServiceValue", "Invoice", 1, 0)?.Value);
+            var TaxValue = decimal.Parse("0" + setting.GetByKey("TaxValue", "Invoice", 1, 0)?.Value);
+            ViewBag.NumberLine = int.Parse("0" + setting.GetByKey("NumberLine", "Invoice", 1, 0)?.Value);
+            ViewBag.OrderTabe = int.Parse("0" + setting.GetByKey("OrderTabe", "Invoice", 1, 0)?.Value);
+            ViewBag.AutoSave = int.Parse("0" + setting.GetByKey("AutoSave", "Invoice", 1, 0)?.Value);
+            var TypeCode = int.Parse("0" + setting.GetByKey("TypeSerial", "Invoice", 1, 0)?.Value);
+            ViewBag.TypeSerial = TypeCode;
+            ViewBag.AllowRepeated = int.Parse("0" + setting.GetByKey("AllowRepeated", "Invoice", 1, 0)?.Value);
+
             if (ob == null)
                 ob = new InvoiceModelView();
-            ob.Date = DateTime.Now;
+
+            if (ob.Id == 0)
+            {
+                ob.CodeNumber = new InvoiceService().GetMaxCode(1);
+                ob.Code = "" + new InvoiceService().GetMaxCode(1);
+                ob.StoreId = StoreId;
+                ob.DealerId = CustomerId;
+                ob.PaymentTypeId = PaymentTypeId;
+                ob.Date = DateTime.Now;
+                ob.DiscountType = DefaultDiscountType;
+                ob.ServiceType = DefaultServiceType;
+                ob.TaxType = DefaultTaxType;
+                ob.Discount = DiscountValue;
+                ob.Service = ServiceValue;
+                ob.Tax = TaxValue;
+                ob.InvoiceProducts = new List<InvoiceProductModelView>();
+              }
+            
             return ob;
         }
-        public JsonResult SearchItems(string phrase = "")
-        {
-            if ( phrase != null)
-                phrase = phrase.Trim().ToLower();
-
-            var itemsList = new ProductService().GetAll(phrase ,0, 0 , 1 ,10);          
-            var list = itemsList.Distinct().OrderBy(_ => _.Name)
-                .Select(_ => new
-                {
-                    _.Id,
-                    _.Name,
-                    _.Barcode,
-                    _.Price
-                })               
-                .ToList();
-            return Json(list);
-        }
-
-        public JsonResult checkStock(int id)
-        {
-            var product = new ProductService().Get(id);
-            var data = new
-            {
-                price = product.Price,
-                selectunitid = product.ProductUnits.FirstOrDefault(e=>e.DefaultUnit).UnitId,
-                unitlist = new UnitService().GetAllByProductId(id)
-            };           
-            return Json(data);
-        }        
+       
     }
 }

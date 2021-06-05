@@ -37,8 +37,8 @@ namespace Entity.ModelView
             this.TypeId = ob.TypeId;
             this.ImgPath = ob.ImgPath;
             this.ProductUnits = ob.ProductUnits.Select(e => new ProductUnitModelView(e)).ToList();
-            this.ProductRecipes = ob.ProductRecipes.Select(e => new ProductRecipeModelView(e)).ToList();
-            this.ProductPropertyElements = ob.ProductPropertyElements.Select(e => new ProductPropertyElementModelView(e)).ToList();
+            //this.ProductRecipes = ob.ProductRecipes.Select(e => new ProductRecipeModelView(e)).ToList();
+            //this.ProductPropertyElements = ob.ProductPropertyElements.Select(e => new ProductPropertyElementModelView(e)).ToList();
         }
 
         public Product Model

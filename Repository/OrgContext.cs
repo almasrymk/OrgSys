@@ -80,21 +80,93 @@ namespace Repository
                             new Permission { Id = 20404, Key = "Delete", Value = "Clients.Delete", ParentId = 204 }
                 );
 
-            modelBuilder.Entity<Role>().HasData(new Role { Id = 1, Name = "Owner", Hide = true });
+            modelBuilder.Entity<Role>().HasData(new Role { Id = 1, Name = "Owner", Hide = false });
 
-            modelBuilder.Entity<User>().HasData(new User { Id = 1, Name = "Owner", UserName = "Owner", Password = Security.Encrypt("OwnerAbc@123"), RoleId = 1, Hide = true });
+            modelBuilder.Entity<User>().HasData(new User { Id = 1, Name = "Owner", UserName = "Owner", Password = Security.Encrypt("OwnerAbc@123"), RoleId = 1, Hide = false });
 
             modelBuilder.Entity<InvoiceType>().HasData(
-                new InvoiceType { Id = 1, Name = "Sales", Hide = true },
-                new InvoiceType { Id = 2, Name = "Purchase", Hide = true },
-                new InvoiceType { Id = 3, Name = "Return Sales", Hide = true },
-                new InvoiceType { Id = 4, Name = "Return Purchase", Hide = true }
+                new InvoiceType { Id = 1, Name = "Sales", Hide = false, InOut = -1 },
+                new InvoiceType { Id = 2, Name = "Purchase", Hide = false, InOut = 1},
+                new InvoiceType { Id = 3, Name = "Return Sales", Hide = false, InOut = 1},
+                new InvoiceType { Id = 4, Name = "Return Purchase", Hide = false, InOut = -1 }
                 );
 
             modelBuilder.Entity<PaymentType>().HasData(
-                new PaymentType { Id = 1, Name = "Cash", Hide = true },
-                new PaymentType { Id = 2, Name = "Check", Hide = true }
+                new PaymentType { Id = 1, Name = "Cash", Hide = false },
+                new PaymentType { Id = 2, Name = "Check", Hide = false }
                 );
+
+            modelBuilder.Entity<Branch>().HasData(new Branch { Id = 1, Name = "Main Branch", Hide = false });
+
+            modelBuilder.Entity<Store>().HasData(new Store { Id = 1, Name = "Main Store" , BranchId = 1, Hide = false });
+
+            modelBuilder.Entity<Dealer>().HasData(new Dealer { Id = 1 , Code = "1" , CodeNumber = 1, Name = "...", TypeId = 0, Hide = false });
+
+            modelBuilder.Entity<Preference>().HasData(
+               new Preference { Id = 1, Key = "DefaultStore", Value = "1", Reference = "Invoice", TypeId = 1, Hide = false },
+               new Preference { Id = 2, Key = "DefaultCustomer", Value = "1", Reference = "Invoice", TypeId = 1, Hide = false },
+               new Preference { Id = 3, Key = "DefaultPaymentType", Value = "1", Reference = "Invoice", TypeId = 1, Hide = false },
+               new Preference { Id = 4, Key = "DiscountValue", Value = "", Reference = "Invoice", TypeId = 1, Hide = false },
+               new Preference { Id = 5, Key = "DefaultDiscountType", Value = "2", Reference = "Invoice", TypeId = 1, Hide = false },
+               new Preference { Id = 6, Key = "ServiceValue", Value = "", Reference = "Invoice", TypeId = 1, Hide = false },
+               new Preference { Id = 7, Key = "DefaultServiceType", Value = "2", Reference = "Invoice", TypeId = 1, Hide = false },
+               new Preference { Id = 8, Key = "TaxValue", Value = "14", Reference = "Invoice", TypeId = 1, Hide = false },
+               new Preference { Id = 9, Key = "DefaultTaxType", Value = "2", Reference = "Invoice", TypeId = 1, Hide = false },
+               new Preference { Id = 10, Key = "NumberLine", Value = "6", Reference = "Invoice", TypeId = 1, Hide = false },
+               new Preference { Id = 11, Key = "OrderTabe", Value = "1", Reference = "Invoice", TypeId = 1, Hide = false },
+               new Preference { Id = 12, Key = "AutoSave", Value = "0", Reference = "Invoice", TypeId = 1, Hide = false },
+               new Preference { Id = 13, Key = "TypeSerial", Value = "1", Reference = "Invoice", TypeId = 1, Hide = false },
+               new Preference { Id = 14, Key = "AllowRepeated", Value = "1", Reference = "Invoice", TypeId = 1, Hide = false },
+               new Preference { Id = 15, Key = "SaveLastStatusSetting", Value = "1", Reference = "Invoice", TypeId = 1, Hide = false },
+
+               new Preference { Id = 16, Key = "DefaultStore", Value = "1", Reference = "Invoice", TypeId = 2, Hide = false },
+               new Preference { Id = 17, Key = "DefaultSupplier", Value = "1", Reference = "Invoice", TypeId = 2, Hide = false },
+               new Preference { Id = 18, Key = "DefaultPaymentType", Value = "1", Reference = "Invoice", TypeId = 2, Hide = false },
+               new Preference { Id = 19, Key = "DiscountValue", Value = "", Reference = "Invoice", TypeId = 2, Hide = false },
+               new Preference { Id = 20, Key = "DefaultDiscountType", Value = "2", Reference = "Invoice", TypeId = 2, Hide = false },
+               new Preference { Id = 21, Key = "ServiceValue", Value = "", Reference = "Invoice", TypeId = 2, Hide = false },
+               new Preference { Id = 22, Key = "DefaultServiceType", Value = "2", Reference = "Invoice", TypeId = 2, Hide = false },
+               new Preference { Id = 23, Key = "TaxValue", Value = "14", Reference = "Invoice", TypeId = 2, Hide = false },
+               new Preference { Id = 24, Key = "DefaultTaxType", Value = "2", Reference = "Invoice", TypeId = 2, Hide = false },
+               new Preference { Id = 25, Key = "NumberLine", Value = "6", Reference = "Invoice", TypeId = 2, Hide = false },
+               new Preference { Id = 26, Key = "OrderTabe", Value = "1", Reference = "Invoice", TypeId = 2, Hide = false },
+               new Preference { Id = 27, Key = "AutoSave", Value = "0", Reference = "Invoice", TypeId = 2, Hide = false },
+               new Preference { Id = 28, Key = "TypeSerial", Value = "1", Reference = "Invoice", TypeId = 2, Hide = false },
+               new Preference { Id = 29, Key = "AllowRepeated", Value = "1", Reference = "Invoice", TypeId = 2, Hide = false },
+               new Preference { Id = 30, Key = "SaveLastStatusSetting", Value = "1", Reference = "Invoice", TypeId = 2, Hide = false },
+
+               new Preference { Id = 31, Key = "DefaultStore", Value = "1", Reference = "Invoice", TypeId = 3, Hide = false },
+               new Preference { Id = 32, Key = "DefaultCustomer", Value = "1", Reference = "Invoice", TypeId = 3, Hide = false },
+               new Preference { Id = 33, Key = "DefaultPaymentType", Value = "1", Reference = "Invoice", TypeId = 3, Hide = false },
+               new Preference { Id = 34, Key = "DiscountValue", Value = "", Reference = "Invoice", TypeId = 3, Hide = false },
+               new Preference { Id = 35, Key = "DefaultDiscountType", Value = "2", Reference = "Invoice", TypeId = 3, Hide = false },
+               new Preference { Id = 36, Key = "ServiceValue", Value = "", Reference = "Invoice", TypeId = 3, Hide = false },
+               new Preference { Id = 37, Key = "DefaultServiceType", Value = "2", Reference = "Invoice", TypeId = 3, Hide = false },
+               new Preference { Id = 38, Key = "TaxValue", Value = "14", Reference = "Invoice", TypeId = 3, Hide = false },
+               new Preference { Id = 39, Key = "DefaultTaxType", Value = "2", Reference = "Invoice", TypeId = 3, Hide = false },
+               new Preference { Id = 40, Key = "NumberLine", Value = "6", Reference = "Invoice", TypeId = 3, Hide = false },
+               new Preference { Id = 41, Key = "OrderTabe", Value = "1", Reference = "Invoice", TypeId = 3, Hide = false },
+               new Preference { Id = 42, Key = "AutoSave", Value = "0", Reference = "Invoice", TypeId = 3, Hide = false },
+               new Preference { Id = 43, Key = "TypeSerial", Value = "1", Reference = "Invoice", TypeId = 3, Hide = false },
+               new Preference { Id = 44, Key = "AllowRepeated", Value = "1", Reference = "Invoice", TypeId = 3, Hide = false },
+               new Preference { Id = 45, Key = "SaveLastStatusSetting", Value = "1", Reference = "Invoice", TypeId = 3, Hide = false },
+
+               new Preference { Id = 46, Key = "DefaultStore", Value = "1", Reference = "Invoice", TypeId = 4, Hide = false },
+               new Preference { Id = 47, Key = "DefaultSupplier", Value = "1", Reference = "Invoice", TypeId = 4, Hide = false },
+               new Preference { Id = 48, Key = "DefaultPaymentType", Value = "1", Reference = "Invoice", TypeId = 4, Hide = false },
+               new Preference { Id = 49, Key = "DiscountValue", Value = "", Reference = "Invoice", TypeId = 4, Hide = false },
+               new Preference { Id = 50, Key = "DefaultDiscountType", Value = "2", Reference = "Invoice", TypeId = 4, Hide = false },
+               new Preference { Id = 51, Key = "ServiceValue", Value = "", Reference = "Invoice", TypeId = 4, Hide = false },
+               new Preference { Id = 52, Key = "DefaultServiceType", Value = "2", Reference = "Invoice", TypeId = 4, Hide = false },
+               new Preference { Id = 53, Key = "TaxValue", Value = "14", Reference = "Invoice", TypeId = 4, Hide = false },
+               new Preference { Id = 54, Key = "DefaultTaxType", Value = "2", Reference = "Invoice", TypeId = 4, Hide = false },
+               new Preference { Id = 55, Key = "NumberLine", Value = "6", Reference = "Invoice", TypeId = 4, Hide = false },
+               new Preference { Id = 56, Key = "OrderTabe", Value = "1", Reference = "Invoice", TypeId = 4, Hide = false },
+               new Preference { Id = 57, Key = "AutoSave", Value = "0", Reference = "Invoice", TypeId = 4, Hide = false },
+               new Preference { Id = 58, Key = "TypeSerial", Value = "1", Reference = "Invoice", TypeId = 4, Hide = false },
+               new Preference { Id = 59, Key = "AllowRepeated", Value = "1", Reference = "Invoice", TypeId = 4, Hide = false },
+               new Preference { Id = 60, Key = "SaveLastStatusSetting", Value = "1", Reference = "Invoice", TypeId = 4, Hide = false }
+               );
         }
 
         public virtual DbSet<Unit> Units { get; set; }
@@ -120,6 +192,6 @@ namespace Repository
         public virtual DbSet<PropertyElement> PropertyElements { get; set; }
         public virtual DbSet<ProductPropertyElement> ProductPropertyElements { get; set; }
 
-
+         public virtual DbSet<Preference> Preferences { get; set; }
     }
 }

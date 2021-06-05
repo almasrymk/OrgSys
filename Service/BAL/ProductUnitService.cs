@@ -114,7 +114,7 @@ namespace Service.BAL
             return repo.productUnitRepo.Delete(ids);
         }
 
-        public List<ProductUnitModelView> GetAll(List<long> ids)
+        public List<ProductUnitModelView> GetAll(List<long> ids, long TypeId = 0)
         {
             return repo.productUnitRepo.GetList(e => ids.Contains(e.Id), e => e.OrderBy(e => e.Id), "", Utility.Status.New).Select(e => new ProductUnitModelView(e)).ToList();
         }

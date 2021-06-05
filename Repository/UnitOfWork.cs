@@ -237,6 +237,18 @@ namespace Repository
                 return _invoiceProductRepo;
             }
         }
-        
+
+        private PreferenceRepo _preferenceRepo;
+        public PreferenceRepo preferenceRepo
+        {
+            get
+            {
+
+                if (this._preferenceRepo == null)
+                    this._preferenceRepo = new PreferenceRepo();
+
+                return _preferenceRepo;
+            }
+        }
     }
 }

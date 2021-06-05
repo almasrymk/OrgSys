@@ -64,7 +64,7 @@ namespace Service.BAL
         /// <returns></returns>
         public List<InvoiceModelView> GetAll(long parentId = 0, long TypeId = 0)
         {
-            return repo.invoiceRepo.GetList(e => e.OrderBy(e => e.Id), "Dealer", Utility.Status.New).Select(e => new InvoiceModelView(e)).ToList();
+            return repo.invoiceRepo.GetList( e=>e.TypeId == TypeId, e => e.OrderByDescending(e => e.Id), "Dealer", Utility.Status.New).Select(e => new InvoiceModelView(e)).ToList();
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace Service.BAL
         /// <returns></returns>
         public List<InvoiceModelView> GetAll(string textSearch , long parentId = 0, long TypeId = 0)
         {
-            return repo.invoiceRepo.GetList(e => e.Dealer.Name.Contains("" + textSearch), e => e.OrderBy(e => e.Id), "Dealer", Utility.Status.New).Select(e => new InvoiceModelView(e)).ToList();
+            return repo.invoiceRepo.GetList(e => e.Dealer.Name.Contains("" + textSearch) && e.TypeId == TypeId, e => e.OrderByDescending(e => e.Id), "Dealer", Utility.Status.New).Select(e => new InvoiceModelView(e)).ToList();
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace Service.BAL
         /// <returns></returns>
         public IPagedList<InvoiceModelView> GetAll(long parentId = 0, long TypeId = 0 ,int page = 1, int pageSize = 20)
         {
-            return repo.invoiceRepo.GetList(e => e.OrderBy(e => e.Id), "Dealer", Utility.Status.New).Select(e => new InvoiceModelView(e)).ToPagedList(page, pageSize);
+            return repo.invoiceRepo.GetList(e=> e.TypeId == TypeId , e => e.OrderByDescending(e => e.Id), "Dealer", Utility.Status.New).Select(e => new InvoiceModelView(e)).ToPagedList(page, pageSize);
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace Service.BAL
         /// <returns></returns>
         public IPagedList<InvoiceModelView> GetAll(string textSearch , long parentId = 0, long TypeId = 0, int page = 1, int pageSize = 20)
         {
-            return repo.invoiceRepo.GetList(e => "" + textSearch == "" || e.Dealer.Name.Contains("" + textSearch), e => e.OrderBy(e => e.Id), "Dealer", Utility.Status.New).Select(e => new InvoiceModelView(e)).ToPagedList(page, pageSize);
+            return repo.invoiceRepo.GetList(e => e.TypeId == TypeId && ("" + textSearch == "" || e.Dealer.Name.Contains("" + textSearch)), e => e.OrderByDescending(e => e.Id), "Dealer", Utility.Status.New).Select(e => new InvoiceModelView(e)).ToPagedList(page, pageSize);
         }
 
         /// <summary>
@@ -130,9 +130,14 @@ namespace Service.BAL
             return repo.invoiceRepo.Delete(ids);
         }
 
-        public List<InvoiceModelView> GetAll(List<long> ids)
+        public List<InvoiceModelView> GetAll(List<long> ids,long TypeId = 0)
         {
-            return repo.invoiceRepo.GetList(e => ids.Contains(e.Id), e => e.OrderBy(e => e.Id) , "Dealer", Utility.Status.New).Select(e => new InvoiceModelView(e)).ToList();
+            return repo.invoiceRepo.GetList(e => e.TypeId == TypeId && ids.Contains(e.Id), e => e.OrderBy(e => e.Id) , "Dealer", Utility.Status.New).Select(e => new InvoiceModelView(e)).ToList();
+        }
+       // , long TypeId
+        public long GetMaxCode(int type )
+        {
+            return repo.invoiceRepo.GetMaXCode(type);
         }
     }
 }

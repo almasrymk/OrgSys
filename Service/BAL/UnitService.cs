@@ -109,7 +109,7 @@ namespace Service.BAL
             return repo.unitRepo.Delete(ids);
         }
 
-        public List<UnitModelView> GetAll(List<long> ids)
+        public List<UnitModelView> GetAll(List<long> ids, long TypeId = 0)
         {
             return repo.unitRepo.GetList(e => ids.Contains(e.Id), e => e.OrderBy(e => e.Id), "", Utility.Status.New).Select(e => new UnitModelView(e)).ToList();
         }

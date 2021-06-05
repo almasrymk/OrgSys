@@ -109,7 +109,7 @@ namespace Service.BAL
             return repo.invoiceProductRepo.Delete(ids);
         }
 
-        public List<InvoiceProductModelView> GetAll(List<long> ids)
+        public List<InvoiceProductModelView> GetAll(List<long> ids, long TypeId = 0)
         {
             return repo.invoiceProductRepo.GetList(e => ids.Contains(e.Id), e => e.OrderBy(e => e.Id) , "Product", Utility.Status.New).Select(e => new InvoiceProductModelView(e)).ToList();
         }

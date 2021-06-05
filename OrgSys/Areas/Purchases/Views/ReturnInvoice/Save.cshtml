@@ -1,4 +1,4 @@
-﻿@model Entity.ModelView.BranchModelView
+﻿@model Entity.ModelView.InvoiceModelView
 @{
     ViewData["Title_Designer"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col-12">
             <div class="mb-3">
-                <h1>@Utility.Resource.Title_Designer.Branch</h1>
+                <h1>@Utility.Resource.Title_Designer.ReturnInvoices</h1>
                 <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
                     <ol class="breadcrumb pt-0">
                         <li class="breadcrumb-item">
@@ -17,53 +17,1016 @@
                         <li class="breadcrumb-item">
                             @Utility.Resource.Title_Designer.Setting
                         </li>
-                        <li class="breadcrumb-item active" aria-current="page">  <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId">@Utility.Resource.Title_Designer.Branch</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">  <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId">@Utility.Resource.Title_Designer.ReturnInvoices</a></li>
                     </ol>
                 </nav>
             </div>
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-xl-12 col-lg-12 mb-4">
-            <div class="card h-100">
+    <div class="card">
 
-                <div class="card pt-4 pb-4 pl-4 pr-4">
-                    <div class="d-md-block" id="displayOptions">
-                        <h3 class="mr-4 mb-2 ml-4 d-inline-block float-md-left">
-                            @if (Model != null || Model.Id == 0)
-                            {
-                                <span class="mb-4"> @Utility.Resource.Title_Designer.New ...</span>
-                            }
-                            else
-                            {
-                                <span class="mb-4"> @Utility.Resource.Title_Designer.Edit ...</span>
-                            }
-                        </h3>
-                        <div class="position-absolute card-top-buttons">
-                            <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId" class="btn btn-primary"><i class="simple-icon-action-undo"></i>  @Utility.Resource.Title_Designer.Back</a>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <form action="Save" method="post" enctype="multipart/form-data" class="tooltip-label-right" novalidate>
-                            <div class="row">
-                                <div class="col-md-12 col-sm-12 col-lg-12">
-                                    @Html.HiddenFor(model => model.Id)
-                                    @Html.HiddenFor(model => model.TypeId)
-                                    @Html.HiddenFor(model => model.ParentId)
-                                    <div class="form-group position-relative error-l-50">
-                                        @Html.LabelFor(model => model.Name)
-                                        @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Name })
-                                        <small class="form-text text-muted"> @Utility.Resource.Message_Designer.NameRequired!</small>
-                                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger mt-3 m-1" })
-                                    </div>                                   
-                                </div>                               
+        <div class="card pl-1 pr-1">
+            <form action="Save" method="post" enctype="multipart/form-data" class="tooltip-label-right" novalidate>
+                <div class="d-md-block" >
+
+                    <div id="smartWizardClickable">
+                        @if (ViewBag.OrderTabe == 1)
+                        {
+                            <ul class="card-header">
+                                <li>
+                                    <a id="tbProduct" href="#checkStep1">
+                                        @Utility.Resource.Title_Designer.InvoiceProducts<br />
+                                        <small>@Utility.Resource.Message_Designer.UnitsWhichProductMeasured</small>
+                                        <div id="divProduct"></div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a id="tbHeader" href="#checkStep2">
+                                        @Utility.Resource.Title_Designer.InvoiceDetails<br />
+                                        <small>@Utility.Resource.Message_Designer.IngredientsThatProductMadeOf</small>
+                                        <div id="divHeader"></div>
+                                    </a>
+                                </li>
+                            </ul>
+                        }
+                        else
+                        {
+                            <ul class="card-header">
+                                <li>
+                                    <a id="tbHeader" href="#checkStep2">
+                                        @Utility.Resource.Title_Designer.InvoiceDetails<br />
+                                        <small>@Utility.Resource.Message_Designer.IngredientsThatProductMadeOf</small>
+                                        <div id="divHeader"></div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a id="tbProduct" href="#checkStep1">
+                                        @Utility.Resource.Title_Designer.InvoiceProducts<br />
+                                        <small>@Utility.Resource.Message_Designer.UnitsWhichProductMeasured</small>
+                                        <div id="divProduct"></div>
+                                    </a>
+                                </li>
+                            </ul>
+                        }
+                        <div class="card-body">
+                            @Html.HiddenFor(model => model.Id)
+                            @Html.HiddenFor(model => model.TypeId)
+                            @Html.HiddenFor(model => model.ParentId)
+                            <div id="checkStep1">
+                                <div class="card">
+                                    <table id="tbl" class="table table-hover ">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col" colspan="2">@Utility.Resource.Title_Designer.Product</th>
+                                                <th scope="col">@Utility.Resource.Title_Designer.Unit</th>
+                                                <th scope="col">@Utility.Resource.Title_Designer.Price</th>
+                                                <th scope="col">@Utility.Resource.Title_Designer.Quantity</th>
+                                                <th scope="col">@Utility.Resource.Title_Designer.Amount</th>
+                                                <th scope="col"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var InvoiceProduct in Model.InvoiceProducts)
+                                            {
+                                            <tr class="product-empty ProductRow">
+                                                <td style="width:35px;padding:0px;text-align:center;vertical-align:middle;">
+                                                    <span id="Index">  </span>
+                                                </td>
+                                                <td class="input-group typeahead-container" style="min-width:100px;padding:0px;">
+                                                    <div class="input-group typeahead-container">
+                                                        <div class="input-group-append " style="border-top:none;border-bottom:none;border-right:none;border-left:none;">
+                                                            <button id="SearchProduct" type="button" class="btn btn-primary SearchProduct" data-toggle="modal" data-target=".bd-example-modal-lg" style="width:30px;padding:0px;color:white;">
+                                                                <i class="simple-icon-magnifier"></i>
+                                                            </button>
+                                                        </div>
+                                                        <input type="text" class="form-control search-box" name="query" id="query"
+                                                               placeholder="Start typing product to search..."
+                                                               autocomplete="off" style="border-top:none;border-bottom:none;border-right:none;" value="@InvoiceProduct.ProductName">                                                        
+                                                        <input type="hidden" id="ProductId" name="ProductId" class="ProductId" value="@InvoiceProduct.ProductId" />
+                                                    </div>
+                                                </td>
+                                                <td style="max-width: 40px; padding: 0px; text-align: center; vertical-align: middle;">
+                                                    <i id="RepeatedDanger" class="badge badge-danger mb-1" style="text-align: center; vertical-align: middle;height:25px;display:none;margin-left:10px;margin-right:10px;">Repeated</i>
+                                                    <i id="RepeatedWarning" class="badge badge-warning mb-1" style="text-align: center; vertical-align: middle;height:25px;display:none;margin-left:10px;margin-right:10px;">Repeated</i>
+                                                    <i id="RepeatedPrimary" class="badge badge-primary mb-1" style="text-align: center; vertical-align: middle;height:25px;display:none;margin-left:10px;margin-right:10px;">Repeated</i>
+                                                </td>
+                                                <td style="width:150px;padding:0px;">
+                                                    @Html.DropDownList("UnitId", new SelectList(InvoiceProduct.Units, "Id", "Name", InvoiceProduct.UnitId), null, new { @class = "form-control UnitId", @style = "border-top:none;border-bottom:none;border-right:none;" })
+                                                </td>
+                                                <td style="width:100px;padding:0px;">
+                                                    <input type="text" id="Price" name="Price" class="form-control Price" value="@InvoiceProduct.Price" style="border-top:none;border-bottom:none;border-right:none;" placeholder="0.0" autocomplete="off" />
+                                                </td>
+                                                <td style="width:100px;padding:0px;">
+                                                    <input type="text" id="Quantity" name="Quantity" class="form-control Quantity" value="@InvoiceProduct.Quantity" style="border-top:none;border-bottom:none;border-right:none;" placeholder="0.0" autocomplete="off" />
+                                                </td>
+                                                <td style="width:100px;padding:0px;">
+                                                    <input type="text" id="Amount" name="Amount" class="form-control Amount" value="@InvoiceProduct.Total" readonly style="border-top:none;border-bottom:none;background-color:transparent;" placeholder="0.0" />
+                                                </td>
+                                                <td style="width:100px;padding:0px;text-align:center;vertical-align:middle;">
+                                                    <a id="btnDelete" class="btnDelete" href="javascript:;" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete</a>
+                                                </td>
+                                            </tr>
+                                            }
+                                            @if (Model.InvoiceProducts == null || (Model.InvoiceProducts.Count < int.Parse("0" + ViewBag.NumberLine) && int.Parse("0" + ViewBag.NumberLine) > 0))
+                                            {
+
+                                                @for (int i = 0, index = 1; i < int.Parse("0" + ViewBag.NumberLine) - Model.InvoiceProducts.Count; i++, index++)
+                                                {
+                                        <tr class="product-empty ProductRow">
+                                            <td style="width:35px;padding:0px;text-align:center;vertical-align:middle;">
+                                                <span id="Index">  </span>
+                                            </td>
+                                            <td class="input-group typeahead-container" style="min-width:100px;padding:0px;">
+                                                <div class="input-group typeahead-container">
+                                                    <div class="input-group-append " style="border-top:none;border-bottom:none;border-right:none;border-left:none;">
+                                                        <button id="SearchProduct" type="button" class="btn btn-primary SearchProduct" data-toggle="modal" data-target=".bd-example-modal-lg" style="width:30px;padding:0px;color:white;">
+                                                            <i class="simple-icon-magnifier"></i>
+                                                        </button>
+                                                    </div>
+                                                    <input type="text" class="form-control search-box" name="query" id="query"
+                                                           placeholder="Start typing product to search..."
+                                                           autocomplete="off" style="border-top:none;border-bottom:none;border-right:none;">
+                                                    <input type="hidden" id="ProductId" name="ProductId" class="ProductId" />
+                                                </div>
+                                            </td>
+                                            <td style="max-width: 40px; padding: 0px; text-align: center; vertical-align: middle;">
+                                                <i id="RepeatedDanger" class="badge badge-danger mb-1" style="text-align: center; vertical-align: middle;height:25px;display:none;margin-left:10px;margin-right:10px;">Repeated</i>
+                                                <i id="RepeatedWarning" class="badge badge-warning mb-1" style="text-align: center; vertical-align: middle;height:25px;display:none;margin-left:10px;margin-right:10px;">Repeated</i>
+                                                <i id="RepeatedPrimary" class="badge badge-primary mb-1" style="text-align: center; vertical-align: middle;height:25px;display:none;margin-left:10px;margin-right:10px;">Repeated</i>
+                                            </td>
+                                            <td style="width:150px;padding:0px;">
+
+                                                <select type="text" id="UnitId" name="UnitId" class="form-control UnitId" style="border-top:none;border-bottom:none;border-right:none;"></select>
+                                            </td>
+                                            <td style="width:100px;padding:0px;">
+                                                <input type="text" id="Price" name="Price" class="form-control Price" style="border-top:none;border-bottom:none;border-right:none;" placeholder="0.0" autocomplete="off" />
+                                            </td>
+                                            <td style="width:100px;padding:0px;">
+                                                <input type="text" id="Quantity" name="Quantity" class="form-control Quantity" style="border-top:none;border-bottom:none;border-right:none;" placeholder="0.0" autocomplete="off" />
+                                            </td>
+                                            <td style="width:100px;padding:0px;">
+                                                <input type="text" id="Amount" name="Amount" class="form-control Amount" readonly style="border-top:none;border-bottom:none;background-color:transparent;" placeholder="0.0" />
+                                            </td>
+                                            <td style="width:100px;padding:0px;text-align:center;vertical-align:middle;">
+                                                <a id="btnDelete" class="btnDelete" href="javascript:;" data-toggle="modal" data-target="#MsgModelId" style="display:none"><i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete</a>
+                                            </td>
+                                        </tr>
+                                                }
+                                            }
+
+                                        <tr class="product-empty ProductRow trNew">
+                                            <td style="width:35px;padding:0px;text-align:center;vertical-align:middle;">
+                                                <span id="Index">  </span>
+                                            </td>
+                                            <td class="input-group typeahead-container" style="min-width:100px;padding:0px;">
+                                                <div class="input-group typeahead-container">
+                                                    <div class="input-group-append " style="border-top:none;border-bottom:none;border-right:none;border-left:none;">
+                                                        <button id="SearchProduct" type="button" class="btn btn-primary SearchProduct" data-toggle="modal" data-target=".bd-example-modal-lg" style="width:30px;padding:0px;color:white;">
+                                                            <i class="simple-icon-magnifier"></i>
+                                                        </button>
+                                                    </div>
+                                                    <input type="text" class="form-control search-box" name="query" id="query"
+                                                           placeholder="Start typing product to search..."
+                                                           autocomplete="off" style="border-top:none;border-bottom:none;border-right:none;">
+                                                    <input type="hidden" id="ProductId" name="ProductId" class="ProductId" />
+                                                </div>
+                                            </td>
+                                            <td style="max-width:40px;padding:0px;text-align:center;vertical-align:middle;">
+                                                <i id="RepeatedDanger" class="badge badge-danger mb-1" style="text-align: center; vertical-align: middle;height:25px;display:none;margin-left:10px;margin-right:10px;">Repeated</i>
+                                                <i id="RepeatedWarning" class="badge badge-warning mb-1" style="text-align: center; vertical-align: middle;height:25px;display:none;margin-left:10px;margin-right:10px;">Repeated</i>
+                                                <i id="RepeatedPrimary" class="badge badge-primary mb-1" style="text-align: center; vertical-align: middle;height:25px;display:none;margin-left:10px;margin-right:10px;">Repeated</i>
+                                            </td>
+                                            <td style="width:150px;padding:0px;">
+
+                                                <select type="text" id="UnitId" name="UnitId" class="form-control UnitId" style="border-top:none;border-bottom:none;border-right:none;"></select>
+                                            </td>
+                                            <td style="width:100px;padding:0px;">
+                                                <input type="text" id="Price" name="Price" class="form-control Price" style="border-top:none;border-bottom:none;border-right:none;" placeholder="0.0" autocomplete="off" />
+                                            </td>
+                                            <td style="width:100px;padding:0px;">
+                                                <input type="text" id="Quantity" name="Quantity" class="form-control Quantity" style="border-top:none;border-bottom:none;border-right:none;" placeholder="0.0" autocomplete="off" />
+                                            </td>
+                                            <td style="width:100px;padding:0px;">
+                                                <input type="text" id="Amount" name="Amount" readonly class="form-control Amount" style="border-top:none;border-bottom:none;background-color:transparent;" placeholder="0.0" />
+                                            </td>
+                                            <td style="width:100px;padding:0px;text-align:center;vertical-align:middle;">
+                                                <a id="btnDelete" class="btnDelete" href="javascript:;" data-toggle="modal" data-target="#MsgModelId" style="display:none"><i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete</a>
+                                            </td>
+                                        </tr>
+
+                                            <tr class="tblFooter" style="margin-top:5px !important;">
+                                                <td style="min-width:100px;padding:0px;" colspan="3">
+                                                </td>
+                                                <td style="width:100px;padding:0px;text-align:center;vertical-align:middle;">
+                                                    @Html.LabelFor(model => model.Paid)
+                                                </td>
+                                                <td style="width:100px;padding:0px;">
+                                                    @Html.TextBoxFor(model => model.Paid, new { @class = "form-control", @style = "border-top:none;border-bottom:none;border-right:none;", @placeholder = "0.0" })
+                                                </td>
+                                                <td style="width:100px;padding:0px;text-align:center;vertical-align:middle;">
+                                                    @Html.LabelFor(model => model.Total)
+                                                </td>
+                                                <td style="width:100px;padding:0px;">
+                                                    @Html.TextBoxFor(model => model.Total, new { @class = "form-control", @style = "border-top:none;border-bottom:none;border-right:none;background-color:transparent;", @placeholder = "0.0", @readonly = "true" })
+                                                </td>
+                                                <td style="width:100px;padding:0px;">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="min-width:100px;padding:0px;" colspan="3">
+                                                </td>
+                                                <td style="width:100px;padding:0px;text-align:center;vertical-align:middle;">
+                                                    @Html.LabelFor(model => model.Remaining)
+                                                </td>
+                                                <td style="width:100px;padding:0px;">
+                                                    @Html.TextBoxFor(model => model.Remaining, new { @class = "form-control", @style = "border-top:none;border-bottom:none;border-right:none;", @placeholder = "0.0" })
+                                                </td>
+                                                <td style="width:100px;padding:0px;text-align:center;vertical-align:middle;">
+                                                    @Html.LabelFor(model => model.Discount)
+                                                </td>
+                                                <td style="width:100px;padding:0px;">
+                                                    @Html.TextBoxFor(model => model.Discount, new {  @class = "form-control", @style = "border-top:none;border-bottom:none;border-right:none;", @placeholder = "0.0" })
+                                                </td>
+                                                <td style="width:100px;padding:0px;">
+                                                    @Html.DropDownListFor(model => model.DiscountType, null, " ... ", new { @class = "form-control", @style = "border-top:none;border-bottom:none;border-right:none;" })
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="min-width:100px;padding:0px;" colspan="5">
+                                                </td>
+
+                                                <td style="width:100px;padding:0px;text-align:center;vertical-align:middle;">
+                                                    @Html.LabelFor(model => model.Tax)
+                                                </td>
+                                                <td style="width:100px;padding:0px;">
+                                                    @Html.TextBoxFor(model => model.Tax, new { @class = "form-control", @style = "border-top:none;border-bottom:none;border-right:none;", @placeholder = "0.0"})
+                                                </td>
+                                                <td style="width:100px;padding:0px;">
+                                                    @Html.DropDownListFor(model => model.TaxType, null, " ... ", new { @class = "form-control", @style = "border-top:none;border-bottom:none;border-right:none;" })
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="min-width:100px;padding:0px;" colspan="5">
+                                                </td>
+
+                                                <td style="width:100px;padding:0px;text-align:center;vertical-align:middle;">
+                                                    @Html.LabelFor(model => model.Service)
+                                                    Service
+                                                </td>
+                                                <td style="width:100px;padding:0px;">
+                                                    @Html.TextBoxFor(model => model.Service, new {@class = "form-control", @style = "border-top:none;border-bottom:none;border-right:none;", @placeholder = "0.0" })
+                                                </td>
+                                                <td style="width:100px;padding:0px;">
+                                                    @Html.DropDownListFor(model => model.ServiceType, null, " ... ", new { @class = "form-control", @style = "border-top:none;border-bottom:none;border-right:none;" })
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="min-width:100px;padding:0px;" colspan="5">
+                                                </td>
+
+                                                <td style="width:100px;padding:0px;text-align:center;vertical-align:middle;">
+                                                    @Html.LabelFor(model => model.Net)
+                                                </td>
+                                                <td style="width:100px;padding:0px;">
+                                                    @Html.TextBoxFor(model => model.Net, new { @id = "Net", @class = "form-control", @style = "border-top:none;border-bottom:none;border-right:none;background-color:transparent;", @placeholder = "0.0", @readonly = "true" })
+                                                </td>
+                                                <td style="width:100px;padding:0px;">
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
-                            <button type="submit" class="btn btn-primary mb-0">@Utility.Resource.Title_Designer.Save</button>
-                        </form>
+                            <div id="checkStep2">
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        @Html.LabelFor(model => model.Code)
+                                        <div id="divCode">
+                                            @if (ViewBag.TypeSerial == 1)
+                                            {
+                                                @Html.TextBoxFor(model => model.Code, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Code })
+                                            }
+                                            else
+                                            {
+                                                @Html.TextBoxFor(model => model.Code, new { @class = "form-control" , @readonly = "true" , @style = "background-color:transparent", @placeholder = @Utility.Resource.Title_Designer.Code })
+                                           }
+                                            <small class="form-text text-muted" > @Utility.Resource.Message_Designer.CodeIncreasedAutomaticallyCanBechanged</small>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger " })
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        @Html.LabelFor(model => model.Date)
+                                        <div id="divDate">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="simple-icon-calendar"></i></span>
+                                                </div>
+                                                @Html.TextBoxFor(model => model.Date, new { @class = "form-control datepicker" })
+                                            </div>
+                                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label>Supplier</label>
+                                        <div id="divDealerId">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="simple-icon-people"></i></span>
+                                                </div>
+                                                @Html.DropDownListFor(model => model.DealerId, null, " ... ", new { @class = "form-control" })
+                                            </div>
+                                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.DealerId, "", new { @class = "text-danger " })
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        @Html.LabelFor(model => model.StoreName)
+                                        <div id="divStoreId">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="iconsminds-clothing-store"></i></span>
+                                                </div>
+                                                @Html.DropDownListFor(model => model.StoreId, null, " ... ", new { @class = "form-control" })
+                                            </div>
+                                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.StoreId, "", new { @class = "text-danger " })
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        @Html.LabelFor(model => model.PaymentTypeName)
+                                        <div id="divPaymentTypeId">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="iconsminds-financial"></i></span>
+                                                </div>
+                                                @Html.DropDownListFor(model => model.PaymentTypeId, null, " ... ", new { @class = "form-control" })
+                                            </div>
+                                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.PaymentTypeId, "", new { @class = "text-danger " })
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        @Html.LabelFor(model => model.Notes)
+                                        <div id="divNotes">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="simple-icon-notebook"></i></span>
+                                                </div>
+                                                @Html.TextBoxFor(model => model.Notes, new { @class = "form-control" })
+                                            </div>
+                                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.Notes, "", new { @class = "text-danger " })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="position-absolute card-top-buttons">
+                        <span class="btn-group group-add">
+                            <a id="ShowPreference" href="javascript::" class="btn btn-primary .ShowPreference" data-toggle="modal" data-target=".Preference">
+                                <i class="iconsminds-gear-2"></i>
+                                Preference
+                            </a>
+
+                            @*<button id="ShowPreference" type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg" style="width:30px;padding:0px;color:white;">
+                                <i class="iconsminds-gear-2"></i>
+                                @Utility.Resource.Title_Designer.Setting
+                            </button>*@
+
+                            <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId" class="btn btn-primary ">
+                                <i class="simple-icon-action-undo"> </i>
+                                @Utility.Resource.Title_Designer.Back
+                            </a>
+                        </span>
                     </div>
                 </div>
-            </div>
+                <div class="row">
+                    <div class="col-8">
+                        <button id="btn" type="button" class="btn btn-primary ml-4 mr-4 mb-4">@Utility.Resource.Title_Designer.Save</button>
+                    </div>
+                    <div class="col-4">
+                        <span class="btn-group group-add mb-4" style="width:92%">
+                            <a href="/Setting/Product/Save" class="btn btn-primary ">
+                                <i class="iconsminds-shopping-basket"></i>
+                                New Product
+                            </a>
+                            <a href="/Setting/Classification/Save" class="btn btn-primary">
+                                <i class="simple-icon-layers"></i>
+                                New Classification
+                            </a>
+                        </span>
+                    </div>
+                </div>
+
+
+            </form>
         </div>
     </div>
 </div>
+
+
+<div class="modal fade bd-example-modal-lg ProductBody" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" id="SearchProductBody">
+
+    </div>
+</div>
+
+<div class="modal fade bd-example-modal-lg Preference" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" id="ShowPreferenceBody">
+
+    </div>
+</div>
+
+
+<script src="~/js/vendor/jquery-3.3.1.min.js"></script>
+<script src="~/js/vendor/bootstrap3-typeahead.js"></script>
+<link href="~/css/jquery-ui.css" rel="stylesheet" />
+<script src="~/js/jquery-ui.js"></script>
+<script src="~/js/PopupScript.js"></script>
+<script>
+    var AddNewRow;
+    var AddNewProduct;
+    var AddProduct;
+    var RefreshSomeEventListener;
+    var ReIndex;
+    var ReCalc;
+    var Save;
+    var AutoSave;
+    var Repeated;
+    
+    jQuery(function ($) {
+        $("#query").focus();
+        setTimeout(function () {
+            $(".sw-toolbar-bottom").css("display", "none");
+
+        }, 600);
+
+        $('#btn').click(function () {
+            Save();
+        });
+
+        $('.SearchProduct').on("click", function () {
+            var index = $(this).parents("tr").find("#Index").html();
+            $.ajax({
+                type: 'GET',
+                url: "/Setting/Product/SearchProducts",
+                data: { txt: "", page: 1, index: index },
+                success: function (res) {
+                    $("#SearchProductBody").html(res);
+                }
+            });
+
+        });
+
+        $('#ShowPreference').on("click", function () {
+            $.ajax({
+                type: 'GET',
+                url: "/Setting/Preference/Show",
+                data: { Resource: 'Invoice', type: 4},
+                success: function (res) {
+                    $("#ShowPreferenceBody").html(res);
+                }
+            });
+
+        });
+
+
+        AddNewRow = function () {
+
+
+            var Current = $('.trNew');
+            var NewRow = Current.clone();
+            NewRow.insertAfter(".trNew")
+            Current.removeClass("trNew");
+            Current.addClass("ProductRow")
+            NewRow.find("#query").val("");
+            NewRow.find(".UnitId").find('option').remove();
+            NewRow.find("#Index").empty();
+            NewRow.find("#Index").append();
+            NewRow.find(".Price").val("");
+            NewRow.find(".Quantity").val("");
+            NewRow.find(".Amount").val("");
+            NewRow.find("#btnDelete").css("display", "none");
+            RefreshSomeEventListener();
+        }
+
+        RefreshSomeEventListener = function () {
+            $(document).on('keyup keypress', 'input', function (e) {
+                if (e.which == 13) {
+                    e.preventDefault();
+
+                    var isProduct = $(document.activeElement).hasClass("search-box");
+                    var isQuantity = $(document.activeElement).hasClass("Quantity");
+                    var row = $(document.activeElement).parents("tr");
+
+                    if (isProduct) {
+                        setTimeout(function () {
+                            row.find(".Quantity").focus();
+                            row.find(".Quantity").select();
+                        }, 200);
+                    }
+                    else if (isQuantity) {
+                        var NextRow = row.next();
+                        if (NextRow.find(".search-box").hasClass("trNew"))
+                            AddNewRow();
+
+                        setTimeout(function () {
+                            NextRow.find(".search-box").focus();
+                            NextRow.find(".search-box").select();
+                        }, 200);
+                    }
+                    return false;
+                }
+            });
+
+            $(".search-box").autocomplete({
+                minLength: 0,
+                source: function (request, response) {
+                    var searchPhrase = request.term.trim().toLowerCase();
+                    var noResultsLabel = 'NoResultsFound';
+                    $.ajax({
+                        url: "/Setting/Product/SearchItems",
+                        type: "Get",
+                        dataType: "json",
+                        data: { phrase: searchPhrase },
+                        success: function (data) {
+                            try {
+                                if (!data.length) {
+                                    data = [{ name: noResultsLabel }];
+                                }
+
+                                response($.map(data, function (item) {
+                                    return {
+                                        label: item.name, value: item.name, id: item.id,
+                                        barcode: item.barcode, price: item.price
+                                    };
+                                }));
+                            } catch (err) { }
+                        }
+                    });
+                },
+                select: function (event, ui) {
+                    if (ui.item.label === 'NoResultsFound') {
+                        event.preventDefault();
+                        return;
+                    }
+                    var $row = $(event.target).parents('tr');
+                    AddProduct($row, ui.item.id);
+                },
+                focus: function (event, ui) {
+                    if (ui.item.label === 'NoResultsFound') {
+                        event.preventDefault();
+                    }
+                },
+            });
+
+            $('.btnDelete').click(function () {
+                $(this).parent().parent().remove();
+                if ($("#tbl").find('.ProductRow').length < 7) {
+                    AddNewRow();
+                }
+                ReIndex();
+                ReCalc();
+            });
+
+            $("#Discount").keyup(function () {
+                ReCalc();
+            });
+            $("#Tax").keyup(function () {
+                ReCalc();
+            });
+            $("#Service").keyup(function () {
+                ReCalc();
+            });
+            $("#Paid").keyup(function () {
+                ReCalc();
+            });
+            $(".Price").keyup(function () {
+                ReCalc();
+            });
+            $(".Quantity").keyup(function () {
+                ReCalc();
+            });
+            $("#DiscountType").change(function () {
+                ReCalc();
+            });
+            $("#TaxType").change(function () {
+                ReCalc();
+            });
+            $("#ServiceType").change(function () {
+                ReCalc();
+            });
+
+            $("#Code").keyup(function () {
+                AutoSave();
+            });
+
+            $("#DealerId").change(function () {
+                AutoSave();
+            });
+
+            $("#StoreId").change(function () {
+                AutoSave();
+            });
+
+            $("#PaymentTypeId").change(function () {
+                AutoSave();
+            });
+
+            $("#Date").change(function () {
+                AutoSave();
+            });
+
+            $("#Notes").keyup(function () {
+                AutoSave();
+            });
+        }
+
+        AddProduct = function ($row, itemId) {
+            var AllowRepeated = '@ViewBag.AllowRepeated';
+            var RowRepeated = Repeated(itemId);
+            if (AllowRepeated == 2 && RowRepeated != "") {
+                var Quantity = Number(RowRepeated.find("#Quantity").val());
+                RowRepeated.find("#Quantity").val(++Quantity);
+                ReIndex();
+                ReCalc();
+                RowRepeated.find("#RepeatedWarning").css("display", "block");
+
+                if ($row.find("#ProductId").val() == 0) {
+                    setTimeout(function () {
+
+                        $row.find("#query").val("");
+                    }, 200);
+                }
+
+                setTimeout(function () {
+                    RowRepeated.find("#RepeatedDanger").css("display", "none");
+                    RowRepeated.find("#RepeatedWarning").css("display", "none");
+                    RowRepeated.find("#RepeatedPrimary").css("display", "none");
+                }, 3000);
+            }
+            else if (AllowRepeated == 3 && RowRepeated != "") {
+                RowRepeated.find("#RepeatedDanger").css("display", "block");
+                if ($row.find("#ProductId").val() == 0) {
+                    setTimeout(function () {
+                        $row.find("#query").val("");
+                        $row.find("#query").select();
+                    }, 200);
+                }
+                setTimeout(function () {
+                    RowRepeated.find("#RepeatedDanger").css("display", "none");
+                    RowRepeated.find("#RepeatedWarning").css("display", "none");
+                    RowRepeated.find("#RepeatedPrimary").css("display", "none");
+                }, 3000);
+            }
+            else {
+
+                $.ajax({
+                    url: "/Setting/Product/checkStock",
+                    type: "Get",
+                    data: { id: itemId },
+                    success: function (data) {
+                        $row.find("#ProductId").val(itemId);
+                        $row.find("#query").val(data.name);
+                        var price = Number(data.price);
+                        var $UnitID = $row.find('#UnitId');
+                        $UnitID.find('option').remove();
+                        $(data.unitlist).each(function (index, unit) {
+                            $UnitID.append($('<option></option>').val(unit.id).html(unit.name));
+                        });
+                        $UnitID.val(data.selectunitid).trigger("change", SkipCallingAction = true);
+
+                        $row.find("#Price").val(price);
+                        $row.find("#Quantity").val(1);
+                        $row.find("#Amount").val(price);
+                        $row.find("#btnDelete").css("display", "block");
+
+                        if ($row.hasClass("trNew") == true) {
+                            $row.find("#Index").append($("#tbl").find('.ProductRow').length);
+                            AddNewRow();
+                        }
+
+                        if (RowRepeated != "") {
+                            $row.find("#RepeatedPrimary").css("display", "block");
+                            $row.find("#RepeatedPrimary").empty();
+                            $row.find("#RepeatedPrimary").append("Repeated " + RowRepeated.find("#Index").html() + " ");
+                        }
+
+                        ReIndex();
+                        ReCalc();
+                    }
+                });
+            }
+        }
+
+        AddNewProduct = function (itemId) {
+            var AllowRepeated = '@ViewBag.AllowRepeated';
+            var RowRepeated = Repeated(itemId);
+            if (AllowRepeated == 2 && RowRepeated != "") {
+                var Quantity = Number(RowRepeated.find("#Quantity").val());
+                RowRepeated.find("#Quantity").val(++Quantity);
+                ReIndex();
+                ReCalc();
+                RowRepeated.find("#RepeatedWarning").css("display", "block");
+                if ($row.find("#ProductId").val() == 0) {
+                    setTimeout(function () {
+                        $row.find("#query").val("");
+                    }, 200);
+                }
+                setTimeout(function () {
+                    RowRepeated.find("#RepeatedDanger").css("display", "none");
+                    RowRepeated.find("#RepeatedWarning").css("display", "none");
+                    RowRepeated.find("#RepeatedPrimary").css("display", "none");
+                }, 3000);
+            }
+            else if (AllowRepeated == 3 && RowRepeated != "") {
+                RowRepeated.find("#RepeatedDanger").css("display", "block");
+                if ($row.find("#ProductId").val() == 0) {
+                    setTimeout(function () {
+                        $row.find("#query").val("");
+                        $row.find("#query").select();
+                    }, 200);
+                }
+                setTimeout(function () {
+                    RowRepeated.find("#RepeatedDanger").css("display", "none");
+                    RowRepeated.find("#RepeatedWarning").css("display", "none");
+                    RowRepeated.find("#RepeatedPrimary").css("display", "none");
+                }, 3000);
+
+            }
+            else {
+                $.ajax({
+                    url: "/Setting/Product/checkStock",
+                    type: "Get",
+                    data: { id: itemId },
+                    success: function (data) {
+                        var $row = $('.trNew');
+                        $row.find("#ProductId").val(itemId);
+                        $row.find("#query").val(data.name);
+                        var price = Number(data.price);
+                        var $UnitID = $row.find('#UnitId');
+                        $UnitID.find('option').remove();
+                        $(data.unitlist).each(function (index, unit) {
+                            $UnitID.append($('<option></option>').val(unit.id).html(unit.name));
+                        });
+                        $UnitID.val(data.selectunitid).trigger("change", SkipCallingAction = true);
+
+                        $row.find("#Price").val(price);
+                        $row.find("#Quantity").val(1);
+                        $row.find("#Amount").val(price);
+                        $row.find("#btnDelete").css("display", "block");
+                        if ($row.hasClass("trNew") == true) {
+                            $row.find("#Index").append($("#tbl").find('.ProductRow').length);
+                            AddNewRow();
+                        }
+
+                        if (RowRepeated != "") {
+                            $row.find("#RepeatedPrimary").css("display", "block");
+                            $row.find("#RepeatedPrimary").empty();
+                            $row.find("#RepeatedPrimary").append("Repeated " + RowRepeated.find("#Index").html() + " ");
+                        }
+
+                        ReIndex();
+                        ReCalc();
+                    }
+                });
+
+            }
+        }
+
+        ReIndex = function () {
+            $("#tbl").find('.ProductRow').not(".trNew").each(function (index) {
+                $(this).find("#Index").empty();
+                $(this).find("#Index").append(index + 1);
+            });
+        }
+
+        ReCalc = function () {
+            var total = parseFloat(0);
+            var TotalAfterDiscount = Number(0);
+            var totalafterTax = Number(0);
+            var totalafterservice = Number(0);
+            var Remianing = Number(0);
+
+            $("#tbl").find('.ProductRow').not(".trNew").each(function (index) {
+                var row = $(this);
+                if (parseFloat($(this).find("#Price").val()) > 0 && parseFloat($(this).find("#Quantity").val()) > 0) {
+                    var Price = parseFloat($(this).find("#Price").val());
+                    var Quantity = parseFloat($(this).find("#Quantity").val());
+                    $(this).find("#Amount").val(Price * Quantity);
+                    total += parseFloat($(this).find("#Amount").val());
+                }
+
+
+            });
+
+            $("#Total").val(total);
+
+            if ($("#DiscountType").val() == 1) {
+                TotalAfterDiscount = total - $('#Discount').val();
+            }
+            else if ($("#DiscountType").val() == 2) {
+                TotalAfterDiscount = total - ((total * $('#Discount').val()) / 100);
+            }
+
+            var total2 = TotalAfterDiscount
+
+            if ($("#TaxType").val() == 1) {
+                totalafterTax = total2 + parseFloat($('#Tax').val());
+
+            }
+            else if ($("#TaxType").val() == 2) {
+                totalafterTax = total2 + ((total2 * parseFloat($('#Tax').val())) / 100);
+
+            }
+
+            var total3 = totalafterTax;
+
+            if ($("#ServiceType").val() == 1) {
+                totalafterservice = total3 + parseFloat($('#Service').val());
+
+            }
+            else if ($("#ServiceType").val() == 2) {
+                totalafterservice = total3 + (total3 * parseFloat($('#Service').val())) / 100;
+
+            }
+            $("#Net").val(parseFloat(totalafterservice).toFixed(1));
+
+            Remianing = parseFloat($("#Paid").val()) - totalafterservice;
+            if (Remianing < 0) {
+                $("#Remaining").val(0);
+            }
+            else {
+                $("#Remaining").val(parseFloat(Remianing).toFixed(1));
+            }
+
+            AutoSave();
+        }
+
+        Save = function () {
+            var Valid = true;
+
+            if (CheckRowCountWithVal("tbl", "ProductId", "divProduct", '@Utility.Resource.Message_Designer.SelectProduct'))
+                Valid = false;
+            else {
+                if (CheckRequired("Code", "divCode", '@Utility.Resource.Message_Designer.CodeRequired'))
+                    Valid = false;
+
+                if (CheckRequired("DealerId", "divDealerId", '@Utility.Resource.Message_Designer.SupplierRequired'))
+                    Valid = false;
+
+
+                if (CheckRequired("Date", "divDate", '@Utility.Resource.Message_Designer.DateRequired'))
+                    Valid = false;
+
+
+                if (CheckRequired("StoreId", "divStoreId", '@Utility.Resource.Message_Designer.StoreRequired'))
+                    Valid = false;
+
+                if (CheckRequired("PaymentTypeId", "divPaymentTypeId", '@Utility.Resource.Message_Designer.PaymentTypeRequired'))
+                    Valid = false;
+
+                if (!Valid) {
+                    $("#tbHeader").trigger("Click", SkipCallingAction = true)
+                    //alert("Sd");
+                    window.location.replace("#checkStep2");
+                }
+            }
+
+            if (Valid == true) {
+                var data = CollectData();
+
+                $.ajax({
+                    type: 'POST',
+                    url: "/Purchases/ReturnInvoice/Save",
+                    data: { model: data },
+                    success: function (res) {
+                        window.location.replace(res.url);
+
+                    }
+                });
+            }
+        }
+       
+       AutoSave = function () {
+            var Valid = true;
+
+           if (CheckRowCountWithValNoMessage("tbl", "ProductId"))
+                Valid = false;
+            else {
+               if (CheckRequiredNoMessage("Code"))
+                    Valid = false;
+
+               if (CheckRequiredNoMessage("DealerId"))
+                    Valid = false;
+
+
+               if (CheckRequiredNoMessage("Date"))
+                    Valid = false;
+
+
+               if (CheckRequiredNoMessage("StoreId"))
+                   Valid = false;
+
+               if (CheckRequiredNoMessage("PaymentTypeId"))
+                    Valid = false;             
+            }
+
+            if (Valid == true) {
+                if ('@ViewBag.AutoSave' == 1) {
+                   setTimeout(function () {
+
+                        var data = CollectData();
+
+                        $.ajax({
+                            type: 'POST',
+                            url: "/Purchases/ReturnInvoice/Save",
+                            data: { model: data },
+                            success: function (res) {
+                                if (res != "Error") {
+                                   
+                                    $("#Id").val(res.id);     
+                                    var obj = { area: "Purchases", Url: "/Purchases/ReturnInvoice/Save?Id=" + res.id + "&ParentId=" + $("#ParentId").val() + "&TypeId=" + $("#TypeId").val() };
+                                    history.pushState(null, obj.area, obj.Url);
+                                }
+                            }
+                        });
+                    }, 500);
+                }
+            }
+        }
+
+        function CollectData() {
+            var list = [];
+            $('#tbl > tbody > .ProductRow').each(function () {
+                var currentRow = $(this);
+                if (!currentRow.hasClass('trNew')) {
+                    if (currentRow.find('#ProductId').val() > 0) {
+                        list.push({
+                            InvoiceId: $('#Id').val(),
+                            ProductId: currentRow.find('#ProductId').val(),
+                            StoreId: $('#StoreId').val(),
+                            UnitId: currentRow.find('#UnitId').val(),
+                            Quantity: currentRow.find('#Quantity').val(),
+                            Price: currentRow.find('#Price').val(),
+                            Net: currentRow.find('#Net').val(),
+                        });
+                    }
+                }
+            });
+
+            var data = {
+                Id: $('#Id').val(),
+                TypeId: $('#TypeId').val(),
+                Code: $('#Code').val(),
+                Date: $('#Date').val(),
+                DealerId: $('#DealerId').val(),
+                PaymentTypeId: $('#PaymentTypeId').val(),
+                StoreId: $('#StoreId').val(),
+                Total: $('#Total').val(),
+                Discount: $('#Discount').val(),
+                DiscountType: $('#DiscountType').val(),
+                Tax: $('#Tax').val(),
+                TaxType: $('#TaxType').val(),
+                Service: $('#Service').val(),
+                ServiceType: $('#ServiceType').val(),
+                Net: $('#Net').val(),
+                Notes: $('#Notes').val(),
+                Remaining: $('#Remaining').val(),
+                Paid: $('#Paid').val(),
+                InvoiceProducts: list
+            }
+
+           return data;
+        }
+
+        Repeated = function (itemId) {
+            var Product = ""
+            $("#tbl").find('.ProductRow').not(".trNew").each(function (index) {
+                var currentRow = $(this);
+                if (itemId == currentRow.find("#ProductId").val()) {
+                    Product = currentRow;
+                    return false;
+                }
+            });
+            return Product;
+        }
+
+        RefreshSomeEventListener();
+
+        ReIndex();
+
+        ReCalc();
+    });
+</script>

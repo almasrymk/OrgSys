@@ -51,6 +51,17 @@ namespace Repository.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Branch");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            Hide = false,
+                            Name = "Main Branch",
+                            ParentId = 0L,
+                            Status = 0,
+                            TypeId = 0L
+                        });
                 });
 
             modelBuilder.Entity("Entity.Model.Classification", b =>
@@ -150,6 +161,19 @@ namespace Repository.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Dealer");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            Code = "1",
+                            CodeNumber = 1L,
+                            Hide = false,
+                            Name = "...",
+                            ParentId = 0L,
+                            Status = 0,
+                            TypeId = 0L
+                        });
                 });
 
             modelBuilder.Entity("Entity.Model.Invoice", b =>
@@ -338,6 +362,9 @@ namespace Repository.Migrations
                     b.Property<string>("ImgPath")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("InOut")
+                        .HasColumnType("int");
+
                     b.Property<string>("MaskText")
                         .HasColumnType("nvarchar(max)");
 
@@ -362,7 +389,8 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1L,
-                            Hide = true,
+                            Hide = false,
+                            InOut = -1,
                             Name = "Sales",
                             ParentId = 0L,
                             Status = 0,
@@ -371,7 +399,8 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 2L,
-                            Hide = true,
+                            Hide = false,
+                            InOut = 1,
                             Name = "Purchase",
                             ParentId = 0L,
                             Status = 0,
@@ -380,7 +409,8 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 3L,
-                            Hide = true,
+                            Hide = false,
+                            InOut = 1,
                             Name = "Return Sales",
                             ParentId = 0L,
                             Status = 0,
@@ -389,7 +419,8 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 4L,
-                            Hide = true,
+                            Hide = false,
+                            InOut = -1,
                             Name = "Return Purchase",
                             ParentId = 0L,
                             Status = 0,
@@ -643,7 +674,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1L,
-                            Hide = true,
+                            Hide = false,
                             Name = "Cash",
                             ParentId = 0L,
                             Status = 0,
@@ -652,7 +683,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 2L,
-                            Hide = true,
+                            Hide = false,
                             Name = "Check",
                             ParentId = 0L,
                             Status = 0,
@@ -1128,6 +1159,710 @@ namespace Repository.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Entity.Model.Preference", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .UseIdentityColumn();
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Key")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Reference")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Preference");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            Hide = false,
+                            Key = "DefaultStore",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 1L,
+                            Value = "1"
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            Hide = false,
+                            Key = "DefaultCustomer",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 1L,
+                            Value = "1"
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            Hide = false,
+                            Key = "DefaultPaymentType",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 1L,
+                            Value = "1"
+                        },
+                        new
+                        {
+                            Id = 4L,
+                            Hide = false,
+                            Key = "DiscountValue",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 1L,
+                            Value = ""
+                        },
+                        new
+                        {
+                            Id = 5L,
+                            Hide = false,
+                            Key = "DefaultDiscountType",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 1L,
+                            Value = "2"
+                        },
+                        new
+                        {
+                            Id = 6L,
+                            Hide = false,
+                            Key = "ServiceValue",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 1L,
+                            Value = ""
+                        },
+                        new
+                        {
+                            Id = 7L,
+                            Hide = false,
+                            Key = "DefaultServiceType",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 1L,
+                            Value = "2"
+                        },
+                        new
+                        {
+                            Id = 8L,
+                            Hide = false,
+                            Key = "TaxValue",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 1L,
+                            Value = "14"
+                        },
+                        new
+                        {
+                            Id = 9L,
+                            Hide = false,
+                            Key = "DefaultTaxType",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 1L,
+                            Value = "2"
+                        },
+                        new
+                        {
+                            Id = 10L,
+                            Hide = false,
+                            Key = "NumberLine",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 1L,
+                            Value = "6"
+                        },
+                        new
+                        {
+                            Id = 11L,
+                            Hide = false,
+                            Key = "OrderTabe",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 1L,
+                            Value = "1"
+                        },
+                        new
+                        {
+                            Id = 12L,
+                            Hide = false,
+                            Key = "AutoSave",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 1L,
+                            Value = "0"
+                        },
+                        new
+                        {
+                            Id = 13L,
+                            Hide = false,
+                            Key = "TypeSerial",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 1L,
+                            Value = "1"
+                        },
+                        new
+                        {
+                            Id = 14L,
+                            Hide = false,
+                            Key = "AllowRepeated",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 1L,
+                            Value = "1"
+                        },
+                        new
+                        {
+                            Id = 15L,
+                            Hide = false,
+                            Key = "SaveLastStatusSetting",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 1L,
+                            Value = "1"
+                        },
+                        new
+                        {
+                            Id = 16L,
+                            Hide = false,
+                            Key = "DefaultStore",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 2L,
+                            Value = "1"
+                        },
+                        new
+                        {
+                            Id = 17L,
+                            Hide = false,
+                            Key = "DefaultSupplier",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 2L,
+                            Value = "1"
+                        },
+                        new
+                        {
+                            Id = 18L,
+                            Hide = false,
+                            Key = "DefaultPaymentType",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 2L,
+                            Value = "1"
+                        },
+                        new
+                        {
+                            Id = 19L,
+                            Hide = false,
+                            Key = "DiscountValue",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 2L,
+                            Value = ""
+                        },
+                        new
+                        {
+                            Id = 20L,
+                            Hide = false,
+                            Key = "DefaultDiscountType",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 2L,
+                            Value = "2"
+                        },
+                        new
+                        {
+                            Id = 21L,
+                            Hide = false,
+                            Key = "ServiceValue",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 2L,
+                            Value = ""
+                        },
+                        new
+                        {
+                            Id = 22L,
+                            Hide = false,
+                            Key = "DefaultServiceType",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 2L,
+                            Value = "2"
+                        },
+                        new
+                        {
+                            Id = 23L,
+                            Hide = false,
+                            Key = "TaxValue",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 2L,
+                            Value = "14"
+                        },
+                        new
+                        {
+                            Id = 24L,
+                            Hide = false,
+                            Key = "DefaultTaxType",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 2L,
+                            Value = "2"
+                        },
+                        new
+                        {
+                            Id = 25L,
+                            Hide = false,
+                            Key = "NumberLine",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 2L,
+                            Value = "6"
+                        },
+                        new
+                        {
+                            Id = 26L,
+                            Hide = false,
+                            Key = "OrderTabe",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 2L,
+                            Value = "1"
+                        },
+                        new
+                        {
+                            Id = 27L,
+                            Hide = false,
+                            Key = "AutoSave",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 2L,
+                            Value = "0"
+                        },
+                        new
+                        {
+                            Id = 28L,
+                            Hide = false,
+                            Key = "TypeSerial",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 2L,
+                            Value = "1"
+                        },
+                        new
+                        {
+                            Id = 29L,
+                            Hide = false,
+                            Key = "AllowRepeated",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 2L,
+                            Value = "1"
+                        },
+                        new
+                        {
+                            Id = 30L,
+                            Hide = false,
+                            Key = "SaveLastStatusSetting",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 2L,
+                            Value = "1"
+                        },
+                        new
+                        {
+                            Id = 31L,
+                            Hide = false,
+                            Key = "DefaultStore",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 3L,
+                            Value = "1"
+                        },
+                        new
+                        {
+                            Id = 32L,
+                            Hide = false,
+                            Key = "DefaultCustomer",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 3L,
+                            Value = "1"
+                        },
+                        new
+                        {
+                            Id = 33L,
+                            Hide = false,
+                            Key = "DefaultPaymentType",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 3L,
+                            Value = "1"
+                        },
+                        new
+                        {
+                            Id = 34L,
+                            Hide = false,
+                            Key = "DiscountValue",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 3L,
+                            Value = ""
+                        },
+                        new
+                        {
+                            Id = 35L,
+                            Hide = false,
+                            Key = "DefaultDiscountType",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 3L,
+                            Value = "2"
+                        },
+                        new
+                        {
+                            Id = 36L,
+                            Hide = false,
+                            Key = "ServiceValue",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 3L,
+                            Value = ""
+                        },
+                        new
+                        {
+                            Id = 37L,
+                            Hide = false,
+                            Key = "DefaultServiceType",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 3L,
+                            Value = "2"
+                        },
+                        new
+                        {
+                            Id = 38L,
+                            Hide = false,
+                            Key = "TaxValue",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 3L,
+                            Value = "14"
+                        },
+                        new
+                        {
+                            Id = 39L,
+                            Hide = false,
+                            Key = "DefaultTaxType",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 3L,
+                            Value = "2"
+                        },
+                        new
+                        {
+                            Id = 40L,
+                            Hide = false,
+                            Key = "NumberLine",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 3L,
+                            Value = "6"
+                        },
+                        new
+                        {
+                            Id = 41L,
+                            Hide = false,
+                            Key = "OrderTabe",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 3L,
+                            Value = "1"
+                        },
+                        new
+                        {
+                            Id = 42L,
+                            Hide = false,
+                            Key = "AutoSave",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 3L,
+                            Value = "0"
+                        },
+                        new
+                        {
+                            Id = 43L,
+                            Hide = false,
+                            Key = "TypeSerial",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 3L,
+                            Value = "1"
+                        },
+                        new
+                        {
+                            Id = 44L,
+                            Hide = false,
+                            Key = "AllowRepeated",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 3L,
+                            Value = "1"
+                        },
+                        new
+                        {
+                            Id = 45L,
+                            Hide = false,
+                            Key = "SaveLastStatusSetting",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 3L,
+                            Value = "1"
+                        },
+                        new
+                        {
+                            Id = 46L,
+                            Hide = false,
+                            Key = "DefaultStore",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 4L,
+                            Value = "1"
+                        },
+                        new
+                        {
+                            Id = 47L,
+                            Hide = false,
+                            Key = "DefaultSupplier",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 4L,
+                            Value = "1"
+                        },
+                        new
+                        {
+                            Id = 48L,
+                            Hide = false,
+                            Key = "DefaultPaymentType",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 4L,
+                            Value = "1"
+                        },
+                        new
+                        {
+                            Id = 49L,
+                            Hide = false,
+                            Key = "DiscountValue",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 4L,
+                            Value = ""
+                        },
+                        new
+                        {
+                            Id = 50L,
+                            Hide = false,
+                            Key = "DefaultDiscountType",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 4L,
+                            Value = "2"
+                        },
+                        new
+                        {
+                            Id = 51L,
+                            Hide = false,
+                            Key = "ServiceValue",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 4L,
+                            Value = ""
+                        },
+                        new
+                        {
+                            Id = 52L,
+                            Hide = false,
+                            Key = "DefaultServiceType",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 4L,
+                            Value = "2"
+                        },
+                        new
+                        {
+                            Id = 53L,
+                            Hide = false,
+                            Key = "TaxValue",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 4L,
+                            Value = "14"
+                        },
+                        new
+                        {
+                            Id = 54L,
+                            Hide = false,
+                            Key = "DefaultTaxType",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 4L,
+                            Value = "2"
+                        },
+                        new
+                        {
+                            Id = 55L,
+                            Hide = false,
+                            Key = "NumberLine",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 4L,
+                            Value = "6"
+                        },
+                        new
+                        {
+                            Id = 56L,
+                            Hide = false,
+                            Key = "OrderTabe",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 4L,
+                            Value = "1"
+                        },
+                        new
+                        {
+                            Id = 57L,
+                            Hide = false,
+                            Key = "AutoSave",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 4L,
+                            Value = "0"
+                        },
+                        new
+                        {
+                            Id = 58L,
+                            Hide = false,
+                            Key = "TypeSerial",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 4L,
+                            Value = "1"
+                        },
+                        new
+                        {
+                            Id = 59L,
+                            Hide = false,
+                            Key = "AllowRepeated",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 4L,
+                            Value = "1"
+                        },
+                        new
+                        {
+                            Id = 60L,
+                            Hide = false,
+                            Key = "SaveLastStatusSetting",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 4L,
+                            Value = "1"
+                        });
+                });
+
             modelBuilder.Entity("Entity.Model.Product", b =>
                 {
                     b.Property<long>("Id")
@@ -1452,7 +2187,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1L,
-                            Hide = true,
+                            Hide = false,
                             Name = "Owner",
                             ParentId = 0L,
                             Status = 0,
@@ -1531,6 +2266,18 @@ namespace Repository.Migrations
                     b.HasIndex("BranchId");
 
                     b.ToTable("Store");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            BranchId = 1L,
+                            Hide = false,
+                            Name = "Main Store",
+                            ParentId = 0L,
+                            Status = 0,
+                            TypeId = 0L
+                        });
                 });
 
             modelBuilder.Entity("Entity.Model.Unit", b =>
@@ -1623,7 +2370,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1L,
-                            Hide = true,
+                            Hide = false,
                             Name = "Owner",
                             ParentId = 0L,
                             Password = "iebLM3YfOZ4fcXYL1jInxA==",

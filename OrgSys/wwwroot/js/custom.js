@@ -64,7 +64,7 @@ $(".mode-object").on("click", function (event) {
     $(".mode-object").addClass("active");
 });
 
-function showNotification(message, status) {
+function showNotification(message, status) {    
     if (status == "error") {
         status = "danger";
     }
@@ -194,7 +194,7 @@ function DeleteList() {
         $.ajax({
             type: 'POST',
             url: url + "/DeleteList",
-            data: { ids: ids },
+            data: { ids: ids, TypeId : $("#TypeId").val()},
             success: function (result) {
                 search(page);
                 ids = [];              
@@ -260,6 +260,16 @@ function CheckRequired(control, dvivControl , message) {
     return false;
 }
 
+
+function CheckRequiredNoMessage(control) {
+    if ($("#" + control).val() == "") {
+        $("#" + control).focus();      
+        return true;
+    }
+    return false;
+}
+
+
 function CheckRage(control, dvivControl , min , max , message) {
     $("#error" + control).remove();
     if ("" + $("#" + control).val() != "") {
@@ -279,7 +289,7 @@ function CheckRowCount(control, dvivControl, message) {
     $("#error" + control).remove();
     var count = 0;
     $('#' + control +' > tbody > tr').each(function () {
-        var currentRow = $(this);
+        var currentRow = $(this);        
         if (!currentRow.hasClass('trNew')) {
             count++;
         }
@@ -292,7 +302,7 @@ function CheckRowCount(control, dvivControl, message) {
     return false;
 }
 
-function CheckRowCount(control , checkVal, dvivControl, message) {
+function CheckRowCountWithVal(control , checkVal, dvivControl, message) {
     $("#error" + control).remove();
     var count = 0;
     $('#' + control + ' > tbody > tr').each(function () {
@@ -300,9 +310,24 @@ function CheckRowCount(control , checkVal, dvivControl, message) {
         if (!currentRow.hasClass('trNew') && currentRow.find("#" + checkVal).val() > 0 ) {
             count++;
         }
-    });
+    });    
     if (count == 0) {
         $("#" + dvivControl).after('<span id="error' + control + '" class="error" style="color:red">' + message + '</span>');
+        $("#" + control).focus();
+        return true;
+    }
+    return false;
+}
+
+function CheckRowCountWithValNoMessage(control, checkVal) {    
+    var count = 0;
+    $('#' + control + ' > tbody > tr').each(function () {
+        var currentRow = $(this);
+        if (!currentRow.hasClass('trNew') && currentRow.find("#" + checkVal).val() > 0) {
+            count++;
+        }
+    });
+    if (count == 0) {      
         $("#" + control).focus();
         return true;
     }

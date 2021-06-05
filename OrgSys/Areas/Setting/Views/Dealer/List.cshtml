@@ -19,6 +19,8 @@
                 <tbody>
                     @for (int i = 0, x = ((Model.PageNumber - 1) * Model.PageSize) + 1; i < Model.Count; i++, x++)
                     {
+                        if (Model[i].TypeId > 0)
+                        {
                         <tr>
                             <td style="width:50px;vertical-align: middle;text-align:center">
                                 <p class="list-item-heading">@x</p>
@@ -56,6 +58,7 @@
                                 }
                             </td>
                         </tr>
+                        }
                     }
                 </tbody>
             </table>
@@ -65,6 +68,8 @@
         <div class="col-12 list m-0 p-0 pt-3" data-check-all="checkAll">
             @for (int i = 0, x = ((Model.PageNumber - 1) * Model.PageSize) + 1; i < Model.Count; i++, x++)
             {
+                if (Model[i].TypeId > 0)
+                {
                 <div class="card d-flex flex-row mb-3">
                     <div class="d-flex flex-grow-1 min-width-zero">
                         @if ("" + Model[i].ImgPath != "")
@@ -104,12 +109,15 @@
                         </label>
                     </div>
                 </div>
+                }
             }
         </div>
     </div>
     <div id="obList" class="row list disable-text-selection pt-2" data-check-all="checkAll" style="display:none;">
         @for (int i = 0, x = ((Model.PageNumber - 1) * Model.PageSize) + 1; i < Model.Count; i++, x++)
         {
+            if (Model[i].TypeId > 0)
+            {
             <div href="#" class="card m-2 p-1">
                 <label class="custom-control custom-checkbox mr-1 ml-1">
                     @if (Model[i].Status == Utility.Status.All)
@@ -147,7 +155,7 @@
                     </div>
                 </div>
             </div>
-
+            }
         }
     </div>
 }

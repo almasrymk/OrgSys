@@ -86,13 +86,13 @@ namespace OrgSys.Controllers
         }
 
         [HttpPost]
-        public virtual JsonResult DeleteList(long[] ids)
+        public virtual JsonResult DeleteList(long[] ids , long ParentId = 0 , long TypeId = 0)
         {
             try
             {
                 if (ids != null && ids.Length > 0)
                 {
-                    var list = service.GetAll(ids.ToList());
+                    var list = service.GetAll(ids.ToList(), TypeId);
                     var res = service.Delete(ids.ToList());
                     if (res)
                         DeleteFile(list.Select(e => e.ImgPath).ToList());

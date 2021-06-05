@@ -109,7 +109,7 @@ namespace Service.BAL
             return repo.roleRepo.Delete(ids);
         }
 
-        public List<RoleModelView> GetAll(List<long> ids)
+        public List<RoleModelView> GetAll(List<long> ids, long TypeId = 0)
         {
             return repo.roleRepo.GetList(e => ids.Contains(e.Id), e => e.OrderBy(e => e.Id), "", Utility.Status.New).Select(e => new RoleModelView(e)).ToList();
         }

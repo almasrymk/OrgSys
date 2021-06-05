@@ -109,7 +109,7 @@ namespace Service.BAL
             return repo.shiftRepo.Delete(ids);
         }
 
-        public List<ShiftModelView> GetAll(List<long> ids)
+        public List<ShiftModelView> GetAll(List<long> ids, long TypeId = 0)
         {
             return repo.shiftRepo.GetList(e => ids.Contains(e.Id), e => e.OrderBy(e => e.Id), "", Utility.Status.New).Select(e => new ShiftModelView(e)).ToList();
         }

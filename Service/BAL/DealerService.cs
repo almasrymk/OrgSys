@@ -43,7 +43,7 @@ namespace Service.BAL
         /// <returns></returns>
         public List<DealerModelView> GetAll(long parentId = 0, long TypeId = 0)
         {
-            return repo.dealerRepo.GetList(e=>e.TypeId == TypeId , e => e.OrderBy(e => e.Id), "", Utility.Status.New).Select(e => new DealerModelView(e)).ToList();
+            return repo.dealerRepo.GetList(e=>e.TypeId == TypeId || e.TypeId == 0, e => e.OrderBy(e => e.Id), "", Utility.Status.New).Select(e => new DealerModelView(e)).ToList();
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Service.BAL
         /// <returns></returns>
         public List<DealerModelView> GetAll(string textSearch , long parentId = 0, long TypeId = 0)
         {
-            return repo.dealerRepo.GetList(e => e.TypeId == TypeId && e.Name.Contains("" + textSearch), e => e.OrderBy(e => e.Id), "", Utility.Status.New).Select(e => new DealerModelView(e)).ToList();
+            return repo.dealerRepo.GetList(e => (e.TypeId == TypeId || e.TypeId == 0) && e.Name.Contains("" + textSearch), e => e.OrderBy(e => e.Id), "", Utility.Status.New).Select(e => new DealerModelView(e)).ToList();
         }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace Service.BAL
         /// <returns></returns>
         public IPagedList<DealerModelView> GetAll(long parentId = 0, long TypeId = 0 , int page = 1, int pageSize = 20)
         {
-            return repo.dealerRepo.GetList(e=> e.TypeId == TypeId , e => e.OrderBy(e => e.Id), "", Utility.Status.New).Select(e => new DealerModelView(e)).ToPagedList(page, pageSize);
+            return repo.dealerRepo.GetList(e=> e.TypeId == TypeId || e.TypeId == 0, e => e.OrderBy(e => e.Id), "", Utility.Status.New).Select(e => new DealerModelView(e)).ToPagedList(page, pageSize);
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace Service.BAL
         /// <returns></returns>
         public IPagedList<DealerModelView> GetAll(string textSearch, long parentId = 0, long TypeId = 0, int page = 1, int pageSize = 20)
         {
-            return repo.dealerRepo.GetList(e => e.TypeId == TypeId &&( "" + textSearch == "" || e.Name.Contains("" + textSearch)), e => e.OrderBy(e => e.Id), "", Utility.Status.New).Select(e => new DealerModelView(e)).ToPagedList(page, pageSize);
+            return repo.dealerRepo.GetList(e => (e.TypeId == TypeId || e.TypeId == 0) &&( "" + textSearch == "" || e.Name.Contains("" + textSearch)), e => e.OrderBy(e => e.Id), "", Utility.Status.New).Select(e => new DealerModelView(e)).ToPagedList(page, pageSize);
         }
 
         /// <summary>
@@ -109,9 +109,9 @@ namespace Service.BAL
             return repo.dealerRepo.Delete(ids);
         }
 
-        public List<DealerModelView> GetAll(List<long> ids)
+        public List<DealerModelView> GetAll(List<long> ids, long TypeId = 0)
         {
-            return repo.dealerRepo.GetList(e => ids.Contains(e.Id), e => e.OrderBy(e => e.Id), "", Utility.Status.New).Select(e => new DealerModelView(e)).ToList();
+            return repo.dealerRepo.GetList(e => e.TypeId == TypeId && ids.Contains(e.Id), e => e.OrderBy(e => e.Id), "", Utility.Status.New).Select(e => new DealerModelView(e)).ToList();
         }
     }
 }

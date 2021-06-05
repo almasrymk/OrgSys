@@ -33,10 +33,10 @@ namespace Service.BAL
             var deleted = repo.productUnitRepo.GetList(e => e.ProductId == ob.Id && !ids.Contains(e.Id), e => e.OrderBy(e => e.Id), "", Utility.Status.All).ToList();
             if (deleted != null && deleted.Count > 0)
                 repo.productUnitRepo.ShiftDelete(deleted.Select(e => e.Id).ToList());
-            //RecipeDelete from DataBase
-            var RecipeDeleted = repo.recipeRepo.GetList(e => e.ProductId == ob.Id, e => e.OrderBy(e => e.Id), "", Utility.Status.All).ToList();
-            if (RecipeDeleted != null && RecipeDeleted.Count > 0)
-                repo.recipeRepo.ShiftDelete(RecipeDeleted.Select(e => e.Id).ToList());
+            ////RecipeDelete from DataBase
+            //var RecipeDeleted = repo.recipeRepo.GetList(e => e.ProductId == ob.Id, e => e.OrderBy(e => e.Id), "", Utility.Status.All).ToList();
+            //if (RecipeDeleted != null && RecipeDeleted.Count > 0)
+            //    repo.recipeRepo.ShiftDelete(RecipeDeleted.Select(e => e.Id).ToList());
         
             foreach (var productUnit in ob.ProductUnits)
             {
@@ -47,13 +47,13 @@ namespace Service.BAL
             Nwob.ProductUnits = repo.productUnitRepo.GetList(e=>e.ProductId == Nwob.Id, e => e.OrderBy(e => e.Id), "", Utility.Status.All).ToList();
 
             //Save Recipe            
-            foreach (var productRecipe in ob.ProductRecipes)
-            {
-                var model = productRecipe.Model;
-                model.ProductId = Nwob.Id;
-                repo.recipeRepo.AddOrUpdate(model);
-            }
-            Nwob.ProductRecipes = repo.recipeRepo.GetList(e => e.ProductId == Nwob.Id, e => e.OrderBy(e => e.Id), "", Utility.Status.All).ToList();
+            //foreach (var productRecipe in ob.ProductRecipes)
+            //{
+            //    var model = productRecipe.Model;
+            //    model.ProductId = Nwob.Id;
+            //    repo.recipeRepo.AddOrUpdate(model);
+            //}
+            //Nwob.ProductRecipes = repo.recipeRepo.GetList(e => e.ProductId == Nwob.Id, e => e.OrderBy(e => e.Id), "", Utility.Status.All).ToList();
             return new ProductModelView(Nwob);
         }
 
@@ -167,7 +167,7 @@ namespace Service.BAL
             return repo.productRepo.Delete(ids);
         }
 
-        public List<ProductModelView> GetAll(List<long> ids)
+        public List<ProductModelView> GetAll(List<long> ids, long TypeId = 0)
         {
             return repo.productRepo.GetList(e => ids.Contains(e.Id), e => e.OrderBy(e => e.Id), "", Utility.Status.New).Select(e => new ProductModelView(e)).ToList();
         }

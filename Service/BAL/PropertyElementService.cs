@@ -113,7 +113,7 @@ namespace Service.BAL
             return repo.propertyelementRepo.Delete(ids);
         }
 
-        public List<PropertyElementModelView> GetAll(List<long> ids)
+        public List<PropertyElementModelView> GetAll(List<long> ids, long TypeId = 0)
         {
             return repo.propertyelementRepo.GetList(e => ids.Contains(e.Id), e => e.OrderBy(e => e.Id), "", Utility.Status.New).Select(e => new PropertyElementModelView(e)).ToList();
         }

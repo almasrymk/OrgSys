@@ -20,6 +20,7 @@
         <tr>
             <td style="width:50px;vertical-align: middle;text-align:center;padding:3px;">
                 <p id="Index" class="list-item-heading"></p>
+                <input type="hidden" id="ProductSearchId" value="@item.Id" />
             </td>
             <td style="vertical-align: middle; padding: 3px;">
                 <p class="text-muted">&nbsp; @item.Code</p>
@@ -48,7 +49,7 @@
             </td>
             <td style="width:25px;text-align:center;vertical-align:middle;padding:3px;">
                 <label class="custom-control custom-checkbox" style="vertical-align: middle; text-align: center;" >
-                    <input id="chk_5" type="checkbox" class="custom-control-input chk">
+                    <input id="chkSelect" type="checkbox" class="custom-control-input chk">
                     <input type="hidden" value="5">
                     <span class="custom-control-label"></span>
                 </label>

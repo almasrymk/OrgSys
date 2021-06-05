@@ -110,7 +110,7 @@ namespace Service.BAL
             return repo.branchRepo.Delete(ids);
         }
 
-        public List<BranchModelView> GetAll(List<long> ids)
+        public List<BranchModelView> GetAll(List<long> ids, long TypeId = 0)
         {
             return repo.branchRepo.GetList(e => ids.Contains(e.Id), e => e.OrderBy(e => e.Id), "", Utility.Status.New).Select(e => new BranchModelView(e)).ToList();
         }

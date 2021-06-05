@@ -5,12 +5,12 @@
 
 <div class="modal-content" style="border-radius:12px;">
     <div class="modal-header" style="padding:15px;">
-        <h5 class="modal-title">Search Product</h5>        
+        <h5 class="modal-title">Search Product</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
-    <div  class="modal-body" style="padding: 10px 20px 10px 20px;background-color:#f8f8f8;">
+    <div class="modal-body" style="padding: 10px 20px 10px 20px;background-color:#f8f8f8;">
         <div class="card" style="background-color:white;padding:10px 20px 0px 20px;">
             <div class="row" style="margin-left:2px;margin-right:2px;">
                 <div class="float-md-right">
@@ -34,11 +34,11 @@
     </div>
     <div class="modal-footer" style="padding:12px;">
         <span class="btn-group group-add" role="group" aria-label="Basic example">
-            <button class="btn btn-primary">
+            <button class="btn btn-primary" onclick="Select()">
                 <i class="fa fa-check"></i>
                 @Utility.Resource.Title_Designer.Ok
-            </button>           
-            <button class="btn btn-primary ">
+            </button>
+            <button class="btn btn-primary" onclick="Close()">
                 <i class="simple-icon-action-undo"> </i>
                 @Utility.Resource.Title_Designer.Back
             </button>
@@ -64,11 +64,7 @@
 
     function searchProduct(_page) {
         page = _page;
-        var Search2 = "";
-        //if ($("#HTypeId").length) {
-        //    Search2 = "&TypeId=" + $("#HTypeId").val();
-        //}
-        //alert(Search2);
+        var Search2 = "";     
         setTimeout(() => {
             $.ajax({
                 url: "/Setting/Product/SearchProducts" + "?txt=" + $('#txtSearchProduct').val() + Search2 + "&page=" + page + "&Type=2",
@@ -79,5 +75,46 @@
                 }
             });
         }, 300);
+    }
+
+    function Select() {
+        var index = '@ViewBag.index';
+      
+        $('#tblSearch > tbody > tr').each(function () {
+            var currentRow = $(this);
+            if (currentRow.find("#chkSelect").is(":checked")) {
+                $('#tbl > tbody > .ProductRow').each(function () {
+                    var currentRowtbl = $(this);                   
+                    if (currentRowtbl.hasClass("trNew")) {
+                        index = 0;
+                        return false;
+                    }
+                    if (currentRowtbl.find("#Index").html() == index) {                       
+                        AddProduct(currentRowtbl, currentRow.find("#ProductSearchId").val());
+                        index++;
+                        return false;
+                    }
+                });  
+                if (index == 0) {                   
+                    AddNewProduct(currentRow.find("#ProductSearchId").val());  
+                }                
+            }
+           
+        });
+        $(".close").trigger("click");
+    }
+
+    function tbl(_index)
+    {
+        $('#tbl > tbody > .ProductRow').each(function () {
+            var currentRowtbl = $(this);
+            if (currentRowtbl.find("#Index").html() == _index) {
+                return currentRowtbl;
+            }
+        });
+    }
+
+    function Close() {
+        $(".close").trigger("click");
     }
 </script>

@@ -108,7 +108,7 @@ namespace Service.BAL
             return repo.productpropertyelementRepo.Delete(ids);
         }
 
-        public List<ProductPropertyElementModelView> GetAll(List<long> ids)
+        public List<ProductPropertyElementModelView> GetAll(List<long> ids, long TypeId = 0)
         {
             return repo.productpropertyelementRepo.GetList(e => ids.Contains(e.Id), e => e.OrderBy(e => e.Id), "", Utility.Status.New).Select(e => new ProductPropertyElementModelView(e)).ToList();
         }

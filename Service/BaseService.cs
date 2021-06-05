@@ -20,7 +20,7 @@ namespace Service
 
         List<entity> GetAll(long parentId =0 , long TypeId = 0);
 
-        List<entity> GetAll(List<long> ids);
+        List<entity> GetAll(List<long> ids, long TypeId =0);
 
         List<entity> GetAll(string textSearch , long parentId = 0, long TypeId = 0);
 
