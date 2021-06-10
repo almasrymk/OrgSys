@@ -33,9 +33,9 @@ namespace Entity.ModelView
             this.ParentId = ob.ParentId;
             this.TypeId = ob.TypeId;
             this.ImgPath = ob.ImgPath;
-            if (ob.InventoryStoreProducts == null)
-                ob.InventoryStoreProducts = new List<InventoryStoreProduct>();
-            this.InventoryStoreProducts = ob.InventoryStoreProducts.Select(e => new InventoryStoreProductModelView(e)).ToList();
+            if (ob.InventoryProducts == null)
+                ob.InventoryProducts = new List<InventoryProduct>();
+            this.InventoryProducts = ob.InventoryProducts.Select(e => new InventoryProductModelView(e)).ToList();
         }
 
         public InventoryStore Model
@@ -59,7 +59,7 @@ namespace Entity.ModelView
                     ParentId = this.ParentId,
                     TypeId = this.TypeId,
                     ImgPath = this.ImgPath,
-                    InventoryStoreProducts = this.InventoryStoreProducts != null ? this.InventoryStoreProducts.Select(e => e.Model).ToList() : new List<InventoryStoreProduct>()
+                    InventoryProducts = this.InventoryProducts != null ? this.InventoryProducts.Select(e => e.Model).ToList() : new List<InventoryProduct>()
                 };
             }
         }
@@ -84,6 +84,6 @@ namespace Entity.ModelView
         public bool CreateTransaction { get; set; }
         public bool Closed { get; set; }
 
-        public List<InventoryStoreProductModelView> InventoryStoreProducts { get; set; }
+        public List<InventoryProductModelView> InventoryProducts { get; set; }
     }
 }
