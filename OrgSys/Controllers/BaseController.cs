@@ -27,7 +27,7 @@ namespace OrgSys.Controllers
             ViewBag.pageNumber = page;
             ViewBag.ParentId = ParentId;
             ViewBag.TypeId = TypeId;
-            LoadViewBagIndex();
+            LoadViewBagIndex(ParentId , TypeId);
             var list = service.GetAll(search, ParentId, TypeId, page, pageSize);
             return Request.Headers["X-Requested-With"] == "XMLHttpRequest" ? (ActionResult)PartialView("List", list) : View("Index", list);
         }
@@ -123,7 +123,7 @@ namespace OrgSys.Controllers
 
         }
 
-        public virtual void LoadViewBagIndex()
+        public virtual void LoadViewBagIndex(long ParentId = 0, long TypeId = 0)
         {
 
         }

@@ -13,5 +13,7 @@ namespace Entity.Model
         [StringLength(50, MinimumLength = 3)]
         public string Name { get; set; }
         public int InOut { get; set; }
+        public string Icon { get; set; }
+        public string Group { get; set; }
     }
 }

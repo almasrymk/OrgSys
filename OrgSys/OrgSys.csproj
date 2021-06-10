@@ -20,10 +20,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Purchases\Data\" />
-    <Folder Include="Areas\Purchases\Models\" />
-    <Folder Include="Areas\Sales\Data\" />
-    <Folder Include="Areas\Sales\Models\" />
+    <Folder Include="Areas\Transactions\Data\" />
+    <Folder Include="Areas\Transactions\Models\" />
+    <Folder Include="Areas\Invoices\Data\" />
+    <Folder Include="Areas\Invoices\Models\" />
     <Folder Include="Areas\Setting\Data\" />
     <Folder Include="Areas\Setting\Models\" />
     <Folder Include="wwwroot\Files\" />

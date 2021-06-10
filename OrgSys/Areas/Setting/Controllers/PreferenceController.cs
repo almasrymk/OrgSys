@@ -24,7 +24,7 @@ namespace OrgSys.Areas.Setting.Controllers
             ViewBag.Resource = Resource;
             ViewBag.type = type;
 
-            var Service = service.GetAll("Invoice", 0, type);
+            var Service = service.GetAll(Resource, 0, type);
             if (Resource == "Invoice")
             {
                 List<SelectListItem> selectListItems = new List<SelectListItem>();
@@ -32,7 +32,7 @@ namespace OrgSys.Areas.Setting.Controllers
                 selectListItems.Add(new SelectListItem { Value = "2", Text = "Percentage" });
                 
                 ViewBag.Customers = new SelectList(new DealerService().GetAll(0, 1), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultCustomer")?.Value);
-                ViewBag.Suppliers = new SelectList(new DealerService().GetAll(0, 1), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultSupplier")?.Value);                
+                ViewBag.Suppliers = new SelectList(new DealerService().GetAll(0, 2), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultSupplier")?.Value);                
                 ViewBag.Stores = new SelectList(new StoreService().GetAll(0, 0), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultStore")?.Value);
                 ViewBag.PaymentTypes = new SelectList(new PaymentTypeService().GetAll(0, 0), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultPaymentType")?.Value);
                 ViewBag.DiscountType = new SelectList(selectListItems, "Value", "Text" , Service.FirstOrDefault(e => e.Key == "DefaultDiscountType")?.Value);
@@ -65,6 +65,41 @@ namespace OrgSys.Areas.Setting.Controllers
                 ViewBag.AutoSave = Service.FirstOrDefault(e => e.Key == "AutoSave")?.Value == "1";
                 ViewBag.SaveLastStatusSetting = Service.FirstOrDefault(e => e.Key == "SaveLastStatusSetting")?.Value == "1";
 
+            }
+
+            if (Resource == "Transaction")
+            {
+                ViewBag.Customers = new SelectList(new DealerService().GetAll(0, 1), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultCustomer")?.Value);
+                ViewBag.Suppliers = new SelectList(new DealerService().GetAll(0, 2), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultSupplier")?.Value);
+                ViewBag.Stores = new SelectList(new StoreService().GetAll(0, 0), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultStore")?.Value);
+
+                List<SelectListItem>  selectListItems = new List<SelectListItem>();
+                selectListItems.Add(new SelectListItem { Value = "1", Text = "Data after product" });
+                selectListItems.Add(new SelectListItem { Value = "2", Text = "Product after Data" });
+
+                ViewBag.OrderTabe = new SelectList(selectListItems, "Value", "Text", Service.FirstOrDefault(e => e.Key == "OrderTabe")?.Value);
+
+                selectListItems = new List<SelectListItem>();
+                selectListItems.Add(new SelectListItem { Value = "1", Text = "Allow Repeated" });
+                selectListItems.Add(new SelectListItem { Value = "2", Text = "Increasing the quantity" });
+                selectListItems.Add(new SelectListItem { Value = "3", Text = "Not allowed" });
+
+                ViewBag.AllowRepeated = new SelectList(selectListItems, "Value", "Text", Service.FirstOrDefault(e => e.Key == "AllowRepeated")?.Value);
+
+                selectListItems = new List<SelectListItem>();
+                selectListItems.Add(new SelectListItem { Value = "1", Text = "Allow" });
+                selectListItems.Add(new SelectListItem { Value = "2", Text = "Not allowed" });
+
+                ViewBag.TypeSerial = new SelectList(selectListItems, "Value", "Text", Service.FirstOrDefault(e => e.Key == "TypeSerial")?.Value);
+
+                ViewBag.NumberLine = Service.FirstOrDefault(e => e.Key == "NumberLine")?.Value;
+                ViewBag.AutoSave = Service.FirstOrDefault(e => e.Key == "AutoSave")?.Value == "1";
+                ViewBag.SaveLastStatusSetting = Service.FirstOrDefault(e => e.Key == "SaveLastStatusSetting")?.Value == "1";
+
+                selectListItems = new List<SelectListItem>();
+                selectListItems.Add(new SelectListItem { Value = "0", Text = "Yes" });
+                selectListItems.Add(new SelectListItem { Value = "1", Text = "No" });
+                ViewBag.AutoReceived = Service.FirstOrDefault(e => e.Key == "AutoReceived")?.Value == "1";
             }
             return View(Service);
         }

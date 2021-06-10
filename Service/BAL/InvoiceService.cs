@@ -135,7 +135,7 @@ namespace Service.BAL
             return repo.invoiceRepo.GetList(e => e.TypeId == TypeId && ids.Contains(e.Id), e => e.OrderBy(e => e.Id) , "Dealer", Utility.Status.New).Select(e => new InvoiceModelView(e)).ToList();
         }
        // , long TypeId
-        public long GetMaxCode(int type )
+        public long GetMaxCode(long type )
         {
             return repo.invoiceRepo.GetMaXCode(type);
         }

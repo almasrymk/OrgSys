@@ -85,11 +85,18 @@ namespace Repository
             modelBuilder.Entity<User>().HasData(new User { Id = 1, Name = "Owner", UserName = "Owner", Password = Security.Encrypt("OwnerAbc@123"), RoleId = 1, Hide = false });
 
             modelBuilder.Entity<InvoiceType>().HasData(
-                new InvoiceType { Id = 1, Name = "Sales", Hide = false, InOut = -1 },
-                new InvoiceType { Id = 2, Name = "Purchase", Hide = false, InOut = 1},
-                new InvoiceType { Id = 3, Name = "Return Sales", Hide = false, InOut = 1},
-                new InvoiceType { Id = 4, Name = "Return Purchase", Hide = false, InOut = -1 }
+                new InvoiceType { Id = 1 , Group = "Sales", Name = "Invoice", Hide = false, InOut = -1   , Icon = "simple-icon-basket-loaded" },
+                new InvoiceType { Id = 2, Group = "Purchases", Name = "Invoice", Hide = false, InOut = 1, Icon = "simple-icon-basket-loaded" },
+                new InvoiceType { Id = 3, Group = "Sales", Name = "Return", Hide = false, InOut = 1, Icon = "simple-icon-action-undo" },
+                new InvoiceType { Id = 4, Group = "Purchases", Name = "Return", Hide = false, InOut = -1, Icon = "simple-icon-action-undo" }
                 );
+
+            modelBuilder.Entity<TransactionType>().HasData(
+              new TransactionType { Id = 1, Name = "Addition", Hide = false, InOut = 1 , Icon = "iconsminds-down-1" },
+              new TransactionType { Id = 2, Name = "Issue", Hide = false, InOut = -1, Icon = "iconsminds-up-1" },
+              new TransactionType { Id = 3, Name = "Transafer", Hide = false, InOut = -1, Icon = "iconsminds-shuffle-1" },
+              new TransactionType { Id = 4, Name = "Received", Hide = false, InOut = 1, Icon = "iconsminds-file-edit" }
+              );
 
             modelBuilder.Entity<PaymentType>().HasData(
                 new PaymentType { Id = 1, Name = "Cash", Hide = false },
@@ -98,9 +105,9 @@ namespace Repository
 
             modelBuilder.Entity<Branch>().HasData(new Branch { Id = 1, Name = "Main Branch", Hide = false });
 
-            modelBuilder.Entity<Store>().HasData(new Store { Id = 1, Name = "Main Store" , BranchId = 1, Hide = false });
+            modelBuilder.Entity<Store>().HasData(new Store { Id = 1, Name = "Main Store", BranchId = 1, Hide = false });
 
-            modelBuilder.Entity<Dealer>().HasData(new Dealer { Id = 1 , Code = "1" , CodeNumber = 1, Name = "...", TypeId = 0, Hide = false });
+            modelBuilder.Entity<Dealer>().HasData(new Dealer { Id = 1, Code = "1", CodeNumber = 1, Name = "...", TypeId = 0, Hide = false });
 
             modelBuilder.Entity<Preference>().HasData(
                new Preference { Id = 1, Key = "DefaultStore", Value = "1", Reference = "Invoice", TypeId = 1, Hide = false },
@@ -165,7 +172,41 @@ namespace Repository
                new Preference { Id = 57, Key = "AutoSave", Value = "0", Reference = "Invoice", TypeId = 4, Hide = false },
                new Preference { Id = 58, Key = "TypeSerial", Value = "1", Reference = "Invoice", TypeId = 4, Hide = false },
                new Preference { Id = 59, Key = "AllowRepeated", Value = "1", Reference = "Invoice", TypeId = 4, Hide = false },
-               new Preference { Id = 60, Key = "SaveLastStatusSetting", Value = "1", Reference = "Invoice", TypeId = 4, Hide = false }
+               new Preference { Id = 60, Key = "SaveLastStatusSetting", Value = "1", Reference = "Invoice", TypeId = 4, Hide = false },
+
+               new Preference { Id = 61, Key = "DefaultStore", Value = "1", Reference = "Transaction", TypeId = 1, Hide = false },
+               new Preference { Id = 62, Key = "DefaultSupplier", Value = "1", Reference = "Transaction", TypeId = 1, Hide = false },
+               new Preference { Id = 63, Key = "NumberLine", Value = "6", Reference = "Transaction", TypeId = 1, Hide = false },
+               new Preference { Id = 64, Key = "OrderTabe", Value = "2", Reference = "Transaction", TypeId = 1, Hide = false },
+               new Preference { Id = 65, Key = "AutoSave", Value = "0", Reference = "Transaction", TypeId = 1, Hide = false },
+               new Preference { Id = 66, Key = "TypeSerial", Value = "1", Reference = "Transaction", TypeId = 1, Hide = false },
+               new Preference { Id = 67, Key = "AllowRepeated", Value = "1", Reference = "Transaction", TypeId = 1, Hide = false },
+               new Preference { Id = 68, Key = "SaveLastStatusSetting", Value = "1", Reference = "Transaction", TypeId = 1, Hide = false },
+
+               new Preference { Id = 69, Key = "DefaultStore", Value = "1", Reference = "Transaction", TypeId = 2, Hide = false },
+               new Preference { Id = 70, Key = "DefaultCustomer", Value = "1", Reference = "Transaction", TypeId = 2, Hide = false },
+               new Preference { Id = 71, Key = "NumberLine", Value = "6", Reference = "Transaction", TypeId = 2, Hide = false },
+               new Preference { Id = 72, Key = "OrderTabe", Value = "2", Reference = "Transaction", TypeId = 2, Hide = false },
+               new Preference { Id = 73, Key = "AutoSave", Value = "0", Reference = "Transaction", TypeId = 2, Hide = false },
+               new Preference { Id = 74, Key = "TypeSerial", Value = "1", Reference = "Transaction", TypeId = 2, Hide = false },
+               new Preference { Id = 75, Key = "AllowRepeated", Value = "1", Reference = "Transaction", TypeId = 2, Hide = false },
+               new Preference { Id = 76, Key = "SaveLastStatusSetting", Value = "1", Reference = "Transaction", TypeId = 2, Hide = false },
+
+               new Preference { Id = 77, Key = "DefaultStore", Value = "1", Reference = "Transaction", TypeId = 3, Hide = false },
+               new Preference { Id = 78, Key = "NumberLine", Value = "6", Reference = "Transaction", TypeId = 3, Hide = false },
+               new Preference { Id = 79, Key = "OrderTabe", Value = "2", Reference = "Transaction", TypeId = 3, Hide = false },
+               new Preference { Id = 80, Key = "AutoSave", Value = "0", Reference = "Transaction", TypeId = 3, Hide = false },
+               new Preference { Id = 81, Key = "TypeSerial", Value = "1", Reference = "Transaction", TypeId = 3, Hide = false },
+               new Preference { Id = 82, Key = "AllowRepeated", Value = "1", Reference = "Transaction", TypeId = 3, Hide = false },
+               new Preference { Id = 83, Key = "SaveLastStatusSetting", Value = "1", Reference = "Transaction", TypeId = 3, Hide = false },
+               new Preference { Id = 84, Key = "AutoReceived", Value = "0", Reference = "Transaction", TypeId = 3, Hide = false },
+
+               new Preference { Id = 85, Key = "DefaultStore", Value = "1", Reference = "Transaction", TypeId = 4, Hide = false },
+               new Preference { Id = 86, Key = "NumberLine", Value = "6", Reference = "Transaction", TypeId = 4, Hide = false },
+               new Preference { Id = 87, Key = "OrderTabe", Value = "2", Reference = "Transaction", TypeId = 4, Hide = false },
+               new Preference { Id = 88, Key = "AutoSave", Value = "0", Reference = "Transaction", TypeId = 4, Hide = false },
+               new Preference { Id = 89, Key = "TypeSerial", Value = "1", Reference = "Transaction", TypeId = 4, Hide = false },
+               new Preference { Id = 90, Key = "AllowRepeated", Value = "1", Reference = "Transaction", TypeId = 4, Hide = false }
                );
         }
 
@@ -191,7 +232,9 @@ namespace Repository
         public virtual DbSet<ProductRecipe> ProductRecipes { get; set; }
         public virtual DbSet<PropertyElement> PropertyElements { get; set; }
         public virtual DbSet<ProductPropertyElement> ProductPropertyElements { get; set; }
-
-         public virtual DbSet<Preference> Preferences { get; set; }
+        public virtual DbSet<Preference> Preferences { get; set; }
+        public virtual DbSet<TransactionType> TransactionTypes { get; set; }
+        public virtual DbSet<Transaction> Transactions { get; set; }
+        public virtual DbSet<TransactionProduct> TransactionProducts { get; set; }
     }
 }

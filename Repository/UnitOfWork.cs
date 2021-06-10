@@ -250,5 +250,57 @@ namespace Repository
                 return _preferenceRepo;
             }
         }
+
+        private TransactionRepo _transactionRepo;
+        public TransactionRepo transactionRepo
+        {
+            get
+            {
+
+                if (this._transactionRepo == null)
+                    this._transactionRepo = new TransactionRepo();
+
+                return _transactionRepo;
+            }
+        }
+
+        private TransactionProductRepo _transactionProductRepo;
+        public TransactionProductRepo transactionProductRepo
+        {
+            get
+            {
+
+                if (this._transactionProductRepo == null)
+                    this._transactionProductRepo = new TransactionProductRepo();
+
+                return _transactionProductRepo;
+            }
+        }
+
+        private InvoiceTypeRepo _invoiceTypeRepo;
+        public InvoiceTypeRepo invoiceTypeRepo
+        {
+            get
+            {
+
+                if (this._invoiceTypeRepo == null)
+                    this._invoiceTypeRepo = new InvoiceTypeRepo();
+
+                return _invoiceTypeRepo;
+            }
+        }
+
+        private TransactionTypeRepo _transactionTypeRepo;
+        public TransactionTypeRepo transactionTypeRepo
+        {
+            get
+            {
+
+                if (this._transactionTypeRepo == null)
+                    this._transactionTypeRepo = new TransactionTypeRepo();
+
+                return _transactionTypeRepo;
+            }
+        }
     }
 }

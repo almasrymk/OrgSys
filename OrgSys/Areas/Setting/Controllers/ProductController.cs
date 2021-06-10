@@ -56,7 +56,8 @@ namespace OrgSys.Areas.Setting.Controllers
                     _.Id,
                     _.Name,
                     _.Barcode,
-                    _.Price
+                    _.Price,
+                    _.Cost,
                 })
                 .ToList();
             return Json(list);

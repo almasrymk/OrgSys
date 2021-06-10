@@ -356,8 +356,14 @@ namespace Repository.Migrations
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
 
+                    b.Property<string>("Group")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("Hide")
                         .HasColumnType("bit");
+
+                    b.Property<string>("Icon")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImgPath")
                         .HasColumnType("nvarchar(max)");
@@ -389,9 +395,11 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1L,
+                            Group = "Sales",
                             Hide = false,
+                            Icon = "simple-icon-basket-loaded",
                             InOut = -1,
-                            Name = "Sales",
+                            Name = "Invoice",
                             ParentId = 0L,
                             Status = 0,
                             TypeId = 0L
@@ -399,9 +407,11 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 2L,
+                            Group = "Purchases",
                             Hide = false,
+                            Icon = "simple-icon-basket-loaded",
                             InOut = 1,
-                            Name = "Purchase",
+                            Name = "Invoice",
                             ParentId = 0L,
                             Status = 0,
                             TypeId = 0L
@@ -409,9 +419,11 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 3L,
+                            Group = "Sales",
                             Hide = false,
+                            Icon = "simple-icon-action-undo",
                             InOut = 1,
-                            Name = "Return Sales",
+                            Name = "Return",
                             ParentId = 0L,
                             Status = 0,
                             TypeId = 0L
@@ -419,9 +431,11 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 4L,
+                            Group = "Purchases",
                             Hide = false,
+                            Icon = "simple-icon-action-undo",
                             InOut = -1,
-                            Name = "Return Purchase",
+                            Name = "Return",
                             ParentId = 0L,
                             Status = 0,
                             TypeId = 0L
@@ -1860,6 +1874,336 @@ namespace Repository.Migrations
                             Status = 0,
                             TypeId = 4L,
                             Value = "1"
+                        },
+                        new
+                        {
+                            Id = 61L,
+                            Hide = false,
+                            Key = "DefaultStore",
+                            ParentId = 0L,
+                            Reference = "Transaction",
+                            Status = 0,
+                            TypeId = 1L,
+                            Value = "1"
+                        },
+                        new
+                        {
+                            Id = 62L,
+                            Hide = false,
+                            Key = "DefaultSupplier",
+                            ParentId = 0L,
+                            Reference = "Transaction",
+                            Status = 0,
+                            TypeId = 1L,
+                            Value = "1"
+                        },
+                        new
+                        {
+                            Id = 63L,
+                            Hide = false,
+                            Key = "NumberLine",
+                            ParentId = 0L,
+                            Reference = "Transaction",
+                            Status = 0,
+                            TypeId = 1L,
+                            Value = "6"
+                        },
+                        new
+                        {
+                            Id = 64L,
+                            Hide = false,
+                            Key = "OrderTabe",
+                            ParentId = 0L,
+                            Reference = "Transaction",
+                            Status = 0,
+                            TypeId = 1L,
+                            Value = "2"
+                        },
+                        new
+                        {
+                            Id = 65L,
+                            Hide = false,
+                            Key = "AutoSave",
+                            ParentId = 0L,
+                            Reference = "Transaction",
+                            Status = 0,
+                            TypeId = 1L,
+                            Value = "0"
+                        },
+                        new
+                        {
+                            Id = 66L,
+                            Hide = false,
+                            Key = "TypeSerial",
+                            ParentId = 0L,
+                            Reference = "Transaction",
+                            Status = 0,
+                            TypeId = 1L,
+                            Value = "1"
+                        },
+                        new
+                        {
+                            Id = 67L,
+                            Hide = false,
+                            Key = "AllowRepeated",
+                            ParentId = 0L,
+                            Reference = "Transaction",
+                            Status = 0,
+                            TypeId = 1L,
+                            Value = "1"
+                        },
+                        new
+                        {
+                            Id = 68L,
+                            Hide = false,
+                            Key = "SaveLastStatusSetting",
+                            ParentId = 0L,
+                            Reference = "Transaction",
+                            Status = 0,
+                            TypeId = 1L,
+                            Value = "1"
+                        },
+                        new
+                        {
+                            Id = 69L,
+                            Hide = false,
+                            Key = "DefaultStore",
+                            ParentId = 0L,
+                            Reference = "Transaction",
+                            Status = 0,
+                            TypeId = 2L,
+                            Value = "1"
+                        },
+                        new
+                        {
+                            Id = 70L,
+                            Hide = false,
+                            Key = "DefaultCustomer",
+                            ParentId = 0L,
+                            Reference = "Transaction",
+                            Status = 0,
+                            TypeId = 2L,
+                            Value = "1"
+                        },
+                        new
+                        {
+                            Id = 71L,
+                            Hide = false,
+                            Key = "NumberLine",
+                            ParentId = 0L,
+                            Reference = "Transaction",
+                            Status = 0,
+                            TypeId = 2L,
+                            Value = "6"
+                        },
+                        new
+                        {
+                            Id = 72L,
+                            Hide = false,
+                            Key = "OrderTabe",
+                            ParentId = 0L,
+                            Reference = "Transaction",
+                            Status = 0,
+                            TypeId = 2L,
+                            Value = "2"
+                        },
+                        new
+                        {
+                            Id = 73L,
+                            Hide = false,
+                            Key = "AutoSave",
+                            ParentId = 0L,
+                            Reference = "Transaction",
+                            Status = 0,
+                            TypeId = 2L,
+                            Value = "0"
+                        },
+                        new
+                        {
+                            Id = 74L,
+                            Hide = false,
+                            Key = "TypeSerial",
+                            ParentId = 0L,
+                            Reference = "Transaction",
+                            Status = 0,
+                            TypeId = 2L,
+                            Value = "1"
+                        },
+                        new
+                        {
+                            Id = 75L,
+                            Hide = false,
+                            Key = "AllowRepeated",
+                            ParentId = 0L,
+                            Reference = "Transaction",
+                            Status = 0,
+                            TypeId = 2L,
+                            Value = "1"
+                        },
+                        new
+                        {
+                            Id = 76L,
+                            Hide = false,
+                            Key = "SaveLastStatusSetting",
+                            ParentId = 0L,
+                            Reference = "Transaction",
+                            Status = 0,
+                            TypeId = 2L,
+                            Value = "1"
+                        },
+                        new
+                        {
+                            Id = 77L,
+                            Hide = false,
+                            Key = "DefaultStore",
+                            ParentId = 0L,
+                            Reference = "Transaction",
+                            Status = 0,
+                            TypeId = 3L,
+                            Value = "1"
+                        },
+                        new
+                        {
+                            Id = 78L,
+                            Hide = false,
+                            Key = "NumberLine",
+                            ParentId = 0L,
+                            Reference = "Transaction",
+                            Status = 0,
+                            TypeId = 3L,
+                            Value = "6"
+                        },
+                        new
+                        {
+                            Id = 79L,
+                            Hide = false,
+                            Key = "OrderTabe",
+                            ParentId = 0L,
+                            Reference = "Transaction",
+                            Status = 0,
+                            TypeId = 3L,
+                            Value = "2"
+                        },
+                        new
+                        {
+                            Id = 80L,
+                            Hide = false,
+                            Key = "AutoSave",
+                            ParentId = 0L,
+                            Reference = "Transaction",
+                            Status = 0,
+                            TypeId = 3L,
+                            Value = "0"
+                        },
+                        new
+                        {
+                            Id = 81L,
+                            Hide = false,
+                            Key = "TypeSerial",
+                            ParentId = 0L,
+                            Reference = "Transaction",
+                            Status = 0,
+                            TypeId = 3L,
+                            Value = "1"
+                        },
+                        new
+                        {
+                            Id = 82L,
+                            Hide = false,
+                            Key = "AllowRepeated",
+                            ParentId = 0L,
+                            Reference = "Transaction",
+                            Status = 0,
+                            TypeId = 3L,
+                            Value = "1"
+                        },
+                        new
+                        {
+                            Id = 83L,
+                            Hide = false,
+                            Key = "SaveLastStatusSetting",
+                            ParentId = 0L,
+                            Reference = "Transaction",
+                            Status = 0,
+                            TypeId = 3L,
+                            Value = "1"
+                        },
+                        new
+                        {
+                            Id = 84L,
+                            Hide = false,
+                            Key = "AutoReceived",
+                            ParentId = 0L,
+                            Reference = "Transaction",
+                            Status = 0,
+                            TypeId = 3L,
+                            Value = "0"
+                        },
+                        new
+                        {
+                            Id = 85L,
+                            Hide = false,
+                            Key = "DefaultStore",
+                            ParentId = 0L,
+                            Reference = "Transaction",
+                            Status = 0,
+                            TypeId = 4L,
+                            Value = "1"
+                        },
+                        new
+                        {
+                            Id = 86L,
+                            Hide = false,
+                            Key = "NumberLine",
+                            ParentId = 0L,
+                            Reference = "Transaction",
+                            Status = 0,
+                            TypeId = 4L,
+                            Value = "6"
+                        },
+                        new
+                        {
+                            Id = 87L,
+                            Hide = false,
+                            Key = "OrderTabe",
+                            ParentId = 0L,
+                            Reference = "Transaction",
+                            Status = 0,
+                            TypeId = 4L,
+                            Value = "2"
+                        },
+                        new
+                        {
+                            Id = 88L,
+                            Hide = false,
+                            Key = "AutoSave",
+                            ParentId = 0L,
+                            Reference = "Transaction",
+                            Status = 0,
+                            TypeId = 4L,
+                            Value = "0"
+                        },
+                        new
+                        {
+                            Id = 89L,
+                            Hide = false,
+                            Key = "TypeSerial",
+                            ParentId = 0L,
+                            Reference = "Transaction",
+                            Status = 0,
+                            TypeId = 4L,
+                            Value = "1"
+                        },
+                        new
+                        {
+                            Id = 90L,
+                            Hide = false,
+                            Key = "AllowRepeated",
+                            ParentId = 0L,
+                            Reference = "Transaction",
+                            Status = 0,
+                            TypeId = 4L,
+                            Value = "1"
                         });
                 });
 
@@ -2280,6 +2624,229 @@ namespace Repository.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Entity.Model.Transaction", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("DealerId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("InvoiceId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<long?>("OrderId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("StoreId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("ToStoreId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("Total")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DealerId");
+
+                    b.HasIndex("InvoiceId");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("StoreId");
+
+                    b.HasIndex("ToStoreId");
+
+                    b.ToTable("Transaction");
+                });
+
+            modelBuilder.Entity("Entity.Model.TransactionProduct", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .UseIdentityColumn();
+
+                    b.Property<decimal>("Cost")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("Quantity")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long>("RowNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("StoreId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("Total")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long>("TransactionId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("UnitId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("StoreId");
+
+                    b.HasIndex("TransactionId");
+
+                    b.HasIndex("UnitId");
+
+                    b.ToTable("TransactionProduct");
+                });
+
+            modelBuilder.Entity("Entity.Model.TransactionType", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .UseIdentityColumn();
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Icon")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("InOut")
+                        .HasColumnType("int");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TransactionType");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            Hide = false,
+                            Icon = "iconsminds-down-1",
+                            InOut = 1,
+                            Name = "Addition",
+                            ParentId = 0L,
+                            Status = 0,
+                            TypeId = 0L
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            Hide = false,
+                            Icon = "iconsminds-up-1",
+                            InOut = -1,
+                            Name = "Issue",
+                            ParentId = 0L,
+                            Status = 0,
+                            TypeId = 0L
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            Hide = false,
+                            Icon = "iconsminds-shuffle-1",
+                            InOut = -1,
+                            Name = "Transafer",
+                            ParentId = 0L,
+                            Status = 0,
+                            TypeId = 0L
+                        },
+                        new
+                        {
+                            Id = 4L,
+                            Hide = false,
+                            Icon = "iconsminds-file-edit",
+                            InOut = 1,
+                            Name = "Received",
+                            ParentId = 0L,
+                            Status = 0,
+                            TypeId = 0L
+                        });
+                });
+
             modelBuilder.Entity("Entity.Model.Unit", b =>
                 {
                     b.Property<long>("Id")
@@ -2579,6 +3146,76 @@ namespace Repository.Migrations
                     b.Navigation("Branch");
                 });
 
+            modelBuilder.Entity("Entity.Model.Transaction", b =>
+                {
+                    b.HasOne("Entity.Model.Dealer", "Dealer")
+                        .WithMany()
+                        .HasForeignKey("DealerId");
+
+                    b.HasOne("Entity.Model.Invoice", "Invoice")
+                        .WithMany()
+                        .HasForeignKey("InvoiceId");
+
+                    b.HasOne("Entity.Model.Order", "Order")
+                        .WithMany()
+                        .HasForeignKey("OrderId");
+
+                    b.HasOne("Entity.Model.Store", "Store")
+                        .WithMany()
+                        .HasForeignKey("StoreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Entity.Model.Store", "ToStore")
+                        .WithMany()
+                        .HasForeignKey("ToStoreId");
+
+                    b.Navigation("Dealer");
+
+                    b.Navigation("Invoice");
+
+                    b.Navigation("Order");
+
+                    b.Navigation("Store");
+
+                    b.Navigation("ToStore");
+                });
+
+            modelBuilder.Entity("Entity.Model.TransactionProduct", b =>
+                {
+                    b.HasOne("Entity.Model.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Entity.Model.Store", "Store")
+                        .WithMany()
+                        .HasForeignKey("StoreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Entity.Model.Transaction", "Transaction")
+                        .WithMany("TransactionProducts")
+                        .HasForeignKey("TransactionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Entity.Model.Unit", "Unit")
+                        .WithMany()
+                        .HasForeignKey("UnitId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Store");
+
+                    b.Navigation("Transaction");
+
+                    b.Navigation("Unit");
+                });
+
             modelBuilder.Entity("Entity.Model.User", b =>
                 {
                     b.HasOne("Entity.Model.Branch", "Branch")
@@ -2613,6 +3250,11 @@ namespace Repository.Migrations
             modelBuilder.Entity("Entity.Model.Property", b =>
                 {
                     b.Navigation("propertyElements");
+                });
+
+            modelBuilder.Entity("Entity.Model.Transaction", b =>
+                {
+                    b.Navigation("TransactionProducts");
                 });
 #pragma warning restore 612, 618
         }

@@ -3,7 +3,6 @@
 
 }
 
-
 <div class="modal-content" style="border-radius:12px;">
     <div class="modal-header" style="padding:15px;">
         <h5 class="modal-title">Preference</h5>
@@ -624,6 +623,426 @@
                     </div>
                 </div>
             }
+
+            @if (ViewBag.type == 1 && ViewBag.Resource == "Transaction")
+            {
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        Supplier
+                        <div id="divStoreId">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="iconsminds-clothing-store"></i></span>
+                                </div>
+                                @Html.DropDownList("Suppliers", null, null, new { @class = "form-control" })
+                            </div>
+                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        Stores
+                        <div id="divPaymentTypeId">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="iconsminds-financial"></i></span>
+                                </div>
+                                @Html.DropDownList("Stores", null, null, new { @class = "form-control" })
+                            </div>
+                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        Order Tabe
+                        <div id="divStoreId">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="iconsminds-clothing-store"></i></span>
+                                </div>
+                                @Html.DropDownList("OrderTabe", null, null, new { @class = "form-control" })
+                            </div>
+                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        Repeated
+                        <div id="divPaymentTypeId">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="iconsminds-financial"></i></span>
+                                </div>
+                                @Html.DropDownList("AllowRepeated", null, null, new { @class = "form-control" })
+                            </div>
+                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        Type Serial
+                        <div id="divPaymentTypeId">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="iconsminds-financial"></i></span>
+                                </div>
+                                @Html.DropDownList("TypeSerial", null, null, new { @class = "form-control" })
+                            </div>
+                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        Empty line count
+                        <div id="divStoreId">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="iconsminds-clothing-store"></i></span>
+                                </div>
+                                <input type="text" id="NumberLine" name="NumberLine" value="@ViewBag.NumberLine" class="form-control" />
+                            </div>
+                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+
+                    <div class="form-group col-md-4">
+                        Auto Save
+                        <div id="divPaymentTypeId">
+                            <div class="input-group mt-2">
+                                <div id="divAutoSave" class="custom-switch custom-switch-primary-inverse custom-switch-small">
+                                    <input class="custom-switch-input" id="AutoSave" name="AutoSave" type="checkbox" checked="@ViewBag.AutoSave">
+                                    <label class="custom-switch-btn" for="AutoSave"></label>
+                                </div>
+                            </div>
+                            <small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        Save Last Status Preference
+                        <div id="divPaymentTypeId">
+                            <div class="input-group mt-2">
+                                <div id="divSaveLastStatusSetting" class="custom-switch custom-switch-primary-inverse custom-switch-small">
+                                    <input class="custom-switch-input" id="SaveLastStatusSetting" name="SaveLastStatusSetting" type="checkbox" checked="@ViewBag.SaveLastStatusSetting">
+                                    <label class="custom-switch-btn" for="SaveLastStatusSetting"></label>
+                                </div>
+                            </div>
+                            <small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @if (ViewBag.type == 2 && ViewBag.Resource == "Transaction")
+            {
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        Customers
+                        <div id="divStoreId">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="iconsminds-clothing-store"></i></span>
+                                </div>
+                                @Html.DropDownList("Customers", null, null, new { @class = "form-control" })
+                            </div>
+                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        Stores
+                        <div id="divPaymentTypeId">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="iconsminds-financial"></i></span>
+                                </div>
+                                @Html.DropDownList("Stores", null, null, new { @class = "form-control" })
+                            </div>
+                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        Order Tabe
+                        <div id="divStoreId">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="iconsminds-clothing-store"></i></span>
+                                </div>
+                                @Html.DropDownList("OrderTabe", null, null, new { @class = "form-control" })
+                            </div>
+                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        Repeated
+                        <div id="divPaymentTypeId">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="iconsminds-financial"></i></span>
+                                </div>
+                                @Html.DropDownList("AllowRepeated", null, null, new { @class = "form-control" })
+                            </div>
+                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        Type Serial
+                        <div id="divPaymentTypeId">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="iconsminds-financial"></i></span>
+                                </div>
+                                @Html.DropDownList("TypeSerial", null, null, new { @class = "form-control" })
+                            </div>
+                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        Empty line count
+                        <div id="divStoreId">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="iconsminds-clothing-store"></i></span>
+                                </div>
+                                <input type="text" id="NumberLine" name="NumberLine" value="@ViewBag.NumberLine" class="form-control" />
+                            </div>
+                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+
+                    <div class="form-group col-md-4">
+                        Auto Save
+                        <div id="divPaymentTypeId">
+                            <div class="input-group mt-2">
+                                <div id="divAutoSave" class="custom-switch custom-switch-primary-inverse custom-switch-small">
+                                    <input class="custom-switch-input" id="AutoSave" name="AutoSave" type="checkbox" checked="@ViewBag.AutoSave">
+                                    <label class="custom-switch-btn" for="AutoSave"></label>
+                                </div>
+                            </div>
+                            <small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        Save Last Status Preference
+                        <div id="divPaymentTypeId">
+                            <div class="input-group mt-2">
+                                <div id="divSaveLastStatusSetting" class="custom-switch custom-switch-primary-inverse custom-switch-small">
+                                    <input class="custom-switch-input" id="SaveLastStatusSetting" name="SaveLastStatusSetting" type="checkbox" checked="@ViewBag.SaveLastStatusSetting">
+                                    <label class="custom-switch-btn" for="SaveLastStatusSetting"></label>
+                                </div>
+                            </div>
+                            <small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @if (ViewBag.type == 3 && ViewBag.Resource == "Transaction")
+            {
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        Stores
+                        <div id="divPaymentTypeId">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="iconsminds-financial"></i></span>
+                                </div>
+                                @Html.DropDownList("Stores", null, null, new { @class = "form-control" })
+                            </div>
+                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        Order Tabe
+                        <div id="divStoreId">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="iconsminds-clothing-store"></i></span>
+                                </div>
+                                @Html.DropDownList("OrderTabe", null, null, new { @class = "form-control" })
+                            </div>
+                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        Repeated
+                        <div id="divPaymentTypeId">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="iconsminds-financial"></i></span>
+                                </div>
+                                @Html.DropDownList("AllowRepeated", null, null, new { @class = "form-control" })
+                            </div>
+                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        Type Serial
+                        <div id="divPaymentTypeId">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="iconsminds-financial"></i></span>
+                                </div>
+                                @Html.DropDownList("TypeSerial", null, null, new { @class = "form-control" })
+                            </div>
+                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        Empty line count
+                        <div id="divStoreId">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="iconsminds-clothing-store"></i></span>
+                                </div>
+                                <input type="text" id="NumberLine" name="NumberLine" value="@ViewBag.NumberLine" class="form-control" />
+                            </div>
+                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        Auto Save
+                        <div id="divPaymentTypeId">
+                            <div class="input-group mt-2">
+                                <div id="divAutoSave" class="custom-switch custom-switch-primary-inverse custom-switch-small">
+                                    <input class="custom-switch-input" id="AutoSave" name="AutoSave" type="checkbox" checked="@ViewBag.AutoSave">
+                                    <label class="custom-switch-btn" for="AutoSave"></label>
+                                </div>
+                            </div>
+                            <small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        Save Last Status Preference
+                        <div id="divPaymentTypeId">
+                            <div class="input-group mt-2">
+                                <div id="divSaveLastStatusSetting" class="custom-switch custom-switch-primary-inverse custom-switch-small">
+                                    <input class="custom-switch-input" id="SaveLastStatusSetting" name="SaveLastStatusSetting" type="checkbox" checked="@ViewBag.SaveLastStatusSetting">
+                                    <label class="custom-switch-btn" for="SaveLastStatusSetting"></label>
+                                </div>
+                            </div>
+                            <small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        Auto Received
+                        <div id="divPaymentTypeId">
+                            <div class="input-group mt-2">
+                                <div id="divAutoReceived" class="custom-switch custom-switch-primary-inverse custom-switch-small">
+                                    <input class="custom-switch-input" id="AutoReceived" name="AutoReceived" type="checkbox" checked="@ViewBag.AutoReceived">
+                                    <label class="custom-switch-btn" for="AutoReceived"></label>
+                                </div>
+                            </div>
+                            <small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @if (ViewBag.type == 4 && ViewBag.Resource == "Transaction")
+            {
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        Stores
+                        <div id="divPaymentTypeId">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="iconsminds-financial"></i></span>
+                                </div>
+                                @Html.DropDownList("Stores", null, null, new { @class = "form-control" })
+                            </div>
+                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        Order Tabe
+                        <div id="divStoreId">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="iconsminds-clothing-store"></i></span>
+                                </div>
+                                @Html.DropDownList("OrderTabe", null, null, new { @class = "form-control" })
+                            </div>
+                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        Repeated
+                        <div id="divPaymentTypeId">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="iconsminds-financial"></i></span>
+                                </div>
+                                @Html.DropDownList("AllowRepeated", null, null, new { @class = "form-control" })
+                            </div>
+                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        Type Serial
+                        <div id="divPaymentTypeId">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="iconsminds-financial"></i></span>
+                                </div>
+                                @Html.DropDownList("TypeSerial", null, null, new { @class = "form-control" })
+                            </div>
+                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        Empty line count
+                        <div id="divStoreId">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="iconsminds-clothing-store"></i></span>
+                                </div>
+                                <input type="text" id="NumberLine" name="NumberLine" value="@ViewBag.NumberLine" class="form-control" />
+                            </div>
+                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        Auto Save
+                        <div id="divPaymentTypeId">
+                            <div class="input-group mt-2">
+                                <div id="divAutoSave" class="custom-switch custom-switch-primary-inverse custom-switch-small">
+                                    <input class="custom-switch-input" id="AutoSave" name="AutoSave" type="checkbox" checked="@ViewBag.AutoSave">
+                                    <label class="custom-switch-btn" for="AutoSave"></label>
+                                </div>
+                            </div>
+                            <small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        Save Last Status Preference
+                        <div id="divPaymentTypeId">
+                            <div class="input-group mt-2">
+                                <div id="divSaveLastStatusSetting" class="custom-switch custom-switch-primary-inverse custom-switch-small">
+                                    <input class="custom-switch-input" id="SaveLastStatusSetting" name="SaveLastStatusSetting" type="checkbox" checked="@ViewBag.SaveLastStatusSetting">
+                                    <label class="custom-switch-btn" for="SaveLastStatusSetting"></label>
+                                </div>
+                            </div>
+                            <small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
     </div>
     <div class="modal-footer" style="padding:12px;">
@@ -649,7 +1068,7 @@
         var data = CollectDataPreference();
         $.ajax({
             type: 'POST',
-            url: "/Setting/Preference/Save",          
+            url: "/Setting/Preference/Save",
             data: { list: JSON.stringify( data) },
             success: function (res) {
                 if (res != "Error") {
@@ -664,155 +1083,208 @@
         var list = [];
 
         // DefaultCustomer
-        var DefaultCustomer = {
-            Id: 2,
-            Key: "DefaultCustomer",
-            Value: $('#Customers').val(),
-            Reference: '@ViewBag.Resource',
-            TypeId: Number( '@ViewBag.type'),
+        if ($("#Customers").length) {
+            var DefaultCustomer = {
+                Id: 2,
+                Key: "DefaultCustomer",
+                Value: $('#Customers').val(),
+                Reference: '@ViewBag.Resource',
+                TypeId: Number('@ViewBag.type'),
+            }
+            list.push(DefaultCustomer);
         }
-        list.push(DefaultCustomer);
 
-        // DefaultStore
-        var DefaultStore = {
-            Id: 1,
-            Key: "DefaultStore",
-            Value: $('#Stores').val(),
-            Reference: '@ViewBag.Resource',
-           TypeId: Number( '@ViewBag.type'),
+         // DefaultSupplier
+        if ($("#Suppliers").length) {
+            var DefaultCustomer = {
+                Id: 2,
+                Key: "DefaultSupplier",
+                Value: $('#Suppliers').val(),
+                Reference: '@ViewBag.Resource',
+                TypeId: Number('@ViewBag.type'),
+            }
+            list.push(DefaultCustomer);
         }
-        list.push(DefaultStore);
+
+        if ($("#Stores").length) {
+            // DefaultStore
+            var DefaultStore = {
+                Id: 1,
+                Key: "DefaultStore",
+                Value: $('#Stores').val(),
+                Reference: '@ViewBag.Resource',
+                TypeId: Number('@ViewBag.type'),
+            }
+            list.push(DefaultStore);
+        }
 
         // DefaultPaymentType
-        var DefaultPaymentType = {
-            Id: 2,
-            Key: "DefaultPaymentType",
-            Value: $('#PaymentTypes').val(),
-            Reference: '@ViewBag.Resource',
-          TypeId: Number( '@ViewBag.type'),
+        if ($("#PaymentTypes").length) {
+            var DefaultPaymentType = {
+                Id: 2,
+                Key: "DefaultPaymentType",
+                Value: $('#PaymentTypes').val(),
+                Reference: '@ViewBag.Resource',
+                TypeId: Number('@ViewBag.type'),
+            }
+            list.push(DefaultPaymentType);
         }
-        list.push(DefaultPaymentType);
 
-        // DefaultDiscountType
-        var DefaultDiscountType = {
-            Id: 2,
-            Key: "DefaultDiscountType",
-            Value: $('#DiscountType').val(),
-            Reference: '@ViewBag.Resource',
-          TypeId: Number( '@ViewBag.type'),
+        if ($("#DiscountType").length) {
+            // DefaultDiscountType
+            var DefaultDiscountType = {
+                Id: 2,
+                Key: "DefaultDiscountType",
+                Value: $('#DiscountType').val(),
+                Reference: '@ViewBag.Resource',
+                TypeId: Number('@ViewBag.type'),
+            }
+            list.push(DefaultDiscountType);
         }
-        list.push(DefaultDiscountType);
 
         // DefaultServiceType
-        var DefaultServiceType = {
-            Id: 2,
-            Key: "DefaultServiceType",
-            Value: $('#ServiceType').val(),
-            Reference: '@ViewBag.Resource',
-            TypeId: Number( '@ViewBag.type'),
+        if ($("#ServiceType").length) {
+            var DefaultServiceType = {
+                Id: 2,
+                Key: "DefaultServiceType",
+                Value: $('#ServiceType').val(),
+                Reference: '@ViewBag.Resource',
+                TypeId: Number('@ViewBag.type'),
+            }
+            list.push(DefaultServiceType);
         }
-        list.push(DefaultServiceType);
 
         // DefaultTaxType
-        var DefaultTaxType = {
-            Id: 2,
-            Key: "DefaultTaxType",
-            Value: $('#TaxType').val(),
-            Reference: '@ViewBag.Resource',
-           TypeId: Number( '@ViewBag.type'),
+        if ($("#TaxType").length) {
+            var DefaultTaxType = {
+                Id: 2,
+                Key: "DefaultTaxType",
+                Value: $('#TaxType').val(),
+                Reference: '@ViewBag.Resource',
+                TypeId: Number('@ViewBag.type'),
+            }
+            list.push(DefaultTaxType);
         }
-        list.push(DefaultTaxType);
 
         // DiscountValue
-        var DiscountValue = {
-            Id: 2,
-            Key: "DiscountValue",
-            Value: $('#DiscountValue').val(),
-            Reference: '@ViewBag.Resource',
-           TypeId: Number( '@ViewBag.type'),
+        if ($("#DiscountValue").length) {
+            var DiscountValue = {
+                Id: 2,
+                Key: "DiscountValue",
+                Value: $('#DiscountValue').val(),
+                Reference: '@ViewBag.Resource',
+                TypeId: Number('@ViewBag.type'),
+            }
+            list.push(DiscountValue);
         }
-        list.push(DiscountValue);
 
-        // ServiceValue
-        var ServiceValue = {
-            Id: 2,
-            Key: "ServiceValue",
-            Value: $('#ServiceValue').val(),
-            Reference: '@ViewBag.Resource',
-           TypeId: Number( '@ViewBag.type'),
+        if ($("#ServiceValue").length) {
+            // ServiceValue
+            var ServiceValue = {
+                Id: 2,
+                Key: "ServiceValue",
+                Value: $('#ServiceValue').val(),
+                Reference: '@ViewBag.Resource',
+                TypeId: Number('@ViewBag.type'),
+            }
+            list.push(ServiceValue);
         }
-        list.push(ServiceValue);       
 
         // TaxValue
-        var TaxValue = {
-            Id: 2,
-            Key: "TaxValue",
-            Value: $('#TaxValue').val(),
-            Reference: '@ViewBag.Resource',
-           TypeId: Number( '@ViewBag.type'),
+        if ($("#TaxValue").length) {
+            var TaxValue = {
+                Id: 2,
+                Key: "TaxValue",
+                Value: $('#TaxValue').val(),
+                Reference: '@ViewBag.Resource',
+                TypeId: Number('@ViewBag.type'),
+            }
+            list.push(TaxValue);
         }
-        list.push(TaxValue);
 
         // OrderTabe
-        var OrderTabe = {
-            Id: 2,
-            Key: "OrderTabe",
-            Value: $('#OrderTabe').val(),
-            Reference: '@ViewBag.Resource',
-            TypeId: Number( '@ViewBag.type'),
+        if ($("#OrderTabe").length) {
+            var OrderTabe = {
+                Id: 2,
+                Key: "OrderTabe",
+                Value: $('#OrderTabe').val(),
+                Reference: '@ViewBag.Resource',
+                TypeId: Number('@ViewBag.type'),
+            }
+            list.push(OrderTabe);
         }
-        list.push(OrderTabe);
 
         // AllowRepeated
-        var AllowRepeated = {
-            Id: 2,
-            Key: "AllowRepeated",
-            Value: $('#AllowRepeated').val(),
-            Reference: '@ViewBag.Resource',
-           TypeId: Number( '@ViewBag.type'),
+        if ($("#AllowRepeated").length) {
+            var AllowRepeated = {
+                Id: 2,
+                Key: "AllowRepeated",
+                Value: $('#AllowRepeated').val(),
+                Reference: '@ViewBag.Resource',
+                TypeId: Number('@ViewBag.type'),
+            }
+            list.push(AllowRepeated);
         }
-        list.push(AllowRepeated);
 
         // TypeSerial
-        var TypeSerial = {
-            Id: 2,
-            Key: "TypeSerial",
-            Value: $('#TypeSerial').val(),
-            Reference: '@ViewBag.Resource',
-           TypeId: Number( '@ViewBag.type'),
+        if ($("#TypeSerial").length) {
+            var TypeSerial = {
+                Id: 2,
+                Key: "TypeSerial",
+                Value: $('#TypeSerial').val(),
+                Reference: '@ViewBag.Resource',
+                TypeId: Number('@ViewBag.type'),
+            }
+            list.push(TypeSerial);
         }
-        list.push(TypeSerial);
 
         // DefaultStore
-        var NumberLine = {
-            Id: 2,
-            Key: "NumberLine",
-            Value: $('#NumberLine').val(),
-            Reference: '@ViewBag.Resource',
-         TypeId: Number( '@ViewBag.type'),
+        if ($("#NumberLine").length) {
+            var NumberLine = {
+                Id: 2,
+                Key: "NumberLine",
+                Value: $('#NumberLine').val(),
+                Reference: '@ViewBag.Resource',
+                TypeId: Number('@ViewBag.type'),
+            }
+            list.push(NumberLine);
         }
-        list.push(NumberLine);
 
-        // AutoSave
-        var AutoSave = {
-            Id: 2,
-            Key: "AutoSave",
-            Value: $('#AutoSave').is(":checked") ? "1" : "2",
-            Reference: '@ViewBag.Resource',
-            TypeId: Number( '@ViewBag.type'),
+             // AutoSave
+        if ($("#AutoSave").length) {
+            var AutoSave = {
+                Id: 2,
+                Key: "AutoSave",
+                Value: $('#AutoSave').is(":checked") ? "1" : "2",
+                Reference: '@ViewBag.Resource',
+                TypeId: Number('@ViewBag.type'),
+            }
+            list.push(AutoSave);
         }
-        list.push(AutoSave);
 
         // SaveLastStatusSetting
-        var SaveLastStatusSetting = {
-            Id: 2,
-            Key: "SaveLastStatusSetting",
-            Value: $('#SaveLastStatusSetting').is(":checked")? "1" : "2",
-            Reference: '@ViewBag.Resource',
-           TypeId: Number( '@ViewBag.type'),
+        if ($("#SaveLastStatusSetting").length) {
+            var SaveLastStatusSetting = {
+                Id: 2,
+                Key: "SaveLastStatusSetting",
+                Value: $('#SaveLastStatusSetting').is(":checked") ? "1" : "2",
+                Reference: '@ViewBag.Resource',
+                TypeId: Number('@ViewBag.type'),
+            }
+            list.push(SaveLastStatusSetting);
         }
-        list.push(SaveLastStatusSetting);
 
+        // AutoReceived
+        if ($("#AutoReceived").length) {
+            var SaveLastStatusSetting = {
+                Id: 2,
+                Key: "AutoReceived",
+                Value: $('#AutoReceived').is(":checked") ? "1" : "0",
+                Reference: '@ViewBag.Resource',
+                TypeId: Number('@ViewBag.type'),
+            }
+            list.push(SaveLastStatusSetting);
+        }
         return list;
     }
 

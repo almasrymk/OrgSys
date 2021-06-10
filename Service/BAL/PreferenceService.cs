@@ -116,7 +116,7 @@ namespace Service.BAL
 
         public PreferenceModelView GetByKey(string textSearch , string reference , long type , int userId)
         {
-            return new PreferenceModelView(repo.preferenceRepo.Get(e => e.Key.Equals("" + textSearch) && (e.TypeId == type || type == 0) && (userId == 0 || e.UserId == userId) && (e.Reference == reference || "" + reference == "") ));
+            return new PreferenceModelView(repo.preferenceRepo.Get(e => e.Key =="" + textSearch && (e.TypeId == type || type == 0) && (userId == 0 || e.UserId == userId) && (e.Reference == reference || "" + reference == "") ));
         }
     }
 }

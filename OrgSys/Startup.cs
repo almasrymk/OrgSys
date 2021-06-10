@@ -95,14 +95,14 @@ namespace OrgSys
                     pattern: "Setting/{controller=Home}/{action=Index}/{id?}");
 
                 endpoints.MapAreaControllerRoute(
-                    name: "Sales",
-                    areaName: "Sales",
-                    pattern: "Sales/{controller=Home}/{action=Index}/{id?}");
+                    name: "Invoices",
+                    areaName: "Invoices",
+                    pattern: "Invoices/{controller=Home}/{action=Index}/{id?}");
 
                 endpoints.MapAreaControllerRoute(
-                   name: "Purchases",
-                   areaName: "Purchases",
-                   pattern: "Purchases/{controller=Home}/{action=Index}/{id?}");
+                 name: "Transactions",
+                 areaName: "Transactions",
+                 pattern: "Transactions/{controller=Home}/{action=Index}/{id?}");
                 //endpoints.MapRazorPages();
             });
         }
