@@ -8,36 +8,32 @@ using System.Linq;
 
 namespace Entity.ModelView
 {
-    public class InvoiceModelView : BaseModel
+    public class OrderModelView : BaseModel
     {
-        public InvoiceModelView()
+        public OrderModelView()
         {
 
         }
 
-        public InvoiceModelView(Invoice ob)
+        public OrderModelView(Order ob)
         {
             if (ob == null)
-                ob = new Invoice();
+                ob = new Order();
             this.Id = ob.Id;
             this.CodeNumber = ob.CodeNumber;
             this.Code = ob.Code;
             this.Date = ob.Date;
             this.DealerId = ob.DealerId;
-            this.DealerName = ob.Dealer?.Name;           
+            this.DealerName = ob.Dealer?.Name;
             this.Hide = ob.Hide;            
             this.Notes = ob.Notes;
-            this.OrderId = ob.OrderId;
-            this.PaymentTypeId = ob.PaymentTypeId;
-            this.PaymentTypeName = ob.PaymentType?.Name;
-            this.StoreId = ob.StoreId;
-            this.StoreName = ob.Store?.Name;                           
+            this.TableId = ob.TableId;
+            this.TableName = ob.Table?.Name;
+            this.CloseTable = ob.CloseTable;
             this.Status = ob.Status;
             this.ParentId = ob.ParentId;
             this.TypeId = ob.TypeId;
             this.ImgPath = ob.ImgPath;
-            this.Remaining = ob.Remaining;
-            this.Paid = ob.Paid;
             this.Total = ob.Total;
             this.Service = ob.Service;
             this.ServiceType = ob.ServiceType;
@@ -46,43 +42,40 @@ namespace Entity.ModelView
             this.Discount = ob.Discount;
             this.DiscountType = ob.DiscountType;
             this.Net = ob.Net;
-            if (ob.InvoiceProducts == null)
-                ob.InvoiceProducts = new List<InvoiceProduct>();
-            this.InvoiceProducts = ob.InvoiceProducts.Select(e => new InvoiceProductModelView(e)).ToList();
+            if (ob.OrderProducts == null)
+                ob.OrderProducts = new List<OrderProduct>();
+            this.OrderProducts = ob.OrderProducts.Select(e => new OrderProductModelView(e)).ToList();
         }
 
-        public Invoice Model
+        public Order Model
         {
             get
             {
-                return new Invoice
+                return new Order
                 {
                     Id = this.Id,
                     CodeNumber = this.CodeNumber,
                     Code = this.Code,
                     Date = this.Date,
-                    DealerId = this.DealerId,                  
-                    Total = this.Total,                    
+                    DealerId = this.DealerId,                   
+                    Total = this.Total,                   
                     Hide = this.Hide,
                     Net  = this.Net,
                     Notes = this.Notes,
-                    OrderId = this.OrderId,
-                    PaymentTypeId = this.PaymentTypeId,
-                    StoreId = this.StoreId,
+                    TableId = this.TableId,
+                    CloseTable = this.CloseTable,
                     Status = this.Status,
                     MaskText = this.MaskText,
                     ParentId = this.ParentId,
                     TypeId = this.TypeId,
                     ImgPath = this.ImgPath,
-                    Remaining = this.Remaining,
-                    Paid = this.Paid,
-                    Service=this.Service,
-                    ServiceType=this.ServiceType,
+                    Service = this.Service,
+                    ServiceType = this.ServiceType,
                     Tax = this.Tax,
-                    TaxType =this.TaxType,
+                    TaxType = this.TaxType,
                     Discount = this.Discount,
-                    DiscountType =this.DiscountType,
-                    InvoiceProducts = this.InvoiceProducts != null ? this.InvoiceProducts.Select(e => e.Model).ToList() : new List<InvoiceProduct>()
+                    DiscountType = this.DiscountType,
+                    OrderProducts = this.OrderProducts != null ? this.OrderProducts.Select(e => e.Model).ToList() : new List<OrderProduct>()
                 };
             }
         }
@@ -90,29 +83,17 @@ namespace Entity.ModelView
         public long CodeNumber { get; set; }
 
         [Required]
-        public string Code { get; set; }
-
+        public string Code { get; set; }       
+        public long? TableId { get; set; }
+        public string TableName { get; set; }
+        public bool CloseTable { get; set; }
         [Required]
         public DateTime Date { get; set; }
 
         [Required]
         public long DealerId { get; set; }
 
-        [Display(Name = nameof(Title_Designer.Client), ResourceType = typeof(Title_Designer))]
         public string DealerName { get; set; }
-
-        [Required]
-        public long PaymentTypeId { get; set; }
-
-        public string PaymentTypeName { get; set; }
-
-        [Required]       
-        public long StoreId { get; set; }
-
-        [Display(Name = nameof(Title_Designer.Store), ResourceType = typeof(Title_Designer))]
-        public string StoreName { get; set; }
-
-        public long? OrderId { get; set; }
 
         public decimal Total { get; set; }
 
@@ -123,14 +104,10 @@ namespace Entity.ModelView
         public decimal Service { get; set; }
         public int ServiceType { get; set; }
 
-
         public decimal Net { get; set; }
 
         [StringLength(500)]
         public string Notes { get; set; }
-        public decimal Remaining { get; set; }
-        public decimal Paid { get; set; }
-
-        public List<InvoiceProductModelView> InvoiceProducts { get; set; }
+        public List<OrderProductModelView> OrderProducts { get; set; }
     }
 }

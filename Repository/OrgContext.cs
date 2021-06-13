@@ -91,6 +91,11 @@ namespace Repository
                 new InvoiceType { Id = 4, Group = "Purchases", Name = "Return", Hide = false, InOut = -1, Icon = "simple-icon-action-undo" }
                 );
 
+            modelBuilder.Entity<OrderType>().HasData(
+               new OrderType { Id = 1,  Name = "Internal", Hide = false, Icon = "simple-icon-basket-loaded" },
+               new OrderType { Id = 2,  Name = "External", Hide = false,Icon = "simple-icon-basket-loaded" }
+               );
+
             modelBuilder.Entity<TransactionType>().HasData(
               new TransactionType { Id = 1, Name = "Addition", Hide = false, InOut = 1 , Icon = "iconsminds-down-1" },
               new TransactionType { Id = 2, Name = "Issue", Hide = false, InOut = -1, Icon = "iconsminds-up-1" },
@@ -206,8 +211,31 @@ namespace Repository
                new Preference { Id = 87, Key = "OrderTabe", Value = "2", Reference = "Transaction", TypeId = 4, Hide = false },
                new Preference { Id = 88, Key = "AutoSave", Value = "0", Reference = "Transaction", TypeId = 4, Hide = false },
                new Preference { Id = 89, Key = "TypeSerial", Value = "1", Reference = "Transaction", TypeId = 4, Hide = false },
-               new Preference { Id = 90, Key = "AllowRepeated", Value = "1", Reference = "Transaction", TypeId = 4, Hide = false }
-               );
+               new Preference { Id = 90, Key = "AllowRepeated", Value = "1", Reference = "Transaction", TypeId = 4, Hide = false },
+
+               new Preference { Id = 91, Key = "NumberLine", Value = "6", Reference = "Order", TypeId = 1, Hide = false },
+               new Preference { Id = 92, Key = "OrderTabe", Value = "2", Reference = "Order", TypeId = 1, Hide = false },
+               new Preference { Id = 93, Key = "AutoSave", Value = "0", Reference = "Order", TypeId = 1, Hide = false },
+               new Preference { Id = 94, Key = "TypeSerial", Value = "1", Reference = "Order", TypeId = 1, Hide = false },
+               new Preference { Id = 95, Key = "AllowRepeated", Value = "1", Reference = "Order", TypeId = 1, Hide = false },
+               new Preference { Id = 96, Key = "DiscountValue", Value = "", Reference = "Order", TypeId = 1, Hide = false },
+               new Preference { Id = 97, Key = "DefaultDiscountType", Value = "2", Reference = "Order", TypeId = 1, Hide = false },
+               new Preference { Id = 98, Key = "ServiceValue", Value = "", Reference = "Order", TypeId = 1, Hide = false },
+               new Preference { Id = 99, Key = "DefaultServiceType", Value = "2", Reference = "Order", TypeId = 1, Hide = false },
+               new Preference { Id = 100, Key = "TaxValue", Value = "14", Reference = "Order", TypeId = 1, Hide = false },
+               new Preference { Id = 101, Key = "DefaultTaxType", Value = "2", Reference = "Order", TypeId = 1, Hide = false },
+
+               new Preference { Id = 102, Key = "NumberLine", Value = "6", Reference = "Order", TypeId = 2, Hide = false },
+               new Preference { Id = 103, Key = "OrderTabe", Value = "2", Reference = "Order", TypeId = 2, Hide = false },
+               new Preference { Id = 104, Key = "AutoSave", Value = "0", Reference = "Order", TypeId = 2, Hide = false },
+               new Preference { Id = 105, Key = "TypeSerial", Value = "1", Reference = "Order", TypeId = 2, Hide = false },
+               new Preference { Id = 106, Key = "AllowRepeated", Value = "1", Reference = "Order", TypeId = 2, Hide = false },
+               new Preference { Id = 107, Key = "DiscountValue", Value = "", Reference = "Order", TypeId = 2, Hide = false },
+               new Preference { Id = 108, Key = "DefaultDiscountType", Value = "2", Reference = "Order", TypeId = 2, Hide = false },
+               new Preference { Id = 109, Key = "ServiceValue", Value = "", Reference = "Order", TypeId = 2, Hide = false },
+               new Preference { Id = 110, Key = "DefaultServiceType", Value = "2", Reference = "Order", TypeId = 2, Hide = false },
+               new Preference { Id = 111, Key = "TaxValue", Value = "14", Reference = "Order", TypeId = 2, Hide = false },
+               new Preference { Id = 112, Key = "DefaultTaxType", Value = "2", Reference = "Order", TypeId = 2, Hide = false }               );
         }
 
         public virtual DbSet<Unit> Units { get; set; }
@@ -236,5 +264,10 @@ namespace Repository
         public virtual DbSet<TransactionType> TransactionTypes { get; set; }
         public virtual DbSet<Transaction> Transactions { get; set; }
         public virtual DbSet<TransactionProduct> TransactionProducts { get; set; }
+        public virtual DbSet<Inventory> Inventories { get; set; }
+        public virtual DbSet<InventoryStore> InventoryStores { get; set; }
+        public virtual DbSet<InventoryProduct> InventoryProducts { get; set; }
+        public virtual DbSet<OrderType> OrderTypes { get; set; }
+        public virtual DbSet<Table> Tables { get; set; }
     }
 }

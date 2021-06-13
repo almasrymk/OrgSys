@@ -302,5 +302,70 @@ namespace Repository
                 return _transactionTypeRepo;
             }
         }
+
+        private InventoryRepo _inventoryRepo;
+        public InventoryRepo inventoryRepo
+        {
+            get
+            {
+
+                if (this._inventoryRepo == null)
+                    this._inventoryRepo = new InventoryRepo();
+
+                return _inventoryRepo;
+            }
+        }
+
+        private OrderTypeRepo _orderTypeRepo;
+        public OrderTypeRepo orderTypeRepo
+        {
+            get
+            {
+
+                if (this._orderTypeRepo == null)
+                    this._orderTypeRepo = new OrderTypeRepo();
+
+                return _orderTypeRepo;
+            }
+        }
+
+        private TableRepo _tableRepo;
+        public TableRepo tableRepo
+        {
+            get
+            {
+
+                if (this._tableRepo == null)
+                    this._tableRepo = new TableRepo();
+
+                return _tableRepo;
+            }
+        }
+
+        private OrderRepo _orderRepo;
+        public OrderRepo orderRepo
+        {
+            get
+            {
+
+                if (this._orderRepo == null)
+                    this._orderRepo = new OrderRepo();
+
+                return _orderRepo;
+            }
+        }
+
+        private OrderProductRepo _orderProductRepo;
+        public OrderProductRepo orderProductRepo
+        {
+            get
+            {
+
+                if (this._orderProductRepo == null)
+                    this._orderProductRepo = new OrderProductRepo();
+
+                return _orderProductRepo;
+            }
+        }
     }
 }

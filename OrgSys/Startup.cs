@@ -103,6 +103,11 @@ namespace OrgSys
                  name: "Transactions",
                  areaName: "Transactions",
                  pattern: "Transactions/{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapAreaControllerRoute(
+                 name: "Orders",
+                 areaName: "Orders",
+                 pattern: "Orders/{controller=Home}/{action=Index}/{id?}");
                 //endpoints.MapRazorPages();
             });
         }

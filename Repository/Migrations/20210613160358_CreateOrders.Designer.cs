@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repository;
 
 namespace Repository.Migrations
 {
     [DbContext(typeof(OrgContext))]
-    partial class OrgContextModelSnapshot : ModelSnapshot
+    [Migration("20210613160358_CreateOrders")]
+    partial class CreateOrders
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -706,9 +708,6 @@ namespace Repository.Migrations
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
 
-                    b.Property<bool>("CloseTable")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Code")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -744,6 +743,9 @@ namespace Repository.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
+                    b.Property<long>("OrderTypeId")
+                        .HasColumnType("bigint");
+
                     b.Property<long>("ParentId")
                         .HasColumnType("bigint");
 
@@ -774,6 +776,8 @@ namespace Repository.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("DealerId");
+
+                    b.HasIndex("OrderTypeId");
 
                     b.HasIndex("TableId");
 
@@ -2521,72 +2525,6 @@ namespace Repository.Migrations
                         {
                             Id = 96L,
                             Hide = false,
-                            Key = "DiscountValue",
-                            ParentId = 0L,
-                            Reference = "Order",
-                            Status = 0,
-                            TypeId = 1L,
-                            Value = ""
-                        },
-                        new
-                        {
-                            Id = 97L,
-                            Hide = false,
-                            Key = "DefaultDiscountType",
-                            ParentId = 0L,
-                            Reference = "Order",
-                            Status = 0,
-                            TypeId = 1L,
-                            Value = "2"
-                        },
-                        new
-                        {
-                            Id = 98L,
-                            Hide = false,
-                            Key = "ServiceValue",
-                            ParentId = 0L,
-                            Reference = "Order",
-                            Status = 0,
-                            TypeId = 1L,
-                            Value = ""
-                        },
-                        new
-                        {
-                            Id = 99L,
-                            Hide = false,
-                            Key = "DefaultServiceType",
-                            ParentId = 0L,
-                            Reference = "Order",
-                            Status = 0,
-                            TypeId = 1L,
-                            Value = "2"
-                        },
-                        new
-                        {
-                            Id = 100L,
-                            Hide = false,
-                            Key = "TaxValue",
-                            ParentId = 0L,
-                            Reference = "Order",
-                            Status = 0,
-                            TypeId = 1L,
-                            Value = "14"
-                        },
-                        new
-                        {
-                            Id = 101L,
-                            Hide = false,
-                            Key = "DefaultTaxType",
-                            ParentId = 0L,
-                            Reference = "Order",
-                            Status = 0,
-                            TypeId = 1L,
-                            Value = "2"
-                        },
-                        new
-                        {
-                            Id = 102L,
-                            Hide = false,
                             Key = "NumberLine",
                             ParentId = 0L,
                             Reference = "Order",
@@ -2596,7 +2534,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 103L,
+                            Id = 97L,
                             Hide = false,
                             Key = "OrderTabe",
                             ParentId = 0L,
@@ -2607,7 +2545,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 104L,
+                            Id = 98L,
                             Hide = false,
                             Key = "AutoSave",
                             ParentId = 0L,
@@ -2618,7 +2556,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 105L,
+                            Id = 99L,
                             Hide = false,
                             Key = "TypeSerial",
                             ParentId = 0L,
@@ -2629,7 +2567,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 106L,
+                            Id = 100L,
                             Hide = false,
                             Key = "AllowRepeated",
                             ParentId = 0L,
@@ -2637,72 +2575,6 @@ namespace Repository.Migrations
                             Status = 0,
                             TypeId = 2L,
                             Value = "1"
-                        },
-                        new
-                        {
-                            Id = 107L,
-                            Hide = false,
-                            Key = "DiscountValue",
-                            ParentId = 0L,
-                            Reference = "Order",
-                            Status = 0,
-                            TypeId = 2L,
-                            Value = ""
-                        },
-                        new
-                        {
-                            Id = 108L,
-                            Hide = false,
-                            Key = "DefaultDiscountType",
-                            ParentId = 0L,
-                            Reference = "Order",
-                            Status = 0,
-                            TypeId = 2L,
-                            Value = "2"
-                        },
-                        new
-                        {
-                            Id = 109L,
-                            Hide = false,
-                            Key = "ServiceValue",
-                            ParentId = 0L,
-                            Reference = "Order",
-                            Status = 0,
-                            TypeId = 2L,
-                            Value = ""
-                        },
-                        new
-                        {
-                            Id = 110L,
-                            Hide = false,
-                            Key = "DefaultServiceType",
-                            ParentId = 0L,
-                            Reference = "Order",
-                            Status = 0,
-                            TypeId = 2L,
-                            Value = "2"
-                        },
-                        new
-                        {
-                            Id = 111L,
-                            Hide = false,
-                            Key = "TaxValue",
-                            ParentId = 0L,
-                            Reference = "Order",
-                            Status = 0,
-                            TypeId = 2L,
-                            Value = "14"
-                        },
-                        new
-                        {
-                            Id = 112L,
-                            Hide = false,
-                            Key = "DefaultTaxType",
-                            ParentId = 0L,
-                            Reference = "Order",
-                            Status = 0,
-                            TypeId = 2L,
-                            Value = "2"
                         });
                 });
 
@@ -3630,11 +3502,19 @@ namespace Repository.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Entity.Model.OrderType", "OrderType")
+                        .WithMany()
+                        .HasForeignKey("OrderTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Entity.Model.Table", "Table")
                         .WithMany()
                         .HasForeignKey("TableId");
 
                     b.Navigation("Dealer");
+
+                    b.Navigation("OrderType");
 
                     b.Navigation("Table");
                 });

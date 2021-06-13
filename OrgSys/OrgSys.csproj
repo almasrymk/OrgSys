@@ -20,6 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Orders\Data\" />
+    <Folder Include="Areas\Orders\Models\" />
     <Folder Include="Areas\Transactions\Data\" />
     <Folder Include="Areas\Transactions\Models\" />
     <Folder Include="Areas\Invoices\Data\" />

@@ -11,7 +11,12 @@ namespace Entity.Model
     public class OrderProduct : BaseModel
     {
         [Required]
-        public long RowNumber { get; set; }
+        public long RowNumber { get; set; }        
+
+        [Required]
+        public long OrderId { get; set; }
+
+        public virtual Order Order { get; set; }
 
         [Required]
         public long ProductId { get; set; }

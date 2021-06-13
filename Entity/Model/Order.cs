@@ -14,7 +14,10 @@ namespace Entity.Model
 
         [Required]
         public string Code { get; set; }
-
+      
+        public long? TableId { get; set; }
+        public virtual Table Table { get; set; }
+        public bool CloseTable { get; set; }
         [Required]
         public DateTime Date { get; set; }
 
@@ -23,17 +26,19 @@ namespace Entity.Model
 
         public virtual Dealer Dealer { get; set; }
 
-        public long TableId { get; set; }
-
         public decimal Total { get; set; }
 
         public decimal Discount { get; set; }
-
+        public int DiscountType { get; set; }
         public decimal Tax { get; set; }
+        public int TaxType { get; set; }
+        public decimal Service { get; set; }
+        public int ServiceType { get; set; }
 
         public decimal Net { get; set; }
 
         [StringLength(500)]
-        public string Notes { get; set; }             
+        public string Notes { get; set; }
+        public virtual List<OrderProduct> OrderProducts { get; set; }
     }
 }
