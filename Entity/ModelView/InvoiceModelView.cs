@@ -27,7 +27,6 @@ namespace Entity.ModelView
             this.DealerName = ob.Dealer?.Name;           
             this.Hide = ob.Hide;            
             this.Notes = ob.Notes;
-            this.OrderId = ob.OrderId;
             this.PaymentTypeId = ob.PaymentTypeId;
             this.PaymentTypeName = ob.PaymentType?.Name;
             this.StoreId = ob.StoreId;
@@ -51,6 +50,32 @@ namespace Entity.ModelView
             this.InvoiceProducts = ob.InvoiceProducts.Select(e => new InvoiceProductModelView(e)).ToList();
         }
 
+        public InvoiceModelView UpdateData(Order ob , long StoreId)
+        {
+            if (ob == null)
+                ob = new Order();
+            this.Date = ob.Date;           
+            this.Hide = ob.Hide;
+            this.Notes = ob.Notes;           
+            this.Status = ob.Status;
+            this.StoreId = StoreId;
+            if (ob.DealerId != null)
+                this.DealerId = ob.DealerId.Value;
+            this.ParentId = ob.ParentId;
+            this.ImgPath = ob.ImgPath;           
+            this.Total = ob.Total;
+            this.Service = ob.Service;
+            this.ServiceType = ob.ServiceType;
+            this.Tax = ob.Tax;            
+            this.TaxType = ob.TaxType;
+            this.Discount = ob.Discount;
+            this.DiscountType = ob.DiscountType;
+            this.Net = ob.Net;
+            if (ob.OrderProducts == null)
+                ob.OrderProducts = new List<OrderProduct>();
+            this.InvoiceProducts = ob.OrderProducts.Select(e => new InvoiceProductModelView(e , StoreId)).ToList();
+            return this;
+        }
         public Invoice Model
         {
             get
@@ -66,7 +91,6 @@ namespace Entity.ModelView
                     Hide = this.Hide,
                     Net  = this.Net,
                     Notes = this.Notes,
-                    OrderId = this.OrderId,
                     PaymentTypeId = this.PaymentTypeId,
                     StoreId = this.StoreId,
                     Status = this.Status,
@@ -110,9 +134,7 @@ namespace Entity.ModelView
         public long StoreId { get; set; }
 
         [Display(Name = nameof(Title_Designer.Store), ResourceType = typeof(Title_Designer))]
-        public string StoreName { get; set; }
-
-        public long? OrderId { get; set; }
+        public string StoreName { get; set; }      
 
         public decimal Total { get; set; }
 

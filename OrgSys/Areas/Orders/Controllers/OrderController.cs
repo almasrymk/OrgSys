@@ -25,7 +25,7 @@ namespace OrgSys.Areas.Orders.Controllers
         {
             ViewBag.DealerId = new SelectList(new DealerService().GetAll(model.ParentId, model.TypeId == 1 || model.TypeId == 3 ? (int)DealerType.Client : (int)DealerType.Supplier), "Id", "Name", model.DealerId);
             ViewBag.ProductId = new SelectList(new ProductService().GetAll(model.ParentId, 0), "Id", "Name");
-            ViewBag.TableId = new SelectList(new TableService().GetAll(model.ParentId, 0), "Id", "Name");
+            ViewBag.TableId = new SelectList(new TableService().GetAllClosed(model.ParentId, 0), "Id", "Name");
 
             List<SelectListItem> selectListItems = new List<SelectListItem>();
             selectListItems.Add(new SelectListItem { Value = "1", Text = "Amount" });
@@ -81,6 +81,28 @@ namespace OrgSys.Areas.Orders.Controllers
                 ob.OrderProducts = new List<OrderProductModelView>();
               }           
             return ob;
-        }       
+        }
+
+
+        [HttpGet]
+        public virtual ActionResult CreateInvoice(long id , string search, long ParentId = 0, long TypeId = 0, int page = 1)
+        {
+            var ob = new OrderService().CreateInvoice(id);
+            return Redirect("/Orders/Order/Index?ParentId=" +  ParentId + "&TypeId=" + TypeId + "&page=" + page +"&status=" + ResultStatus.success + "&MsgError=Success");
+        }
+
+        [HttpGet]
+        public virtual ActionResult Cancel(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1)
+        {
+            new OrderService().Cancel(id);
+            return Redirect("/Orders/Order/Index?ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" + ResultStatus.success + "&MsgError=Success");
+        }
+
+        [HttpGet]
+        public virtual ActionResult Redo(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1)
+        {
+            new OrderService().Redo(id);
+            return Redirect("/Orders/Order/Index?ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" + ResultStatus.success + "&MsgError=Success");
+        }
     }
 }

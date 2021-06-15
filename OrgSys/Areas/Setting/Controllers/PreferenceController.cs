@@ -63,6 +63,7 @@ namespace OrgSys.Areas.Setting.Controllers
 
                 ViewBag.NumberLine = Service.FirstOrDefault(e => e.Key == "NumberLine")?.Value;
                 ViewBag.AutoSave = Service.FirstOrDefault(e => e.Key == "AutoSave")?.Value == "1";
+                ViewBag.AutoCreateTransaction = Service.FirstOrDefault(e => e.Key == "AutoCreateTransaction")?.Value == "1";
                 ViewBag.SaveLastStatusSetting = Service.FirstOrDefault(e => e.Key == "SaveLastStatusSetting")?.Value == "1";
 
             }
@@ -127,6 +128,7 @@ namespace OrgSys.Areas.Setting.Controllers
 
                 ViewBag.NumberLine = Service.FirstOrDefault(e => e.Key == "NumberLine")?.Value;
                 ViewBag.AutoSave = Service.FirstOrDefault(e => e.Key == "AutoSave")?.Value == "1";
+                ViewBag.AutoCreateInvoice = Service.FirstOrDefault(e => e.Key == "AutoCreateInvoice")?.Value == "1";
                 //ViewBag.SaveLastStatusSetting = Service.FirstOrDefault(e => e.Key == "SaveLastStatusSetting")?.Value == "1";
 
                 selectListItems = new List<SelectListItem>();

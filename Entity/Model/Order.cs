@@ -20,11 +20,18 @@ namespace Entity.Model
         public bool CloseTable { get; set; }
         [Required]
         public DateTime Date { get; set; }
-
-        [Required]
-        public long DealerId { get; set; }
+        
+        public long? DealerId { get; set; }
 
         public virtual Dealer Dealer { get; set; }
+        
+        public long? ShiftId { get; set; }
+
+        public virtual Shift Shift { get; set; }
+
+        public long? InvoiceId { get; set; }
+
+        public virtual Invoice Invoice { get; set; }
 
         public decimal Total { get; set; }
 

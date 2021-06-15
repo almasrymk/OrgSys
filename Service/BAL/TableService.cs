@@ -50,6 +50,17 @@ namespace Service.BAL
         /// <summary>
         /// 
         /// </summary>
+        /// <returns></returns>
+        public List<TableModelView> GetAllClosed(long parentId = 0, long TypeId = 0)
+        {
+            var ids = repo.orderRepo.GetList(e => e.CloseTable != true, null, "", Utility.Status.New).Select(e=>e.TableId).Distinct().ToList();
+
+            return repo.tableRepo.GetList(e => !ids.Contains(e.Id), e => e.OrderBy(e => e.Id), "", Utility.Status.New).Select(e => new TableModelView(e)).ToList();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="textSearch"></param>
         /// <returns></returns>
         public List<TableModelView> GetAll(string textSearch , long parentId = 0, long TypeId = 0)

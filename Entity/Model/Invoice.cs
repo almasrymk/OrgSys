@@ -32,11 +32,7 @@ namespace Entity.Model
         public long StoreId { get; set; }
 
         public virtual Store Store { get; set; }
-
-        public long? OrderId { get; set; }
-
-        public virtual Order Order { get; set; }
-
+     
         public long? ShiftId { get; set; }
 
         public virtual Shift Shift { get; set; }

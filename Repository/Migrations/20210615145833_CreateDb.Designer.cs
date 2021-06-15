@@ -10,8 +10,8 @@ using Repository;
 namespace Repository.Migrations
 {
     [DbContext(typeof(OrgContext))]
-    [Migration("20210608212349_EditSeed3")]
-    partial class EditSeed3
+    [Migration("20210615145833_CreateDb")]
+    partial class CreateDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -178,6 +178,182 @@ namespace Repository.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Entity.Model.Inventory", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .UseIdentityColumn();
+
+                    b.Property<bool>("Closed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Review")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Inventory");
+                });
+
+            modelBuilder.Entity("Entity.Model.InventoryProduct", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .UseIdentityColumn();
+
+                    b.Property<decimal>("ActualBalance")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("CalcBalance")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("DiffQuantity")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("InventoryStoreId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("RowNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("UnitId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InventoryStoreId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("UnitId");
+
+                    b.ToTable("InventoryProduct");
+                });
+
+            modelBuilder.Entity("Entity.Model.InventoryStore", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .UseIdentityColumn();
+
+                    b.Property<bool>("Closed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("CreateTransaction")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("InventoryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Review")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("StoreId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InventoryId");
+
+                    b.HasIndex("StoreId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("InventoryStore");
+                });
+
             modelBuilder.Entity("Entity.Model.Invoice", b =>
                 {
                     b.Property<long>("Id")
@@ -219,9 +395,6 @@ namespace Repository.Migrations
                     b.Property<string>("Notes")
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
-
-                    b.Property<long?>("OrderId")
-                        .HasColumnType("bigint");
 
                     b.Property<decimal>("Paid")
                         .HasColumnType("decimal(18,2)");
@@ -265,8 +438,6 @@ namespace Repository.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("DealerId");
-
-                    b.HasIndex("OrderId");
 
                     b.HasIndex("PaymentTypeId");
 
@@ -358,8 +529,14 @@ namespace Repository.Migrations
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
 
+                    b.Property<string>("Group")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("Hide")
                         .HasColumnType("bit");
+
+                    b.Property<string>("Icon")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImgPath")
                         .HasColumnType("nvarchar(max)");
@@ -391,9 +568,11 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1L,
+                            Group = "Sales",
                             Hide = false,
+                            Icon = "simple-icon-basket-loaded",
                             InOut = -1,
-                            Name = "Sales",
+                            Name = "Invoice",
                             ParentId = 0L,
                             Status = 0,
                             TypeId = 0L
@@ -401,9 +580,11 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 2L,
+                            Group = "Purchases",
                             Hide = false,
+                            Icon = "simple-icon-basket-loaded",
                             InOut = 1,
-                            Name = "Purchase",
+                            Name = "Invoice",
                             ParentId = 0L,
                             Status = 0,
                             TypeId = 0L
@@ -411,9 +592,11 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 3L,
+                            Group = "Sales",
                             Hide = false,
+                            Icon = "simple-icon-action-undo",
                             InOut = 1,
-                            Name = "Return Sales",
+                            Name = "Return",
                             ParentId = 0L,
                             Status = 0,
                             TypeId = 0L
@@ -421,9 +604,11 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 4L,
+                            Group = "Purchases",
                             Hide = false,
+                            Icon = "simple-icon-action-undo",
                             InOut = -1,
-                            Name = "Return Purchase",
+                            Name = "Return",
                             ParentId = 0L,
                             Status = 0,
                             TypeId = 0L
@@ -518,6 +703,9 @@ namespace Repository.Migrations
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
 
+                    b.Property<bool>("CloseTable")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Code")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -528,17 +716,23 @@ namespace Repository.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<long>("DealerId")
+                    b.Property<long?>("DealerId")
                         .HasColumnType("bigint");
 
                     b.Property<decimal>("Discount")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("DiscountType")
+                        .HasColumnType("int");
 
                     b.Property<bool>("Hide")
                         .HasColumnType("bit");
 
                     b.Property<string>("ImgPath")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("InvoiceId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("MaskText")
                         .HasColumnType("nvarchar(max)");
@@ -553,14 +747,26 @@ namespace Repository.Migrations
                     b.Property<long>("ParentId")
                         .HasColumnType("bigint");
 
+                    b.Property<decimal>("Service")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("ServiceType")
+                        .HasColumnType("int");
+
+                    b.Property<long?>("ShiftId")
+                        .HasColumnType("bigint");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<long>("TableId")
+                    b.Property<long?>("TableId")
                         .HasColumnType("bigint");
 
                     b.Property<decimal>("Tax")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("TaxType")
+                        .HasColumnType("int");
 
                     b.Property<decimal>("Total")
                         .HasColumnType("decimal(18,2)");
@@ -571,6 +777,12 @@ namespace Repository.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("DealerId");
+
+                    b.HasIndex("InvoiceId");
+
+                    b.HasIndex("ShiftId");
+
+                    b.HasIndex("TableId");
 
                     b.ToTable("Order");
                 });
@@ -599,6 +811,9 @@ namespace Repository.Migrations
 
                     b.Property<string>("Notes")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("OrderId")
+                        .HasColumnType("bigint");
 
                     b.Property<long>("ParentId")
                         .HasColumnType("bigint");
@@ -632,11 +847,72 @@ namespace Repository.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("OrderId");
+
                     b.HasIndex("ProductId");
 
                     b.HasIndex("UnitId");
 
                     b.ToTable("OrderProduct");
+                });
+
+            modelBuilder.Entity("Entity.Model.OrderType", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .UseIdentityColumn();
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Icon")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("OrderType");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            Hide = false,
+                            Icon = "iconsminds-right-1",
+                            Name = "Internal",
+                            ParentId = 0L,
+                            Status = 0,
+                            TypeId = 0L
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            Hide = false,
+                            Icon = "iconsminds-left-1",
+                            Name = "External",
+                            ParentId = 0L,
+                            Status = 0,
+                            TypeId = 0L
+                        });
                 });
 
             modelBuilder.Entity("Entity.Model.PaymentType", b =>
@@ -1164,9 +1440,7 @@ namespace Repository.Migrations
             modelBuilder.Entity("Entity.Model.Preference", b =>
                 {
                     b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
+                        .HasColumnType("bigint");
 
                     b.Property<bool>("Hide")
                         .HasColumnType("bit");
@@ -1372,6 +1646,17 @@ namespace Repository.Migrations
                         {
                             Id = 16L,
                             Hide = false,
+                            Key = "AutoCreateTransaction",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 1L,
+                            Value = "0"
+                        },
+                        new
+                        {
+                            Id = 101L,
+                            Hide = false,
                             Key = "DefaultStore",
                             ParentId = 0L,
                             Reference = "Invoice",
@@ -1381,7 +1666,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 17L,
+                            Id = 102L,
                             Hide = false,
                             Key = "DefaultSupplier",
                             ParentId = 0L,
@@ -1392,7 +1677,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 18L,
+                            Id = 103L,
                             Hide = false,
                             Key = "DefaultPaymentType",
                             ParentId = 0L,
@@ -1403,7 +1688,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 19L,
+                            Id = 104L,
                             Hide = false,
                             Key = "DiscountValue",
                             ParentId = 0L,
@@ -1414,7 +1699,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 20L,
+                            Id = 105L,
                             Hide = false,
                             Key = "DefaultDiscountType",
                             ParentId = 0L,
@@ -1425,7 +1710,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 21L,
+                            Id = 106L,
                             Hide = false,
                             Key = "ServiceValue",
                             ParentId = 0L,
@@ -1436,7 +1721,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 22L,
+                            Id = 107L,
                             Hide = false,
                             Key = "DefaultServiceType",
                             ParentId = 0L,
@@ -1447,7 +1732,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 23L,
+                            Id = 108L,
                             Hide = false,
                             Key = "TaxValue",
                             ParentId = 0L,
@@ -1458,7 +1743,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 24L,
+                            Id = 109L,
                             Hide = false,
                             Key = "DefaultTaxType",
                             ParentId = 0L,
@@ -1469,7 +1754,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 25L,
+                            Id = 110L,
                             Hide = false,
                             Key = "NumberLine",
                             ParentId = 0L,
@@ -1480,7 +1765,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 26L,
+                            Id = 111L,
                             Hide = false,
                             Key = "OrderTabe",
                             ParentId = 0L,
@@ -1491,7 +1776,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 27L,
+                            Id = 112L,
                             Hide = false,
                             Key = "AutoSave",
                             ParentId = 0L,
@@ -1502,7 +1787,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 28L,
+                            Id = 113L,
                             Hide = false,
                             Key = "TypeSerial",
                             ParentId = 0L,
@@ -1513,7 +1798,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 29L,
+                            Id = 114L,
                             Hide = false,
                             Key = "AllowRepeated",
                             ParentId = 0L,
@@ -1524,7 +1809,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 30L,
+                            Id = 115L,
                             Hide = false,
                             Key = "SaveLastStatusSetting",
                             ParentId = 0L,
@@ -1535,7 +1820,18 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 31L,
+                            Id = 116L,
+                            Hide = false,
+                            Key = "AutoCreateTransaction",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 2L,
+                            Value = "0"
+                        },
+                        new
+                        {
+                            Id = 201L,
                             Hide = false,
                             Key = "DefaultStore",
                             ParentId = 0L,
@@ -1546,7 +1842,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 32L,
+                            Id = 202L,
                             Hide = false,
                             Key = "DefaultCustomer",
                             ParentId = 0L,
@@ -1557,7 +1853,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 33L,
+                            Id = 203L,
                             Hide = false,
                             Key = "DefaultPaymentType",
                             ParentId = 0L,
@@ -1568,7 +1864,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 34L,
+                            Id = 204L,
                             Hide = false,
                             Key = "DiscountValue",
                             ParentId = 0L,
@@ -1579,7 +1875,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 35L,
+                            Id = 205L,
                             Hide = false,
                             Key = "DefaultDiscountType",
                             ParentId = 0L,
@@ -1590,7 +1886,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 36L,
+                            Id = 206L,
                             Hide = false,
                             Key = "ServiceValue",
                             ParentId = 0L,
@@ -1601,7 +1897,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 37L,
+                            Id = 207L,
                             Hide = false,
                             Key = "DefaultServiceType",
                             ParentId = 0L,
@@ -1612,7 +1908,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 38L,
+                            Id = 208L,
                             Hide = false,
                             Key = "TaxValue",
                             ParentId = 0L,
@@ -1623,7 +1919,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 39L,
+                            Id = 209L,
                             Hide = false,
                             Key = "DefaultTaxType",
                             ParentId = 0L,
@@ -1634,7 +1930,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 40L,
+                            Id = 210L,
                             Hide = false,
                             Key = "NumberLine",
                             ParentId = 0L,
@@ -1645,7 +1941,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 41L,
+                            Id = 211L,
                             Hide = false,
                             Key = "OrderTabe",
                             ParentId = 0L,
@@ -1656,7 +1952,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 42L,
+                            Id = 212L,
                             Hide = false,
                             Key = "AutoSave",
                             ParentId = 0L,
@@ -1667,7 +1963,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 43L,
+                            Id = 213L,
                             Hide = false,
                             Key = "TypeSerial",
                             ParentId = 0L,
@@ -1678,7 +1974,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 44L,
+                            Id = 214L,
                             Hide = false,
                             Key = "AllowRepeated",
                             ParentId = 0L,
@@ -1689,7 +1985,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 45L,
+                            Id = 215L,
                             Hide = false,
                             Key = "SaveLastStatusSetting",
                             ParentId = 0L,
@@ -1700,7 +1996,18 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 46L,
+                            Id = 216L,
+                            Hide = false,
+                            Key = "AutoCreateTransaction",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 4L,
+                            Value = "0"
+                        },
+                        new
+                        {
+                            Id = 301L,
                             Hide = false,
                             Key = "DefaultStore",
                             ParentId = 0L,
@@ -1711,7 +2018,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 47L,
+                            Id = 302L,
                             Hide = false,
                             Key = "DefaultSupplier",
                             ParentId = 0L,
@@ -1722,7 +2029,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 48L,
+                            Id = 303L,
                             Hide = false,
                             Key = "DefaultPaymentType",
                             ParentId = 0L,
@@ -1733,7 +2040,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 49L,
+                            Id = 304L,
                             Hide = false,
                             Key = "DiscountValue",
                             ParentId = 0L,
@@ -1744,7 +2051,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 50L,
+                            Id = 305L,
                             Hide = false,
                             Key = "DefaultDiscountType",
                             ParentId = 0L,
@@ -1755,7 +2062,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 51L,
+                            Id = 306L,
                             Hide = false,
                             Key = "ServiceValue",
                             ParentId = 0L,
@@ -1766,7 +2073,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 52L,
+                            Id = 307L,
                             Hide = false,
                             Key = "DefaultServiceType",
                             ParentId = 0L,
@@ -1777,7 +2084,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 53L,
+                            Id = 308L,
                             Hide = false,
                             Key = "TaxValue",
                             ParentId = 0L,
@@ -1788,7 +2095,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 54L,
+                            Id = 309L,
                             Hide = false,
                             Key = "DefaultTaxType",
                             ParentId = 0L,
@@ -1799,7 +2106,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 55L,
+                            Id = 310L,
                             Hide = false,
                             Key = "NumberLine",
                             ParentId = 0L,
@@ -1810,7 +2117,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 56L,
+                            Id = 311L,
                             Hide = false,
                             Key = "OrderTabe",
                             ParentId = 0L,
@@ -1821,7 +2128,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 57L,
+                            Id = 312L,
                             Hide = false,
                             Key = "AutoSave",
                             ParentId = 0L,
@@ -1832,7 +2139,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 58L,
+                            Id = 313L,
                             Hide = false,
                             Key = "TypeSerial",
                             ParentId = 0L,
@@ -1843,7 +2150,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 59L,
+                            Id = 314L,
                             Hide = false,
                             Key = "AllowRepeated",
                             ParentId = 0L,
@@ -1854,7 +2161,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 60L,
+                            Id = 315L,
                             Hide = false,
                             Key = "SaveLastStatusSetting",
                             ParentId = 0L,
@@ -1865,7 +2172,18 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 61L,
+                            Id = 316L,
+                            Hide = false,
+                            Key = "AutoCreateTransaction",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 4L,
+                            Value = "0"
+                        },
+                        new
+                        {
+                            Id = 401L,
                             Hide = false,
                             Key = "DefaultStore",
                             ParentId = 0L,
@@ -1876,7 +2194,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 62L,
+                            Id = 402L,
                             Hide = false,
                             Key = "DefaultSupplier",
                             ParentId = 0L,
@@ -1887,7 +2205,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 63L,
+                            Id = 403L,
                             Hide = false,
                             Key = "NumberLine",
                             ParentId = 0L,
@@ -1898,18 +2216,18 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 64L,
+                            Id = 404L,
                             Hide = false,
                             Key = "OrderTabe",
                             ParentId = 0L,
                             Reference = "Transaction",
                             Status = 0,
                             TypeId = 1L,
-                            Value = "1"
+                            Value = "2"
                         },
                         new
                         {
-                            Id = 65L,
+                            Id = 405L,
                             Hide = false,
                             Key = "AutoSave",
                             ParentId = 0L,
@@ -1920,7 +2238,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 66L,
+                            Id = 406L,
                             Hide = false,
                             Key = "TypeSerial",
                             ParentId = 0L,
@@ -1931,7 +2249,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 67L,
+                            Id = 407L,
                             Hide = false,
                             Key = "AllowRepeated",
                             ParentId = 0L,
@@ -1942,7 +2260,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 68L,
+                            Id = 408L,
                             Hide = false,
                             Key = "SaveLastStatusSetting",
                             ParentId = 0L,
@@ -1953,7 +2271,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 69L,
+                            Id = 501L,
                             Hide = false,
                             Key = "DefaultStore",
                             ParentId = 0L,
@@ -1964,7 +2282,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 70L,
+                            Id = 502L,
                             Hide = false,
                             Key = "DefaultCustomer",
                             ParentId = 0L,
@@ -1975,7 +2293,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 71L,
+                            Id = 503L,
                             Hide = false,
                             Key = "NumberLine",
                             ParentId = 0L,
@@ -1986,18 +2304,18 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 72L,
+                            Id = 504L,
                             Hide = false,
                             Key = "OrderTabe",
                             ParentId = 0L,
                             Reference = "Transaction",
                             Status = 0,
                             TypeId = 2L,
-                            Value = "1"
+                            Value = "2"
                         },
                         new
                         {
-                            Id = 73L,
+                            Id = 505L,
                             Hide = false,
                             Key = "AutoSave",
                             ParentId = 0L,
@@ -2008,7 +2326,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 74L,
+                            Id = 506L,
                             Hide = false,
                             Key = "TypeSerial",
                             ParentId = 0L,
@@ -2019,7 +2337,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 75L,
+                            Id = 507L,
                             Hide = false,
                             Key = "AllowRepeated",
                             ParentId = 0L,
@@ -2030,7 +2348,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 76L,
+                            Id = 508L,
                             Hide = false,
                             Key = "SaveLastStatusSetting",
                             ParentId = 0L,
@@ -2041,7 +2359,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 77L,
+                            Id = 601L,
                             Hide = false,
                             Key = "DefaultStore",
                             ParentId = 0L,
@@ -2052,7 +2370,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 78L,
+                            Id = 602L,
                             Hide = false,
                             Key = "NumberLine",
                             ParentId = 0L,
@@ -2063,18 +2381,18 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 79L,
+                            Id = 603L,
                             Hide = false,
                             Key = "OrderTabe",
                             ParentId = 0L,
                             Reference = "Transaction",
                             Status = 0,
                             TypeId = 3L,
-                            Value = "1"
+                            Value = "2"
                         },
                         new
                         {
-                            Id = 80L,
+                            Id = 604L,
                             Hide = false,
                             Key = "AutoSave",
                             ParentId = 0L,
@@ -2085,7 +2403,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 81L,
+                            Id = 605L,
                             Hide = false,
                             Key = "TypeSerial",
                             ParentId = 0L,
@@ -2096,7 +2414,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 82L,
+                            Id = 606L,
                             Hide = false,
                             Key = "AllowRepeated",
                             ParentId = 0L,
@@ -2107,7 +2425,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 83L,
+                            Id = 607L,
                             Hide = false,
                             Key = "SaveLastStatusSetting",
                             ParentId = 0L,
@@ -2115,6 +2433,347 @@ namespace Repository.Migrations
                             Status = 0,
                             TypeId = 3L,
                             Value = "1"
+                        },
+                        new
+                        {
+                            Id = 608L,
+                            Hide = false,
+                            Key = "AutoReceived",
+                            ParentId = 0L,
+                            Reference = "Transaction",
+                            Status = 0,
+                            TypeId = 3L,
+                            Value = "0"
+                        },
+                        new
+                        {
+                            Id = 701L,
+                            Hide = false,
+                            Key = "DefaultStore",
+                            ParentId = 0L,
+                            Reference = "Transaction",
+                            Status = 0,
+                            TypeId = 4L,
+                            Value = "1"
+                        },
+                        new
+                        {
+                            Id = 702L,
+                            Hide = false,
+                            Key = "NumberLine",
+                            ParentId = 0L,
+                            Reference = "Transaction",
+                            Status = 0,
+                            TypeId = 4L,
+                            Value = "6"
+                        },
+                        new
+                        {
+                            Id = 703L,
+                            Hide = false,
+                            Key = "OrderTabe",
+                            ParentId = 0L,
+                            Reference = "Transaction",
+                            Status = 0,
+                            TypeId = 4L,
+                            Value = "2"
+                        },
+                        new
+                        {
+                            Id = 704L,
+                            Hide = false,
+                            Key = "AutoSave",
+                            ParentId = 0L,
+                            Reference = "Transaction",
+                            Status = 0,
+                            TypeId = 4L,
+                            Value = "0"
+                        },
+                        new
+                        {
+                            Id = 705L,
+                            Hide = false,
+                            Key = "TypeSerial",
+                            ParentId = 0L,
+                            Reference = "Transaction",
+                            Status = 0,
+                            TypeId = 4L,
+                            Value = "1"
+                        },
+                        new
+                        {
+                            Id = 706L,
+                            Hide = false,
+                            Key = "AllowRepeated",
+                            ParentId = 0L,
+                            Reference = "Transaction",
+                            Status = 0,
+                            TypeId = 4L,
+                            Value = "1"
+                        },
+                        new
+                        {
+                            Id = 801L,
+                            Hide = false,
+                            Key = "NumberLine",
+                            ParentId = 0L,
+                            Reference = "Order",
+                            Status = 0,
+                            TypeId = 1L,
+                            Value = "6"
+                        },
+                        new
+                        {
+                            Id = 802L,
+                            Hide = false,
+                            Key = "OrderTabe",
+                            ParentId = 0L,
+                            Reference = "Order",
+                            Status = 0,
+                            TypeId = 1L,
+                            Value = "2"
+                        },
+                        new
+                        {
+                            Id = 803L,
+                            Hide = false,
+                            Key = "AutoSave",
+                            ParentId = 0L,
+                            Reference = "Order",
+                            Status = 0,
+                            TypeId = 1L,
+                            Value = "0"
+                        },
+                        new
+                        {
+                            Id = 804L,
+                            Hide = false,
+                            Key = "TypeSerial",
+                            ParentId = 0L,
+                            Reference = "Order",
+                            Status = 0,
+                            TypeId = 1L,
+                            Value = "1"
+                        },
+                        new
+                        {
+                            Id = 805L,
+                            Hide = false,
+                            Key = "AllowRepeated",
+                            ParentId = 0L,
+                            Reference = "Order",
+                            Status = 0,
+                            TypeId = 1L,
+                            Value = "1"
+                        },
+                        new
+                        {
+                            Id = 806L,
+                            Hide = false,
+                            Key = "DiscountValue",
+                            ParentId = 0L,
+                            Reference = "Order",
+                            Status = 0,
+                            TypeId = 1L,
+                            Value = ""
+                        },
+                        new
+                        {
+                            Id = 807L,
+                            Hide = false,
+                            Key = "DefaultDiscountType",
+                            ParentId = 0L,
+                            Reference = "Order",
+                            Status = 0,
+                            TypeId = 1L,
+                            Value = "2"
+                        },
+                        new
+                        {
+                            Id = 808L,
+                            Hide = false,
+                            Key = "ServiceValue",
+                            ParentId = 0L,
+                            Reference = "Order",
+                            Status = 0,
+                            TypeId = 1L,
+                            Value = ""
+                        },
+                        new
+                        {
+                            Id = 809L,
+                            Hide = false,
+                            Key = "DefaultServiceType",
+                            ParentId = 0L,
+                            Reference = "Order",
+                            Status = 0,
+                            TypeId = 1L,
+                            Value = "2"
+                        },
+                        new
+                        {
+                            Id = 810L,
+                            Hide = false,
+                            Key = "TaxValue",
+                            ParentId = 0L,
+                            Reference = "Order",
+                            Status = 0,
+                            TypeId = 1L,
+                            Value = "14"
+                        },
+                        new
+                        {
+                            Id = 811L,
+                            Hide = false,
+                            Key = "DefaultTaxType",
+                            ParentId = 0L,
+                            Reference = "Order",
+                            Status = 0,
+                            TypeId = 1L,
+                            Value = "2"
+                        },
+                        new
+                        {
+                            Id = 812L,
+                            Hide = false,
+                            Key = "AutoCreateInvoice",
+                            ParentId = 0L,
+                            Reference = "Order",
+                            Status = 0,
+                            TypeId = 1L,
+                            Value = "0"
+                        },
+                        new
+                        {
+                            Id = 901L,
+                            Hide = false,
+                            Key = "NumberLine",
+                            ParentId = 0L,
+                            Reference = "Order",
+                            Status = 0,
+                            TypeId = 2L,
+                            Value = "6"
+                        },
+                        new
+                        {
+                            Id = 902L,
+                            Hide = false,
+                            Key = "OrderTabe",
+                            ParentId = 0L,
+                            Reference = "Order",
+                            Status = 0,
+                            TypeId = 2L,
+                            Value = "2"
+                        },
+                        new
+                        {
+                            Id = 903L,
+                            Hide = false,
+                            Key = "AutoSave",
+                            ParentId = 0L,
+                            Reference = "Order",
+                            Status = 0,
+                            TypeId = 2L,
+                            Value = "0"
+                        },
+                        new
+                        {
+                            Id = 904L,
+                            Hide = false,
+                            Key = "TypeSerial",
+                            ParentId = 0L,
+                            Reference = "Order",
+                            Status = 0,
+                            TypeId = 2L,
+                            Value = "1"
+                        },
+                        new
+                        {
+                            Id = 905L,
+                            Hide = false,
+                            Key = "AllowRepeated",
+                            ParentId = 0L,
+                            Reference = "Order",
+                            Status = 0,
+                            TypeId = 2L,
+                            Value = "1"
+                        },
+                        new
+                        {
+                            Id = 906L,
+                            Hide = false,
+                            Key = "DiscountValue",
+                            ParentId = 0L,
+                            Reference = "Order",
+                            Status = 0,
+                            TypeId = 2L,
+                            Value = ""
+                        },
+                        new
+                        {
+                            Id = 907L,
+                            Hide = false,
+                            Key = "DefaultDiscountType",
+                            ParentId = 0L,
+                            Reference = "Order",
+                            Status = 0,
+                            TypeId = 2L,
+                            Value = "2"
+                        },
+                        new
+                        {
+                            Id = 908L,
+                            Hide = false,
+                            Key = "ServiceValue",
+                            ParentId = 0L,
+                            Reference = "Order",
+                            Status = 0,
+                            TypeId = 2L,
+                            Value = ""
+                        },
+                        new
+                        {
+                            Id = 909L,
+                            Hide = false,
+                            Key = "DefaultServiceType",
+                            ParentId = 0L,
+                            Reference = "Order",
+                            Status = 0,
+                            TypeId = 2L,
+                            Value = "2"
+                        },
+                        new
+                        {
+                            Id = 910L,
+                            Hide = false,
+                            Key = "TaxValue",
+                            ParentId = 0L,
+                            Reference = "Order",
+                            Status = 0,
+                            TypeId = 2L,
+                            Value = "14"
+                        },
+                        new
+                        {
+                            Id = 911L,
+                            Hide = false,
+                            Key = "DefaultTaxType",
+                            ParentId = 0L,
+                            Reference = "Order",
+                            Status = 0,
+                            TypeId = 2L,
+                            Value = "2"
+                        },
+                        new
+                        {
+                            Id = 912L,
+                            Hide = false,
+                            Key = "AutoCreateInvoice",
+                            ParentId = 0L,
+                            Reference = "Order",
+                            Status = 0,
+                            TypeId = 2L,
+                            Value = "0"
                         });
                 });
 
@@ -2535,6 +3194,46 @@ namespace Repository.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Entity.Model.Table", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("NumberOfPeople")
+                        .HasColumnType("int");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Table");
+                });
+
             modelBuilder.Entity("Entity.Model.Transaction", b =>
                 {
                     b.Property<long>("Id")
@@ -2682,6 +3381,9 @@ namespace Repository.Migrations
                     b.Property<bool>("Hide")
                         .HasColumnType("bit");
 
+                    b.Property<string>("Icon")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ImgPath")
                         .HasColumnType("nvarchar(max)");
 
@@ -2713,8 +3415,9 @@ namespace Repository.Migrations
                         {
                             Id = 1L,
                             Hide = false,
+                            Icon = "iconsminds-down-1",
                             InOut = 1,
-                            Name = "Transaction In",
+                            Name = "Addition",
                             ParentId = 0L,
                             Status = 0,
                             TypeId = 0L
@@ -2723,8 +3426,9 @@ namespace Repository.Migrations
                         {
                             Id = 2L,
                             Hide = false,
+                            Icon = "iconsminds-up-1",
                             InOut = -1,
-                            Name = "Transaction Out",
+                            Name = "Issue",
                             ParentId = 0L,
                             Status = 0,
                             TypeId = 0L
@@ -2733,6 +3437,7 @@ namespace Repository.Migrations
                         {
                             Id = 3L,
                             Hide = false,
+                            Icon = "iconsminds-shuffle-1",
                             InOut = -1,
                             Name = "Transafer",
                             ParentId = 0L,
@@ -2743,6 +3448,7 @@ namespace Repository.Migrations
                         {
                             Id = 4L,
                             Hide = false,
+                            Icon = "iconsminds-file-edit",
                             InOut = 1,
                             Name = "Received",
                             ParentId = 0L,
@@ -2852,6 +3558,67 @@ namespace Repository.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Entity.Model.Inventory", b =>
+                {
+                    b.HasOne("Entity.Model.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Entity.Model.InventoryProduct", b =>
+                {
+                    b.HasOne("Entity.Model.InventoryStore", "InventoryStore")
+                        .WithMany("InventoryProducts")
+                        .HasForeignKey("InventoryStoreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Entity.Model.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Entity.Model.Unit", "Unit")
+                        .WithMany()
+                        .HasForeignKey("UnitId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("InventoryStore");
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Unit");
+                });
+
+            modelBuilder.Entity("Entity.Model.InventoryStore", b =>
+                {
+                    b.HasOne("Entity.Model.Inventory", "Inventory")
+                        .WithMany("InventoryStores")
+                        .HasForeignKey("InventoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Entity.Model.Store", "Store")
+                        .WithMany()
+                        .HasForeignKey("StoreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Entity.Model.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Inventory");
+
+                    b.Navigation("Store");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Entity.Model.Invoice", b =>
                 {
                     b.HasOne("Entity.Model.Dealer", "Dealer")
@@ -2859,10 +3626,6 @@ namespace Repository.Migrations
                         .HasForeignKey("DealerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Entity.Model.Order", "Order")
-                        .WithMany()
-                        .HasForeignKey("OrderId");
 
                     b.HasOne("Entity.Model.PaymentType", "PaymentType")
                         .WithMany()
@@ -2881,8 +3644,6 @@ namespace Repository.Migrations
                         .IsRequired();
 
                     b.Navigation("Dealer");
-
-                    b.Navigation("Order");
 
                     b.Navigation("PaymentType");
 
@@ -2930,15 +3691,37 @@ namespace Repository.Migrations
                 {
                     b.HasOne("Entity.Model.Dealer", "Dealer")
                         .WithMany()
-                        .HasForeignKey("DealerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DealerId");
+
+                    b.HasOne("Entity.Model.Invoice", "Invoice")
+                        .WithMany()
+                        .HasForeignKey("InvoiceId");
+
+                    b.HasOne("Entity.Model.Shift", "Shift")
+                        .WithMany()
+                        .HasForeignKey("ShiftId");
+
+                    b.HasOne("Entity.Model.Table", "Table")
+                        .WithMany()
+                        .HasForeignKey("TableId");
 
                     b.Navigation("Dealer");
+
+                    b.Navigation("Invoice");
+
+                    b.Navigation("Shift");
+
+                    b.Navigation("Table");
                 });
 
             modelBuilder.Entity("Entity.Model.OrderProduct", b =>
                 {
+                    b.HasOne("Entity.Model.Order", "Order")
+                        .WithMany("OrderProducts")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Entity.Model.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
@@ -2950,6 +3733,8 @@ namespace Repository.Migrations
                         .HasForeignKey("UnitId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Order");
 
                     b.Navigation("Product");
 
@@ -3137,9 +3922,24 @@ namespace Repository.Migrations
                     b.Navigation("Role");
                 });
 
+            modelBuilder.Entity("Entity.Model.Inventory", b =>
+                {
+                    b.Navigation("InventoryStores");
+                });
+
+            modelBuilder.Entity("Entity.Model.InventoryStore", b =>
+                {
+                    b.Navigation("InventoryProducts");
+                });
+
             modelBuilder.Entity("Entity.Model.Invoice", b =>
                 {
                     b.Navigation("InvoiceProducts");
+                });
+
+            modelBuilder.Entity("Entity.Model.Order", b =>
+                {
+                    b.Navigation("OrderProducts");
                 });
 
             modelBuilder.Entity("Entity.Model.Product", b =>

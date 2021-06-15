@@ -41,6 +41,7 @@ namespace Service.BAL
                 {
                     var model = productUnit.Model;
                     model.InvoiceId = Nwob.Id;
+                    model.StoreId = Nwob.StoreId;
                     repo.invoiceProductRepo.AddOrUpdate(model);
                 }
                 Nwob.InvoiceProducts = repo.invoiceProductRepo.GetList(e => e.InvoiceId == Nwob.Id, e => e.OrderBy(e => e.Id), "", Utility.Status.All).ToList();

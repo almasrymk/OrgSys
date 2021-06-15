@@ -25,13 +25,17 @@ namespace Entity.ModelView
             this.Date = ob.Date;
             this.DealerId = ob.DealerId;
             this.DealerName = ob.Dealer?.Name;
+            this.InvoiceId = ob.InvoiceId;
+            this.InvoiceCode = ob.Invoice?.Code;
             this.Hide = ob.Hide;            
             this.Notes = ob.Notes;
             this.TableId = ob.TableId;
             this.TableName = ob.Table?.Name;
+            this.ShiftId = ob.ShiftId;
+            this.ShiftName = ob.Shift?.Name;
             this.CloseTable = ob.CloseTable;
             this.Status = ob.Status;
-            this.ParentId = ob.ParentId;
+            this.ParentId = ob.InvoiceId??0;
             this.TypeId = ob.TypeId;
             this.ImgPath = ob.ImgPath;
             this.Total = ob.Total;
@@ -57,7 +61,9 @@ namespace Entity.ModelView
                     CodeNumber = this.CodeNumber,
                     Code = this.Code,
                     Date = this.Date,
-                    DealerId = this.DealerId,                   
+                    DealerId = this.DealerId,
+                    InvoiceId = this.InvoiceId,
+                    ShiftId = this.ShiftId,
                     Total = this.Total,                   
                     Hide = this.Hide,
                     Net  = this.Net,
@@ -85,15 +91,20 @@ namespace Entity.ModelView
         [Required]
         public string Code { get; set; }       
         public long? TableId { get; set; }
+        public long? InvoiceId { get; set; }
+        public string InvoiceCode { get; set; }
         public string TableName { get; set; }
         public bool CloseTable { get; set; }
         [Required]
         public DateTime Date { get; set; }
-
-        [Required]
-        public long DealerId { get; set; }
+        
+        public long? DealerId { get; set; }
 
         public string DealerName { get; set; }
+
+        public long? ShiftId { get; set; }
+
+        public string ShiftName { get; set; }
 
         public decimal Total { get; set; }
 

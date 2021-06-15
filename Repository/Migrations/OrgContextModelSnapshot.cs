@@ -394,9 +394,6 @@ namespace Repository.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<long?>("OrderId")
-                        .HasColumnType("bigint");
-
                     b.Property<decimal>("Paid")
                         .HasColumnType("decimal(18,2)");
 
@@ -439,8 +436,6 @@ namespace Repository.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("DealerId");
-
-                    b.HasIndex("OrderId");
 
                     b.HasIndex("PaymentTypeId");
 
@@ -719,7 +714,7 @@ namespace Repository.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<long>("DealerId")
+                    b.Property<long?>("DealerId")
                         .HasColumnType("bigint");
 
                     b.Property<decimal>("Discount")
@@ -733,6 +728,9 @@ namespace Repository.Migrations
 
                     b.Property<string>("ImgPath")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("InvoiceId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("MaskText")
                         .HasColumnType("nvarchar(max)");
@@ -752,6 +750,9 @@ namespace Repository.Migrations
 
                     b.Property<int>("ServiceType")
                         .HasColumnType("int");
+
+                    b.Property<long?>("ShiftId")
+                        .HasColumnType("bigint");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -774,6 +775,10 @@ namespace Repository.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("DealerId");
+
+                    b.HasIndex("InvoiceId");
+
+                    b.HasIndex("ShiftId");
 
                     b.HasIndex("TableId");
 
@@ -890,7 +895,7 @@ namespace Repository.Migrations
                         {
                             Id = 1L,
                             Hide = false,
-                            Icon = "simple-icon-basket-loaded",
+                            Icon = "iconsminds-right-1",
                             Name = "Internal",
                             ParentId = 0L,
                             Status = 0,
@@ -900,7 +905,7 @@ namespace Repository.Migrations
                         {
                             Id = 2L,
                             Hide = false,
-                            Icon = "simple-icon-basket-loaded",
+                            Icon = "iconsminds-left-1",
                             Name = "External",
                             ParentId = 0L,
                             Status = 0,
@@ -1433,9 +1438,7 @@ namespace Repository.Migrations
             modelBuilder.Entity("Entity.Model.Preference", b =>
                 {
                     b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
+                        .HasColumnType("bigint");
 
                     b.Property<bool>("Hide")
                         .HasColumnType("bit");
@@ -1641,6 +1644,17 @@ namespace Repository.Migrations
                         {
                             Id = 16L,
                             Hide = false,
+                            Key = "AutoCreateTransaction",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 1L,
+                            Value = "0"
+                        },
+                        new
+                        {
+                            Id = 101L,
+                            Hide = false,
                             Key = "DefaultStore",
                             ParentId = 0L,
                             Reference = "Invoice",
@@ -1650,7 +1664,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 17L,
+                            Id = 102L,
                             Hide = false,
                             Key = "DefaultSupplier",
                             ParentId = 0L,
@@ -1661,7 +1675,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 18L,
+                            Id = 103L,
                             Hide = false,
                             Key = "DefaultPaymentType",
                             ParentId = 0L,
@@ -1672,7 +1686,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 19L,
+                            Id = 104L,
                             Hide = false,
                             Key = "DiscountValue",
                             ParentId = 0L,
@@ -1683,7 +1697,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 20L,
+                            Id = 105L,
                             Hide = false,
                             Key = "DefaultDiscountType",
                             ParentId = 0L,
@@ -1694,7 +1708,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 21L,
+                            Id = 106L,
                             Hide = false,
                             Key = "ServiceValue",
                             ParentId = 0L,
@@ -1705,7 +1719,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 22L,
+                            Id = 107L,
                             Hide = false,
                             Key = "DefaultServiceType",
                             ParentId = 0L,
@@ -1716,7 +1730,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 23L,
+                            Id = 108L,
                             Hide = false,
                             Key = "TaxValue",
                             ParentId = 0L,
@@ -1727,7 +1741,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 24L,
+                            Id = 109L,
                             Hide = false,
                             Key = "DefaultTaxType",
                             ParentId = 0L,
@@ -1738,7 +1752,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 25L,
+                            Id = 110L,
                             Hide = false,
                             Key = "NumberLine",
                             ParentId = 0L,
@@ -1749,7 +1763,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 26L,
+                            Id = 111L,
                             Hide = false,
                             Key = "OrderTabe",
                             ParentId = 0L,
@@ -1760,7 +1774,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 27L,
+                            Id = 112L,
                             Hide = false,
                             Key = "AutoSave",
                             ParentId = 0L,
@@ -1771,7 +1785,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 28L,
+                            Id = 113L,
                             Hide = false,
                             Key = "TypeSerial",
                             ParentId = 0L,
@@ -1782,7 +1796,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 29L,
+                            Id = 114L,
                             Hide = false,
                             Key = "AllowRepeated",
                             ParentId = 0L,
@@ -1793,7 +1807,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 30L,
+                            Id = 115L,
                             Hide = false,
                             Key = "SaveLastStatusSetting",
                             ParentId = 0L,
@@ -1804,7 +1818,18 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 31L,
+                            Id = 116L,
+                            Hide = false,
+                            Key = "AutoCreateTransaction",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 2L,
+                            Value = "0"
+                        },
+                        new
+                        {
+                            Id = 201L,
                             Hide = false,
                             Key = "DefaultStore",
                             ParentId = 0L,
@@ -1815,7 +1840,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 32L,
+                            Id = 202L,
                             Hide = false,
                             Key = "DefaultCustomer",
                             ParentId = 0L,
@@ -1826,7 +1851,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 33L,
+                            Id = 203L,
                             Hide = false,
                             Key = "DefaultPaymentType",
                             ParentId = 0L,
@@ -1837,7 +1862,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 34L,
+                            Id = 204L,
                             Hide = false,
                             Key = "DiscountValue",
                             ParentId = 0L,
@@ -1848,7 +1873,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 35L,
+                            Id = 205L,
                             Hide = false,
                             Key = "DefaultDiscountType",
                             ParentId = 0L,
@@ -1859,7 +1884,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 36L,
+                            Id = 206L,
                             Hide = false,
                             Key = "ServiceValue",
                             ParentId = 0L,
@@ -1870,7 +1895,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 37L,
+                            Id = 207L,
                             Hide = false,
                             Key = "DefaultServiceType",
                             ParentId = 0L,
@@ -1881,7 +1906,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 38L,
+                            Id = 208L,
                             Hide = false,
                             Key = "TaxValue",
                             ParentId = 0L,
@@ -1892,7 +1917,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 39L,
+                            Id = 209L,
                             Hide = false,
                             Key = "DefaultTaxType",
                             ParentId = 0L,
@@ -1903,7 +1928,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 40L,
+                            Id = 210L,
                             Hide = false,
                             Key = "NumberLine",
                             ParentId = 0L,
@@ -1914,7 +1939,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 41L,
+                            Id = 211L,
                             Hide = false,
                             Key = "OrderTabe",
                             ParentId = 0L,
@@ -1925,7 +1950,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 42L,
+                            Id = 212L,
                             Hide = false,
                             Key = "AutoSave",
                             ParentId = 0L,
@@ -1936,7 +1961,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 43L,
+                            Id = 213L,
                             Hide = false,
                             Key = "TypeSerial",
                             ParentId = 0L,
@@ -1947,7 +1972,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 44L,
+                            Id = 214L,
                             Hide = false,
                             Key = "AllowRepeated",
                             ParentId = 0L,
@@ -1958,7 +1983,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 45L,
+                            Id = 215L,
                             Hide = false,
                             Key = "SaveLastStatusSetting",
                             ParentId = 0L,
@@ -1969,7 +1994,18 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 46L,
+                            Id = 216L,
+                            Hide = false,
+                            Key = "AutoCreateTransaction",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 4L,
+                            Value = "0"
+                        },
+                        new
+                        {
+                            Id = 301L,
                             Hide = false,
                             Key = "DefaultStore",
                             ParentId = 0L,
@@ -1980,7 +2016,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 47L,
+                            Id = 302L,
                             Hide = false,
                             Key = "DefaultSupplier",
                             ParentId = 0L,
@@ -1991,7 +2027,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 48L,
+                            Id = 303L,
                             Hide = false,
                             Key = "DefaultPaymentType",
                             ParentId = 0L,
@@ -2002,7 +2038,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 49L,
+                            Id = 304L,
                             Hide = false,
                             Key = "DiscountValue",
                             ParentId = 0L,
@@ -2013,7 +2049,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 50L,
+                            Id = 305L,
                             Hide = false,
                             Key = "DefaultDiscountType",
                             ParentId = 0L,
@@ -2024,7 +2060,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 51L,
+                            Id = 306L,
                             Hide = false,
                             Key = "ServiceValue",
                             ParentId = 0L,
@@ -2035,7 +2071,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 52L,
+                            Id = 307L,
                             Hide = false,
                             Key = "DefaultServiceType",
                             ParentId = 0L,
@@ -2046,7 +2082,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 53L,
+                            Id = 308L,
                             Hide = false,
                             Key = "TaxValue",
                             ParentId = 0L,
@@ -2057,7 +2093,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 54L,
+                            Id = 309L,
                             Hide = false,
                             Key = "DefaultTaxType",
                             ParentId = 0L,
@@ -2068,7 +2104,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 55L,
+                            Id = 310L,
                             Hide = false,
                             Key = "NumberLine",
                             ParentId = 0L,
@@ -2079,7 +2115,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 56L,
+                            Id = 311L,
                             Hide = false,
                             Key = "OrderTabe",
                             ParentId = 0L,
@@ -2090,7 +2126,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 57L,
+                            Id = 312L,
                             Hide = false,
                             Key = "AutoSave",
                             ParentId = 0L,
@@ -2101,7 +2137,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 58L,
+                            Id = 313L,
                             Hide = false,
                             Key = "TypeSerial",
                             ParentId = 0L,
@@ -2112,7 +2148,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 59L,
+                            Id = 314L,
                             Hide = false,
                             Key = "AllowRepeated",
                             ParentId = 0L,
@@ -2123,7 +2159,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 60L,
+                            Id = 315L,
                             Hide = false,
                             Key = "SaveLastStatusSetting",
                             ParentId = 0L,
@@ -2134,7 +2170,18 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 61L,
+                            Id = 316L,
+                            Hide = false,
+                            Key = "AutoCreateTransaction",
+                            ParentId = 0L,
+                            Reference = "Invoice",
+                            Status = 0,
+                            TypeId = 4L,
+                            Value = "0"
+                        },
+                        new
+                        {
+                            Id = 401L,
                             Hide = false,
                             Key = "DefaultStore",
                             ParentId = 0L,
@@ -2145,7 +2192,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 62L,
+                            Id = 402L,
                             Hide = false,
                             Key = "DefaultSupplier",
                             ParentId = 0L,
@@ -2156,7 +2203,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 63L,
+                            Id = 403L,
                             Hide = false,
                             Key = "NumberLine",
                             ParentId = 0L,
@@ -2167,7 +2214,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 64L,
+                            Id = 404L,
                             Hide = false,
                             Key = "OrderTabe",
                             ParentId = 0L,
@@ -2178,7 +2225,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 65L,
+                            Id = 405L,
                             Hide = false,
                             Key = "AutoSave",
                             ParentId = 0L,
@@ -2189,7 +2236,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 66L,
+                            Id = 406L,
                             Hide = false,
                             Key = "TypeSerial",
                             ParentId = 0L,
@@ -2200,7 +2247,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 67L,
+                            Id = 407L,
                             Hide = false,
                             Key = "AllowRepeated",
                             ParentId = 0L,
@@ -2211,7 +2258,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 68L,
+                            Id = 408L,
                             Hide = false,
                             Key = "SaveLastStatusSetting",
                             ParentId = 0L,
@@ -2222,7 +2269,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 69L,
+                            Id = 501L,
                             Hide = false,
                             Key = "DefaultStore",
                             ParentId = 0L,
@@ -2233,7 +2280,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 70L,
+                            Id = 502L,
                             Hide = false,
                             Key = "DefaultCustomer",
                             ParentId = 0L,
@@ -2244,7 +2291,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 71L,
+                            Id = 503L,
                             Hide = false,
                             Key = "NumberLine",
                             ParentId = 0L,
@@ -2255,7 +2302,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 72L,
+                            Id = 504L,
                             Hide = false,
                             Key = "OrderTabe",
                             ParentId = 0L,
@@ -2266,7 +2313,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 73L,
+                            Id = 505L,
                             Hide = false,
                             Key = "AutoSave",
                             ParentId = 0L,
@@ -2277,7 +2324,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 74L,
+                            Id = 506L,
                             Hide = false,
                             Key = "TypeSerial",
                             ParentId = 0L,
@@ -2288,7 +2335,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 75L,
+                            Id = 507L,
                             Hide = false,
                             Key = "AllowRepeated",
                             ParentId = 0L,
@@ -2299,7 +2346,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 76L,
+                            Id = 508L,
                             Hide = false,
                             Key = "SaveLastStatusSetting",
                             ParentId = 0L,
@@ -2310,7 +2357,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 77L,
+                            Id = 601L,
                             Hide = false,
                             Key = "DefaultStore",
                             ParentId = 0L,
@@ -2321,7 +2368,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 78L,
+                            Id = 602L,
                             Hide = false,
                             Key = "NumberLine",
                             ParentId = 0L,
@@ -2332,7 +2379,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 79L,
+                            Id = 603L,
                             Hide = false,
                             Key = "OrderTabe",
                             ParentId = 0L,
@@ -2343,7 +2390,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 80L,
+                            Id = 604L,
                             Hide = false,
                             Key = "AutoSave",
                             ParentId = 0L,
@@ -2354,7 +2401,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 81L,
+                            Id = 605L,
                             Hide = false,
                             Key = "TypeSerial",
                             ParentId = 0L,
@@ -2365,7 +2412,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 82L,
+                            Id = 606L,
                             Hide = false,
                             Key = "AllowRepeated",
                             ParentId = 0L,
@@ -2376,7 +2423,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 83L,
+                            Id = 607L,
                             Hide = false,
                             Key = "SaveLastStatusSetting",
                             ParentId = 0L,
@@ -2387,7 +2434,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 84L,
+                            Id = 608L,
                             Hide = false,
                             Key = "AutoReceived",
                             ParentId = 0L,
@@ -2398,7 +2445,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 85L,
+                            Id = 701L,
                             Hide = false,
                             Key = "DefaultStore",
                             ParentId = 0L,
@@ -2409,7 +2456,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 86L,
+                            Id = 702L,
                             Hide = false,
                             Key = "NumberLine",
                             ParentId = 0L,
@@ -2420,7 +2467,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 87L,
+                            Id = 703L,
                             Hide = false,
                             Key = "OrderTabe",
                             ParentId = 0L,
@@ -2431,7 +2478,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 88L,
+                            Id = 704L,
                             Hide = false,
                             Key = "AutoSave",
                             ParentId = 0L,
@@ -2442,7 +2489,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 89L,
+                            Id = 705L,
                             Hide = false,
                             Key = "TypeSerial",
                             ParentId = 0L,
@@ -2453,7 +2500,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 90L,
+                            Id = 706L,
                             Hide = false,
                             Key = "AllowRepeated",
                             ParentId = 0L,
@@ -2464,7 +2511,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 91L,
+                            Id = 801L,
                             Hide = false,
                             Key = "NumberLine",
                             ParentId = 0L,
@@ -2475,7 +2522,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 92L,
+                            Id = 802L,
                             Hide = false,
                             Key = "OrderTabe",
                             ParentId = 0L,
@@ -2486,7 +2533,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 93L,
+                            Id = 803L,
                             Hide = false,
                             Key = "AutoSave",
                             ParentId = 0L,
@@ -2497,7 +2544,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 94L,
+                            Id = 804L,
                             Hide = false,
                             Key = "TypeSerial",
                             ParentId = 0L,
@@ -2508,7 +2555,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 95L,
+                            Id = 805L,
                             Hide = false,
                             Key = "AllowRepeated",
                             ParentId = 0L,
@@ -2519,7 +2566,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 96L,
+                            Id = 806L,
                             Hide = false,
                             Key = "DiscountValue",
                             ParentId = 0L,
@@ -2530,7 +2577,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 97L,
+                            Id = 807L,
                             Hide = false,
                             Key = "DefaultDiscountType",
                             ParentId = 0L,
@@ -2541,7 +2588,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 98L,
+                            Id = 808L,
                             Hide = false,
                             Key = "ServiceValue",
                             ParentId = 0L,
@@ -2552,7 +2599,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 99L,
+                            Id = 809L,
                             Hide = false,
                             Key = "DefaultServiceType",
                             ParentId = 0L,
@@ -2563,7 +2610,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 100L,
+                            Id = 810L,
                             Hide = false,
                             Key = "TaxValue",
                             ParentId = 0L,
@@ -2574,7 +2621,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 101L,
+                            Id = 811L,
                             Hide = false,
                             Key = "DefaultTaxType",
                             ParentId = 0L,
@@ -2585,7 +2632,29 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 102L,
+                            Id = 812L,
+                            Hide = false,
+                            Key = "AutoCreateInvoice",
+                            ParentId = 0L,
+                            Reference = "Order",
+                            Status = 0,
+                            TypeId = 1L,
+                            Value = "0"
+                        },
+                        new
+                        {
+                            Id = 813L,
+                            Hide = false,
+                            Key = "DefaultCustomer",
+                            ParentId = 0L,
+                            Reference = "Order",
+                            Status = 0,
+                            TypeId = 1L,
+                            Value = "1"
+                        },
+                        new
+                        {
+                            Id = 901L,
                             Hide = false,
                             Key = "NumberLine",
                             ParentId = 0L,
@@ -2596,7 +2665,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 103L,
+                            Id = 902L,
                             Hide = false,
                             Key = "OrderTabe",
                             ParentId = 0L,
@@ -2607,7 +2676,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 104L,
+                            Id = 903L,
                             Hide = false,
                             Key = "AutoSave",
                             ParentId = 0L,
@@ -2618,7 +2687,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 105L,
+                            Id = 904L,
                             Hide = false,
                             Key = "TypeSerial",
                             ParentId = 0L,
@@ -2629,7 +2698,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 106L,
+                            Id = 905L,
                             Hide = false,
                             Key = "AllowRepeated",
                             ParentId = 0L,
@@ -2640,7 +2709,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 107L,
+                            Id = 906L,
                             Hide = false,
                             Key = "DiscountValue",
                             ParentId = 0L,
@@ -2651,7 +2720,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 108L,
+                            Id = 907L,
                             Hide = false,
                             Key = "DefaultDiscountType",
                             ParentId = 0L,
@@ -2662,7 +2731,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 109L,
+                            Id = 908L,
                             Hide = false,
                             Key = "ServiceValue",
                             ParentId = 0L,
@@ -2673,7 +2742,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 110L,
+                            Id = 909L,
                             Hide = false,
                             Key = "DefaultServiceType",
                             ParentId = 0L,
@@ -2684,7 +2753,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 111L,
+                            Id = 910L,
                             Hide = false,
                             Key = "TaxValue",
                             ParentId = 0L,
@@ -2695,7 +2764,7 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 112L,
+                            Id = 911L,
                             Hide = false,
                             Key = "DefaultTaxType",
                             ParentId = 0L,
@@ -2703,6 +2772,28 @@ namespace Repository.Migrations
                             Status = 0,
                             TypeId = 2L,
                             Value = "2"
+                        },
+                        new
+                        {
+                            Id = 912L,
+                            Hide = false,
+                            Key = "AutoCreateInvoice",
+                            ParentId = 0L,
+                            Reference = "Order",
+                            Status = 0,
+                            TypeId = 2L,
+                            Value = "0"
+                        },
+                        new
+                        {
+                            Id = 913L,
+                            Hide = false,
+                            Key = "DefaultCustomer",
+                            ParentId = 0L,
+                            Reference = "Order",
+                            Status = 0,
+                            TypeId = 2L,
+                            Value = "1"
                         });
                 });
 
@@ -3556,10 +3647,6 @@ namespace Repository.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Entity.Model.Order", "Order")
-                        .WithMany()
-                        .HasForeignKey("OrderId");
-
                     b.HasOne("Entity.Model.PaymentType", "PaymentType")
                         .WithMany()
                         .HasForeignKey("PaymentTypeId")
@@ -3577,8 +3664,6 @@ namespace Repository.Migrations
                         .IsRequired();
 
                     b.Navigation("Dealer");
-
-                    b.Navigation("Order");
 
                     b.Navigation("PaymentType");
 
@@ -3626,15 +3711,25 @@ namespace Repository.Migrations
                 {
                     b.HasOne("Entity.Model.Dealer", "Dealer")
                         .WithMany()
-                        .HasForeignKey("DealerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DealerId");
+
+                    b.HasOne("Entity.Model.Invoice", "Invoice")
+                        .WithMany()
+                        .HasForeignKey("InvoiceId");
+
+                    b.HasOne("Entity.Model.Shift", "Shift")
+                        .WithMany()
+                        .HasForeignKey("ShiftId");
 
                     b.HasOne("Entity.Model.Table", "Table")
                         .WithMany()
                         .HasForeignKey("TableId");
 
                     b.Navigation("Dealer");
+
+                    b.Navigation("Invoice");
+
+                    b.Navigation("Shift");
 
                     b.Navigation("Table");
                 });

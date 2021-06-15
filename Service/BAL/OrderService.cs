@@ -24,6 +24,11 @@ namespace Service.BAL
         /// <returns></returns>
         public OrderModelView Save(OrderModelView ob)
         {
+            if(ob.Id > 0)
+            {
+                ob.InvoiceId = Get(ob.Id).InvoiceId;
+            }
+
             // Save
             var Nwob = repo.orderRepo.AddOrUpdate(ob.Model);
 
@@ -45,7 +50,81 @@ namespace Service.BAL
                 }
                 Nwob.OrderProducts = repo.orderProductRepo.GetList(e => e.OrderId == Nwob.Id, e => e.OrderBy(e => e.Id), "", Utility.Status.All).ToList();
             }
+
+            var setting = new PreferenceService();
+            if (long.Parse("0" + setting.GetByKey("AutoCreateInvoice", "Order", ob.TypeId, 0)?.Value) == 1 || ob.InvoiceId > 0)
+            {
+                Nwob = CreateInvoice(Nwob);
+            }
+
             return new OrderModelView(Nwob);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        public Order CreateInvoice(long Id)
+        {
+            var ob = Get(Id);
+            return CreateInvoice(ob.Model);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ob"></param>
+        /// <returns></returns>
+        public Order CreateInvoice(Order ob)
+        {           
+            if(ob != null)
+            {
+                var inv = repo.invoiceRepo.Get(e => e.Id == ob.InvoiceId);
+                if(inv == null || inv.Id == 0)
+                {
+                    inv = new Invoice();
+                    var setting = new PreferenceService();
+                    inv.StoreId = long.Parse("0" + setting.GetByKey("DefaultStore", "Invoice", 1, 0)?.Value);
+                    if (ob.DealerId == null || ob.DealerId == 0)
+                        inv.DealerId = long.Parse("0" + setting.GetByKey("DefaultCustomer", "Invoice", 1, 0)?.Value);
+                    else
+                        inv.DealerId = ob.DealerId.Value;
+                    inv.PaymentTypeId = long.Parse("0" + setting.GetByKey("DefaultPaymentType", "Invoice", 1, 0)?.Value);
+                    inv.TypeId = 1;
+                    inv.CodeNumber = new InvoiceService().GetMaxCode(1);
+                    inv.Code = "" + new InvoiceService().GetMaxCode(1);
+                }
+                var obInv = new InvoiceService().Save(new InvoiceModelView(inv).UpdateData(ob , inv.StoreId));
+                ob.InvoiceId = obInv.Id;
+                ob.CloseTable = true;
+                ob = repo.orderRepo.AddOrUpdate(ob);
+            }
+            return ob;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Id"></param>
+        public void Cancel(long Id)
+        {
+            var ob = repo.orderRepo.Get(e => e.Id == Id);
+            ob.Status = Utility.Status.Cancel;
+            ob.CloseTable = true;
+            ob = repo.orderRepo.AddOrUpdate(ob);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Id"></param>
+        public void Redo(long Id)
+        {
+            var ob = repo.orderRepo.Get(e => e.Id == Id);
+            ob.Status = Utility.Status.All;
+            ob.CloseTable = false;
+            ob = repo.orderRepo.AddOrUpdate(ob);
         }
 
         /// <summary>
@@ -64,7 +143,7 @@ namespace Service.BAL
         /// <returns></returns>
         public List<OrderModelView> GetAll(long parentId = 0, long TypeId = 0)
         {
-            return repo.orderRepo.GetList( e=>e.TypeId == TypeId, e => e.OrderByDescending(e => e.Id), "Dealer", Utility.Status.New).Select(e => new OrderModelView(e)).ToList();
+            return repo.orderRepo.GetList( e=>e.TypeId == TypeId, e => e.OrderByDescending(e => e.Id), "Dealer,Table,Invoice", Utility.Status.New).Select(e => new OrderModelView(e)).ToList();
         }
 
         /// <summary>
@@ -74,7 +153,7 @@ namespace Service.BAL
         /// <returns></returns>
         public List<OrderModelView> GetAll(string textSearch , long parentId = 0, long TypeId = 0)
         {
-            return repo.orderRepo.GetList(e => e.Dealer.Name.Contains("" + textSearch) && e.TypeId == TypeId, e => e.OrderByDescending(e => e.Id), "Dealer", Utility.Status.New).Select(e => new OrderModelView(e)).ToList();
+            return repo.orderRepo.GetList(e => e.Dealer.Name.Contains("" + textSearch) && e.TypeId == TypeId, e => e.OrderByDescending(e => e.Id), "Dealer,Table,Invoice", Utility.Status.New).Select(e => new OrderModelView(e)).ToList();
         }
 
         /// <summary>
@@ -85,7 +164,7 @@ namespace Service.BAL
         /// <returns></returns>
         public IPagedList<OrderModelView> GetAll(long parentId = 0, long TypeId = 0 ,int page = 1, int pageSize = 20)
         {
-            return repo.orderRepo.GetList(e=> e.TypeId == TypeId , e => e.OrderByDescending(e => e.Id), "Dealer", Utility.Status.New).Select(e => new OrderModelView(e)).ToPagedList(page, pageSize);
+            return repo.orderRepo.GetList(e=> e.TypeId == TypeId , e => e.OrderByDescending(e => e.Id), "Dealer,Table,Invoice", Utility.Status.New).Select(e => new OrderModelView(e)).ToPagedList(page, pageSize);
         }
 
         /// <summary>
@@ -97,7 +176,7 @@ namespace Service.BAL
         /// <returns></returns>
         public IPagedList<OrderModelView> GetAll(string textSearch , long parentId = 0, long TypeId = 0, int page = 1, int pageSize = 20)
         {
-            return repo.orderRepo.GetList(e => e.TypeId == TypeId && ("" + textSearch == "" || e.Dealer.Name.Contains("" + textSearch)), e => e.OrderByDescending(e => e.Id), "Dealer", Utility.Status.New).Select(e => new OrderModelView(e)).ToPagedList(page, pageSize);
+            return repo.orderRepo.GetList(e => e.TypeId == TypeId && ("" + textSearch == "" || e.Dealer.Name.Contains("" + textSearch)), e => e.OrderByDescending(e => e.Id), "Dealer,Table,Invoice", Utility.Status.New).Select(e => new OrderModelView(e)).ToPagedList(page, pageSize);
         }
 
         /// <summary>
@@ -107,7 +186,7 @@ namespace Service.BAL
         /// <returns></returns>
         public OrderModelView Get(long Id)
         {
-            return new OrderModelView(repo.orderRepo.Get(e => e.Id == Id  , "Dealer,OrderProducts,OrderProducts.Product,OrderProducts.Product.ProductUnits,,OrderProducts.Product.ProductUnits.Unit"));
+            return new OrderModelView(repo.orderRepo.Get(e => e.Id == Id  , "Dealer,Table,Invoice,OrderProducts,OrderProducts.Product,OrderProducts.Product.ProductUnits,,OrderProducts.Product.ProductUnits.Unit"));
         }
 
         /// <summary>
@@ -117,7 +196,7 @@ namespace Service.BAL
         /// <returns></returns>
         public OrderModelView Get(string textSearch)
         {
-            return new OrderModelView(repo.orderRepo.Get(e => e.Dealer.Name.Contains("" + textSearch) , "Dealer"));
+            return new OrderModelView(repo.orderRepo.Get(e => e.Dealer.Name.Contains("" + textSearch) , "Dealer,Table,Invoice"));
         }
 
         /// <summary>
@@ -132,7 +211,7 @@ namespace Service.BAL
 
         public List<OrderModelView> GetAll(List<long> ids,long TypeId = 0)
         {
-            return repo.orderRepo.GetList(e => e.TypeId == TypeId && ids.Contains(e.Id), e => e.OrderBy(e => e.Id) , "Dealer", Utility.Status.New).Select(e => new OrderModelView(e)).ToList();
+            return repo.orderRepo.GetList(e => e.TypeId == TypeId && ids.Contains(e.Id), e => e.OrderBy(e => e.Id) , "Dealer,Table,Invoice", Utility.Status.New).Select(e => new OrderModelView(e)).ToList();
         }
        // , long TypeId
         public long GetMaxCode(long type )

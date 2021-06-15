@@ -74,6 +74,7 @@
                         @Html.HiddenFor(model => model.TypeId)
                         @Html.HiddenFor(model => model.ParentId)
                         @Html.HiddenFor(model => model.CloseTable)
+                        @Html.HiddenFor(model => model.InvoiceId)
                         <div id="checkStep1">
                             <div class="card">
                                 <table id="tbl" class="table table-hover ">
@@ -921,7 +922,7 @@
                             success: function (res) {
                                 if (res != "Error") {
 
-                                    $("#Id").val(res.id);
+                                    $("#Id").val(res.id);                                   
                                     var obj = { area: "Orders", Url: "/Orders/Order/Save?Id=" + res.id + "&ParentId=" + $("#ParentId").val() + "&TypeId=" + $("#TypeId").val() };
                                     history.pushState(null, obj.area, obj.Url);
                                 }
@@ -954,6 +955,8 @@
             var data = {
                 Id: $('#Id').val(),
                 TypeId: $('#TypeId').val(),
+                InvoiceId: $('#InvoiceId').val(),
+                ParentId: $('#ParentId').val(),
                 Code: $('#Code').val(),
                 CodeNumber: $('#CodeNumber').val(),
                 Date: $('#Date').val(),

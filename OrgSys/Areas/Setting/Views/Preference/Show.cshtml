@@ -163,6 +163,21 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        Auto Create Transaction
+                        <div id="divPaymentTypeId">
+                            <div class="input-group mt-2">
+                                <div id="divAutoSave" class="custom-switch custom-switch-primary-inverse custom-switch-small">
+                                    <input class="custom-switch-input" id="AutoCreateTransaction" name="AutoCreateTransaction" type="checkbox" checked="@ViewBag.AutoCreateTransaction">
+                                    <label class="custom-switch-btn" for="AutoCreateTransaction"></label>
+                                </div>
+                            </div>
+                            <small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                        </div>
+                    </div>
+                </div>
             }
 
             @if (ViewBag.type == 2 && ViewBag.Resource == "Invoice")
@@ -310,6 +325,21 @@
                                 <div id="divSaveLastStatusSetting" class="custom-switch custom-switch-primary-inverse custom-switch-small">
                                     <input class="custom-switch-input" id="SaveLastStatusSetting" name="SaveLastStatusSetting" type="checkbox" checked="@ViewBag.SaveLastStatusSetting">
                                     <label class="custom-switch-btn" for="SaveLastStatusSetting"></label>
+                                </div>
+                            </div>
+                            <small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        Auto Create Transaction
+                        <div id="divPaymentTypeId">
+                            <div class="input-group mt-2">
+                                <div id="divAutoSave" class="custom-switch custom-switch-primary-inverse custom-switch-small">
+                                    <input class="custom-switch-input" id="AutoCreateTransaction" name="AutoCreateTransaction" type="checkbox" checked="@ViewBag.AutoCreateTransaction">
+                                    <label class="custom-switch-btn" for="AutoCreateTransaction"></label>
                                 </div>
                             </div>
                             <small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
@@ -469,6 +499,21 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        Auto Create Transaction
+                        <div id="divPaymentTypeId">
+                            <div class="input-group mt-2">
+                                <div id="divAutoSave" class="custom-switch custom-switch-primary-inverse custom-switch-small">
+                                    <input class="custom-switch-input" id="AutoCreateTransaction" name="AutoCreateTransaction" type="checkbox" checked="@ViewBag.AutoCreateTransaction">
+                                    <label class="custom-switch-btn" for="AutoCreateTransaction"></label>
+                                </div>
+                            </div>
+                            <small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                        </div>
+                    </div>
+                </div>
             }
 
             @if (ViewBag.type == 4 && ViewBag.Resource == "Invoice")
@@ -616,6 +661,21 @@
                                 <div id="divSaveLastStatusSetting" class="custom-switch custom-switch-primary-inverse custom-switch-small">
                                     <input class="custom-switch-input" id="SaveLastStatusSetting" name="SaveLastStatusSetting" type="checkbox" checked="@ViewBag.SaveLastStatusSetting">
                                     <label class="custom-switch-btn" for="SaveLastStatusSetting"></label>
+                                </div>
+                            </div>
+                            <small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        Auto Create Transaction
+                        <div id="divPaymentTypeId">
+                            <div class="input-group mt-2">
+                                <div id="divAutoSave" class="custom-switch custom-switch-primary-inverse custom-switch-small">
+                                    <input class="custom-switch-input" id="AutoCreateTransaction" name="AutoCreateTransaction" type="checkbox" checked="@ViewBag.AutoCreateTransaction">
+                                    <label class="custom-switch-btn" for="AutoCreateTransaction"></label>
                                 </div>
                             </div>
                             <small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
@@ -1046,44 +1106,44 @@
 
             @if (ViewBag.Resource == "Order")
             {
-        <div class="form-row">
-            <div class="form-group col-md-4">
-                Client
-                <div id="divStoreId">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="iconsminds-clothing-store"></i></span>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        Client
+                        <div id="divStoreId">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="iconsminds-clothing-store"></i></span>
+                                </div>
+                                @Html.DropDownList("Customers", null, null, new { @class = "form-control" })
+                            </div>
+                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
                         </div>
-                        @Html.DropDownList("Customers", null, null, new { @class = "form-control" })
                     </div>
-                    <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
-                </div>
-            </div>
-            <div class="form-group col-md-4">
-                Order Tabe
-                <div id="divStoreId">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="iconsminds-clothing-store"></i></span>
+                    <div class="form-group col-md-4">
+                        Order Tabe
+                        <div id="divStoreId">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="iconsminds-clothing-store"></i></span>
+                                </div>
+                                @Html.DropDownList("OrderTabe", null, null, new { @class = "form-control" })
+                            </div>
+                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
                         </div>
-                        @Html.DropDownList("OrderTabe", null, null, new { @class = "form-control" })
                     </div>
-                    <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
-                </div>
-            </div>
-            <div class="form-group col-md-4">
-                Repeated
-                <div id="divPaymentTypeId">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="iconsminds-financial"></i></span>
+                    <div class="form-group col-md-4">
+                        Repeated
+                        <div id="divPaymentTypeId">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="iconsminds-financial"></i></span>
+                                </div>
+                                @Html.DropDownList("AllowRepeated", null, null, new { @class = "form-control" })
+                            </div>
+                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
                         </div>
-                        @Html.DropDownList("AllowRepeated", null, null, new { @class = "form-control" })
                     </div>
-                    <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
                 </div>
-            </div>
-        </div>
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         Discount
@@ -1154,14 +1214,26 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-row">                   
-                    <div class="form-group col-md-4">
+                <div class="form-row">
+                    @*<div class="form-group col-md-4">
                         Save Last Status Preference
                         <div id="divPaymentTypeId">
                             <div class="input-group mt-2">
                                 <div id="divSaveLastStatusSetting" class="custom-switch custom-switch-primary-inverse custom-switch-small">
                                     <input class="custom-switch-input" id="SaveLastStatusSetting" name="SaveLastStatusSetting" type="checkbox" checked="@ViewBag.SaveLastStatusSetting">
                                     <label class="custom-switch-btn" for="SaveLastStatusSetting"></label>
+                                </div>
+                            </div>
+                            <small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                        </div>
+                    </div>*@
+                    <div class="form-group col-md-4">
+                        Auto Create Invoice
+                        <div id="divPaymentTypeId">
+                            <div class="input-group mt-2">
+                                <div id="divAutoSave" class="custom-switch custom-switch-primary-inverse custom-switch-small">
+                                    <input class="custom-switch-input" id="AutoCreateInvoice" name="AutoCreateInvoice" type="checkbox" checked="@ViewBag.AutoCreateInvoice">
+                                    <label class="custom-switch-btn" for="AutoCreateInvoice"></label>
                                 </div>
                             </div>
                             <small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
@@ -1410,6 +1482,30 @@
                 TypeId: Number('@ViewBag.type'),
             }
             list.push(SaveLastStatusSetting);
+        }
+
+         // AutoCreateInvoice
+        if ($("#AutoCreateInvoice").length) {
+            var AutoCreateInvoice = {
+                Id: 2,
+                Key: "AutoCreateInvoice",
+                Value: $('#AutoCreateInvoice').is(":checked") ? "1" : "0",
+                Reference: '@ViewBag.Resource',
+                TypeId: Number('@ViewBag.type'),
+            }
+            list.push(AutoCreateInvoice);
+        }
+
+     // AutoCreateTransaction
+        if ($("#AutoCreateTransaction").length) {
+            var AutoCreateTransaction = {
+                Id: 2,
+                Key: "AutoCreateTransaction",
+                Value: $('#AutoCreateTransaction').is(":checked") ? "1" : "0",
+                Reference: '@ViewBag.Resource',
+                TypeId: Number('@ViewBag.type'),
+            }
+            list.push(AutoCreateTransaction);
         }
         return list;
     }
