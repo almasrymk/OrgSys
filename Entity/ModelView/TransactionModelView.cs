@@ -44,6 +44,44 @@ namespace Entity.ModelView
             this.TransactionProducts = ob.TransactionProducts.Select(e => new TransactionProductModelView(e)).ToList();
         }
 
+        public TransactionModelView UpdateData(Invoice ob)
+        {
+            if (ob == null)
+                ob = new Invoice();
+            this.Date = ob.Date;
+            this.Hide = ob.Hide;
+            this.Notes = ob.Notes;
+            this.Status = ob.Status;
+            this.StoreId = ob.StoreId;
+            this.DealerId = ob.DealerId;
+            this.ParentId = ob.ParentId;
+            this.ImgPath = ob.ImgPath;
+            this.Total = ob.Total;           
+            if (ob.InvoiceProducts == null)
+                ob.InvoiceProducts = new List<InvoiceProduct>();
+            this.TransactionProducts = ob.InvoiceProducts.Select(e => new TransactionProductModelView(e , ob.StoreId)).ToList();
+            return this;
+        }
+
+
+        public TransactionModelView UpdateData(Transaction ob)
+        {
+            if (ob == null)
+                ob = new Transaction();
+            this.Date = ob.Date;
+            this.Hide = ob.Hide;
+            this.Notes = ob.Notes;
+            this.Status = ob.Status;
+            this.StoreId = ob.ToStoreId.Value;
+            this.DealerId = ob.DealerId;
+            this.ParentId = ob.Id;
+            this.ImgPath = ob.ImgPath;
+            this.Total = ob.Total;
+            if (ob.TransactionProducts == null)
+                ob.TransactionProducts = new List<TransactionProduct>();
+            this.TransactionProducts = ob.TransactionProducts.Select(e => new TransactionProductModelView(e, ob.ToStoreId.Value)).ToList();
+            return this;
+        }
         public Transaction Model
         {
             get
@@ -95,7 +133,8 @@ namespace Entity.ModelView
 
         public long? OrderId { get; set; }
 
-        public decimal Total { get; set; }       
+        public decimal Total { get; set; }
+        public string ParentCode { get; set; }
 
         [StringLength(500)]
         public string Notes { get; set; }

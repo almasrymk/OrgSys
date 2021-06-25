@@ -24,6 +24,11 @@ namespace Service.BAL
         /// <returns></returns>
         public TransactionModelView Save(TransactionModelView ob)
         {
+            if (ob.Id > 0)
+            {
+                ob.ParentId = Get(ob.Id).ParentId;
+            }
+
             // Save
             var Nwob = repo.transactionRepo.AddOrUpdate(ob.Model);
 
@@ -45,7 +50,55 @@ namespace Service.BAL
                 }
                 Nwob.TransactionProducts = repo.transactionProductRepo.GetList(e => e.TransactionId == Nwob.Id, e => e.OrderBy(e => e.Id), "", Utility.Status.All).ToList();
             }
+
+            if (ob.TypeId == 3)
+            {
+                var setting = new PreferenceService();
+                if (long.Parse("0" + setting.GetByKey("AutoReceived", "Transaction", ob.TypeId, 0)?.Value) == 1 || ob.ParentId > 0)
+                {
+                    Nwob = CreateTransaction(Nwob);
+                }
+            }
+
             return new TransactionModelView(Nwob);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        public Transaction CreateTransaction(long Id)
+        {
+            var ob = Get(Id);
+            return CreateTransaction(ob.Model);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ob"></param>
+        /// <returns></returns>
+        public Transaction CreateTransaction(Transaction ob)
+        {
+            if (ob != null)
+            {
+                var trns = repo.transactionRepo.Get(e => e.ParentId == ob.Id);
+                if (trns == null || trns.Id == 0)
+                {
+                    long trnsTypeId = 4;
+
+                    trns = new Transaction();
+                    var setting = new PreferenceService();
+                    trns.StoreId = ob.ToStoreId.Value;
+                    trns.TypeId = trnsTypeId;
+                    trns.ParentId = ob.Id;
+                    trns.CodeNumber = new TransactionService().GetMaxCode(trnsTypeId);
+                    trns.Code = "" + new TransactionService().GetMaxCode(trnsTypeId);
+                }
+                var obInv = new TransactionService().Save(new TransactionModelView(trns).UpdateData(ob));               
+            }
+            return ob;
         }
 
         /// <summary>
@@ -64,7 +117,8 @@ namespace Service.BAL
         /// <returns></returns>
         public List<TransactionModelView> GetAll(long parentId = 0, long TypeId = 0)
         {
-            return repo.transactionRepo.GetList( e=>e.TypeId == TypeId, e => e.OrderByDescending(e => e.Id), "Dealer", Utility.Status.New).Select(e => new TransactionModelView(e)).ToList();
+            var obList = repo.transactionRepo.GetList( e=>e.TypeId == TypeId, e => e.OrderByDescending(e => e.Id), "Dealer,Store,ToStore", Utility.Status.New).Select(e => new TransactionModelView(e)).ToList();
+            return GetParent(obList);
         }
 
         /// <summary>
@@ -74,7 +128,8 @@ namespace Service.BAL
         /// <returns></returns>
         public List<TransactionModelView> GetAll(string textSearch , long parentId = 0, long TypeId = 0)
         {
-            return repo.transactionRepo.GetList(e => e.Dealer.Name.Contains("" + textSearch) && e.TypeId == TypeId, e => e.OrderByDescending(e => e.Id), "Dealer", Utility.Status.New).Select(e => new TransactionModelView(e)).ToList();
+            var obList= repo.transactionRepo.GetList(e => e.Dealer.Name.Contains("" + textSearch) && e.TypeId == TypeId, e => e.OrderByDescending(e => e.Id), "Dealer,Store,ToStore", Utility.Status.New).Select(e => new TransactionModelView(e)).ToList();
+            return GetParent(obList);
         }
 
         /// <summary>
@@ -85,7 +140,8 @@ namespace Service.BAL
         /// <returns></returns>
         public IPagedList<TransactionModelView> GetAll(long parentId = 0, long TypeId = 0 ,int page = 1, int pageSize = 20)
         {
-            return repo.transactionRepo.GetList(e=> e.TypeId == TypeId , e => e.OrderByDescending(e => e.Id), "Dealer", Utility.Status.New).Select(e => new TransactionModelView(e)).ToPagedList(page, pageSize);
+            var obList = repo.transactionRepo.GetList(e=> e.TypeId == TypeId , e => e.OrderByDescending(e => e.Id), "Dealer,Store,ToStore", Utility.Status.New).Select(e => new TransactionModelView(e)).ToPagedList(page, pageSize);
+            return GetParent(obList);
         }
 
         /// <summary>
@@ -97,7 +153,8 @@ namespace Service.BAL
         /// <returns></returns>
         public IPagedList<TransactionModelView> GetAll(string textSearch , long parentId = 0, long TypeId = 0, int page = 1, int pageSize = 20)
         {
-            return repo.transactionRepo.GetList(e => e.TypeId == TypeId && ("" + textSearch == "" || e.Dealer.Name.Contains("" + textSearch)), e => e.OrderByDescending(e => e.Id), "Dealer", Utility.Status.New).Select(e => new TransactionModelView(e)).ToPagedList(page, pageSize);
+            var obList = repo.transactionRepo.GetList(e => e.TypeId == TypeId && ("" + textSearch == "" || e.Dealer.Name.Contains("" + textSearch)), e => e.OrderByDescending(e => e.Id), "Dealer,Store,ToStore", Utility.Status.New).Select(e => new TransactionModelView(e)).ToPagedList(page, pageSize);
+            return GetParent(obList);
         }
 
         /// <summary>
@@ -107,7 +164,8 @@ namespace Service.BAL
         /// <returns></returns>
         public TransactionModelView Get(long Id)
         {
-            return new TransactionModelView(repo.transactionRepo.Get(e => e.Id == Id  , "Dealer,TransactionProducts,TransactionProducts.Product,TransactionProducts.Product.ProductUnits,,TransactionProducts.Product.ProductUnits.Unit"));
+            var ob = new TransactionModelView(repo.transactionRepo.Get(e => e.Id == Id  , "Dealer,Store,ToStore,TransactionProducts,TransactionProducts.Product,TransactionProducts.Product.ProductUnits,,TransactionProducts.Product.ProductUnits.Unit"));
+            return GetParent(ob);
         }
 
         /// <summary>
@@ -117,7 +175,8 @@ namespace Service.BAL
         /// <returns></returns>
         public TransactionModelView Get(string textSearch)
         {
-            return new TransactionModelView(repo.transactionRepo.Get(e => e.Dealer.Name.Contains("" + textSearch) , "Dealer"));
+            var ob = new TransactionModelView(repo.transactionRepo.Get(e => e.Dealer.Name.Contains("" + textSearch) , "Dealer,Store,ToStore"));
+            return GetParent(ob);
         }
 
         /// <summary>
@@ -132,12 +191,37 @@ namespace Service.BAL
 
         public List<TransactionModelView> GetAll(List<long> ids,long TypeId = 0)
         {
-            return repo.transactionRepo.GetList(e => e.TypeId == TypeId && ids.Contains(e.Id), e => e.OrderBy(e => e.Id) , "Dealer", Utility.Status.New).Select(e => new TransactionModelView(e)).ToList();
+            var obList = repo.transactionRepo.GetList(e => e.TypeId == TypeId && ids.Contains(e.Id), e => e.OrderBy(e => e.Id) , "Dealer,Store,ToStore", Utility.Status.New).Select(e => new TransactionModelView(e)).ToList();
+            return GetParent(obList);
         }
        // , long TypeId
         public long GetMaxCode(long type )
         {
             return repo.transactionRepo.GetMaXCode(type);
+        }
+
+        public TransactionModelView GetParent(TransactionModelView ob)
+        {
+            ob.ParentCode = repo.transactionRepo.Get(e => (e.Id == ob.ParentId && ob.TypeId == 4) || (e.ParentId == ob.Id && ob.TypeId == 3))?.Code;
+            return ob;
+        }
+
+        public List<TransactionModelView> GetParent(List<TransactionModelView> obList)
+        {
+            foreach (var ob in obList)
+            {
+                ob.ParentCode = repo.transactionRepo.Get(e => (e.Id == ob.ParentId && ob.TypeId == 4) || (e.ParentId == ob.Id && ob.TypeId == 3))?.Code;
+            }
+            return obList;
+        }
+
+        public IPagedList<TransactionModelView> GetParent(IPagedList<TransactionModelView> obList)
+        {
+            foreach (var ob in obList)
+            {
+                ob.ParentCode = repo.transactionRepo.Get(e => (e.Id == ob.ParentId && ob.TypeId == 4) || (e.ParentId == ob.Id && ob.TypeId == 3))?.Code;
+                    }
+            return obList;
         }
     }
 }

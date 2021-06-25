@@ -34,10 +34,6 @@ namespace Entity.Model
 
         public virtual Order Order { get; set; }
 
-        public long? InvoiceId { get; set; }
-
-        public virtual Invoice Invoice { get; set; }
-
         public decimal Total { get; set; }
 
         [StringLength(500)]

@@ -36,7 +36,10 @@ namespace Entity.Model
         public long? ShiftId { get; set; }
 
         public virtual Shift Shift { get; set; }
+        
+        public long? TransactionId { get; set; }
 
+        public virtual Transaction Transaction { get; set; }
         public decimal Total { get; set; }
 
         public decimal Discount { get; set; }

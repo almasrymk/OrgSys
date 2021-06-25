@@ -5,6 +5,7 @@ using OrgSys.Controllers;
 using Service.BAL;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Utility;
 
 namespace OrgSys.Areas.Invoices.Controllers
@@ -24,10 +25,8 @@ namespace OrgSys.Areas.Invoices.Controllers
 
         public override void LoadViewBag(InvoiceModelView model)
         {
-            ViewBag.DealerId = new SelectList(new DealerService().GetAll(model.ParentId, model.TypeId == 1 || model.TypeId == 3 ? (int)DealerType.Client : (int)DealerType.Supplier), "Id", "Name", model.DealerId);
-            ViewBag.StoreId = new SelectList(new StoreService().GetAll(model.ParentId, model.StoreId), "Id", "Name", model.StoreId);
-            ViewBag.PaymentTypeId = new SelectList(new PaymentTypeService().GetAll(model.ParentId, model.PaymentTypeId), "Id", "Name", model.PaymentTypeId);
-            ViewBag.ProductId = new SelectList(new ProductService().GetAll(model.ParentId, 0), "Id", "Name");
+            ViewBag.PaymentTypeId = new SelectList(new PaymentTypeService().GetAll(model.ParentId, model.PaymentTypeId, 1, 20), "Id", "Name", model.PaymentTypeId);
+            
             List<SelectListItem> selectListItems = new List<SelectListItem>();
             selectListItems.Add(new SelectListItem { Value = "1", Text = "Amount" });
             selectListItems.Add(new SelectListItem { Value = "2", Text = "Percentage" });
@@ -74,8 +73,8 @@ namespace OrgSys.Areas.Invoices.Controllers
             {
                 ob.CodeNumber = new InvoiceService().GetMaxCode(ob.TypeId);
                 ob.Code = "" + new InvoiceService().GetMaxCode(ob.TypeId);
-                ob.StoreId = StoreId;
-                ob.DealerId = DealerId;
+                ob.StoreId = StoreId;               
+                ob.DealerId = DealerId;                
                 ob.PaymentTypeId = PaymentTypeId;
                 ob.Date = DateTime.Now;
                 ob.DiscountType = DefaultDiscountType;
@@ -85,8 +84,36 @@ namespace OrgSys.Areas.Invoices.Controllers
                 ob.Service = ServiceValue;
                 ob.Tax = TaxValue;
                 ob.InvoiceProducts = new List<InvoiceProductModelView>();
-              }           
+              }
+
+            ob.StoreName = new StoreService().Get(ob.StoreId).Name;
+            ob.DealerName = new DealerService().Get(ob.DealerId).Name;
+            ob.ParentCode = new InvoiceService().Get(ob.ParentId).Code;
             return ob;
-        }       
+        }
+
+        [HttpGet]
+        public virtual ActionResult CreateTransaction(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1)
+        {
+            var ob = new InvoiceService().CreateTransaction(id);
+            return Redirect("/Invoices/Invoice/Index?ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" + ResultStatus.success + "&MsgError=Success");
+        }
+      
+        public JsonResult GetInvoicesNotReturn(string txtSearch = "", long TypeId = 0, long InvId = 0, int page = 1, int pageSize = 10)
+        {
+            if (txtSearch != null)
+                txtSearch = txtSearch.Trim().ToLower();
+
+           
+            var itemsList = new InvoiceService().GetInvoicesNotReturn(txtSearch, TypeId, InvId, page, pageSize);
+            var list = itemsList.Distinct().OrderBy(_ => _.Code)
+                .Select(_ => new
+                {
+                    _.Id,
+                    _.Code                    
+                })
+                .ToList();
+            return Json(list);
+        }
     }
 }

@@ -24,6 +24,11 @@ namespace Service.BAL
         /// <returns></returns>
         public InvoiceModelView Save(InvoiceModelView ob)
         {
+            if (ob.Id > 0)
+            {
+                ob.TransactionId = Get(ob.Id).TransactionId;
+            }
+
             // Save
             var Nwob = repo.invoiceRepo.AddOrUpdate(ob.Model);
 
@@ -46,7 +51,65 @@ namespace Service.BAL
                 }
                 Nwob.InvoiceProducts = repo.invoiceProductRepo.GetList(e => e.InvoiceId == Nwob.Id, e => e.OrderBy(e => e.Id), "", Utility.Status.All).ToList();
             }
+
+            var setting = new PreferenceService();
+            if (long.Parse("0" + setting.GetByKey("AutoCreateTransaction", "Invoice", ob.TypeId, 0)?.Value) == 1 || ob.TransactionId > 0)
+            {
+                Nwob = CreateTransaction(Nwob);
+            }
+
             return new InvoiceModelView(Nwob);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        public Invoice CreateTransaction(long Id)
+        {
+            var ob = Get(Id);
+            return CreateTransaction(ob.Model);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ob"></param>
+        /// <returns></returns>
+        public Invoice CreateTransaction(Invoice ob)
+        {
+            if (ob != null)
+            {
+                var trns = repo.transactionRepo.Get(e => e.Id == ob.TransactionId);
+                if (trns == null || trns.Id == 0)
+                {
+                    long trnsTypeId = 1;
+                    if (ob.TypeId == 2 || ob.TypeId == 4)
+                        trnsTypeId = 2;
+
+                    trns = new Transaction();
+                    var setting = new PreferenceService();
+                    trns.StoreId = long.Parse("0" + setting.GetByKey("DefaultStore", "Transaction", trnsTypeId, 0)?.Value);
+                    if (ob.DealerId == 0)
+                    {
+                        if (trnsTypeId == 1)
+                            trns.DealerId = long.Parse("0" + setting.GetByKey("DefaultCustomer", "Transaction", trnsTypeId, 0)?.Value);
+                        else
+                            trns.DealerId = long.Parse("0" + setting.GetByKey("DefaultSupplier", "Transaction", trnsTypeId, 0)?.Value);
+                    }
+                    else
+                        trns.DealerId = ob.DealerId;
+
+                    trns.TypeId = trnsTypeId;
+                    trns.CodeNumber = new TransactionService().GetMaxCode(trnsTypeId);
+                    trns.Code = "" + new TransactionService().GetMaxCode(trnsTypeId);
+                }
+                var obInv = new TransactionService().Save(new TransactionModelView(trns).UpdateData(ob));
+                ob.TransactionId = obInv.Id;
+                ob = repo.invoiceRepo.AddOrUpdate(ob);
+            }
+            return ob;
         }
 
         /// <summary>
@@ -65,7 +128,7 @@ namespace Service.BAL
         /// <returns></returns>
         public List<InvoiceModelView> GetAll(long parentId = 0, long TypeId = 0)
         {
-            return repo.invoiceRepo.GetList( e=>e.TypeId == TypeId, e => e.OrderByDescending(e => e.Id), "Dealer", Utility.Status.New).Select(e => new InvoiceModelView(e)).ToList();
+            return repo.invoiceRepo.GetList(e => e.TypeId == TypeId, e => e.OrderByDescending(e => e.Id), "Dealer,Transaction", Utility.Status.New).Select(e => new InvoiceModelView(e)).ToList();
         }
 
         /// <summary>
@@ -73,9 +136,9 @@ namespace Service.BAL
         /// </summary>
         /// <param name="textSearch"></param>
         /// <returns></returns>
-        public List<InvoiceModelView> GetAll(string textSearch , long parentId = 0, long TypeId = 0)
+        public List<InvoiceModelView> GetAll(string textSearch, long parentId = 0, long TypeId = 0)
         {
-            return repo.invoiceRepo.GetList(e => e.Dealer.Name.Contains("" + textSearch) && e.TypeId == TypeId, e => e.OrderByDescending(e => e.Id), "Dealer", Utility.Status.New).Select(e => new InvoiceModelView(e)).ToList();
+            return repo.invoiceRepo.GetList(e => e.Dealer.Name.Contains("" + textSearch) && e.TypeId == TypeId, e => e.OrderByDescending(e => e.Id), "Dealer,Transaction", Utility.Status.New).Select(e => new InvoiceModelView(e)).ToList();
         }
 
         /// <summary>
@@ -84,9 +147,9 @@ namespace Service.BAL
         /// <param name="page"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public IPagedList<InvoiceModelView> GetAll(long parentId = 0, long TypeId = 0 ,int page = 1, int pageSize = 20)
+        public IPagedList<InvoiceModelView> GetAll(long parentId = 0, long TypeId = 0, int page = 1, int pageSize = 20)
         {
-            return repo.invoiceRepo.GetList(e=> e.TypeId == TypeId , e => e.OrderByDescending(e => e.Id), "Dealer", Utility.Status.New).Select(e => new InvoiceModelView(e)).ToPagedList(page, pageSize);
+            return repo.invoiceRepo.GetList(e => e.TypeId == TypeId, e => e.OrderByDescending(e => e.Id), "Dealer,Transaction", Utility.Status.New).Select(e => new InvoiceModelView(e)).ToPagedList(page, pageSize);
         }
 
         /// <summary>
@@ -96,9 +159,9 @@ namespace Service.BAL
         /// <param name="page"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public IPagedList<InvoiceModelView> GetAll(string textSearch , long parentId = 0, long TypeId = 0, int page = 1, int pageSize = 20)
+        public IPagedList<InvoiceModelView> GetAll(string textSearch, long parentId = 0, long TypeId = 0, int page = 1, int pageSize = 20)
         {
-            return repo.invoiceRepo.GetList(e => e.TypeId == TypeId && ("" + textSearch == "" || e.Dealer.Name.Contains("" + textSearch)), e => e.OrderByDescending(e => e.Id), "Dealer", Utility.Status.New).Select(e => new InvoiceModelView(e)).ToPagedList(page, pageSize);
+            return repo.invoiceRepo.GetList(e => e.TypeId == TypeId && ("" + textSearch == "" || e.Dealer.Name.Contains("" + textSearch)), e => e.OrderByDescending(e => e.Id), "Dealer,Transaction", Utility.Status.New).Select(e => new InvoiceModelView(e)).ToPagedList(page, pageSize);
         }
 
         /// <summary>
@@ -108,7 +171,7 @@ namespace Service.BAL
         /// <returns></returns>
         public InvoiceModelView Get(long Id)
         {
-            return new InvoiceModelView(repo.invoiceRepo.Get(e => e.Id == Id  , "Dealer,InvoiceProducts,InvoiceProducts.Product,InvoiceProducts.Product.ProductUnits,,InvoiceProducts.Product.ProductUnits.Unit"));
+            return new InvoiceModelView(repo.invoiceRepo.Get(e => e.Id == Id, "Dealer,Transaction,InvoiceProducts,InvoiceProducts.Product,InvoiceProducts.Product.ProductUnits,,InvoiceProducts.Product.ProductUnits.Unit"));
         }
 
         /// <summary>
@@ -118,7 +181,7 @@ namespace Service.BAL
         /// <returns></returns>
         public InvoiceModelView Get(string textSearch)
         {
-            return new InvoiceModelView(repo.invoiceRepo.Get(e => e.Dealer.Name.Contains("" + textSearch) , "Dealer"));
+            return new InvoiceModelView(repo.invoiceRepo.Get(e => e.Dealer.Name.Contains("" + textSearch), "Dealer,Transaction"));
         }
 
         /// <summary>
@@ -131,14 +194,22 @@ namespace Service.BAL
             return repo.invoiceRepo.Delete(ids);
         }
 
-        public List<InvoiceModelView> GetAll(List<long> ids,long TypeId = 0)
+        public List<InvoiceModelView> GetAll(List<long> ids, long TypeId = 0)
         {
-            return repo.invoiceRepo.GetList(e => e.TypeId == TypeId && ids.Contains(e.Id), e => e.OrderBy(e => e.Id) , "Dealer", Utility.Status.New).Select(e => new InvoiceModelView(e)).ToList();
+            return repo.invoiceRepo.GetList(e => e.TypeId == TypeId && ids.Contains(e.Id), e => e.OrderBy(e => e.Id), "Dealer,Transaction", Utility.Status.New).Select(e => new InvoiceModelView(e)).ToList();
         }
-       // , long TypeId
-        public long GetMaxCode(long type )
+        // , long TypeId
+        public long GetMaxCode(long type)
         {
             return repo.invoiceRepo.GetMaXCode(type);
+        }
+
+        public List<InvoiceModelView> GetInvoicesNotReturn(string txtSearch = "" ,long TypeId = 0 , long InvId = 0 ,  int page = 1, int pageSize = 20)
+        {
+            var obList = repo.invoiceRepo.GetInvoicesNotReturn(txtSearch, TypeId, InvId, page, pageSize);
+            if (obList == null)
+                obList = new List<Invoice>();
+            return obList.Select(e => new InvoiceModelView(e)).ToList();
         }
     }
 }

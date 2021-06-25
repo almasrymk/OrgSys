@@ -29,6 +29,9 @@ namespace Entity.ModelView
             this.Notes = ob.Notes;
             this.PaymentTypeId = ob.PaymentTypeId;
             this.PaymentTypeName = ob.PaymentType?.Name;
+            this.TransactionId = ob.TransactionId;
+            this.TransactionCode = ob.Transaction?.Code;
+            this.TransactionDate = ob.Transaction?.Date;
             this.StoreId = ob.StoreId;
             this.StoreName = ob.Store?.Name;                           
             this.Status = ob.Status;
@@ -92,6 +95,7 @@ namespace Entity.ModelView
                     Net  = this.Net,
                     Notes = this.Notes,
                     PaymentTypeId = this.PaymentTypeId,
+                    TransactionId = this.TransactionId,
                     StoreId = this.StoreId,
                     Status = this.Status,
                     MaskText = this.MaskText,
@@ -134,8 +138,11 @@ namespace Entity.ModelView
         public long StoreId { get; set; }
 
         [Display(Name = nameof(Title_Designer.Store), ResourceType = typeof(Title_Designer))]
-        public string StoreName { get; set; }      
+        public string StoreName { get; set; }
+        public long? TransactionId { get; set; }
 
+        public string TransactionCode { get; set; }
+        public DateTime? TransactionDate { get; set; }
         public decimal Total { get; set; }
 
         public decimal Discount { get; set; }
@@ -152,7 +159,7 @@ namespace Entity.ModelView
         public string Notes { get; set; }
         public decimal Remaining { get; set; }
         public decimal Paid { get; set; }
-
+        public string ParentCode { get; set; }
         public List<InvoiceProductModelView> InvoiceProducts { get; set; }
     }
 }

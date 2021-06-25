@@ -25,10 +25,10 @@ namespace OrgSys.Areas.Transaction.Controllers
 
         public override void LoadViewBag(TransactionModelView model)
         {           
-            ViewBag.DealerId = new SelectList(new DealerService().GetAll(model.ParentId, model.TypeId == 1 || model.TypeId == 3 ? (int)DealerType.Client : (int)DealerType.Supplier), "Id", "Name", model.DealerId);
-            ViewBag.StoreId = new SelectList(new StoreService().GetAll(model.ParentId, 0), "Id", "Name", model.StoreId);
-            ViewBag.ToStoreId = new SelectList(new StoreService().GetAll(model.ParentId, 0), "Id", "Name", model.ToStoreId);
-            ViewBag.ProductId = new SelectList(new ProductService().GetAll(model.ParentId, 0), "Id", "Name");
+            ViewBag.DealerId = new SelectList(new DealerService().GetAll(model.ParentId, model.TypeId == 1 || model.TypeId == 3 ? (int)DealerType.Client : (int)DealerType.Supplier, 1, 20), "Id", "Name", model.DealerId);
+            ViewBag.StoreId = new SelectList(new StoreService().GetAll(model.ParentId, 0, 1, 20), "Id", "Name", model.StoreId);
+            ViewBag.ToStoreId = new SelectList(new StoreService().GetAll(model.ParentId, 0, 1, 20), "Id", "Name", model.ToStoreId);
+            ViewBag.ProductId = new SelectList(new ProductService().GetAll(model.ParentId, 0, 1, 20), "Id", "Name");
             var type = new TransactionTypeService().Get(model.TypeId);
             ViewBag.TransactionsType = type.Name;
             ViewBag.TransactionsType = type.Icon;

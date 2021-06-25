@@ -11,44 +11,111 @@
                     <tr>
                         <th style="text-align: center">#</th>
                         <th style="text-align: center">Image</th>
-                        <th>@Utility.Resource.Title_Designer.Name</th>
+                        <th>@Utility.Resource.Title_Designer.Code</th>
+                        @if (ViewBag.TypeId == 3)
+                        {
+                            <th>From Store</th>
+                            <th>To Store</th>
+                        }
+                        else
+                        {
+                            <th>Store</th>
+
+                        }
+                        <th>Date</th>
+                        <th>Total</th>
+                        @if (ViewBag.TypeId == 3)
+                        {
+                            <th> Received </th>
+                        }
+                        @if (ViewBag.TypeId == 4)
+                        {
+                            <th>Transfer</th>
+                        }
                         <th colspan="3"></th>
                     </tr>
                 </thead>
                 <tbody>
                     @for (int i = 0, x = ((Model.PageNumber - 1) * Model.PageSize) + 1; i < Model.Count; i++, x++)
                     {
-                       
-                            <tr>
-                                <td style="width:50px;vertical-align: middle;text-align:center">
-                                    <p class="list-item-heading">@x</p>
+
+                        <tr>
+                            <td style="width:50px;vertical-align: middle;text-align:center">
+                                <p class="list-item-heading">@x</p>
+                            </td>
+                            <td style="width:80px;padding:7px; vertical-align: middle;">
+                                <div class="list-thumbnail responsive border-0 rounded-circle badge-theme-1 m-0" style="height:60px;width:60px;font-size:x-large;text-align:center;padding-top:14px;">
+                                    <i class="@ViewBag.TransactionsIcon"></i>
+                                </div>
+                            </td>
+                            <td style="width:80px;vertical-align: middle;">
+                                <p class="text-muted">@Model[i].Code</p>
+                            </td>
+                            @if (ViewBag.TypeId == 3)
+                            {
+                                <td style="vertical-align: middle;">
+                                    <p class="text-muted">@Model[i].StoreName</p>
                                 </td>
-                                <td style="width:80px;padding:7px; vertical-align: middle;">
-                                    <div class="list-thumbnail responsive border-0 rounded-circle badge-theme-1 m-0" style="height:60px;width:60px;font-size:x-large;text-align:center;padding-top:14px;">
-                                        <i class="@ViewBag.TransactionsIcon"></i>
-                                    </div>
+                                <td style="vertical-align: middle;">
+                                    <p class="text-muted">@Model[i].ToStoreName</p>
                                 </td>
-                                <td>
-                                    <p class="text-muted">@Model[i].DealerName</p>
+
+                            }
+                            else
+                            {
+                                <td style="vertical-align: middle;">
+                                    <p class="text-muted">@Model[i].StoreName</p>
                                 </td>
-                                <td style="width:70px;vertical-align: middle;">
-                                    <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit"></i> @Utility.Resource.Title_Designer.Edit</a>
-                                </td>
+                            }
+                            <td style="width:100px;vertical-align: middle;">
+                                @Model[i].Date.ToString("dd-MM-yyyy")
+                            </td>
+                            <td style="width:100px;vertical-align: middle;">
+                                <p class="text-muted">@Model[i].Total</p>
+                            </td>
+                            @if (ViewBag.TypeId == 3)
+                            {
                                 <td style="width:80px;vertical-align: middle;">
-                                    <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete</a>
-                                </td>
-                                <td style="width:40px;text-align:center;vertical-align: middle;">
-                                    @if (Model[i].Status == Utility.Status.All)
+                                    @if ("" + Model[i].ParentCode != "")
                                     {
-                                        <label class="custom-control custom-checkbox">
-                                            <input id="chk_@Model[i].Id" type="checkbox" class="custom-control-input chk">
-                                            <input type="hidden" value="@Model[i].Id" />
-                                            <span class="custom-control-label">&nbsp;</span>
-                                        </label>
+                                        <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].ParentId&ParentId=@ViewBag.ParentId&TypeId=4">
+                                            <i class="iconsminds-file-edit"></i>
+                                            @Model[i].ParentCode
+                                        </a>
                                     }
                                 </td>
-                            </tr>
-                        
+                            }
+                            @if (ViewBag.TypeId == 4)
+                            {
+                                <td style="width:80px;vertical-align: middle;">
+                                    @if ("" + Model[i].ParentCode != "")
+                                    {
+                                        <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].ParentId&ParentId=@ViewBag.ParentId&TypeId=3">
+                                            <i class="iconsminds-shuffle-1"></i>
+                                            @Model[i].ParentCode
+                                        </a>
+                                    }
+
+                                </td>
+                            }
+                            <td style="width:70px;vertical-align: middle;">
+                                <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit"></i> @Utility.Resource.Title_Designer.Edit</a>
+                            </td>
+                            <td style="width:80px;vertical-align: middle;">
+                                <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete</a>
+                            </td>
+                            <td style="width:40px;text-align:center;vertical-align: middle;">
+                                @if (Model[i].Status == Utility.Status.All)
+                                {
+                                    <label class="custom-control custom-checkbox">
+                                        <input id="chk_@Model[i].Id" type="checkbox" class="custom-control-input chk">
+                                        <input type="hidden" value="@Model[i].Id" />
+                                        <span class="custom-control-label">&nbsp;</span>
+                                    </label>
+                                }
+                            </td>
+                        </tr>
+
                     }
                 </tbody>
             </table>
@@ -58,7 +125,7 @@
         <div class="col-12 list m-0 p-0 pt-3" data-check-all="checkAll">
             @for (int i = 0, x = ((Model.PageNumber - 1) * Model.PageSize) + 1; i < Model.Count; i++, x++)
             {
-               
+
                 <div class="card d-flex flex-row mb-3">
                     <div class="d-flex flex-grow-1 min-width-zero">
                         <div class="list-thumbnail responsive border-0 card-img-left badge-theme-1" style="height:85px; width:85px; font-size:xx-large;text-align:center; padding-top:22px;">
@@ -66,9 +133,30 @@
                         </div>
 
                         <div class="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
-                            <a class="list-item-heading mb-0 truncate w-40 w-xs-100 d-inline-block" href="Pages.Product.Detail.html">
-                                @Model[i].DealerName
-                            </a>
+                            <div class="list-item-heading mb-0 truncate w-10 w-xs-100 d-inline-block" href="Pages.Product.Detail.html">
+                                @Model[i].Code
+                            </div>
+                            @if (ViewBag.TypeId == 3)
+                            {
+                                <div class="list-item-heading mb-0 truncate w-20 w-xs-100 d-inline-block" href="Pages.Product.Detail.html">
+                                    @Model[i].StoreName
+                                </div>
+                                <div class="list-item-heading mb-0 truncate w-20 w-xs-100 d-inline-block" href="Pages.Product.Detail.html">
+                                    @Model[i].ToStoreName
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="list-item-heading mb-0 truncate w-20 w-xs-100 d-inline-block" href="Pages.Product.Detail.html">
+                                    @Model[i].StoreName
+                                </div>
+                            }
+                            <div class="list-item-heading mb-0 truncate w-15 w-xs-100 d-inline-block" href="Pages.Product.Detail.html">
+                                @Model[i].Date.ToString("dd-MM-yyyy")
+                            </div>
+                            <div class="list-item-heading mb-0 truncate w-15 w-xs-100 d-inline-block" href="Pages.Product.Detail.html">
+                                @Model[i].Total
+                            </div>
                             <div class="w-15 w-xs-100">
                                 <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit"></i> @Utility.Resource.Title_Designer.Edit</a>
                                 <span> &nbsp; | &nbsp; </span>
@@ -87,7 +175,7 @@
 
                     </div>
                 </div>
-                
+
             }
         </div>
     </div>
@@ -95,7 +183,7 @@
     <div id="obList" class="row list disable-text-selection pt-2" data-check-all="checkAll" style="display:none;">
         @for (int i = 0, x = ((Model.PageNumber - 1) * Model.PageSize) + 1; i < Model.Count; i++, x++)
         {
-           
+
             <div href="#" class="card m-2 p-1">
                 <label class="custom-control custom-checkbox mr-1 ml-1">
                     @if (Model[i].Status == Utility.Status.All)
@@ -126,7 +214,7 @@
                     </div>
                 </div>
             </div>
-            
+
         }
     </div>
 }

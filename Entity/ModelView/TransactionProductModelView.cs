@@ -42,6 +42,54 @@ namespace Entity.ModelView
                 this.Units = ob.Product.ProductUnits.Select(e => new UnitModelView(e.Unit)).ToList();           
         }
 
+        public TransactionProductModelView(InvoiceProduct ob , long _StoreId)
+        {
+            if (ob == null)
+                ob = new InvoiceProduct();
+            this.RowNumber = ob.RowNumber;
+            this.ProductId = ob.ProductId;
+            this.ProductName = ob.Product?.Name;
+            this.UnitId = ob.UnitId;
+            this.UnitName = ob.Unit?.Name;
+            this.Quantity = ob.Quantity;
+            this.Cost = ob.Price - ob.Discount;
+            this.Hide = ob.Hide;
+            this.Notes = ob.Notes;
+            this.StoreId = _StoreId;
+            this.Total = ob.Net;
+            this.Status = ob.Status;
+            this.ParentId = ob.ParentId;
+            this.TypeId = ob.TypeId;
+            this.ImgPath = ob.ImgPath;
+            this.Units = new List<UnitModelView>();
+            if (ob.Product != null && ob.Product.ProductUnits != null)
+                this.Units = ob.Product.ProductUnits.Select(e => new UnitModelView(e.Unit)).ToList();
+        }
+
+        public TransactionProductModelView(TransactionProduct ob, long _StoreId)
+        {
+            if (ob == null)
+                ob = new TransactionProduct();
+            this.RowNumber = ob.RowNumber;
+            this.ProductId = ob.ProductId;
+            this.ProductName = ob.Product?.Name;
+            this.UnitId = ob.UnitId;
+            this.UnitName = ob.Unit?.Name;
+            this.Quantity = ob.Quantity;
+            this.Cost = ob.Cost;
+            this.Hide = ob.Hide;
+            this.Notes = ob.Notes;
+            this.StoreId = _StoreId;
+            this.Total = ob.Total;
+            this.Status = ob.Status;
+            this.ParentId = ob.ParentId;
+            this.TypeId = ob.TypeId;
+            this.ImgPath = ob.ImgPath;
+            this.Units = new List<UnitModelView>();
+            if (ob.Product != null && ob.Product.ProductUnits != null)
+                this.Units = ob.Product.ProductUnits.Select(e => new UnitModelView(e.Unit)).ToList();
+        }
+
         public TransactionProduct Model
         {
             get

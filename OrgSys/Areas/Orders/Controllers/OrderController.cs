@@ -23,8 +23,8 @@ namespace OrgSys.Areas.Orders.Controllers
 
         public override void LoadViewBag(OrderModelView model)
         {
-            ViewBag.DealerId = new SelectList(new DealerService().GetAll(model.ParentId, model.TypeId == 1 || model.TypeId == 3 ? (int)DealerType.Client : (int)DealerType.Supplier), "Id", "Name", model.DealerId);
-            ViewBag.ProductId = new SelectList(new ProductService().GetAll(model.ParentId, 0), "Id", "Name");
+            ViewBag.DealerId = new SelectList(new DealerService().GetAll(model.ParentId, model.TypeId == 1 || model.TypeId == 3 ? (int)DealerType.Client : (int)DealerType.Supplier , 1, 20), "Id", "Name", model.DealerId);
+            ViewBag.ProductId = new SelectList(new ProductService().GetAll(model.ParentId, 0 ,1,20), "Id", "Name");
             ViewBag.TableId = new SelectList(new TableService().GetAllClosed(model.ParentId, 0), "Id", "Name");
 
             List<SelectListItem> selectListItems = new List<SelectListItem>();
