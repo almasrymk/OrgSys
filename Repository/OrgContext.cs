@@ -103,6 +103,12 @@ namespace Repository
               new TransactionType { Id = 4, Name = "Received", Hide = false, InOut = 1, Icon = "iconsminds-file-edit" }
               );
 
+            modelBuilder.Entity<FinancialType>().HasData(
+             new FinancialType { Id = 1, Name = "Collection", Hide = false, InOut = 1, Icon = "iconsminds-financial" },
+             new FinancialType { Id = 2, Name = "Payment", Hide = false, InOut = -1, Icon = "iconsminds-handshake" },
+             new FinancialType { Id = 3, Name = "Outlay", Hide = false, InOut = -1, Icon = "iconsminds-wallet" }
+             );
+
             modelBuilder.Entity<PaymentType>().HasData(
                 new PaymentType { Id = 1, Name = "Cash", Hide = false },
                 new PaymentType { Id = 2, Name = "Check", Hide = false }
@@ -113,6 +119,8 @@ namespace Repository
             modelBuilder.Entity<Store>().HasData(new Store { Id = 1, Name = "Main Store", BranchId = 1, Hide = false });
 
             modelBuilder.Entity<Dealer>().HasData(new Dealer { Id = 1, Code = "1", CodeNumber = 1, Name = "...", TypeId = 0, Hide = false });
+
+            modelBuilder.Entity<Safe>().HasData(new Safe { Id = 1, Name = "Main Safe", Hide = false });
 
             modelBuilder.Entity<Preference>().HasData(
                new Preference { Id = 1, Key = "DefaultStore", Value = "1", Reference = "Invoice", TypeId = 1, Hide = false },
@@ -278,5 +286,9 @@ namespace Repository
         public virtual DbSet<InventoryProduct> InventoryProducts { get; set; }
         public virtual DbSet<OrderType> OrderTypes { get; set; }
         public virtual DbSet<Table> Tables { get; set; }
+        public virtual DbSet<Safe> Safes { get; set; }
+        public virtual DbSet<Financial> Financials { get; set; }
+        public virtual DbSet<FinancialInvoice> FinancialInvoices { get; set; }
+        public virtual DbSet<FinancialType> FinancialTypes { get; set; }        
     }
 }

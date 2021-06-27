@@ -367,5 +367,57 @@ namespace Repository
                 return _orderProductRepo;
             }
         }
+
+        private SafeRepo _safeRepo;
+        public SafeRepo safeRepo
+        {
+            get
+            {
+
+                if (this._safeRepo == null)
+                    this._safeRepo = new SafeRepo();
+
+                return _safeRepo;
+            }
+        }
+
+        private FinancialRepo _financialRepo;
+        public FinancialRepo financialRepo
+        {
+            get
+            {
+
+                if (this._financialRepo == null)
+                    this._financialRepo = new FinancialRepo();
+
+                return _financialRepo;
+            }
+        }
+
+        private FinancialInvoiceRepo _financialInvoiceRepo;
+        public FinancialInvoiceRepo financialInvoiceRepo
+        {
+            get
+            {
+
+                if (this._financialInvoiceRepo == null)
+                    this._financialInvoiceRepo = new FinancialInvoiceRepo();
+
+                return _financialInvoiceRepo;
+            }
+        }
+
+        private FinancialTypeRepo _financialTypeRepo;
+        public FinancialTypeRepo financialTypeRepo
+        {
+            get
+            {
+
+                if (this._financialTypeRepo == null)
+                    this._financialTypeRepo = new FinancialTypeRepo();
+
+                return _financialTypeRepo;
+            }
+        }
     }
 }

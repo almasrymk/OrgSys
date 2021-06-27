@@ -34,7 +34,7 @@
     <link rel="stylesheet" href="~/css/jquery.bonsai.css" />
     <link rel="stylesheet" href="~/fontawesome-free-5.15.3-web/css/all.css" />
     <link rel="stylesheet" href="~/fontawesome-free-5.15.3-web/css/fontawesome.css" />
-    <link  rel="stylesheet" href="~/css/jquery-ui.css" />
+    <link rel="stylesheet" href="~/css/jquery-ui.css" />
     <style>
         .menu .main-menu ul li a {
             height: 80px !important;
@@ -58,10 +58,10 @@
             .DropAutoComplete > .Dropbtn > .DropIcon {
                 border-left: none;
                 font-weight: 400;
-                font-size:15px;
-                font-weight:100;
-                padding:5px;
-            }           
+                font-size: 15px;
+                font-weight: 100;
+                padding: 5px;
+            }
         </style>
     }
     else
@@ -78,7 +78,7 @@
                 font-size: 15px;
                 font-weight: 100;
                 padding: 4px;
-            }           
+            }
         </style>
     }
 </head>
@@ -282,6 +282,11 @@
                             <i class="iconsminds-synchronize-2"></i> Transactions
                         </a>
                     </li>
+                    <li>
+                        <a href="#Financial">
+                            <i class="iconsminds-coins"></i> Financial
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -312,6 +317,13 @@
                                         <span class="d-inline-block">Table</span>
                                     </a>
                                 </li>
+                                <li>
+                                    <a href="/Setting/Safe">
+                                        <i class="iconsminds-safe-box"></i>
+                                        <span class="d-inline-block">Safe</span>
+                                    </a>
+                                </li>
+
                             </ul>
                         </div>
                     </li>
@@ -566,6 +578,56 @@
                                     <a href="/Transactions/Transaction?TypeId=4">
                                         <i class="iconsminds-file-edit"></i> <span class="d-inline-block">
                                             Received
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#" data-toggle="collapse" data-target="#collapseReportTransaction" aria-expanded="false"
+                           aria-controls="collapseReportTransaction" class="rotate-arrow-icon opacity-50 collapsed">
+                            <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Report</span>
+                        </a>
+                        <div id="collapseReportTransaction" class="collapse">
+                            @*<ul class="list-unstyled inner-level-menu">
+                                    <li>
+                                        <a href="Pages.Profile.Social.html">
+                                            <i class="iconsminds-line-chart-1"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.TotalSales</span>
+                                        </a>
+                                    </li>
+                                </ul>*@
+                        </div>
+                    </li>
+                </ul>
+
+                <ul class="list-unstyled" data-link="Financial" id="Financial">
+
+                    <li>
+                        <a href="#" data-toggle="collapse" data-target="#collapseFinancial" aria-expanded="true"
+                           aria-controls="collapseFinancial" class="rotate-arrow-icon opacity-50">
+                            <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">Safe Notices</span>
+                        </a>
+                        <div id="collapseFinancial" class="collapse show">
+                            <ul class="list-unstyled inner-level-menu">
+                                <li>
+                                    <a href="/Transactions/Transaction?TypeId=1">
+                                        <i class="iconsminds-financial"></i> <span class="d-inline-block">
+                                            Collection
+                                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/Transactions/Transaction?TypeId=2">
+                                        <i class="iconsminds-handshake"></i> <span class="d-inline-block">
+                                            Payment
+                                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/Transactions/Transaction?TypeId=2">
+                                        <i class="iconsminds-wallet"></i> <span class="d-inline-block">
+                                            Outlay
                                         </span>
                                     </a>
                                 </li>
@@ -1133,7 +1195,7 @@
 
 
     <script src="~/js/vendor/bootstrap3-typeahead.js"></script>
-    
+
     <script src="~/js/jquery-ui.js"></script>
     <script src="~/js/PopupScript.js"></script>
     <script>
@@ -1163,10 +1225,10 @@
                     '@ViewBag.area',
                     '@ViewBag.page');
             }
-          
+
         });
 
-       
+
     </script>
 
     @RenderSection("Scripts", required: false)

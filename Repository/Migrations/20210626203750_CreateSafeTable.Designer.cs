@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repository;
 
 namespace Repository.Migrations
 {
     [DbContext(typeof(OrgContext))]
-    partial class OrgContextModelSnapshot : ModelSnapshot
+    [Migration("20210626203750_CreateSafeTable")]
+    partial class CreateSafeTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -215,9 +217,6 @@ namespace Repository.Migrations
                     b.Property<long>("ParentId")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("PaymentTypeId")
-                        .HasColumnType("bigint");
-
                     b.Property<long>("SafeId")
                         .HasColumnType("bigint");
 
@@ -230,8 +229,6 @@ namespace Repository.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("DealerId");
-
-                    b.HasIndex("PaymentTypeId");
 
                     b.HasIndex("SafeId");
 
@@ -282,81 +279,6 @@ namespace Repository.Migrations
                     b.HasIndex("InvoiceId");
 
                     b.ToTable("FinancialInvoice");
-                });
-
-            modelBuilder.Entity("Entity.Model.FinancialType", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
-
-                    b.Property<bool>("Hide")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Icon")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ImgPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("InOut")
-                        .HasColumnType("int");
-
-                    b.Property<string>("MaskText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<long>("ParentId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<long>("TypeId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("FinancialType");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1L,
-                            Hide = false,
-                            Icon = "iconsminds-financial",
-                            InOut = 1,
-                            Name = "Collection",
-                            ParentId = 0L,
-                            Status = 0,
-                            TypeId = 0L
-                        },
-                        new
-                        {
-                            Id = 2L,
-                            Hide = false,
-                            Icon = "iconsminds-handshake",
-                            InOut = -1,
-                            Name = "Payment",
-                            ParentId = 0L,
-                            Status = 0,
-                            TypeId = 0L
-                        },
-                        new
-                        {
-                            Id = 3L,
-                            Hide = false,
-                            Icon = "iconsminds-wallet",
-                            InOut = -1,
-                            Name = "Outlay",
-                            ParentId = 0L,
-                            Status = 0,
-                            TypeId = 0L
-                        });
                 });
 
             modelBuilder.Entity("Entity.Model.Inventory", b =>
@@ -3349,17 +3271,6 @@ namespace Repository.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Safe");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1L,
-                            Hide = false,
-                            Name = "Main Safe",
-                            ParentId = 0L,
-                            Status = 0,
-                            TypeId = 0L
-                        });
                 });
 
             modelBuilder.Entity("Entity.Model.Shift", b =>
@@ -3812,12 +3723,6 @@ namespace Repository.Migrations
                         .WithMany()
                         .HasForeignKey("DealerId");
 
-                    b.HasOne("Entity.Model.PaymentType", "PaymentType")
-                        .WithMany()
-                        .HasForeignKey("PaymentTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Entity.Model.Safe", "Safe")
                         .WithMany()
                         .HasForeignKey("SafeId")
@@ -3825,8 +3730,6 @@ namespace Repository.Migrations
                         .IsRequired();
 
                     b.Navigation("Dealer");
-
-                    b.Navigation("PaymentType");
 
                     b.Navigation("Safe");
                 });
