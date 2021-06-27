@@ -33,18 +33,18 @@ namespace OrgSys
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
-            services.AddMvc(options => options.EnableEndpointRouting = false);           
+            services.AddMvc(options => options.EnableEndpointRouting = false);
 
             services.AddLocalization(options => options.ResourcesPath = "Resources");
             services.AddMvc().AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix).AddDataAnnotationsLocalization();
 
             services.Configure<RequestLocalizationOptions>(options =>
-            {                
+            {
                 options.AddSupportedUICultures("en-US", "ar-EG");
                 options.FallBackToParentUICultures = true;
             });
             services.AddRazorPages().AddRazorRuntimeCompilation();
-            services.AddRazorPages().AddViewLocalization();          
+            services.AddRazorPages().AddViewLocalization();
 
             services.AddDbContext<OrgContext>(options => options.UseSqlServer(Configuration.GetConnectionString("OrgConnection")));
             services.AddControllersWithViews();
@@ -74,7 +74,7 @@ namespace OrgSys
                 .AddSupportedCultures(supportedCultures)
                 .AddSupportedUICultures(supportedCultures);
 
-            app.UseRequestLocalization(localizationOptions );
+            app.UseRequestLocalization(localizationOptions);
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
@@ -82,9 +82,9 @@ namespace OrgSys
             app.UseRouting();
 
             app.UseAuthorization();
-          
+
             app.UseEndpoints(endpoints =>
-            {                
+            {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
@@ -108,6 +108,11 @@ namespace OrgSys
                  name: "Orders",
                  areaName: "Orders",
                  pattern: "Orders/{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapAreaControllerRoute(
+                 name: "Financials",
+                 areaName: "Financials",
+                 pattern: "Financials/{controller=Home}/{action=Index}/{id?}");
                 //endpoints.MapRazorPages();
             });
         }
