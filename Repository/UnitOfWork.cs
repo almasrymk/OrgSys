@@ -419,5 +419,31 @@ namespace Repository
                 return _financialTypeRepo;
             }
         }
+
+        private OutlayRepo _outlayRepo;
+        public OutlayRepo outlayRepo
+        {
+            get
+            {
+
+                if (this._outlayRepo == null)
+                    this._outlayRepo = new OutlayRepo();
+
+                return _outlayRepo;
+            }
+        }
+
+        private CurrencyRepo _currencyRepo;
+        public CurrencyRepo currencyRepo
+        {
+            get
+            {
+
+                if (this._currencyRepo == null)
+                    this._currencyRepo = new CurrencyRepo();
+
+                return _currencyRepo;
+            }
+        }
     }
 }

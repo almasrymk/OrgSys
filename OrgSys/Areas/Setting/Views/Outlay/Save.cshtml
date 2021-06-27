@@ -1,0 +1,69 @@
+﻿@model Entity.ModelView.OutlayModelView
+@{
+    ViewData["Title_Designer"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="HPage" class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="mb-3">
+                <h1>Outlay</h1>
+                <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
+                    <ol class="breadcrumb pt-0">
+                        <li class="breadcrumb-item">
+                            <a href="/">@Utility.Resource.Title_Designer.Home</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            @Utility.Resource.Title_Designer.Setting
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">  <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId">Outlay</a></li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-12 col-lg-12 mb-4">
+            <div class="card h-100">
+
+                <div class="card pt-4 pb-4 pl-4 pr-4">
+                    <div class="d-md-block" id="displayOptions">
+                        <h3 class="mr-4 mb-2 ml-4 d-inline-block float-md-left">
+                            @if (Model != null || Model.Id == 0)
+                            {
+                                <span class="mb-4"> @Utility.Resource.Title_Designer.New ...</span>
+                            }
+                            else
+                            {
+                                <span class="mb-4"> @Utility.Resource.Title_Designer.Edit ...</span>
+                            }
+                        </h3>
+                        <div class="position-absolute card-top-buttons">
+                            <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId" class="btn btn-primary"><i class="simple-icon-action-undo"></i>  @Utility.Resource.Title_Designer.Back</a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form action="Save" method="post" enctype="multipart/form-data" class="tooltip-label-right" novalidate>
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-lg-12">
+                                    @Html.HiddenFor(model => model.Id)
+                                    @Html.HiddenFor(model => model.TypeId)
+                                    @Html.HiddenFor(model => model.ParentId)
+                                    <div class="form-group position-relative error-l-50">
+                                        @Html.LabelFor(model => model.Name)
+                                        @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Name })
+                                        <small class="form-text text-muted"> @Utility.Resource.Message_Designer.NameRequired!</small>
+                                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger mt-3 m-1" })
+                                    </div>                                   
+                                </div>                               
+                            </div>
+                            <button type="submit" class="btn btn-primary mb-0">@Utility.Resource.Title_Designer.Save</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

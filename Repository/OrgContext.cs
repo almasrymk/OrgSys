@@ -289,6 +289,8 @@ namespace Repository
         public virtual DbSet<Safe> Safes { get; set; }
         public virtual DbSet<Financial> Financials { get; set; }
         public virtual DbSet<FinancialInvoice> FinancialInvoices { get; set; }
-        public virtual DbSet<FinancialType> FinancialTypes { get; set; }        
+        public virtual DbSet<FinancialType> FinancialTypes { get; set; }
+        public virtual DbSet<Outlay> Outlays { get; set; }
+        public virtual DbSet<Currency> Currencys { get; set; }
     }
 }
