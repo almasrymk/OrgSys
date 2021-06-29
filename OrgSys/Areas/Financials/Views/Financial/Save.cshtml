@@ -83,6 +83,43 @@
                             </div>
 
                             <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label>Currency</label>
+                                    <div id="divCurrencyId">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="iconsminds-financial"></i></span>
+                                            </div>
+                                            @Html.DropDownListFor(model => model.CurrencyId, null, "...", new { @class = "form-control" })
+                                        </div>
+                                        <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.CurrencyId, "", new { @class = "text-danger " })
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label>Rate</label>
+
+                                    <div id="divRate">
+                                        @Html.TextBoxFor(model => model.Rate, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Code })
+                                        <small class="form-text text-muted"> @Utility.Resource.Message_Designer.CodeIncreasedAutomaticallyCanBechanged</small>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.Rate, "", new { @class = "text-danger " })
+                                </div>
+                                <div class="form-group col-md-4">
+                                    @Html.LabelFor(model => model.PaymentTypeName)
+                                    <div id="divPaymentTypeId">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="iconsminds-financial"></i></span>
+                                            </div>
+                                            @Html.DropDownListFor(model => model.PaymentTypeId, null, " ... ", new { @class = "form-control" })
+                                        </div>
+                                        <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.PaymentTypeId, "", new { @class = "text-danger " })
+                                </div>
+                            </div>
+                            <div class="form-row">
                                 @if (Model.TypeId == 1 || Model.TypeId == 2)
                                 {
                                     <div class="form-group col-md-4">
@@ -106,19 +143,22 @@
                                         @Html.ValidationMessageFor(model => model.DealerId, "", new { @class = "text-danger " })
                                     </div>
                                 }
-                                <div class="form-group col-md-4">
-                                    @Html.LabelFor(model => model.PaymentTypeName)
-                                    <div id="divPaymentTypeId">
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><i class="iconsminds-financial"></i></span>
+                                else
+                                {
+                                    <div class="form-group col-md-4">
+                                        <label>Outlay</label>
+                                        <div id="divOutlayId">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="simple-icon-people"></i></span>
+                                                </div>
+                                                @Html.DropDownListFor(model => model.OutlayId, null, null, new { @class = "form-control" })
                                             </div>
-                                            @Html.DropDownListFor(model => model.PaymentTypeId, null, " ... ", new { @class = "form-control" })
+                                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
                                         </div>
-                                        <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                                        @Html.ValidationMessageFor(model => model.OutlayId, "", new { @class = "text-danger " })
                                     </div>
-                                    @Html.ValidationMessageFor(model => model.PaymentTypeId, "", new { @class = "text-danger " })
-                                </div>
+                                }
                                 <div class="form-group col-md-4">
                                     <label>Amount</label>
 
@@ -153,105 +193,68 @@
                                         <thead>
                                             <tr>
                                                 <th scope="col">#</th>
-                                                <th scope="col" colspan="2">@Utility.Resource.Title_Designer.Invoice</th>
+                                                <th scope="col">@Utility.Resource.Title_Designer.Invoice</th>
+                                                <th scope="col">Date</th>
                                                 <th scope="col">@Utility.Resource.Title_Designer.Amount</th>
+                                                <th scope="col">Credit</th>
                                                 <th scope="col"></th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach (var FinancialProduct in Model.FinancialInvoices)
+                                            @foreach (var FinancialInvoice in Model.FinancialInvoices)
                                             {
-                                                <tr class="product-empty ProductRow">
+                                                <tr class="invoice-empty InvoiceRow">
                                                     <td style="width:35px;padding:0px;text-align:center;vertical-align:middle;">
                                                         <span id="Index">  </span>
                                                     </td>
-                                                    <td class="input-group typeahead-container" style="min-width:100px;padding:0px;">
-                                                        <div class="input-group typeahead-container">
+                                                    <td class="input-group typeahead-container" style="padding:0px;">
+                                                        <div class="input-group">
                                                             <div class="input-group-append " style="border-top:none;border-bottom:none;border-right:none;border-left:none;">
-                                                                <button id="SearchProduct" type="button" class="btn btn-primary SearchProduct" data-toggle="modal" data-target=".bd-example-modal-lg" style="width:30px;padding:0px;color:white;">
+                                                                <button id="SearchInvoice" type="button" class="btn btn-primary SearchInvoice" data-toggle="modal" data-target=".bd-example-modal-lg" style="width:30px;padding:0px;color:white;">
                                                                     <i class="simple-icon-magnifier"></i>
                                                                 </button>
                                                             </div>
-                                                            <input type="text" class="form-control search-box" name="query" id="query"
-                                                                   placeholder="Start typing product to search..."
-                                                                   autocomplete="off" style="border-top:none;border-bottom:none;border-right:none;" value="@FinancialProduct.InvoiceCode">
-                                                            <input type="hidden" id="ProductId" name="ProductId" class="ProductId" value="@FinancialProduct.InvoiceId" />
+                                                            <input type="text" class="form-control" name="query" id="query" autocomplete="off" style="border-top:none;border-bottom:none;border-right:none;" value="@FinancialInvoice.InvoiceCode" readonly="readonly">
+                                                            <input type="hidden" id="InvoiceId" name="InvoiceId" class="InvoiceId" value="@FinancialInvoice.InvoiceId" />
                                                         </div>
                                                     </td>
-                                                    <td style="max-width: 40px; padding: 0px; text-align: center; vertical-align: middle;">
-                                                        <i id="RepeatedDanger" class="badge badge-danger mb-1" style="text-align: center; vertical-align: middle;height:25px;display:none;margin-left:10px;margin-right:10px;">Repeated</i>
-                                                        <i id="RepeatedWarning" class="badge badge-warning mb-1" style="text-align: center; vertical-align: middle;height:25px;display:none;margin-left:10px;margin-right:10px;">Repeated</i>
-                                                        <i id="RepeatedPrimary" class="badge badge-primary mb-1" style="text-align: center; vertical-align: middle;height:25px;display:none;margin-left:10px;margin-right:10px;">Repeated</i>
+                                                    <td style="padding:0px;">
+                                                        <input type="text" id="Date" name="Date" class="form-control Date" value="@FinancialInvoice.InvoiceDate.Value.ToString("yyyy-MM-dd")" readonly style="border-top:none;border-bottom:none;background-color:transparent;" />
                                                     </td>
-                                                    <td style="width:100px;padding:0px;">
-                                                        <input type="text" id="Amount" name="Amount" class="form-control Amount" value="@FinancialProduct.Amount" readonly style="border-top:none;border-bottom:none;background-color:transparent;" placeholder="0.0" />
+                                                    <td style="padding:0px;">
+                                                        <input type="text" id="Net" name="Net" class="form-control Net" value="@FinancialInvoice.Net" readonly style="border-top:none;border-bottom:none;background-color:transparent;" placeholder="0.0" />
+                                                    </td>
+                                                    <td style="padding:0px;">
+                                                        <input type="text" id="Amount" name="Amount" class="form-control Amount" value="@FinancialInvoice.Amount"  style="border-top:none;border-bottom:none;background-color:transparent;" placeholder="0.0" />
                                                     </td>
                                                     <td style="width:100px;padding:0px;text-align:center;vertical-align:middle;">
                                                         <a id="btnDelete" class="btnDelete" href="javascript:;" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete</a>
                                                     </td>
                                                 </tr>
                                             }
-                                            @if (Model.FinancialInvoices == null || (Model.FinancialInvoices.Count < int.Parse("0" + ViewBag.NumberLine) && int.Parse("0" + ViewBag.NumberLine) > 0))
-                                            {
-
-                                                @for (int i = 0, index = 1; i < int.Parse("0" + ViewBag.NumberLine) - Model.FinancialInvoices.Count; i++, index++)
-                                                {
-                                                    <tr class="product-empty ProductRow">
-                                                        <td style="width:35px;padding:0px;text-align:center;vertical-align:middle;">
-                                                            <span id="Index">  </span>
-                                                        </td>
-                                                        <td class="input-group typeahead-container" style="min-width:100px;padding:0px;">
-                                                            <div class="input-group typeahead-container">
-                                                                <div class="input-group-append " style="border-top:none;border-bottom:none;border-right:none;border-left:none;">
-                                                                    <button id="SearchProduct" type="button" class="btn btn-primary SearchProduct" data-toggle="modal" data-target=".bd-example-modal-lg" style="width:30px;padding:0px;color:white;">
-                                                                        <i class="simple-icon-magnifier"></i>
-                                                                    </button>
-                                                                </div>
-                                                                <input type="text" class="form-control search-box" name="query" id="query"
-                                                                       placeholder="Start typing product to search..."
-                                                                       autocomplete="off" style="border-top:none;border-bottom:none;border-right:none;">
-                                                                <input type="hidden" id="ProductId" name="ProductId" class="ProductId" />
-                                                            </div>
-                                                        </td>
-                                                        <td style="max-width: 40px; padding: 0px; text-align: center; vertical-align: middle;">
-                                                            <i id="RepeatedDanger" class="badge badge-danger mb-1" style="text-align: center; vertical-align: middle;height:25px;display:none;margin-left:10px;margin-right:10px;">Repeated</i>
-                                                            <i id="RepeatedWarning" class="badge badge-warning mb-1" style="text-align: center; vertical-align: middle;height:25px;display:none;margin-left:10px;margin-right:10px;">Repeated</i>
-                                                            <i id="RepeatedPrimary" class="badge badge-primary mb-1" style="text-align: center; vertical-align: middle;height:25px;display:none;margin-left:10px;margin-right:10px;">Repeated</i>
-                                                        </td>
-                                                        <td style="width:100px;padding:0px;">
-                                                            <input type="text" id="Amount" name="Amount" class="form-control Amount" readonly style="border-top:none;border-bottom:none;background-color:transparent;" placeholder="0.0" />
-                                                        </td>
-                                                        <td style="width:100px;padding:0px;text-align:center;vertical-align:middle;">
-                                                            <a id="btnDelete" class="btnDelete" href="javascript:;" data-toggle="modal" data-target="#MsgModelId" style="display:none"><i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete</a>
-                                                        </td>
-                                                    </tr>
-                                                }
-                                            }
-
-                                            <tr class="product-empty ProductRow trNew">
+                                            <tr class="invoice-empty InvoiceRow trNew">
                                                 <td style="width:35px;padding:0px;text-align:center;vertical-align:middle;">
                                                     <span id="Index">  </span>
                                                 </td>
-                                                <td class="input-group typeahead-container" style="min-width:100px;padding:0px;">
-                                                    <div class="input-group typeahead-container">
+                                                <td class="input-group typeahead-container" style="padding:0px;">
+                                                    <div class="input-group">
                                                         <div class="input-group-append " style="border-top:none;border-bottom:none;border-right:none;border-left:none;">
-                                                            <button id="SearchProduct" type="button" class="btn btn-primary SearchProduct" data-toggle="modal" data-target=".bd-example-modal-lg" style="width:30px;padding:0px;color:white;">
+                                                            <button id="SearchInvoice" type="button" class="btn btn-primary SearchInvoice" data-toggle="modal" data-target=".bd-example-modal-lg" style="width:30px;padding:0px;color:white;">
                                                                 <i class="simple-icon-magnifier"></i>
                                                             </button>
                                                         </div>
-                                                        <input type="text" class="form-control search-box" name="query" id="query"
-                                                               placeholder="Start typing product to search..."
-                                                               autocomplete="off" style="border-top:none;border-bottom:none;border-right:none;">
-                                                        <input type="hidden" id="ProductId" name="ProductId" class="ProductId" />
+                                                        <input type="text" class="form-control" name="query" id="query" style="border-top:none;border-bottom:none;border-right:none;" readonly>
+                                                        <input type="hidden" id="InvoiceId" name="InvoiceId" class="InvoiceId" />
                                                     </div>
+                                                </td>                                               
+                                                <td style="padding:0px;">
+                                                    <input type="text" id="Date" name="Date" class="form-control Date" readonly style="border-top:none;border-bottom:none;background-color:transparent;"  />
                                                 </td>
-                                                <td style="max-width:40px;padding:0px;text-align:center;vertical-align:middle;">
-                                                    <i id="RepeatedDanger" class="badge badge-danger mb-1" style="text-align: center; vertical-align: middle;height:25px;display:none;margin-left:10px;margin-right:10px;">Repeated</i>
-                                                    <i id="RepeatedWarning" class="badge badge-warning mb-1" style="text-align: center; vertical-align: middle;height:25px;display:none;margin-left:10px;margin-right:10px;">Repeated</i>
-                                                    <i id="RepeatedPrimary" class="badge badge-primary mb-1" style="text-align: center; vertical-align: middle;height:25px;display:none;margin-left:10px;margin-right:10px;">Repeated</i>
+                                                <td style="padding:0px;">
+                                                    <input type="text" id="Net" name="Net" class="form-control Net" readonly style="border-top:none;border-bottom:none;background-color:transparent;" placeholder="0.0" />
                                                 </td>
-                                                <td style="width:100px;padding:0px;">
-                                                    <input type="text" id="Amount" name="Amount" readonly class="form-control Amount" style="border-top:none;border-bottom:none;background-color:transparent;" placeholder="0.0" />
+                                                <td style="padding:0px;">
+                                                    <input type="text" id="Amount" name="Amount"  class="form-control Amount" style="border-top:none;border-bottom:none;background-color:transparent;" placeholder="0.0" />
                                                 </td>
                                                 <td style="width:100px;padding:0px;text-align:center;vertical-align:middle;">
                                                     <a id="btnDelete" class="btnDelete" href="javascript:;" data-toggle="modal" data-target="#MsgModelId" style="display:none"><i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete</a>
@@ -295,8 +298,8 @@
 </div>
 
 
-<div class="modal fade bd-example-modal-lg ProductBody" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg" id="SearchProductBody">
+<div class="modal fade bd-example-modal-lg InvoiceBody" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" id="SearchInvoiceBody">
 
     </div>
 </div>
@@ -319,16 +322,14 @@
     var AddInvoice;
     var RefreshSomeEventListener;
     var ReIndex;
-    var ReCalc;
     var Save;
     var AutoSave;
     var Repeated;
-
     jQuery(function ($) {
         $(".datepicker").datepicker();
-        $(".datepicker").datepicker("option", "dateFormat", "yy/mm/dd");
-
+        $(".datepicker").datepicker("option", "dateFormat", "yy/mm/dd");        
         $("#query").focus();
+        
         setTimeout(function () {
             $(".sw-toolbar-bottom").css("display", "none");
 
@@ -338,17 +339,21 @@
             Save();
         });
 
-        $('.SearchInvoice').on("click", function () {
-            var index = $(this).parents("tr").find("#Index").html();
+        $('#CurrencyId').on("change", function () {            
             $.ajax({
                 type: 'GET',
-                url: "/Setting/Invoice/SearchInvoices",
-                data: { txt: "", page: 1, index: index },
-                success: function (res) {
-                    $("#SearchInvoiceBody").html(res);
+                url: "/Setting/Currency/GetRate",
+                data: { id: $("#CurrencyId").val()},
+                success: function (data) { 
+                    $("#Rate").val(data.rate);
+                    $(".InvoiceRow").not(".trNew").remove();
                 }
             });
 
+        });
+
+        $('#DealerId').on("change", function () {
+            $(".InvoiceRow").not(".trNew").remove();
         });
 
         $('#ShowPreference').on("click", function () {
@@ -379,88 +384,35 @@
             RefreshSomeEventListener();
         }
 
-        RefreshSomeEventListener = function () {
-            $(document).on('keyup keypress', 'input', function (e) {
-                if (e.which == 13) {
-                    e.preventDefault();
-
-                    var isProduct = $(document.activeElement).hasClass("search-box");
-                    var isQuantity = $(document.activeElement).hasClass("Quantity");
-                    var row = $(document.activeElement).parents("tr");
-
-                    if (isProduct) {
-                        setTimeout(function () {
-                            row.find(".Quantity").focus();
-                            row.find(".Quantity").select();
-                        }, 200);
-                    }
-                    else if (isQuantity) {
-                        var NextRow = row.next();
-                        if (NextRow.find(".search-box").hasClass("trNew"))
-                            AddNewRow();
-
-                        setTimeout(function () {
-                            NextRow.find(".search-box").focus();
-                            NextRow.find(".search-box").select();
-                        }, 200);
-                    }
-                    return false;
-                }
-            });
-
-            $(".search-box").autocomplete({
-                minLength: 0,
-                source: function (request, response) {
-                    var searchPhrase = request.term.trim().toLowerCase();
-                    var noResultsLabel = 'NoResultsFound';
-                    $.ajax({
-                        url: "/Setting/Invoice/SearchInvoices",
-                        type: "Get",
-                        dataType: "json",
-                        data: { phrase: searchPhrase },
-                        success: function (data) {
-                            try {
-                                if (!data.length) {
-                                    data = [{ name: noResultsLabel }];
-                                }
-
-                                response($.map(data, function (inv) {
-                                    return {
-                                        label: inv.name, value: inv.name, id: inv.id,
-                                        barcode: inv.date
-                                    };
-                                }));
-                            } catch (err) { }
+        RefreshSomeEventListener = function () {   
+            $('.SearchInvoice').on("click", function () {
+                var idsList = "";
+                $('#tbl > tbody > .InvoiceRow').each(function () {
+                    var currentRow = $(this);
+                    if (!currentRow.hasClass('trNew')) {
+                        if (currentRow.find('#InvoiceId').val() > 0) {
+                            idsList += "," + currentRow.find('#InvoiceId').val();
                         }
-                    });
-                },
-                select: function (event, ui) {
-                    if (ui.item.label === 'NoResultsFound') {
-                        event.preventDefault();
-                        return;
                     }
-                    var $row = $(event.target).parents('tr');
-                    AddProduct($row, ui.item.id);
-                },
-                focus: function (event, ui) {
-                    if (ui.item.label === 'NoResultsFound') {
-                        event.preventDefault();
+                });
+                
+                var index = $(this).parents("tr").find("#Index").html();
+                $.ajax({
+                    type: 'GET',
+                    url: "/Invoices/Invoice/SearchInvoices",
+                    data: { txt: "", dealerId: $("#DealerId").val(), currencyId: $("#CurrencyId").val(), typeId: $("#TypeId").val(), ids: idsList, page: 1, index: index },
+                    success: function (res) {
+                        $("#SearchInvoiceBody").empty();
+                        $("#SearchInvoiceBody").html(res);
                     }
-                },
+                });
+
             });
 
             $('.btnDelete').click(function () {
-                $(this).parent().parent().remove();
-                if ($("#tbl").find('.InvoiceRow').length < 7) {
-                    AddNewRow();
-                }
-                ReIndex();
-                ReCalc();
-            });
-
-            $(".Amount").keyup(function () {
-                ReCalc();
-            });
+                $(this).parent().parent().remove();                
+                ReIndex();               
+            });          
 
             $("#Code").keyup(function () {
                 AutoSave();
@@ -482,7 +434,7 @@
                 AutoSave();
             });
 
-            $("#GrandAmount").keyup(function () {
+            $("#GrandAmount").change(function () {
                 AutoSave();
             });
 
@@ -505,22 +457,24 @@
             else {
 
                 $.ajax({
-                    url: "/Setting/Invoice/checkStock",
+                    url: "/Invoices/Invoice/checkStock",
                     type: "Get",
-                    data: { id: itemId },
+                    data: { id: id },
                     success: function (data) {
-                        $row.find("#InvoiceId").val(id);
-                        $row.find("#query").val(data.code);
-                        $row.find("#Amount").val(data.amount);
-                        $row.find("#btnDelete").css("display", "block");
-
                         if ($row.hasClass("trNew") == true) {
                             $row.find("#Index").append($("#tbl").find('.InvoiceRow').length);
                             AddNewRow();
                         }
 
+                        var date = new Date(data.date);
+                        $row.find("#InvoiceId").val(id);
+                        $row.find("#query").val(data.code);
+                        $row.find("#Date").val(leftPad(date.getDay(), 2) + "-" + leftPad(date.getMonth(), 2) + "-" + date.getFullYear());
+                        $row.find("#Net").val(data.net);
+                        $row.find("#Amount").val(data.credit);
+                        $row.find("#btnDelete").css("display", "block");
+
                         ReIndex();
-                        ReCalc();
                     }
                 });
             }
@@ -543,26 +497,36 @@
             }
             else {
                 $.ajax({
-                    url: "/Setting/Invoice/checkStock",
+                    url: "/Invoices/Invoice/checkStock",
                     type: "Get",
                     data: { id: id },
                     success: function (data) {
                         var $row = $('.trNew');
-                        $row.find("#InvoiceId").val(id);
-                        $row.find("#query").val(data.code);
-                        $row.find("#Amount").val(data.amount);
-                        $row.find("#btnDelete").css("display", "block");
                         if ($row.hasClass("trNew") == true) {
                             $row.find("#Index").append($("#tbl").find('.InvoiceRow').length);
                             AddNewRow();
                         }
+                        var date = new Date(data.date);
+                        $row.find("#InvoiceId").val(id);
+                        $row.find("#query").val(data.code);
+                        $row.find("#Date").val(leftPad(date.getDay(), 2) + "-" + leftPad(date.getMonth(),2) + "-" + date.getFullYear());
+                        $row.find("#Net").val(data.net);
+                        $row.find("#Amount").val(data.credit);
+                        $row.find("#btnDelete").css("display", "block");
 
                         ReIndex();
-                        ReCalc();
                     }
                 });
 
             }
+        }
+
+        function leftPad(number, targetLength) {
+            var output = number + '';
+            while (output.length < targetLength) {
+                output = '0' + output;
+            }
+            return output;
         }
 
         ReIndex = function () {
@@ -570,19 +534,7 @@
                 $(this).find("#Index").empty();
                 $(this).find("#Index").append(index + 1);
             });
-        }
-
-        ReCalc = function () {
-            var totalAmount = parseFloat(0);
-            $("#tbl").find('.InvoiceRow').not(".trNew").each(function (index) {
-                var row = $(this);
-                if (parseFloat($(this).find("#Amount").val()) > 0) {
-                    totalAmount += parseFloat($(this).find("#Amount").val());
-                }
-            });
-            $("#GrandAmount").val(totalAmount);
-            AutoSave();
-        }
+        }       
 
         Save = function () {
             var Valid = true;
@@ -592,6 +544,10 @@
 
             if ('@Model.TypeId' == 1 || '@Model.TypeId' == 2) {
                 if (CheckRequired("DealerId", "divDealerId", '@Utility.Resource.Message_Designer.CustomerRequired'))
+                    Valid = false;
+            }
+            else {
+                if (CheckRequired("OutlayId", "divOutlayId", '@Utility.Resource.Message_Designer.CustomerRequired'))
                     Valid = false;
             }
 
@@ -604,6 +560,12 @@
             if (CheckRequired("PaymentTypeId", "divPaymentTypeId", '@Utility.Resource.Message_Designer.StoreRequired'))
                 Valid = false;
 
+            if (CheckRequired("CurrencyId", "divCurrencyId", '@Utility.Resource.Message_Designer.StoreRequired'))
+                Valid = false;
+
+            if (CheckRequired("Rate", "divRate", '@Utility.Resource.Message_Designer.StoreRequired'))
+                Valid = false;
+
             if (CheckRequired("GrandAmount", "divGrandAmount", '@Utility.Resource.Message_Designer.DateRequired'))
                 Valid = false;
 
@@ -611,10 +573,9 @@
                 $("#tbHeader").trigger("Click", SkipCallingAction = true)
                 window.location.replace("#checkStep2");
             }
-
+           
             if (Valid == true) {
-                var data = CollectData();
-
+                var data = CollectData();                
                 $.ajax({
                     type: 'POST',
                     url: "/Financials/Financial/Save",
@@ -636,11 +597,21 @@
                 if (CheckRequiredNoMessage("DealerId"))
                     Valid = false;
             }
+            else {
+                if (CheckRequiredNoMessage("OutlayId"))
+                    Valid = false;
+            }
 
             if (CheckRequiredNoMessage("Date"))
                 Valid = false;
 
             if (CheckRequiredNoMessage("SafeId"))
+                Valid = false;
+
+            if (CheckRequiredNoMessage("CurrencyId"))
+                Valid = false;
+
+            if (CheckRequiredNoMessage("Rate"))
                 Valid = false;
 
             if (CheckRequiredNoMessage("PaymentTypeId"))
@@ -678,11 +649,11 @@
             $('#tbl > tbody > .InvoiceRow').each(function () {
                 var currentRow = $(this);
                 if (!currentRow.hasClass('trNew')) {
-                    if (currentRow.find('#InvoiceId').val() > 0) {
+                    if (currentRow.find('#InvoiceId').val() > 0) {                      
                         list.push({
                             FinancialId: $('#Id').val(),
-                            ProductId: currentRow.find('#InvoiceId').val(),
-                            Aamount: currentRow.find('#Amount').val(),
+                            InvoiceId: currentRow.find('#InvoiceId').val(),
+                            Amount: currentRow.find('#Amount').val(),
                         });
                     }
                 }
@@ -699,7 +670,11 @@
                 PaymentTypeId: $('#PaymentTypeId').val(),
                 Amount: $('#GrandAmount').val(),
                 Notes: $('#Notes').val(),
-                FinancialProducts: list
+                CurrencyId: $('#CurrencyId').val(),
+                Rate: $('#Rate').val(),
+                AmountByDefaultCurrency: $('#AmountByDefaultCurrency').val(),
+                OutlayId: $('#OutlayId').val(),
+                FinancialInvoices: list
             }
 
            return data;
@@ -720,7 +695,5 @@
         RefreshSomeEventListener();
 
         ReIndex();
-
-        ReCalc();
     });
 </script>

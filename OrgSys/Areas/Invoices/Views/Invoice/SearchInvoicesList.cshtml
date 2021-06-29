@@ -1,0 +1,241 @@
+﻿@model X.PagedList.IPagedList<Entity.ModelView.InvoiceModelView>
+@{
+    ViewData["Title_Designer"] = "Index";
+}
+
+<table id="tblSearch" class="table table-bordered responsive nowrap" data-order="[[ 1, &quot;desc&quot; ]]">
+    <thead>
+        <tr>
+            <th style="text-align: center">#</th>
+            <th style="width:10%">Code</th>
+            <th>Date</th>
+            <th>Dealer</th>
+            <th>Amount</th>
+            <th>Credit</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td style="width:50px;vertical-align: middle;text-align:center;padding:3px;">
+                <p id="Index" class="list-item-heading"></p>
+                <input type="hidden" id="InvoiceSearchId" value="@item.Id" />
+            </td>
+            <td style="vertical-align: middle; padding: 3px;">
+                <p class="text-muted">&nbsp; @item.Code</p>
+            </td>
+            <td style="vertical-align: middle; padding: 3px;">
+                <p class="text-muted">&nbsp; @item.Date.ToString("dd-MM-yyyy") </p>
+            </td>
+            <td style="vertical-align: middle; padding: 3px;">
+                <p class="text-muted">&nbsp; @item.DealerName</p>
+            </td>
+            <td style="vertical-align: middle; padding: 3px;">
+                <p class="text-muted"> &nbsp; @item.Net</p>
+            </td>
+            <td style="vertical-align: middle; padding: 3px;">
+                <p class="text-muted"> &nbsp; @item.Credit</p>
+            </td>
+            <td style="width:25px;text-align:center;vertical-align:middle;padding:3px;">
+                <label class="custom-control custom-checkbox" style="vertical-align: middle; text-align: center;">
+                    <input id="chkSelect" type="checkbox" class="custom-control-input chk">
+                    <input type="hidden" value="5">
+                    <span class="custom-control-label"></span>
+                </label>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+
+
+@if (@Model.PageCount > 1)
+{
+    <nav class="p-0 m-0">
+        <ul class="pagination justify-content-center mb-0">
+            @if (Model.PageNumber > 1)
+            {
+                <li class="page-item ">
+                    <button class="page-link first" onclick="searchInvoice(1)">
+                        <i class="simple-icon-control-start"></i>
+                    </button>
+                </li>
+                <li class="page-item">
+                    <button class="page-link prev" onclick="searchInvoice(@Model.PageNumber - 1)">
+                        <i class="simple-icon-arrow-left"></i>
+                    </button>
+                </li>
+            }
+            else
+            {
+                <li class="page-item diabled">
+                    <a class="page-link first">
+                        <i class="simple-icon-control-start"></i>
+                    </a>
+                </li>
+                <li class="page-item ">
+                    <a class="page-link prev">
+                        <i class="simple-icon-arrow-left"></i>
+                    </a>
+                </li>
+            }
+
+            @if (Model.PageCount <= 5)
+            {
+                @for (int i = 1; i <= Model.PageCount; i++)
+                {
+                    if (i == Model.PageNumber)
+                    {
+                        <li class="page-item active">
+                            <a class="page-link">@i</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="page-item ">
+                            <button class="page-link" onclick="searchInvoice(@i)">@i</button>
+                        </li>
+                    }
+                }
+            }
+            else
+            {
+                if (Model.PageNumber < 5)
+                {
+                    @for (int i = 1; i <= 5; i++)
+                    {
+                        if (i == Model.PageNumber)
+                        {
+                            <li class="page-item active">
+                                <a class="page-link">@i</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="page-item ">
+                                <button class="page-link" onclick="searchInvoice(@i)">@i</button>
+                            </li>
+                        }
+                    }
+                }
+
+                if (Model.PageNumber >= 5)
+                {
+
+                    @for (int i = 1; i <= 2; i++)
+                    {
+                        <li class="page-item ">
+                            <button class="page-link" onclick="searchInvoice(@i)">@i</button>
+                        </li>
+                    }
+                    <li class="page-item ">
+                        &ensp;
+                    </li>
+                }
+
+
+                if (Model.PageNumber >= 5 && Model.PageNumber <= Model.PageCount - 5)
+                {
+
+                    @for (int i = Model.PageNumber - 1; i <= Model.PageNumber + 3; i++)
+                    {
+                        if (i == Model.PageNumber)
+                        {
+                            <li class="page-item active">
+                                <a class="page-link">@i</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="page-item ">
+                                <button class="page-link" onclick="searchInvoice(@i)">@i</button>
+                            </li>
+                        }
+                    }
+                }
+
+                if (Model.PageNumber == Model.PageCount - 4)
+                {
+
+                    @for (int i = Model.PageNumber - 2; i <= Model.PageNumber + 2; i++)
+                    {
+                        if (i == Model.PageNumber)
+                        {
+                            <li class="page-item active">
+                                <a class="page-link">@i</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="page-item ">
+                                <button class="page-link" onclick="searchInvoice(@i)">@i</button>
+                            </li>
+                        }
+                    }
+                }
+
+                if (Model.PageNumber > Model.PageCount - 4)
+                {
+                    @for (int i = Model.PageCount - 4; i <= Model.PageCount; i++)
+                    {
+                        if (i == Model.PageNumber)
+                        {
+                            <li class="page-item active">
+                                <a class="page-link">@i</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="page-item ">
+                                <button class="page-link" onclick="searchInvoice(@i)">@i</button>
+                            </li>
+                        }
+                    }
+                }
+
+
+                if (Model.PageNumber < Model.PageCount - 3)
+                {
+                    <li class="page-item ">
+                        &ensp;
+                    </li>
+                    @for (int i = Model.PageCount - 1; i <= Model.PageCount; i++)
+                    {
+                        <li class="page-item ">
+                            <button class="page-link" onclick="searchInvoice(@i)">@i</button>
+                        </li>
+                    }
+                }
+            }
+
+            @if (Model.PageNumber < Model.PageCount)
+            {
+                <li class="page-item ">
+                    <button class="page-link next" aria-label="Next" onclick="searchInvoice( @Model.PageNumber + 1)">
+                        <i class="simple-icon-arrow-right"></i>
+                    </button>
+                </li>
+                <li class="page-item ">
+                    <button class="page-link last" onclick="searchInvoice(@Model.PageCount)">
+                        <i class="simple-icon-control-end"></i>
+                    </button>
+                </li>
+            }
+            else
+            {
+                <li class="page-item ">
+                    <a class="page-link next" aria-label="Next">
+                        <i class="simple-icon-arrow-right"></i>
+                    </a>
+                </li>
+                <li class="page-item ">
+                    <a class="page-link last">
+                        <i class="simple-icon-control-end"></i>
+                    </a>
+                </li>
+            }
+        </ul>
+    </nav>
+}

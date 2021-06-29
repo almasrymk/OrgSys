@@ -24,16 +24,19 @@ namespace Entity.ModelView
             this.Code = ob.Code;
             this.Date = ob.Date;
             this.DealerId = ob.DealerId;
-            this.DealerName = ob.Dealer?.Name;           
-            this.Hide = ob.Hide;            
+            this.DealerName = ob.Dealer?.Name;
+            this.Hide = ob.Hide;
             this.Notes = ob.Notes;
             this.PaymentTypeId = ob.PaymentTypeId;
             this.PaymentTypeName = ob.PaymentType?.Name;
+            this.CurrencyId = ob.CurrencyId;
+            this.CurrencyName = ob.Currency?.Name;
             this.TransactionId = ob.TransactionId;
             this.TransactionCode = ob.Transaction?.Code;
             this.TransactionDate = ob.Transaction?.Date;
+            this.Rate = ob.Rate;
             this.StoreId = ob.StoreId;
-            this.StoreName = ob.Store?.Name;                           
+            this.StoreName = ob.Store?.Name;
             this.Status = ob.Status;
             this.ParentId = ob.ParentId;
             this.TypeId = ob.TypeId;
@@ -48,35 +51,40 @@ namespace Entity.ModelView
             this.Discount = ob.Discount;
             this.DiscountType = ob.DiscountType;
             this.Net = ob.Net;
+            this.Credit = ob.Credit;
+            this.CreditByDefaultCurrency = ob.CreditByDefaultCurrency;
+            this.NetByDefaultCurrency = ob.NetByDefaultCurrency;
             if (ob.InvoiceProducts == null)
                 ob.InvoiceProducts = new List<InvoiceProduct>();
             this.InvoiceProducts = ob.InvoiceProducts.Select(e => new InvoiceProductModelView(e)).ToList();
         }
 
-        public InvoiceModelView UpdateData(Order ob , long StoreId)
+        public InvoiceModelView UpdateData(Order ob, long StoreId)
         {
             if (ob == null)
                 ob = new Order();
-            this.Date = ob.Date;           
+            this.Date = ob.Date;
             this.Hide = ob.Hide;
-            this.Notes = ob.Notes;           
+            this.Notes = ob.Notes;
             this.Status = ob.Status;
             this.StoreId = StoreId;
             if (ob.DealerId != null)
                 this.DealerId = ob.DealerId.Value;
             this.ParentId = ob.ParentId;
-            this.ImgPath = ob.ImgPath;           
+            this.ImgPath = ob.ImgPath;
+            this.Total = ob.Total;
             this.Total = ob.Total;
             this.Service = ob.Service;
             this.ServiceType = ob.ServiceType;
-            this.Tax = ob.Tax;            
+            this.Tax = ob.Tax;
             this.TaxType = ob.TaxType;
             this.Discount = ob.Discount;
             this.DiscountType = ob.DiscountType;
             this.Net = ob.Net;
+
             if (ob.OrderProducts == null)
                 ob.OrderProducts = new List<OrderProduct>();
-            this.InvoiceProducts = ob.OrderProducts.Select(e => new InvoiceProductModelView(e , StoreId)).ToList();
+            this.InvoiceProducts = ob.OrderProducts.Select(e => new InvoiceProductModelView(e, StoreId)).ToList();
             return this;
         }
         public Invoice Model
@@ -89,12 +97,15 @@ namespace Entity.ModelView
                     CodeNumber = this.CodeNumber,
                     Code = this.Code,
                     Date = this.Date,
-                    DealerId = this.DealerId,                  
-                    Total = this.Total,                    
+                    DealerId = this.DealerId,
+                    Total = this.Total,
                     Hide = this.Hide,
-                    Net  = this.Net,
+                    Net = this.Net,
+                    Rate = this.Rate,
+                    NetByDefaultCurrency = this.NetByDefaultCurrency,
                     Notes = this.Notes,
                     PaymentTypeId = this.PaymentTypeId,
+                    CurrencyId = this.CurrencyId,
                     TransactionId = this.TransactionId,
                     StoreId = this.StoreId,
                     Status = this.Status,
@@ -104,12 +115,14 @@ namespace Entity.ModelView
                     ImgPath = this.ImgPath,
                     Remaining = this.Remaining,
                     Paid = this.Paid,
-                    Service=this.Service,
-                    ServiceType=this.ServiceType,
+                    Service = this.Service,
+                    ServiceType = this.ServiceType,
                     Tax = this.Tax,
-                    TaxType =this.TaxType,
+                    TaxType = this.TaxType,
                     Discount = this.Discount,
-                    DiscountType =this.DiscountType,
+                    DiscountType = this.DiscountType,
+                    Credit = this.Credit,
+                    CreditByDefaultCurrency = this.CreditByDefaultCurrency,
                     InvoiceProducts = this.InvoiceProducts != null ? this.InvoiceProducts.Select(e => e.Model).ToList() : new List<InvoiceProduct>()
                 };
             }
@@ -134,7 +147,7 @@ namespace Entity.ModelView
 
         public string PaymentTypeName { get; set; }
 
-        [Required]       
+        [Required]
         public long StoreId { get; set; }
 
         [Display(Name = nameof(Title_Designer.Store), ResourceType = typeof(Title_Designer))]
@@ -160,6 +173,12 @@ namespace Entity.ModelView
         public decimal Remaining { get; set; }
         public decimal Paid { get; set; }
         public string ParentCode { get; set; }
+        public long CurrencyId { get; set; }
+        public string CurrencyName { get; set; }
+        public decimal Rate { get; set; }
+        public decimal NetByDefaultCurrency { get; set; }
+        public decimal Credit { get; set; }
+        public decimal CreditByDefaultCurrency { get; set; }
         public List<InvoiceProductModelView> InvoiceProducts { get; set; }
     }
 }

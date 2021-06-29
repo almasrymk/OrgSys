@@ -27,6 +27,10 @@ namespace Entity.ModelView
             this.DealerName = ob.Dealer?.Name;
             this.PaymentTypeId = ob.PaymentTypeId;
             this.PaymentTypeName = ob.PaymentType?.Name;
+            this.CurrencyId = ob.CurrencyId;
+            this.CurrencyName = ob.Currency?.Name;
+            this.OutlayId = ob.OutlayId;
+            this.OutlayName = ob.Outlay?.Name;
             this.Hide = ob.Hide;
             this.Notes = ob.Notes;
             this.Amount = ob.Amount;
@@ -34,6 +38,8 @@ namespace Entity.ModelView
             this.SafeName = ob.Safe?.Name;
             this.Status = ob.Status;
             this.ParentId = ob.ParentId;
+            this.Rate = ob.Rate > 0 ? ob.Rate : (ob.Currency?.Rate??0);
+            this.AmountByDefaultCurrency = ob.AmountByDefaultCurrency;
             this.TypeId = ob.TypeId;
             this.ImgPath = ob.ImgPath;          
             if (ob.FinancialInvoices == null)
@@ -54,7 +60,11 @@ namespace Entity.ModelView
                     Date = this.Date,
                     DealerId = this.DealerId,
                     PaymentTypeId = this.PaymentTypeId,
+                    CurrencyId = this.CurrencyId,
+                    OutlayId = this.OutlayId,
+                    Rate = this.Rate,
                     Amount = this.Amount,
+                    AmountByDefaultCurrency = this.AmountByDefaultCurrency,
                     Hide = this.Hide,
                     Notes = this.Notes,
                     SafeId = this.SafeId,
@@ -84,6 +94,9 @@ namespace Entity.ModelView
         public long PaymentTypeId { get; set; }
 
         public string PaymentTypeName { get; set; }
+        public long? OutlayId { get; set; }
+
+        public string OutlayName { get; set; }
 
         public long SafeId { get; set; }
 
@@ -93,7 +106,11 @@ namespace Entity.ModelView
 
         [StringLength(500)]
         public string Notes { get; set; }
-      
+ 
+        public long CurrencyId { get; set; }
+        public string CurrencyName { get; set; }
+        public decimal Rate { get; set; }
+        public decimal AmountByDefaultCurrency { get; set; }
         public List<FinancialInvoiceModelView> FinancialInvoices { get; set; }
     }
 }

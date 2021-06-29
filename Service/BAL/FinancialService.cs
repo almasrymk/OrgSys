@@ -23,12 +23,15 @@ namespace Service.BAL
         /// <param name="ob"></param>
         /// <returns></returns>
         public FinancialModelView Save(FinancialModelView ob)
-        {         
+        {
+            List<long> InvIds = new List<long>();
             // Save
             var Nwob = repo.financialRepo.AddOrUpdate(ob.Model);
-
+            if (ob.FinancialInvoices == null)
+                ob.FinancialInvoices = new List<FinancialInvoiceModelView>();
             if (ob.Id > 0)
             {
+          
                 var ids = ob.FinancialInvoices.Select(e => e.Id).ToList();
                 if (ids == null) ids = new List<long>();
 
@@ -44,10 +47,14 @@ namespace Service.BAL
                     repo.financialInvoiceRepo.AddOrUpdate(model);
                 }
                 Nwob.FinancialInvoices = repo.financialInvoiceRepo.GetList(e => e.FinancialId == Nwob.Id, e => e.OrderBy(e => e.Id), "Invoice", Utility.Status.All).ToList();
+
+                InvIds.AddRange(deleted.Select(e => e.InvoiceId).ToList());                
             }
-           
+            InvIds.AddRange(ob.FinancialInvoices.Select(e => e.InvoiceId).ToList());
+            new InvoiceService().UpdateCredit(InvIds.Distinct().ToList());
             return new FinancialModelView(Nwob);
         }            
+      
 
         /// <summary>
         /// 
@@ -56,7 +63,19 @@ namespace Service.BAL
         /// <returns></returns>
         public bool Delete(long id)
         {
-            return repo.financialRepo.Delete(id);
+            bool res = false;
+            var ob = repo.financialRepo.Get(e => e.Id == id);            
+            if(ob != null)
+            {
+                res = repo.financialRepo.Delete(id);
+                if (res)
+                {
+                    var InvIds = ob.FinancialInvoices.Select(e => e.InvoiceId).ToList();
+                    new InvoiceService().UpdateCredit(InvIds);
+                }
+            }
+           
+            return res;
         }
 
         /// <summary>
@@ -65,7 +84,7 @@ namespace Service.BAL
         /// <returns></returns>
         public List<FinancialModelView> GetAll(long parentId = 0, long TypeId = 0)
         {
-            return repo.financialRepo.GetList( e=>e.TypeId == TypeId, e => e.OrderByDescending(e => e.Id), "Dealer,Safe", Utility.Status.New).Select(e => new FinancialModelView(e)).ToList();            
+            return repo.financialRepo.GetList( e=>e.TypeId == TypeId, e => e.OrderByDescending(e => e.Id), "Dealer,Safe,FinancialInvoices,FinancialInvoices.Invoice", Utility.Status.New).Select(e => new FinancialModelView(e)).ToList();            
         }
 
         /// <summary>
@@ -75,7 +94,7 @@ namespace Service.BAL
         /// <returns></returns>
         public List<FinancialModelView> GetAll(string textSearch , long parentId = 0, long TypeId = 0)
         {
-            return repo.financialRepo.GetList(e => e.Dealer.Name.Contains("" + textSearch) && e.TypeId == TypeId, e => e.OrderByDescending(e => e.Id), "Dealer,Safe", Utility.Status.New).Select(e => new FinancialModelView(e)).ToList();            
+            return repo.financialRepo.GetList(e => e.Dealer.Name.Contains("" + textSearch) && e.TypeId == TypeId, e => e.OrderByDescending(e => e.Id), "Dealer,Safe,FinancialInvoices,FinancialInvoices.Invoice", Utility.Status.New).Select(e => new FinancialModelView(e)).ToList();            
         }
 
         /// <summary>
@@ -86,7 +105,7 @@ namespace Service.BAL
         /// <returns></returns>
         public IPagedList<FinancialModelView> GetAll(long parentId = 0, long TypeId = 0 ,int page = 1, int pageSize = 20)
         {
-            return  repo.financialRepo.GetList(e=> e.TypeId == TypeId , e => e.OrderByDescending(e => e.Id), "Dealer,Safe", Utility.Status.New).Select(e => new FinancialModelView(e)).ToPagedList(page, pageSize);           
+            return  repo.financialRepo.GetList(e=> e.TypeId == TypeId , e => e.OrderByDescending(e => e.Id), "Dealer,Safe,FinancialInvoices,FinancialInvoices.Invoice", Utility.Status.New).Select(e => new FinancialModelView(e)).ToPagedList(page, pageSize);           
         }
 
         /// <summary>
@@ -98,7 +117,7 @@ namespace Service.BAL
         /// <returns></returns>
         public IPagedList<FinancialModelView> GetAll(string textSearch , long parentId = 0, long TypeId = 0, int page = 1, int pageSize = 20)
         {
-            return repo.financialRepo.GetList(e => e.TypeId == TypeId && ("" + textSearch == "" || e.Dealer.Name.Contains("" + textSearch)), e => e.OrderByDescending(e => e.Id), "Dealer,Safe", Utility.Status.New).Select(e => new FinancialModelView(e)).ToPagedList(page, pageSize);            
+            return repo.financialRepo.GetList(e => e.TypeId == TypeId && ("" + textSearch == "" || e.Dealer.Name.Contains("" + textSearch)), e => e.OrderByDescending(e => e.Id), "Dealer,Safe,FinancialInvoices,FinancialInvoices.Invoice", Utility.Status.New).Select(e => new FinancialModelView(e)).ToPagedList(page, pageSize);            
         }
 
         /// <summary>
@@ -108,7 +127,7 @@ namespace Service.BAL
         /// <returns></returns>
         public FinancialModelView Get(long Id)
         {
-            return new FinancialModelView(repo.financialRepo.Get(e => e.Id == Id  , "Dealer,Safe"));            
+            return new FinancialModelView(repo.financialRepo.Get(e => e.Id == Id  , "Dealer,Safe,FinancialInvoices,FinancialInvoices.Invoice"));            
         }
 
         /// <summary>
@@ -118,7 +137,7 @@ namespace Service.BAL
         /// <returns></returns>
         public FinancialModelView Get(string textSearch)
         {
-            return new FinancialModelView(repo.financialRepo.Get(e => e.Dealer.Name.Contains("" + textSearch) , "Dealer,Safe"));            
+            return new FinancialModelView(repo.financialRepo.Get(e => e.Dealer.Name.Contains("" + textSearch) , "Dealer,Safe,FinancialInvoices,FinancialInvoices.Invoice"));            
         }
 
         /// <summary>
@@ -133,7 +152,7 @@ namespace Service.BAL
 
         public List<FinancialModelView> GetAll(List<long> ids,long TypeId = 0)
         {
-            return repo.financialRepo.GetList(e => e.TypeId == TypeId && ids.Contains(e.Id), e => e.OrderBy(e => e.Id) , "Dealer,Safe", Utility.Status.New).Select(e => new FinancialModelView(e)).ToList();
+            return repo.financialRepo.GetList(e => e.TypeId == TypeId && ids.Contains(e.Id), e => e.OrderBy(e => e.Id) , "Dealer,Safe,FinancialInvoices,FinancialInvoices.Invoice", Utility.Status.New).Select(e => new FinancialModelView(e)).ToList();
         }
        
         public long GetMaxCode(long type )

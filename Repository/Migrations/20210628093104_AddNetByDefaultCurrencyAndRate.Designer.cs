@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repository;
 
 namespace Repository.Migrations
 {
     [DbContext(typeof(OrgContext))]
-    partial class OrgContextModelSnapshot : ModelSnapshot
+    [Migration("20210628093104_AddNetByDefaultCurrencyAndRate")]
+    partial class AddNetByDefaultCurrencyAndRate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -258,9 +260,6 @@ namespace Repository.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<long?>("OutlayId")
-                        .HasColumnType("bigint");
-
                     b.Property<long>("ParentId")
                         .HasColumnType("bigint");
 
@@ -284,8 +283,6 @@ namespace Repository.Migrations
                     b.HasIndex("CurrencyId");
 
                     b.HasIndex("DealerId");
-
-                    b.HasIndex("OutlayId");
 
                     b.HasIndex("PaymentTypeId");
 
@@ -3925,10 +3922,6 @@ namespace Repository.Migrations
                         .WithMany()
                         .HasForeignKey("DealerId");
 
-                    b.HasOne("Entity.Model.Outlay", "Outlay")
-                        .WithMany()
-                        .HasForeignKey("OutlayId");
-
                     b.HasOne("Entity.Model.PaymentType", "PaymentType")
                         .WithMany()
                         .HasForeignKey("PaymentTypeId")
@@ -3944,8 +3937,6 @@ namespace Repository.Migrations
                     b.Navigation("Currency");
 
                     b.Navigation("Dealer");
-
-                    b.Navigation("Outlay");
 
                     b.Navigation("PaymentType");
 

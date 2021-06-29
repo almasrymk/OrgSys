@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repository;
 
 namespace Repository.Migrations
 {
     [DbContext(typeof(OrgContext))]
-    partial class OrgContextModelSnapshot : ModelSnapshot
+    [Migration("20210628090252_AddCurrenctInInvoicesAndFinancial")]
+    partial class AddCurrenctInInvoicesAndFinancial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -226,9 +228,6 @@ namespace Repository.Migrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<decimal>("AmountByDefaultCurrency")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<string>("Code")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -258,17 +257,11 @@ namespace Repository.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<long?>("OutlayId")
-                        .HasColumnType("bigint");
-
                     b.Property<long>("ParentId")
                         .HasColumnType("bigint");
 
                     b.Property<long>("PaymentTypeId")
                         .HasColumnType("bigint");
-
-                    b.Property<decimal>("Rate")
-                        .HasColumnType("decimal(18,2)");
 
                     b.Property<long>("SafeId")
                         .HasColumnType("bigint");
@@ -284,8 +277,6 @@ namespace Repository.Migrations
                     b.HasIndex("CurrencyId");
 
                     b.HasIndex("DealerId");
-
-                    b.HasIndex("OutlayId");
 
                     b.HasIndex("PaymentTypeId");
 
@@ -605,12 +596,6 @@ namespace Repository.Migrations
                     b.Property<long>("CodeNumber")
                         .HasColumnType("bigint");
 
-                    b.Property<decimal>("Credit")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("CreditByDefaultCurrency")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<long>("CurrencyId")
                         .HasColumnType("bigint");
 
@@ -638,9 +623,6 @@ namespace Repository.Migrations
                     b.Property<decimal>("Net")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<decimal>("NetByDefaultCurrency")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<string>("Notes")
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
@@ -653,9 +635,6 @@ namespace Repository.Migrations
 
                     b.Property<long>("PaymentTypeId")
                         .HasColumnType("bigint");
-
-                    b.Property<decimal>("Rate")
-                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("Remaining")
                         .HasColumnType("decimal(18,2)");
@@ -3925,10 +3904,6 @@ namespace Repository.Migrations
                         .WithMany()
                         .HasForeignKey("DealerId");
 
-                    b.HasOne("Entity.Model.Outlay", "Outlay")
-                        .WithMany()
-                        .HasForeignKey("OutlayId");
-
                     b.HasOne("Entity.Model.PaymentType", "PaymentType")
                         .WithMany()
                         .HasForeignKey("PaymentTypeId")
@@ -3944,8 +3919,6 @@ namespace Repository.Migrations
                     b.Navigation("Currency");
 
                     b.Navigation("Dealer");
-
-                    b.Navigation("Outlay");
 
                     b.Navigation("PaymentType");
 

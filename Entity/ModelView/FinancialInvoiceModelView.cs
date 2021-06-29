@@ -24,6 +24,8 @@ namespace Entity.ModelView
             this.RowNumber = ob.RowNumber;
             this.InvoiceId = ob.InvoiceId;
             this.InvoiceCode = ob.Invoice?.Code;
+            this.InvoiceDate = ob.Invoice?.Date;
+            this.Net = ob.Invoice?.Net;
             this.Hide = ob.Hide;
             this.Amount = ob.Amount;           
             this.Status = ob.Status;
@@ -41,7 +43,7 @@ namespace Entity.ModelView
                     Id = this.Id,
                     FinancialId = this.FinancialId,
                     InvoiceId = this.InvoiceId,
-                    RowNumber = this.RowNumber,
+                    RowNumber = this.RowNumber,                    
                     Amount = this.Amount,
                     Hide = this.Hide,
                     Status = this.Status,
@@ -59,6 +61,8 @@ namespace Entity.ModelView
         public long InvoiceId { get; set; }
 
         public string InvoiceCode { get; set; }
+        public DateTime? InvoiceDate { get; set; }
+        public decimal? Net { get; set; }
         public decimal Amount { get; set; }
     }
 }

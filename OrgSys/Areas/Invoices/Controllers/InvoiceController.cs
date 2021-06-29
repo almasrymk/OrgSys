@@ -25,6 +25,7 @@ namespace OrgSys.Areas.Invoices.Controllers
 
         public override void LoadViewBag(InvoiceModelView model)
         {
+            ViewBag.CurrencyId = new SelectList(new CurrencyService().GetAll(model.ParentId, 0, 1, 20), "Id", "Name", model.CurrencyId);
             ViewBag.PaymentTypeId = new SelectList(new PaymentTypeService().GetAll(model.ParentId, model.PaymentTypeId, 1, 20), "Id", "Name", model.PaymentTypeId);
             
             List<SelectListItem> selectListItems = new List<SelectListItem>();
@@ -114,6 +115,31 @@ namespace OrgSys.Areas.Invoices.Controllers
                 })
                 .ToList();
             return Json(list);
+        }       
+
+        public ActionResult SearchInvoices(string txt = "" , long dealerId = 0 , long currencyId =0, int page = 1 , long typeId = 1, int Type = 1, int index = 0 , string ids = "")
+        {
+            ViewBag.index = index;
+            ViewBag.dealerId = dealerId;
+            ViewBag.currencyId = currencyId;
+            ViewBag.Type = Type;          
+            ViewBag.ids = ids;            
+            var list = new InvoiceService().GetCreditAllByDealerId(txt , dealerId, currencyId , ids, 0 , typeId,  page, 10);
+            return Type != 1 ? (ActionResult)PartialView("SearchInvoicesList", list) : View("SearchInvoices", list);
+        }
+       
+        public JsonResult checkStock(int id)
+        {
+            var invoice = new InvoiceService().Get(id);
+            var data = new
+            {
+                code = invoice.Code,
+                dealer = invoice.DealerName,
+                date = invoice.Date,
+                net = invoice.Net,
+                credit = invoice.Credit
+            };
+            return Json(data);
         }
     }
 }

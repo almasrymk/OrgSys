@@ -25,7 +25,17 @@ namespace Service.BAL
         /// <returns></returns>
         public CurrencyModelView Save(CurrencyModelView ob)
         {
-            return new CurrencyModelView(repo.currencyRepo.AddOrUpdate(ob.Model));
+            ob = new CurrencyModelView(repo.currencyRepo.AddOrUpdate(ob.Model));
+            if(ob.IsDefault )
+            {
+                 var obOldIsDefault = repo.currencyRepo.Get(e => e.IsDefault && e.Id != ob.Id);
+                if(obOldIsDefault != null && ob.Id != obOldIsDefault.Id)
+                {
+                    obOldIsDefault.IsDefault = false;
+                    repo.currencyRepo.AddOrUpdate(obOldIsDefault);
+                }
+            }
+            return ob;
         }
 
         /// <summary>

@@ -25,7 +25,9 @@ namespace OrgSys.Areas.Financial.Controllers
 
         public override void LoadViewBag(FinancialModelView model)
         {
-            ViewBag.PaymentTypeId = new SelectList(new PaymentTypeService().GetAll(model.ParentId, model.PaymentTypeId, 1, 20), "Id", "Name", model.PaymentTypeId);
+            ViewBag.OutlayId = new SelectList(new OutlayService().GetAll(model.ParentId, 0, 1, 20), "Id", "Name", model.OutlayId);
+            ViewBag.CurrencyId = new SelectList(new CurrencyService().GetAll(model.ParentId, 0, 1, 20), "Id", "Name", model.CurrencyId);
+            ViewBag.PaymentTypeId = new SelectList(new PaymentTypeService().GetAll(model.ParentId, 0, 1, 20), "Id", "Name", model.PaymentTypeId);
             ViewBag.DealerId = new SelectList(new DealerService().GetAll(model.ParentId, model.TypeId == 1 || model.TypeId == 3 ? (int)DealerType.Client : (int)DealerType.Supplier, 1, 20), "Id", "Name", model.DealerId);
             ViewBag.SafeId = new SelectList(new SafeService().GetAll(model.ParentId, 0, 1, 20), "Id", "Name", model.SafeId);
             var type = new TransactionTypeService().Get(model.TypeId);

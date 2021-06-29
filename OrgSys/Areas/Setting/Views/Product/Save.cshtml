@@ -31,10 +31,10 @@
                         <h2 class="mr-4 mb-2 ml-4 d-inline-block float-md-left">
                             @if (Model != null || Model.Id == 0)
                             {
-                <span class="mb-4"> @Utility.Resource.Title_Designer.New ...</span> }
-            else
-            {
-<span class="mb-4"> @Utility.Resource.Title_Designer.Edit ...</span>}
+                                <span class="mb-4"> @Utility.Resource.Title_Designer.New ...</span> }
+                            else
+                            {
+                                <span class="mb-4"> @Utility.Resource.Title_Designer.Edit ...</span>}
                         </h2>
                         <div class="position-absolute card-top-buttons">
                             <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId" class="btn btn-primary"><i class="simple-icon-action-undo"></i>  @Utility.Resource.Title_Designer.Back</a>
@@ -191,43 +191,43 @@
                                                             <tbody>
                                                                 @foreach (var ob in Model.ProductUnits)
                                                                 {
-                                                    <tr>
-                                                        <td style="min-width:100px;">
-                                                            <input type="hidden" id="RowId" value="@ob.Id" />
-                                                            <div id="divUnitId" class="input-group">
-                                                                <div class="input-group-prepend">
-                                                                    <span class="input-group-text"><i class="simple-icon-pie-chart"></i></span>
-                                                                </div>
-                                                                @Html.DropDownListFor(model => ob.UnitId, (SelectList)ViewBag.UnitList, " - " + Utility.Resource.Title_Designer.SelectUnit + " - ", new { @id = "UnitId", @name = "UnitId", @class = "form-control", @onchange = "AddNewRowUnit($(this).parent().parent())" })
-                                                            </div>
-                                                        </td>
-                                                        <td style="width:100px;">
-                                                            @Html.EditorFor(modelItem => ob.Rate, new { htmlAttributes = new { @id = "Rate", @name = "Rate", @class = "form-control", @type = "text", @onkeyup = "AddNewRowUnit($(this).parent().parent())" } })
-                                                        </td>
-                                                        <td style="width:100px;text-align:center;vertical-align:middle;">
-                                                            @if (ob.DefaultUnit)
-                                                            {
-                                            <div id="DefaultUnit" class="custom-switch custom-switch-primary-inverse custom-switch-small">
-                                                <input onchange="CheckDefaultUnit($(this).parent().parent().parent())" class="custom-switch-input chkUnit" id="chkUnit_@ob.UnitId" type="checkbox" checked>
-                                                <label class="custom-switch-btn" for="chkUnit_@ob.UnitId"></label>
-                                            </div> }
-                                        else
-                                        {
-                        <div id="DefaultUnit" class="custom-switch custom-switch-primary-inverse custom-switch-small">
-                            <input onchange="CheckDefaultUnit($(this).parent().parent().parent())" class="custom-switch-input chkUnit" id="chkUnit_@ob.UnitId" type="checkbox">
-                            <label class="custom-switch-btn" for="chkUnit_@ob.UnitId"></label>
-                        </div>}
-                                                        </td>
-                                                        <td style="width:100px;vertical-align:middle;">
-                                                            @if (ob != null && ob.Id >= 0)
-                                                            {
-                                            <a id="btDelete" href="javascript:;" onclick="RemoveRowUnit($(this).parent().parent())">  <i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete  </a> }
-                                        else
-                                        {
-                        <a id="btDelete" href="javascript:;" onclick="RemoveRowUnit($(this).parent().parent())" style="display:none">  <i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete </a>}
-                                                        </td>
-                                                    </tr>
-}
+                                                                    <tr>
+                                                                        <td style="min-width:100px;">
+                                                                            <input type="hidden" id="RowId" value="@ob.Id" />
+                                                                            <div id="divUnitId" class="input-group">
+                                                                                <div class="input-group-prepend">
+                                                                                    <span class="input-group-text"><i class="simple-icon-pie-chart"></i></span>
+                                                                                </div>
+                                                                                @Html.DropDownListFor(model => ob.UnitId, (SelectList)ViewBag.UnitList, " - " + Utility.Resource.Title_Designer.SelectUnit + " - ", new { @id = "UnitId", @name = "UnitId", @class = "form-control", @onchange = "AddNewRowUnit($(this).parent().parent())" })
+                                                                            </div>
+                                                                        </td>
+                                                                        <td style="width:100px;">
+                                                                            @Html.EditorFor(modelItem => ob.Rate, new { htmlAttributes = new { @id = "Rate", @name = "Rate", @class = "form-control", @type = "text", @onkeyup = "AddNewRowUnit($(this).parent().parent())" } })
+                                                                        </td>
+                                                                        <td style="width:100px;text-align:center;vertical-align:middle;">
+                                                                            @if (ob.DefaultUnit)
+                                                                            {
+                                                                                <div id="DefaultUnit" class="custom-switch custom-switch-primary-inverse custom-switch-small">
+                                                                                    <input onchange="CheckDefaultUnit($(this).parent().parent().parent())" class="custom-switch-input chkUnit" id="chkUnit_@ob.UnitId" type="checkbox" checked>
+                                                                                    <label class="custom-switch-btn" for="chkUnit_@ob.UnitId"></label>
+                                                                                </div> }
+                                                                            else
+                                                                            {
+                                                                                <div id="DefaultUnit" class="custom-switch custom-switch-primary-inverse custom-switch-small">
+                                                                                    <input onchange="CheckDefaultUnit($(this).parent().parent().parent())" class="custom-switch-input chkUnit" id="chkUnit_@ob.UnitId" type="checkbox">
+                                                                                    <label class="custom-switch-btn" for="chkUnit_@ob.UnitId"></label>
+                                                                                </div>}
+                                                                        </td>
+                                                                        <td style="width:100px;vertical-align:middle;">
+                                                                            @if (ob != null && ob.Id >= 0)
+                                                                            {
+                                                                                <a id="btDelete" href="javascript:;" onclick="RemoveRowUnit($(this).parent().parent())">  <i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete  </a> }
+                                                                            else
+                                                                            {
+                                                                                <a id="btDelete" href="javascript:;" onclick="RemoveRowUnit($(this).parent().parent())" style="display:none">  <i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete </a>}
+                                                                        </td>
+                                                                    </tr>
+                                                                }
 
                                                                 <tr class="trNew">
                                                                     <td style="min-width:100px;">
@@ -276,10 +276,10 @@
                                         </div>
                                         @if ("" + Model.ImgPath != "")
                                         {
-                            <img id="img" src="@Model.ImgPath" alt="Fruitcake" class="list-thumbnail border-0  badge-theme-1" style="height:200px;"> }
-                        else
-                        {
-            <img id="img" src="~/img/profiles/ProductCard.png" alt="Fruitcake" class="list-thumbnail border-0  badge-theme-1" style="height:200px;">}
+                                            <img id="img" src="@Model.ImgPath" alt="Fruitcake" class="list-thumbnail border-0  badge-theme-1" style="height:200px;"> }
+                                        else
+                                        {
+                                            <img id="img" src="~/img/profiles/ProductCard.png" alt="Fruitcake" class="list-thumbnail border-0  badge-theme-1" style="height:200px;">}
                                     </div>
                                 </div>
                             </div>
@@ -301,7 +301,7 @@
         $(".sw-btn-prev").append('@Utility.Resource.Title_Designer.Previous');
         $(".sw-btn-next").empty();
         $(".sw-btn-next").append('@Utility.Resource.Title_Designer.Next');
-       
+
     }, 600);*@
 
     setTimeout(function () {
@@ -401,7 +401,7 @@
 
         if (CheckRowCount("tblUnit", "divtblUnit", '@Utility.Resource.Message_Designer.ClassificationRequired'))
             Valid = false;
-        
+
         if (CheckRage("Description", "divDescription", 5, 500, '@Utility.Resource.Message_Designer.DescriptionRange'))
             Valid = false;
 

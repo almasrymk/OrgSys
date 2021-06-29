@@ -112,6 +112,20 @@ namespace Service.BAL
             return ob;
         }
 
+        public void UpdateCredit(List<long> ids)
+        {
+            foreach (var id in ids)
+            {
+                var inv = repo.invoiceRepo.Get(e => e.Id == id);
+                if (inv == null || inv.Id == 0)
+                    continue;
+
+                var amount = repo.financialInvoiceRepo.GetList(e => e.InvoiceId == id, null, "Invoice").Sum(e => e.Amount);
+                inv.Credit = inv.Net - amount;
+                repo.invoiceRepo.AddOrUpdate(inv);
+            }
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -162,6 +176,16 @@ namespace Service.BAL
         public IPagedList<InvoiceModelView> GetAll(string textSearch, long parentId = 0, long TypeId = 0, int page = 1, int pageSize = 20)
         {
             return repo.invoiceRepo.GetList(e => e.TypeId == TypeId && ("" + textSearch == "" || e.Dealer.Name.Contains("" + textSearch)), e => e.OrderByDescending(e => e.Id), "Dealer,Transaction", Utility.Status.New).Select(e => new InvoiceModelView(e)).ToPagedList(page, pageSize);
+        }
+
+        public IPagedList<InvoiceModelView> GetCreditAllByDealerId(string textSearch , long dealerId , long currencyId, string ids, long parentId = 0, long TypeId = 0, int page = 1, int pageSize = 20)
+        {
+            if (ids == null)
+                ids = "";
+           var idsList = ids.Split(",").Where(e => e != "").ToList();
+            if (idsList == null)
+                idsList = new List<string>();
+            return repo.invoiceRepo.GetList(e => !ids.Contains(e.Id.ToString()) && e.TypeId == TypeId && e.DealerId == dealerId && e.CurrencyId == currencyId && e.Credit > 0 && ("" + textSearch == "" || e.Code.Contains("" + textSearch) || e.Dealer.Name.Contains("" + textSearch)), e => e.OrderByDescending(e => e.Id), "Dealer", Utility.Status.New).Select(e => new InvoiceModelView(e)).ToPagedList(page, pageSize);
         }
 
         /// <summary>
