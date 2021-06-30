@@ -74,7 +74,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="iconsminds-clothing-store"></i></span>
                                             </div>
-                                            @Html.DropDownListFor(model => model.SafeId, null, " ... ", new { @class = "form-control" })
+                                            @Html.DropDownListFor(model => model.SafeId, null, null, new { @class = "form-control" })
                                         </div>
                                         <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
                                     </div>
@@ -90,7 +90,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="iconsminds-financial"></i></span>
                                             </div>
-                                            @Html.DropDownListFor(model => model.CurrencyId, null, "...", new { @class = "form-control" })
+                                            @Html.DropDownListFor(model => model.CurrencyId, null, null, new { @class = "form-control" })
                                         </div>
                                         <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
                                     </div>
@@ -112,7 +112,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="iconsminds-financial"></i></span>
                                             </div>
-                                            @Html.DropDownListFor(model => model.PaymentTypeId, null, " ... ", new { @class = "form-control" })
+                                            @Html.DropDownListFor(model => model.PaymentTypeId, null, null, new { @class = "form-control" })
                                         </div>
                                         <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
                                     </div>
@@ -423,6 +423,22 @@
             });
 
             $("#SafeId").change(function () {
+                AutoSave();
+            });
+
+            $("#CurrencyId").change(function () {
+                AutoSave();
+            });
+
+            $("#Rate").change(function () {
+                AutoSave();
+            });
+
+            $("#OutlayId").change(function () {
+                AutoSave();
+            });
+
+            $("#PaymentTypeId").change(function () {
                 AutoSave();
             });
 
