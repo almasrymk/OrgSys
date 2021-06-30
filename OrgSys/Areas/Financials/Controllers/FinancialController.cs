@@ -39,14 +39,16 @@ namespace OrgSys.Areas.Financial.Controllers
         {
             var setting = new PreferenceService();
             var SafeId = long.Parse("0" + setting.GetByKey("DefaultSafe", "Financial", ob.TypeId, 0)?.Value);
+            var PaymentTypeId = long.Parse("0" + setting.GetByKey("DefaultPaymentType", "Financial", ob.TypeId, 0)?.Value);
+            var CurrencyId = long.Parse("0" + setting.GetByKey("DefaultCurrency", "Financial", ob.TypeId, 0)?.Value);
+            var OutlayId = long.Parse("0" + setting.GetByKey("DefaultOutlay", "Financial", ob.TypeId, 0)?.Value);
 
             long DealerId = 0;
             if(ob.TypeId == 1)
                 DealerId = long.Parse("0" + setting.GetByKey("DefaultSupplier", "Financial", ob.TypeId, 0)?.Value);
             else if (ob.TypeId == 2)
                 DealerId = long.Parse("0" + setting.GetByKey("DefaultCustomer", "Financial", ob.TypeId, 0)?.Value);
-
-            ViewBag.OrderTabe = int.Parse("0" + setting.GetByKey("OrderTabe", "Financial", ob.TypeId, 0)?.Value);
+            
             ViewBag.AutoSave = int.Parse("0" + setting.GetByKey("AutoSave", "Financial", ob.TypeId, 0)?.Value);
             var TypeCode = int.Parse("0" + setting.GetByKey("TypeSerial", "Financial", ob.TypeId, 0)?.Value);
             ViewBag.TypeSerial = TypeCode;
@@ -60,6 +62,10 @@ namespace OrgSys.Areas.Financial.Controllers
                 ob.Code = "" + new FinancialService().GetMaxCode(ob.TypeId);
                 ob.SafeId = SafeId;
                 ob.DealerId = DealerId;
+                ob.CurrencyId = long.Parse("0" + CurrencyId);
+                ob.Rate = new CurrencyService().Get(long.Parse("0" + CurrencyId))?.Rate??0;
+                ob.PaymentTypeId = PaymentTypeId;
+                ob.OutlayId = OutlayId;
                 ob.Date = DateTime.Now;
                 ob.FinancialInvoices = new List<FinancialInvoiceModelView>();
             }

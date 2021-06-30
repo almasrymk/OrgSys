@@ -12,7 +12,21 @@
                         <th style="text-align: center">#</th>
                         <th style="text-align: center">Image</th>
                         <th>@Utility.Resource.Title_Designer.Code</th>
-                        <th>Dealer</th>
+                        <th>
+                            @if (ViewBag.TypeId == 1)
+                            {
+                                <span>Client</span>
+                            }
+                            else if (ViewBag.TypeId == 2)
+                            {
+                                <span>Supplier</span>
+                            }
+                            else
+                            {
+                                <span>Outlay</span>
+                            }
+
+                        </th>
                         <th>Date</th>
                         <th>Safe</th>
                         <th>Amount</th>
@@ -36,7 +50,16 @@
                                 <p class="text-muted">@Model[i].Code</p>
                             </td>
                             <td style="vertical-align: middle;">
-                                <p class="text-muted">@Model[i].DealerName</p>
+                                <p class="text-muted">
+                                    @if (ViewBag.TypeId == 1 || ViewBag.TypeId == 2)
+                                    {
+                                        @Model[i].DealerName
+                                    }
+                                    else
+                                    {
+                                        @Model[i].OutlayName
+                                    }
+                                </p>
                             </td>
                             <td style="width:100px;vertical-align: middle;">
                                 @Model[i].Date.ToString("dd-MM-yyyy")
@@ -119,7 +142,7 @@
 
             }
         </div>
-    </div> 
+    </div>
 }
 
 @Html.Partial("PagedList", Model)

@@ -251,7 +251,29 @@ namespace Repository
                new Preference { Id = 910, Key = "TaxValue", Value = "14", Reference = "Order", TypeId = 2, Hide = false },
                new Preference { Id = 911, Key = "DefaultTaxType", Value = "2", Reference = "Order", TypeId = 2, Hide = false },
                new Preference { Id = 912, Key = "AutoCreateInvoice", Value = "0", Reference = "Order", TypeId = 2, Hide = false },
-               new Preference { Id = 913, Key = "DefaultCustomer", Value = "1", Reference = "Order", TypeId = 2, Hide = false }
+               new Preference { Id = 913, Key = "DefaultCustomer", Value = "1", Reference = "Order", TypeId = 2, Hide = false },
+
+               new Preference { Id = 1000, Key = "DefaultClient", Value = "1", Reference = "Financial", TypeId = 1, Hide = false },
+               new Preference { Id = 1001, Key = "DefaultSafe", Value = "1", Reference = "Financial", TypeId = 1, Hide = false },
+               new Preference { Id = 1002, Key = "DefaultPaymentType", Value = "1", Reference = "Financial", TypeId = 1, Hide = false },
+               new Preference { Id = 1003, Key = "DefaultCurrency", Value = "1", Reference = "Financial", TypeId = 1, Hide = false },
+               new Preference { Id = 1004, Key = "AutoSave", Value = "0", Reference = "Financial", TypeId = 1, Hide = false },
+               new Preference { Id = 1005, Key = "TypeSerial", Value = "1", Reference = "Financial", TypeId = 1, Hide = false },
+
+               new Preference { Id = 1100, Key = "DefaultSupplier", Value = "1", Reference = "Financial", TypeId = 2, Hide = false },
+               new Preference { Id = 1101, Key = "DefaultSafe", Value = "1", Reference = "Financial", TypeId = 2, Hide = false },
+               new Preference { Id = 1102, Key = "DefaultPaymentType", Value = "1", Reference = "Financial", TypeId = 2, Hide = false },
+               new Preference { Id = 1103, Key = "DefaultCurrency", Value = "1", Reference = "Financial", TypeId = 2, Hide = false },
+               new Preference { Id = 1104, Key = "AutoSave", Value = "0", Reference = "Financial", TypeId = 2, Hide = false },
+               new Preference { Id = 1105, Key = "TypeSerial", Value = "1", Reference = "Financial", TypeId = 2, Hide = false },
+
+               new Preference { Id = 1200, Key = "DefaultOutlay", Value = "1", Reference = "Financial", TypeId = 3, Hide = false },
+               new Preference { Id = 1201, Key = "DefaultSafe", Value = "1", Reference = "Financial", TypeId = 3, Hide = false },
+               new Preference { Id = 1202, Key = "DefaultPaymentType", Value = "1", Reference = "Financial", TypeId = 3, Hide = false },
+               new Preference { Id = 1203, Key = "DefaultCurrency", Value = "1", Reference = "Financial", TypeId = 3, Hide = false },
+               new Preference { Id = 1204, Key = "AutoSave", Value = "0", Reference = "Financial", TypeId = 3, Hide = false },
+               new Preference { Id = 1205, Key = "TypeSerial", Value = "1", Reference = "Financial", TypeId = 3, Hide = false }
+
                );
         }
 

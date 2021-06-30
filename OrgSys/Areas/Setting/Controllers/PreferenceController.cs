@@ -142,6 +142,29 @@ namespace OrgSys.Areas.Setting.Controllers
                 ViewBag.ServiceValue = Service.FirstOrDefault(e => e.Key == "ServiceValue")?.Value;
                 ViewBag.TaxValue = Service.FirstOrDefault(e => e.Key == "TaxValue")?.Value;
             }
+
+            if (Resource == "Financial")
+            {
+                ViewBag.Clients = new SelectList(new DealerService().GetAll(0, 1), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultClient")?.Value);
+                ViewBag.Suppliers = new SelectList(new DealerService().GetAll(0, 2), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultSupplier")?.Value);
+                ViewBag.Safes = new SelectList(new SafeService().GetAll(0, 0), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultSafe")?.Value);
+                ViewBag.PaymentTypes = new SelectList(new PaymentTypeService().GetAll(0, 0), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultPaymentType")?.Value);
+                ViewBag.Currencys = new SelectList(new CurrencyService().GetAll(0, 0), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultCurrency")?.Value);
+                ViewBag.Outlays = new SelectList(new OutlayService().GetAll(0, 0), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultOutlay")?.Value);
+
+                List<SelectListItem> selectListItems = new List<SelectListItem>();
+                selectListItems.Add(new SelectListItem { Value = "1", Text = "Data after product" });
+                selectListItems.Add(new SelectListItem { Value = "2", Text = "Product after Data" });
+
+                ViewBag.OrderTabe = new SelectList(selectListItems, "Value", "Text", Service.FirstOrDefault(e => e.Key == "OrderTabe")?.Value);
+              
+                selectListItems = new List<SelectListItem>();
+                selectListItems.Add(new SelectListItem { Value = "1", Text = "Allow" });
+                selectListItems.Add(new SelectListItem { Value = "2", Text = "Not allowed" });
+
+                ViewBag.TypeSerial = new SelectList(selectListItems, "Value", "Text", Service.FirstOrDefault(e => e.Key == "TypeSerial")?.Value);
+                ViewBag.AutoSave = Service.FirstOrDefault(e => e.Key == "AutoSave")?.Value == "1";
+            }
             return View(Service);
         }
 
@@ -156,8 +179,11 @@ namespace OrgSys.Areas.Setting.Controllers
                     if ("" + ob.Key != "")
                     {
                         var pr = service.GetByKey(ob.Key, ob.Reference, ob.TypeId, 0);
-                        pr.Value = ob.Value;
-                        service.Save(pr);
+                        if (pr != null && pr.Id > 0)
+                        {
+                            pr.Value = ob.Value;
+                            service.Save(pr);
+                        }
                     }
                 }
 
