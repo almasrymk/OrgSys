@@ -22,11 +22,14 @@ namespace OrgSys.Controllers
             _logger = logger;
         }
 
+        public IActionResult Dashboard()
+        {
+            return View();
+        }
         public IActionResult Index()
         {
             return View();
         }
-
         public IActionResult Privacy()
         {
             return View();
