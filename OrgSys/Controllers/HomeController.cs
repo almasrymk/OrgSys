@@ -30,6 +30,10 @@ namespace OrgSys.Controllers
         {
             return View();
         }
+        public IActionResult Notfound()
+        {
+            return View();
+        }
         public IActionResult Privacy()
         {
             return View();
