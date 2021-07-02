@@ -34,11 +34,24 @@ namespace OrgSys.Controllers
         {
             return View();
         }
+        public IActionResult ServerError()
+        {
+            return View();
+        }
         public IActionResult Privacy()
         {
             return View();
         }
 
+        public IActionResult Maintenance()
+        {
+            return View();
+        }
+
+        public IActionResult Register()
+        {
+            return View();
+        }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
@@ -61,7 +74,7 @@ namespace OrgSys.Controllers
         [AllowAnonymous]
         [HttpGet]
         public IActionResult LogIn()
-        {            
+        {
             return View();
         }
     }
