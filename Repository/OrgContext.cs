@@ -100,7 +100,9 @@ namespace Repository
               new TransactionType { Id = 1, Name = "Addition", Hide = false, InOut = 1 , Icon = "iconsminds-down-1" },
               new TransactionType { Id = 2, Name = "Issue", Hide = false, InOut = -1, Icon = "iconsminds-up-1" },
               new TransactionType { Id = 3, Name = "Transafer", Hide = false, InOut = -1, Icon = "iconsminds-shuffle-1" },
-              new TransactionType { Id = 4, Name = "Received", Hide = false, InOut = 1, Icon = "iconsminds-file-edit" }
+              new TransactionType { Id = 4, Name = "Received", Hide = false, InOut = 1, Icon = "iconsminds-file-edit" },
+              new TransactionType { Id = 5, Name = "Adjustment In", Hide = false, InOut = 1, Icon = "" },
+              new TransactionType { Id = 6, Name = "Adjustment Out", Hide = false, InOut = -1, Icon = "" }
               );
 
             modelBuilder.Entity<FinancialType>().HasData(
@@ -304,7 +306,6 @@ namespace Repository
         public virtual DbSet<Transaction> Transactions { get; set; }
         public virtual DbSet<TransactionProduct> TransactionProducts { get; set; }
         public virtual DbSet<Inventory> Inventories { get; set; }
-        public virtual DbSet<InventoryStore> InventoryStores { get; set; }
         public virtual DbSet<InventoryProduct> InventoryProducts { get; set; }
         public virtual DbSet<OrderType> OrderTypes { get; set; }
         public virtual DbSet<Table> Tables { get; set; }

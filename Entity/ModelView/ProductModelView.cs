@@ -120,6 +120,8 @@ namespace Entity.ModelView
         [Display(Name = nameof(Title_Designer.ProductRecipe), ResourceType = typeof(Title_Designer))]
         public string Recipe { get; set; }
 
+        public decimal Balance { get; set; }
+
         public List<ProductUnitModelView> ProductUnits { get; set; }
         public List<ProductRecipeModelView> ProductRecipes { get; set; }
         public List<ProductPropertyElementModelView> ProductPropertyElements { get; set; }

@@ -316,6 +316,19 @@ namespace Repository
             }
         }
 
+        private InventoryProductRepo _inventoryProductRepo;
+        public InventoryProductRepo inventoryProductRepo
+        {
+            get
+            {
+
+                if (this._inventoryProductRepo == null)
+                    this._inventoryProductRepo = new InventoryProductRepo();
+
+                return _inventoryProductRepo;
+            }
+        }
+
         private OrderTypeRepo _orderTypeRepo;
         public OrderTypeRepo orderTypeRepo
         {

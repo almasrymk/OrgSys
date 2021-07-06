@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repository;
 
 namespace Repository.Migrations
 {
     [DbContext(typeof(OrgContext))]
-    partial class OrgContextModelSnapshot : ModelSnapshot
+    [Migration("20210706105529_EditInventoryTables")]
+    partial class EditInventoryTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -3948,28 +3950,6 @@ namespace Repository.Migrations
                             Icon = "iconsminds-file-edit",
                             InOut = 1,
                             Name = "Received",
-                            ParentId = 0L,
-                            Status = 0,
-                            TypeId = 0L
-                        },
-                        new
-                        {
-                            Id = 5L,
-                            Hide = false,
-                            Icon = "",
-                            InOut = 1,
-                            Name = "Adjustment In",
-                            ParentId = 0L,
-                            Status = 0,
-                            TypeId = 0L
-                        },
-                        new
-                        {
-                            Id = 6L,
-                            Hide = false,
-                            Icon = "",
-                            InOut = -1,
-                            Name = "Adjustment Out",
                             ParentId = 0L,
                             Status = 0,
                             TypeId = 0L

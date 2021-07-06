@@ -14,9 +14,9 @@ namespace Entity.Model
         public long RowNumber { get; set; }
 
         [Required]
-        public long InventoryStoreId { get; set; }
+        public long InventoryId { get; set; }
 
-        public virtual InventoryStore InventoryStore { get; set; }
+        public virtual Inventory Inventory { get; set; }
 
         [Required]
         public long ProductId { get; set; }
@@ -31,7 +31,6 @@ namespace Entity.Model
         public decimal CalcBalance { get; set; }
         public decimal ActualBalance { get; set; }
         public decimal DiffQuantity { get; set; }
-
         public string Notes { get; set; }                       
     }
 }
