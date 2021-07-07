@@ -820,21 +820,18 @@
                 if ($(this).val() == "" || $(this).val() == "...")
                     $(this).autocomplete("search", "");
                 return;
-
             });
 
             $(".Dropbtn").click(function () {
                 event.preventDefault();
                 $(this).parent().find(".Droptxt").autocomplete("search", "");
                 return;
-
             });
 
             $(".Dropbtn2").click(function () {
                 event.preventDefault();
                 $(this).parent().find(".Droptxt").autocomplete("search", "");
                 return;
-
             });
 
             $(".Droptxt").dblclick(function () {
@@ -842,7 +839,6 @@
                 if ($(this).val() != "")
                     $(this).autocomplete("search", "");
                 return;
-
             });
 
             $('.btnDelete').click(function () {

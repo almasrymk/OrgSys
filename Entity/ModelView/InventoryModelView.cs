@@ -23,15 +23,21 @@ namespace Entity.ModelView
             this.CodeNumber = ob.CodeNumber;
             this.Code = ob.Code;
             this.Date = ob.Date;
+            this.StoreId = ob.StoreId;
+            this.StoreName = ob.Store?.Name;
+            this.UserId = ob.UserId;
+            this.UserName = ob.User?.Name;
+            this.Review = ob.Review;
+            this.Closed = ob.Closed;
             this.Hide = ob.Hide;
             this.Notes = ob.Notes;
             this.Status = ob.Status;
             this.ParentId = ob.ParentId;
             this.TypeId = ob.TypeId;
             this.ImgPath = ob.ImgPath;
-            if (ob.InventoryStores == null)
-                ob.InventoryStores = new List<InventoryStore>();
-            this.InventoryStores = ob.InventoryStores.Select(e => new InventoryStoreModelView(e)).ToList();
+            if (ob.InventoryProducts == null)
+                ob.InventoryProducts = new List<InventoryProduct>();
+            this.InventoryProducts = ob.InventoryProducts.Select(e => new InventoryProductModelView(e)).ToList();
         }
 
         public Inventory Model
@@ -44,6 +50,10 @@ namespace Entity.ModelView
                     CodeNumber = this.CodeNumber,
                     Code = this.Code,
                     Date = this.Date,
+                    StoreId = this.StoreId,
+                    UserId = this.UserId,
+                    Closed = this.Closed,
+                    Review = this.Review,
                     Hide = this.Hide,
                     Notes = this.Notes,
                     Status = this.Status,
@@ -51,7 +61,7 @@ namespace Entity.ModelView
                     ParentId = this.ParentId,
                     TypeId = this.TypeId,
                     ImgPath = this.ImgPath,
-                    InventoryStores = this.InventoryStores != null ? this.InventoryStores.Select(e => e.Model).ToList() : new List<InventoryStore>()
+                    InventoryProducts = this.InventoryProducts != null ? this.InventoryProducts.Select(e => e.Model).ToList() : new List<InventoryProduct>()
                 };
             }
         }
@@ -63,12 +73,18 @@ namespace Entity.ModelView
 
         [Required]
         public DateTime Date { get; set; }
-        [Required]       
-       
+        [Required]
+        public long StoreId { get; set; }
+
+        public string StoreName { get; set; }
+        public long? UserId { get; set; }
+
+        public string UserName { get; set; }
 
         [StringLength(500)]
         public string Notes { get; set; }
-     
-        public List<InventoryStoreModelView> InventoryStores { get; set; }
+        public bool Review { get; set; }
+        public bool Closed { get; set; }
+        public List<InventoryProductModelView> InventoryProducts { get; set; }
     }
 }

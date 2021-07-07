@@ -1,0 +1,689 @@
+﻿@model Entity.ModelView.InventoryModelView
+@{
+    ViewData["Title_Designer"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="HPage" class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="mb-3">
+                <h1>Inventorys </h1>
+                <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
+                    <ol class="breadcrumb pt-0">
+                        <li class="breadcrumb-item">
+                            <a href="/">@Utility.Resource.Title_Designer.Home</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            @Utility.Resource.Title_Designer.Setting
+                        </li>
+                        <li class="breadcrumb-item">
+                            Inventory Notices
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">  <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId">@ViewBag.InventorysType</a></li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+
+        <div class="card pl-1 pr-1">
+            <form action="Save" method="post" enctype="multipart/form-data" class="tooltip-label-right" novalidate>
+                <div class="d-md-block">
+
+                    <div class="d-md-block">
+                        <div class="card-body">
+                            @Html.HiddenFor(model => model.Id)
+                            @Html.HiddenFor(model => model.TypeId)
+                            @Html.HiddenFor(model => model.ParentId)
+                            <div class="m-3 mt-5">
+                                <div class="form-row">
+                                    @Html.HiddenFor(model => model.CodeNumber)
+                                    <div class="form-group col-md-3">
+                                        @Html.LabelFor(model => model.Code)
+
+                                        <div id="divCode">
+                                            @if (ViewBag.TypeSerial == 1)
+                                            {
+                                                @Html.TextBoxFor(model => model.Code, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Code })
+                                            }
+                                            else
+                                            {
+                                                @Html.TextBoxFor(model => model.Code, new { @class = "form-control", @readonly = "true", @style = "background-color:transparent", @placeholder = @Utility.Resource.Title_Designer.Code })
+                                            }
+                                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.CodeIncreasedAutomaticallyCanBechanged</small>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger " })
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        @Html.LabelFor(model => model.Date)
+                                        <div id="divDate">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="simple-icon-calendar"></i></span>
+                                                </div>
+                                                @Html.TextBoxFor(model => model.Date, new { @class = "form-control datepicker" })
+                                            </div>
+                                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        @Html.LabelFor(model => model.StoreName)
+                                        <div id="divStoreId">
+                                            <div class="input-group">
+                                                <div class="input-group DropAutoComplete">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i class="iconsminds-clothing-store"></i></span>
+                                                    </div>
+                                                    <input type="text" class="form-control Droptxt" id="txtStoreId" value="@Model.StoreName" autocomplete="off" />
+                                                    @Html.HiddenFor(model => model.StoreId)
+                                                    <div class="input-group-prepend Dropbtn">
+                                                        <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
+                                                    </div>
+                                                    <div class="input-group-append " style="border-top:none;border-bottom:none;border-right:none;border-left:none;">
+                                                        <button type="button" onclick="LoadProducts()" class="btn btn-primary SearchProduct" style="padding-left:20px;padding-right:20px;color:white;">
+                                                            <i class="iconsminds-repeat-2"> </i>Load Products
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.StoreId, "", new { @class = "text-danger " })
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        @Html.LabelFor(model => model.Notes)
+                                        <div id="divNotes">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="simple-icon-notebook"></i></span>
+                                                </div>
+                                                @Html.TextBoxFor(model => model.Notes, new { @class = "form-control" })
+                                            </div>
+                                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.Notes, "", new { @class = "text-danger " })
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="card">
+                                    <table id="tbl" class="table table-hover ">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">@Utility.Resource.Title_Designer.Product</th>
+                                                <th scope="col">@Utility.Resource.Title_Designer.Unit</th>
+                                                <th scope="col">Balance</th>
+                                                <th scope="col">Actual Balance</th>
+                                                <th scope="col">Diff Quantity</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var InventoryProduct in Model.InventoryProducts)
+                                            {
+                                                <tr class="product-empty ProductRow">
+                                                    <td style="width:35px;padding:0px;text-align:center;vertical-align:middle;">
+                                                        <span id="Index">  </span>
+                                                    </td>
+                                                    <td class="input-group typeahead-container" style="min-width:100px;padding:0px;">
+                                                        <div class="input-group typeahead-container DropAutoComplete">
+                                                            <div class="input-group-append " style="border-top:none;border-bottom:none;border-right:none;border-left:none;">
+                                                                <button id="SearchProduct" type="button" class="btn btn-primary SearchProduct" data-toggle="modal" data-target=".bd-example-modal-lg" style="width:30px;padding:0px;color:white;">
+                                                                    <i class="simple-icon-magnifier"></i>
+                                                                </button>
+                                                            </div>
+                                                            <input type="text" class="form-control search-box Droptxt" name="query" id="query"
+                                                                   placeholder="Start typing product to search..."
+                                                                   autocomplete="off" style="border-top:none;border-bottom:none;border-right:none;" value="@InventoryProduct.ProductName">
+                                                            <input type="hidden" id="ProductId" name="ProductId" class="ProductId" value="@InventoryProduct.ProductId" />
+                                                            <div style="text-align: center; vertical-align: middle;">
+                                                                <i id="RepeatedDanger" class="badge badge-danger mb-1" style="width: 60px; text-align: center; vertical-align: middle; height: 25px; display: none; margin: 6px;">Repeated</i>
+                                                            </div>
+                                                            <div class="input-group-prepend Dropbtn2  ">
+                                                                <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td style="width:150px;padding:0px; vertical-align: middle;">
+                                                        <input type="hidden" id="UnitId" class="UnitId" value="@InventoryProduct.UnitId" />
+                                                        <span id="UnitName" class="form-control UnitName" style="border-top:none;border-bottom:none;border-right:none;"> @InventoryProduct.UnitName </span>
+                                                    </td>
+                                                    <td style="width:100px;padding:0px;">
+                                                        <input type="text" id="CalcBalance" name="CalcBalance" class="form-control CalcBalance" value="@InventoryProduct.CalcBalance" style="border-top:none;border-bottom:none;border-right:none;background-color:transparent;" placeholder="0.0" autocomplete="off" readonly />
+                                                    </td>
+                                                    <td style="width:100px;padding:0px;">
+                                                        <input type="text" id="ActualBalance" name="ActualBalance" class="form-control ActualBalance" value="@InventoryProduct.ActualBalance" style="border-top:none;border-bottom:none;border-right:none;" placeholder="0.0" autocomplete="off" />
+                                                    </td>
+                                                    <td style="width:100px;padding:0px;">
+                                                        <input type="text" id="DiffQuantity" name="DiffQuantity" class="form-control DiffQuantity" value="@InventoryProduct.DiffQuantity" style="border-top:none;border-bottom:none;background-color:transparent;" placeholder="0.0" autocomplete="off" readonly />
+                                                    </td>
+                                                </tr>
+                                            }
+
+                                            <tr class="product-empty ProductRow trNew">
+                                                <td style="width:35px;padding:0px;text-align:center;vertical-align:middle;">
+                                                    <span id="Index">  </span>
+                                                </td>
+                                                <td class="input-group typeahead-container" style="min-width:100px;padding:0px;">
+                                                    <div class="input-group typeahead-container DropAutoComplete">
+                                                        <div class="input-group-append " style="border-top:none;border-bottom:none;border-right:none;border-left:none;">
+                                                            <button id="SearchProduct" type="button" class="btn btn-primary SearchProduct" data-toggle="modal" data-target=".bd-example-modal-lg" style="width:30px;padding:0px;color:white;">
+                                                                <i class="simple-icon-magnifier"></i>
+                                                            </button>
+                                                        </div>
+                                                        <input type="text" class="form-control search-box Droptxt" name="query" id="query"
+                                                               placeholder="Start typing product to search..."
+                                                               autocomplete="off" style="border-top:none;border-bottom:none;border-right:none;">
+                                                        <input type="hidden" id="ProductId" name="ProductId" class="ProductId" />
+                                                        <div style="text-align: center; vertical-align: middle;">
+                                                            <i id="RepeatedDanger" class="badge badge-danger mb-1" style="width: 60px; text-align: center; vertical-align: middle; height: 25px; display: none; margin: 6px;">Repeated</i>
+                                                        </div>
+                                                        <div class="input-group-prepend Dropbtn2  ">
+                                                            <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td style="width:150px;padding:0px;vertical-align: middle;">
+                                                    <input type="hidden" id="UnitId" class="UnitId" />
+                                                    <span id="UnitName" class="form-control UnitName" style="border-top:none;border-bottom:none;border-right:none;"> </span>
+                                                </td>
+                                                <td style="width:100px;padding:0px;">
+                                                    <input type="text" id="CalcBalance" name="CalcBalance" class="form-control CalcBalance" style="border-top:none;border-bottom:none;border-right:none;background-color:transparent;" placeholder="0.0" autocomplete="off" readonly />
+                                                </td>
+                                                <td style="width:100px;padding:0px;">
+                                                    <input type="text" id="ActualBalance" name="ActualBalance" class="form-control ActualBalance" style="border-top:none;border-bottom:none;border-right:none;" placeholder="0.0" autocomplete="off" />
+                                                </td>
+                                                <td style="width:100px;padding:0px;">
+                                                    <input type="text" id="DiffQuantity" name="DiffQuantity" class="form-control DiffQuantity" style="border-top:none;border-bottom:none;background-color:transparent;" placeholder="0.0" autocomplete="off" readonly />
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="position-absolute card-top-buttons">
+                    <span class="btn-group group-add">
+                        <a id="ShowPreference" href="javascript::" class="btn btn-primary .ShowPreference" data-toggle="modal" data-target=".Preference">
+                            <i class="iconsminds-gear-2"></i>
+                            Preference
+                        </a>
+                        <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId" class="btn btn-primary ">
+                            <i class="simple-icon-action-undo"> </i>
+                            @Utility.Resource.Title_Designer.Back
+                        </a>
+                    </span>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <button id="btn" type="button" class="btn btn-primary ml-4 mr-4 mb-4">@Utility.Resource.Title_Designer.Save</button>
+                    </div>
+                </div>
+
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bd-example-modal-lg ProductBody" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" id="SearchProductBody">
+
+    </div>
+</div>
+
+
+<div class="modal fade bd-example-modal-lg Preference" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" id="ShowPreferenceBody">
+
+    </div>
+</div>
+
+<script src="~/js/vendor/jquery-3.3.1.min.js"></script>
+<script src="~/js/vendor/bootstrap3-typeahead.js"></script>
+<link href="~/css/jquery-ui.css" rel="stylesheet" />
+<script src="~/js/jquery-ui.js"></script>
+<script src="~/js/PopupScript.js"></script>
+<script>
+    var AddNewRow;
+    var AddNewProduct;
+    var AddProduct;
+    var LoadProducts;
+    var RefreshSomeEventListener;
+    var ReIndex;
+    var Save;
+    var AutoSave;
+    var Repeated;
+    var ReCalc;
+    jQuery(function ($) {
+        $(".datepicker").datepicker();
+        $(".datepicker").datepicker("option", "dateFormat", "yy/mm/dd");
+        $("#query").focus();
+
+        $('#btn').click(function () {
+            Save();
+        });
+
+        $('#ShowPreference').on("click", function () {
+            $.ajax({
+                type: 'GET',
+                url: "/Setting/Preference/Show",
+                data: { Resource: 'Inventory', type: '0'},
+                success: function (res) {
+                    $("#ShowPreferenceBody").html(res);
+                }
+            });
+
+        });
+
+        $(".txtStoreId").change(
+            function () {
+                alert("sds");
+                if ("" + $(".txtStoreId").val() == "") {
+                    $("#StoreId").val(0);
+                    $(".ProductRow").not(".trNew").remove();
+                }
+            });
+
+        $("#txtStoreId").autocomplete({
+            minLength: 0,
+            source: function (request, response) {
+                var searchPhrase = $("#txtStoreId").val();//request.term.trim().toLowerCase();
+                var noResultsLabel = 'NoResultsFound';
+                $.ajax({
+                    url: "/Setting/Store/GetList",
+                    type: "Get",
+                    dataType: "json",
+                    data: { txtSearch: searchPhrase, page: 1, pageSize: 7 },
+                    success: function (data) {
+                        try {
+                            if (!data.length) {
+                                data = [{ name: noResultsLabel }];
+                            }
+
+                            if ("" + $("#txtStoreId").val() == "") {
+                                $("#StoreId").val("");
+                                $(".ProductRow").not(".trNew").remove();
+                            }
+
+                            response($.map(data, function (item) {
+                                return {
+                                    label: item.name, value: item.name, id: item.id
+                                };
+                            }));
+                        } catch (err) { }
+                    }
+                });
+            },
+            select: function (event, ui) {
+                if (ui.item.label === 'NoResultsFound') {
+                    event.preventDefault();
+                    return;
+                }
+                $("#StoreId").val(ui.item.id);
+                $("#errorStoreId").remove();
+            },
+            focus: function (event, ui) {
+                if (ui.item.label === 'NoResultsFound') {
+                    event.preventDefault();
+                }
+            }
+        });
+
+        AddNewRow = function () {
+            var Current = $('.trNew');
+            var NewRow = Current.clone();
+            NewRow.insertAfter(".trNew")
+            Current.removeClass("trNew");
+            Current.addClass("ProductRow")
+            NewRow.find("#Index").empty();
+            NewRow.find("#Index").append();
+            NewRow.find(".CalcBalance").val("");
+            NewRow.find(".ActualBalance").val("");
+            NewRow.find(".DiffQuantity").val("");
+            RefreshSomeEventListener();
+        }
+
+        RefreshSomeEventListener = function () {
+            $(".search-box").autocomplete({
+                minLength: 0,
+                source: function (request, response) {
+                    var searchPhrase = request.term.trim().toLowerCase();
+                    var noResultsLabel = 'NoResultsFound';
+                    $.ajax({
+                        url: "/Setting/Product/SearchItems",
+                        type: "Get",
+                        dataType: "json",
+                        data: { phrase: searchPhrase },
+                        success: function (data) {
+                            try {
+                                if (!data.length) {
+                                    data = [{ name: noResultsLabel }];
+                                }
+
+                                response($.map(data, function (item) {
+                                    return {
+                                        label: item.name, value: item.name, id: item.id,
+                                        barcode: item.barcode, price: item.price
+                                    };
+                                }));
+                            } catch (err) { }
+                        }
+                    });
+                },
+                select: function (event, ui) {
+                    if (ui.item.label === 'NoResultsFound') {
+                        event.preventDefault();
+                        return;
+                    }
+                    var $row = $(event.target).parents('tr');
+                    AddProduct($row, ui.item.id);
+                },
+                focus: function (event, ui) {
+                    if (ui.item.label === 'NoResultsFound') {
+                        event.preventDefault();
+                    }
+                },
+            });
+
+            $("#Code").keyup(function () {
+                AutoSave();
+            });
+
+            $("#StoreId").change(function () {
+                AutoSave();
+            });
+
+            $("#Date").change(function () {
+                AutoSave();
+            });
+
+            $("#Notes").keyup(function () {
+                AutoSave();
+            });
+
+            $(".ActualBalance").keyup(function () {
+                ReCalc();
+            });
+
+            $(".Droptxt").click(function () {
+                event.preventDefault();
+                if ($(this).val() == "" || $(this).val() == "...")
+                    $(this).autocomplete("search", "");
+                return;
+            });
+
+            $(".Dropbtn").click(function () {
+                event.preventDefault();
+                $(this).parent().find(".Droptxt").autocomplete("search", "");
+                return;
+            });
+
+            $(".Dropbtn2").click(function () {
+                event.preventDefault();
+                $(this).parent().find(".Droptxt").autocomplete("search", "");
+                return;
+            });
+
+            $(".Droptxt").dblclick(function () {
+                event.preventDefault();
+                if ($(this).val() != "")
+                    $(this).autocomplete("search", "");
+                return;
+            });
+        }
+
+        AddProduct = function ($row, id) {
+            var RowRepeated = Repeated(id);
+           if (RowRepeated != "") {
+                RowRepeated.find("#RepeatedDanger").css("display", "block");
+               if ($row.find("#ProductId").val() == 0) {
+                    setTimeout(function () {
+                        $row.find("#query").val("");
+                        $row.find("#query").select();
+                    }, 200);
+                }
+                setTimeout(function () {
+                    RowRepeated.find("#RepeatedDanger").css("display", "none");
+                }, 3000);
+            }
+            else {
+
+                $.ajax({
+                    url: "/Setting/Product/checkStock",
+                    type: "Get",
+                    data: { id: id },
+                    success: function (data) {
+                        if ($row.hasClass("trNew") == true) {
+                            $row.find("#Index").append($("#tbl").find('.ProductRow').length);
+                            AddNewRow();
+                        }
+
+                        $row.find("#ProductId").val(data.id);
+                        $row.find("#query").val(data.name);
+                        $row.find("#UnitId").val(data.selectunitid);
+                        $row.find("#UnitName").empty();
+                        $row.find("#UnitName").append(data.selectunitName);
+
+                        ReIndex();
+                    }
+                });
+            }
+        }
+
+        AddNewProduct = function (id) {
+            var RowRepeated = Repeated(id);
+           if (RowRepeated != "") {
+                RowRepeated.find("#RepeatedDanger").css("display", "block");
+                if ($row.find("#InvoiceId").val() == 0) {
+                    setTimeout(function () {
+                        $row.find("#query").val("");
+                        $row.find("#query").select();
+                    }, 200);
+                }
+                setTimeout(function () {
+                    RowRepeated.find("#RepeatedDanger").css("display", "none");
+                }, 3000);
+
+            }
+            else {
+                $.ajax({
+                    url: "/Setting/Product/checkStock",
+                    type: "Get",
+                    data: { id: id },
+                    success: function (data) {
+                        var $row = $('.trNew');
+                        if ($row.hasClass("trNew") == true) {
+                            $row.find("#Index").append($("#tbl").find('.ProductRow').length);
+                            AddNewRow();
+                        }
+
+                        $row.find("#ProductId").val(data.id);
+                        $row.find("#query").val(data.name);
+                        $row.find("#UnitId").val(data.selectunitid);
+                        $row.find("#UnitName").empty();
+                        $row.find("#UnitName").append(data.selectunitName);
+
+                        ReIndex();
+                    }
+                });
+            }
+        }
+
+        LoadProducts = function () {
+            $(".ProductRow").not(".trNew").remove();
+            var storeId = $("#StoreId").val();
+            $.ajax({
+                dataType: 'json',
+                url: "/Setting/Product/LoadProductsByStore",
+                type: "Get",
+                data: { storeId: storeId },
+                success: function (data) {
+                    for (var i = 0; i < data.length; i++) {
+                        var $row = $('.trNew');
+                        if ($row.hasClass("trNew") == true) {
+                            $row.find("#Index").append($("#tbl").find('.ProductRow').length);
+                            AddNewRow();
+                        }
+                        ReIndex();
+
+                        $row.find("#ProductId").val(data[i].id);
+                        $row.find("#query").val(data[i].name);
+                        $row.find("#UnitId").val(data[i].selectunitid);
+                        $row.find("#UnitName").empty();
+                        $row.find("#UnitName").append(data[i].selectunitName);
+                        $row.find("#CalcBalance").val(data[i].balance);
+                    }
+                }
+            });
+        }
+
+        function leftPad(number, targetLength) {
+            var output = number + '';
+            while (output.length < targetLength) {
+                output = '0' + output;
+            }
+            return output;
+        }
+
+        ReIndex = function () {
+            $("#tbl").find('.ProductRow').not(".trNew").each(function (index) {
+                $(this).find("#Index").empty();
+                $(this).find("#Index").append(index + 1);
+            });
+        }
+
+        Save = function () {
+            var Valid = true;
+
+            if (CheckRequired("Code", "divCode", '@Utility.Resource.Message_Designer.CodeRequired'))
+                Valid = false;
+
+            if (CheckRequired("Date", "divDate", '@Utility.Resource.Message_Designer.DateRequired'))
+                Valid = false;
+
+            if (CheckRequired("StoreId", "divStoreId", '@Utility.Resource.Message_Designer.StoreRequired'))
+                Valid = false;
+
+            if (!Valid) {
+                $("#tbHeader").trigger("Click", SkipCallingAction = true)
+                window.location.replace("#checkStep2");
+            }
+
+            if (Valid == true) {
+                var data = CollectData();
+                $.ajax({
+                    type: 'POST',
+                    url: "/Transactions/Inventory/Save",
+                    data: { model: data },
+                    success: function (res) {
+                        window.location.replace(res.url);
+                    }
+                });
+            }
+        }
+
+        AutoSave = function () {
+            var Valid = true;
+            if (CheckRequiredNoMessage("Code"))
+                Valid = false;
+
+            if (CheckRequiredNoMessage("Date"))
+                Valid = false;
+
+            if (CheckRequiredNoMessage("StoreId"))
+                Valid = false;
+
+            if (Valid == true) {
+                if ('@ViewBag.AutoSave' == 1) {
+                    setTimeout(function () {
+                        var data = CollectData();
+                        $.ajax({
+                            type: 'POST',
+                            url: "/Transactions/Inventory/Save",
+                            data: { model: data },
+                            success: function (res) {
+                                if (res != "Error") {
+                                    $("#Id").val(res.id);
+                                    var obj = { area: "Transactions", Url: "/Transactions/Inventory/Save?Id=" + res.id + "&ParentId=" + $("#ParentId").val() + "&TypeId=" + $("#TypeId").val() };
+                                    history.pushState(null, obj.area, obj.Url);
+                                }
+                            }
+                        });
+                    }, 500);
+                }
+            }
+        }
+
+        function CollectData() {
+            var list = [];
+            $('#tbl > tbody > .ProductRow').each(function () {
+                var currentRow = $(this);
+                if (!currentRow.hasClass('trNew')) {
+                    if (currentRow.find('#ProductId').val() > 0) {                       
+                        list.push({
+                            InventoryId: $('#Id').val(),
+                            ProductId: currentRow.find('#ProductId').val(),
+                            UnitId: currentRow.find('#UnitId').val(),
+                            CalcBalance: "0" + currentRow.find('#CalcBalance').val(),
+                            ActualBalance: "0" + currentRow.find('#ActualBalance').val(),
+                            DiffQuantity: "0" +  currentRow.find('#DiffQuantity').val(),
+                        });
+                    }
+                }
+            });
+
+            var data = {
+                Id: $('#Id').val(),
+                TypeId: $('#TypeId').val(),
+                Code: $('#Code').val(),
+                CodeNumber: $('#CodeNumber').val(),
+                Date: $('#Date').val(),
+                StoreId: $('#StoreId').val(),
+                Notes: $('#Notes').val(),
+                InventoryProducts: list
+            }
+
+           return data;
+        }
+
+        Repeated = function (itemId) {
+            var Inv = ""
+            $("#tbl").find('.ProductRow').not(".trNew").each(function (index) {
+                var currentRow = $(this);
+                if (itemId == currentRow.find("#ProductId").val()) {
+                    Inv = currentRow;
+                    return false;
+                }
+            });
+            return Inv;
+        }
+
+        ReCalc = function () {
+
+            $("#tbl").find('.ProductRow').not(".trNew").each(function (index) {
+                var row = $(this);
+                if (parseFloat(row.find("#ProductId").val()) > 0) {
+                    var CalcBalance = parseFloat(row.find("#CalcBalance").val());
+                    var ActualBalance = parseFloat(row.find("#ActualBalance").val());
+                    row.find("#DiffQuantity").val(ActualBalance - CalcBalance);
+                }
+
+
+            });
+
+            AutoSave();
+        }
+
+        RefreshSomeEventListener();
+
+        ReIndex();
+    });
+</script>

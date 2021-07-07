@@ -20,13 +20,16 @@ namespace Entity.Model
       
         public long? UserId { get; set; }
 
-        public virtual User User { get; set; }             
+        public virtual User User { get; set; }
+        [Required]
+        public long StoreId { get; set; }
 
+        public virtual Store Store { get; set; }
         [StringLength(500)]
         public string Notes { get; set; }
         public bool Review { get; set; }
         public bool Closed { get; set; }
 
-        public virtual List<InventoryStore> InventoryStores { get; set; }
+        public virtual List<InventoryProduct> InventoryProducts { get; set; }
     }
 }

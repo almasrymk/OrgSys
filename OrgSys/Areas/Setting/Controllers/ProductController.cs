@@ -68,11 +68,28 @@ namespace OrgSys.Areas.Setting.Controllers
             var product = new ProductService().Get(id);
             var data = new
             {
+                id = product.Id,
                 name = product.Name,
                 price = product.Price,
                 selectunitid = product.ProductUnits.FirstOrDefault(e => e.DefaultUnit).UnitId,
+                selectunitName = product.ProductUnits.FirstOrDefault(e => e.DefaultUnit).UnitName,
                 unitlist = new UnitService().GetAllByProductId(id)
             };
+            return Json(data);
+        }
+
+        public JsonResult LoadProductsByStore(long storeId)
+        {
+            var products = new ProductService().GetAllByBalance(storeId);
+            var data = products.Select(e=> new
+            {
+                id = e.Id,
+                name = e.Name,
+                price = e.Price,
+                selectunitid = e.ProductUnits.FirstOrDefault(e => e.DefaultUnit).UnitId,
+                selectunitName = e.ProductUnits.FirstOrDefault(e => e.DefaultUnit).UnitName,
+                balance = e.Balance
+            }).ToList();
             return Json(data);
         }
     }

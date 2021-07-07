@@ -25,10 +25,10 @@ namespace Entity.ModelView
             this.ProductName = ob.Product?.Name;
             this.UnitId = ob.UnitId;
             this.UnitName = ob.Unit?.Name;
-            this.ActualBalance = this.ActualBalance;
-            this.CalcBalance = this.CalcBalance;
-            this.DiffQuantity = this.DiffQuantity;
-            this.InventoryStoreId = this.InventoryStoreId;
+            this.ActualBalance = ob.ActualBalance;
+            this.CalcBalance = ob.CalcBalance;
+            this.DiffQuantity = ob.DiffQuantity;
+            this.InventoryId = ob.InventoryId;
             this.Hide = ob.Hide;
             this.Notes = ob.Notes;         
             this.Status = ob.Status;
@@ -52,7 +52,7 @@ namespace Entity.ModelView
                     ActualBalance = this.ActualBalance,
                     CalcBalance = this.CalcBalance,
                     DiffQuantity = this.DiffQuantity,
-                    InventoryStoreId = this.InventoryStoreId,
+                    InventoryId = this.InventoryId,
                     RowNumber = this.RowNumber,
                     Hide = this.Hide,
                     Notes = this.Notes,
@@ -69,7 +69,7 @@ namespace Entity.ModelView
         public long RowNumber { get; set; }
 
         [Required]
-        public long InventoryStoreId { get; set; }
+        public long InventoryId { get; set; }
 
 
         [Required]

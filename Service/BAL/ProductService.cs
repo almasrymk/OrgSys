@@ -131,7 +131,7 @@ namespace Service.BAL
             var ob = repo.productRepo.Get(e => e.Id == Id);
             if (ob != null)
             {
-                ob.ProductUnits = repo.productUnitRepo.GetList(e => e.ProductId == Id, e => e.OrderBy(e => e.Id), "", Utility.Status.All).ToList();
+                ob.ProductUnits = repo.productUnitRepo.GetList(e => e.ProductId == Id, e => e.OrderBy(e => e.Id), "Unit", Utility.Status.All).ToList();
                 ob.ProductRecipes = repo.recipeRepo.GetList(e => e.ProductId == Id, e => e.OrderBy(e => e.Id), "", Utility.Status.All).ToList();
             }
             var obMw = new ProductModelView(ob);
@@ -184,6 +184,20 @@ namespace Service.BAL
                     obList.Add(new TreeView { Id = item2.Id, Value = item2.Name, Key = "" + item2.Id, ParentId = item.Id });
             }
             return obList;
+        }
+
+        public List<ProductModelView> GetAllByBalance(long StoreId)
+        {
+            List<ProductModelView> list = new List<ProductModelView>();
+            var trns = repo.transactionProductRepo.GetList(e => e.StoreId == StoreId, e => e.OrderBy(e => e.ProductId), "Transaction,Transaction.Store,Product,Unit,Product.ProductUnits", Utility.Status.All).ToList();
+            var products = trns.Select(e => e.Product).Distinct().ToList();
+            foreach (var product in products)
+            {
+                var ob = new ProductModelView(product);
+                ob.Balance = trns.Where(e => e.ProductId == product.Id).Sum(e => e.TypeId == 1 || e.TypeId == 3 || e.TypeId == 6 ? -1 * e.Quantity : e.Quantity);
+                list.Add(ob);
+            }
+            return list;
         }
     }
 }
