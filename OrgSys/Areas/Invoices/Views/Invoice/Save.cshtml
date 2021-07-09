@@ -15,7 +15,7 @@
                             <a href="/">@Utility.Resource.Title_Designer.Home</a>
                         </li>
                         <li class="breadcrumb-item">
-                            Invoices
+                            @Utility.Resource.Title_Designer.Invoices
                         </li>
                         <li class="breadcrumb-item">
                             @ViewBag.InvoicesGroup
@@ -293,7 +293,7 @@
 
                                             <td style="width:100px;padding:0px;text-align:center;vertical-align:middle;">
                                                 @Html.LabelFor(model => model.Service)
-                                                Service
+                                                @Utility.Resource.Title_Designer.Service
                                             </td>
                                             <td style="width:100px;padding:0px;">
                                                 @Html.TextBoxFor(model => model.Service, new { @class = "form-control", @style = "border-top:none;border-bottom:none;border-right:none;", @placeholder = "0.0" })
@@ -352,11 +352,11 @@
                                 <div class="form-group col-md-4">
                                     @if (Model.TypeId == 1 || Model.TypeId == 3)
                                     {
-                                        <label>Client</label>
+                                    <label>@Utility.Resource.Title_Designer.Client</label>
                                     }
                                     else
                                     {
-                                        <label>Supplier</label>
+                                <label>@Utility.Resource.Title_Designer.Supplier</label>
                                     }
                                     <div id="divDealerId">
                                         <div class="input-group DropAutoComplete">
@@ -404,7 +404,7 @@
                                     @Html.ValidationMessageFor(model => model.Rate, "", new { @class = "text-danger " })
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label>Store</label>
+                                    <label>@Utility.Resource.Title_Designer.Store</label>
                                     <div id="divStoreId">
                                         <div class="input-group DropAutoComplete">
                                             <div class="input-group-prepend">
@@ -439,7 +439,7 @@
                                 @if (Model.TypeId == 3 || Model.TypeId == 4)
                                 {
                                     <div class="form-group col-md-4">
-                                        <label>Invoice</label>
+                                        <label>@Utility.Resource.Title_Designer.Invoice</label>
                                         <div id="divParentId">
                                             <div class="input-group DropAutoComplete">
                                                 <div class="input-group-prepend">
@@ -481,7 +481,7 @@
                         <span class="btn-group group-add">
                             <a id="ShowPreference" href="javascript::" class="btn btn-primary .ShowPreference" data-toggle="modal" data-target=".Preference">
                                 <i class="iconsminds-gear-2"></i>
-                                Preference
+                                @Utility.Resource.Title_Designer.Preference
                             </a>
 
                             @*<button id="ShowPreference" type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg" style="width:30px;padding:0px;color:white;">
@@ -504,11 +504,11 @@
                         <span class="btn-group group-add mb-4" style="width:92%">
                             <a href="/Setting/Product/Save" class="btn btn-primary ">
                                 <i class="iconsminds-shopping-basket"></i>
-                                New Product
+                                @Utility.Resource.Title_Designer.NewProduct
                             </a>
                             <a href="/Setting/Classification/Save" class="btn btn-primary">
                                 <i class="simple-icon-layers"></i>
-                                New Classification
+                                @Utility.Resource.Title_Designer.NewClassification
                             </a>
                         </span>
                     </div>

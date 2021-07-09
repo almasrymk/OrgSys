@@ -10,26 +10,26 @@
                 <thead>
                     <tr>
                         <th style="text-align: center">#</th>
-                        <th style="text-align: center">Image</th>
+                        <th style="text-align: center">@Utility.Resource.Title_Designer.Image</th>
                         <th>@Utility.Resource.Title_Designer.Code</th>
                         <th>
                             @if (ViewBag.TypeId == 1)
                             {
-                                <span>Client</span>
+                            <span>@Utility.Resource.Title_Designer.Client</span>
                             }
                             else if (ViewBag.TypeId == 2)
                             {
-                                <span>Supplier</span>
+                        <span>@Utility.Resource.Title_Designer.Supplier</span>
                             }
                             else
                             {
-                                <span>Outlay</span>
+                        <span>@Utility.Resource.Title_Designer.Outlay</span>
                             }
 
                         </th>
-                        <th>Date</th>
-                        <th>Safe</th>
-                        <th>Amount</th>
+                        <th>@Utility.Resource.Title_Designer.Date</th>
+                        <th>@Utility.Resource.Title_Designer.Safe</th>
+                        <th>@Utility.Resource.Title_Designer.Amount</th>
                         <th colspan="3"></th>
                     </tr>
                 </thead>

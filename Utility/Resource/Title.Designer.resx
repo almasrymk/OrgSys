@@ -132,6 +132,18 @@
   <data name="Amount" xml:space="preserve">
     <value>Amount</value>
   </data>
+  <data name="AutoCreateInvoice" xml:space="preserve">
+    <value>Auto Create Invoice</value>
+  </data>
+  <data name="AutoCreateTransaction" xml:space="preserve">
+    <value>Auto Create Transaction</value>
+  </data>
+  <data name="AutoReceived" xml:space="preserve">
+    <value>Auto Received</value>
+  </data>
+  <data name="AutoSave" xml:space="preserve">
+    <value>Auto Save</value>
+  </data>
   <data name="Back" xml:space="preserve">
     <value>Back</value>
   </data>
@@ -177,17 +189,50 @@
   <data name="Cost" xml:space="preserve">
     <value>Cost</value>
   </data>
+  <data name="Credit" xml:space="preserve">
+    <value>Credit</value>
+  </data>
   <data name="Currencies" xml:space="preserve">
     <value>Currencies</value>
   </data>
+  <data name="Currency" xml:space="preserve">
+    <value>Currency</value>
+  </data>
+  <data name="Customers" xml:space="preserve">
+    <value>Customers</value>
+  </data>
   <data name="Data" xml:space="preserve">
     <value>Data</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="Dealer" xml:space="preserve">
+    <value>Dealer</value>
   </data>
   <data name="Dealers" xml:space="preserve">
     <value>Dealers</value>
   </data>
   <data name="Default" xml:space="preserve">
     <value>Default</value>
+  </data>
+  <data name="DefaultClient" xml:space="preserve">
+    <value>Default Client</value>
+  </data>
+  <data name="DefaultCurrency" xml:space="preserve">
+    <value>Default Currency</value>
+  </data>
+  <data name="DefaultOutlay" xml:space="preserve">
+    <value>Default Outlay</value>
+  </data>
+  <data name="DefaultPaymentType" xml:space="preserve">
+    <value>Default Payment Type</value>
+  </data>
+  <data name="DefaultSafe" xml:space="preserve">
+    <value>Default Safe</value>
+  </data>
+  <data name="DefaultSupplier" xml:space="preserve">
+    <value>Default Supplier</value>
   </data>
   <data name="DefaultUnit" xml:space="preserve">
     <value>Default Unit</value>
@@ -198,6 +243,12 @@
   <data name="Description" xml:space="preserve">
     <value>Description</value>
   </data>
+  <data name="Discount" xml:space="preserve">
+    <value>Discount</value>
+  </data>
+  <data name="DisplayOptions" xml:space="preserve">
+    <value>Display Options</value>
+  </data>
   <data name="Docs" xml:space="preserve">
     <value>Docs</value>
   </data>
@@ -206,6 +257,9 @@
   </data>
   <data name="Email" xml:space="preserve">
     <value>Email</value>
+  </data>
+  <data name="EmptyLineCount" xml:space="preserve">
+    <value>Empty Line Count</value>
   </data>
   <data name="External" xml:space="preserve">
     <value>External</value>
@@ -216,11 +270,17 @@
   <data name="Financial" xml:space="preserve">
     <value>Financial</value>
   </data>
+  <data name="FinancialNotices" xml:space="preserve">
+    <value>Financial Notices</value>
+  </data>
   <data name="History" xml:space="preserve">
     <value>History</value>
   </data>
   <data name="Home" xml:space="preserve">
     <value>Home</value>
+  </data>
+  <data name="Image" xml:space="preserve">
+    <value>Image</value>
   </data>
   <data name="Internal" xml:space="preserve">
     <value>Internal</value>
@@ -240,6 +300,9 @@
   <data name="Invoices" xml:space="preserve">
     <value>Invoices</value>
   </data>
+  <data name="IsDefault" xml:space="preserve">
+    <value>Is Default</value>
+  </data>
   <data name="Issue" xml:space="preserve">
     <value>Issue</value>
   </data>
@@ -248,6 +311,12 @@
   </data>
   <data name="New" xml:space="preserve">
     <value>New</value>
+  </data>
+  <data name="NewClassification" xml:space="preserve">
+    <value>New Classification</value>
+  </data>
+  <data name="NewProduct" xml:space="preserve">
+    <value>New Product</value>
   </data>
   <data name="Next" xml:space="preserve">
     <value>Next</value>
@@ -261,8 +330,14 @@
   <data name="Orders" xml:space="preserve">
     <value>Orders</value>
   </data>
+  <data name="OrderTabe" xml:space="preserve">
+    <value>Order Tabe</value>
+  </data>
   <data name="OrgSys" xml:space="preserve">
     <value>Organizer System</value>
+  </data>
+  <data name="Outlaies" xml:space="preserve">
+    <value>Outlaies</value>
   </data>
   <data name="Outlay" xml:space="preserve">
     <value>Outlay</value>
@@ -276,8 +351,14 @@
   <data name="Payment" xml:space="preserve">
     <value>Payment</value>
   </data>
+  <data name="PaymentTypes" xml:space="preserve">
+    <value>Payment Types</value>
+  </data>
   <data name="Phone" xml:space="preserve">
     <value>Phone</value>
+  </data>
+  <data name="Preference" xml:space="preserve">
+    <value>Preference</value>
   </data>
   <data name="Previous" xml:space="preserve">
     <value>Previous</value>
@@ -321,6 +402,9 @@
   <data name="Received" xml:space="preserve">
     <value>Received</value>
   </data>
+  <data name="Repeated" xml:space="preserve">
+    <value>Repeated</value>
+  </data>
   <data name="Report" xml:space="preserve">
     <value>Report</value>
   </data>
@@ -348,6 +432,9 @@
   <data name="Safe" xml:space="preserve">
     <value>Safe</value>
   </data>
+  <data name="Safes" xml:space="preserve">
+    <value>Safes</value>
+  </data>
   <data name="Sales" xml:space="preserve">
     <value>Sales</value>
   </data>
@@ -357,8 +444,17 @@
   <data name="Save" xml:space="preserve">
     <value>Save</value>
   </data>
+  <data name="SaveLastStatusPreference" xml:space="preserve">
+    <value>Save Last Status Preference</value>
+  </data>
   <data name="Search" xml:space="preserve">
     <value>Search</value>
+  </data>
+  <data name="SearchInvoice" xml:space="preserve">
+    <value>Search Invoice</value>
+  </data>
+  <data name="SearchProduct" xml:space="preserve">
+    <value>Search Product</value>
   </data>
   <data name="Security" xml:space="preserve">
     <value>Security</value>
@@ -368,6 +464,9 @@
   </data>
   <data name="SelectUnit" xml:space="preserve">
     <value>Select Unit</value>
+  </data>
+  <data name="Service" xml:space="preserve">
+    <value>Service</value>
   </data>
   <data name="Setting" xml:space="preserve">
     <value>Setting</value>
@@ -390,6 +489,9 @@
   <data name="Stores" xml:space="preserve">
     <value>Stores</value>
   </data>
+  <data name="String1" xml:space="preserve">
+    <value />
+  </data>
   <data name="Supplier" xml:space="preserve">
     <value>Supplier</value>
   </data>
@@ -405,11 +507,17 @@
   <data name="Table" xml:space="preserve">
     <value>Table</value>
   </data>
+  <data name="Tables" xml:space="preserve">
+    <value>Tables</value>
+  </data>
   <data name="Tasks" xml:space="preserve">
     <value>Tasks</value>
   </data>
+  <data name="Tax" xml:space="preserve">
+    <value>Tax</value>
+  </data>
   <data name="TextSearch" xml:space="preserve">
-    <value>TextSearch</value>
+    <value>Search</value>
   </data>
   <data name="TotalSales" xml:space="preserve">
     <value>Total sales</value>
@@ -425,6 +533,9 @@
   </data>
   <data name="Transfer" xml:space="preserve">
     <value>Transafer</value>
+  </data>
+  <data name="TypeSerial" xml:space="preserve">
+    <value>Type Serial</value>
   </data>
   <data name="Unit" xml:space="preserve">
     <value>Unit</value>
