@@ -70,6 +70,15 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Actual Balance.
+        /// </summary>
+        public static string ActualBalance {
+            get {
+                return ResourceManager.GetString("ActualBalance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add.
         /// </summary>
         public static string Add {
@@ -147,6 +156,15 @@ namespace Utility.Resource {
         public static string Back {
             get {
                 return ResourceManager.GetString("Back", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Balance.
+        /// </summary>
+        public static string Balance {
+            get {
+                return ResourceManager.GetString("Balance", resourceCulture);
             }
         }
         
@@ -259,6 +277,15 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Completed Orders.
+        /// </summary>
+        public static string CompletedOrders {
+            get {
+                return ResourceManager.GetString("CompletedOrders", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Components.
         /// </summary>
         public static string Components {
@@ -309,6 +336,15 @@ namespace Utility.Resource {
         public static string Customers {
             get {
                 return ResourceManager.GetString("Customers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dashboard.
+        /// </summary>
+        public static string Dashboard {
+            get {
+                return ResourceManager.GetString("Dashboard", resourceCulture);
             }
         }
         
@@ -439,6 +475,15 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Diff Quantity.
+        /// </summary>
+        public static string DiffQuantity {
+            get {
+                return ResourceManager.GetString("DiffQuantity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Discount.
         /// </summary>
         public static string Discount {
@@ -462,6 +507,15 @@ namespace Utility.Resource {
         public static string Docs {
             get {
                 return ResourceManager.GetString("Docs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DONE.
+        /// </summary>
+        public static string DONE {
+            get {
+                return ResourceManager.GetString("DONE", resourceCulture);
             }
         }
         
@@ -529,6 +583,15 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to From Store.
+        /// </summary>
+        public static string FromStore {
+            get {
+                return ResourceManager.GetString("FromStore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to History.
         /// </summary>
         public static string History {
@@ -570,6 +633,15 @@ namespace Utility.Resource {
         public static string Inventory {
             get {
                 return ResourceManager.GetString("Inventory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inventory Notices.
+        /// </summary>
+        public static string InventoryNotices {
+            get {
+                return ResourceManager.GetString("InventoryNotices", resourceCulture);
             }
         }
         
@@ -628,6 +700,24 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Library.
+        /// </summary>
+        public static string Library {
+            get {
+                return ResourceManager.GetString("Library", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Logs.
+        /// </summary>
+        public static string Logs {
+            get {
+                return ResourceManager.GetString("Logs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Name.
         /// </summary>
         public static string Name {
@@ -651,6 +741,15 @@ namespace Utility.Resource {
         public static string NewClassification {
             get {
                 return ResourceManager.GetString("NewClassification", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Comments.
+        /// </summary>
+        public static string NewComments {
+            get {
+                return ResourceManager.GetString("NewComments", resourceCulture);
             }
         }
         
@@ -687,6 +786,24 @@ namespace Utility.Resource {
         public static string Ok {
             get {
                 return ResourceManager.GetString("Ok", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Order Details.
+        /// </summary>
+        public static string OrderDetails {
+            get {
+                return ResourceManager.GetString("OrderDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Order Products.
+        /// </summary>
+        public static string OrderProducts {
+            get {
+                return ResourceManager.GetString("OrderProducts", resourceCulture);
             }
         }
         
@@ -772,6 +889,15 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pending Orders.
+        /// </summary>
+        public static string PendingOrders {
+            get {
+                return ResourceManager.GetString("PendingOrders", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Phone.
         /// </summary>
         public static string Phone {
@@ -808,6 +934,15 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to PROCESS.
+        /// </summary>
+        public static string PROCESS {
+            get {
+                return ResourceManager.GetString("PROCESS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Prodect sales of details.
         /// </summary>
         public static string ProdectSalesDetails {
@@ -822,6 +957,15 @@ namespace Utility.Resource {
         public static string Product {
             get {
                 return ResourceManager.GetString("Product", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product Categories.
+        /// </summary>
+        public static string ProductCategories {
+            get {
+                return ResourceManager.GetString("ProductCategories", resourceCulture);
             }
         }
         
@@ -912,6 +1056,33 @@ namespace Utility.Resource {
         public static string Received {
             get {
                 return ResourceManager.GetString("Received", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recent Orders.
+        /// </summary>
+        public static string RecentOrders {
+            get {
+                return ResourceManager.GetString("RecentOrders", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Refund Requests.
+        /// </summary>
+        public static string RefundRequests {
+            get {
+                return ResourceManager.GetString("RefundRequests", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Refunds.
+        /// </summary>
+        public static string Refunds {
+            get {
+                return ResourceManager.GetString("Refunds", resourceCulture);
             }
         }
         
@@ -1177,15 +1348,6 @@ namespace Utility.Resource {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
-        public static string String1 {
-            get {
-                return ResourceManager.GetString("String1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Supplier.
         /// </summary>
         public static string Supplier {
@@ -1267,6 +1429,33 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Time.
+        /// </summary>
+        public static string Time {
+            get {
+                return ResourceManager.GetString("Time", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To Store.
+        /// </summary>
+        public static string ToStore {
+            get {
+                return ResourceManager.GetString("ToStore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total.
+        /// </summary>
+        public static string Total {
+            get {
+                return ResourceManager.GetString("Total", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Total sales.
         /// </summary>
         public static string TotalSales {
@@ -1285,11 +1474,29 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Transaction Details.
+        /// </summary>
+        public static string TransactionDetails {
+            get {
+                return ResourceManager.GetString("TransactionDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Transaction Notices.
         /// </summary>
         public static string TransactionNotices {
             get {
                 return ResourceManager.GetString("TransactionNotices", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Transaction Products.
+        /// </summary>
+        public static string TransactionProducts {
+            get {
+                return ResourceManager.GetString("TransactionProducts", resourceCulture);
             }
         }
         

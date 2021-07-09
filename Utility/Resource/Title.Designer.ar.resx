@@ -120,6 +120,9 @@
   <data name="Account" xml:space="preserve">
     <value>الحساب</value>
   </data>
+  <data name="ActualBalance" xml:space="preserve">
+    <value>الرصيد الفعلي</value>
+  </data>
   <data name="Add" xml:space="preserve">
     <value>اضافة</value>
   </data>
@@ -146,6 +149,9 @@
   </data>
   <data name="Back" xml:space="preserve">
     <value>عودة</value>
+  </data>
+  <data name="Balance" xml:space="preserve">
+    <value>الرصيد</value>
   </data>
   <data name="Barcode" xml:space="preserve">
     <value>الباركود</value>
@@ -183,6 +189,9 @@
   <data name="Collection" xml:space="preserve">
     <value>مجموعة</value>
   </data>
+  <data name="CompletedOrders" xml:space="preserve">
+    <value>الطلبات المكتملة</value>
+  </data>
   <data name="Components" xml:space="preserve">
     <value>العناصر</value>
   </data>
@@ -200,6 +209,9 @@
   </data>
   <data name="Customers" xml:space="preserve">
     <value>العملاء</value>
+  </data>
+  <data name="Dashboard" xml:space="preserve">
+    <value>لوحة القيادة</value>
   </data>
   <data name="Data" xml:space="preserve">
     <value>البيانات</value>
@@ -243,6 +255,9 @@
   <data name="Description" xml:space="preserve">
     <value>الوصف</value>
   </data>
+  <data name="DiffQuantity" xml:space="preserve">
+    <value>كمية الفرق</value>
+  </data>
   <data name="Discount" xml:space="preserve">
     <value>خصم</value>
   </data>
@@ -251,6 +266,9 @@
   </data>
   <data name="Docs" xml:space="preserve">
     <value>مستندات</value>
+  </data>
+  <data name="DONE" xml:space="preserve">
+    <value>تم</value>
   </data>
   <data name="Edit" xml:space="preserve">
     <value>تعديل</value>
@@ -273,6 +291,9 @@
   <data name="FinancialNotices" xml:space="preserve">
     <value>الاخطارات المالية</value>
   </data>
+  <data name="FromStore" xml:space="preserve">
+    <value>من متجر</value>
+  </data>
   <data name="History" xml:space="preserve">
     <value>السجل</value>
   </data>
@@ -287,6 +308,9 @@
   </data>
   <data name="Inventory" xml:space="preserve">
     <value>مخزون</value>
+  </data>
+  <data name="InventoryNotices" xml:space="preserve">
+    <value>اشعارات المخزون</value>
   </data>
   <data name="Invoice" xml:space="preserve">
     <value>فاتورة</value>
@@ -306,6 +330,12 @@
   <data name="Issue" xml:space="preserve">
     <value>مشكلة</value>
   </data>
+  <data name="Library" xml:space="preserve">
+    <value>المكتبة</value>
+  </data>
+  <data name="Logs" xml:space="preserve">
+    <value>السجلات</value>
+  </data>
   <data name="Name" xml:space="preserve">
     <value>الاسم</value>
   </data>
@@ -314,6 +344,9 @@
   </data>
   <data name="NewClassification" xml:space="preserve">
     <value>تصنيف جديد</value>
+  </data>
+  <data name="NewComments" xml:space="preserve">
+    <value>التعليقات الجديدة</value>
   </data>
   <data name="NewProduct" xml:space="preserve">
     <value>منتج جديد</value>
@@ -326,6 +359,12 @@
   </data>
   <data name="Ok" xml:space="preserve">
     <value>موافق</value>
+  </data>
+  <data name="OrderDetails" xml:space="preserve">
+    <value>طلب تفاصيل</value>
+  </data>
+  <data name="OrderProducts" xml:space="preserve">
+    <value>طلب منتجات</value>
   </data>
   <data name="Orders" xml:space="preserve">
     <value>الطلبات</value>
@@ -354,6 +393,9 @@
   <data name="PaymentTypes" xml:space="preserve">
     <value>انواع الدفع</value>
   </data>
+  <data name="PendingOrders" xml:space="preserve">
+    <value>الطلبات المعلقة</value>
+  </data>
   <data name="Phone" xml:space="preserve">
     <value>التليفون</value>
   </data>
@@ -366,11 +408,17 @@
   <data name="Price" xml:space="preserve">
     <value>السعر</value>
   </data>
+  <data name="PROCESS" xml:space="preserve">
+    <value>عملية</value>
+  </data>
   <data name="ProdectSalesDetails" xml:space="preserve">
     <value>تفاصيل البيع بالاصناف</value>
   </data>
   <data name="Product" xml:space="preserve">
     <value>منتج</value>
+  </data>
+  <data name="ProductCategories" xml:space="preserve">
+    <value>فئات المنتجات</value>
   </data>
   <data name="ProductRecipe" xml:space="preserve">
     <value>وصفة المنتج</value>
@@ -401,6 +449,15 @@
   </data>
   <data name="Received" xml:space="preserve">
     <value>استلام</value>
+  </data>
+  <data name="RecentOrders" xml:space="preserve">
+    <value>الطلبات الاخيره</value>
+  </data>
+  <data name="RefundRequests" xml:space="preserve">
+    <value>طلبات الاسترداد</value>
+  </data>
+  <data name="Refunds" xml:space="preserve">
+    <value>المبالغ المستردة</value>
   </data>
   <data name="Repeated" xml:space="preserve">
     <value>مُعاد</value>
@@ -516,14 +573,29 @@
   <data name="TextSearch" xml:space="preserve">
     <value>نص البحث</value>
   </data>
+  <data name="Time" xml:space="preserve">
+    <value>الوقت</value>
+  </data>
+  <data name="ToStore" xml:space="preserve">
+    <value>الي متجر</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>الاجمالي</value>
+  </data>
   <data name="TotalSales" xml:space="preserve">
     <value>اجمالى البيع</value>
   </data>
   <data name="TotalSalesProdects" xml:space="preserve">
     <value>اجمالى البيع بالاصناف</value>
   </data>
+  <data name="TransactionDetails" xml:space="preserve">
+    <value>تفاصيل المعاملات</value>
+  </data>
   <data name="TransactionNotices" xml:space="preserve">
     <value>اشعارات المعاملات</value>
+  </data>
+  <data name="TransactionProducts" xml:space="preserve">
+    <value>منتجات المعاملات</value>
   </data>
   <data name="Transactions" xml:space="preserve">
     <value>المعاملات</value>
