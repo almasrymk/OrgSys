@@ -117,8 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Account" xml:space="preserve">
+    <value>الحساب</value>
+  </data>
   <data name="Add" xml:space="preserve">
     <value>اضافة</value>
+  </data>
+  <data name="Addition" xml:space="preserve">
+    <value>إضافة</value>
   </data>
   <data name="Address" xml:space="preserve">
     <value>العنوان</value>
@@ -162,8 +168,23 @@
   <data name="Code" xml:space="preserve">
     <value>الكود</value>
   </data>
+  <data name="Collection" xml:space="preserve">
+    <value>مجموعة</value>
+  </data>
+  <data name="Components" xml:space="preserve">
+    <value>العناصر</value>
+  </data>
   <data name="Cost" xml:space="preserve">
     <value>التكلفة</value>
+  </data>
+  <data name="Currencies" xml:space="preserve">
+    <value>العملات</value>
+  </data>
+  <data name="Data" xml:space="preserve">
+    <value>البيانات</value>
+  </data>
+  <data name="Dealers" xml:space="preserve">
+    <value>الوكلاء</value>
   </data>
   <data name="Default" xml:space="preserve">
     <value>افتراضي</value>
@@ -177,14 +198,35 @@
   <data name="Description" xml:space="preserve">
     <value>الوصف</value>
   </data>
+  <data name="Docs" xml:space="preserve">
+    <value>مستندات</value>
+  </data>
   <data name="Edit" xml:space="preserve">
     <value>تعديل</value>
   </data>
   <data name="Email" xml:space="preserve">
     <value>الايميل</value>
   </data>
+  <data name="External" xml:space="preserve">
+    <value>خارجي</value>
+  </data>
+  <data name="Features" xml:space="preserve">
+    <value>السمات</value>
+  </data>
+  <data name="Financial" xml:space="preserve">
+    <value>الماليات</value>
+  </data>
+  <data name="History" xml:space="preserve">
+    <value>السجل</value>
+  </data>
   <data name="Home" xml:space="preserve">
     <value>الرئيسية</value>
+  </data>
+  <data name="Internal" xml:space="preserve">
+    <value>داخلي</value>
+  </data>
+  <data name="Inventory" xml:space="preserve">
+    <value>مخزون</value>
   </data>
   <data name="Invoice" xml:space="preserve">
     <value>فاتورة</value>
@@ -197,6 +239,9 @@
   </data>
   <data name="Invoices" xml:space="preserve">
     <value>الفواتير</value>
+  </data>
+  <data name="Issue" xml:space="preserve">
+    <value>مشكلة</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>الاسم</value>
@@ -213,8 +258,23 @@
   <data name="Ok" xml:space="preserve">
     <value>موافق</value>
   </data>
+  <data name="Orders" xml:space="preserve">
+    <value>الطلبات</value>
+  </data>
+  <data name="OrgSys" xml:space="preserve">
+    <value>برنامج اورجنايزر</value>
+  </data>
+  <data name="Outlay" xml:space="preserve">
+    <value>مصاريف</value>
+  </data>
+  <data name="OutlayTerms" xml:space="preserve">
+    <value>شروط النفقات</value>
+  </data>
   <data name="Password" xml:space="preserve">
     <value>كلمة المرور</value>
+  </data>
+  <data name="Payment" xml:space="preserve">
+    <value>دفع</value>
   </data>
   <data name="Phone" xml:space="preserve">
     <value>التليفون</value>
@@ -237,6 +297,9 @@
   <data name="Products" xml:space="preserve">
     <value>المنتجات</value>
   </data>
+  <data name="Profits" xml:space="preserve">
+    <value>الارباح</value>
+  </data>
   <data name="Properties" xml:space="preserve">
     <value>الخصائص</value>
   </data>
@@ -255,6 +318,9 @@
   <data name="Rate" xml:space="preserve">
     <value>معدل التحويل</value>
   </data>
+  <data name="Received" xml:space="preserve">
+    <value>استلام</value>
+  </data>
   <data name="Report" xml:space="preserve">
     <value>التقارير</value>
   </data>
@@ -267,6 +333,9 @@
   <data name="Returns" xml:space="preserve">
     <value>مرتجعات</value>
   </data>
+  <data name="Review" xml:space="preserve">
+    <value>مراجعة</value>
+  </data>
   <data name="ReviewClose" xml:space="preserve">
     <value>المراجعة / الاغلاق</value>
   </data>
@@ -275,6 +344,9 @@
   </data>
   <data name="Roles" xml:space="preserve">
     <value>الصلاحيات</value>
+  </data>
+  <data name="Safe" xml:space="preserve">
+    <value>آمن</value>
   </data>
   <data name="Sales" xml:space="preserve">
     <value>المبيعات</value>
@@ -288,6 +360,9 @@
   <data name="Search" xml:space="preserve">
     <value>البحث</value>
   </data>
+  <data name="Security" xml:space="preserve">
+    <value>الحماية</value>
+  </data>
   <data name="SelectProduct" xml:space="preserve">
     <value>اختر المنتج</value>
   </data>
@@ -297,11 +372,17 @@
   <data name="Setting" xml:space="preserve">
     <value>الاعدادات</value>
   </data>
+  <data name="Settings" xml:space="preserve">
+    <value>الاعدادات</value>
+  </data>
   <data name="Shift" xml:space="preserve">
     <value>وردية</value>
   </data>
   <data name="Shifts" xml:space="preserve">
     <value>الورديات</value>
+  </data>
+  <data name="SignOut" xml:space="preserve">
+    <value>تسجيل الخروج</value>
   </data>
   <data name="Store" xml:space="preserve">
     <value>المخزن</value>
@@ -315,6 +396,18 @@
   <data name="Suppliers" xml:space="preserve">
     <value>الموردين</value>
   </data>
+  <data name="Support" xml:space="preserve">
+    <value>الدعم</value>
+  </data>
+  <data name="Surveys" xml:space="preserve">
+    <value>الدراسات الاستقصائية</value>
+  </data>
+  <data name="Table" xml:space="preserve">
+    <value>الجدول</value>
+  </data>
+  <data name="Tasks" xml:space="preserve">
+    <value>المهام</value>
+  </data>
   <data name="TextSearch" xml:space="preserve">
     <value>نص البحث</value>
   </data>
@@ -323,6 +416,15 @@
   </data>
   <data name="TotalSalesProdects" xml:space="preserve">
     <value>اجمالى البيع بالاصناف</value>
+  </data>
+  <data name="TransactionNotices" xml:space="preserve">
+    <value>اشعارات المعاملات</value>
+  </data>
+  <data name="Transactions" xml:space="preserve">
+    <value>المعاملات</value>
+  </data>
+  <data name="Transfer" xml:space="preserve">
+    <value>تحويل</value>
   </data>
   <data name="Unit" xml:space="preserve">
     <value>الوحدة</value>

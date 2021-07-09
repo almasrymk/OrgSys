@@ -117,8 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Account" xml:space="preserve">
+    <value>Account</value>
+  </data>
   <data name="Add" xml:space="preserve">
     <value>Add</value>
+  </data>
+  <data name="Addition" xml:space="preserve">
+    <value>Addition</value>
   </data>
   <data name="Address" xml:space="preserve">
     <value>Address</value>
@@ -162,8 +168,23 @@
   <data name="Code" xml:space="preserve">
     <value>Code</value>
   </data>
+  <data name="Collection" xml:space="preserve">
+    <value>Collection</value>
+  </data>
+  <data name="Components" xml:space="preserve">
+    <value>Components</value>
+  </data>
   <data name="Cost" xml:space="preserve">
     <value>Cost</value>
+  </data>
+  <data name="Currencies" xml:space="preserve">
+    <value>Currencies</value>
+  </data>
+  <data name="Data" xml:space="preserve">
+    <value>Data</value>
+  </data>
+  <data name="Dealers" xml:space="preserve">
+    <value>Dealers</value>
   </data>
   <data name="Default" xml:space="preserve">
     <value>Default</value>
@@ -177,14 +198,35 @@
   <data name="Description" xml:space="preserve">
     <value>Description</value>
   </data>
+  <data name="Docs" xml:space="preserve">
+    <value>Docs</value>
+  </data>
   <data name="Edit" xml:space="preserve">
     <value>Edit</value>
   </data>
   <data name="Email" xml:space="preserve">
     <value>Email</value>
   </data>
+  <data name="External" xml:space="preserve">
+    <value>External</value>
+  </data>
+  <data name="Features" xml:space="preserve">
+    <value>Features</value>
+  </data>
+  <data name="Financial" xml:space="preserve">
+    <value>Financial</value>
+  </data>
+  <data name="History" xml:space="preserve">
+    <value>History</value>
+  </data>
   <data name="Home" xml:space="preserve">
     <value>Home</value>
+  </data>
+  <data name="Internal" xml:space="preserve">
+    <value>Internal</value>
+  </data>
+  <data name="Inventory" xml:space="preserve">
+    <value>Inventory</value>
   </data>
   <data name="Invoice" xml:space="preserve">
     <value>Invoice</value>
@@ -197,6 +239,9 @@
   </data>
   <data name="Invoices" xml:space="preserve">
     <value>Invoices</value>
+  </data>
+  <data name="Issue" xml:space="preserve">
+    <value>Issue</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Name</value>
@@ -213,8 +258,23 @@
   <data name="Ok" xml:space="preserve">
     <value>Ok</value>
   </data>
+  <data name="Orders" xml:space="preserve">
+    <value>Orders</value>
+  </data>
+  <data name="OrgSys" xml:space="preserve">
+    <value>Organizer System</value>
+  </data>
+  <data name="Outlay" xml:space="preserve">
+    <value>Outlay</value>
+  </data>
+  <data name="OutlayTerms" xml:space="preserve">
+    <value>Outlay Terms</value>
+  </data>
   <data name="Password" xml:space="preserve">
     <value>Password</value>
+  </data>
+  <data name="Payment" xml:space="preserve">
+    <value>Payment</value>
   </data>
   <data name="Phone" xml:space="preserve">
     <value>Phone</value>
@@ -237,6 +297,9 @@
   <data name="Products" xml:space="preserve">
     <value>Products</value>
   </data>
+  <data name="Profits" xml:space="preserve">
+    <value>Profits</value>
+  </data>
   <data name="Properties" xml:space="preserve">
     <value>Properties</value>
   </data>
@@ -255,6 +318,9 @@
   <data name="Rate" xml:space="preserve">
     <value>Rate</value>
   </data>
+  <data name="Received" xml:space="preserve">
+    <value>Received</value>
+  </data>
   <data name="Report" xml:space="preserve">
     <value>Report</value>
   </data>
@@ -267,6 +333,9 @@
   <data name="Returns" xml:space="preserve">
     <value>Returns</value>
   </data>
+  <data name="Review" xml:space="preserve">
+    <value>Review</value>
+  </data>
   <data name="ReviewClose" xml:space="preserve">
     <value>Review / Close</value>
   </data>
@@ -275,6 +344,9 @@
   </data>
   <data name="Roles" xml:space="preserve">
     <value>Roles</value>
+  </data>
+  <data name="Safe" xml:space="preserve">
+    <value>Safe</value>
   </data>
   <data name="Sales" xml:space="preserve">
     <value>Sales</value>
@@ -288,6 +360,9 @@
   <data name="Search" xml:space="preserve">
     <value>Search</value>
   </data>
+  <data name="Security" xml:space="preserve">
+    <value>Security</value>
+  </data>
   <data name="SelectProduct" xml:space="preserve">
     <value>Select Product</value>
   </data>
@@ -297,11 +372,17 @@
   <data name="Setting" xml:space="preserve">
     <value>Setting</value>
   </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
   <data name="Shift" xml:space="preserve">
     <value>Shift</value>
   </data>
   <data name="Shifts" xml:space="preserve">
     <value>Shifts</value>
+  </data>
+  <data name="SignOut" xml:space="preserve">
+    <value>SignOut</value>
   </data>
   <data name="Store" xml:space="preserve">
     <value>Store</value>
@@ -315,6 +396,18 @@
   <data name="Suppliers" xml:space="preserve">
     <value>Suppliers</value>
   </data>
+  <data name="Support" xml:space="preserve">
+    <value>Support</value>
+  </data>
+  <data name="Surveys" xml:space="preserve">
+    <value>Surveys</value>
+  </data>
+  <data name="Table" xml:space="preserve">
+    <value>Table</value>
+  </data>
+  <data name="Tasks" xml:space="preserve">
+    <value>Tasks</value>
+  </data>
   <data name="TextSearch" xml:space="preserve">
     <value>TextSearch</value>
   </data>
@@ -323,6 +416,15 @@
   </data>
   <data name="TotalSalesProdects" xml:space="preserve">
     <value>Total sales of prodects</value>
+  </data>
+  <data name="TransactionNotices" xml:space="preserve">
+    <value>Transaction Notices</value>
+  </data>
+  <data name="Transactions" xml:space="preserve">
+    <value>Transactions</value>
+  </data>
+  <data name="Transfer" xml:space="preserve">
+    <value>Transafer</value>
   </data>
   <data name="Unit" xml:space="preserve">
     <value>Unit</value>
