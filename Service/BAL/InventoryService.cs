@@ -45,7 +45,46 @@ namespace Service.BAL
                 }
                 Nwob.InventoryProducts = repo.inventoryProductRepo.GetList(e => e.InventoryId == Nwob.Id, e => e.OrderBy(e => e.Id), "", Utility.Status.All).ToList();
             }
+
+            CreateTransaction(Nwob, 5);
+            CreateTransaction(Nwob, 6);
+
             return new InventoryModelView(Nwob);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        public void CreateTransaction(long Id)
+        {
+            var ob = Get(Id);
+            CreateTransaction(ob.Model, 5);
+            CreateTransaction(ob.Model, 6);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ob"></param>
+        /// <returns></returns>
+        public void CreateTransaction(Inventory ob, long typeId)
+        {
+            if (ob != null)
+            {
+                var trns = repo.transactionRepo.Get(e => e.ParentId == ob.Id && e.TypeId == typeId);
+                if (trns == null || trns.Id == 0)
+                {
+                    trns = new Transaction();
+                    trns.StoreId = ob.StoreId;
+                    trns.TypeId = typeId;
+                    trns.ParentId = ob.Id;
+                    trns.CodeNumber = new TransactionService().GetMaxCode(typeId);
+                    trns.Code = "" + new TransactionService().GetMaxCode(typeId);
+                }
+                var obInv = new TransactionService().Save(new TransactionModelView(trns).UpdateData(ob , typeId));
+            }
         }
 
         /// <summary>
@@ -64,7 +103,7 @@ namespace Service.BAL
         /// <returns></returns>
         public List<InventoryModelView> GetAll(long parentId = 0, long TypeId = 0)
         {
-            return repo.inventoryRepo.GetList( e=>e.TypeId == TypeId, e => e.OrderByDescending(e => e.Id), "Store,InventoryProducts,InventoryProducts.Product,InventoryProducts.Unit", Utility.Status.New).Select(e => new InventoryModelView(e)).ToList();
+            return repo.inventoryRepo.GetList(e => e.TypeId == TypeId, e => e.OrderByDescending(e => e.Id), "Store,InventoryProducts,InventoryProducts.Product,InventoryProducts.Unit", Utility.Status.New).Select(e => new InventoryModelView(e)).ToList();
         }
 
         /// <summary>
@@ -72,7 +111,7 @@ namespace Service.BAL
         /// </summary>
         /// <param name="textSearch"></param>
         /// <returns></returns>
-        public List<InventoryModelView> GetAll(string textSearch , long parentId = 0, long TypeId = 0)
+        public List<InventoryModelView> GetAll(string textSearch, long parentId = 0, long TypeId = 0)
         {
             return repo.inventoryRepo.GetList(e => e.Code.Contains("" + textSearch), e => e.OrderByDescending(e => e.Id), "Store,InventoryProducts,InventoryProducts.Product,InventoryProducts.Unit", Utility.Status.New).Select(e => new InventoryModelView(e)).ToList();
         }
@@ -83,7 +122,7 @@ namespace Service.BAL
         /// <param name="page"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public IPagedList<InventoryModelView> GetAll(long parentId = 0, long TypeId = 0 ,int page = 1, int pageSize = 20)
+        public IPagedList<InventoryModelView> GetAll(long parentId = 0, long TypeId = 0, int page = 1, int pageSize = 20)
         {
             return repo.inventoryRepo.GetList(null, e => e.OrderByDescending(e => e.Id), "Store,InventoryProducts,InventoryProducts.Product,InventoryProducts.Unit", Utility.Status.New).Select(e => new InventoryModelView(e)).ToPagedList(page, pageSize);
         }
@@ -95,7 +134,7 @@ namespace Service.BAL
         /// <param name="page"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public IPagedList<InventoryModelView> GetAll(string textSearch , long parentId = 0, long TypeId = 0, int page = 1, int pageSize = 20)
+        public IPagedList<InventoryModelView> GetAll(string textSearch, long parentId = 0, long TypeId = 0, int page = 1, int pageSize = 20)
         {
             return repo.inventoryRepo.GetList(null, e => e.OrderByDescending(e => e.Id), "Store,InventoryProducts,InventoryProducts.Product,InventoryProducts.Unit", Utility.Status.New).Select(e => new InventoryModelView(e)).ToPagedList(page, pageSize);
         }
@@ -107,7 +146,7 @@ namespace Service.BAL
         /// <returns></returns>
         public InventoryModelView Get(long Id)
         {
-            return new InventoryModelView(repo.inventoryRepo.Get(e => e.Id == Id  , "Store,InventoryProducts,InventoryProducts.Product,InventoryProducts.Unit"));
+            return new InventoryModelView(repo.inventoryRepo.Get(e => e.Id == Id, "Store,InventoryProducts,InventoryProducts.Product,InventoryProducts.Unit"));
         }
 
         /// <summary>
@@ -117,7 +156,7 @@ namespace Service.BAL
         /// <returns></returns>
         public InventoryModelView Get(string textSearch)
         {
-            return new InventoryModelView(repo.inventoryRepo.Get(null , "Store,InventoryProducts,InventoryProducts.Product,InventoryProducts.Unit"));
+            return new InventoryModelView(repo.inventoryRepo.Get(null, "Store,InventoryProducts,InventoryProducts.Product,InventoryProducts.Unit"));
         }
 
         /// <summary>
@@ -136,17 +175,17 @@ namespace Service.BAL
         /// <param name="ids"></param>
         /// <param name="TypeId"></param>
         /// <returns></returns>
-        public List<InventoryModelView> GetAll(List<long> ids,long TypeId = 0)
+        public List<InventoryModelView> GetAll(List<long> ids, long TypeId = 0)
         {
-            return repo.inventoryRepo.GetList(e => ids.Contains(e.Id), e => e.OrderBy(e => e.Id) , "Store,InventoryProducts,InventoryProducts.Product", Utility.Status.New).Select(e => new InventoryModelView(e)).ToList();
+            return repo.inventoryRepo.GetList(e => ids.Contains(e.Id), e => e.OrderBy(e => e.Id), "Store,InventoryProducts,InventoryProducts.Product", Utility.Status.New).Select(e => new InventoryModelView(e)).ToList();
         }
-       
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        public long GetMaxCode(long type )
+        public long GetMaxCode(long type)
         {
             return repo.inventoryRepo.GetMaXCode(type);
         }

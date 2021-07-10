@@ -524,7 +524,7 @@
                 dataType: 'json',
                 url: "/Setting/Product/LoadProductsByStore",
                 type: "Get",
-                data: { storeId: storeId },
+                data: { storeId: storeId, date : $("#Date").val()},
                 success: function (data) {
                     for (var i = 0; i < data.length; i++) {
                         var $row = $('.trNew');
@@ -540,6 +540,9 @@
                         $row.find("#UnitName").empty();
                         $row.find("#UnitName").append(data[i].selectunitName);
                         $row.find("#CalcBalance").val(data[i].balance);
+                        $row.find("#ActualBalance").val(0);
+                        $row.find("#DiffQuantity").val(data[i].balance);
+                        AutoSave();
                     }
                 }
             });
@@ -675,8 +678,6 @@
                     var ActualBalance = parseFloat(row.find("#ActualBalance").val());
                     row.find("#DiffQuantity").val(ActualBalance - CalcBalance);
                 }
-
-
             });
 
             AutoSave();

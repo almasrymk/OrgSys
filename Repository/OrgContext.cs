@@ -274,7 +274,11 @@ namespace Repository
                new Preference { Id = 1202, Key = "DefaultPaymentType", Value = "1", Reference = "Financial", TypeId = 3, Hide = false },
                new Preference { Id = 1203, Key = "DefaultCurrency", Value = "1", Reference = "Financial", TypeId = 3, Hide = false },
                new Preference { Id = 1204, Key = "AutoSave", Value = "0", Reference = "Financial", TypeId = 3, Hide = false },
-               new Preference { Id = 1205, Key = "TypeSerial", Value = "1", Reference = "Financial", TypeId = 3, Hide = false }
+               new Preference { Id = 1205, Key = "TypeSerial", Value = "1", Reference = "Financial", TypeId = 3, Hide = false },
+
+               new Preference { Id = 1300, Key = "DefaultStore", Value = "1", Reference = "Inventory", TypeId = 0, Hide = false },
+               new Preference { Id = 1301, Key = "AutoSave", Value = "0", Reference = "Inventory", TypeId = 0, Hide = false },
+               new Preference { Id = 1302, Key = "TypeSerial", Value = "1", Reference = "Inventory", TypeId = 0, Hide = false }
 
                );
         }

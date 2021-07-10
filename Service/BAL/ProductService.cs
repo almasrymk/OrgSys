@@ -186,15 +186,15 @@ namespace Service.BAL
             return obList;
         }
 
-        public List<ProductModelView> GetAllByBalance(long StoreId)
+        public List<ProductModelView> GetAllByBalance(long StoreId, DateTime date)
         {
             List<ProductModelView> list = new List<ProductModelView>();
-            var trns = repo.transactionProductRepo.GetList(e => e.StoreId == StoreId, e => e.OrderBy(e => e.ProductId), "Transaction,Transaction.Store,Product,Unit,Product.ProductUnits", Utility.Status.All).ToList();
+            var trns = repo.transactionProductRepo.GetList(e => e.StoreId == StoreId && e.Transaction.Date <= date, e => e.OrderBy(e => e.ProductId), "Transaction,Transaction.Store,Product,Unit,Product.ProductUnits", Utility.Status.All).ToList();
             var products = trns.Select(e => e.Product).Distinct().ToList();
             foreach (var product in products)
             {
                 var ob = new ProductModelView(product);
-                ob.Balance = trns.Where(e => e.ProductId == product.Id).Sum(e => e.TypeId == 1 || e.TypeId == 3 || e.TypeId == 6 ? -1 * e.Quantity : e.Quantity);
+                ob.Balance = trns.Where(e => e.ProductId == product.Id).Sum(e => e.Transaction.TypeId == 2 || e.Transaction.TypeId == 3 || e.Transaction.TypeId == 6 ? -1 * e.Quantity : e.Quantity);
                 list.Add(ob);
             }
             return list;

@@ -1216,17 +1216,17 @@
                 </div>
                 <div class="form-row">
                     @*<div class="form-group col-md-4">
-                    Save Last Status Preference
-                    <div id="divPaymentTypeId">
-                        <div class="input-group mt-2">
-                            <div id="divSaveLastStatusSetting" class="custom-switch custom-switch-primary-inverse custom-switch-small">
-                                <input class="custom-switch-input" id="SaveLastStatusSetting" name="SaveLastStatusSetting" type="checkbox" checked="@ViewBag.SaveLastStatusSetting">
-                                <label class="custom-switch-btn" for="SaveLastStatusSetting"></label>
+                            Save Last Status Preference
+                            <div id="divPaymentTypeId">
+                                <div class="input-group mt-2">
+                                    <div id="divSaveLastStatusSetting" class="custom-switch custom-switch-primary-inverse custom-switch-small">
+                                        <input class="custom-switch-input" id="SaveLastStatusSetting" name="SaveLastStatusSetting" type="checkbox" checked="@ViewBag.SaveLastStatusSetting">
+                                        <label class="custom-switch-btn" for="SaveLastStatusSetting"></label>
+                                    </div>
+                                </div>
+                                <small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
                             </div>
-                        </div>
-                        <small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
-                    </div>
-                </div>*@
+                        </div>*@
                     <div class="form-group col-md-4">
                         Auto Create Invoice
                         <div id="divPaymentTypeId">
@@ -1357,7 +1357,48 @@
                     </div>
                 </div>
             }
-          
+
+            @if (ViewBag.Resource == "Inventory")
+            {
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        Stores
+                        <div id="divPaymentTypeId">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="iconsminds-financial"></i></span>
+                                </div>
+                                @Html.DropDownList("Stores", null, null, new { @class = "form-control" })
+                            </div>
+                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        Type Serial
+                        <div id="divPaymentTypeId">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="iconsminds-financial"></i></span>
+                                </div>
+                                @Html.DropDownList("TypeSerial", null, null, new { @class = "form-control" })
+                            </div>
+                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        Auto Save
+                        <div id="divPaymentTypeId">
+                            <div class="input-group mt-2">
+                                <div id="divAutoSave" class="custom-switch custom-switch-primary-inverse custom-switch-small">
+                                    <input class="custom-switch-input" id="AutoSave" name="AutoSave" type="checkbox" checked="@ViewBag.AutoSave">
+                                    <label class="custom-switch-btn" for="AutoSave"></label>
+                                </div>
+                            </div>
+                            <small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
     </div>
     <div class="modal-footer" style="padding:12px;">

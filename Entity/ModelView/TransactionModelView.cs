@@ -63,6 +63,22 @@ namespace Entity.ModelView
             return this;
         }
 
+        public TransactionModelView UpdateData(Inventory ob, long type)
+        {
+            if (ob == null)
+                ob = new Inventory();
+            this.Date = ob.Date;
+            this.Hide = ob.Hide;
+            this.Notes = ob.Notes;
+            this.Status = ob.Status;
+            this.StoreId = ob.StoreId;
+            this.ParentId = ob.Id;
+            this.ImgPath = ob.ImgPath;            
+            if (ob.InventoryProducts == null)
+                ob.InventoryProducts = new List<InventoryProduct>();
+            this.TransactionProducts = ob.InventoryProducts.Where(e=> (type == 5 && e.DiffQuantity > 0) || (type == 6 && e.DiffQuantity < 0)).Select(e => new TransactionProductModelView(e, ob.StoreId)).ToList();
+            return this;
+        }
 
         public TransactionModelView UpdateData(Transaction ob)
         {

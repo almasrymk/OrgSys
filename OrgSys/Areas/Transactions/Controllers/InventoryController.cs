@@ -23,9 +23,7 @@ namespace OrgSys.Areas.Inventory.Controllers
         public override InventoryModelView InitializeData(InventoryModelView ob)
         {
             var setting = new PreferenceService();
-            var StoreId = long.Parse("0" + setting.GetByKey("DefaultStore", "Inventory", ob.TypeId, 0)?.Value);
-
-            ViewBag.NumberLine = int.Parse("0" + setting.GetByKey("NumberLine", "Inventory", ob.TypeId, 0)?.Value);
+            var StoreId = long.Parse("0" + setting.GetByKey("DefaultStore", "Inventory", ob.TypeId, 0)?.Value);           
             ViewBag.AutoSave = int.Parse("0" + setting.GetByKey("AutoSave", "Inventory", ob.TypeId, 0)?.Value);
             var TypeCode = int.Parse("0" + setting.GetByKey("TypeSerial", "Inventory", ob.TypeId, 0)?.Value);
             ViewBag.TypeSerial = TypeCode;

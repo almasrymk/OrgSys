@@ -78,9 +78,9 @@ namespace OrgSys.Areas.Setting.Controllers
             return Json(data);
         }
 
-        public JsonResult LoadProductsByStore(long storeId)
+        public JsonResult LoadProductsByStore(long storeId , DateTime date)
         {
-            var products = new ProductService().GetAllByBalance(storeId);
+            var products = new ProductService().GetAllByBalance(storeId , date);
             var data = products.Select(e=> new
             {
                 id = e.Id,
