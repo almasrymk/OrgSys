@@ -18,7 +18,7 @@
                             @Utility.Resource.Title_Designer.Setting
                         </li>                        
                         <li class="breadcrumb-item">
-                            Transaction Notices
+                            @Utility.Resource.Title_Designer.TransactionNotices
                         </li>                       
                         <li class="breadcrumb-item active" aria-current="page">  <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId">@ViewBag.TransactionsType</a></li>
                     </ol>
@@ -39,14 +39,14 @@
                             <ul class="card-header">
                                 <li>
                                     <a id="tbProduct" href="#checkStep1">
-                                        TransactionProducts<br />
+                                        @Utility.Resource.Title_Designer.TransactionProducts<br />
                                         <small>@Utility.Resource.Message_Designer.UnitsWhichProductMeasured</small>
                                         <div id="divProduct"></div>
                                     </a>
                                 </li>
                                 <li>
                                     <a id="tbHeader" href="#checkStep2">
-                                        TransactionDetails<br />
+                                        @Utility.Resource.Title_Designer.TransactionDetails<br />
                                         <small>@Utility.Resource.Message_Designer.IngredientsThatProductMadeOf</small>
                                         <div id="divHeader"></div>
                                     </a>
@@ -58,14 +58,14 @@
                             <ul class="card-header">
                                 <li>
                                     <a id="tbHeader" href="#checkStep2">
-                                        TransactionDetails<br />
+                                        @Utility.Resource.Title_Designer.TransactionDetails<br />
                                         <small>@Utility.Resource.Message_Designer.IngredientsThatProductMadeOf</small>
                                         <div id="divHeader"></div>
                                     </a>
                                 </li>
                                 <li>
                                     <a id="tbProduct" href="#checkStep1">
-                                        TransactionProducts<br />
+                                        @Utility.Resource.Title_Designer.TransactionProducts<br />
                                         <small>@Utility.Resource.Message_Designer.UnitsWhichProductMeasured</small>
                                         <div id="divProduct"></div>
                                     </a>
@@ -197,9 +197,9 @@
                                                     </div>
                                                 </td>
                                                 <td style="max-width:40px;padding:0px;text-align:center;vertical-align:middle;">
-                                                    <i id="RepeatedDanger" class="badge badge-danger mb-1" style="text-align: center; vertical-align: middle;height:25px;display:none;margin-left:10px;margin-right:10px;">Repeated</i>
-                                                    <i id="RepeatedWarning" class="badge badge-warning mb-1" style="text-align: center; vertical-align: middle;height:25px;display:none;margin-left:10px;margin-right:10px;">Repeated</i>
-                                                    <i id="RepeatedPrimary" class="badge badge-primary mb-1" style="text-align: center; vertical-align: middle;height:25px;display:none;margin-left:10px;margin-right:10px;">Repeated</i>
+                                                    <i id="RepeatedDanger" class="badge badge-danger mb-1" style="text-align: center; vertical-align: middle;height:25px;display:none;margin-left:10px;margin-right:10px;">@Utility.Resource.Title_Designer.Repeated</i>
+                                                    <i id="RepeatedWarning" class="badge badge-warning mb-1" style="text-align: center; vertical-align: middle;height:25px;display:none;margin-left:10px;margin-right:10px;">@Utility.Resource.Title_Designer.Repeated</i>
+                                                    <i id="RepeatedPrimary" class="badge badge-primary mb-1" style="text-align: center; vertical-align: middle;height:25px;display:none;margin-left:10px;margin-right:10px;">@Utility.Resource.Title_Designer.Repeated</i>
                                                 </td>
                                                 <td style="width:150px;padding:0px;">
 
@@ -223,7 +223,7 @@
                                                 <td style="min-width:100px;padding:0px;" colspan="5">
                                                 </td>
                                                 <td style="width:100px;padding:0px;text-align:center;vertical-align:middle;">
-                                                    Total
+                                                    @Utility.Resource.Title_Designer.Total
                                                 </td>
                                                 <td style="width:100px;padding:0px;text-align:center;vertical-align:middle;">
                                                     @Html.TextBoxFor(model => model.Total, new { @class = "form-control", @style = "border-top:none;border-bottom:none;border-right:none;background-color:transparent;", @placeholder = "0.0", @readonly = "true" })
@@ -301,19 +301,19 @@
                                     }
                                     @if (Model.TypeId == 3)
                                     {
-                                        <div class="form-group col-md-4">
-                                            To Store
-                                            <div id="divToStoreId">
-                                                <div class="input-group">
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text"><i class="simple-icon-people"></i></span>
-                                                    </div>
-                                                    @Html.DropDownListFor(model => model.ToStoreId, null, "...", new { @class = "form-control" })
-                                                </div>
-                                                <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                                <div class="form-group col-md-4">
+                                    @Utility.Resource.Title_Designer.ToStore
+                                    <div id="divToStoreId">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="simple-icon-people"></i></span>
                                             </div>
-                                            @Html.ValidationMessageFor(model => model.ToStoreId, "", new { @class = "text-danger " })
+                                            @Html.DropDownListFor(model => model.ToStoreId, null, "...", new { @class = "form-control" })
                                         </div>
+                                        <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.ToStoreId, "", new { @class = "text-danger " })
+                                </div>
                                     }
                                 </div>
 
@@ -341,7 +341,7 @@
                         <span class="btn-group group-add">
                             <a id="ShowPreference" href="javascript::" class="btn btn-primary .ShowPreference" data-toggle="modal" data-target=".Preference">
                                 <i class="iconsminds-gear-2"></i>
-                                Preference
+                                @Utility.Resource.Title_Designer.Preference
                             </a>
 
                             @*<button id="ShowPreference" type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg" style="width:30px;padding:0px;color:white;">
@@ -364,11 +364,11 @@
                         <span class="btn-group group-add mb-4" style="width:92%">
                             <a href="/Setting/Product/Save" class="btn btn-primary ">
                                 <i class="iconsminds-shopping-basket"></i>
-                                New Product
+                                @Utility.Resource.Title_Designer.NewProduct
                             </a>
                             <a href="/Setting/Classification/Save" class="btn btn-primary">
                                 <i class="simple-icon-layers"></i>
-                                New Classification
+                                @Utility.Resource.Title_Designer.NewClassification
                             </a>
                         </span>
                     </div>

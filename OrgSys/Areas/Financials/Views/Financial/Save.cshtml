@@ -18,7 +18,7 @@
                             @Utility.Resource.Title_Designer.Setting
                         </li>
                         <li class="breadcrumb-item">
-                            Financial Notices
+                            @Utility.Resource.Title_Designer.FinancialNotices
                         </li>
                         <li class="breadcrumb-item active" aria-current="page">  <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId">@ViewBag.FinancialsType</a></li>
                     </ol>
@@ -68,7 +68,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label>Safe</label>
+                                    <label>@Utility.Resource.Title_Designer.Safe</label>
                                     <div id="divSafeId">
                                         <div class="input-group">
                                             <div class="input-group-prepend">
@@ -84,7 +84,7 @@
 
                             <div class="form-row">
                                 <div class="form-group col-md-4">
-                                    <label>Currency</label>
+                                    <label>@Utility.Resource.Title_Designer.Currency</label>
                                     <div id="divCurrencyId">
                                         <div class="input-group">
                                             <div class="input-group-prepend">
@@ -97,7 +97,7 @@
                                     @Html.ValidationMessageFor(model => model.CurrencyId, "", new { @class = "text-danger " })
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label>Rate</label>
+                                    <label>@Utility.Resource.Title_Designer.Rate</label>
 
                                     <div id="divRate">
                                         @Html.TextBoxFor(model => model.Rate, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Code })
@@ -125,11 +125,11 @@
                                     <div class="form-group col-md-4">
                                         @if (Model.TypeId == 1)
                                         {
-                                            <label>Client</label>
+                                        <label>@Utility.Resource.Title_Designer.Client</label>
                                         }
                                         else
                                         {
-                                            <label>Supplier</label>
+                                    <label>@Utility.Resource.Title_Designer.Supplier</label>
                                         }
                                         <div id="divDealerId">
                                             <div class="input-group">
@@ -146,7 +146,7 @@
                                 else
                                 {
                                     <div class="form-group col-md-4">
-                                        <label>Outlay</label>
+                                        <label>@Utility.Resource.Title_Designer.Outlay</label>
                                         <div id="divOutlayId">
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
@@ -160,7 +160,7 @@
                                     </div>
                                 }
                                 <div class="form-group col-md-4">
-                                    <label>Amount</label>
+                                    <label>@Utility.Resource.Title_Designer.Amount</label>
 
                                     <div id="divGrandAmount">
                                         @Html.TextBoxFor(model => model.Amount, new { id = "GrandAmount", @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Code })
@@ -194,9 +194,9 @@
                                             <tr>
                                                 <th scope="col">#</th>
                                                 <th scope="col">@Utility.Resource.Title_Designer.Invoice</th>
-                                                <th scope="col">Date</th>
+                                                <th scope="col">@Utility.Resource.Title_Designer.Date</th>
                                                 <th scope="col">@Utility.Resource.Title_Designer.Amount</th>
-                                                <th scope="col">Credit</th>
+                                                <th scope="col">@Utility.Resource.Title_Designer.Credit</th>
                                                 <th scope="col"></th>
                                             </tr>
                                         </thead>
@@ -271,7 +271,7 @@
                     <span class="btn-group group-add">
                         <a id="ShowPreference" href="javascript::" class="btn btn-primary .ShowPreference" data-toggle="modal" data-target=".Preference">
                             <i class="iconsminds-gear-2"></i>
-                            Preference
+                            @Utility.Resource.Title_Designer.Preference
                         </a>
 
                         @*<button id="ShowPreference" type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg" style="width:30px;padding:0px;color:white;">

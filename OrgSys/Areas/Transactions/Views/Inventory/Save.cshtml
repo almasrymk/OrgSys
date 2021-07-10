@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col-12">
             <div class="mb-3">
-                <h1>Inventorys </h1>
+                <h1>@Utility.Resource.Title_Designer.Inventory </h1>
                 <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
                     <ol class="breadcrumb pt-0">
                         <li class="breadcrumb-item">
@@ -18,7 +18,7 @@
                             @Utility.Resource.Title_Designer.Setting
                         </li>
                         <li class="breadcrumb-item">
-                            Inventory Notices
+                            @Utility.Resource.Title_Designer.InventoryNotices
                         </li>
                         <li class="breadcrumb-item active" aria-current="page">  <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId">@ViewBag.InventorysType</a></li>
                     </ol>
@@ -118,9 +118,9 @@
                                                 <th scope="col">#</th>
                                                 <th scope="col">@Utility.Resource.Title_Designer.Product</th>
                                                 <th scope="col">@Utility.Resource.Title_Designer.Unit</th>
-                                                <th scope="col">Balance</th>
-                                                <th scope="col">Actual Balance</th>
-                                                <th scope="col">Diff Quantity</th>
+                                                <th scope="col">@Utility.Resource.Title_Designer.Balance</th>
+                                                <th scope="col">@Utility.Resource.Title_Designer.ActualBalance</th>
+                                                <th scope="col">@Utility.Resource.Title_Designer.DiffQuantity</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -142,7 +142,7 @@
                                                                    autocomplete="off" style="border-top:none;border-bottom:none;border-right:none;" value="@InventoryProduct.ProductName">
                                                             <input type="hidden" id="ProductId" name="ProductId" class="ProductId" value="@InventoryProduct.ProductId" />
                                                             <div style="text-align: center; vertical-align: middle;">
-                                                                <i id="RepeatedDanger" class="badge badge-danger mb-1" style="width: 60px; text-align: center; vertical-align: middle; height: 25px; display: none; margin: 6px;">Repeated</i>
+                                                                <i id="RepeatedDanger" class="badge badge-danger mb-1" style="width: 60px; text-align: center; vertical-align: middle; height: 25px; display: none; margin: 6px;">@Utility.Resource.Title_Designer.Repeated</i>
                                                             </div>
                                                             <div class="input-group-prepend Dropbtn2  ">
                                                                 <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
@@ -181,7 +181,7 @@
                                                                autocomplete="off" style="border-top:none;border-bottom:none;border-right:none;">
                                                         <input type="hidden" id="ProductId" name="ProductId" class="ProductId" />
                                                         <div style="text-align: center; vertical-align: middle;">
-                                                            <i id="RepeatedDanger" class="badge badge-danger mb-1" style="width: 60px; text-align: center; vertical-align: middle; height: 25px; display: none; margin: 6px;">Repeated</i>
+                                                            <i id="RepeatedDanger" class="badge badge-danger mb-1" style="width: 60px; text-align: center; vertical-align: middle; height: 25px; display: none; margin: 6px;">@Utility.Resource.Title_Designer.Repeated</i>
                                                         </div>
                                                         <div class="input-group-prepend Dropbtn2  ">
                                                             <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
@@ -213,7 +213,7 @@
                     <span class="btn-group group-add">
                         <a id="ShowPreference" href="javascript::" class="btn btn-primary .ShowPreference" data-toggle="modal" data-target=".Preference">
                             <i class="iconsminds-gear-2"></i>
-                            Preference
+                            @Utility.Resource.Title_Designer.Preference
                         </a>
                         <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId" class="btn btn-primary ">
                             <i class="simple-icon-action-undo"> </i>

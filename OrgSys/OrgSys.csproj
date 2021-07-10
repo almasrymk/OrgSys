@@ -5,9 +5,49 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\Financials\Data\**" />
+    <Compile Remove="Areas\Financials\Models\**" />
+    <Compile Remove="Areas\Invoices\Data\**" />
+    <Compile Remove="Areas\Invoices\Models\**" />
+    <Compile Remove="Areas\Orders\Data\**" />
+    <Compile Remove="Areas\Orders\Models\**" />
+    <Compile Remove="Areas\Setting\Data\**" />
+    <Compile Remove="Areas\Setting\Models\**" />
+    <Compile Remove="Areas\Transactions\Data\**" />
+    <Compile Remove="Areas\Transactions\Models\**" />
     <Compile Remove="wwwroot\Assets\Revolutions\**" />
+    <Content Remove="Areas\Financials\Data\**" />
+    <Content Remove="Areas\Financials\Models\**" />
+    <Content Remove="Areas\Invoices\Data\**" />
+    <Content Remove="Areas\Invoices\Models\**" />
+    <Content Remove="Areas\Orders\Data\**" />
+    <Content Remove="Areas\Orders\Models\**" />
+    <Content Remove="Areas\Setting\Data\**" />
+    <Content Remove="Areas\Setting\Models\**" />
+    <Content Remove="Areas\Transactions\Data\**" />
+    <Content Remove="Areas\Transactions\Models\**" />
     <Content Remove="wwwroot\Assets\Revolutions\**" />
+    <EmbeddedResource Remove="Areas\Financials\Data\**" />
+    <EmbeddedResource Remove="Areas\Financials\Models\**" />
+    <EmbeddedResource Remove="Areas\Invoices\Data\**" />
+    <EmbeddedResource Remove="Areas\Invoices\Models\**" />
+    <EmbeddedResource Remove="Areas\Orders\Data\**" />
+    <EmbeddedResource Remove="Areas\Orders\Models\**" />
+    <EmbeddedResource Remove="Areas\Setting\Data\**" />
+    <EmbeddedResource Remove="Areas\Setting\Models\**" />
+    <EmbeddedResource Remove="Areas\Transactions\Data\**" />
+    <EmbeddedResource Remove="Areas\Transactions\Models\**" />
     <EmbeddedResource Remove="wwwroot\Assets\Revolutions\**" />
+    <None Remove="Areas\Financials\Data\**" />
+    <None Remove="Areas\Financials\Models\**" />
+    <None Remove="Areas\Invoices\Data\**" />
+    <None Remove="Areas\Invoices\Models\**" />
+    <None Remove="Areas\Orders\Data\**" />
+    <None Remove="Areas\Orders\Models\**" />
+    <None Remove="Areas\Setting\Data\**" />
+    <None Remove="Areas\Setting\Models\**" />
+    <None Remove="Areas\Transactions\Data\**" />
+    <None Remove="Areas\Transactions\Models\**" />
     <None Remove="wwwroot\Assets\Revolutions\**" />
   </ItemGroup>
 
@@ -27,16 +67,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Financials\Data\" />
-    <Folder Include="Areas\Financials\Models\" />
-    <Folder Include="Areas\Orders\Data\" />
-    <Folder Include="Areas\Orders\Models\" />
-    <Folder Include="Areas\Transactions\Data\" />
-    <Folder Include="Areas\Transactions\Models\" />
-    <Folder Include="Areas\Invoices\Data\" />
-    <Folder Include="Areas\Invoices\Models\" />
-    <Folder Include="Areas\Setting\Data\" />
-    <Folder Include="Areas\Setting\Models\" />
     <Folder Include="wwwroot\Files\" />
   </ItemGroup>
 

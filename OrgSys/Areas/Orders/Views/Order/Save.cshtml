@@ -15,7 +15,7 @@
                             <a href="/">@Utility.Resource.Title_Designer.Home</a>
                         </li>
                         <li class="breadcrumb-item">
-                            Orders
+                            @Utility.Resource.Title_Designer.Orders
                         </li>
                         <li class="breadcrumb-item active" aria-current="page">  <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId"> @ViewBag.OrdersType</a></li>
                     </ol>
@@ -36,14 +36,14 @@
                             <ul class="card-header">
                                 <li>
                                     <a id="tbProduct" href="#checkStep1">
-                                        OrderProducts<br />
+                                        @Utility.Resource.Title_Designer.OrderProducts<br />
                                         <small>@Utility.Resource.Message_Designer.UnitsWhichProductMeasured</small>
                                         <div id="divProduct"></div>
                                     </a>
                                 </li>
                                 <li>
                                     <a id="tbHeader" href="#checkStep2">
-                                        OrderDetails<br />
+                                        @Utility.Resource.Title_Designer.OrderDetails<br />
                                         <small>@Utility.Resource.Message_Designer.IngredientsThatProductMadeOf</small>
                                         <div id="divHeader"></div>
                                     </a>
@@ -55,14 +55,14 @@
                             <ul class="card-header">
                                 <li>
                                     <a id="tbHeader" href="#checkStep2">
-                                        OrderDetails<br />
+                                        @Utility.Resource.Title_Designer.OrderDetails<br />
                                         <small>@Utility.Resource.Message_Designer.IngredientsThatProductMadeOf</small>
                                         <div id="divHeader"></div>
                                     </a>
                                 </li>
                                 <li>
                                     <a id="tbProduct" href="#checkStep1">
-                                        OrderProducts<br />
+                                        @Utility.Resource.Title_Designer.OrderProducts<br />
                                         <small>@Utility.Resource.Message_Designer.UnitsWhichProductMeasured</small>
                                         <div id="divProduct"></div>
                                     </a>
@@ -338,7 +338,7 @@
                             {
                                 <div class="form-row">
                                     <div class="form-group col-md-4">
-                                        Table
+                                        @Utility.Resource.Title_Designer.Table
                                         <div id="divStoreId">
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
@@ -376,7 +376,7 @@
                         <span class="btn-group group-add">
                             <a id="ShowPreference" href="javascript::" class="btn btn-primary .ShowPreference" data-toggle="modal" data-target=".Preference">
                                 <i class="iconsminds-gear-2"></i>
-                                Preference
+                                @Utility.Resource.Title_Designer.Preference
                             </a>
 
                             @*<button id="ShowPreference" type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg" style="width:30px;padding:0px;color:white;">
@@ -399,11 +399,11 @@
                         <span class="btn-group group-add mb-4" style="width:92%">
                             <a href="/Setting/Product/Save" class="btn btn-primary ">
                                 <i class="iconsminds-shopping-basket"></i>
-                                New Product
+                                @Utility.Resource.Title_Designer.NewProduct
                             </a>
                             <a href="/Setting/Classification/Save" class="btn btn-primary">
                                 <i class="simple-icon-layers"></i>
-                                New Classification
+                                @Utility.Resource.Title_Designer.NewClassification
                             </a>
                         </span>
                     </div>

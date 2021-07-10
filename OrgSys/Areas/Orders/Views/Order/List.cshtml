@@ -10,14 +10,14 @@
                 <thead>
                     <tr>
                         <th style="text-align: center">#</th>
-                        <th style="text-align: center">Image</th>
+                        <th style="text-align: center">@Utility.Resource.Title_Designer.Image</th>
                         <th>
-                            Code
+                            @Utility.Resource.Title_Designer.Code
                         </th>
                         <th>
                             @if (ViewBag.TypeId == 1)
                             {
-                                <span> Table </span>
+                            <span> @Utility.Resource.Title_Designer.Table </span>
                             }
                             else
                             {
@@ -26,16 +26,16 @@
 
                         </th>
                         <th>
-                            Date
+                            @Utility.Resource.Title_Designer.Date
                         </th>
                         <th>
-                            Shift
+                            @Utility.Resource.Title_Designer.Shift
                         </th>
                         <th>
-                            Time
+                            @Utility.Resource.Title_Designer.Time
                         </th>
                         <th style="vertical-align: middle;text-align:center;">
-                            Invoice
+                            @Utility.Resource.Title_Designer.Invoice
                         </th>
 
                         <th colspan="3">
