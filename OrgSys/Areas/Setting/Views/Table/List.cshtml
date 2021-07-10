@@ -11,7 +11,7 @@
                 <thead>
                     <tr>
                         <th style="text-align: center">#</th>
-                        <th style="text-align: center">@Utility.Resource.Title_Designer.Image</th>
+                        <th style="text-align: center"> </th>
                         <th>@Utility.Resource.Title_Designer.Name</th>
                         <th colspan="3"></th>
                     </tr>
@@ -20,7 +20,7 @@
                     @for (int i = 0, x = ((Model.PageNumber - 1) * Model.PageSize) + 1; i < Model.Count; i++, x++)
                     {
                         <tr>
-                            <td style="width:50px;vertical-align: middle;text-align:center">
+                            <td style="width:30px;vertical-align: middle;text-align:center">
                                 <p class="list-item-heading">@x</p>
                             </td>
                             <td style="width:80px;padding:7px; vertical-align: middle;">
@@ -28,7 +28,7 @@
                                     <i class="simple-icon-grid"></i>
                                 </div>
                             </td>
-                            <td>
+                            <td style="vertical-align: middle;">
                                 <p class="text-muted">@Model[i].Name</p>
                             </td>
                             <td style="width:70px;vertical-align: middle;">
@@ -111,11 +111,11 @@
                         </div>
                     </div>
                     <div class="lead text-center">
-                        <p style="text-align:center;font-size:large;">
+                        <p style="text-align:center;font-size:large;width:120px;">
                             @Model[i].Name
                         </p>
                     </div>
-                    <div class="m-0 p-0">
+                    <div class="m-0 mt-2 p-0">
                         <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit"></i> @Utility.Resource.Title_Designer.Edit</a>
                         <span> &nbsp; | &nbsp; </span>
                         <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete</a>

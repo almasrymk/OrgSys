@@ -127,7 +127,7 @@
     <value>اضافة</value>
   </data>
   <data name="Addition" xml:space="preserve">
-    <value>إضافة</value>
+    <value>الاضافة</value>
   </data>
   <data name="Address" xml:space="preserve">
     <value>العنوان</value>
@@ -171,6 +171,9 @@
   <data name="Branchs" xml:space="preserve">
     <value>الفروع</value>
   </data>
+  <data name="Check" xml:space="preserve">
+    <value>اختار</value>
+  </data>
   <data name="Classification" xml:space="preserve">
     <value>تصنيف</value>
   </data>
@@ -178,16 +181,16 @@
     <value>التصنيفات</value>
   </data>
   <data name="Client" xml:space="preserve">
-    <value>عملاء</value>
+    <value>العميل</value>
   </data>
   <data name="Clients" xml:space="preserve">
-    <value>عميل</value>
+    <value>العملاء</value>
   </data>
   <data name="Code" xml:space="preserve">
     <value>الكود</value>
   </data>
   <data name="Collection" xml:space="preserve">
-    <value>مجموعة</value>
+    <value>التحصيل</value>
   </data>
   <data name="CompletedOrders" xml:space="preserve">
     <value>الطلبات المكتملة</value>
@@ -207,6 +210,9 @@
   <data name="Currency" xml:space="preserve">
     <value>العملة</value>
   </data>
+  <data name="Customer" xml:space="preserve">
+    <value>عميل</value>
+  </data>
   <data name="Customers" xml:space="preserve">
     <value>العملاء</value>
   </data>
@@ -223,7 +229,7 @@
     <value>الوكيل</value>
   </data>
   <data name="Dealers" xml:space="preserve">
-    <value>الوكلاء</value>
+    <value>المتعاملين</value>
   </data>
   <data name="Default" xml:space="preserve">
     <value>افتراضي</value>
@@ -279,6 +285,9 @@
   <data name="EmptyLineCount" xml:space="preserve">
     <value>عدد الاسطر الفارغة</value>
   </data>
+  <data name="End" xml:space="preserve">
+    <value>ينتهي فى</value>
+  </data>
   <data name="External" xml:space="preserve">
     <value>خارجي</value>
   </data>
@@ -307,7 +316,7 @@
     <value>داخلي</value>
   </data>
   <data name="Inventory" xml:space="preserve">
-    <value>مخزون</value>
+    <value>الجرد</value>
   </data>
   <data name="InventoryNotices" xml:space="preserve">
     <value>اشعارات المخزون</value>
@@ -328,7 +337,7 @@
     <value>افتراضي</value>
   </data>
   <data name="Issue" xml:space="preserve">
-    <value>مشكلة</value>
+    <value>الصرف</value>
   </data>
   <data name="Library" xml:space="preserve">
     <value>المكتبة</value>
@@ -357,6 +366,9 @@
   <data name="Nickname" xml:space="preserve">
     <value>الاسم المستعار</value>
   </data>
+  <data name="NumberofPeople" xml:space="preserve">
+    <value>عدد الافراد</value>
+  </data>
   <data name="Ok" xml:space="preserve">
     <value>موافق</value>
   </data>
@@ -372,6 +384,9 @@
   <data name="OrderTabe" xml:space="preserve">
     <value>بوابة الطلب</value>
   </data>
+  <data name="Organization" xml:space="preserve">
+    <value>هيكل المنشأة</value>
+  </data>
   <data name="OrgSys" xml:space="preserve">
     <value>برنامج اورجنايزر</value>
   </data>
@@ -379,16 +394,16 @@
     <value>المصروفات</value>
   </data>
   <data name="Outlay" xml:space="preserve">
-    <value>مصاريف</value>
+    <value>المصاريف</value>
   </data>
   <data name="OutlayTerms" xml:space="preserve">
-    <value>شروط النفقات</value>
+    <value>بنود الصرف</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>كلمة المرور</value>
   </data>
   <data name="Payment" xml:space="preserve">
-    <value>دفع</value>
+    <value>الدفع</value>
   </data>
   <data name="PaymentTypes" xml:space="preserve">
     <value>انواع الدفع</value>
@@ -415,7 +430,7 @@
     <value>تفاصيل البيع بالاصناف</value>
   </data>
   <data name="Product" xml:space="preserve">
-    <value>منتج</value>
+    <value>المنتج</value>
   </data>
   <data name="ProductCategories" xml:space="preserve">
     <value>فئات المنتجات</value>
@@ -436,7 +451,7 @@
     <value>عنصر الخاصية</value>
   </data>
   <data name="Purchase" xml:space="preserve">
-    <value>شراء</value>
+    <value>فاتورة شراء</value>
   </data>
   <data name="Purchases" xml:space="preserve">
     <value>المشتريات</value>
@@ -448,7 +463,7 @@
     <value>معدل التحويل</value>
   </data>
   <data name="Received" xml:space="preserve">
-    <value>استلام</value>
+    <value>الاستلام</value>
   </data>
   <data name="RecentOrders" xml:space="preserve">
     <value>الطلبات الاخيره</value>
@@ -460,37 +475,37 @@
     <value>المبالغ المستردة</value>
   </data>
   <data name="Repeated" xml:space="preserve">
-    <value>مُعاد</value>
+    <value>مكرر</value>
   </data>
   <data name="Report" xml:space="preserve">
     <value>التقارير</value>
   </data>
   <data name="Return" xml:space="preserve">
-    <value>مرتجع</value>
+    <value>المرتجع</value>
   </data>
   <data name="ReturnInvoice" xml:space="preserve">
     <value>مرتد فواتير البيع</value>
   </data>
   <data name="Returns" xml:space="preserve">
-    <value>مرتجعات</value>
+    <value>المرتجعات</value>
   </data>
   <data name="Review" xml:space="preserve">
-    <value>مراجعة</value>
+    <value>المراجعة</value>
   </data>
   <data name="ReviewClose" xml:space="preserve">
     <value>المراجعة / الاغلاق</value>
   </data>
   <data name="Role" xml:space="preserve">
-    <value>صلاحية</value>
+    <value>الصلاحية</value>
   </data>
   <data name="Roles" xml:space="preserve">
     <value>الصلاحيات</value>
   </data>
   <data name="Safe" xml:space="preserve">
-    <value>خزينة</value>
+    <value>الخزينة</value>
   </data>
   <data name="Safes" xml:space="preserve">
-    <value>خزائن</value>
+    <value>الخزائن</value>
   </data>
   <data name="Sales" xml:space="preserve">
     <value>المبيعات</value>
@@ -532,13 +547,16 @@
     <value>الاعدادات</value>
   </data>
   <data name="Shift" xml:space="preserve">
-    <value>وردية</value>
+    <value>الوردية</value>
   </data>
   <data name="Shifts" xml:space="preserve">
     <value>الورديات</value>
   </data>
   <data name="SignOut" xml:space="preserve">
     <value>تسجيل الخروج</value>
+  </data>
+  <data name="Start" xml:space="preserve">
+    <value>يبدأ من</value>
   </data>
   <data name="Store" xml:space="preserve">
     <value>المخزن</value>
@@ -559,10 +577,10 @@
     <value>الدراسات الاستقصائية</value>
   </data>
   <data name="Table" xml:space="preserve">
-    <value>الجدول</value>
+    <value>طاولة</value>
   </data>
   <data name="Tables" xml:space="preserve">
-    <value>جداول</value>
+    <value>الطاولات</value>
   </data>
   <data name="Tasks" xml:space="preserve">
     <value>المهام</value>
@@ -598,10 +616,10 @@
     <value>منتجات المعاملات</value>
   </data>
   <data name="Transactions" xml:space="preserve">
-    <value>المعاملات</value>
+    <value>الحركات</value>
   </data>
   <data name="Transfer" xml:space="preserve">
-    <value>تحويل</value>
+    <value>التحويل</value>
   </data>
   <data name="TypeSerial" xml:space="preserve">
     <value>اكتب التسلسل</value>

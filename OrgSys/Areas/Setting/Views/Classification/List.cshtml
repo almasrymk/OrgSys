@@ -10,7 +10,7 @@
                 <thead>
                     <tr>
                         <th style="text-align: center">#</th>
-                        <th style="text-align: center">@Utility.Resource.Title_Designer.Image</th>
+                        <th style="text-align: center"> </th>
                         <th>@Utility.Resource.Title_Designer.Name</th>
                         <th colspan="3"></th>
                     </tr>
@@ -18,49 +18,50 @@
                 <tbody>
                     @for (int i = 0, x = ((Model.PageNumber - 1) * Model.PageSize) + 1; i < Model.Count; i++, x++)
                     {
-                        <tr>
-                            <td style="width:50px;vertical-align: middle;text-align:center">
-                                <p class="list-item-heading">@x</p>
-                            </td>
-                            <td style="width:80px;padding:7px; vertical-align: middle;">
-                                @if ("" + Model[i].ImgPath != "")
-                                {
-                                    <img alt="Thumbnail" src="@Model[i].ImgPath"
-                                         class="list-thumbnail responsive border-0 rounded-circle badge-theme-1 m-0" style="height:60px;width:60px;" />
-                                }
-                                else
-                                {
-                                    <div class="list-thumbnail responsive border-0 rounded-circle badge-theme-1 m-0" style="height:60px;width:60px;font-size:x-large;text-align:center;padding-top:15px;">
-                                        <i class="simple-icon-layers"></i>
-                                    </div>
-                                }
-                            </td>
-                            <td>
-                                <p class="text-muted">@Model[i].Name</p>
-                            </td>
-                            <td style="width:70px;vertical-align: middle;">
-                                <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit"></i> @Utility.Resource.Title_Designer.Edit</a>
-                            </td>
-                            <td style="width:80px;vertical-align: middle;">
-                                <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete</a>
-                            </td>
-                            <td style="width:40px;text-align:center;vertical-align: middle;">
-                                @if (Model[i].Status == Utility.Status.All)
-                                {
-                                    <label class="custom-control custom-checkbox">
-                                        <input id="chk_@Model[i].Id" type="checkbox" class="custom-control-input chk">
-                                        <input type="hidden" value="@Model[i].Id" />
-                                        <span class="custom-control-label">&nbsp;</span>
-                                    </label>
-                                }
-                            </td>
-                        </tr>
+                    <tr>
+                        <td style="width:30px;vertical-align: middle;text-align:center">
+                            <p class="list-item-heading">@x</p>
+                        </td>
+                        <td style="width:80px;padding:7px; vertical-align: middle;">
+                            @if ("" + Model[i].ImgPath != "")
+                            {
+                                <img alt="Thumbnail" src="@Model[i].ImgPath"
+                                     class="list-thumbnail responsive border-0 rounded-circle badge-theme-1 m-0" style="height:60px;width:60px;" />
+                            }
+                            else
+                            {
+                                <div class="list-thumbnail responsive border-0 rounded-circle badge-theme-1 m-0" style="height:60px;width:60px;font-size:x-large;text-align:center;padding-top:15px;">
+                                    <i class="simple-icon-layers"></i>
+                                </div>
+                            }
+                        </td>
+                        <td style="vertical-align: middle;">
+                            <p class="text-muted">@Model[i].Name</p>
+                        </td>
+                        <td style="width:70px;vertical-align: middle;">
+                            <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit"></i> @Utility.Resource.Title_Designer.Edit</a>
+                        </td>
+                        <td style="width:80px;vertical-align: middle;">
+                            <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete</a>
+                        </td>
+                        <td style="width:40px;text-align:center;vertical-align: middle;">
+                            @if (Model[i].Status == Utility.Status.All)
+                            {
+                                <label class="custom-control custom-checkbox">
+                                    <input id="chk_@Model[i].Id" type="checkbox" class="custom-control-input chk">
+                                    <input type="hidden" value="@Model[i].Id" />
+                                    <span class="custom-control-label">&nbsp;</span>
+                                </label>
+                            }
+                        </td>
+                    </tr>
 
                     }
                 </tbody>
             </table>
         </div>
     </div>
+
     <div id="rowList" style="display:none;">
         <div class="col-12 list m-0 p-0 pt-3" data-check-all="checkAll">
             @for (int i = 0, x = ((Model.PageNumber - 1) * Model.PageSize) + 1; i < Model.Count; i++, x++)
@@ -80,9 +81,9 @@
                         }
 
                         <div class="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
-                            <a class="list-item-heading mb-0 truncate w-40 w-xs-100 d-inline-block" href="Pages.Product.Detail.html">
+                            <div class="list-item-heading mb-0 truncate w-40 w-xs-100 d-inline-block" href="Pages.Product.Detail.html">
                                 @Model[i].Name
-                            </a>
+                            </div>
                             <div class="w-15 w-xs-100">
                                 <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit"></i> @Utility.Resource.Title_Designer.Edit</a>
                                 <span> &nbsp; | &nbsp; </span>
@@ -134,11 +135,11 @@
                         }
                     </div>
                     <div class="lead text-center">
-                        <p style="text-align:center;font-size:large;">
+                        <p style="text-align:center;font-size:large;width:120px;">
                             @Model[i].Name
                         </p>
                     </div>
-                    <div class="m-0 p-0">
+                    <div class="m-0 mt-2 p-0">
                         <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit"></i> @Utility.Resource.Title_Designer.Edit</a>
                         <span> &nbsp; | &nbsp; </span>
                         <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete</a>

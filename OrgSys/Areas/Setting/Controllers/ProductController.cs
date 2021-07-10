@@ -28,8 +28,13 @@ namespace OrgSys.Areas.Setting.Controllers
         public override ProductModelView InitializeData(ProductModelView ob)
         {
             if (ob.ProductUnits == null)
-                 ob.ProductUnits = new List<ProductUnitModelView>();         
-            return ob;
+                 ob.ProductUnits = new List<ProductUnitModelView>();
+            if (ob.Id == 0)
+            {
+                ob.CodeNumber = new ProductService().GetMaxCode(ob.TypeId);
+                ob.Code = "" + new ProductService().GetMaxCode(ob.TypeId);
+            }
+                return ob;
         }
         public JsonResult GetList(int ProductId)
         {

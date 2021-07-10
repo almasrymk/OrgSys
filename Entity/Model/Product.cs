@@ -20,21 +20,16 @@ namespace Entity.Model
         public long CodeNumber { get; set; }
 
         [Required]
-        [StringLength(10, MinimumLength = 3)]
         public string Code { get; set; }
 
         [Required]
-        [StringLength(50, MinimumLength = 3)]
         public string Name { get; set; }
 
-        [StringLength(15, MinimumLength = 3)]
         public string Nickname { get; set; }
 
         [Required]
-        [StringLength(15, MinimumLength = 5)]
         public string Barcode { get; set; }
 
-        [StringLength(500, MinimumLength = 5)]
         public string Description { get; set; }
 
         public decimal Price { get; set; }

@@ -171,6 +171,9 @@
   <data name="Branchs" xml:space="preserve">
     <value>Branchs</value>
   </data>
+  <data name="Check" xml:space="preserve">
+    <value>Check</value>
+  </data>
   <data name="Classification" xml:space="preserve">
     <value>Classification</value>
   </data>
@@ -206,6 +209,9 @@
   </data>
   <data name="Currency" xml:space="preserve">
     <value>Currency</value>
+  </data>
+  <data name="Customer" xml:space="preserve">
+    <value>Customer</value>
   </data>
   <data name="Customers" xml:space="preserve">
     <value>Customers</value>
@@ -278,6 +284,9 @@
   </data>
   <data name="EmptyLineCount" xml:space="preserve">
     <value>Empty Line Count</value>
+  </data>
+  <data name="End" xml:space="preserve">
+    <value>End</value>
   </data>
   <data name="External" xml:space="preserve">
     <value>External</value>
@@ -357,6 +366,9 @@
   <data name="Nickname" xml:space="preserve">
     <value>Nickname</value>
   </data>
+  <data name="NumberofPeople" xml:space="preserve">
+    <value>Number of People</value>
+  </data>
   <data name="Ok" xml:space="preserve">
     <value>Ok</value>
   </data>
@@ -371,6 +383,9 @@
   </data>
   <data name="OrderTabe" xml:space="preserve">
     <value>Order Tabe</value>
+  </data>
+  <data name="Organization" xml:space="preserve">
+    <value>Organization</value>
   </data>
   <data name="OrgSys" xml:space="preserve">
     <value>Organizer System</value>
@@ -539,6 +554,9 @@
   </data>
   <data name="SignOut" xml:space="preserve">
     <value>SignOut</value>
+  </data>
+  <data name="Start" xml:space="preserve">
+    <value>Start</value>
   </data>
   <data name="Store" xml:space="preserve">
     <value>Store</value>

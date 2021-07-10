@@ -12,5 +12,7 @@ namespace Entity.Model
     {
         [StringLength(50, MinimumLength = 3)]
         public string Name { get; set; }
+        public TimeSpan Start { get; set; }
+        public TimeSpan End { get; set; }
     }
 }

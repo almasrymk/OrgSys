@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col-12">
             <div class="mb-3">
-                <h1>Table</h1>
+                <h1>@Utility.Resource.Title_Designer.Table</h1>
                 <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
                     <ol class="breadcrumb pt-0">
                         <li class="breadcrumb-item">
@@ -59,16 +59,16 @@
                                             @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                                         </div>
                                         <div class="form-group col-md-6">
-                                            Description
-                                            @Html.TextBoxFor(model => model.Description, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Code })
+                                            @Utility.Resource.Title_Designer.Description
+                                            @Html.TextBoxFor(model => model.Description, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Description })
                                             <small class="form-text text-muted"> @Utility.Resource.Message_Designer.CodeIncreasedAutomaticallyCanBechanged</small>
                                             @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger " })
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
-                                            Number of People
-                                            @Html.TextBoxFor(model => model.NumberOfPeople, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Name })
+                                            @Utility.Resource.Title_Designer.NumberofPeople
+                                            @Html.TextBoxFor(model => model.NumberOfPeople, new { @class = "form-control", @placeholder = "0" })
                                             <small class="form-text text-muted"> @Utility.Resource.Message_Designer.NameRequired</small>
                                             @Html.ValidationMessageFor(model => model.NumberOfPeople, "", new { @class = "text-danger" })
                                         </div>

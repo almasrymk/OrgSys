@@ -409,22 +409,13 @@
             Valid = false;
 
        else if (CheckRage("Barcode", "divBarcode", 5, 15, '@Utility.Resource.Message_Designer.BarcodeRange'))
-            Valid = false;
-
-        if (CheckRage("Nickname", "divNickname", 3, 15, '@Utility.Resource.Message_Designer.NicknameRange'))
-            Valid = false;
+            Valid = false;       
 
         if (CheckRequired("Name", "divName", '@Utility.Resource.Message_Designer.NameRequired'))
-            Valid = false;
-
-        else if (CheckRage("Name", "divName", 3, 50, '@Utility.Resource.Message_Designer.NameRange'))
-            Valid = false;
+            Valid = false;     
 
         if (CheckRequired("Code", "divCode", '@Utility.Resource.Message_Designer.CodeRequired'))
-            Valid = false;
-
-        else if (CheckRage("Code", "divCode", 3, 10, '@Utility.Resource.Message_Designer.CodeRange'))
-            Valid = false;
+            Valid = false;     
 
         if (CheckRequired("ClassificationId", "divClassificationName", '@Utility.Resource.Message_Designer.ClassificationRequired'))
             Valid = false;

@@ -199,5 +199,10 @@ namespace Service.BAL
             }
             return list;
         }
+
+        public long GetMaxCode(long type)
+        {
+            return repo.productRepo.GetMaXCode(type);
+        }
     }
 }

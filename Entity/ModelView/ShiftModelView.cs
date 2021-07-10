@@ -2,6 +2,7 @@
 using Entity.Model;
 using Utility.Resource;
 using System.ComponentModel.DataAnnotations;
+using System;
 
 namespace Entity.ModelView
 {
@@ -18,6 +19,8 @@ namespace Entity.ModelView
                 ob = new Shift();
             this.Id = ob.Id;
             this.Name = ob.Name;
+            this.Start = ob.Start;
+            this.End = ob.End;
             this.Status = ob.Status;
             this.ParentId = ob.ParentId;
             this.TypeId = ob.TypeId;
@@ -32,6 +35,8 @@ namespace Entity.ModelView
                 {
                     Id = this.Id,
                     Name = this.Name,
+                    Start = this.Start,
+                    End = this.End,
                     Status = this.Status,
                     MaskText = this.MaskText,
                     ParentId = this.ParentId,
@@ -45,5 +50,8 @@ namespace Entity.ModelView
         [StringLength(50, MinimumLength = 3, ErrorMessageResourceName = nameof(Message_Designer.NameRequired), ErrorMessageResourceType = typeof(Message_Designer))]
         [Required(ErrorMessageResourceName = nameof(Message_Designer.NameRequired), ErrorMessageResourceType = typeof(Message_Designer))]
         public string Name { get; set; }
+
+        public TimeSpan Start { get; set; }
+        public TimeSpan End { get; set; }
     }
 }

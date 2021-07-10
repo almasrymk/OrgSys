@@ -50,7 +50,7 @@
     </style>
     @if (dirCss == "ltr")
     {
-        <style>
+        <style type="text/css">            
             .DropAutoComplete > .Droptxt {
                 border-right: none;
             }
@@ -67,6 +67,10 @@
     else
     {
         <style>
+        body { font-family: 'Cairo-Bold', sans-serif !important; font-size: 13px !important; }
+
+            h1, h2, h3, h4, p, .page-header h1, body h1, body h2, body h3, .btn, .btn-icon .badge, body { font-family: 'Cairo-Bold', sans-serif !important; }
+
             .DropAutoComplete > .Droptxt {
                 border-left: none;
             }
@@ -296,7 +300,7 @@
                     <li>
                         <a href="#" data-toggle="collapse" data-target="#collapseOrganization" aria-expanded="true"
                            aria-controls="collapseOrganization" class="rotate-arrow-icon opacity-50">
-                            <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">Organization</span>
+                            <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Organization</span>
                         </a>
                         <div id="collapseOrganization" class="collapse show">
                             <ul class="list-unstyled inner-level-menu">
@@ -314,13 +318,13 @@
                                 <li>
                                     <a href="/Setting/Table">
                                         <i class="simple-icon-grid"></i>
-                                        <span class="d-inline-block">@Utility.Resource.Title_Designer.Table</span>
+                                        <span class="d-inline-block">@Utility.Resource.Title_Designer.Tables</span>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="/Setting/Safe">
                                         <i class="iconsminds-safe-box"></i>
-                                        <span class="d-inline-block">@Utility.Resource.Title_Designer.Safe</span>
+                                        <span class="d-inline-block">@Utility.Resource.Title_Designer.Safes</span>
                                     </a>
                                 </li>
 
@@ -356,7 +360,7 @@
                     <li>
                         <a href="#" data-toggle="collapse" data-target="#collapseProduct" aria-expanded="false"
                            aria-controls="collapseProduct" class="rotate-arrow-icon opacity-50 collapsed">
-                            <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Product</span>
+                            <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Products</span>
                         </a>
                         <div id="collapseProduct" class="collapse">
                             <ul class="list-unstyled inner-level-menu">
@@ -677,7 +681,7 @@
                         </div>
                     </li>
                 </ul>
-           
+
             </div>
         </div>
     </div>

@@ -43,7 +43,7 @@ namespace Service.BAL
         /// <returns></returns>
         public List<StoreModelView> GetAll(long parentId = 0, long TypeId = 0)
         {
-            return repo.storeRepo.GetList(e => e.OrderBy(e => e.Id), "", Utility.Status.New).Select(e => new StoreModelView(e)).ToList();
+            return repo.storeRepo.GetList(e => e.OrderBy(e => e.Id), "Branch", Utility.Status.New).Select(e => new StoreModelView(e)).ToList();
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Service.BAL
         /// <returns></returns>
         public List<StoreModelView> GetAll(string textSearch , long parentId = 0, long TypeId = 0)
         {
-            return repo.storeRepo.GetList(e => e.Name.Contains("" + textSearch), e => e.OrderBy(e => e.Id), "", Utility.Status.New).Select(e => new StoreModelView(e)).ToList();
+            return repo.storeRepo.GetList(e => e.Name.Contains("" + textSearch), e => e.OrderBy(e => e.Id), "Branch", Utility.Status.New).Select(e => new StoreModelView(e)).ToList();
         }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace Service.BAL
         /// <returns></returns>
         public IPagedList<StoreModelView> GetAll(long parentId = 0, long TypeId = 0 ,int page = 1, int pageSize = 20)
         {
-            return repo.storeRepo.GetList(e => e.OrderBy(e => e.Id), "", Utility.Status.New).Select(e => new StoreModelView(e)).ToPagedList(page, pageSize);
+            return repo.storeRepo.GetList(e => e.OrderBy(e => e.Id), "Branch", Utility.Status.New).Select(e => new StoreModelView(e)).ToPagedList(page, pageSize);
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace Service.BAL
         /// <returns></returns>
         public IPagedList<StoreModelView> GetAll(string textSearch , long parentId = 0, long TypeId = 0, int page = 1, int pageSize = 20)
         {
-            return repo.storeRepo.GetList(e => "" + textSearch == "" || e.Name.Contains("" + textSearch), e => e.OrderBy(e => e.Id), "", Utility.Status.New).Select(e => new StoreModelView(e)).ToPagedList(page, pageSize);
+            return repo.storeRepo.GetList(e => "" + textSearch == "" || e.Name.Contains("" + textSearch), e => e.OrderBy(e => e.Id), "Branch", Utility.Status.New).Select(e => new StoreModelView(e)).ToPagedList(page, pageSize);
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace Service.BAL
         /// <returns></returns>
         public StoreModelView Get(long Id)
         {
-            return new StoreModelView(repo.storeRepo.Get(e => e.Id == Id));
+            return new StoreModelView(repo.storeRepo.Get(e => e.Id == Id , "Branch"));
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace Service.BAL
         /// <returns></returns>
         public StoreModelView Get(string textSearch)
         {
-            return new StoreModelView(repo.storeRepo.Get(e => e.Name.Contains("" + textSearch)));
+            return new StoreModelView(repo.storeRepo.Get(e => e.Name.Contains("" + textSearch)  , "Branch"));
         }
 
         /// <summary>
@@ -111,7 +111,7 @@ namespace Service.BAL
 
         public List<StoreModelView> GetAll(List<long> ids, long TypeId = 0)
         {
-            return repo.storeRepo.GetList(e => ids.Contains(e.Id), e => e.OrderBy(e => e.Id), "", Utility.Status.New).Select(e => new StoreModelView(e)).ToList();
+            return repo.storeRepo.GetList(e => ids.Contains(e.Id), e => e.OrderBy(e => e.Id), "Branch", Utility.Status.New).Select(e => new StoreModelView(e)).ToList();
         }
     }
 }
