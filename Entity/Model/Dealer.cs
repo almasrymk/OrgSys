@@ -13,11 +13,9 @@ namespace Entity.Model
         public long CodeNumber { get; set; }
 
         [Required]
-        [StringLength(10, MinimumLength = 3)]        
         public string Code { get; set; }
 
         [Required]
-        [StringLength(50, MinimumLength = 3)]
         public string Name { get; set; }
 
         [StringLength(25, MinimumLength = 8)]        

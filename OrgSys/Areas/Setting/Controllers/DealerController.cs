@@ -12,6 +12,18 @@ namespace OrgSys.Areas.Setting.Controllers
     [Area("Setting")]
     public class DealerController : BaseController<DealerModelView>
     {
+        public override DealerModelView InitializeData(DealerModelView ob)
+        {
+            if (ob == null)
+                ob = new DealerModelView();
+            if (ob.Id == 0)
+            {
+                ob.CodeNumber = new DealerService().GetMaxCode(ob.TypeId);
+                ob.Code = "" + new DealerService().GetMaxCode(ob.TypeId);
+            }
+            return ob;
+        }
+
         public JsonResult GetList(string txtSearch = "", long TypeId = 0, int page = 1, int pageSize = 10)
         {
             if (txtSearch != null)

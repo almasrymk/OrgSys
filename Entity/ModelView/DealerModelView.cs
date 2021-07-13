@@ -54,12 +54,10 @@ namespace Entity.ModelView
       
         public long CodeNumber { get; set; }
 
-        [StringLength(10, MinimumLength = 3, ErrorMessageResourceName = nameof(Message_Designer.CodeRange), ErrorMessageResourceType = typeof(Message_Designer))]
         [Required(ErrorMessageResourceName = nameof(Message_Designer.CodeRequired), ErrorMessageResourceType = typeof(Message_Designer))]
         public string Code { get; set; }
 
         [Display(Name = nameof(Title_Designer.Name), ResourceType = typeof(Title_Designer))]
-        [StringLength(50, MinimumLength = 3, ErrorMessageResourceName = nameof(Message_Designer.NameRange), ErrorMessageResourceType = typeof(Message_Designer))]
         [Required(ErrorMessageResourceName = nameof(Message_Designer.NameRequired), ErrorMessageResourceType = typeof(Message_Designer))]
         public string Name { get; set; }
 

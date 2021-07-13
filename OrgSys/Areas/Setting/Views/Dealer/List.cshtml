@@ -84,15 +84,10 @@
                             </div>
                         }
                         <div class="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
-                            <a class="list-item-heading mb-0 p-0 truncate w-20 w-xs-100 d-inline-block" href="Pages.Product.Detail.html">
+                            <div class="list-item-heading mb-0 p-0 truncate w-20 w-xs-100 d-inline-block" href="Pages.Product.Detail.html">
                                 <p class="list-item-heading mb-1 color-theme-1">@Model[i].Name</p>
-                            </a>
-                            <a class="list-item-heading mb-0 p-0 truncate w-20 w-xs-100 d-inline-block" href="Pages.Product.Detail.html">
-                                <p class="list-item-heading mb-1 color-theme-1 text-small">@Model[i].Phone</p>
-                            </a>
-                            <a class="list-item-heading mb-0 p-0 truncate w-20 w-xs-100 d-inline-block" href="Pages.Product.Detail.html">
-                                <p class="list-item-heading mb-1 color-theme-1 text-small ">@Model[i].Address</p>
-                            </a>
+                            </div>
+                           
                             <div class="w-15 w-xs-100">
                                 <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit"></i> @Utility.Resource.Title_Designer.Edit</a>
                                 <span> &nbsp; | &nbsp; </span>

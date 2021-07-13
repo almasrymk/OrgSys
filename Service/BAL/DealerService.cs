@@ -113,5 +113,10 @@ namespace Service.BAL
         {
             return repo.dealerRepo.GetList(e => e.TypeId == TypeId && ids.Contains(e.Id), e => e.OrderBy(e => e.Id), "", Utility.Status.New).Select(e => new DealerModelView(e)).ToList();
         }
+
+        public long GetMaxCode(long type)
+        {
+            return repo.dealerRepo.GetMaXCode(type);
+        }
     }
 }

@@ -36,6 +36,7 @@ namespace OrgSys.Areas.Setting.Controllers
             }
                 return ob;
         }
+
         public JsonResult GetList(int ProductId)
         {
             var ProductUnitList = new SelectList(new ProductUnitService().GetAll(0,0).Where(e=>e.ProductId==ProductId).Select(e=>e.UnitName));
