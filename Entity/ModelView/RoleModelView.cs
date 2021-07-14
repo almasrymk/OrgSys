@@ -2,6 +2,7 @@
 using Entity.Model;
 using Utility.Resource;
 using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 
 namespace Entity.ModelView
 {
@@ -45,5 +46,8 @@ namespace Entity.ModelView
         [StringLength(50, MinimumLength = 3, ErrorMessageResourceName = nameof(Message_Designer.NameRequired), ErrorMessageResourceType = typeof(Message_Designer))]
         [Required(ErrorMessageResourceName = nameof(Message_Designer.NameRequired), ErrorMessageResourceType = typeof(Message_Designer))]
         public string Name { get; set; }
+
+        public List<RolePermission> RolePermissions { get; set; }
+        public List<TreeView> Permissions { get; set; }
     }
 }

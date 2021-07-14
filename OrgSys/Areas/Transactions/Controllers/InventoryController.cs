@@ -16,8 +16,6 @@ namespace OrgSys.Areas.Inventory.Controllers
     {
         public override void LoadViewBag(InventoryModelView model)
         {           
-            ViewBag.StoreId = new SelectList(new StoreService().GetAll(model.ParentId, 0, 1, 20), "Id", "Name", model.StoreId);
-            ViewBag.ProductId = new SelectList(new ProductService().GetAll(model.ParentId, 0, 1, 20), "Id", "Name");
         }
 
         public override InventoryModelView InitializeData(InventoryModelView ob)
@@ -39,7 +37,7 @@ namespace OrgSys.Areas.Inventory.Controllers
                 ob.Date = DateTime.Now;
                 ob.InventoryProducts = new List<InventoryProductModelView>();
               }
-            
+            ob.StoreName = new StoreService().Get(ob.StoreId).Name;
             return ob;
         }
        

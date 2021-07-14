@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repository;
 
 namespace Repository.Migrations
 {
     [DbContext(typeof(OrgContext))]
-    partial class OrgContextModelSnapshot : ModelSnapshot
+    [Migration("20210713201406_EditSeed")]
+    partial class EditSeed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1257,8 +1259,8 @@ namespace Repository.Migrations
                         {
                             Id = 10L,
                             Hide = false,
-                            Key = "Data.All",
-                            Name = "Data",
+                            Key = "Setting.All",
+                            Name = "Setting",
                             ParentId = 1L,
                             Status = 0,
                             TypeId = 0L
@@ -1327,8 +1329,8 @@ namespace Repository.Migrations
                         {
                             Id = 10102L,
                             Hide = false,
-                            Key = "Stores.All",
-                            Name = "Stores",
+                            Key = "Store.All",
+                            Name = "Store",
                             ParentId = 101L,
                             Status = 0,
                             TypeId = 0L
@@ -1337,7 +1339,7 @@ namespace Repository.Migrations
                         {
                             Id = 1010201L,
                             Hide = false,
-                            Key = "Stores.View",
+                            Key = "Store.View",
                             Name = "View",
                             ParentId = 10102L,
                             Status = 0,
@@ -1347,7 +1349,7 @@ namespace Repository.Migrations
                         {
                             Id = 1010202L,
                             Hide = false,
-                            Key = "Stores.Add",
+                            Key = "Store.Add",
                             Name = "Add",
                             ParentId = 10102L,
                             Status = 0,
@@ -1357,7 +1359,7 @@ namespace Repository.Migrations
                         {
                             Id = 1010203L,
                             Hide = false,
-                            Key = "Stores.Edit",
+                            Key = "Store.Edit",
                             Name = "Edit",
                             ParentId = 10102L,
                             Status = 0,
@@ -1367,7 +1369,7 @@ namespace Repository.Migrations
                         {
                             Id = 1010204L,
                             Hide = false,
-                            Key = "Stores.Delete",
+                            Key = "Store.Delete",
                             Name = "Delete",
                             ParentId = 10102L,
                             Status = 0,
@@ -1420,6 +1422,56 @@ namespace Repository.Migrations
                             Key = "Tables.Delete",
                             Name = "Delete",
                             ParentId = 10103L,
+                            Status = 0,
+                            TypeId = 1L
+                        },
+                        new
+                        {
+                            Id = 10104L,
+                            Hide = false,
+                            Key = "Safes.All",
+                            Name = "Safes",
+                            ParentId = 101L,
+                            Status = 0,
+                            TypeId = 0L
+                        },
+                        new
+                        {
+                            Id = 1010401L,
+                            Hide = false,
+                            Key = "Safes.View",
+                            Name = "View",
+                            ParentId = 10104L,
+                            Status = 0,
+                            TypeId = 1L
+                        },
+                        new
+                        {
+                            Id = 1010402L,
+                            Hide = false,
+                            Key = "Safes.Add",
+                            Name = "Add",
+                            ParentId = 10104L,
+                            Status = 0,
+                            TypeId = 1L
+                        },
+                        new
+                        {
+                            Id = 1010403L,
+                            Hide = false,
+                            Key = "Safes.Edit",
+                            Name = "Edit",
+                            ParentId = 10104L,
+                            Status = 0,
+                            TypeId = 1L
+                        },
+                        new
+                        {
+                            Id = 1010404L,
+                            Hide = false,
+                            Key = "Safes.Delete",
+                            Name = "Delete",
+                            ParentId = 10104L,
                             Status = 0,
                             TypeId = 1L
                         },
@@ -1537,8 +1589,8 @@ namespace Repository.Migrations
                         {
                             Id = 10203L,
                             Hide = false,
-                            Key = "Shifts.All",
-                            Name = "Shifts",
+                            Key = "Sfilts.All",
+                            Name = "Sfilts",
                             ParentId = 102L,
                             Status = 0,
                             TypeId = 0L
@@ -1547,7 +1599,7 @@ namespace Repository.Migrations
                         {
                             Id = 1020301L,
                             Hide = false,
-                            Key = "Shifts.View",
+                            Key = "Sfilts.View",
                             Name = "View",
                             ParentId = 10203L,
                             Status = 0,
@@ -1557,7 +1609,7 @@ namespace Repository.Migrations
                         {
                             Id = 1020302L,
                             Hide = false,
-                            Key = "Shifts.Add",
+                            Key = "Sfilts.Add",
                             Name = "Add",
                             ParentId = 10203L,
                             Status = 0,
@@ -1567,7 +1619,7 @@ namespace Repository.Migrations
                         {
                             Id = 1020303L,
                             Hide = false,
-                            Key = "Shifts.Edit",
+                            Key = "Sfilts.Edit",
                             Name = "Edit",
                             ParentId = 10203L,
                             Status = 0,
@@ -1577,7 +1629,7 @@ namespace Repository.Migrations
                         {
                             Id = 1020304L,
                             Hide = false,
-                            Key = "Shifts.Delete",
+                            Key = "Sfilts.Delete",
                             Name = "Delete",
                             ParentId = 10203L,
                             Status = 0,
@@ -1867,8 +1919,8 @@ namespace Repository.Migrations
                         {
                             Id = 10501L,
                             Hide = false,
-                            Key = "Safes.All",
-                            Name = "Safes",
+                            Key = "OutlayTerms.All",
+                            Name = "Outlay Terms",
                             ParentId = 105L,
                             Status = 0,
                             TypeId = 0L
@@ -1877,7 +1929,7 @@ namespace Repository.Migrations
                         {
                             Id = 1050101L,
                             Hide = false,
-                            Key = "Safes.View",
+                            Key = "OutlayTerms.View",
                             Name = "View",
                             ParentId = 10501L,
                             Status = 0,
@@ -1887,7 +1939,7 @@ namespace Repository.Migrations
                         {
                             Id = 1050102L,
                             Hide = false,
-                            Key = "Safes.Add",
+                            Key = "OutlayTerms.Add",
                             Name = "Add",
                             ParentId = 10501L,
                             Status = 0,
@@ -1897,7 +1949,7 @@ namespace Repository.Migrations
                         {
                             Id = 1050103L,
                             Hide = false,
-                            Key = "Safes.Edit",
+                            Key = "OutlayTerms.Edit",
                             Name = "Edit",
                             ParentId = 10501L,
                             Status = 0,
@@ -1907,7 +1959,7 @@ namespace Repository.Migrations
                         {
                             Id = 1050104L,
                             Hide = false,
-                            Key = "Safes.Delete",
+                            Key = "OutlayTerms.Delete",
                             Name = "Delete",
                             ParentId = 10501L,
                             Status = 0,
@@ -1917,8 +1969,8 @@ namespace Repository.Migrations
                         {
                             Id = 10502L,
                             Hide = false,
-                            Key = "OutlayTerms.All",
-                            Name = "Outlay Terms",
+                            Key = "Currencies.All",
+                            Name = "Currencies",
                             ParentId = 105L,
                             Status = 0,
                             TypeId = 0L
@@ -1927,7 +1979,7 @@ namespace Repository.Migrations
                         {
                             Id = 1050201L,
                             Hide = false,
-                            Key = "OutlayTerms.View",
+                            Key = "Currencies.View",
                             Name = "View",
                             ParentId = 10502L,
                             Status = 0,
@@ -1937,7 +1989,7 @@ namespace Repository.Migrations
                         {
                             Id = 1050202L,
                             Hide = false,
-                            Key = "OutlayTerms.Add",
+                            Key = "Currencies.Add",
                             Name = "Add",
                             ParentId = 10502L,
                             Status = 0,
@@ -1947,7 +1999,7 @@ namespace Repository.Migrations
                         {
                             Id = 1050203L,
                             Hide = false,
-                            Key = "OutlayTerms.Edit",
+                            Key = "Currencies.Edit",
                             Name = "Edit",
                             ParentId = 10502L,
                             Status = 0,
@@ -1957,989 +2009,9 @@ namespace Repository.Migrations
                         {
                             Id = 1050204L,
                             Hide = false,
-                            Key = "OutlayTerms.Delete",
-                            Name = "Delete",
-                            ParentId = 10502L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 10503L,
-                            Hide = false,
-                            Key = "Currencies.All",
-                            Name = "Currencies",
-                            ParentId = 105L,
-                            Status = 0,
-                            TypeId = 0L
-                        },
-                        new
-                        {
-                            Id = 1050301L,
-                            Hide = false,
-                            Key = "Currencies.View",
-                            Name = "View",
-                            ParentId = 10503L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 1050302L,
-                            Hide = false,
-                            Key = "Currencies.Add",
-                            Name = "Add",
-                            ParentId = 10503L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 1050303L,
-                            Hide = false,
-                            Key = "Currencies.Edit",
-                            Name = "Edit",
-                            ParentId = 10503L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 1050304L,
-                            Hide = false,
                             Key = "Currencies.Delete",
                             Name = "Delete",
-                            ParentId = 10503L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 20L,
-                            Hide = false,
-                            Key = "Orders.All",
-                            Name = "Orders",
-                            ParentId = 1L,
-                            Status = 0,
-                            TypeId = 0L
-                        },
-                        new
-                        {
-                            Id = 201L,
-                            Hide = false,
-                            Key = "Orders",
-                            Name = "Order Notices",
-                            ParentId = 20L,
-                            Status = 0,
-                            TypeId = 0L
-                        },
-                        new
-                        {
-                            Id = 20101L,
-                            Hide = false,
-                            Key = "Internal.All",
-                            Name = "Internal",
-                            ParentId = 201L,
-                            Status = 0,
-                            TypeId = 0L
-                        },
-                        new
-                        {
-                            Id = 2010101L,
-                            Hide = false,
-                            Key = "Internal.View",
-                            Name = "View",
-                            ParentId = 20101L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 2010102L,
-                            Hide = false,
-                            Key = "Internal.Add",
-                            Name = "Add",
-                            ParentId = 20101L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 2010103L,
-                            Hide = false,
-                            Key = "Internal.Edit",
-                            Name = "Edit",
-                            ParentId = 20101L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 2010104L,
-                            Hide = false,
-                            Key = "Internal.Delete",
-                            Name = "Delete",
-                            ParentId = 20101L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 2010105L,
-                            Hide = false,
-                            Key = "Internal.Preference",
-                            Name = "Preference",
-                            ParentId = 20101L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 20102L,
-                            Hide = false,
-                            Key = "External.All",
-                            Name = "External",
-                            ParentId = 201L,
-                            Status = 0,
-                            TypeId = 0L
-                        },
-                        new
-                        {
-                            Id = 2010201L,
-                            Hide = false,
-                            Key = "External.View",
-                            Name = "View",
-                            ParentId = 20102L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 2010202L,
-                            Hide = false,
-                            Key = "External.Add",
-                            Name = "Add",
-                            ParentId = 20102L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 2010203L,
-                            Hide = false,
-                            Key = "External.Edit",
-                            Name = "Edit",
-                            ParentId = 20102L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 2010204L,
-                            Hide = false,
-                            Key = "External.Delete",
-                            Name = "Delete",
-                            ParentId = 20102L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 2010205L,
-                            Hide = false,
-                            Key = "External.Preference",
-                            Name = "Preference",
-                            ParentId = 20102L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 30L,
-                            Hide = false,
-                            Key = "Invoices.All",
-                            Name = "Invoices",
-                            ParentId = 1L,
-                            Status = 0,
-                            TypeId = 0L
-                        },
-                        new
-                        {
-                            Id = 301L,
-                            Hide = false,
-                            Key = "Sales",
-                            Name = "Sales",
-                            ParentId = 30L,
-                            Status = 0,
-                            TypeId = 0L
-                        },
-                        new
-                        {
-                            Id = 30101L,
-                            Hide = false,
-                            Key = "SalesInvoices.All",
-                            Name = "Invoices",
-                            ParentId = 301L,
-                            Status = 0,
-                            TypeId = 0L
-                        },
-                        new
-                        {
-                            Id = 3010101L,
-                            Hide = false,
-                            Key = "SalesInvoices.View",
-                            Name = "View",
-                            ParentId = 30101L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 3010102L,
-                            Hide = false,
-                            Key = "SalesInvoices.Add",
-                            Name = "Add",
-                            ParentId = 30101L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 3010103L,
-                            Hide = false,
-                            Key = "SalesInvoices.Edit",
-                            Name = "Edit",
-                            ParentId = 30101L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 3010104L,
-                            Hide = false,
-                            Key = "SalesInvoices.Delete",
-                            Name = "Delete",
-                            ParentId = 30101L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 3010105L,
-                            Hide = false,
-                            Key = "SalesInvoices.Preference",
-                            Name = "Preference",
-                            ParentId = 30101L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 30102L,
-                            Hide = false,
-                            Key = "SalesReturns.All",
-                            Name = "Returns",
-                            ParentId = 301L,
-                            Status = 0,
-                            TypeId = 0L
-                        },
-                        new
-                        {
-                            Id = 3010201L,
-                            Hide = false,
-                            Key = "SalesReturns.View",
-                            Name = "View",
-                            ParentId = 30102L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 3010202L,
-                            Hide = false,
-                            Key = "SalesReturns.Add",
-                            Name = "Add",
-                            ParentId = 30102L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 3010203L,
-                            Hide = false,
-                            Key = "SalesReturns.Edit",
-                            Name = "Edit",
-                            ParentId = 30102L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 3010204L,
-                            Hide = false,
-                            Key = "SalesReturns.Delete",
-                            Name = "Delete",
-                            ParentId = 30102L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 3010205L,
-                            Hide = false,
-                            Key = "SalesReturns.Preference",
-                            Name = "Preference",
-                            ParentId = 30102L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 302L,
-                            Hide = false,
-                            Key = "Purchases",
-                            Name = "Purchases",
-                            ParentId = 30L,
-                            Status = 0,
-                            TypeId = 0L
-                        },
-                        new
-                        {
-                            Id = 30201L,
-                            Hide = false,
-                            Key = "PurchasesInvoices.All",
-                            Name = "Invoices",
-                            ParentId = 302L,
-                            Status = 0,
-                            TypeId = 0L
-                        },
-                        new
-                        {
-                            Id = 3020101L,
-                            Hide = false,
-                            Key = "PurchasesInvoices.View",
-                            Name = "View",
-                            ParentId = 30201L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 3020102L,
-                            Hide = false,
-                            Key = "PurchasesInvoices.Add",
-                            Name = "Add",
-                            ParentId = 30201L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 3020103L,
-                            Hide = false,
-                            Key = "PurchasesInvoices.Edit",
-                            Name = "Edit",
-                            ParentId = 30201L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 3020104L,
-                            Hide = false,
-                            Key = "PurchasesInvoices.Delete",
-                            Name = "Delete",
-                            ParentId = 30201L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 3020105L,
-                            Hide = false,
-                            Key = "PurchasesInvoices.Preference",
-                            Name = "Preference",
-                            ParentId = 30201L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 30202L,
-                            Hide = false,
-                            Key = "PurchasesReturns.All",
-                            Name = "Returns",
-                            ParentId = 302L,
-                            Status = 0,
-                            TypeId = 0L
-                        },
-                        new
-                        {
-                            Id = 3020201L,
-                            Hide = false,
-                            Key = "PurchasesReturns.View",
-                            Name = "View",
-                            ParentId = 30202L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 3020202L,
-                            Hide = false,
-                            Key = "PurchasesReturns.Add",
-                            Name = "Add",
-                            ParentId = 30202L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 3020203L,
-                            Hide = false,
-                            Key = "PurchasesReturns.Edit",
-                            Name = "Edit",
-                            ParentId = 30202L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 3020204L,
-                            Hide = false,
-                            Key = "PurchasesReturns.Delete",
-                            Name = "Delete",
-                            ParentId = 30202L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 3020205L,
-                            Hide = false,
-                            Key = "PurchasesReturns.Preference",
-                            Name = "Preference",
-                            ParentId = 30202L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 40L,
-                            Hide = false,
-                            Key = "Transactions.All",
-                            Name = "Transactions",
-                            ParentId = 1L,
-                            Status = 0,
-                            TypeId = 0L
-                        },
-                        new
-                        {
-                            Id = 401L,
-                            Hide = false,
-                            Key = "TransactionNotices",
-                            Name = "Transaction Notices",
-                            ParentId = 40L,
-                            Status = 0,
-                            TypeId = 0L
-                        },
-                        new
-                        {
-                            Id = 40101L,
-                            Hide = false,
-                            Key = "Addition.All",
-                            Name = "Addition",
-                            ParentId = 401L,
-                            Status = 0,
-                            TypeId = 0L
-                        },
-                        new
-                        {
-                            Id = 4010101L,
-                            Hide = false,
-                            Key = "Addition.View",
-                            Name = "View",
-                            ParentId = 40101L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 4010102L,
-                            Hide = false,
-                            Key = "Addition.Add",
-                            Name = "Add",
-                            ParentId = 40101L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 4010103L,
-                            Hide = false,
-                            Key = "Addition.Edit",
-                            Name = "Edit",
-                            ParentId = 40101L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 4010104L,
-                            Hide = false,
-                            Key = "Addition.Delete",
-                            Name = "Delete",
-                            ParentId = 40101L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 4010105L,
-                            Hide = false,
-                            Key = "Addition.Preference",
-                            Name = "Preference",
-                            ParentId = 40101L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 40102L,
-                            Hide = false,
-                            Key = "Issue.All",
-                            Name = "Issue",
-                            ParentId = 401L,
-                            Status = 0,
-                            TypeId = 0L
-                        },
-                        new
-                        {
-                            Id = 4010201L,
-                            Hide = false,
-                            Key = "Issue.View",
-                            Name = "View",
-                            ParentId = 40102L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 4010202L,
-                            Hide = false,
-                            Key = "Issue.Add",
-                            Name = "Add",
-                            ParentId = 40102L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 4010203L,
-                            Hide = false,
-                            Key = "Issue.Edit",
-                            Name = "Edit",
-                            ParentId = 40102L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 4010204L,
-                            Hide = false,
-                            Key = "Issue.Delete",
-                            Name = "Delete",
-                            ParentId = 40102L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 4010205L,
-                            Hide = false,
-                            Key = "Issue.Preference",
-                            Name = "Preference",
-                            ParentId = 40102L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 40103L,
-                            Hide = false,
-                            Key = "Transafer.All",
-                            Name = "Transafer",
-                            ParentId = 401L,
-                            Status = 0,
-                            TypeId = 0L
-                        },
-                        new
-                        {
-                            Id = 4010301L,
-                            Hide = false,
-                            Key = "Transafer.View",
-                            Name = "View",
-                            ParentId = 40103L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 4010302L,
-                            Hide = false,
-                            Key = "Transafer.Add",
-                            Name = "Add",
-                            ParentId = 40103L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 4010303L,
-                            Hide = false,
-                            Key = "Transafer.Edit",
-                            Name = "Edit",
-                            ParentId = 40103L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 4010304L,
-                            Hide = false,
-                            Key = "Transafer.Delete",
-                            Name = "Delete",
-                            ParentId = 40103L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 4010305L,
-                            Hide = false,
-                            Key = "Transafer.Preference",
-                            Name = "Preference",
-                            ParentId = 40103L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 40104L,
-                            Hide = false,
-                            Key = "Received.All",
-                            Name = "Received",
-                            ParentId = 401L,
-                            Status = 0,
-                            TypeId = 0L
-                        },
-                        new
-                        {
-                            Id = 4010401L,
-                            Hide = false,
-                            Key = "Received.View",
-                            Name = "View",
-                            ParentId = 40104L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 4010402L,
-                            Hide = false,
-                            Key = "Received.Add",
-                            Name = "Add",
-                            ParentId = 40104L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 4010403L,
-                            Hide = false,
-                            Key = "Received.Edit",
-                            Name = "Edit",
-                            ParentId = 40104L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 4010404L,
-                            Hide = false,
-                            Key = "Received.Delete",
-                            Name = "Delete",
-                            ParentId = 40104L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 4010405L,
-                            Hide = false,
-                            Key = "Received.Preference",
-                            Name = "Preference",
-                            ParentId = 40104L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 40105L,
-                            Hide = false,
-                            Key = "Inventory.All",
-                            Name = "Inventory",
-                            ParentId = 401L,
-                            Status = 0,
-                            TypeId = 0L
-                        },
-                        new
-                        {
-                            Id = 4010501L,
-                            Hide = false,
-                            Key = "Inventory.View",
-                            Name = "View",
-                            ParentId = 40105L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 4010502L,
-                            Hide = false,
-                            Key = "Inventory.Add",
-                            Name = "Add",
-                            ParentId = 40105L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 4010503L,
-                            Hide = false,
-                            Key = "Inventory.Edit",
-                            Name = "Edit",
-                            ParentId = 40105L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 4010504L,
-                            Hide = false,
-                            Key = "Inventory.Delete",
-                            Name = "Delete",
-                            ParentId = 40105L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 4010505L,
-                            Hide = false,
-                            Key = "Inventory.Preference",
-                            Name = "Preference",
-                            ParentId = 40105L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 50L,
-                            Hide = false,
-                            Key = "Financials.All",
-                            Name = "Financials",
-                            ParentId = 1L,
-                            Status = 0,
-                            TypeId = 0L
-                        },
-                        new
-                        {
-                            Id = 501L,
-                            Hide = false,
-                            Key = "SafeNotices",
-                            Name = "Safe Notices",
-                            ParentId = 50L,
-                            Status = 0,
-                            TypeId = 0L
-                        },
-                        new
-                        {
-                            Id = 50101L,
-                            Hide = false,
-                            Key = "Collection.All",
-                            Name = "Collection",
-                            ParentId = 501L,
-                            Status = 0,
-                            TypeId = 0L
-                        },
-                        new
-                        {
-                            Id = 5010101L,
-                            Hide = false,
-                            Key = "Collection.View",
-                            Name = "View",
-                            ParentId = 50101L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 5010102L,
-                            Hide = false,
-                            Key = "Collection.Add",
-                            Name = "Add",
-                            ParentId = 50101L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 5010103L,
-                            Hide = false,
-                            Key = "Collection.Edit",
-                            Name = "Edit",
-                            ParentId = 50101L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 5010104L,
-                            Hide = false,
-                            Key = "Collection.Delete",
-                            Name = "Delete",
-                            ParentId = 50101L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 5010105L,
-                            Hide = false,
-                            Key = "Collection.Preference",
-                            Name = "Preference",
-                            ParentId = 50101L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 50102L,
-                            Hide = false,
-                            Key = "Payment.All",
-                            Name = "Payment",
-                            ParentId = 501L,
-                            Status = 0,
-                            TypeId = 0L
-                        },
-                        new
-                        {
-                            Id = 5010201L,
-                            Hide = false,
-                            Key = "Payment.View",
-                            Name = "View",
-                            ParentId = 50102L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 5010202L,
-                            Hide = false,
-                            Key = "Payment.Add",
-                            Name = "Add",
-                            ParentId = 50102L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 5010203L,
-                            Hide = false,
-                            Key = "Payment.Edit",
-                            Name = "Edit",
-                            ParentId = 50102L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 5010204L,
-                            Hide = false,
-                            Key = "Payment.Delete",
-                            Name = "Delete",
-                            ParentId = 50102L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 5010205L,
-                            Hide = false,
-                            Key = "Payment.Preference",
-                            Name = "Preference",
-                            ParentId = 50102L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 50103L,
-                            Hide = false,
-                            Key = "Outlay.All",
-                            Name = "Outlay",
-                            ParentId = 501L,
-                            Status = 0,
-                            TypeId = 0L
-                        },
-                        new
-                        {
-                            Id = 5010301L,
-                            Hide = false,
-                            Key = "Outlay.View",
-                            Name = "View",
-                            ParentId = 50103L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 5010302L,
-                            Hide = false,
-                            Key = "Outlay.Add",
-                            Name = "Add",
-                            ParentId = 50103L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 5010303L,
-                            Hide = false,
-                            Key = "Outlay.Edit",
-                            Name = "Edit",
-                            ParentId = 50103L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 5010304L,
-                            Hide = false,
-                            Key = "Outlay.Delete",
-                            Name = "Delete",
-                            ParentId = 50103L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 5010305L,
-                            Hide = false,
-                            Key = "Outlay.Preference",
-                            Name = "Preference",
-                            ParentId = 50103L,
+                            ParentId = 10502L,
                             Status = 0,
                             TypeId = 1L
                         });

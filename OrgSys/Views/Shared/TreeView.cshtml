@@ -12,8 +12,8 @@
     {
         if (ob.ParentId >= 1)
         {
-            <li class="" data-value="@ob.Id">
-                &nbsp; @localizer[ob.Key].Value
+            <li id="@ob.Key"  class="" data-value="@ob.Id" @(ob.Select?"data-checked='true'":"")  >
+                &nbsp; @localizer[ob.Value].Value
                 @if (Model.Any(e => e.ParentId == ob.Id))
                 {
                     ViewBag.parentId = ob.Id;
@@ -23,8 +23,8 @@
         }
         else
         {
-            <li class="expanded" data-value="@ob.Id">
-                &nbsp; @localizer[ob.Key].Value
+            <li id="@ob.Key"  class="expanded " data-value="@ob.Id"  @(ob.Select?"data-checked='true'":"")>
+                &nbsp; @localizer[ob.Value].Value
                 @if (Model.Any(e => e.ParentId == ob.Id))
                 {
                     ViewBag.parentId = ob.Id;
@@ -34,6 +34,7 @@
         }
     }
 </ol>
+<script src="~/js/vendor/jquery-3.3.1.min.js"></script>
 
 @*<ol id="auto-checkboxes" data-name="foo">
         <li class="expanded" data-value="0">

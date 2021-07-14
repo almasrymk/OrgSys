@@ -26,78 +26,254 @@ namespace Repository
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Permission>().HasData(
-                new Permission { Id = 1, Key = "AllPage", Value = "AllPage.All", ParentId = 0 },
-                    new Permission { Id = 10, Key = "Setting", Value = "Setting.All", ParentId = 1 },
+                new Permission { Id = 1, Name = "Organizer", Key = "Organizer", ParentId = 0 },
+                    new Permission { Id = 10, Name = "Data", Key = "Data.All", ParentId = 1 },
 
-                        new Permission { Id = 101, Key = "Branchs", Value = "Branchs.All", ParentId = 10 },
-                            new Permission { Id = 10101, Key = "View", Value = "Branchs.View", ParentId = 101 },
-                            new Permission { Id = 10102, Key = "Add", Value = "Branchs.Add", ParentId = 101 },
-                            new Permission { Id = 10103, Key = "Edit", Value = "Branchs.Edit", ParentId = 101 },
-                            new Permission { Id = 10104, Key = "Delete", Value = "Branchs.Delete", ParentId = 101 },
+                      new Permission { Id = 101, Name = "Organization", Key = "Organization", ParentId = 10 },
 
-                        new Permission { Id = 102, Key = "Roles", Value = "Roles.All", ParentId = 10 },
-                            new Permission { Id = 10201, Key = "View", Value = "Roles.View", ParentId = 102 },
-                            new Permission { Id = 10202, Key = "Add", Value = "Roles.Add", ParentId = 102 },
-                            new Permission { Id = 10203, Key = "Edit", Value = "Roles.Edit", ParentId = 102 },
-                            new Permission { Id = 10204, Key = "Delete", Value = "Roles.Delete", ParentId = 102 },
+                        new Permission { Id = 10101, Name = "Branchs", Key = "Branchs.All", ParentId = 101 },
+                            new Permission { Id = 1010101, Name = "View", Key = "Branchs.View", ParentId = 10101, TypeId = 1 },
+                            new Permission { Id = 1010102, Name = "Add", Key = "Branchs.Add", ParentId = 10101, TypeId = 1 },
+                            new Permission { Id = 1010103, Name = "Edit", Key = "Branchs.Edit", ParentId = 10101, TypeId = 1 },
+                            new Permission { Id = 1010104, Name = "Delete", Key = "Branchs.Delete", ParentId = 10101, TypeId = 1 },
 
-                        new Permission { Id = 103, Key = "Users", Value = "Users.All", ParentId = 10 },
-                            new Permission { Id = 10301, Key = "View", Value = "Users.View", ParentId = 103 },
-                            new Permission { Id = 10302, Key = "Add", Value = "Users.Add", ParentId = 103 },
-                            new Permission { Id = 10303, Key = "Edit", Value = "Users.Edit", ParentId = 103 },
-                            new Permission { Id = 10304, Key = "Delete", Value = "Users.Delete", ParentId = 103 },
+                        new Permission { Id = 10102, Name = "Stores", Key = "Stores.All", ParentId = 101 },
+                            new Permission { Id = 1010201, Name = "View", Key = "Stores.View", ParentId = 10102, TypeId = 1 },
+                            new Permission { Id = 1010202, Name = "Add", Key = "Stores.Add", ParentId = 10102, TypeId = 1 },
+                            new Permission { Id = 1010203, Name = "Edit", Key = "Stores.Edit", ParentId = 10102, TypeId = 1 },
+                            new Permission { Id = 1010204, Name = "Delete", Key = "Stores.Delete", ParentId = 10102, TypeId = 1 },
 
-                        new Permission { Id = 104, Key = "Shifts", Value = "Shifts.All", ParentId = 10 },
-                            new Permission { Id = 10401, Key = "View", Value = "Shifts.View", ParentId = 104 },
-                            new Permission { Id = 10402, Key = "Add", Value = "Shifts.Add", ParentId = 104 },
-                            new Permission { Id = 10403, Key = "Edit", Value = "Shifts.Edit", ParentId = 104 },
-                            new Permission { Id = 10404, Key = "Delete", Value = "Shifts.Delete", ParentId = 104 },
+                        new Permission { Id = 10103, Name = "Tables", Key = "Tables.All", ParentId = 101 },
+                            new Permission { Id = 1010301, Name = "View", Key = "Tables.View", ParentId = 10103, TypeId = 1 },
+                            new Permission { Id = 1010302, Name = "Add", Key = "Tables.Add", ParentId = 10103, TypeId = 1 },
+                            new Permission { Id = 1010303, Name = "Edit", Key = "Tables.Edit", ParentId = 10103, TypeId = 1 },
+                            new Permission { Id = 1010304, Name = "Delete", Key = "Tables.Delete", ParentId = 10103, TypeId = 1 },
+                        
+                     new Permission { Id = 102, Name = "Security", Key = "Security", ParentId = 10 },
 
-                     new Permission { Id = 20, Key = "Sales", Value = "Sales.All", ParentId = 1 },
+                        new Permission { Id = 10201, Name = "Roles", Key = "Roles.All", ParentId = 102 },
+                            new Permission { Id = 1020101, Name = "View", Key = "Roles.View", ParentId = 10201, TypeId = 1 },
+                            new Permission { Id = 1020102, Name = "Add", Key = "Roles.Add", ParentId = 10201, TypeId = 1 },
+                            new Permission { Id = 1020103, Name = "Edit", Key = "Roles.Edit", ParentId = 10201, TypeId = 1 },
+                            new Permission { Id = 1020104, Name = "Delete", Key = "Roles.Delete", ParentId = 10201, TypeId = 1 },
 
-                        new Permission { Id = 201, Key = "Products", Value = "Products.All", ParentId = 20 },
-                            new Permission { Id = 20101, Key = "View", Value = "Products.View", ParentId = 201 },
-                            new Permission { Id = 20102, Key = "Add", Value = "Products.Add", ParentId = 201 },
-                            new Permission { Id = 20103, Key = "Edit", Value = "Products.Edit", ParentId = 201 },
-                            new Permission { Id = 20104, Key = "Delete", Value = "Products.Delete", ParentId = 201 },
+                        new Permission { Id = 10202, Name = "Users", Key = "Users.All", ParentId = 102 },
+                            new Permission { Id = 1020201, Name = "View", Key = "Users.View", ParentId = 10202, TypeId = 1 },
+                            new Permission { Id = 1020202, Name = "Add", Key = "Users.Add", ParentId = 10202, TypeId = 1 },
+                            new Permission { Id = 1020203, Name = "Edit", Key = "Users.Edit", ParentId = 10202, TypeId = 1 },
+                            new Permission { Id = 1020204, Name = "Delete", Key = "Users.Delete", ParentId = 10202, TypeId = 1 },
 
-                        new Permission { Id = 202, Key = "Classifications", Value = "Classifications.All", ParentId = 20 },
-                            new Permission { Id = 20201, Key = "View", Value = "Classifications.View", ParentId = 202 },
-                            new Permission { Id = 20202, Key = "Add", Value = "Classifications.Add", ParentId = 202 },
-                            new Permission { Id = 20203, Key = "Edit", Value = "Classifications.Edit", ParentId = 202 },
-                            new Permission { Id = 20204, Key = "Delete", Value = "Classifications.Delete", ParentId = 202 },
+                        new Permission { Id = 10203, Name = "Shifts", Key = "Shifts.All", ParentId = 102 },
+                            new Permission { Id = 1020301, Name = "View", Key = "Shifts.View", ParentId = 10203, TypeId = 1 },
+                            new Permission { Id = 1020302, Name = "Add", Key = "Shifts.Add", ParentId = 10203, TypeId = 1 },
+                            new Permission { Id = 1020303, Name = "Edit", Key = "Shifts.Edit", ParentId = 10203, TypeId = 1 },
+                            new Permission { Id = 1020304, Name = "Delete", Key = "Shifts.Delete", ParentId = 10203, TypeId = 1 },
 
-                        new Permission { Id = 203, Key = "UnitsMeasure", Value = "UnitsMeasure.All", ParentId = 20 },
-                            new Permission { Id = 20301, Key = "View", Value = "UnitsMeasure.View", ParentId = 203 },
-                            new Permission { Id = 20302, Key = "Add", Value = "UnitsMeasure.Add", ParentId = 203 },
-                            new Permission { Id = 20303, Key = "Edit", Value = "UnitsMeasure.Edit", ParentId = 203 },
-                            new Permission { Id = 20304, Key = "Delete", Value = "UnitsMeasure.Delete", ParentId = 203 },
+                     new Permission { Id = 103, Name = "Products", Key = "Products", ParentId = 10 },
 
-                        new Permission { Id = 204, Key = "Clients", Value = "Clients.All", ParentId = 20 },
-                            new Permission { Id = 20401, Key = "View", Value = "Clients.View", ParentId = 204 },
-                            new Permission { Id = 20402, Key = "Add", Value = "Clients.Add", ParentId = 204 },
-                            new Permission { Id = 20403, Key = "Edit", Value = "Clients.Edit", ParentId = 204 },
-                            new Permission { Id = 20404, Key = "Delete", Value = "Clients.Delete", ParentId = 204 }
+                        new Permission { Id = 10301, Name = "Products", Key = "Products.All", ParentId = 103 },
+                            new Permission { Id = 1030101, Name = "View", Key = "Products.View", ParentId = 10301, TypeId = 1 },
+                            new Permission { Id = 1030102, Name = "Add", Key = "Products.Add", ParentId = 10301, TypeId = 1 },
+                            new Permission { Id = 1030103, Name = "Edit", Key = "Products.Edit", ParentId = 10301, TypeId = 1 },
+                            new Permission { Id = 1030104, Name = "Delete", Key = "Products.Delete", ParentId = 10301, TypeId = 1 },
+
+                        new Permission { Id = 10302, Name = "Classifications", Key = "Classifications.All", ParentId = 103 },
+                            new Permission { Id = 1030201, Name = "View", Key = "Classifications.View", ParentId = 10302, TypeId = 1 },
+                            new Permission { Id = 1030202, Name = "Add", Key = "Classifications.Add", ParentId = 10302, TypeId = 1 },
+                            new Permission { Id = 1030203, Name = "Edit", Key = "Classifications.Edit", ParentId = 10302, TypeId = 1 },
+                            new Permission { Id = 1030204, Name = "Delete", Key = "Classifications.Delete", ParentId = 10302, TypeId = 1 },
+
+                        new Permission { Id = 10303, Name = "Units Measure", Key = "UnitsMeasure.All", ParentId = 103 },
+                            new Permission { Id = 1030301, Name = "View", Key = "UnitsMeasure.View", ParentId = 10303, TypeId = 1 },
+                            new Permission { Id = 1030302, Name = "Add", Key = "UnitsMeasure.Add", ParentId = 10303, TypeId = 1 },
+                            new Permission { Id = 1030303, Name = "Edit", Key = "UnitsMeasure.Edit", ParentId = 10303, TypeId = 1 },
+                            new Permission { Id = 1030304, Name = "Delete", Key = "UnitsMeasure.Delete", ParentId = 10303, TypeId = 1 },
+
+                      new Permission { Id = 104, Name = "Dealers", Key = "Dealers", ParentId = 10 },
+
+                        new Permission { Id = 10401, Name = "Clients", Key = "Clients.All", ParentId = 104 },
+                            new Permission { Id = 1040101, Name = "View", Key = "Clients.View", ParentId = 10401, TypeId = 1 },
+                            new Permission { Id = 1040102, Name = "Add", Key = "Clients.Add", ParentId = 10401, TypeId = 1 },
+                            new Permission { Id = 1040103, Name = "Edit", Key = "Clients.Edit", ParentId = 10401, TypeId = 1 },
+                            new Permission { Id = 1040104, Name = "Delete", Key = "Clients.Delete", ParentId = 10401, TypeId = 1 },
+
+                        new Permission { Id = 10402, Name = "Suppliers", Key = "Suppliers.All", ParentId = 104 },
+                            new Permission { Id = 1040201, Name = "View", Key = "Suppliers.View", ParentId = 10402, TypeId = 1 },
+                            new Permission { Id = 1040202, Name = "Add", Key = "Suppliers.Add", ParentId = 10402, TypeId = 1 },
+                            new Permission { Id = 1040203, Name = "Edit", Key = "Suppliers.Edit", ParentId = 10402, TypeId = 1 },
+                            new Permission { Id = 1040204, Name = "Delete", Key = "Suppliers.Delete", ParentId = 10402, TypeId = 1 },
+
+                      new Permission { Id = 105, Name = "Financials", Key = "Financials", ParentId = 10 },
+
+                       new Permission { Id = 10501, Name = "Safes", Key = "Safes.All", ParentId = 105 },
+                            new Permission { Id = 1050101, Name = "View", Key = "Safes.View", ParentId = 10501, TypeId = 1 },
+                            new Permission { Id = 1050102, Name = "Add", Key = "Safes.Add", ParentId = 10501, TypeId = 1 },
+                            new Permission { Id = 1050103, Name = "Edit", Key = "Safes.Edit", ParentId = 10501, TypeId = 1 },
+                            new Permission { Id = 1050104, Name = "Delete", Key = "Safes.Delete", ParentId = 10501, TypeId = 1 },
+
+                        new Permission { Id = 10502, Name = "Outlay Terms", Key = "OutlayTerms.All", ParentId = 105 },
+                            new Permission { Id = 1050201, Name = "View", Key = "OutlayTerms.View", ParentId = 10502, TypeId = 1 },
+                            new Permission { Id = 1050202, Name = "Add", Key = "OutlayTerms.Add", ParentId = 10502, TypeId = 1 },
+                            new Permission { Id = 1050203, Name = "Edit", Key = "OutlayTerms.Edit", ParentId = 10502, TypeId = 1 },
+                            new Permission { Id = 1050204, Name = "Delete", Key = "OutlayTerms.Delete", ParentId = 10502, TypeId = 1 },
+
+                        new Permission { Id = 10503, Name = "Currencies", Key = "Currencies.All", ParentId = 105 },
+                            new Permission { Id = 1050301, Name = "View", Key = "Currencies.View", ParentId = 10503, TypeId = 1 },
+                            new Permission { Id = 1050302, Name = "Add", Key = "Currencies.Add", ParentId = 10503, TypeId = 1 },
+                            new Permission { Id = 1050303, Name = "Edit", Key = "Currencies.Edit", ParentId = 10503, TypeId = 1 },
+                            new Permission { Id = 1050304, Name = "Delete", Key = "Currencies.Delete", ParentId = 10503, TypeId = 1 },
+
+                new Permission { Id = 20, Name = "Orders", Key = "Orders.All", ParentId = 1 },
+
+                   new Permission { Id = 201, Name = "Order Notices", Key = "Orders", ParentId = 20 },
+
+                        new Permission { Id = 20101, Name = "Internal", Key = "Internal.All", ParentId = 201 },
+                            new Permission { Id = 2010101, Name = "View", Key = "Internal.View", ParentId = 20101, TypeId = 1 },
+                            new Permission { Id = 2010102, Name = "Add", Key = "Internal.Add", ParentId = 20101, TypeId = 1 },
+                            new Permission { Id = 2010103, Name = "Edit", Key = "Internal.Edit", ParentId = 20101, TypeId = 1 },
+                            new Permission { Id = 2010104, Name = "Delete", Key = "Internal.Delete", ParentId = 20101, TypeId = 1 },
+                            new Permission { Id = 2010105, Name = "Preference", Key = "Internal.Preference", ParentId = 20101, TypeId = 1 },
+
+                        new Permission { Id = 20102, Name = "External", Key = "External.All", ParentId = 201 },
+                            new Permission { Id = 2010201, Name = "View", Key = "External.View", ParentId = 20102, TypeId = 1 },
+                            new Permission { Id = 2010202, Name = "Add", Key = "External.Add", ParentId = 20102, TypeId = 1 },
+                            new Permission { Id = 2010203, Name = "Edit", Key = "External.Edit", ParentId = 20102, TypeId = 1 },
+                            new Permission { Id = 2010204, Name = "Delete", Key = "External.Delete", ParentId = 20102, TypeId = 1 },
+                            new Permission { Id = 2010205, Name = "Preference", Key = "External.Preference", ParentId = 20102, TypeId = 1 },
+
+                new Permission { Id = 30, Name = "Invoices", Key = "Invoices.All", ParentId = 1 },
+
+                   new Permission { Id = 301, Name = "Sales", Key = "Sales", ParentId = 30 },
+
+                        new Permission { Id = 30101, Name = "Invoices", Key = "SalesInvoices.All", ParentId = 301 },
+                            new Permission { Id = 3010101, Name = "View", Key = "SalesInvoices.View", ParentId = 30101, TypeId = 1 },
+                            new Permission { Id = 3010102, Name = "Add", Key = "SalesInvoices.Add", ParentId = 30101, TypeId = 1 },
+                            new Permission { Id = 3010103, Name = "Edit", Key = "SalesInvoices.Edit", ParentId = 30101, TypeId = 1 },
+                            new Permission { Id = 3010104, Name = "Delete", Key = "SalesInvoices.Delete", ParentId = 30101, TypeId = 1 },
+                            new Permission { Id = 3010105, Name = "Preference", Key = "SalesInvoices.Preference", ParentId = 30101, TypeId = 1 },
+
+                        new Permission { Id = 30102, Name = "Returns", Key = "SalesReturns.All", ParentId = 301 },
+                            new Permission { Id = 3010201, Name = "View", Key = "SalesReturns.View", ParentId = 30102, TypeId = 1 },
+                            new Permission { Id = 3010202, Name = "Add", Key = "SalesReturns.Add", ParentId = 30102, TypeId = 1 },
+                            new Permission { Id = 3010203, Name = "Edit", Key = "SalesReturns.Edit", ParentId = 30102, TypeId = 1 },
+                            new Permission { Id = 3010204, Name = "Delete", Key = "SalesReturns.Delete", ParentId = 30102, TypeId = 1 },
+                            new Permission { Id = 3010205, Name = "Preference", Key = "SalesReturns.Preference", ParentId = 30102, TypeId = 1 },
+
+                    new Permission { Id = 302, Name = "Purchases", Key = "Purchases", ParentId = 30 },
+
+                        new Permission { Id = 30201, Name = "Invoices", Key = "PurchasesInvoices.All", ParentId = 302 },
+                            new Permission { Id = 3020101, Name = "View", Key = "PurchasesInvoices.View", ParentId = 30201, TypeId = 1 },
+                            new Permission { Id = 3020102, Name = "Add", Key = "PurchasesInvoices.Add", ParentId = 30201, TypeId = 1 },
+                            new Permission { Id = 3020103, Name = "Edit", Key = "PurchasesInvoices.Edit", ParentId = 30201, TypeId = 1 },
+                            new Permission { Id = 3020104, Name = "Delete", Key = "PurchasesInvoices.Delete", ParentId = 30201, TypeId = 1 },
+                            new Permission { Id = 3020105, Name = "Preference", Key = "PurchasesInvoices.Preference", ParentId = 30201, TypeId = 1 },
+
+                        new Permission { Id = 30202, Name = "Returns", Key = "PurchasesReturns.All", ParentId = 302 },
+                            new Permission { Id = 3020201, Name = "View", Key = "PurchasesReturns.View", ParentId = 30202, TypeId = 1 },
+                            new Permission { Id = 3020202, Name = "Add", Key = "PurchasesReturns.Add", ParentId = 30202, TypeId = 1 },
+                            new Permission { Id = 3020203, Name = "Edit", Key = "PurchasesReturns.Edit", ParentId = 30202, TypeId = 1 },
+                            new Permission { Id = 3020204, Name = "Delete", Key = "PurchasesReturns.Delete", ParentId = 30202, TypeId = 1 },
+                            new Permission { Id = 3020205, Name = "Preference", Key = "PurchasesReturns.Preference", ParentId = 30202, TypeId = 1 },
+
+                    new Permission { Id = 40, Name = "Transactions", Key = "Transactions.All", ParentId = 1 },
+
+                           new Permission { Id = 401, Name = "Transaction Notices", Key = "TransactionNotices", ParentId = 40 },
+
+                                new Permission { Id = 40101, Name = "Addition", Key = "Addition.All", ParentId = 401 },
+                                    new Permission { Id = 4010101, Name = "View", Key = "Addition.View", ParentId = 40101, TypeId = 1 },
+                                    new Permission { Id = 4010102, Name = "Add", Key = "Addition.Add", ParentId = 40101, TypeId = 1 },
+                                    new Permission { Id = 4010103, Name = "Edit", Key = "Addition.Edit", ParentId = 40101, TypeId = 1 },
+                                    new Permission { Id = 4010104, Name = "Delete", Key = "Addition.Delete", ParentId = 40101, TypeId = 1 },
+                                    new Permission { Id = 4010105, Name = "Preference", Key = "Addition.Preference", ParentId = 40101, TypeId = 1 },
+
+                                new Permission { Id = 40102, Name = "Issue", Key = "Issue.All", ParentId = 401 },
+                                    new Permission { Id = 4010201, Name = "View", Key = "Issue.View", ParentId = 40102, TypeId = 1 },
+                                    new Permission { Id = 4010202, Name = "Add", Key = "Issue.Add", ParentId = 40102, TypeId = 1 },
+                                    new Permission { Id = 4010203, Name = "Edit", Key = "Issue.Edit", ParentId = 40102, TypeId = 1 },
+                                    new Permission { Id = 4010204, Name = "Delete", Key = "Issue.Delete", ParentId = 40102, TypeId = 1 },
+                                    new Permission { Id = 4010205, Name = "Preference", Key = "Issue.Preference", ParentId = 40102, TypeId = 1 },
+
+                                new Permission { Id = 40103, Name = "Transafer", Key = "Transafer.All", ParentId = 401 },
+                                    new Permission { Id = 4010301, Name = "View", Key = "Transafer.View", ParentId = 40103, TypeId = 1 },
+                                    new Permission { Id = 4010302, Name = "Add", Key = "Transafer.Add", ParentId = 40103, TypeId = 1 },
+                                    new Permission { Id = 4010303, Name = "Edit", Key = "Transafer.Edit", ParentId = 40103, TypeId = 1 },
+                                    new Permission { Id = 4010304, Name = "Delete", Key = "Transafer.Delete", ParentId = 40103, TypeId = 1 },
+                                    new Permission { Id = 4010305, Name = "Preference", Key = "Transafer.Preference", ParentId = 40103, TypeId = 1 },
+
+                                new Permission { Id = 40104, Name = "Received", Key = "Received.All", ParentId = 401 },
+                                    new Permission { Id = 4010401, Name = "View", Key = "Received.View", ParentId = 40104, TypeId = 1 },
+                                    new Permission { Id = 4010402, Name = "Add", Key = "Received.Add", ParentId = 40104, TypeId = 1 },
+                                    new Permission { Id = 4010403, Name = "Edit", Key = "Received.Edit", ParentId = 40104, TypeId = 1 },
+                                    new Permission { Id = 4010404, Name = "Delete", Key = "Received.Delete", ParentId = 40104, TypeId = 1 },
+                                    new Permission { Id = 4010405, Name = "Preference", Key = "Received.Preference", ParentId = 40104, TypeId = 1 },
+
+                                new Permission { Id = 40105, Name = "Inventory", Key = "Inventory.All", ParentId = 401 },
+                                    new Permission { Id = 4010501, Name = "View", Key = "Inventory.View", ParentId = 40105, TypeId = 1 },
+                                    new Permission { Id = 4010502, Name = "Add", Key = "Inventory.Add", ParentId = 40105, TypeId = 1 },
+                                    new Permission { Id = 4010503, Name = "Edit", Key = "Inventory.Edit", ParentId = 40105, TypeId = 1 },
+                                    new Permission { Id = 4010504, Name = "Delete", Key = "Inventory.Delete", ParentId = 40105, TypeId = 1 },
+                                    new Permission { Id = 4010505, Name = "Preference", Key = "Inventory.Preference", ParentId = 40105, TypeId = 1 },
+
+                        new Permission { Id = 50, Name = "Financials", Key = "Financials.All", ParentId = 1 },
+
+                           new Permission { Id = 501, Name = "Safe Notices", Key = "SafeNotices", ParentId = 50 },
+
+                                new Permission { Id = 50101, Name = "Collection", Key = "Collection.All", ParentId = 501 },
+                                    new Permission { Id = 5010101, Name = "View", Key = "Collection.View", ParentId = 50101, TypeId = 1 },
+                                    new Permission { Id = 5010102, Name = "Add", Key = "Collection.Add", ParentId = 50101, TypeId = 1 },
+                                    new Permission { Id = 5010103, Name = "Edit", Key = "Collection.Edit", ParentId = 50101, TypeId = 1 },
+                                    new Permission { Id = 5010104, Name = "Delete", Key = "Collection.Delete", ParentId = 50101, TypeId = 1 },
+                                    new Permission { Id = 5010105, Name = "Preference", Key = "Collection.Preference", ParentId = 50101, TypeId = 1 },
+
+                                new Permission { Id = 50102, Name = "Payment", Key = "Payment.All", ParentId = 501 },
+                                    new Permission { Id = 5010201, Name = "View", Key = "Payment.View", ParentId = 50102, TypeId = 1 },
+                                    new Permission { Id = 5010202, Name = "Add", Key = "Payment.Add", ParentId = 50102, TypeId = 1 },
+                                    new Permission { Id = 5010203, Name = "Edit", Key = "Payment.Edit", ParentId = 50102, TypeId = 1 },
+                                    new Permission { Id = 5010204, Name = "Delete", Key = "Payment.Delete", ParentId = 50102, TypeId = 1 },
+                                    new Permission { Id = 5010205, Name = "Preference", Key = "Payment.Preference", ParentId = 50102, TypeId = 1 },
+
+                                new Permission { Id = 50103, Name = "Outlay", Key = "Outlay.All", ParentId = 501 },
+                                    new Permission { Id = 5010301, Name = "View", Key = "Outlay.View", ParentId = 50103, TypeId = 1 },
+                                    new Permission { Id = 5010302, Name = "Add", Key = "Outlay.Add", ParentId = 50103, TypeId = 1 },
+                                    new Permission { Id = 5010303, Name = "Edit", Key = "Outlay.Edit", ParentId = 50103, TypeId = 1 },
+                                    new Permission { Id = 5010304, Name = "Delete", Key = "Outlay.Delete", ParentId = 50103, TypeId = 1 },
+                                    new Permission { Id = 5010305, Name = "Preference", Key = "Outlay.Preference", ParentId = 50103, TypeId = 1 }
                 );
 
-            modelBuilder.Entity<Role>().HasData(new Role { Id = 1, Name = "Owner", Hide = false });
+            modelBuilder.Entity<Role>().HasData(new Role { Id = 1, Name = "Owner", Hide = true });
+            //modelBuilder.Entity<Role>().HasData(new Role { Id = 2, Name = "Admin", Hide = false });
 
-            modelBuilder.Entity<User>().HasData(new User { Id = 1, Name = "Owner", UserName = "Owner", Password = Security.Encrypt("OwnerAbc@123"), RoleId = 1, Hide = false });
+            modelBuilder.Entity<User>().HasData(new User { Id = 1, Name = "Owner", UserName = "Owner", Password = Security.Encrypt("OwnerAbc@123"), RoleId = 1, Hide = true });
+
+            //modelBuilder.Entity<RolePermission>().HasData(
+            //   new RolePermission { Id = 1, RoleId = 2, PermissionId = 102 },
+            //   new RolePermission { Id = 2, RoleId = 2, PermissionId = 10201 },
+            //   new RolePermission { Id = 3, RoleId = 2, PermissionId = 10202 },
+            //   new RolePermission { Id = 4, RoleId = 2, PermissionId = 10203 },
+            //   new RolePermission { Id = 5, RoleId = 2, PermissionId = 10204 },
+            //   new RolePermission { Id = 6, RoleId = 2, PermissionId = 103 },
+            //   new RolePermission { Id = 7, RoleId = 2, PermissionId = 10301 },
+            //   new RolePermission { Id = 8, RoleId = 2, PermissionId = 10302 },
+            //   new RolePermission { Id = 9, RoleId = 2, PermissionId = 10303 },
+            //   new RolePermission { Id = 10, RoleId = 2, PermissionId = 10304 }
+
+
+            //   );
 
             modelBuilder.Entity<InvoiceType>().HasData(
-                new InvoiceType { Id = 1 , Group = "Sales", Name = "Invoice", Hide = false, InOut = -1   , Icon = "simple-icon-basket-loaded" },
+                new InvoiceType { Id = 1, Group = "Sales", Name = "Invoice", Hide = false, InOut = -1, Icon = "simple-icon-basket-loaded" },
                 new InvoiceType { Id = 2, Group = "Purchases", Name = "Invoice", Hide = false, InOut = 1, Icon = "simple-icon-basket-loaded" },
                 new InvoiceType { Id = 3, Group = "Sales", Name = "Return", Hide = false, InOut = 1, Icon = "simple-icon-action-undo" },
                 new InvoiceType { Id = 4, Group = "Purchases", Name = "Return", Hide = false, InOut = -1, Icon = "simple-icon-action-undo" }
                 );
 
             modelBuilder.Entity<OrderType>().HasData(
-               new OrderType { Id = 1,  Name = "Internal", Hide = false, Icon = "iconsminds-right-1" },
-               new OrderType { Id = 2,  Name = "External", Hide = false,Icon = "iconsminds-left-1" }
+               new OrderType { Id = 1, Name = "Internal", Hide = false, Icon = "iconsminds-right-1" },
+               new OrderType { Id = 2, Name = "External", Hide = false, Icon = "iconsminds-left-1" }
                );
 
             modelBuilder.Entity<TransactionType>().HasData(
-              new TransactionType { Id = 1, Name = "Addition", Hide = false, InOut = 1 , Icon = "iconsminds-down-1" },
+              new TransactionType { Id = 1, Name = "Addition", Hide = false, InOut = 1, Icon = "iconsminds-down-1" },
               new TransactionType { Id = 2, Name = "Issue", Hide = false, InOut = -1, Icon = "iconsminds-up-1" },
               new TransactionType { Id = 3, Name = "Transafer", Hide = false, InOut = -1, Icon = "iconsminds-shuffle-1" },
               new TransactionType { Id = 4, Name = "Received", Hide = false, InOut = 1, Icon = "iconsminds-file-edit" },
@@ -319,5 +495,6 @@ namespace Repository
         public virtual DbSet<FinancialType> FinancialTypes { get; set; }
         public virtual DbSet<Outlay> Outlays { get; set; }
         public virtual DbSet<Currency> Currencys { get; set; }
+        public virtual DbSet<RolePermission> RolePermissions { get; set; }
     }
 }

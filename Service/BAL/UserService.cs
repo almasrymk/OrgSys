@@ -89,7 +89,12 @@ namespace Service.BAL
             var ob =  new UserModelView(repo.userRepo.Get(e => e.Id == Id));
             if (ob == null)
                 ob = new UserModelView();
-            ob.Permissions = repo.permissionRepo.GetList(e=>e.OrderBy(e=>e.Id) , "").Select(e => new TreeView { Id = e.Id , Key = e.Key , Value = e.Value , ParentId = e.ParentId }).ToList();
+
+           var ids = repo.rolePermissionRepo.GetList(e => e.RoleId == ob.RoleId , null , "" , Utility.Status.New).Select(e => e.PermissionId).Distinct().ToList();
+            if (ids == null)
+                ids = new List<long>();
+
+            ob.Permissions = repo.permissionRepo.GetList(e => ids.Contains(e.Id), null, "", Utility.Status.New).ToList();
             return ob;
         }
 
@@ -103,7 +108,7 @@ namespace Service.BAL
             var ob = new UserModelView(repo.userRepo.Get(e => e.Name.Equals("" + textSearch)));
             if (ob == null)
                 ob = new UserModelView();
-            ob.Permissions = repo.permissionRepo.GetList(e => e.OrderBy(e => e.Id), "").Select(e => new TreeView { Id = e.Id, Key = e.Key, Value = e.Value, ParentId = e.ParentId }).ToList();
+           
             return ob;
         }
 

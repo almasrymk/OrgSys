@@ -23,8 +23,20 @@ namespace Service.BAL
         /// <param name="ob"></param>
         /// <returns></returns>
         public RoleModelView Save(RoleModelView ob)
-        {
-            return new RoleModelView(repo.roleRepo.AddOrUpdate(ob.Model));
+        {          
+            var Nwob = repo.roleRepo.AddOrUpdate(ob.Model);
+
+            var deleted = repo.rolePermissionRepo.GetList(e => e.RoleId == ob.Id, e => e.OrderBy(e => e.Id), "", Utility.Status.All).ToList();
+            if (deleted != null && deleted.Count > 0)
+                repo.rolePermissionRepo.ShiftDelete(deleted.Select(e => e.Id).ToList());
+
+            foreach (var rolePermissions in ob.RolePermissions)
+            {
+                var model = rolePermissions;
+                model.RoleId = Nwob.Id;
+                repo.rolePermissionRepo.AddOrUpdate(model);
+            }
+            return new RoleModelView(Nwob);
         }
 
         /// <summary>
@@ -86,7 +98,17 @@ namespace Service.BAL
         /// <returns></returns>
         public RoleModelView Get(long Id)
         {
-            return new RoleModelView(repo.roleRepo.Get(e => e.Id == Id));
+            var ob = new RoleModelView(repo.roleRepo.Get(e => e.Id == Id));
+            if (ob == null)
+                ob = new RoleModelView();
+            var permission = repo.rolePermissionRepo.GetList(e => e.RoleId == Id, null, "Role,Permission", Utility.Status.New);
+            ob.Permissions = repo.permissionRepo.GetList(e => e.OrderBy(e => e.Id), "").Select(e => new TreeView { Id = e.Id, Key = e.Key, Value = e.Name, ParentId = e.ParentId }).ToList();
+            foreach (var item in ob.Permissions)
+            {
+                if (permission.Any(e => e.PermissionId == item.Id))
+                    item.Select = true;
+            }
+            return ob;
         }
 
         /// <summary>
@@ -96,7 +118,17 @@ namespace Service.BAL
         /// <returns></returns>
         public RoleModelView Get(string textSearch)
         {
-            return new RoleModelView(repo.roleRepo.Get(e => e.Name.Contains("" + textSearch)));
+            var ob = new RoleModelView(repo.roleRepo.Get(e => e.Name.Contains("" + textSearch)));
+            if (ob == null)
+                ob = new RoleModelView();
+            var permission = repo.rolePermissionRepo.GetList(e => e.RoleId == ob.Id, null, "Role,Permission", Utility.Status.New);
+            ob.Permissions = repo.permissionRepo.GetList(e => e.OrderBy(e => e.Id), "").Select(e => new TreeView { Id = e.Id, Key = e.Key, Value = e.Name, ParentId = e.ParentId }).ToList();
+            foreach (var item in ob.Permissions)
+            {
+                if (permission.Any(e => e.PermissionId == item.Id))
+                    item.Select = true;
+            }
+            return ob;
         }
 
         /// <summary>

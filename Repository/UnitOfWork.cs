@@ -458,5 +458,19 @@ namespace Repository
                 return _currencyRepo;
             }
         }
+
+
+        private RolePermissionRepo _rolePermissionRepo;
+        public RolePermissionRepo rolePermissionRepo
+        {
+            get
+            {
+
+                if (this._rolePermissionRepo == null)
+                    this._rolePermissionRepo = new RolePermissionRepo();
+
+                return _rolePermissionRepo;
+            }
+        }        
     }
 }

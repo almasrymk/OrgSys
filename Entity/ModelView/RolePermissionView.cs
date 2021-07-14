@@ -2,41 +2,40 @@
 using Entity.Model;
 using Utility.Resource;
 using System.ComponentModel.DataAnnotations;
-using System.Collections.Generic;
 
 namespace Entity.ModelView
 {
-    public class PermissionModelView : BaseModel
+    public class RolePermissionModelView : BaseModel
     {
-        public PermissionModelView()
+        public RolePermissionModelView()
         {
 
         }
 
-        public PermissionModelView(Permission ob)
+        public RolePermissionModelView(RolePermission ob)
         {
             if (ob == null)
-                ob = new Permission();
+                ob = new RolePermission();
             this.Id = ob.Id;
-            this.Key = ob.Key;
-            this.Name = ob.Name;
-            this.Name2 = ob.Name2;
+            this.RoleId = ob.RoleId;
+            this.RoleName = ob.Role?.Name;
+            this.PermissionId = ob.PermissionId;
+            this.PermissionName = ob.Permission?.Name;
             this.Status = ob.Status;
             this.ParentId = ob.ParentId;
             this.TypeId = ob.TypeId;
             this.ImgPath = ob.ImgPath;
         }
 
-        public Permission Model
+        public RolePermission Model
         {
             get
             {
-                return new Permission
+                return new RolePermission
                 {
                     Id = this.Id,
-                    Key = this.Key,
-                    Name = this.Name,
-                    Name2 = this.Name2,
+                    RoleId = this.RoleId,
+                    PermissionId = this.PermissionId,
                     Status = this.Status,
                     MaskText = this.MaskText,
                     ParentId = this.ParentId,
@@ -45,9 +44,9 @@ namespace Entity.ModelView
                 };
             }
         }
-
-        public string Key { get; set; }
-        public string Name { get; set; }
-        public string Name2 { get; set; }
+        public long RoleId { get; set; }
+        public string RoleName { get; set; }
+        public long PermissionId { get; set; }
+        public string PermissionName { get; set; }
     }
 }

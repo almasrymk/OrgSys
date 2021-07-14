@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repository;
 
 namespace Repository.Migrations
 {
     [DbContext(typeof(OrgContext))]
-    partial class OrgContextModelSnapshot : ModelSnapshot
+    [Migration("20210714093929_EditSeed4")]
+    partial class EditSeed4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1327,8 +1329,8 @@ namespace Repository.Migrations
                         {
                             Id = 10102L,
                             Hide = false,
-                            Key = "Stores.All",
-                            Name = "Stores",
+                            Key = "Store.All",
+                            Name = "Store",
                             ParentId = 101L,
                             Status = 0,
                             TypeId = 0L
@@ -1337,7 +1339,7 @@ namespace Repository.Migrations
                         {
                             Id = 1010201L,
                             Hide = false,
-                            Key = "Stores.View",
+                            Key = "Store.View",
                             Name = "View",
                             ParentId = 10102L,
                             Status = 0,
@@ -1347,7 +1349,7 @@ namespace Repository.Migrations
                         {
                             Id = 1010202L,
                             Hide = false,
-                            Key = "Stores.Add",
+                            Key = "Store.Add",
                             Name = "Add",
                             ParentId = 10102L,
                             Status = 0,
@@ -1357,7 +1359,7 @@ namespace Repository.Migrations
                         {
                             Id = 1010203L,
                             Hide = false,
-                            Key = "Stores.Edit",
+                            Key = "Store.Edit",
                             Name = "Edit",
                             ParentId = 10102L,
                             Status = 0,
@@ -1367,7 +1369,7 @@ namespace Repository.Migrations
                         {
                             Id = 1010204L,
                             Hide = false,
-                            Key = "Stores.Delete",
+                            Key = "Store.Delete",
                             Name = "Delete",
                             ParentId = 10102L,
                             Status = 0,
@@ -1537,8 +1539,8 @@ namespace Repository.Migrations
                         {
                             Id = 10203L,
                             Hide = false,
-                            Key = "Shifts.All",
-                            Name = "Shifts",
+                            Key = "Sfilts.All",
+                            Name = "Sfilts",
                             ParentId = 102L,
                             Status = 0,
                             TypeId = 0L
@@ -1547,7 +1549,7 @@ namespace Repository.Migrations
                         {
                             Id = 1020301L,
                             Hide = false,
-                            Key = "Shifts.View",
+                            Key = "Sfilts.View",
                             Name = "View",
                             ParentId = 10203L,
                             Status = 0,
@@ -1557,7 +1559,7 @@ namespace Repository.Migrations
                         {
                             Id = 1020302L,
                             Hide = false,
-                            Key = "Shifts.Add",
+                            Key = "Sfilts.Add",
                             Name = "Add",
                             ParentId = 10203L,
                             Status = 0,
@@ -1567,7 +1569,7 @@ namespace Repository.Migrations
                         {
                             Id = 1020303L,
                             Hide = false,
-                            Key = "Shifts.Edit",
+                            Key = "Sfilts.Edit",
                             Name = "Edit",
                             ParentId = 10203L,
                             Status = 0,
@@ -1577,7 +1579,7 @@ namespace Repository.Migrations
                         {
                             Id = 1020304L,
                             Hide = false,
-                            Key = "Shifts.Delete",
+                            Key = "Sfilts.Delete",
                             Name = "Delete",
                             ParentId = 10203L,
                             Status = 0,

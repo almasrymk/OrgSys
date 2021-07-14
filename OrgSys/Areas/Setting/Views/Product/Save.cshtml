@@ -55,13 +55,17 @@
                                         <div class="form-group col-md-6">
                                             @Html.LabelFor(model => model.ClassificationName)
                                             <div id="divClassificationName">
-                                                <div class="input-group">
+                                                <div class="input-group DropAutoComplete">
                                                     <div class="input-group-prepend">
-                                                        <span class="input-group-text"><i class="simple-icon-layers"></i></span>
+                                                        <span class="input-group-text"><i class="simple-icon-people"></i></span>
                                                     </div>
-                                                    @Html.DropDownListFor(model => model.ClassificationId, null, " ... ", new { @class = "form-control" })
+                                                    <input type="text" class="form-control Droptxt" id="txtClassificationId" value="@Model.ClassificationName" autocomplete="off" />
+                                                    @Html.HiddenFor(model => model.ClassificationId)
+                                                    <div class="input-group-prepend Dropbtn">
+                                                        <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
+                                                    </div>
                                                 </div>
-                                                <small class="form-text text-muted"> @Utility.Resource.Message_Designer.ClassificationWhichProductBelongs</small>
+                                                <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
                                             </div>
                                             @Html.ValidationMessageFor(model => model.ClassificationId, "", new { @class = "text-danger " })
                                         </div>
@@ -74,7 +78,6 @@
                                             @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger " })
                                         </div>
                                     </div>
-
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             @Html.LabelFor(model => model.Name)
@@ -138,11 +141,15 @@
                                         <div class="form-group col-md-6">
                                             @Html.LabelFor(model => model.DealerName)
                                             <div id="divDealerId">
-                                                <div class="input-group">
+                                                <div class="input-group DropAutoComplete">
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text"><i class="simple-icon-people"></i></span>
                                                     </div>
-                                                    @Html.DropDownListFor(model => model.DealerId, null, " ... ", new { @class = "form-control" })
+                                                    <input type="text" class="form-control Droptxt" id="txtDealerId" value="@Model.DealerName" autocomplete="off" />
+                                                    @Html.HiddenFor(model => model.DealerId)
+                                                    <div class="input-group-prepend Dropbtn">
+                                                        <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
+                                                    </div>
                                                 </div>
                                                 <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
                                             </div>
@@ -194,11 +201,23 @@
                                                                     <tr>
                                                                         <td style="min-width:100px;">
                                                                             <input type="hidden" id="RowId" value="@ob.Id" />
-                                                                            <div id="divUnitId" class="input-group">
-                                                                                <div class="input-group-prepend">
-                                                                                    <span class="input-group-text"><i class="simple-icon-pie-chart"></i></span>
-                                                                                </div>
-                                                                                @Html.DropDownListFor(model => ob.UnitId, (SelectList)ViewBag.UnitList, " - " + Utility.Resource.Title_Designer.SelectUnit + " - ", new { @id = "UnitId", @name = "UnitId", @class = "form-control", @onchange = "AddNewRowUnit($(this).parent().parent())" })
+                                                                            @*<div id="divUnitId" class="input-group">
+                                                                                    <div class="input-group-prepend">
+                                                                                        <span class="input-group-text"><i class="simple-icon-pie-chart"></i></span>
+                                                                                    </div>
+                                                                                    @Html.DropDownListFor(model => ob.UnitId, (SelectList)ViewBag.UnitList, " - " + Utility.Resource.Title_Designer.SelectUnit + " - ", new { @id = "UnitId", @name = "UnitId", @class = "form-control", @onchange = "AddNewRowUnit($(this).parent().parent())" })
+                                                                                </div>*@
+                                                                            <div id="divUnitId">
+                                                                                <div class="input-group DropAutoComplete">
+                                                                                    <div class="input-group-prepend">
+                                                                                        <span class="input-group-text"><i class="simple-icon-pie-chart"></i></span>
+                                                                                    </div>
+                                                                                    <input type="text" class="form-control search-box Droptxt" id="txtUnitId" value="@ob.UnitName" autocomplete="off" />
+                                                                                    <input type="hidden" id="UnitId" name="UnitId" value="@ob.UnitId" />
+                                                                                    <div class="input-group-prepend Dropbtn">
+                                                                                        <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
+                                                                                    </div>
+                                                                                </div>                                                                               
                                                                             </div>
                                                                         </td>
                                                                         <td style="width:100px;">
@@ -232,11 +251,23 @@
                                                                 <tr class="trNew">
                                                                     <td style="min-width:100px;">
                                                                         <input type="hidden" id="RowId" value="-1" />
-                                                                        <div id="divUnitId" class="input-group">
-                                                                            <div class="input-group-prepend">
-                                                                                <span class="input-group-text"><i class="simple-icon-pie-chart"></i></span>
-                                                                            </div>
-                                                                            @Html.DropDownList("UnitId", (SelectList)ViewBag.UnitList, " - " + Utility.Resource.Title_Designer.SelectUnit + " - ", new { @id = "UnitId", @name = "UnitId", @class = "form-control", @onchange = "AddNewRowUnit($(this).parent().parent())" })
+                                                                        @*<div id="divUnitId" class="input-group">
+                                                                                <div class="input-group-prepend">
+                                                                                    <span class="input-group-text"><i class="simple-icon-pie-chart"></i></span>
+                                                                                </div>
+                                                                                @Html.DropDownList("UnitId", (SelectList)ViewBag.UnitList, " - " + Utility.Resource.Title_Designer.SelectUnit + " - ", new { @id = "UnitId", @name = "UnitId", @class = "form-control", @onchange = "AddNewRowUnit($(this).parent().parent())" })
+                                                                            </div>*@
+                                                                        <div id="divUnitId">
+                                                                            <div class="input-group DropAutoComplete">
+                                                                                <div class="input-group-prepend">
+                                                                                    <span class="input-group-text"><i class="simple-icon-pie-chart"></i></span>
+                                                                                </div>
+                                                                                <input type="text" class="form-control search-box Droptxt" id="txtUnitId" autocomplete="off" />
+                                                                                <input type="hidden" id="UnitId" name="UnitId" />
+                                                                                <div class="input-group-prepend Dropbtn">
+                                                                                    <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
+                                                                                </div>
+                                                                            </div>                                                                            
                                                                         </div>
                                                                     </td>
                                                                     <td style="width:100px;">
@@ -295,18 +326,212 @@
 </div>
 
 <script src="~/js/vendor/jquery-3.3.1.min.js"></script>
+<script src="~/js/vendor/bootstrap3-typeahead.js"></script>
+<link href="~/css/jquery-ui.css" rel="stylesheet" />
+<script src="~/js/jquery-ui.js"></script>
+<script src="~/js/PopupScript.js"></script>
 <script>
-    @*setTimeout(() => {
-        $(".sw-btn-prev").empty();
-        $(".sw-btn-prev").append('@Utility.Resource.Title_Designer.Previous');
-        $(".sw-btn-next").empty();
-        $(".sw-btn-next").append('@Utility.Resource.Title_Designer.Next');
+    jQuery(function ($) {
+        setTimeout(function () {
+            $(".sw-toolbar-bottom").css("display", "none");
+        }, 500);
 
-    }, 600);*@
+        RefreshSomeEventListener();
+        function RefreshSomeEventListener () {
+            $(".search-box").autocomplete({
+                minLength: 0,
+                source: function (request, response) {
+                    var searchPhrase = request.term.trim().toLowerCase();
+                    var noResultsLabel = 'NoResultsFound';
+                    if (searchPhrase == "...")
+                        searchPhrase = "";
+                    $.ajax({
+                        url: "/Setting/Unit/GetList",
+                        type: "Get",
+                        dataType: "json",
+                        data: { txtSearch: searchPhrase, page: 1, pageSize: 7 },
+                        success: function (data) {
+                            try {
+                                if (!data.length) {
+                                    data = [{ name: noResultsLabel }];
+                                }
 
-    setTimeout(function () {
-        $(".sw-toolbar-bottom").css("display", "none");
-    }, 500);
+                                if ("" + $("#txtUnitId").val() == "") {
+                                    $("#UnitId").val("");
+                                    $("#errorUnitId").remove();
+                                }
+
+                                response($.map(data, function (item) {
+                                    return {
+                                        label: item.name, value: item.name, id: item.id
+                                    };
+                                }));
+                            } catch (err) { }
+                        }
+                    });
+                },
+                select: function (event, ui) {
+                    if (ui.item.label === 'NoResultsFound') {
+                        event.preventDefault();
+                        return;
+                    }
+                    $("#UnitId").val(ui.item.id);
+                    $("#errorUnitId").remove();
+                    AddNewRowUnit($(this).parent().parent().parent());
+                },
+                focus: function (event, ui) {
+                    if (ui.item.label === 'NoResultsFound') {
+                        event.preventDefault();
+                    }
+                },
+            });
+
+            $("#txtClassificationId").autocomplete({
+                minLength: 0,
+                source: function (request, response) {
+                    var searchPhrase = $("#txtClassificationId").val();//request.term.trim().toLowerCase();
+                    var noResultsLabel = 'NoResultsFound';
+                    if (searchPhrase == "...")
+                        searchPhrase = "";
+                    $.ajax({
+                        url: "/Setting/Classification/GetList",
+                        type: "Get",
+                        dataType: "json",
+                        data: { txtSearch: searchPhrase, page: 1, pageSize: 7 },
+                        success: function (data) {
+                            try {
+                                if (!data.length) {
+                                    data = [{ name: noResultsLabel }];
+                                }
+
+                                if ("" + $("#txtClassificationId").val() == "") {
+                                    $("#ClassificationId").val("");
+                                    $("#errorClassificationId").remove();
+                                }
+
+                                response($.map(data, function (item) {
+                                    return {
+                                        label: item.name, value: item.name, id: item.id
+                                    };
+                                }));
+                            } catch (err) { }
+                        }
+                    });
+                },
+                select: function (event, ui) {
+                    if (ui.item.label === 'NoResultsFound') {
+                        event.preventDefault();
+                        return;
+                    }
+                    $("#ClassificationId").val(ui.item.id);
+                    $("#errorClassificationId").remove();
+                },
+                focus: function (event, ui) {
+                    if (ui.item.label === 'NoResultsFound') {
+                        event.preventDefault();
+                    }
+                }
+            });
+
+            $("#txtDealerId").autocomplete({
+                minLength: 0,
+                source: function (request, response) {
+                    var searchPhrase = $("#txtDealerId").val();//request.term.trim().toLowerCase();
+                    var noResultsLabel = 'NoResultsFound';
+                    if (searchPhrase == "...")
+                        searchPhrase = "";
+                    $.ajax({
+                        url: "/Setting/Dealer/GetList",
+                        type: "Get",
+                        dataType: "json",
+                        data: { txtSearch: searchPhrase, TypeId: $("#TypeId").val(), page: 1, pageSize: 7 },
+                        success: function (data) {
+                            try {
+                                if (!data.length) {
+                                    data = [{ name: noResultsLabel }];
+                                }
+
+                                if ("" + $("#txtDealerId").val() == "") {
+                                    $("#DealerId").val("");
+                                    $("#errorDealerId").remove();
+                                }
+
+                                response($.map(data, function (item) {
+                                    return {
+                                        label: item.name, value: item.name, id: item.id
+                                    };
+                                }));
+                            } catch (err) { }
+                        }
+                    });
+                },
+                select: function (event, ui) {
+                    if (ui.item.label === 'NoResultsFound') {
+                        event.preventDefault();
+                        return;
+                    }
+                    $("#DealerId").val(ui.item.id);
+                    $("#errorDealerId").remove();
+                },
+                focus: function (event, ui) {
+                    if (ui.item.label === 'NoResultsFound') {
+                        event.preventDefault();
+                    }
+                }
+            });
+
+            $(".Droptxt").click(function () {
+                event.preventDefault();
+                if ($(this).val() == "" || $(this).val() == "...")
+                    $(this).autocomplete("search", "");
+                return;
+            });
+
+            $(".Dropbtn").click(function () {
+                event.preventDefault();
+                $(this).parent().find(".Droptxt").autocomplete("search", "");
+                return;
+            });
+
+            $(".Dropbtn2").click(function () {
+                event.preventDefault();
+                $(this).parent().find(".Droptxt").autocomplete("search", "");
+                return;
+            });
+
+            $(".Droptxt").dblclick(function () {
+                event.preventDefault();
+                if ($(this).val() != "")
+                    $(this).autocomplete("search", "");
+                return;
+            });
+        }
+
+        function AddNewRowUnit(data) {
+            $("#errortblUnit").remove();
+            $(data).find("#errorUnitId").remove();
+            $(data).find("#errorRate").remove();
+            var valied = validUnit(data);
+            if ($(data).find("#RowId").val() < 0 && valied == true) {
+                var Current = $('.trNew');
+                var NewRow = Current.clone();
+                NewRow.find("#Rate").val("");
+                $("#tblUnit").find('tbody').append(NewRow);
+                Current.removeClass("trNew");
+                Current.find("#RowId").val(0);
+                Current.find("#Rate").focus();
+                Current.find("#DefaultUnit").css("display", "block");
+                Current.find("#btDelete").css("display", "block");
+                var defaultUnit = Current.find("#chkUnit");
+                defaultUnit.attr("id", "chkUnit_" + Current.find("#UnitId").val());
+                defaultUnit.next().attr("for", "chkUnit_" + Current.find("#UnitId").val());
+                if ($("#tblUnit").find("input:checked").length == 0)
+                    defaultUnit.prop("checked", true);
+
+                RefreshSomeEventListener();
+            }
+        }
+    });
 
     function SelectImage(input) {
         if (input.files && input.files[0]) {
@@ -315,29 +540,6 @@
                 $("#img").attr("src", e.target.result);
             }
             reader.readAsDataURL(input.files[0]);
-        }
-    }
-
-    function AddNewRowUnit(data) {
-        $("#errortblUnit").remove();
-        $(data).find("#errorUnitId").remove();
-        $(data).find("#errorRate").remove();
-        var valied = validUnit(data);
-        if ($(data).find("#RowId").val() < 0 && valied == true) {
-            var Current = $('.trNew');
-            var NewRow = Current.clone();
-            NewRow.find("#Rate").val("");
-            $("#tblUnit").find('tbody').append(NewRow);
-            Current.removeClass("trNew");
-            Current.find("#RowId").val(0);
-            Current.find("#Rate").focus();
-            Current.find("#DefaultUnit").css("display", "block");
-            Current.find("#btDelete").css("display", "block");
-            var defaultUnit = Current.find("#chkUnit");
-            defaultUnit.attr("id", "chkUnit_" + Current.find("#UnitId").val());
-            defaultUnit.next().attr("for", "chkUnit_" + Current.find("#UnitId").val());
-            if ($("#tblUnit").find("input:checked").length == 0)
-                defaultUnit.prop("checked", true);
         }
     }
 
@@ -409,13 +611,13 @@
             Valid = false;
 
        else if (CheckRage("Barcode", "divBarcode", 5, 15, '@Utility.Resource.Message_Designer.BarcodeRange'))
-            Valid = false;       
+            Valid = false;
 
         if (CheckRequired("Name", "divName", '@Utility.Resource.Message_Designer.NameRequired'))
-            Valid = false;     
+            Valid = false;
 
         if (CheckRequired("Code", "divCode", '@Utility.Resource.Message_Designer.CodeRequired'))
-            Valid = false;     
+            Valid = false;
 
         if (CheckRequired("ClassificationId", "divClassificationName", '@Utility.Resource.Message_Designer.ClassificationRequired'))
             Valid = false;

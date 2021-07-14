@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repository;
 
 namespace Repository.Migrations
 {
     [DbContext(typeof(OrgContext))]
-    partial class OrgContextModelSnapshot : ModelSnapshot
+    [Migration("20210713211856_EditSeed2")]
+    partial class EditSeed2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1327,8 +1329,8 @@ namespace Repository.Migrations
                         {
                             Id = 10102L,
                             Hide = false,
-                            Key = "Stores.All",
-                            Name = "Stores",
+                            Key = "Store.All",
+                            Name = "Store",
                             ParentId = 101L,
                             Status = 0,
                             TypeId = 0L
@@ -1337,7 +1339,7 @@ namespace Repository.Migrations
                         {
                             Id = 1010201L,
                             Hide = false,
-                            Key = "Stores.View",
+                            Key = "Store.View",
                             Name = "View",
                             ParentId = 10102L,
                             Status = 0,
@@ -1347,7 +1349,7 @@ namespace Repository.Migrations
                         {
                             Id = 1010202L,
                             Hide = false,
-                            Key = "Stores.Add",
+                            Key = "Store.Add",
                             Name = "Add",
                             ParentId = 10102L,
                             Status = 0,
@@ -1357,7 +1359,7 @@ namespace Repository.Migrations
                         {
                             Id = 1010203L,
                             Hide = false,
-                            Key = "Stores.Edit",
+                            Key = "Store.Edit",
                             Name = "Edit",
                             ParentId = 10102L,
                             Status = 0,
@@ -1367,7 +1369,7 @@ namespace Repository.Migrations
                         {
                             Id = 1010204L,
                             Hide = false,
-                            Key = "Stores.Delete",
+                            Key = "Store.Delete",
                             Name = "Delete",
                             ParentId = 10102L,
                             Status = 0,
@@ -1420,6 +1422,56 @@ namespace Repository.Migrations
                             Key = "Tables.Delete",
                             Name = "Delete",
                             ParentId = 10103L,
+                            Status = 0,
+                            TypeId = 1L
+                        },
+                        new
+                        {
+                            Id = 10104L,
+                            Hide = false,
+                            Key = "Safes.All",
+                            Name = "Safes",
+                            ParentId = 101L,
+                            Status = 0,
+                            TypeId = 0L
+                        },
+                        new
+                        {
+                            Id = 1010401L,
+                            Hide = false,
+                            Key = "Safes.View",
+                            Name = "View",
+                            ParentId = 10104L,
+                            Status = 0,
+                            TypeId = 1L
+                        },
+                        new
+                        {
+                            Id = 1010402L,
+                            Hide = false,
+                            Key = "Safes.Add",
+                            Name = "Add",
+                            ParentId = 10104L,
+                            Status = 0,
+                            TypeId = 1L
+                        },
+                        new
+                        {
+                            Id = 1010403L,
+                            Hide = false,
+                            Key = "Safes.Edit",
+                            Name = "Edit",
+                            ParentId = 10104L,
+                            Status = 0,
+                            TypeId = 1L
+                        },
+                        new
+                        {
+                            Id = 1010404L,
+                            Hide = false,
+                            Key = "Safes.Delete",
+                            Name = "Delete",
+                            ParentId = 10104L,
                             Status = 0,
                             TypeId = 1L
                         },
@@ -1537,8 +1589,8 @@ namespace Repository.Migrations
                         {
                             Id = 10203L,
                             Hide = false,
-                            Key = "Shifts.All",
-                            Name = "Shifts",
+                            Key = "Sfilts.All",
+                            Name = "Sfilts",
                             ParentId = 102L,
                             Status = 0,
                             TypeId = 0L
@@ -1547,7 +1599,7 @@ namespace Repository.Migrations
                         {
                             Id = 1020301L,
                             Hide = false,
-                            Key = "Shifts.View",
+                            Key = "Sfilts.View",
                             Name = "View",
                             ParentId = 10203L,
                             Status = 0,
@@ -1557,7 +1609,7 @@ namespace Repository.Migrations
                         {
                             Id = 1020302L,
                             Hide = false,
-                            Key = "Shifts.Add",
+                            Key = "Sfilts.Add",
                             Name = "Add",
                             ParentId = 10203L,
                             Status = 0,
@@ -1567,7 +1619,7 @@ namespace Repository.Migrations
                         {
                             Id = 1020303L,
                             Hide = false,
-                            Key = "Shifts.Edit",
+                            Key = "Sfilts.Edit",
                             Name = "Edit",
                             ParentId = 10203L,
                             Status = 0,
@@ -1577,7 +1629,7 @@ namespace Repository.Migrations
                         {
                             Id = 1020304L,
                             Hide = false,
-                            Key = "Shifts.Delete",
+                            Key = "Sfilts.Delete",
                             Name = "Delete",
                             ParentId = 10203L,
                             Status = 0,
@@ -1867,8 +1919,8 @@ namespace Repository.Migrations
                         {
                             Id = 10501L,
                             Hide = false,
-                            Key = "Safes.All",
-                            Name = "Safes",
+                            Key = "OutlayTerms.All",
+                            Name = "Outlay Terms",
                             ParentId = 105L,
                             Status = 0,
                             TypeId = 0L
@@ -1877,7 +1929,7 @@ namespace Repository.Migrations
                         {
                             Id = 1050101L,
                             Hide = false,
-                            Key = "Safes.View",
+                            Key = "OutlayTerms.View",
                             Name = "View",
                             ParentId = 10501L,
                             Status = 0,
@@ -1887,7 +1939,7 @@ namespace Repository.Migrations
                         {
                             Id = 1050102L,
                             Hide = false,
-                            Key = "Safes.Add",
+                            Key = "OutlayTerms.Add",
                             Name = "Add",
                             ParentId = 10501L,
                             Status = 0,
@@ -1897,7 +1949,7 @@ namespace Repository.Migrations
                         {
                             Id = 1050103L,
                             Hide = false,
-                            Key = "Safes.Edit",
+                            Key = "OutlayTerms.Edit",
                             Name = "Edit",
                             ParentId = 10501L,
                             Status = 0,
@@ -1907,7 +1959,7 @@ namespace Repository.Migrations
                         {
                             Id = 1050104L,
                             Hide = false,
-                            Key = "Safes.Delete",
+                            Key = "OutlayTerms.Delete",
                             Name = "Delete",
                             ParentId = 10501L,
                             Status = 0,
@@ -1917,8 +1969,8 @@ namespace Repository.Migrations
                         {
                             Id = 10502L,
                             Hide = false,
-                            Key = "OutlayTerms.All",
-                            Name = "Outlay Terms",
+                            Key = "Currencies.All",
+                            Name = "Currencies",
                             ParentId = 105L,
                             Status = 0,
                             TypeId = 0L
@@ -1927,7 +1979,7 @@ namespace Repository.Migrations
                         {
                             Id = 1050201L,
                             Hide = false,
-                            Key = "OutlayTerms.View",
+                            Key = "Currencies.View",
                             Name = "View",
                             ParentId = 10502L,
                             Status = 0,
@@ -1937,7 +1989,7 @@ namespace Repository.Migrations
                         {
                             Id = 1050202L,
                             Hide = false,
-                            Key = "OutlayTerms.Add",
+                            Key = "Currencies.Add",
                             Name = "Add",
                             ParentId = 10502L,
                             Status = 0,
@@ -1947,7 +1999,7 @@ namespace Repository.Migrations
                         {
                             Id = 1050203L,
                             Hide = false,
-                            Key = "OutlayTerms.Edit",
+                            Key = "Currencies.Edit",
                             Name = "Edit",
                             ParentId = 10502L,
                             Status = 0,
@@ -1957,59 +2009,9 @@ namespace Repository.Migrations
                         {
                             Id = 1050204L,
                             Hide = false,
-                            Key = "OutlayTerms.Delete",
-                            Name = "Delete",
-                            ParentId = 10502L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 10503L,
-                            Hide = false,
-                            Key = "Currencies.All",
-                            Name = "Currencies",
-                            ParentId = 105L,
-                            Status = 0,
-                            TypeId = 0L
-                        },
-                        new
-                        {
-                            Id = 1050301L,
-                            Hide = false,
-                            Key = "Currencies.View",
-                            Name = "View",
-                            ParentId = 10503L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 1050302L,
-                            Hide = false,
-                            Key = "Currencies.Add",
-                            Name = "Add",
-                            ParentId = 10503L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 1050303L,
-                            Hide = false,
-                            Key = "Currencies.Edit",
-                            Name = "Edit",
-                            ParentId = 10503L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 1050304L,
-                            Hide = false,
                             Key = "Currencies.Delete",
                             Name = "Delete",
-                            ParentId = 10503L,
+                            ParentId = 10502L,
                             Status = 0,
                             TypeId = 1L
                         },
@@ -2028,7 +2030,7 @@ namespace Repository.Migrations
                             Id = 201L,
                             Hide = false,
                             Key = "Orders",
-                            Name = "Order Notices",
+                            Name = "Orders",
                             ParentId = 20L,
                             Status = 0,
                             TypeId = 0L

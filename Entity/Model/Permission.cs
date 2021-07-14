@@ -10,6 +10,7 @@ namespace Entity.Model
     public class Permission : BaseModel
     {
         public string Key { get; set; }
-        public string Value { get; set; }
+        public string Name { get; set; }
+        public string Name2 { get; set; }
     }
 }

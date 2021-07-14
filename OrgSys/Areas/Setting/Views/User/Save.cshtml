@@ -99,10 +99,6 @@
                                         <small class="form-text text-muted"> @Utility.Resource.Message_Designer.RoleRequired</small>
                                         @Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "text-danger " })
                                     </div>
-
-                                    <div>
-                                        @Html.Partial("~/Views/Shared/TreeView.cshtml", Model.Permissions)
-                                    </div>
                                 </div>
                             </div>
                             <div class="pl-2 pr-2">

@@ -28,7 +28,6 @@ namespace OrgSys.Areas.Financial.Controllers
             ViewBag.OutlayId = new SelectList(new OutlayService().GetAll(model.ParentId, 0, 1, 20), "Id", "Name", model.OutlayId);
             ViewBag.CurrencyId = new SelectList(new CurrencyService().GetAll(model.ParentId, 0, 1, 20), "Id", "Name", model.CurrencyId);
             ViewBag.PaymentTypeId = new SelectList(new PaymentTypeService().GetAll(model.ParentId, 0, 1, 20), "Id", "Name", model.PaymentTypeId);
-            ViewBag.DealerId = new SelectList(new DealerService().GetAll(model.ParentId, model.TypeId == 1 || model.TypeId == 3 ? (int)DealerType.Client : (int)DealerType.Supplier, 1, 20), "Id", "Name", model.DealerId);
             ViewBag.SafeId = new SelectList(new SafeService().GetAll(model.ParentId, 0, 1, 20), "Id", "Name", model.SafeId);
             var type = new TransactionTypeService().Get(model.TypeId);
             ViewBag.TransactionsType = type.Name;
@@ -69,8 +68,10 @@ namespace OrgSys.Areas.Financial.Controllers
                 ob.Date = DateTime.Now;
                 ob.FinancialInvoices = new List<FinancialInvoiceModelView>();
             }
-            
+
+            ob.SafeName = new SafeService().Get(ob.SafeId).Name;
+            ob.DealerName = new DealerService().Get(ob.DealerId??0).Name;
             return ob;
-        }       
+        }      
     }
 }

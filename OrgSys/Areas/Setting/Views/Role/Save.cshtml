@@ -2,6 +2,7 @@
 @{
     ViewData["Title_Designer"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.parentId = 0;
 }
 
 <div id="HPage" class="container-fluid">
@@ -31,7 +32,7 @@
                 <div class="card pt-4 pb-4 pl-4 pr-4">
                     <div class="d-md-block" id="displayOptions">
                         <h3 class="mr-4 mb-2 ml-4 d-inline-block float-md-left">
-                            @if (Model != null || Model.Id == 0)
+                            @if (Model == null || Model.Id == 0)
                             {
                                 <span class="mb-4"> @Utility.Resource.Title_Designer.New ...</span>
                             }
@@ -47,19 +48,23 @@
                     <div class="card-body">
                         <form action="Save" method="post" enctype="multipart/form-data" class="tooltip-label-right" novalidate>
                             <div class="row">
-                                <div class="col-md-12 col-sm-12 col-lg-12">
-                                    @Html.HiddenFor(model => model.Id)
-                                    @Html.HiddenFor(model => model.TypeId)
-                                    @Html.HiddenFor(model => model.ParentId)
-                                    <div class="form-group position-relative error-l-50">
-                                        @Html.LabelFor(model => model.Name)
-                                        @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Name })
-                                        <small class="form-text text-muted"> @Utility.Resource.Message_Designer.NameRequired!</small>
-                                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger mt-3 m-1" })
-                                    </div>                                   
-                                </div>                               
+                                @Html.HiddenFor(model => model.Id)
+                                @Html.HiddenFor(model => model.TypeId)
+                                @Html.HiddenFor(model => model.ParentId)
+                                <div class="form-group col-md-8 col-sm-8 col-lg-8">
+                                    @Html.LabelFor(model => model.Name)
+                                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Name })
+                                    <small class="form-text text-muted"> @Utility.Resource.Message_Designer.NameRequired!</small>
+                                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger mt-3 m-1" })
+                                </div>
+                                <div class="form-group col-md-4 col-sm-4 col-lg-4">
+                                    <label>Permission</label>
+                                    <div id="TrPermission"  style="border:solid 1px #dbd4d4;padding:15px;border-radius:10px;">
+                                        @Html.Partial("~/Views/Shared/TreeView.cshtml", Model.Permissions)
+                                    </div>
+                                </div>
                             </div>
-                            <button type="submit" class="btn btn-primary mb-0">@Utility.Resource.Title_Designer.Save</button>
+                            <button type="button" onclick="Save()" class="btn btn-primary mb-0">@Utility.Resource.Title_Designer.Save</button>
                         </form>
                     </div>
                 </div>
@@ -67,3 +72,84 @@
         </div>
     </div>
 </div>
+
+<script src="~/js/vendor/jquery-3.3.1.min.js"></script>
+<script src="~/js/jquery.bonsai.js"></script>
+<script src="~/js/jquery.json-list.js"></script>
+<script src="~/js/jquery.qubit.js"></script>
+
+<script>
+    $('.demo1').bonsai();
+    $('#auto-checkboxes').bonsai({
+        expandAll: false,
+        checkboxes: true, // depends on jquery.qubit plugin
+        createInputs: 'checkbox' // takes values from data-name and data-value, and data-name is inherited
+    });
+
+    $('#from-JSON').jsonList({
+        url: 'json.js',
+        type: 'groupedItems',
+        groups: 'locationGroups',
+        items: 'locations',
+        // onListItem: called for each list item created from the JSON
+        onListItem: function (event, listItem, data, isGroup) {
+            if (!isGroup) {
+                // set the id into a data value so that Bonsai createInputs
+                // can set the checkbox value
+                listItem.attr('data-value', data.id);
+            }
+        },
+        // success: called after the list is created
+        onSuccess: function (event, jsonList) {
+            // turn the list into a tree
+            $(this.el).find('> ol').bonsai({
+                checkboxes: true,
+                createInputs: 'checkbox',
+                handleDuplicateCheckboxes: true,
+                expandAll: true
+            });
+        }
+    });
+
+     function Save() {
+        var Valid = true;
+
+        if (CheckRequired("Name", "Name", '@Utility.Resource.Message_Designer.NameRequired'))
+            Valid = false;
+
+        if (Valid == true) {
+
+            var list = [];
+            $('.chk').each(function () {
+                if ($(this).is(":checked")) {
+                    list.push({
+                        RoleId: $('#Id').val(),
+                        PermissionId: $(this).val()
+                    });
+                }
+            });
+
+            var data = {
+                Id: $('#Id').val(),              
+                Name: $('#Name').val().trim(),
+                ParentId: $('#ParentId').val(),
+                TypeId: $('#TypeId').val(),
+                RolePermissions: list
+            };
+
+            $.ajax({
+                type: 'POST',
+                url: "/Setting/Role/Save",
+                data: { model: data},
+                success: function (res) {
+                    if (res.status == "success") {
+                        window.location.replace(res.url);
+                    }
+                    else {
+                        LogError(data.Error);
+                    }
+                }
+            });
+        }
+    }
+</script>

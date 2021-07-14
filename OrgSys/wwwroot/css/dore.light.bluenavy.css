@@ -2129,7 +2129,7 @@ main {
   #app-container.sub-hidden main,
   #app-container.menu-sub-hidden main,
   #app-container.menu-hidden main {
-    margin-left: 160px; }
+    margin-left: 130px; }
   #app-container.main-hidden main,
   #app-container.menu-hidden main {
     margin-left: 50px; }
@@ -6624,7 +6624,7 @@ footer.page-footer {
   #app-container.sub-hidden .footer-content,
   #app-container.menu-sub-hidden .footer-content,
   #app-container.menu-hidden .footer-content {
-    margin-left: 160px; }
+    margin-left: 130px; }
   #app-container.main-hidden .footer-content,
   #app-container.menu-hidden .footer-content {
     margin-left: 50px; }

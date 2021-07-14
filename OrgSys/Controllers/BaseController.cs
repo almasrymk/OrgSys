@@ -19,7 +19,7 @@ namespace OrgSys.Controllers
         string ControllerName = "";
         BaseService<entity> service;
         [HttpGet]
-        public virtual ActionResult Index(string search, long ParentId = 0, long TypeId = 0, int page = 1, int pageSize = 28, ResultStatus Status = ResultStatus.nothing, string MsgError = "")
+        public virtual ActionResult Index(string search, long ParentId = 0, long TypeId = 0, int page = 1, int pageSize = 10, ResultStatus Status = ResultStatus.nothing, string MsgError = "")
         {
             if ("" + MsgError != "")
                 ViewBag.message = MsgError;

@@ -70,14 +70,18 @@
                                 <div class="form-group col-md-4">
                                     <label>@Utility.Resource.Title_Designer.Safe</label>
                                     <div id="divSafeId">
-                                        <div class="input-group">
+                                        <div class="input-group DropAutoComplete">
                                             <div class="input-group-prepend">
-                                                <span class="input-group-text"><i class="iconsminds-clothing-store"></i></span>
+                                                <span class="input-group-text"><i class="simple-icon-people"></i></span>
                                             </div>
-                                            @Html.DropDownListFor(model => model.SafeId, null, null, new { @class = "form-control" })
+                                            <input type="text" class="form-control Droptxt" id="txtSafeId" value="@Model.SafeName" autocomplete="off" />
+                                            @Html.HiddenFor(model => model.SafeId)
+                                            <div class="input-group-prepend Dropbtn">
+                                                <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
+                                            </div>
                                         </div>
                                         <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
-                                    </div>
+                                    </div>                                   
                                     @Html.ValidationMessageFor(model => model.SafeId, "", new { @class = "text-danger " })
                                 </div>
                             </div>
@@ -122,26 +126,30 @@
                             <div class="form-row">
                                 @if (Model.TypeId == 1 || Model.TypeId == 2)
                                 {
-                                    <div class="form-group col-md-4">
-                                        @if (Model.TypeId == 1)
-                                        {
+                                <div class="form-group col-md-4">
+                                    @if (Model.TypeId == 1)
+                                    {
                                         <label>@Utility.Resource.Title_Designer.Client</label>
-                                        }
-                                        else
-                                        {
-                                    <label>@Utility.Resource.Title_Designer.Supplier</label>
-                                        }
-                                        <div id="divDealerId">
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="simple-icon-people"></i></span>
-                                                </div>
-                                                @Html.DropDownListFor(model => model.DealerId, null, null, new { @class = "form-control" })
+                                    }
+                                    else
+                                    {
+                                        <label>@Utility.Resource.Title_Designer.Supplier</label>
+                                    }
+                                    <div id="divDealerId">
+                                        <div class="input-group DropAutoComplete">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="simple-icon-people"></i></span>
                                             </div>
-                                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                                            <input type="text" class="form-control Droptxt" id="txtDealerId" value="@Model.DealerName" autocomplete="off" />
+                                            @Html.HiddenFor(model => model.DealerId)
+                                            <div class="input-group-prepend Dropbtn">
+                                                <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
+                                            </div>
                                         </div>
-                                        @Html.ValidationMessageFor(model => model.DealerId, "", new { @class = "text-danger " })
+                                        <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
                                     </div>
+                                    @Html.ValidationMessageFor(model => model.DealerId, "", new { @class = "text-danger " })
+                                </div>
                                 }
                                 else
                                 {
@@ -407,6 +415,128 @@
                     }
                 });
 
+            });
+
+            $("#txtSafeId").autocomplete({
+                minLength: 0,
+                source: function (request, response) {
+                    var searchPhrase = $("#txtSafeId").val();//request.term.trim().toLowerCase();
+                    var noResultsLabel = 'NoResultsFound';
+                    if (searchPhrase == "...")
+                        searchPhrase = "";
+                    $.ajax({
+                        url: "/Setting/Safe/GetList",
+                        type: "Get",
+                        dataType: "json",
+                        data: { txtSearch: searchPhrase,  page: 1, pageSize: 7 },
+                        success: function (data) {
+                            try {
+                                if (!data.length) {
+                                    data = [{ name: noResultsLabel }];
+                                }
+
+                                if ("" + $("#txtSafeId").val() == "") {
+                                    $("#SafeId").val("");
+                                    $("#errorSafeId").remove();
+                                }
+
+                                response($.map(data, function (item) {
+                                    return {
+                                        label: item.name, value: item.name, id: item.id
+                                    };
+                                }));
+                            } catch (err) { }
+                        }
+                    });
+                },
+                select: function (event, ui) {
+                    if (ui.item.label === 'NoResultsFound') {
+                        event.preventDefault();
+                        return;
+                    }
+                    $("#SafeId").val(ui.item.id);
+                    $("#errorSafeId").remove();
+                },
+                focus: function (event, ui) {
+                    if (ui.item.label === 'NoResultsFound') {
+                        event.preventDefault();
+                    }
+                }
+            });
+
+            $("#txtDealerId").autocomplete({
+                minLength: 0,
+                source: function (request, response) {
+                    var searchPhrase = $("#txtDealerId").val();//request.term.trim().toLowerCase();
+                    var noResultsLabel = 'NoResultsFound';
+                    if (searchPhrase == "...")
+                        searchPhrase = "";
+                    $.ajax({
+                        url: "/Setting/Dealer/GetList",
+                        type: "Get",
+                        dataType: "json",
+                        data: { txtSearch: searchPhrase, TypeId: $("#TypeId").val(), page: 1, pageSize: 7 },
+                        success: function (data) {
+                            try {
+                                if (!data.length) {
+                                    data = [{ name: noResultsLabel }];
+                                }
+
+                                if ("" + $("#txtDealerId").val() == "") {
+                                    $("#DealerId").val("");
+                                    $(".InvoiceRow").not(".trNew").remove();
+                                    $("#errorDealerId").remove();
+                                }
+
+                                response($.map(data, function (item) {
+                                    return {
+                                        label: item.name, value: item.name, id: item.id
+                                    };
+                                }));
+                            } catch (err) { }
+                        }
+                    });
+                },
+                select: function (event, ui) {
+                    if (ui.item.label === 'NoResultsFound') {
+                        event.preventDefault();
+                        return;
+                    }
+                    $("#DealerId").val(ui.item.id);
+                    $(".InvoiceRow").not(".trNew").remove();
+                    $("#errorDealerId").remove();
+                },
+                focus: function (event, ui) {
+                    if (ui.item.label === 'NoResultsFound') {
+                        event.preventDefault();
+                    }
+                }
+            });
+
+            $(".Droptxt").click(function () {
+                event.preventDefault();
+                if ($(this).val() == "" || $(this).val() == "...")
+                    $(this).autocomplete("search", "");
+                return;
+            });
+
+            $(".Dropbtn").click(function () {
+                event.preventDefault();
+                $(this).parent().find(".Droptxt").autocomplete("search", "");
+                return;
+            });
+
+            $(".Dropbtn2").click(function () {
+                event.preventDefault();
+                $(this).parent().find(".Droptxt").autocomplete("search", "");
+                return;
+            });
+
+            $(".Droptxt").dblclick(function () {
+                event.preventDefault();
+                if ($(this).val() != "")
+                    $(this).autocomplete("search", "");
+                return;
             });
 
             $('.btnDelete').click(function () {

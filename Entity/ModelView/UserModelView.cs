@@ -77,7 +77,6 @@ namespace Entity.ModelView
 
         [Display(Name = nameof(Title_Designer.Branch), ResourceType = typeof(Title_Designer))]
         public string BranchName { get; set; }
-
-        public List<TreeView> Permissions { get; set; }
+        public List<Permission> Permissions { get; set; }
     }
 }

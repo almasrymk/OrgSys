@@ -17,6 +17,8 @@ using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.AspNetCore.Mvc.Localization;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace OrgSys
 {
@@ -32,8 +34,18 @@ namespace OrgSys
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+
+
+            services.AddOptions();
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
             services.AddMvc(options => options.EnableEndpointRouting = false);
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
 
             services.AddLocalization(options => options.ResourcesPath = "Resources");
             services.AddMvc().AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix).AddDataAnnotationsLocalization();
@@ -48,11 +60,7 @@ namespace OrgSys
 
             services.AddDbContext<OrgContext>(options => options.UseSqlServer(Configuration.GetConnectionString("OrgConnection")));
             services.AddControllersWithViews();
-
-            //services.AddMvc(options =>
-            //{
-            //    options.Filters.Add(new AuthorizeFilter());
-            //});
+            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -81,10 +89,20 @@ namespace OrgSys
 
             app.UseRouting();
 
+            var cookiePolicyOptions = new CookiePolicyOptions
+            {
+                MinimumSameSitePolicy = SameSiteMode.Strict,
+            };
+            app.UseCookiePolicy(cookiePolicyOptions);
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllers();
+
+                endpoints.MapRazorPages();
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
@@ -113,7 +131,6 @@ namespace OrgSys
                  name: "Financials",
                  areaName: "Financials",
                  pattern: "Financials/{controller=Home}/{action=Index}/{id?}");
-                //endpoints.MapRazorPages();
             });
         }
     }

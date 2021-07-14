@@ -18,10 +18,7 @@ namespace OrgSys.Areas.Setting.Controllers
         
         public override void LoadViewBag(ProductModelView model)
         {
-            ViewBag.ClassificationId = new SelectList(new ClassificationService().GetAll(model.ParentId , model.TypeId), "Id", "Name" , model.ClassificationId);
-            ViewBag.DealerId = new SelectList(new DealerService().GetAll(model.ParentId, (int)DealerType.Supplier), "Id", "Name", model.DealerId);
             ViewBag.UnitList = new SelectList(new UnitService().GetAll(model.ParentId, model.TypeId), "Id", "Name");
-            ViewBag.ProductList = new SelectList(new ProductService().GetAll(model.ParentId, model.TypeId), "Id", "Name");
 
         }
 
@@ -34,7 +31,9 @@ namespace OrgSys.Areas.Setting.Controllers
                 ob.CodeNumber = new ProductService().GetMaxCode(ob.TypeId);
                 ob.Code = "" + new ProductService().GetMaxCode(ob.TypeId);
             }
-                return ob;
+            ob.ClassificationName = new ClassificationService().Get(ob.ClassificationId).Name;
+            ob.DealerName = new DealerService().Get(ob.DealerId??1).Name;
+            return ob;
         }
 
         public JsonResult GetList(int ProductId)

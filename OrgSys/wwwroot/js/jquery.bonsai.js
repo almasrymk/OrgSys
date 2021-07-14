@@ -205,7 +205,7 @@
       var type = this.options.createInputs;
       if (listItem.find('> input[type=' + type + ']').length) return;
       var id = this.inputIdFor(listItem);
-      var checkbox = $('<input type="' + type + '" name="'
+        var checkbox = $('<input type="' + type + '" class="chk" name="'
         + this.inputNameFor(listItem) + '" id="' + id + '" /> '
       );
       var children = listItem.children();

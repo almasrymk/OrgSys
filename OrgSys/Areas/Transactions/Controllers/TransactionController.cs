@@ -24,11 +24,7 @@ namespace OrgSys.Areas.Transaction.Controllers
         }
 
         public override void LoadViewBag(TransactionModelView model)
-        {           
-            ViewBag.DealerId = new SelectList(new DealerService().GetAll(model.ParentId, model.TypeId == 1 || model.TypeId == 3 ? (int)DealerType.Client : (int)DealerType.Supplier, 1, 20), "Id", "Name", model.DealerId);
-            ViewBag.StoreId = new SelectList(new StoreService().GetAll(model.ParentId, 0, 1, 20), "Id", "Name", model.StoreId);
-            ViewBag.ToStoreId = new SelectList(new StoreService().GetAll(model.ParentId, 0, 1, 20), "Id", "Name", model.ToStoreId);
-            ViewBag.ProductId = new SelectList(new ProductService().GetAll(model.ParentId, 0, 1, 20), "Id", "Name");
+        {
             var type = new TransactionTypeService().Get(model.TypeId);
             ViewBag.TransactionsType = type.Name;
             ViewBag.TransactionsType = type.Icon;
@@ -40,7 +36,7 @@ namespace OrgSys.Areas.Transaction.Controllers
             var StoreId = long.Parse("0" + setting.GetByKey("DefaultStore", "Transaction", ob.TypeId, 0)?.Value);
 
             long DealerId = 0;
-            if(ob.TypeId == 1)
+            if (ob.TypeId == 1)
                 DealerId = long.Parse("0" + setting.GetByKey("DefaultSupplier", "Transaction", ob.TypeId, 0)?.Value);
             else if (ob.TypeId == 2)
                 DealerId = long.Parse("0" + setting.GetByKey("DefaultCustomer", "Transaction", ob.TypeId, 0)?.Value);
@@ -63,10 +59,12 @@ namespace OrgSys.Areas.Transaction.Controllers
                 ob.DealerId = DealerId;
                 ob.Date = DateTime.Now;
                 ob.TransactionProducts = new List<TransactionProductModelView>();
-              }
-            
+            }
+            ob.StoreName = new StoreService().Get(ob.StoreId).Name;
+            ob.ToStoreName = new StoreService().Get(ob.ToStoreId??0).Name;
+            ob.DealerName = new DealerService().Get(ob.DealerId??0).Name;
             return ob;
         }
-       
+
     }
 }
