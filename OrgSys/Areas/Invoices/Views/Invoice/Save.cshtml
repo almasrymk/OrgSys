@@ -582,7 +582,7 @@
                 type: 'GET',
                 url: "/Setting/Preference/Show",
                 data: { Resource: 'Invoice', type: '@Model.TypeId'},
-                success: function (res) {
+                success: function (res) {                    
                     $("#ShowPreferenceBody").html(res);
                 }
             });

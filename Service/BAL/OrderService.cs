@@ -80,25 +80,29 @@ namespace Service.BAL
         {           
             if(ob != null)
             {
-                var inv = repo.invoiceRepo.Get(e => e.Id == ob.InvoiceId);
-                if(inv == null || inv.Id == 0)
+                var currencyId = repo.currencyRepo.Get(e => e.IsDefault)?.Id??0;
+                if (currencyId > 0)
                 {
-                    inv = new Invoice();
-                    var setting = new PreferenceService();
-                    inv.StoreId = long.Parse("0" + setting.GetByKey("DefaultStore", "Invoice", 1, 0)?.Value);
-                    if (ob.DealerId == null || ob.DealerId == 0)
-                        inv.DealerId = long.Parse("0" + setting.GetByKey("DefaultCustomer", "Invoice", 1, 0)?.Value);
-                    else
-                        inv.DealerId = ob.DealerId.Value;
-                    inv.PaymentTypeId = long.Parse("0" + setting.GetByKey("DefaultPaymentType", "Invoice", 1, 0)?.Value);
-                    inv.TypeId = 1;
-                    inv.CodeNumber = new InvoiceService().GetMaxCode(1);
-                    inv.Code = "" + new InvoiceService().GetMaxCode(1);
+                    var inv = repo.invoiceRepo.Get(e => e.Id == ob.InvoiceId);
+                    if (inv == null || inv.Id == 0)
+                    {
+                        inv = new Invoice();
+                        var setting = new PreferenceService();
+                        inv.StoreId = long.Parse("0" + setting.GetByKey("DefaultStore", "Invoice", 1, 0)?.Value);
+                        if (ob.DealerId == null || ob.DealerId == 0)
+                            inv.DealerId = long.Parse("0" + setting.GetByKey("DefaultCustomer", "Invoice", 1, 0)?.Value);
+                        else
+                            inv.DealerId = ob.DealerId.Value;
+                        inv.PaymentTypeId = long.Parse("0" + setting.GetByKey("DefaultPaymentType", "Invoice", 1, 0)?.Value);
+                        inv.TypeId = 1;
+                        inv.CodeNumber = new InvoiceService().GetMaxCode(1);
+                        inv.Code = "" + new InvoiceService().GetMaxCode(1);
+                    }
+                    var obInv = new InvoiceService().Save(new InvoiceModelView(inv).UpdateData(ob, inv.StoreId, currencyId));
+                    ob.InvoiceId = obInv.Id;
+                    ob.CloseTable = true;
+                    ob = repo.orderRepo.AddOrUpdate(ob);
                 }
-                var obInv = new InvoiceService().Save(new InvoiceModelView(inv).UpdateData(ob , inv.StoreId));
-                ob.InvoiceId = obInv.Id;
-                ob.CloseTable = true;
-                ob = repo.orderRepo.AddOrUpdate(ob);
             }
             return ob;
         }
@@ -134,7 +138,31 @@ namespace Service.BAL
         /// <returns></returns>
         public bool Delete(long id)
         {
-            return repo.orderRepo.Delete(id);
+            var ob = repo.orderRepo.Get(e=>e.Id == id);
+            if(ob != null)
+            {
+                repo.orderRepo.Delete(id);
+                new InvoiceService().Delete(ob.InvoiceId ?? 0);
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ids"></param>
+        /// <returns></returns>
+        public bool Delete(List<long> ids)
+        {
+            var oblist = repo.orderRepo.GetList(e => ids.Contains(e.Id), null, "", Utility.Status.New);
+            if (oblist != null && oblist.Count() > 0)
+            {
+                repo.orderRepo.Delete(ids);
+                new InvoiceService().Delete(oblist.Select(e => e.InvoiceId ?? 0).ToList());
+                return true;
+            }
+            return false;
         }
 
         /// <summary>
@@ -197,17 +225,7 @@ namespace Service.BAL
         public OrderModelView Get(string textSearch)
         {
             return new OrderModelView(repo.orderRepo.Get(e => e.Dealer.Name.Contains("" + textSearch) , "Dealer,Table,Invoice"));
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="ids"></param>
-        /// <returns></returns>
-        public bool Delete(List<long> ids)
-        {
-            return repo.orderRepo.Delete(ids);
-        }
+        }       
 
         public List<OrderModelView> GetAll(List<long> ids,long TypeId = 0)
         {

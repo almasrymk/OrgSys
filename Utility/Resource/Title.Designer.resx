@@ -249,6 +249,9 @@
   <data name="DefaultSafe" xml:space="preserve">
     <value>Default Safe</value>
   </data>
+  <data name="DefaultStore" xml:space="preserve">
+    <value>Default Store</value>
+  </data>
   <data name="DefaultSupplier" xml:space="preserve">
     <value>Default Supplier</value>
   </data>

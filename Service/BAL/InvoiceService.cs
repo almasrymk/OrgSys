@@ -85,7 +85,7 @@ namespace Service.BAL
                 if (trns == null || trns.Id == 0)
                 {
                     long trnsTypeId = 1;
-                    if (ob.TypeId == 2 || ob.TypeId == 4)
+                    if (ob.TypeId == 1 || ob.TypeId == 3)
                         trnsTypeId = 2;
 
                     trns = new Transaction();
@@ -133,7 +133,14 @@ namespace Service.BAL
         /// <returns></returns>
         public bool Delete(long id)
         {
-            return repo.invoiceRepo.Delete(id);
+            var ob = repo.invoiceRepo.Get(e => e.Id == id);
+            if (ob != null)
+            {
+                repo.invoiceRepo.Delete(id);
+                new TransactionService().Delete(ob.TransactionId??0);
+                return true;
+            }
+            return false;
         }
 
         /// <summary>
@@ -215,7 +222,14 @@ namespace Service.BAL
         /// <returns></returns>
         public bool Delete(List<long> ids)
         {
-            return repo.invoiceRepo.Delete(ids);
+            var oblist = repo.invoiceRepo.GetList(e => ids.Contains(e.Id), null, "", Utility.Status.New);
+            if (oblist != null && oblist.Count() > 0)
+            {
+                repo.invoiceRepo.Delete(ids);
+                new TransactionService().Delete(oblist.Select(e => e.TransactionId ?? 0).ToList());
+                return true;
+            }
+            return false;
         }
 
         public List<InvoiceModelView> GetAll(List<long> ids, long TypeId = 0)

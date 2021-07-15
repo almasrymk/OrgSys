@@ -59,7 +59,7 @@ namespace Entity.ModelView
             this.InvoiceProducts = ob.InvoiceProducts.Select(e => new InvoiceProductModelView(e)).ToList();
         }
 
-        public InvoiceModelView UpdateData(Order ob, long StoreId)
+        public InvoiceModelView UpdateData(Order ob, long StoreId , long CurrencyId)
         {
             if (ob == null)
                 ob = new Order();
@@ -71,6 +71,7 @@ namespace Entity.ModelView
             if (ob.DealerId != null)
                 this.DealerId = ob.DealerId.Value;
             this.ParentId = ob.ParentId;
+            this.CurrencyId = CurrencyId;
             this.ImgPath = ob.ImgPath;
             this.Total = ob.Total;
             this.Total = ob.Total;

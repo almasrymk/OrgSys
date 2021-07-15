@@ -249,6 +249,9 @@
   <data name="DefaultSafe" xml:space="preserve">
     <value>الخزينة الافتراضية</value>
   </data>
+  <data name="DefaultStore" xml:space="preserve">
+    <value>المخزن الافتراضي</value>
+  </data>
   <data name="DefaultSupplier" xml:space="preserve">
     <value>المورد الافتراضي</value>
   </data>
@@ -382,7 +385,7 @@
     <value>الطلبات</value>
   </data>
   <data name="OrderTabe" xml:space="preserve">
-    <value>بوابة الطلب</value>
+    <value>ترتيب التبويب</value>
   </data>
   <data name="Organization" xml:space="preserve">
     <value>هيكل المنشأة</value>
@@ -415,7 +418,7 @@
     <value>التليفون</value>
   </data>
   <data name="Preference" xml:space="preserve">
-    <value>الافضلية</value>
+    <value>التفصيلات</value>
   </data>
   <data name="Previous" xml:space="preserve">
     <value>السابق</value>
@@ -475,7 +478,7 @@
     <value>المبالغ المستردة</value>
   </data>
   <data name="Repeated" xml:space="preserve">
-    <value>مكرر</value>
+    <value>التكرار</value>
   </data>
   <data name="Report" xml:space="preserve">
     <value>التقارير</value>
@@ -622,7 +625,7 @@
     <value>التحويل</value>
   </data>
   <data name="TypeSerial" xml:space="preserve">
-    <value>اكتب التسلسل</value>
+    <value>تغير الكود</value>
   </data>
   <data name="Unit" xml:space="preserve">
     <value>الوحدة</value>

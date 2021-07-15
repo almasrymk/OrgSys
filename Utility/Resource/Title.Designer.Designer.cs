@@ -457,6 +457,15 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Default Store.
+        /// </summary>
+        public static string DefaultStore {
+            get {
+                return ResourceManager.GetString("DefaultStore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Default Supplier.
         /// </summary>
         public static string DefaultSupplier {

@@ -316,13 +316,13 @@
                                     @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger " })
                                 </div>
                                 <div class="form-group col-md-4">
-                                    @Html.LabelFor(model => model.Date)
+                                    <label> @Utility.Resource.Title_Designer.Date</label>                                   
                                     <div id="divDate">
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="simple-icon-calendar"></i></span>
                                             </div>
-                                            @Html.TextBoxFor(model => model.Date, new { @class = "form-control datepicker" })
+                                            @Html.TextBoxFor(model => model.Date, new { @class = "form-control datepicker", @autocomplete = "off" })
                                         </div>
                                         <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
                                     </div>
@@ -1034,7 +1034,7 @@
                     }
                 }
             });
-
+           
             var data = {
                 Id: $('#Id').val(),
                 TypeId: $('#TypeId').val(),
