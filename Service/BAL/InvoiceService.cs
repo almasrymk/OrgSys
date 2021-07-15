@@ -58,8 +58,10 @@ namespace Service.BAL
                 Nwob = CreateTransaction(Nwob);
             }
 
+            Nwob = CreateFinancial(Nwob);
+
             return new InvoiceModelView(Nwob);
-        }
+        }        
 
         /// <summary>
         /// 
@@ -112,17 +114,87 @@ namespace Service.BAL
             return ob;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        public Invoice CreateFinancial(long Id)
+        {
+            var ob = Get(Id);
+            return CreateFinancial(ob.Model);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ob"></param>
+        /// <returns></returns>
+        public Invoice CreateFinancial(Invoice ob)
+        {
+            if (ob != null)
+            {
+                long type = ob.TypeId == 1 || ob.TypeId == 4 ? 1 : 2;
+                decimal AmountPaid = 0;
+                var oblist = repo.financialInvoiceRepo.GetList(e => e.InvoiceId == ob.Id && e.Financial.ParentId != ob.Id && e.Financial.Status != Utility.Status.Deleted, null, "Financial", Utility.Status.New);
+                if (oblist != null)
+                    AmountPaid = oblist.Sum(e => e.Amount);
+                if (ob.Paid > AmountPaid)
+                {
+                    var Code = new FinancialService().GetMaxCode(type);
+                    FinancialModelView financial = new FinancialService().GetByParent(ob.Id);
+                    if (financial == null || financial.Id == 0)
+                    {
+                        financial = new FinancialModelView
+                        {
+                            CodeNumber = Code,
+                            Code = "" + Code,
+                            TypeId = type,
+                            ParentId = ob.Id,
+                            FinancialInvoices = new List<FinancialInvoiceModelView>()
+                        };
+                    }
+
+                    var amount = ob.Net < ob.Paid ? ob.Net : ob.Paid;
+                    financial.CurrencyId = ob.CurrencyId;
+                    financial.Date = ob.Date;
+                    financial.DealerId = ob.DealerId;
+                    financial.PaymentTypeId = long.Parse("0" + new PreferenceService().GetByKey("DefaultPaymentType", "Financial", type, 0)?.Value);
+                    financial.SafeId = long.Parse("0" + new PreferenceService().GetByKey("DefaultSafe", "Financial", type, 0)?.Value);
+                    financial.Rate = ob.Rate;
+                    financial.Amount = amount - AmountPaid;
+                    financial.AmountByDefaultCurrency = (amount - AmountPaid) * ob.Rate;
+                    financial.Notes = ob.Notes;
+
+                    if (financial.Id > 0)
+                        financial.FinancialInvoices.Remove(financial.FinancialInvoices.FirstOrDefault(e => e.InvoiceId == ob.Id));
+
+                    financial.FinancialInvoices.Add(new FinancialInvoiceModelView
+                    {
+                        InvoiceId = ob.Id,
+                        RowNumber = 1,
+                        TypeId = type,
+                        Amount = amount - AmountPaid
+                    });
+
+                    new FinancialService().Create(financial);
+                }
+            }
+            return ob;
+        }
+
         public void UpdateCredit(List<long> ids)
         {
             foreach (var id in ids)
             {
-                var inv = repo.invoiceRepo.Get(e => e.Id == id);
+                var inv = repo.invoiceRepo.Get(e => e.Id == id , "InvoiceProducts");
                 if (inv == null || inv.Id == 0)
                     continue;
 
-                var amount = repo.financialInvoiceRepo.GetList(e => e.InvoiceId == id, null, "Invoice").Sum(e => e.Amount);
+                var amount = repo.financialInvoiceRepo.GetList(e => e.InvoiceId == id && e.Financial .Status != Utility.Status.Deleted, null, "Invoice")?.Sum(e => e.Amount) ?? 0;
                 inv.Credit = inv.Net - amount;
-                repo.invoiceRepo.AddOrUpdate(inv);
+                inv.Paid = inv.Net - inv.Credit;                
+                var Nwob = repo.invoiceRepo.AddOrUpdate(inv);
             }
         }
 
@@ -137,7 +209,9 @@ namespace Service.BAL
             if (ob != null)
             {
                 repo.invoiceRepo.Delete(id);
-                new TransactionService().Delete(ob.TransactionId??0);
+                new TransactionService().Delete(ob.TransactionId ?? 0);
+                var fi = new FinancialService().GetByParent(id);
+                new FinancialService().Delete(fi.Id);
                 return true;
             }
             return false;
@@ -185,11 +259,11 @@ namespace Service.BAL
             return repo.invoiceRepo.GetList(e => e.TypeId == TypeId && ("" + textSearch == "" || e.Dealer.Name.Contains("" + textSearch)), e => e.OrderByDescending(e => e.Id), "Dealer,Transaction", Utility.Status.New).Select(e => new InvoiceModelView(e)).ToPagedList(page, pageSize);
         }
 
-        public IPagedList<InvoiceModelView> GetCreditAllByDealerId(string textSearch , long dealerId , long currencyId, string ids, long parentId = 0, long TypeId = 0, int page = 1, int pageSize = 20)
+        public IPagedList<InvoiceModelView> GetCreditAllByDealerId(string textSearch, long dealerId, long currencyId, string ids, long parentId = 0, long TypeId = 0, int page = 1, int pageSize = 20)
         {
             if (ids == null)
                 ids = "";
-           var idsList = ids.Split(",").Where(e => e != "").ToList();
+            var idsList = ids.Split(",").Where(e => e != "").ToList();
             if (idsList == null)
                 idsList = new List<string>();
             return repo.invoiceRepo.GetList(e => !ids.Contains(e.Id.ToString()) && e.TypeId == TypeId && e.DealerId == dealerId && e.CurrencyId == currencyId && e.Credit > 0 && ("" + textSearch == "" || e.Code.Contains("" + textSearch) || e.Dealer.Name.Contains("" + textSearch)), e => e.OrderByDescending(e => e.Id), "Dealer", Utility.Status.New).Select(e => new InvoiceModelView(e)).ToPagedList(page, pageSize);
@@ -227,6 +301,12 @@ namespace Service.BAL
             {
                 repo.invoiceRepo.Delete(ids);
                 new TransactionService().Delete(oblist.Select(e => e.TransactionId ?? 0).ToList());
+                foreach (var id in ids)
+                {
+                    var fi = new FinancialService().GetByParent(id);
+                    new FinancialService().Delete(fi.Id);
+                }
+              
                 return true;
             }
             return false;
@@ -242,7 +322,7 @@ namespace Service.BAL
             return repo.invoiceRepo.GetMaXCode(type);
         }
 
-        public List<InvoiceModelView> GetInvoicesNotReturn(string txtSearch = "" ,long TypeId = 0 , long InvId = 0 ,  int page = 1, int pageSize = 20)
+        public List<InvoiceModelView> GetInvoicesNotReturn(string txtSearch = "", long TypeId = 0, long InvId = 0, int page = 1, int pageSize = 20)
         {
             var obList = repo.invoiceRepo.GetInvoicesNotReturn(txtSearch, TypeId, InvId, page, pageSize);
             if (obList == null)

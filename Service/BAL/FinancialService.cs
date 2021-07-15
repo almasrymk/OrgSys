@@ -29,9 +29,46 @@ namespace Service.BAL
             var Nwob = repo.financialRepo.AddOrUpdate(ob.Model);
             if (ob.FinancialInvoices == null)
                 ob.FinancialInvoices = new List<FinancialInvoiceModelView>();
+
+            if (ob.Id > 0)
+            {          
+                var ids = ob.FinancialInvoices.Select(e => e.Id).ToList();
+                if (ids == null) ids = new List<long>();
+
+                // Delete row from database
+                var deleted = repo.financialInvoiceRepo.GetList(e => e.FinancialId == ob.Id && !ids.Contains(e.Id), e => e.OrderBy(e => e.Id), "Invoice", Utility.Status.All).ToList();
+                if (deleted != null && deleted.Count > 0)
+                    repo.financialInvoiceRepo.ShiftDelete(deleted.Select(e => e.Id).ToList());
+
+                foreach (var productUnit in ob.FinancialInvoices)
+                {
+                    var model = productUnit.Model;
+                    model.FinancialId = Nwob.Id;
+                    repo.financialInvoiceRepo.AddOrUpdate(model);
+                }
+                Nwob.FinancialInvoices = repo.financialInvoiceRepo.GetList(e => e.FinancialId == Nwob.Id, e => e.OrderBy(e => e.Id), "Invoice", Utility.Status.All).ToList();            
+            }
+
+            if (Nwob.FinancialInvoices != null && Nwob.FinancialInvoices.Count > 0)
+                new InvoiceService().UpdateCredit(Nwob.FinancialInvoices.Select(e => e.InvoiceId).ToList());
+            return new FinancialModelView(Nwob);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ob"></param>
+        /// <returns></returns>
+        public FinancialModelView Create(FinancialModelView ob)
+        {
+            List<long> InvIds = new List<long>();
+            // Save
+            var Nwob = repo.financialRepo.AddOrUpdate(ob.Model);
+            if (ob.FinancialInvoices == null)
+                ob.FinancialInvoices = new List<FinancialInvoiceModelView>();
+
             if (ob.Id > 0)
             {
-          
                 var ids = ob.FinancialInvoices.Select(e => e.Id).ToList();
                 if (ids == null) ids = new List<long>();
 
@@ -47,14 +84,10 @@ namespace Service.BAL
                     repo.financialInvoiceRepo.AddOrUpdate(model);
                 }
                 Nwob.FinancialInvoices = repo.financialInvoiceRepo.GetList(e => e.FinancialId == Nwob.Id, e => e.OrderBy(e => e.Id), "Invoice", Utility.Status.All).ToList();
-
-                InvIds.AddRange(deleted.Select(e => e.InvoiceId).ToList());                
             }
-            InvIds.AddRange(ob.FinancialInvoices.Select(e => e.InvoiceId).ToList());
-            new InvoiceService().UpdateCredit(InvIds.Distinct().ToList());
+           
             return new FinancialModelView(Nwob);
-        }            
-      
+        }
 
         /// <summary>
         /// 
@@ -128,6 +161,11 @@ namespace Service.BAL
         public FinancialModelView Get(long Id)
         {
             return new FinancialModelView(repo.financialRepo.Get(e => e.Id == Id  , "Dealer,Outlay,Safe,FinancialInvoices,FinancialInvoices.Invoice"));            
+        }
+
+        public FinancialModelView GetByParent(long Id)
+        {
+            return new FinancialModelView(repo.financialRepo.Get(e => e.ParentId == Id && e.Status != Utility.Status.Deleted, "Dealer,Outlay,Safe,FinancialInvoices,FinancialInvoices.Invoice"));
         }
 
         /// <summary>
