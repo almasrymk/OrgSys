@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Entity.ModelView;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using OrgSys.Controllers;
@@ -24,6 +27,18 @@ namespace OrgSys.Areas.Setting.Controllers
         public JsonResult CheckUDoublicat(string userName , int id)
         {
             return Json(new UserService().CheckDoublicat(userName , id));
+        }
+
+        public override ActionResult Save(UserModelView model)
+        {
+            var res = base.Save(model);
+            if(User.IsCurrentUserAndRole(model.Id , model.RoleId))
+            {
+                var us = new UserService().Get(model.Id);
+                if (us != null)
+                    us.SignIn(HttpContext);
+            }
+            return res;
         }
 
     }

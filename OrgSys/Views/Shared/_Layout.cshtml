@@ -1,7 +1,7 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @using Microsoft.AspNetCore.Mvc.Localization
 @using System.Globalization
-@using Utility 
+@using Utility
 @{
     var culture = CultureInfo.CurrentUICulture.Name;
     var dirCss = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "rtl" : "ltr";
@@ -64,8 +64,7 @@
             font-size: 15px;
             font-weight: 100;
             padding: 4px;
-        }       
-
+        }
     </style>
     @if (dirCss == "ltr")
     {
@@ -284,484 +283,547 @@
                             <span>@Utility.Resource.Title_Designer.Home</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="#setting">
-                            <i class="iconsminds-big-data"></i>
-                            <span>@Utility.Resource.Title_Designer.Data</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#Orders">
-                            <i class="simple-icon-bag"></i>
-                            <span>@Utility.Resource.Title_Designer.Orders</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#Invoices">
-                            <i class="simple-icon-basket-loaded"></i>
-                            <span>@Utility.Resource.Title_Designer.Invoices</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#Transaction">
-                            <i class="iconsminds-synchronize-2"></i> @Utility.Resource.Title_Designer.Transactions
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#Financial">
-                            <i class="iconsminds-coins"></i> @Utility.Resource.Title_Designer.Financial
-                        </a>
-                    </li>
-                </ul>
+                    @if (User.IsAllowed("Branchs.All,Stores.All,Tables.All,Roles.All,Users.All,Shifts.All,Products.All,Classifications.All,Units.All,Clients.All,Suppliers.All,Safes.All,Outlays.All,Currencies.All"))
+                    {
+                        <li>
+                            <a href="#setting">
+                                <i class="iconsminds-big-data"></i>
+                                <span>@Utility.Resource.Title_Designer.Data</span>
+                            </a>
+                        </li>
+                    }
+                    @if (User.IsAllowed("Internal.All,External.All"))
+                    {
+                        <li>
+                            <a href="#Orders">
+                                <i class="simple-icon-bag"></i>
+                                <span>@Utility.Resource.Title_Designer.Orders</span>
+                            </a>
+                        </li>
+                    }
+                    @if (User.IsAllowed("SalesInvoices.All,SalesReturns.All,PurchasesInvoices.All,PurchasesReturns.All"))
+                    {
+                        <li>
+                            <a href="#Invoices">
+                                <i class="simple-icon-basket-loaded"></i>
+                                <span>@Utility.Resource.Title_Designer.Invoices</span>
+                            </a>
+                        </li>
+                    }
+                    @if (User.IsAllowed("Addition.All,Issue.All,Transafer.All,Received.All,Inventory.All"))
+                    {
+                        <li>
+                            <a href="#Transaction">
+                                <i class="iconsminds-synchronize-2"></i> @Utility.Resource.Title_Designer.Transactions
+                            </a>
+                        </li>
+                    }
+                    @if (User.IsAllowed("Collection.All,Payment.All,Outlay.All"))
+                    {
+                        <li>
+                            <a href="#Financial">
+                                <i class="iconsminds-coins"></i> @Utility.Resource.Title_Designer.Financial
+                            </a>
+                        </li>
+                    }
+                    </ul>
             </div>
         </div>
         <div class="sub-menu">
             <div class="scroll">
-                <ul class="list-unstyled" data-link="setting">
-                    @if (User.IsAllowed("Branchs.All,Stores.All,Tables.All"))
-                    {
+                @if (User.IsAllowed("Branchs.All,Stores.All,Tables.All,Roles.All,Users.All,Shifts.All,Products.All,Classifications.All,Units.All,Clients.All,Suppliers.All,Safes.All,Outlays.All,Currencies.All"))
+                {
+                    <ul class="list-unstyled" data-link="setting">
+                        @if (User.IsAllowed("Branchs.All,Stores.All,Tables.All"))
+                        {
+                            <li>
+                                <a href="#" data-toggle="collapse" data-target="#collapseOrganization" aria-expanded="true"
+                                   aria-controls="collapseOrganization" class="rotate-arrow-icon opacity-50">
+                                    <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Organization</span>
+                                </a>
+                                <div id="collapseOrganization" class="collapse show">
+                                    <ul class="list-unstyled inner-level-menu">
+                                        @if (User.IsAllowed("Branchs.All"))
+                                        {
+                                            <li class="active">
+                                                <a href="/Setting/Branch">
+                                                    <i class="simple-icon-share"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Branchs</span>
+                                                </a>
+                                            </li>
+                                        }
+                                        @if (User.IsAllowed("Stores.All"))
+                                        {
+                                            <li>
+                                                <a href="/Setting/Store">
+                                                    <i class="iconsminds-clothing-store"></i>
+                                                    <span class="d-inline-block">@Utility.Resource.Title_Designer.Stores</span>
+                                                </a>
+                                            </li>
+                                        }
+                                        @if (User.IsAllowed("Tables.All"))
+                                        {
+                                            <li>
+                                                <a href="/Setting/Table">
+                                                    <i class="simple-icon-grid"></i>
+                                                    <span class="d-inline-block">@Utility.Resource.Title_Designer.Tables</span>
+                                                </a>
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+                            </li>
+                        }
+
+                        @if (User.IsAllowed("Roles.All,Users.All,Shifts.All"))
+                        {
+                            <li>
+                                <a href="#" data-toggle="collapse" data-target="#collapseSecurity" aria-expanded="false"
+                                   aria-controls="collapseSecurity" class="rotate-arrow-icon opacity-50 collapsed">
+                                    <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Security</span>
+                                </a>
+                                <div id="collapseSecurity" class="collapse">
+                                    <ul class="list-unstyled inner-level-menu">
+                                        @if (User.IsAllowed("Roles.All"))
+                                        {
+                                            <li>
+                                                <a href="/Setting/Role">
+                                                    <i class="simple-icon-lock-open"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Roles</span>
+                                                </a>
+                                            </li>
+                                        }
+                                        @if (User.IsAllowed("Users.All"))
+                                        {
+                                            <li>
+                                                <a href="/Setting/User">
+                                                    <i class="iconsminds-add-user"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Users</span>
+                                                </a>
+                                            </li>
+                                        }
+                                        @if (User.IsAllowed("Shifts.All"))
+                                        {
+                                            <li>
+                                                <a href="/Setting/Shift">
+                                                    <i class="iconsminds-clock-back"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Shifts</span>
+                                                </a>
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+                            </li>
+                        }
+
+                        @if (User.IsAllowed("Products.All,Classifications.All,Units.All"))
+                        {
+                            <li>
+                                <a href="#" data-toggle="collapse" data-target="#collapseProduct" aria-expanded="false"
+                                   aria-controls="collapseProduct" class="rotate-arrow-icon opacity-50 collapsed">
+                                    <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Products</span>
+                                </a>
+                                <div id="collapseProduct" class="collapse">
+                                    <ul class="list-unstyled inner-level-menu">
+                                        @if (User.IsAllowed("Products.All"))
+                                        {
+                                            <li>
+                                                <a href="/Setting/Product">
+                                                    <i class="iconsminds-shopping-basket"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Products</span>
+                                                </a>
+                                            </li>
+                                        }
+                                        @if (User.IsAllowed("Classifications.All"))
+                                        {
+                                            <li>
+                                                <a href="/Setting/Classification">
+                                                    <i class="simple-icon-layers"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Classifications</span>
+                                                </a>
+                                            </li>
+                                        }
+                                        @if (User.IsAllowed("Units.All"))
+                                        {
+                                            <li>
+                                                <a href="/Setting/Unit">
+                                                    <i class="simple-icon-pie-chart"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.UnitsMeasure</span>
+                                                </a>
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+
+                            </li>
+                        }
+
+                        @if (User.IsAllowed("Clients.All,Suppliers.All"))
+                        {
+                            <li>
+                                <a href="#" data-toggle="collapse" data-target="#collapseDealers" aria-expanded="false"
+                                   aria-controls="collapseDealers" class="rotate-arrow-icon opacity-50 collapsed">
+                                    <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Dealers</span>
+                                </a>
+                                <div id="collapseDealers" class="collapse">
+                                    <ul class="list-unstyled inner-level-menu">
+                                        @if (User.IsAllowed("Clients.All"))
+                                        {
+                                            <li>
+                                                <a href="/Setting/Dealer?TypeId=1">
+                                                    <i class="simple-icon-people"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Clients</span>
+                                                </a>
+                                            </li>
+                                        }
+                                        @if (User.IsAllowed("Suppliers.All"))
+                                        {
+                                            <li>
+                                                <a href="/Setting/Dealer?TypeId=2">
+                                                    <i class="simple-icon-people"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Suppliers</span>
+                                                </a>
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+                            </li>
+                        }
+
+                        @if (User.IsAllowed("Safes.All,Outlays.All,Currencies.All"))
+                        {
+                            <li>
+                                <a href="#" data-toggle="collapse" data-target="#collapseDataFinancials" aria-expanded="false"
+                                   aria-controls="collapseDataFinancials" class="rotate-arrow-icon opacity-50 collapsed">
+                                    <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Financial</span>
+                                </a>
+                                <div id="collapseDataFinancials" class="collapse">
+                                    <ul class="list-unstyled inner-level-menu">
+                                        @if (User.IsAllowed("Safes.All"))
+                                        {
+                                            <li>
+                                                <a href="/Setting/Safe">
+                                                    <i class="iconsminds-safe-box"></i>
+                                                    <span class="d-inline-block">@Utility.Resource.Title_Designer.Safes</span>
+                                                </a>
+                                            </li>
+                                        }
+                                        @if (User.IsAllowed("Outlays.All"))
+                                        {
+                                            <li>
+                                                <a href="/Setting/Outlay">
+                                                    <i class="iconsminds-wallet"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.OutlayTerms</span>
+                                                </a>
+                                            </li>
+                                        }
+                                        @if (User.IsAllowed("Currencies.All"))
+                                        {
+                                            <li>
+                                                <a href="/Setting/Currency">
+                                                    <i class="iconsminds-dollar-sign-2"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Currencies</span>
+                                                </a>
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                }
+                @if (User.IsAllowed("Internal.All,External.All"))
+                {
+                    <ul class="list-unstyled" data-link="Orders" id="Orders">
                         <li>
-                            <a href="#" data-toggle="collapse" data-target="#collapseOrganization" aria-expanded="true"
-                               aria-controls="collapseOrganization" class="rotate-arrow-icon opacity-50">
-                                <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Organization</span>
+                            <a href="#" data-toggle="collapse" data-target="#collapseSales" aria-expanded="true"
+                               aria-controls="collapseSales" class="rotate-arrow-icon opacity-50">
+                                <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Orders</span>
                             </a>
-                            <div id="collapseOrganization" class="collapse show">
+                            <div id="collapseSales" class="collapse show">
                                 <ul class="list-unstyled inner-level-menu">
-                                    @if (User.IsAllowed("Branchs.All"))
+                                    @if (User.IsAllowed("Internal.All"))
                                     {
-                                        <li class="active">
-                                            <a href="/Setting/Branch">
-                                                <i class="simple-icon-share"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Branchs</span>
+                                        <li>
+                                            <a href="/Orders/Order?TypeId=1">
+                                                <i class="iconsminds-right-1"></i> <span class="d-inline-block">
+                                                    @Utility.Resource.Title_Designer.Internal
+                                                </span>
                                             </a>
                                         </li>
                                     }
-                                    @if (User.IsAllowed("Stores.All"))
+                                    @if (User.IsAllowed("External.All"))
                                     {
                                         <li>
-                                            <a href="/Setting/Store">
-                                                <i class="iconsminds-clothing-store"></i>
-                                                <span class="d-inline-block">@Utility.Resource.Title_Designer.Stores</span>
+                                            <a href="/Orders/Order?TypeId=2">
+                                                <i class="iconsminds-left-1"></i> <span class="d-inline-block">
+                                                    @Utility.Resource.Title_Designer.External
+                                                </span>
                                             </a>
                                         </li>
                                     }
-                                    @if (User.IsAllowed("Tables.All"))
+                                    @*<li>
+                                <a href="Pages.Product.Images.html">
+                                    <i class="simple-icon-list"></i> <span class="d-inline-block">
+                                        @Utility.Resource.Title_Designer.ReviewClose
+                                    </span>
+                                </a>
+                            </li>*@
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="#" data-toggle="collapse" data-target="#collapseReportInvoice" aria-expanded="false"
+                               aria-controls="collapseReportInvoice" class="rotate-arrow-icon opacity-50 collapsed">
+                                <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Report</span>
+                            </a>
+                            <div id="collapseReportInvoice" class="collapse">
+                                <ul class="list-unstyled inner-level-menu">
+                                    <li>
+                                        @*<a href="Pages.Profile.Social.html">
+                                    <i class="iconsminds-line-chart-1"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.TotalSales</span>
+                                </a>*@
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                }
+                @if (User.IsAllowed("SalesInvoices.All,SalesReturns.All,PurchasesInvoices.All,PurchasesReturns.All"))
+                {
+                    <ul class="list-unstyled" data-link="Invoices" id="Invoices">
+                        <li>
+                            <a href="#" data-toggle="collapse" data-target="#collapseSales" aria-expanded="true"
+                               aria-controls="collapseSales" class="rotate-arrow-icon opacity-50">
+                                <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Sales</span>
+                            </a>
+                            <div id="collapseSales" class="collapse show">
+                                <ul class="list-unstyled inner-level-menu">
+                                    @if (User.IsAllowed("SalesInvoices.All"))
                                     {
                                         <li>
-                                            <a href="/Setting/Table">
-                                                <i class="simple-icon-grid"></i>
-                                                <span class="d-inline-block">@Utility.Resource.Title_Designer.Tables</span>
+                                            <a href="/Invoices/Invoice?TypeId=1">
+                                                <i class="simple-icon-basket-loaded"></i> <span class="d-inline-block">
+                                                    @Utility.Resource.Title_Designer.Invoices
+                                                </span>
+                                            </a>
+                                        </li>
+                                    }
+                                    @if (User.IsAllowed("SalesReturns.All"))
+                                    {
+                                        <li>
+                                            <a href="/Invoices/Invoice?TypeId=3">
+                                                <i class="simple-icon-action-undo"></i> <span class="d-inline-block">
+                                                    @Utility.Resource.Title_Designer.Returns
+                                                </span>
                                             </a>
                                         </li>
                                     }
                                 </ul>
                             </div>
                         </li>
-                    }
-
-                    @if (User.IsAllowed("Roles.All,Users.All,Shifts.All"))
-                    {
                         <li>
-                            <a href="#" data-toggle="collapse" data-target="#collapseSecurity" aria-expanded="false"
-                               aria-controls="collapseSecurity" class="rotate-arrow-icon opacity-50 collapsed">
-                                <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Security</span>
+                            <a href="#" data-toggle="collapse" data-target="#collapsePurchases" aria-expanded="false"
+                               aria-controls="collapsePurchases" class="rotate-arrow-icon opacity-50 collapsed">
+                                <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Purchases</span>
                             </a>
-                            <div id="collapseSecurity" class="collapse">
+                            <div id="collapsePurchases" class="collapse">
                                 <ul class="list-unstyled inner-level-menu">
-                                    @if (User.IsAllowed("Roles.All"))
+                                    @if (User.IsAllowed("PurchasesInvoices.All"))
                                     {
                                         <li>
-                                            <a href="/Setting/Role">
-                                                <i class="simple-icon-lock-open"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Roles</span>
+                                            <a href="/Invoices/Invoice?TypeId=2">
+                                                <i class="simple-icon-basket-loaded"></i> <span class="d-inline-block">
+                                                    @Utility.Resource.Title_Designer.Invoices
+                                                </span>
                                             </a>
                                         </li>
                                     }
-                                    @if (User.IsAllowed("Users.All"))
+                                    @if (User.IsAllowed("PurchasesReturns.All"))
                                     {
                                         <li>
-                                            <a href="/Setting/User">
-                                                <i class="iconsminds-add-user"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Users</span>
+                                            <a href="/Invoices/Invoice?TypeId=4">
+                                                <i class="simple-icon-action-undo"></i> <span class="d-inline-block">
+                                                    @Utility.Resource.Title_Designer.Returns
+                                                </span>
                                             </a>
                                         </li>
                                     }
-                                    @if (User.IsAllowed("Shifts.All"))
-                                    {
-                                        <li>
-                                            <a href="/Setting/Shift">
-                                                <i class="iconsminds-clock-back"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Shifts</span>
-                                            </a>
-                                        </li>
-                                    }
+                                    @*<li>
+                                <a href="Pages.Product.Images.html">
+                                    <i class="simple-icon-list"></i> <span class="d-inline-block">
+                                        @Utility.Resource.Title_Designer.ReviewClose
+                                    </span>
+                                </a>
+                            </li>*@
                                 </ul>
                             </div>
                         </li>
-                    }
-
-                    @if (User.IsAllowed("Products.All,Classifications.All,Units.All"))
-                    {
                         <li>
-                            <a href="#" data-toggle="collapse" data-target="#collapseProduct" aria-expanded="false"
-                               aria-controls="collapseProduct" class="rotate-arrow-icon opacity-50 collapsed">
-                                <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Products</span>
+                            <a href="#" data-toggle="collapse" data-target="#collapseReportInvoice" aria-expanded="false"
+                               aria-controls="collapseReportInvoice" class="rotate-arrow-icon opacity-50 collapsed">
+                                <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Report</span>
                             </a>
-                            <div id="collapseProduct" class="collapse">
+                            <div id="collapseReportInvoice" class="collapse">
                                 <ul class="list-unstyled inner-level-menu">
-                                    @if (User.IsAllowed("Products.All"))
-                                    {
-                                        <li>
-                                            <a href="/Setting/Product">
-                                                <i class="iconsminds-shopping-basket"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Products</span>
-                                            </a>
-                                        </li>
-                                    }
-                                    @if (User.IsAllowed("Classifications.All"))
-                                    {
-                                        <li>
-                                            <a href="/Setting/Classification">
-                                                <i class="simple-icon-layers"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Classifications</span>
-                                            </a>
-                                        </li>
-                                    }
-                                    @if (User.IsAllowed("Units.All"))
-                                    {
-                                        <li>
-                                            <a href="/Setting/Unit">
-                                                <i class="simple-icon-pie-chart"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.UnitsMeasure</span>
-                                            </a>
-                                        </li>
-                                    }
-                                </ul>
-                            </div>
-
-                        </li>
-                    }
-
-                    @if (User.IsAllowed("Clients.All,Suppliers.All"))
-                    {
-                        <li>
-                            <a href="#" data-toggle="collapse" data-target="#collapseDealers" aria-expanded="false"
-                               aria-controls="collapseDealers" class="rotate-arrow-icon opacity-50 collapsed">
-                                <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Dealers</span>
-                            </a>
-                            <div id="collapseDealers" class="collapse">
-                                <ul class="list-unstyled inner-level-menu">
-                                    @if (User.IsAllowed("Clients.All"))
-                                    {
-                                        <li>
-                                            <a href="/Setting/Dealer?TypeId=1">
-                                                <i class="simple-icon-people"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Clients</span>
-                                            </a>
-                                        </li>
-                                    }
-                                    @if (User.IsAllowed("Suppliers.All"))
-                                    {
-                                        <li>
-                                            <a href="/Setting/Dealer?TypeId=2">
-                                                <i class="simple-icon-people"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Suppliers</span>
-                                            </a>
-                                        </li>
-                                    }
-                                </ul>
-                            </div>
-                        </li>
-                    }
-
-                    @if (User.IsAllowed("Safes.All,Outlays.All,Currencies.All"))
-                    {
-                        <li>
-                            <a href="#" data-toggle="collapse" data-target="#collapseDataFinancials" aria-expanded="false"
-                               aria-controls="collapseDataFinancials" class="rotate-arrow-icon opacity-50 collapsed">
-                                <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Financial</span>
-                            </a>
-                            <div id="collapseDataFinancials" class="collapse">
-                                <ul class="list-unstyled inner-level-menu">
-                                    @if (User.IsAllowed("Safes.All"))
-                                    {
-                                        <li>
-                                            <a href="/Setting/Safe">
-                                                <i class="iconsminds-safe-box"></i>
-                                                <span class="d-inline-block">@Utility.Resource.Title_Designer.Safes</span>
-                                            </a>
-                                        </li>
-                                    }
-                                    @if (User.IsAllowed("Outlays.All"))
-                                    {
-                                        <li>
-                                            <a href="/Setting/Outlay">
-                                                <i class="iconsminds-wallet"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.OutlayTerms</span>
-                                            </a>
-                                        </li>
-                                    }
-                                    @if (User.IsAllowed("Currencies.All"))
-                                    {
-                                        <li>
-                                            <a href="/Setting/Currency">
-                                                <i class="iconsminds-dollar-sign-2"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Currencies</span>
-                                            </a>
-                                        </li>
-                                    }
-                                </ul>
-                            </div>
-                        </li>
-                    }
-                </ul>
-                <ul class="list-unstyled" data-link="Orders" id="Orders">
-                    <li>
-                        <a href="#" data-toggle="collapse" data-target="#collapseSales" aria-expanded="true"
-                           aria-controls="collapseSales" class="rotate-arrow-icon opacity-50">
-                            <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Orders</span>
-                        </a>
-                        <div id="collapseSales" class="collapse show">
-                            <ul class="list-unstyled inner-level-menu">
-                                <li>
-                                    <a href="/Orders/Order?TypeId=1">
-                                        <i class="iconsminds-right-1"></i> <span class="d-inline-block">
-                                            @Utility.Resource.Title_Designer.Internal
-                                        </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="/Orders/Order?TypeId=2">
-                                        <i class="iconsminds-left-1"></i> <span class="d-inline-block">
-                                            @Utility.Resource.Title_Designer.External
-                                        </span>
-                                    </a>
-                                </li>
-                                @*<li>
-                                        <a href="Pages.Product.Images.html">
-                                            <i class="simple-icon-list"></i> <span class="d-inline-block">
-                                                @Utility.Resource.Title_Designer.ReviewClose
-                                            </span>
-                                        </a>
-                                    </li>*@
-                            </ul>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="#" data-toggle="collapse" data-target="#collapseReportInvoice" aria-expanded="false"
-                           aria-controls="collapseReportInvoice" class="rotate-arrow-icon opacity-50 collapsed">
-                            <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Report</span>
-                        </a>
-                        <div id="collapseReportInvoice" class="collapse">
-                            <ul class="list-unstyled inner-level-menu">
-                                <li>
-                                    @*<a href="Pages.Profile.Social.html">
-                                            <i class="iconsminds-line-chart-1"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.TotalSales</span>
-                                        </a>*@
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                </ul>
-                <ul class="list-unstyled" data-link="Invoices" id="Invoices">
-                    <li>
-                        <a href="#" data-toggle="collapse" data-target="#collapseSales" aria-expanded="true"
-                           aria-controls="collapseSales" class="rotate-arrow-icon opacity-50">
-                            <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Sales</span>
-                        </a>
-                        <div id="collapseSales" class="collapse show">
-                            <ul class="list-unstyled inner-level-menu">
-                                <li>
-                                    <a href="/Invoices/Invoice?TypeId=1">
-                                        <i class="simple-icon-basket-loaded"></i> <span class="d-inline-block">
-                                            @Utility.Resource.Title_Designer.Invoices
-                                        </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="/Invoices/Invoice?TypeId=3">
-                                        <i class="simple-icon-action-undo"></i> <span class="d-inline-block">
-                                            @Utility.Resource.Title_Designer.Returns
-                                        </span>
-                                    </a>
-                                </li>
-                                @*<li>
-                                        <a href="Pages.Product.Images.html">
-                                            <i class="simple-icon-list"></i> <span class="d-inline-block">
-                                                @Utility.Resource.Title_Designer.ReviewClose
-                                            </span>
-                                        </a>
-                                    </li>*@
-                            </ul>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="#" data-toggle="collapse" data-target="#collapsePurchases" aria-expanded="false"
-                           aria-controls="collapsePurchases" class="rotate-arrow-icon opacity-50 collapsed">
-                            <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Purchases</span>
-                        </a>
-                        <div id="collapsePurchases" class="collapse">
-                            <ul class="list-unstyled inner-level-menu">
-                                <li>
-                                    <a href="/Invoices/Invoice?TypeId=2">
-                                        <i class="simple-icon-basket-loaded"></i> <span class="d-inline-block">
-                                            @Utility.Resource.Title_Designer.Invoices
-                                        </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="/Invoices/Invoice?TypeId=4">
-                                        <i class="simple-icon-action-undo"></i> <span class="d-inline-block">
-                                            @Utility.Resource.Title_Designer.Returns
-                                        </span>
-                                    </a>
-                                </li>
-                                @*<li>
-                                        <a href="Pages.Product.Images.html">
-                                            <i class="simple-icon-list"></i> <span class="d-inline-block">
-                                                @Utility.Resource.Title_Designer.ReviewClose
-                                            </span>
-                                        </a>
-                                    </li>*@
-                            </ul>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="#" data-toggle="collapse" data-target="#collapseReportInvoice" aria-expanded="false"
-                           aria-controls="collapseReportInvoice" class="rotate-arrow-icon opacity-50 collapsed">
-                            <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Report</span>
-                        </a>
-                        <div id="collapseReportInvoice" class="collapse">
-                            <ul class="list-unstyled inner-level-menu">
-                                <li>
-                                    <a href="Pages.Profile.Social.html">
-                                        <i class="iconsminds-line-chart-1"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.TotalSales</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="Pages.Profile.Portfolio.html">
-                                        <i class="iconsminds-line-chart-3"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.SalesDetails</span>
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="Pages.Profile.Portfolio.html">
-                                        <i class="iconsminds-bar-chart-4"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.TotalSalesProdects</span>
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="Pages.Profile.Portfolio.html">
-                                        <i class="iconsminds-pie-chart-3"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.ProdectSalesDetails</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                </ul>
-                <ul class="list-unstyled" data-link="Transaction" id="Transaction">
-
-                    <li>
-                        <a href="#" data-toggle="collapse" data-target="#collapseTransaction" aria-expanded="true"
-                           aria-controls="collapseTransaction" class="rotate-arrow-icon opacity-50">
-                            <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.TransactionNotices</span>
-                        </a>
-                        <div id="collapseTransaction" class="collapse show">
-                            <ul class="list-unstyled inner-level-menu">
-                                <li>
-                                    <a href="/Transactions/Transaction?TypeId=1">
-                                        <i class="iconsminds-down-1"></i> <span class="d-inline-block">
-                                            @Utility.Resource.Title_Designer.Addition
-                                        </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="/Transactions/Transaction?TypeId=2">
-                                        <i class="iconsminds-up-1"></i> <span class="d-inline-block">
-                                            @Utility.Resource.Title_Designer.Issue
-                                        </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="/Transactions/Transaction?TypeId=3">
-                                        <i class="iconsminds-shuffle-1"></i> <span class="d-inline-block">
-                                            @Utility.Resource.Title_Designer.Transfer
-                                        </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="/Transactions/Transaction?TypeId=4">
-                                        <i class="iconsminds-file-edit"></i> <span class="d-inline-block">
-                                            @Utility.Resource.Title_Designer.Received
-                                        </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="/Transactions/Inventory">
-                                        <i class="iconsminds-check"></i> <span class="d-inline-block">
-                                            @Utility.Resource.Title_Designer.Inventory
-                                        </span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="#" data-toggle="collapse" data-target="#collapseReportTransaction" aria-expanded="false"
-                           aria-controls="collapseReportTransaction" class="rotate-arrow-icon opacity-50 collapsed">
-                            <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Report</span>
-                        </a>
-                        <div id="collapseReportTransaction" class="collapse">
-                            @*<ul class="list-unstyled inner-level-menu">
                                     <li>
                                         <a href="Pages.Profile.Social.html">
                                             <i class="iconsminds-line-chart-1"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.TotalSales</span>
                                         </a>
                                     </li>
-                                </ul>*@
-                        </div>
-                    </li>
-                </ul>
-
-                <ul class="list-unstyled" data-link="Financial" id="Financial">
-
-                    <li>
-                        <a href="#" data-toggle="collapse" data-target="#collapseFinancial" aria-expanded="true"
-                           aria-controls="collapseFinancial" class="rotate-arrow-icon opacity-50">
-                            <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">Safe Notices</span>
-                        </a>
-                        <div id="collapseFinancial" class="collapse show">
-                            <ul class="list-unstyled inner-level-menu">
-                                <li>
-                                    <a href="/Financials/Financial?TypeId=1">
-                                        <i class="iconsminds-financial"></i> <span class="d-inline-block">
-                                            @Utility.Resource.Title_Designer.Collection
-                                        </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="/Financials/Financial?TypeId=2">
-                                        <i class="iconsminds-handshake"></i> <span class="d-inline-block">
-                                            @Utility.Resource.Title_Designer.Payment
-                                        </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="/Financials/Financial?TypeId=3">
-                                        <i class="iconsminds-wallet"></i> <span class="d-inline-block">
-                                            @Utility.Resource.Title_Designer.Outlay
-                                        </span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="#" data-toggle="collapse" data-target="#collapseReportTransaction" aria-expanded="false"
-                           aria-controls="collapseReportTransaction" class="rotate-arrow-icon opacity-50 collapsed">
-                            <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Report</span>
-                        </a>
-                        <div id="collapseReportTransaction" class="collapse">
-                            @*<ul class="list-unstyled inner-level-menu">
                                     <li>
-                                        <a href="Pages.Profile.Social.html">
-                                            <i class="iconsminds-line-chart-1"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.TotalSales</span>
+                                        <a href="Pages.Profile.Portfolio.html">
+                                            <i class="iconsminds-line-chart-3"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.SalesDetails</span>
                                         </a>
                                     </li>
-                                </ul>*@
-                        </div>
-                    </li>
-                </ul>
 
+                                    <li>
+                                        <a href="Pages.Profile.Portfolio.html">
+                                            <i class="iconsminds-bar-chart-4"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.TotalSalesProdects</span>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="Pages.Profile.Portfolio.html">
+                                            <i class="iconsminds-pie-chart-3"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.ProdectSalesDetails</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                }
+                @if (User.IsAllowed("Addition.All,Issue.All,Transafer.All,Received.All,Inventory.All"))
+                {
+                    <ul class="list-unstyled" data-link="Transaction" id="Transaction">
+
+                        <li>
+                            <a href="#" data-toggle="collapse" data-target="#collapseTransaction" aria-expanded="true"
+                               aria-controls="collapseTransaction" class="rotate-arrow-icon opacity-50">
+                                <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.TransactionNotices</span>
+                            </a>
+                            <div id="collapseTransaction" class="collapse show">
+                                <ul class="list-unstyled inner-level-menu">
+                                    @if (User.IsAllowed("Addition.All"))
+                                    {
+                                        <li>
+                                            <a href="/Transactions/Transaction?TypeId=1">
+                                                <i class="iconsminds-down-1"></i> <span class="d-inline-block">
+                                                    @Utility.Resource.Title_Designer.Addition
+                                                </span>
+                                            </a>
+                                        </li>
+                                    }
+                                    @if (User.IsAllowed("Issue.All"))
+                                    {
+                                        <li>
+                                            <a href="/Transactions/Transaction?TypeId=2">
+                                                <i class="iconsminds-up-1"></i> <span class="d-inline-block">
+                                                    @Utility.Resource.Title_Designer.Issue
+                                                </span>
+                                            </a>
+                                        </li>
+                                    }
+                                    @if (User.IsAllowed("Transafer.All"))
+                                    {
+                                        <li>
+                                            <a href="/Transactions/Transaction?TypeId=3">
+                                                <i class="iconsminds-shuffle-1"></i> <span class="d-inline-block">
+                                                    @Utility.Resource.Title_Designer.Transfer
+                                                </span>
+                                            </a>
+                                        </li>
+                                    }
+                                    @if (User.IsAllowed("Received.All"))
+                                    {
+                                        <li>
+                                            <a href="/Transactions/Transaction?TypeId=4">
+                                                <i class="iconsminds-file-edit"></i> <span class="d-inline-block">
+                                                    @Utility.Resource.Title_Designer.Received
+                                                </span>
+                                            </a>
+                                        </li>
+                                    }
+                                    @if (User.IsAllowed("Inventory.All"))
+                                    {
+                                        <li>
+                                            <a href="/Transactions/Inventory">
+                                                <i class="iconsminds-check"></i> <span class="d-inline-block">
+                                                    @Utility.Resource.Title_Designer.Inventory
+                                                </span>
+                                            </a>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="#" data-toggle="collapse" data-target="#collapseReportTransaction" aria-expanded="false"
+                               aria-controls="collapseReportTransaction" class="rotate-arrow-icon opacity-50 collapsed">
+                                <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Report</span>
+                            </a>
+                            <div id="collapseReportTransaction" class="collapse">
+                                @*<ul class="list-unstyled inner-level-menu">
+                            <li>
+                                <a href="Pages.Profile.Social.html">
+                                    <i class="iconsminds-line-chart-1"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.TotalSales</span>
+                                </a>
+                            </li>
+                        </ul>*@
+                            </div>
+                        </li>
+                    </ul>
+                }
+                @if (User.IsAllowed("Collection.All,Payment.All,Outlay.All"))
+                {
+                    <ul class="list-unstyled" data-link="Financial" id="Financial">
+
+                        <li>
+                            <a href="#" data-toggle="collapse" data-target="#collapseFinancial" aria-expanded="true"
+                               aria-controls="collapseFinancial" class="rotate-arrow-icon opacity-50">
+                                <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">Safe Notices</span>
+                            </a>
+                            <div id="collapseFinancial" class="collapse show">
+                                <ul class="list-unstyled inner-level-menu">
+                                    @if (User.IsAllowed("Collection.All"))
+                                    {
+                                        <li>
+                                            <a href="/Financials/Financial?TypeId=1">
+                                                <i class="iconsminds-financial"></i> <span class="d-inline-block">
+                                                    @Utility.Resource.Title_Designer.Collection
+                                                </span>
+                                            </a>
+                                        </li>
+                                    }
+                                    @if (User.IsAllowed("Payment.All"))
+                                    {
+                                        <li>
+                                            <a href="/Financials/Financial?TypeId=2">
+                                                <i class="iconsminds-handshake"></i> <span class="d-inline-block">
+                                                    @Utility.Resource.Title_Designer.Payment
+                                                </span>
+                                            </a>
+                                        </li>
+                                    }
+                                    @if (User.IsAllowed("Outlay.All"))
+                                    {
+                                        <li>
+                                            <a href="/Financials/Financial?TypeId=3">
+                                                <i class="iconsminds-wallet"></i> <span class="d-inline-block">
+                                                    @Utility.Resource.Title_Designer.Outlay
+                                                </span>
+                                            </a>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="#" data-toggle="collapse" data-target="#collapseReportTransaction" aria-expanded="false"
+                               aria-controls="collapseReportTransaction" class="rotate-arrow-icon opacity-50 collapsed">
+                                <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Report</span>
+                            </a>
+                            <div id="collapseReportTransaction" class="collapse">
+                                @*<ul class="list-unstyled inner-level-menu">
+                            <li>
+                                <a href="Pages.Profile.Social.html">
+                                    <i class="iconsminds-line-chart-1"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.TotalSales</span>
+                                </a>
+                            </li>
+                        </ul>*@
+                            </div>
+                        </li>
+                    </ul>
+                }
             </div>
         </div>
     </div>
