@@ -135,6 +135,9 @@
   <data name="Amount" xml:space="preserve">
     <value>Amount</value>
   </data>
+  <data name="Arabic" xml:space="preserve">
+    <value>Arabic</value>
+  </data>
   <data name="AutoCreateInvoice" xml:space="preserve">
     <value>Auto Create Invoice</value>
   </data>
@@ -279,6 +282,9 @@
   <data name="DONE" xml:space="preserve">
     <value>DONE</value>
   </data>
+  <data name="DonttHaveAccountYet" xml:space="preserve">
+    <value>Don't have an account yet?</value>
+  </data>
   <data name="Edit" xml:space="preserve">
     <value>Edit</value>
   </data>
@@ -290,6 +296,9 @@
   </data>
   <data name="End" xml:space="preserve">
     <value>End</value>
+  </data>
+  <data name="English" xml:space="preserve">
+    <value>English</value>
   </data>
   <data name="External" xml:space="preserve">
     <value>External</value>
@@ -344,6 +353,9 @@
   </data>
   <data name="Library" xml:space="preserve">
     <value>Library</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Login</value>
   </data>
   <data name="Logs" xml:space="preserve">
     <value>Logs</value>
@@ -476,6 +488,12 @@
   </data>
   <data name="Refunds" xml:space="preserve">
     <value>Refunds</value>
+  </data>
+  <data name="RegisterNewAccount" xml:space="preserve">
+    <value>Register New Account</value>
+  </data>
+  <data name="RememberMe" xml:space="preserve">
+    <value>Remember Me</value>
   </data>
   <data name="Repeated" xml:space="preserve">
     <value>Repeated</value>
@@ -644,6 +662,9 @@
   </data>
   <data name="UserName" xml:space="preserve">
     <value>UserName / Email</value>
+  </data>
+  <data name="UsernameOrEmail" xml:space="preserve">
+    <value>Username Or Email</value>
   </data>
   <data name="Users" xml:space="preserve">
     <value>Users</value>

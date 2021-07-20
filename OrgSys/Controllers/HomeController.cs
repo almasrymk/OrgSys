@@ -62,12 +62,10 @@ namespace OrgSys.Controllers
         {
             return View();
         }
-
         public IActionResult Maintenance()
         {
             return View();
         }
-
         public IActionResult Register()
         {
             return View();
@@ -77,7 +75,6 @@ namespace OrgSys.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-
         [AllowAnonymous]
         [HttpGet]
         public JsonResult SetLanguage(string culture)
@@ -90,7 +87,6 @@ namespace OrgSys.Controllers
 
             return Json(culture);
         }
-
         [AllowAnonymous]
         [HttpGet]
         public IActionResult LogIn()

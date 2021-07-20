@@ -135,6 +135,9 @@
   <data name="Amount" xml:space="preserve">
     <value>المبلغ</value>
   </data>
+  <data name="Arabic" xml:space="preserve">
+    <value>العربية</value>
+  </data>
   <data name="AutoCreateInvoice" xml:space="preserve">
     <value>إنشاء الفاتورة التلقائي</value>
   </data>
@@ -279,6 +282,9 @@
   <data name="DONE" xml:space="preserve">
     <value>تم</value>
   </data>
+  <data name="DonttHaveAccountYet" xml:space="preserve">
+    <value>لا تملك حساب بعد؟</value>
+  </data>
   <data name="Edit" xml:space="preserve">
     <value>تعديل</value>
   </data>
@@ -290,6 +296,9 @@
   </data>
   <data name="End" xml:space="preserve">
     <value>ينتهي فى</value>
+  </data>
+  <data name="English" xml:space="preserve">
+    <value>الانجليزية</value>
   </data>
   <data name="External" xml:space="preserve">
     <value>خارجي</value>
@@ -344,6 +353,9 @@
   </data>
   <data name="Library" xml:space="preserve">
     <value>المكتبة</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>تسجيل الدخول</value>
   </data>
   <data name="Logs" xml:space="preserve">
     <value>السجلات</value>
@@ -476,6 +488,12 @@
   </data>
   <data name="Refunds" xml:space="preserve">
     <value>المبالغ المستردة</value>
+  </data>
+  <data name="RegisterNewAccount" xml:space="preserve">
+    <value>تسجيل حساب جديد</value>
+  </data>
+  <data name="RememberMe" xml:space="preserve">
+    <value>تذكرني</value>
   </data>
   <data name="Repeated" xml:space="preserve">
     <value>التكرار</value>
@@ -644,6 +662,9 @@
   </data>
   <data name="UserName" xml:space="preserve">
     <value>اسم المستخدم / البريد الالكتروني</value>
+  </data>
+  <data name="UsernameOrEmail" xml:space="preserve">
+    <value>أسم المستخدم او البريد الالكتروني</value>
   </data>
   <data name="Users" xml:space="preserve">
     <value>المستخدمين</value>
