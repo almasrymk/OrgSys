@@ -115,6 +115,15 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Arabic.
+        /// </summary>
+        public static string Arabic {
+            get {
+                return ResourceManager.GetString("Arabic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Auto Create Invoice.
         /// </summary>
         public static string AutoCreateInvoice {
@@ -547,6 +556,15 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Don&apos;t have an account yet?.
+        /// </summary>
+        public static string DonttHaveAccountYet {
+            get {
+                return ResourceManager.GetString("DonttHaveAccountYet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit.
         /// </summary>
         public static string Edit {
@@ -579,6 +597,15 @@ namespace Utility.Resource {
         public static string End {
             get {
                 return ResourceManager.GetString("End", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to English.
+        /// </summary>
+        public static string English {
+            get {
+                return ResourceManager.GetString("English", resourceCulture);
             }
         }
         
@@ -741,6 +768,15 @@ namespace Utility.Resource {
         public static string Library {
             get {
                 return ResourceManager.GetString("Library", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Login.
+        /// </summary>
+        public static string Login {
+            get {
+                return ResourceManager.GetString("Login", resourceCulture);
             }
         }
         
@@ -1137,6 +1173,24 @@ namespace Utility.Resource {
         public static string Refunds {
             get {
                 return ResourceManager.GetString("Refunds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Register New Account.
+        /// </summary>
+        public static string RegisterNewAccount {
+            get {
+                return ResourceManager.GetString("RegisterNewAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remember Me.
+        /// </summary>
+        public static string RememberMe {
+            get {
+                return ResourceManager.GetString("RememberMe", resourceCulture);
             }
         }
         
@@ -1641,6 +1695,15 @@ namespace Utility.Resource {
         public static string UserName {
             get {
                 return ResourceManager.GetString("UserName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Username Or Email.
+        /// </summary>
+        public static string UsernameOrEmail {
+            get {
+                return ResourceManager.GetString("UsernameOrEmail", resourceCulture);
             }
         }
         

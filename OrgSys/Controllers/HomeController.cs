@@ -68,36 +68,36 @@ namespace OrgSys.Controllers
             return View();
         }
 
-        //public async Task<IActionResult> Login(string email, string password)
-        //{
-        //    var us = new UserService().Get(1);           
-        //    if (us != null)
-        //    {
+        public async Task<IActionResult> Login(string email, string password)
+        {
+            var us = new UserService().Get(1);
+            if (us != null)
+            {
 
-        //        var claims = new List<Claim>()
-        //            {
-        //              new Claim("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name", us.Name ), 
-        //              new Claim("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier", us.UserName), 
-        //              new Claim("http://schemas.microsoft.com/accesscontrolservice/2010/07/claims/identityprovider", "Organizer"),
-        //              new Claim(ClaimTypes.Role,  us.RoleName) ,
-        //              new Claim(ClaimTypes.Webpage,  string.Join(",",  us.Permissions.Select(r=>r.Key).ToList())),
-        //              new Claim("Id", us.Id.ToString())
-        //           };
+                var claims = new List<Claim>()
+                    {
+                      new Claim("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name", us.Name ),
+                      new Claim("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier", us.UserName),
+                      new Claim("http://schemas.microsoft.com/accesscontrolservice/2010/07/claims/identityprovider", "Organizer"),
+                      new Claim(ClaimTypes.Role,  us.RoleName) ,
+                      new Claim(ClaimTypes.Webpage,  string.Join(",",  us.Permissions.Select(r=>r.Key).ToList())),
+                      new Claim("Id", us.Id.ToString())
+                   };
 
-        //        var claimsIdentity = new ClaimsIdentity(
-        //            claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                var claimsIdentity = new ClaimsIdentity(
+                    claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
-        //        var authProperties = new AuthenticationProperties();
+                var authProperties = new AuthenticationProperties();
 
-        //        await HttpContext.SignInAsync(
-        //            CookieAuthenticationDefaults.AuthenticationScheme,
-        //            new ClaimsPrincipal(claimsIdentity),
-        //            authProperties);
+                await HttpContext.SignInAsync(
+                    CookieAuthenticationDefaults.AuthenticationScheme,
+                    new ClaimsPrincipal(claimsIdentity),
+                    authProperties);
 
-        //        return Ok("Ok");
-        //    }
-        //    return BadRequest("");
-        //}
+                return Ok("Ok");
+            }
+            return BadRequest("");
+        }
 
         public IActionResult Index()
         {
@@ -115,12 +115,10 @@ namespace OrgSys.Controllers
         {
             return View();
         }
-
         public IActionResult Maintenance()
         {
             return View();
         }
-
         public IActionResult Register()
         {
             return View();
@@ -130,7 +128,6 @@ namespace OrgSys.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-
         [AllowAnonymous]
         [HttpGet]
         public JsonResult SetLanguage(string culture)
@@ -143,7 +140,6 @@ namespace OrgSys.Controllers
 
             return Json(culture);
         }
-
         [AllowAnonymous]
         [HttpGet]
         public IActionResult LogIn()
