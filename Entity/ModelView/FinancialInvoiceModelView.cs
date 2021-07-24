@@ -1,10 +1,5 @@
-﻿using Utility;
-using Entity.Model;
-using Utility.Resource;
-using System.ComponentModel.DataAnnotations;
+﻿using Entity.Model;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Entity.ModelView
 {
@@ -19,19 +14,66 @@ namespace Entity.ModelView
         {
             if (ob == null)
                 ob = new FinancialInvoice();
-            this.Id = ob.Id;
+
             this.FinancialId = ob.FinancialId;
+
             this.RowNumber = ob.RowNumber;
+
             this.InvoiceId = ob.InvoiceId;
-            this.InvoiceCode = ob.Invoice?.Code;
-            this.InvoiceDate = ob.Invoice?.Date;
+
+            this.Invoice = ob.Invoice;
+
             this.Net = ob.Invoice?.Net;
-            this.Hide = ob.Hide;
-            this.Amount = ob.Amount;           
-            this.Status = ob.Status;
+
+            this.Amount = ob.Amount;
+
+            this.Id = ob.Id;
+
+            this.CodeNumber = ob.CodeNumber;
+
+            this.Code = ob.Code;
+
+            this.MaskText = ob.MaskText;
+
             this.ParentId = ob.ParentId;
+
             this.TypeId = ob.TypeId;
+
+            this.Hide = ob.Hide;
+
             this.ImgPath = ob.ImgPath;
+
+            this.Status = ob.Status;
+        }
+
+        public FinancialInvoiceModelView(Invoice ob)
+        {
+            if (ob == null)
+                ob = new Invoice();
+
+            this.RowNumber = 1;
+
+            this.InvoiceId = ob.Id;          
+
+            this.Net = ob.Credit;
+
+            this.Amount = ob.Credit;
+
+            this.CodeNumber = 1;
+
+            this.Code = "1";
+
+            this.MaskText = ob.MaskText;
+
+            this.ParentId = ob.ParentId;
+
+            this.TypeId = ob.TypeId == 1 || ob.TypeId == 4 ? 1 : 2;
+
+            this.Hide = ob.Hide;
+
+            this.ImgPath = ob.ImgPath;
+
+            this.Status = ob.Status;
         }
 
         public FinancialInvoice Model
@@ -40,16 +82,18 @@ namespace Entity.ModelView
             {
                 return new FinancialInvoice
                 {
-                    Id = this.Id,
                     FinancialId = this.FinancialId,
                     InvoiceId = this.InvoiceId,
-                    RowNumber = this.RowNumber,                    
+                    RowNumber = this.RowNumber,
                     Amount = this.Amount,
-                    Hide = this.Hide,
-                    Status = this.Status,
+                    Id = this.Id,
+                    CodeNumber = this.CodeNumber,
+                    Code = this.Code,
                     MaskText = this.MaskText,
                     ParentId = this.ParentId,
                     TypeId = this.TypeId,
+                    Hide = this.Hide,
+                    Status = this.Status,
                     ImgPath = this.ImgPath
                 };
             }
@@ -58,11 +102,13 @@ namespace Entity.ModelView
         public long RowNumber { get; set; }
 
         public long FinancialId { get; set; }
+
         public long InvoiceId { get; set; }
 
-        public string InvoiceCode { get; set; }
-        public DateTime? InvoiceDate { get; set; }
+        public Invoice Invoice { get; set; }
+
         public decimal? Net { get; set; }
+
         public decimal Amount { get; set; }
     }
 }

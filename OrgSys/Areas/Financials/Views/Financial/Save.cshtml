@@ -222,12 +222,12 @@
                                                                     <i class="simple-icon-magnifier"></i>
                                                                 </button>
                                                             </div>
-                                                            <input type="text" class="form-control" name="query" id="query" autocomplete="off" style="border-top:none;border-bottom:none;border-right:none;" value="@FinancialInvoice.InvoiceCode" readonly="readonly">
+                                                            <input type="text" class="form-control" name="query" id="query" autocomplete="off" style="border-top:none;border-bottom:none;border-right:none;" value="@FinancialInvoice.Invoice.Code" readonly="readonly">
                                                             <input type="hidden" id="InvoiceId" name="InvoiceId" class="InvoiceId" value="@FinancialInvoice.InvoiceId" />
                                                         </div>
                                                     </td>
                                                     <td style="padding:0px;">
-                                                        <input type="text" id="Date" name="Date" class="form-control Date" value="@FinancialInvoice.InvoiceDate.Value.ToString("yyyy-MM-dd")" readonly style="border-top:none;border-bottom:none;background-color:transparent;" />
+                                                        <input type="text" id="Date" name="Date" class="form-control Date" value="@FinancialInvoice.Invoice.Date.ToString("yyyy-MM-dd")" readonly style="border-top:none;border-bottom:none;background-color:transparent;" />
                                                     </td>
                                                     <td style="padding:0px;">
                                                         <input type="text" id="Net" name="Net" class="form-control Net" value="@FinancialInvoice.Net" readonly style="border-top:none;border-bottom:none;background-color:transparent;" placeholder="0.0" />

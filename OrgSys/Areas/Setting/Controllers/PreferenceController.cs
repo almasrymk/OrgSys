@@ -1,12 +1,11 @@
 ﻿using Entity.ModelView;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Service.BAL;
+using Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace OrgSys.Areas.Setting.Controllers
 {
@@ -18,7 +17,7 @@ namespace OrgSys.Areas.Setting.Controllers
         {
             service = new PreferenceService();
         }
-        [HttpGet]
+
         public ActionResult Show(string Resource = "", int type = 0)
         {
             ViewBag.Resource = Resource;

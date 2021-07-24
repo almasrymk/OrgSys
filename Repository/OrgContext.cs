@@ -1,9 +1,6 @@
 ﻿using Entity.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Utility;
 
 namespace Repository
@@ -241,24 +238,23 @@ namespace Repository
                 );
 
             modelBuilder.Entity<Role>().HasData(new Role { Id = 1, Name = "Owner", Hide = true });
-            //modelBuilder.Entity<Role>().HasData(new Role { Id = 2, Name = "Admin", Hide = false });
+            modelBuilder.Entity<Role>().HasData(new Role { Id = 2, Name = "Admin", Hide = false });
 
             modelBuilder.Entity<User>().HasData(new User { Id = 1, Name = "Owner", UserName = "Owner", Password = Security.Encrypt("OwnerAbc@123"), RoleId = 1, Hide = true });
+            modelBuilder.Entity<User>().HasData(new User { Id = 2, Name = "Admin", UserName = "Admin", Password = Security.Encrypt("AdminAbc@123"), RoleId = 2, Hide = false });
 
-            //modelBuilder.Entity<RolePermission>().HasData(
-            //   new RolePermission { Id = 1, RoleId = 2, PermissionId = 102 },
-            //   new RolePermission { Id = 2, RoleId = 2, PermissionId = 10201 },
-            //   new RolePermission { Id = 3, RoleId = 2, PermissionId = 10202 },
-            //   new RolePermission { Id = 4, RoleId = 2, PermissionId = 10203 },
-            //   new RolePermission { Id = 5, RoleId = 2, PermissionId = 10204 },
-            //   new RolePermission { Id = 6, RoleId = 2, PermissionId = 103 },
-            //   new RolePermission { Id = 7, RoleId = 2, PermissionId = 10301 },
-            //   new RolePermission { Id = 8, RoleId = 2, PermissionId = 10302 },
-            //   new RolePermission { Id = 9, RoleId = 2, PermissionId = 10303 },
-            //   new RolePermission { Id = 10, RoleId = 2, PermissionId = 10304 }
-
-
-            //   );
+            modelBuilder.Entity<RolePermission>().HasData(
+               new RolePermission { Id = 1, RoleId = 2, PermissionId = 102 },
+               new RolePermission { Id = 2, RoleId = 2, PermissionId = 10201 },
+               new RolePermission { Id = 3, RoleId = 2, PermissionId = 1020101 },
+               new RolePermission { Id = 4, RoleId = 2, PermissionId = 1020102 },
+               new RolePermission { Id = 5, RoleId = 2, PermissionId = 1020103 },
+               new RolePermission { Id = 6, RoleId = 2, PermissionId = 1020104 },
+               new RolePermission { Id = 7, RoleId = 2, PermissionId = 10202 },
+               new RolePermission { Id = 8, RoleId = 2, PermissionId = 1020201 },
+               new RolePermission { Id = 9, RoleId = 2, PermissionId = 1020202 },
+               new RolePermission { Id = 10, RoleId = 2, PermissionId = 1020203 },
+               new RolePermission { Id = 11, RoleId = 2, PermissionId = 1020204 });
 
             modelBuilder.Entity<InvoiceType>().HasData(
                 new InvoiceType { Id = 1, Group = "Sales", Name = "Invoice", Hide = false, InOut = -1, Icon = "simple-icon-basket-loaded" },

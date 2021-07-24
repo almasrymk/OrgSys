@@ -6,6 +6,7 @@
     {
         IStringLocalizer<Title_Designer> _Titlelocalizer;
         IStringLocalizer<Message_Designer> _Messagelocalizer;
+
         public Translate(IStringLocalizer<Title_Designer> Titlelocalizer, IStringLocalizer<Message_Designer> Messagelocalizer)
         {
             this._Titlelocalizer = Titlelocalizer;

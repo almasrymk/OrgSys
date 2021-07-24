@@ -1,12 +1,170 @@
-﻿using Repository.DAL;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Repository
+﻿namespace Repository
 {
     public class UnitOfWork
     {
+        #region Input
+        #region Organization
+        private BranchRepo _branchRepo;
+        public BranchRepo branchRepo
+        {
+            get
+            {
+
+                if (this._branchRepo == null)
+                    this._branchRepo = new BranchRepo();
+
+                return _branchRepo;
+            }
+        }
+
+        private StoreRepo _storeRepo;
+        public StoreRepo storeRepo
+        {
+            get
+            {
+
+                if (this._storeRepo == null)
+                    this._storeRepo = new StoreRepo();
+
+                return _storeRepo;
+            }
+        }
+
+        private ShiftRepo _shiftRepo;
+        public ShiftRepo shiftRepo
+        {
+            get
+            {
+
+                if (this._shiftRepo == null)
+                    this._shiftRepo = new ShiftRepo();
+
+                return _shiftRepo;
+            }
+        }
+        #endregion
+
+        #region Permission
+        private RolechRepo _roleRepo;
+        public RolechRepo roleRepo
+        {
+            get
+            {
+
+                if (this._roleRepo == null)
+                    this._roleRepo = new RolechRepo();
+
+                return _roleRepo;
+            }
+        }
+
+        private UserRepo _userRepo;
+        public UserRepo userRepo
+        {
+            get
+            {
+
+                if (this._userRepo == null)
+                    this._userRepo = new UserRepo();
+
+                return _userRepo;
+            }
+        }
+
+        private PermissionRepo _permissionRepo;
+        public PermissionRepo permissionRepo
+        {
+            get
+            {
+
+                if (this._permissionRepo == null)
+                    this._permissionRepo = new PermissionRepo();
+
+                return _permissionRepo;
+            }
+        }
+
+        private RolePermissionRepo _rolePermissionRepo;
+        public RolePermissionRepo rolePermissionRepo
+        {
+            get
+            {
+
+                if (this._rolePermissionRepo == null)
+                    this._rolePermissionRepo = new RolePermissionRepo();
+
+                return _rolePermissionRepo;
+            }
+        }
+        #endregion
+
+        #region Types
+        private OrderTypeRepo _orderTypeRepo;
+        public OrderTypeRepo orderTypeRepo
+        {
+            get
+            {
+
+                if (this._orderTypeRepo == null)
+                    this._orderTypeRepo = new OrderTypeRepo();
+
+                return _orderTypeRepo;
+            }
+        }
+
+        private InvoiceTypeRepo _invoiceTypeRepo;
+        public InvoiceTypeRepo invoiceTypeRepo
+        {
+            get
+            {
+
+                if (this._invoiceTypeRepo == null)
+                    this._invoiceTypeRepo = new InvoiceTypeRepo();
+
+                return _invoiceTypeRepo;
+            }
+        }
+
+        private TransactionTypeRepo _transactionTypeRepo;
+        public TransactionTypeRepo transactionTypeRepo
+        {
+            get
+            {
+
+                if (this._transactionTypeRepo == null)
+                    this._transactionTypeRepo = new TransactionTypeRepo();
+
+                return _transactionTypeRepo;
+            }
+        }
+
+        private FinancialTypeRepo _financialTypeRepo;
+        public FinancialTypeRepo financialTypeRepo
+        {
+            get
+            {
+
+                if (this._financialTypeRepo == null)
+                    this._financialTypeRepo = new FinancialTypeRepo();
+
+                return _financialTypeRepo;
+            }
+        }
+
+        private PaymentTypeRepo _paymentTypeRepo;
+        public PaymentTypeRepo paymentTypeRepo
+        {
+            get
+            {
+
+                if (this._paymentTypeRepo == null)
+                    this._paymentTypeRepo = new PaymentTypeRepo();
+
+                return _paymentTypeRepo;
+            }
+        }
+        #endregion
+
         private UnitRepo _unitRepo;
         public UnitRepo unitRepo
         {
@@ -15,10 +173,11 @@ namespace Repository
 
                 if (this._unitRepo == null)
                     this._unitRepo = new UnitRepo();
-                
+
                 return _unitRepo;
             }
         }
+
         private PropertyRepo _propertyRepo;
         public PropertyRepo propertyRepo
         {
@@ -31,6 +190,7 @@ namespace Repository
                 return _propertyRepo;
             }
         }
+
         private ProductPropertyElementRepo _productpropertyelementRepo;
         public ProductPropertyElementRepo productpropertyelementRepo
         {
@@ -56,6 +216,7 @@ namespace Repository
                 return _dealerRepo;
             }
         }
+
         private PropertyElementRepo _propertyElementRepo;
         public PropertyElementRepo propertyelementRepo
         {
@@ -107,6 +268,7 @@ namespace Repository
                 return _productUnitRepo;
             }
         }
+
         private RecipeRepo _recipeRepo;
         public RecipeRepo recipeRepo
         {
@@ -120,82 +282,96 @@ namespace Repository
             }
         }
 
-
-        private BranchRepo _branchRepo;
-        public BranchRepo branchRepo
+        private PreferenceRepo _preferenceRepo;
+        public PreferenceRepo preferenceRepo
         {
             get
             {
 
-                if (this._branchRepo == null)
-                    this._branchRepo = new BranchRepo();
+                if (this._preferenceRepo == null)
+                    this._preferenceRepo = new PreferenceRepo();
 
-                return _branchRepo;
+                return _preferenceRepo;
             }
         }
 
-        private StoreRepo _storeRepo;
-        public StoreRepo storeRepo
+        private TableRepo _tableRepo;
+        public TableRepo tableRepo
         {
             get
             {
 
-                if (this._storeRepo == null)
-                    this._storeRepo = new StoreRepo();
+                if (this._tableRepo == null)
+                    this._tableRepo = new TableRepo();
 
-                return _storeRepo;
+                return _tableRepo;
             }
         }
 
-        private RolechRepo _roleRepo;
-        public RolechRepo roleRepo
+        private SafeRepo _safeRepo;
+        public SafeRepo safeRepo
         {
             get
             {
 
-                if (this._roleRepo == null)
-                    this._roleRepo = new RolechRepo();
+                if (this._safeRepo == null)
+                    this._safeRepo = new SafeRepo();
 
-                return _roleRepo;
+                return _safeRepo;
             }
         }
 
-        private ShiftRepo _shiftRepo;
-        public ShiftRepo shiftRepo
+        private OutlayRepo _outlayRepo;
+        public OutlayRepo outlayRepo
         {
             get
             {
 
-                if (this._shiftRepo == null)
-                    this._shiftRepo = new ShiftRepo();
+                if (this._outlayRepo == null)
+                    this._outlayRepo = new OutlayRepo();
 
-                return _shiftRepo;
+                return _outlayRepo;
             }
         }
 
-        private UserRepo _userRepo;
-        public UserRepo userRepo
+        private CurrencyRepo _currencyRepo;
+        public CurrencyRepo currencyRepo
         {
             get
             {
 
-                if (this._userRepo == null)
-                    this._userRepo = new UserRepo();
+                if (this._currencyRepo == null)
+                    this._currencyRepo = new CurrencyRepo();
 
-                return _userRepo;
+                return _currencyRepo;
+            }
+        }
+        #endregion
+
+        #region Processing
+        private OrderRepo _orderRepo;
+        public OrderRepo orderRepo
+        {
+            get
+            {
+
+                if (this._orderRepo == null)
+                    this._orderRepo = new OrderRepo();
+
+                return _orderRepo;
             }
         }
 
-        private PermissionRepo _permissionRepo;
-        public PermissionRepo permissionRepo
+        private OrderProductRepo _orderProductRepo;
+        public OrderProductRepo orderProductRepo
         {
             get
             {
 
-                if (this._permissionRepo == null)
-                    this._permissionRepo = new PermissionRepo();
+                if (this._orderProductRepo == null)
+                    this._orderProductRepo = new OrderProductRepo();
 
-                return _permissionRepo;
+                return _orderProductRepo;
             }
         }
 
@@ -212,19 +388,6 @@ namespace Repository
             }
         }
 
-        private PaymentTypeRepo _paymentTypeRepo;
-        public PaymentTypeRepo paymentTypeRepo
-        {
-            get
-            {
-
-                if (this._paymentTypeRepo == null)
-                    this._paymentTypeRepo = new PaymentTypeRepo();
-
-                return _paymentTypeRepo;
-            }
-        }
-
         private InvoiceProductRepo _invoiceProductRepo;
         public InvoiceProductRepo invoiceProductRepo
         {
@@ -235,19 +398,6 @@ namespace Repository
                     this._invoiceProductRepo = new InvoiceProductRepo();
 
                 return _invoiceProductRepo;
-            }
-        }
-
-        private PreferenceRepo _preferenceRepo;
-        public PreferenceRepo preferenceRepo
-        {
-            get
-            {
-
-                if (this._preferenceRepo == null)
-                    this._preferenceRepo = new PreferenceRepo();
-
-                return _preferenceRepo;
             }
         }
 
@@ -277,32 +427,6 @@ namespace Repository
             }
         }
 
-        private InvoiceTypeRepo _invoiceTypeRepo;
-        public InvoiceTypeRepo invoiceTypeRepo
-        {
-            get
-            {
-
-                if (this._invoiceTypeRepo == null)
-                    this._invoiceTypeRepo = new InvoiceTypeRepo();
-
-                return _invoiceTypeRepo;
-            }
-        }
-
-        private TransactionTypeRepo _transactionTypeRepo;
-        public TransactionTypeRepo transactionTypeRepo
-        {
-            get
-            {
-
-                if (this._transactionTypeRepo == null)
-                    this._transactionTypeRepo = new TransactionTypeRepo();
-
-                return _transactionTypeRepo;
-            }
-        }
-
         private InventoryRepo _inventoryRepo;
         public InventoryRepo inventoryRepo
         {
@@ -326,71 +450,6 @@ namespace Repository
                     this._inventoryProductRepo = new InventoryProductRepo();
 
                 return _inventoryProductRepo;
-            }
-        }
-
-        private OrderTypeRepo _orderTypeRepo;
-        public OrderTypeRepo orderTypeRepo
-        {
-            get
-            {
-
-                if (this._orderTypeRepo == null)
-                    this._orderTypeRepo = new OrderTypeRepo();
-
-                return _orderTypeRepo;
-            }
-        }
-
-        private TableRepo _tableRepo;
-        public TableRepo tableRepo
-        {
-            get
-            {
-
-                if (this._tableRepo == null)
-                    this._tableRepo = new TableRepo();
-
-                return _tableRepo;
-            }
-        }
-
-        private OrderRepo _orderRepo;
-        public OrderRepo orderRepo
-        {
-            get
-            {
-
-                if (this._orderRepo == null)
-                    this._orderRepo = new OrderRepo();
-
-                return _orderRepo;
-            }
-        }
-
-        private OrderProductRepo _orderProductRepo;
-        public OrderProductRepo orderProductRepo
-        {
-            get
-            {
-
-                if (this._orderProductRepo == null)
-                    this._orderProductRepo = new OrderProductRepo();
-
-                return _orderProductRepo;
-            }
-        }
-
-        private SafeRepo _safeRepo;
-        public SafeRepo safeRepo
-        {
-            get
-            {
-
-                if (this._safeRepo == null)
-                    this._safeRepo = new SafeRepo();
-
-                return _safeRepo;
             }
         }
 
@@ -419,58 +478,21 @@ namespace Repository
                 return _financialInvoiceRepo;
             }
         }
+        #endregion
 
-        private FinancialTypeRepo _financialTypeRepo;
-        public FinancialTypeRepo financialTypeRepo
+        #region Output
+        private ReportRepo _reportRepo;
+        public ReportRepo reportRepo
         {
             get
             {
 
-                if (this._financialTypeRepo == null)
-                    this._financialTypeRepo = new FinancialTypeRepo();
+                if (this._reportRepo == null)
+                    this._reportRepo = new ReportRepo();
 
-                return _financialTypeRepo;
+                return _reportRepo;
             }
         }
-
-        private OutlayRepo _outlayRepo;
-        public OutlayRepo outlayRepo
-        {
-            get
-            {
-
-                if (this._outlayRepo == null)
-                    this._outlayRepo = new OutlayRepo();
-
-                return _outlayRepo;
-            }
-        }
-
-        private CurrencyRepo _currencyRepo;
-        public CurrencyRepo currencyRepo
-        {
-            get
-            {
-
-                if (this._currencyRepo == null)
-                    this._currencyRepo = new CurrencyRepo();
-
-                return _currencyRepo;
-            }
-        }
-
-
-        private RolePermissionRepo _rolePermissionRepo;
-        public RolePermissionRepo rolePermissionRepo
-        {
-            get
-            {
-
-                if (this._rolePermissionRepo == null)
-                    this._rolePermissionRepo = new RolePermissionRepo();
-
-                return _rolePermissionRepo;
-            }
-        }        
+        #endregion
     }
 }

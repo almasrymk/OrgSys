@@ -1,25 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Entity.ModelView;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using OrgSys.Controllers;
-using Repository;
-using Service.BAL;
-using Utility;
+using Service;
 
 namespace OrgSys.Areas.Setting.Controllers
 {
     [Area("Setting")]
     public class ProductController : BaseController<ProductModelView>
-    {
-        
+    {        
         public override void LoadViewBag(ProductModelView model)
         {
             ViewBag.UnitList = new SelectList(new UnitService().GetAll(model.ParentId, model.TypeId), "Id", "Name");
-
         }
 
         public override ProductModelView InitializeData(ProductModelView ob)

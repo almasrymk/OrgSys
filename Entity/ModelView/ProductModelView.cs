@@ -1,7 +1,4 @@
-﻿using Utility;
-using Entity.Model;
-using Utility.Resource;
-using System.ComponentModel.DataAnnotations;
+﻿using Entity.Model;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -18,27 +15,48 @@ namespace Entity.ModelView
         {
             if (ob == null)
                 ob = new Product();
-            this.Id = ob.Id;
-            this.CodeNumber = ob.CodeNumber;
-            this.Code = ob.Code;
+
             this.Name = ob.Name;
+
             this.Nickname = ob.Nickname;
+
             this.Barcode = ob.Barcode;
+
             this.Description = ob.Description;
+
             this.Price = ob.Price;
+
             this.Cost = ob.Cost;
+
             this.ClassificationId = ob.ClassificationId;
+
             this.ClassificationName = ob.Classification?.Name;
+
             this.DealerId = ob.DealerId;
+
             this.DealerName = ob.Dealer?.Name;
+
             this.Recipe = ob.Recipe;
-            this.Status = ob.Status;
+
+            this.Id = ob.Id;
+
+            this.CodeNumber = ob.CodeNumber;
+
+            this.Code = ob.Code;
+
+            this.MaskText = ob.MaskText;
+
             this.ParentId = ob.ParentId;
+
             this.TypeId = ob.TypeId;
+
+            this.Hide = ob.Hide;
+
             this.ImgPath = ob.ImgPath;
+
+            this.Status = ob.Status;
+
             this.ProductUnits = ob.ProductUnits.Select(e => new ProductUnitModelView(e)).ToList();
-            //this.ProductRecipes = ob.ProductRecipes.Select(e => new ProductRecipeModelView(e)).ToList();
-            //this.ProductPropertyElements = ob.ProductPropertyElements.Select(e => new ProductPropertyElementModelView(e)).ToList();
         }
 
         public Product Model
@@ -47,9 +65,6 @@ namespace Entity.ModelView
             {
                 return new Product
                 {
-                    Id = this.Id,
-                    CodeNumber = this.CodeNumber,
-                    Code = this.Code,
                     Name = this.Name,
                     Nickname = this.Nickname,
                     Barcode = this.Barcode,
@@ -58,68 +73,48 @@ namespace Entity.ModelView
                     Cost = this.Cost,
                     ClassificationId = this.ClassificationId,
                     DealerId = this.DealerId,
-                    Status = this.Status,
-                    MaskText = this.MaskText,
                     Recipe = this.Recipe,
+                    Id = this.Id,
+                    CodeNumber = this.CodeNumber,
+                    Code = this.Code,
+                    MaskText = this.MaskText,
                     ParentId = this.ParentId,
                     TypeId = this.TypeId,
-                    ImgPath = this.ImgPath,
-                    ProductUnits = null,
-                    ProductRecipes = null,
-                    ProductPropertyElements = null
-
-
+                    Hide = this.Hide,
+                    Status = this.Status,
+                    ImgPath = this.ImgPath
                 };
             }
         }
 
-        public long CodeNumber { get; set; }
-
-        [Display(Name = nameof(Title_Designer.Code), ResourceType = typeof(Title_Designer))]
-        [Required(ErrorMessageResourceName = nameof(Message_Designer.CodeRequired), ErrorMessageResourceType = typeof(Message_Designer))]
-        public string Code { get; set; }
-
-        [Display(Name = nameof(Title_Designer.Name), ResourceType = typeof(Title_Designer))]
-        [Required(ErrorMessageResourceName = nameof(Message_Designer.NameRequired), ErrorMessageResourceType = typeof(Message_Designer))]
         public string Name { get; set; }
 
-        [Display(Name = nameof(Title_Designer.Nickname), ResourceType = typeof(Title_Designer))]
         public string Nickname { get; set; }
 
-        [Display(Name = nameof(Title_Designer.Barcode), ResourceType = typeof(Title_Designer))]
-        [Required(ErrorMessageResourceName = nameof(Message_Designer.BarcodeRequired), ErrorMessageResourceType = typeof(Message_Designer))]
         public string Barcode { get; set; }
 
-        [Display(Name = nameof(Title_Designer.Description), ResourceType = typeof(Title_Designer))]
-        [StringLength(500, MinimumLength = 5, ErrorMessageResourceName = nameof(Message_Designer.DescriptionRange), ErrorMessageResourceType = typeof(Message_Designer))]
         public string Description { get; set; }
 
-        [Display(Name = nameof(Title_Designer.Price), ResourceType = typeof(Title_Designer))]
         public decimal Price { get; set; }
 
-        [Display(Name = nameof(Title_Designer.Cost), ResourceType = typeof(Title_Designer))]
         public decimal Cost { get; set; }
 
-        [Display(Name = nameof(Title_Designer.Classification), ResourceType = typeof(Title_Designer))]
-        [Required(ErrorMessageResourceName = nameof(Message_Designer.ClassificationRequired), ErrorMessageResourceType = typeof(Message_Designer))]
         public long ClassificationId { get; set; }
 
-        [Display(Name = nameof(Title_Designer.Classification), ResourceType = typeof(Title_Designer))]
         public string ClassificationName { get; set; }
 
-        [Display(Name = nameof(Title_Designer.Supplier), ResourceType = typeof(Title_Designer))]
         public long? DealerId { get; set; }
 
-        [Display(Name = nameof(Title_Designer.Supplier), ResourceType = typeof(Title_Designer))]
         public string DealerName { get; set; }
 
-        [Display(Name = nameof(Title_Designer.ProductRecipe), ResourceType = typeof(Title_Designer))]
         public string Recipe { get; set; }
 
         public decimal Balance { get; set; }
 
         public List<ProductUnitModelView> ProductUnits { get; set; }
+
         public List<ProductRecipeModelView> ProductRecipes { get; set; }
+
         public List<ProductPropertyElementModelView> ProductPropertyElements { get; set; }
 
         public List<TreeView> ProductPropertyTree { get; set; }

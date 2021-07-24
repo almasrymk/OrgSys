@@ -1,9 +1,4 @@
-﻿using Utility;
-using Entity.Model;
-using Utility.Resource;
-using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Collections.Generic;
+﻿using Entity.Model;
 
 namespace Entity.ModelView
 {
@@ -18,14 +13,29 @@ namespace Entity.ModelView
         {
             if (ob == null)
                 ob = new Store();
-            this.Id = ob.Id;
+            
             this.Name = ob.Name;
             this.BranchId = ob.BranchId;
+
             this.BranchName = ob.Branch?.Name;
-            this.Status = ob.Status;
+
+            this.Id = ob.Id;
+
+            this.CodeNumber = ob.CodeNumber;
+
+            this.Code = ob.Code;
+
+            this.MaskText = ob.MaskText;
+
             this.ParentId = ob.ParentId;
+
             this.TypeId = ob.TypeId;
+
+            this.Hide = ob.Hide;
+
             this.ImgPath = ob.ImgPath;
+
+            this.Status = ob.Status;
         }
 
         public Store Model
@@ -34,28 +44,25 @@ namespace Entity.ModelView
             {
                 return new Store
                 {
-                    Id = this.Id,
                     Name = this.Name,
                     BranchId = this.BranchId,
-                    Status = this.Status,
+                    Id = this.Id,
+                    CodeNumber = this.CodeNumber,
+                    Code = this.Code,
                     MaskText = this.MaskText,
                     ParentId = this.ParentId,
                     TypeId = this.TypeId,
+                    Hide = this.Hide,
+                    Status = this.Status,
                     ImgPath = this.ImgPath
                 };
             }
         }
 
-        [Display(Name = nameof(Title_Designer.Name), ResourceType = typeof(Title_Designer))]
-        [StringLength(50, MinimumLength = 3, ErrorMessageResourceName = nameof(Message_Designer.NameRequired), ErrorMessageResourceType = typeof(Message_Designer))]
-        [Required(ErrorMessageResourceName = nameof(Message_Designer.NameRequired), ErrorMessageResourceType = typeof(Message_Designer))]
         public string Name { get; set; }
 
-        //[Display(Name = nameof(Title_Designer.Branch), ResourceType = typeof(Title_Designer))]
-        //[Required(ErrorMessageResourceName = nameof(Message_Designer.BranchRequired), ErrorMessageResourceType = typeof(Message_Designer))]
         public long BranchId { get; set; }
 
-        [Display(Name = nameof(Title_Designer.Branch), ResourceType = typeof(Title_Designer))]
         public string BranchName { get; set; }
     }
 }

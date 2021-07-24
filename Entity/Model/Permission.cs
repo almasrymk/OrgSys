@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
-using Utility;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entity.Model
 {
@@ -10,7 +6,7 @@ namespace Entity.Model
     public class Permission : BaseModel
     {
         public string Key { get; set; }
+
         public string Name { get; set; }
-        public string Name2 { get; set; }
     }
 }

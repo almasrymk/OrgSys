@@ -286,6 +286,15 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Collect.
+        /// </summary>
+        public static string Collect {
+            get {
+                return ResourceManager.GetString("Collect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Collection.
         /// </summary>
         public static string Collection {
@@ -646,6 +655,15 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to From Date.
+        /// </summary>
+        public static string FromDate {
+            get {
+                return ResourceManager.GetString("FromDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to From Store.
         /// </summary>
         public static string FromStore {
@@ -799,6 +817,15 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Net.
+        /// </summary>
+        public static string Net {
+            get {
+                return ResourceManager.GetString("Net", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New.
         /// </summary>
         public static string New {
@@ -948,6 +975,15 @@ namespace Utility.Resource {
         public static string OutlayTerms {
             get {
                 return ResourceManager.GetString("OutlayTerms", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Paid.
+        /// </summary>
+        public static string Paid {
+            get {
+                return ResourceManager.GetString("Paid", resourceCulture);
             }
         }
         
@@ -1119,6 +1155,15 @@ namespace Utility.Resource {
         public static string Purchases {
             get {
                 return ResourceManager.GetString("Purchases", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Purchases Reports.
+        /// </summary>
+        public static string PurchasesReports {
+            get {
+                return ResourceManager.GetString("PurchasesReports", resourceCulture);
             }
         }
         
@@ -1303,11 +1348,29 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sales Detail.
+        /// </summary>
+        public static string SalesDetail {
+            get {
+                return ResourceManager.GetString("SalesDetail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sales details.
         /// </summary>
         public static string SalesDetails {
             get {
                 return ResourceManager.GetString("SalesDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sales Reports.
+        /// </summary>
+        public static string SalesReports {
+            get {
+                return ResourceManager.GetString("SalesReports", resourceCulture);
             }
         }
         
@@ -1555,6 +1618,15 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to To Date.
+        /// </summary>
+        public static string ToDate {
+            get {
+                return ResourceManager.GetString("ToDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to To Store.
         /// </summary>
         public static string ToStore {
@@ -1677,6 +1749,15 @@ namespace Utility.Resource {
         public static string UnitsMeasure {
             get {
                 return ResourceManager.GetString("UnitsMeasure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unpaid Invoice.
+        /// </summary>
+        public static string UnpaidInvoice {
+            get {
+                return ResourceManager.GetString("UnpaidInvoice", resourceCulture);
             }
         }
         

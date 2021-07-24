@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
-using Utility;
 
 namespace Entity.Model
 {
@@ -13,15 +10,12 @@ namespace Entity.Model
         public Product()
         {
             ProductUnits = new HashSet<ProductUnit>();
+
             ProductRecipes = new HashSet<ProductRecipe>();
+
             ProductPropertyElements = new HashSet<ProductPropertyElement>();
         }
-
-        public long CodeNumber { get; set; }
-
-        [Required]
-        public string Code { get; set; }
-
+     
         [Required]
         public string Name { get; set; }
 
@@ -48,8 +42,9 @@ namespace Entity.Model
         public string Recipe { get; set; }
 
         public ICollection<ProductUnit> ProductUnits { get; set; }
-        public ICollection<ProductRecipe> ProductRecipes { get; set; }
-        public ICollection<ProductPropertyElement> ProductPropertyElements { get; set; }
 
+        public ICollection<ProductRecipe> ProductRecipes { get; set; }
+
+        public ICollection<ProductPropertyElement> ProductPropertyElements { get; set; }
     }
 }

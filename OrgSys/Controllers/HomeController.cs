@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using OrgSys.Models;
-using Service.BAL;
+using Service;
 
 namespace OrgSys.Controllers
 {
@@ -34,7 +34,7 @@ namespace OrgSys.Controllers
         {
             try
             {
-                var us = new UserService().Get(1);
+                var us = new UserService().Get(2);
                 if (us != null)
                     us.SignIn(HttpContext);
             }

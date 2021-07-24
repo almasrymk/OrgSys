@@ -326,7 +326,7 @@
                             </a>
                         </li>
                     }
-                    </ul>
+                </ul>
             </div>
         </div>
         <div class="sub-menu">
@@ -552,12 +552,12 @@
                                         </li>
                                     }
                                     @*<li>
-                                <a href="Pages.Product.Images.html">
-                                    <i class="simple-icon-list"></i> <span class="d-inline-block">
-                                        @Utility.Resource.Title_Designer.ReviewClose
-                                    </span>
-                                </a>
-                            </li>*@
+                                            <a href="Pages.Product.Images.html">
+                                                <i class="simple-icon-list"></i> <span class="d-inline-block">
+                                                    @Utility.Resource.Title_Designer.ReviewClose
+                                                </span>
+                                            </a>
+                                        </li>*@
                                 </ul>
                             </div>
                         </li>
@@ -570,8 +570,8 @@
                                 <ul class="list-unstyled inner-level-menu">
                                     <li>
                                         @*<a href="Pages.Profile.Social.html">
-                                    <i class="iconsminds-line-chart-1"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.TotalSales</span>
-                                </a>*@
+                                                <i class="iconsminds-line-chart-1"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.TotalSales</span>
+                                            </a>*@
                                     </li>
                                 </ul>
                             </div>
@@ -612,6 +612,36 @@
                             </div>
                         </li>
                         <li>
+                            <a href="#" data-toggle="collapse" data-target="#collapseSalesReports" aria-expanded="false"
+                               aria-controls="collapseSalesReports" class="rotate-arrow-icon opacity-50 collapsed">
+                                <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.SalesReports</span>
+                            </a>
+                            <div id="collapseSalesReports" class="collapse">
+                                <ul class="list-unstyled inner-level-menu">                                   
+                                    <li>
+                                        <a href="/Invoices/Invoice?TypeId=1">
+                                            <i class="simple-icon-people"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Clients</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/Invoices/Report/SalesDetail">
+                                            <i class="iconsminds-line-chart-3"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.SalesDetail</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="Pages.Profile.Portfolio.html">
+                                            <i class="iconsminds-bar-chart-4"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.TotalSales</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="Pages.Profile.Portfolio.html">
+                                            <i class="iconsminds-pie-chart-3"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.UnpaidInvoice</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
                             <a href="#" data-toggle="collapse" data-target="#collapsePurchases" aria-expanded="false"
                                aria-controls="collapsePurchases" class="rotate-arrow-icon opacity-50 collapsed">
                                 <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Purchases</span>
@@ -638,26 +668,22 @@
                                             </a>
                                         </li>
                                     }
-                                    @*<li>
-                                <a href="Pages.Product.Images.html">
-                                    <i class="simple-icon-list"></i> <span class="d-inline-block">
-                                        @Utility.Resource.Title_Designer.ReviewClose
-                                    </span>
-                                </a>
-                            </li>*@
                                 </ul>
                             </div>
                         </li>
                         <li>
-                            <a href="#" data-toggle="collapse" data-target="#collapseReportInvoice" aria-expanded="false"
-                               aria-controls="collapseReportInvoice" class="rotate-arrow-icon opacity-50 collapsed">
-                                <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Report</span>
+                            <a href="#" data-toggle="collapse" data-target="#collapsePurchasesReports" aria-expanded="false"
+                               aria-controls="collapsePurchasesReports" class="rotate-arrow-icon opacity-50 collapsed">
+                                <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.PurchasesReports</span>
                             </a>
-                            <div id="collapseReportInvoice" class="collapse">
+                            <div id="collapsePurchasesReports" class="collapse">
                                 <ul class="list-unstyled inner-level-menu">
                                     <li>
                                         <a href="Pages.Profile.Social.html">
-                                            <i class="iconsminds-line-chart-1"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.TotalSales</span>
+                                            <i class="iconsminds-line-chart-1"></i>
+                                            <span class="d-inline-block">
+                                                @Utility.Resource.Title_Designer.TotalSales
+                                            </span>
                                         </a>
                                     </li>
                                     <li>
@@ -665,13 +691,11 @@
                                             <i class="iconsminds-line-chart-3"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.SalesDetails</span>
                                         </a>
                                     </li>
-
                                     <li>
                                         <a href="Pages.Profile.Portfolio.html">
                                             <i class="iconsminds-bar-chart-4"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.TotalSalesProdects</span>
                                         </a>
                                     </li>
-
                                     <li>
                                         <a href="Pages.Profile.Portfolio.html">
                                             <i class="iconsminds-pie-chart-3"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.ProdectSalesDetails</span>
@@ -753,12 +777,12 @@
                             </a>
                             <div id="collapseReportTransaction" class="collapse">
                                 @*<ul class="list-unstyled inner-level-menu">
-                            <li>
-                                <a href="Pages.Profile.Social.html">
-                                    <i class="iconsminds-line-chart-1"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.TotalSales</span>
-                                </a>
-                            </li>
-                        </ul>*@
+                                        <li>
+                                            <a href="Pages.Profile.Social.html">
+                                                <i class="iconsminds-line-chart-1"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.TotalSales</span>
+                                            </a>
+                                        </li>
+                                    </ul>*@
                             </div>
                         </li>
                     </ul>
@@ -814,12 +838,12 @@
                             </a>
                             <div id="collapseReportTransaction" class="collapse">
                                 @*<ul class="list-unstyled inner-level-menu">
-                            <li>
-                                <a href="Pages.Profile.Social.html">
-                                    <i class="iconsminds-line-chart-1"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.TotalSales</span>
-                                </a>
-                            </li>
-                        </ul>*@
+                                        <li>
+                                            <a href="Pages.Profile.Social.html">
+                                                <i class="iconsminds-line-chart-1"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.TotalSales</span>
+                                            </a>
+                                        </li>
+                                    </ul>*@
                             </div>
                         </li>
                     </ul>

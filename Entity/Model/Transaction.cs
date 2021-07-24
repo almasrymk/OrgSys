@@ -1,23 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
-using Utility;
 
 namespace Entity.Model
 {
     [Table("Transaction")]
-    public class Transaction : BaseModel
+    public class Transaction : MovementModel
     {
-        public long CodeNumber { get; set; }
-
-        [Required]
-        public string Code { get; set; }
-
-        [Required]
-        public DateTime Date { get; set; }
-
         public long? DealerId { get; set; }
 
         public virtual Dealer Dealer { get; set; }     
@@ -28,6 +17,7 @@ namespace Entity.Model
         public virtual Store Store { get; set; }
 
         public long? ToStoreId { get; set; }
+
         public virtual Store ToStore { get; set; }
 
         public long? OrderId { get; set; }

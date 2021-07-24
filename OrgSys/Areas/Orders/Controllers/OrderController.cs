@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using OrgSys.Controllers;
-using Service.BAL;
+using Service;
 using System;
 using System.Collections.Generic;
 using Utility;
@@ -67,7 +67,7 @@ namespace OrgSys.Areas.Orders.Controllers
             if (ob.Id == 0)
             {
                 ob.CodeNumber = new OrderService().GetMaxCode(ob.TypeId);
-                ob.Code = "" + new OrderService().GetMaxCode(ob.TypeId);
+                ob.Code = "" + ob.CodeNumber;
                 ob.DealerId = DealerId;
                 ob.Date = DateTime.Now;
                 ob.DiscountType = DefaultDiscountType;
@@ -82,24 +82,20 @@ namespace OrgSys.Areas.Orders.Controllers
             ob.DealerName = new DealerService().Get(ob.DealerId??0).Name;
             return ob;
         }
-
-
-        [HttpGet]
-        public virtual ActionResult CreateInvoice(long id , string search, long ParentId = 0, long TypeId = 0, int page = 1)
+         
+        public ActionResult CreateInvoice(long id , string search, long ParentId = 0, long TypeId = 0, int page = 1)
         {
-            var ob = new OrderService().CreateInvoice(id);
+            var ob = new InvoiceService().CreateInvoiceByOrder(new OrderService().Get(id));
             return Redirect("/Orders/Order/Index?ParentId=" +  ParentId + "&TypeId=" + TypeId + "&page=" + page +"&status=" + ResultStatus.success + "&MsgError=Success");
         }
-
-        [HttpGet]
-        public virtual ActionResult Cancel(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1)
+ 
+        public ActionResult Cancel(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1)
         {
             new OrderService().Cancel(id);
             return Redirect("/Orders/Order/Index?ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" + ResultStatus.success + "&MsgError=Success");
         }
-
-        [HttpGet]
-        public virtual ActionResult Redo(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1)
+ 
+        public ActionResult Redo(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1)
         {
             new OrderService().Redo(id);
             return Redirect("/Orders/Order/Index?ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" + ResultStatus.success + "&MsgError=Success");

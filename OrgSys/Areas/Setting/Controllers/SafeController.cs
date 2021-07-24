@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Entity.ModelView;
 using Microsoft.AspNetCore.Mvc;
 using OrgSys.Controllers;
-using Service.BAL;
+using Service;
 
 namespace OrgSys.Areas.Setting.Controllers
 {

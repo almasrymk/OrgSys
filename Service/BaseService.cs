@@ -1,8 +1,6 @@
 ﻿using X.PagedList;
-using System;
 using System.Collections.Generic;
-using System.Text;
-using Utility;
+using Entity;
 
 namespace Service
 {
@@ -27,5 +25,7 @@ namespace Service
         IPagedList<entity> GetAll(long parentId = 0, long TypeId = 0 , int page = 1, int pageSize = 20);
 
         IPagedList<entity> GetAll(string textSearch , long parentId = 0, long TypeId = 0, int page = 1, int pageSize = 20);
+
+        long GetMaxCode(long type = 0);
     }
 }

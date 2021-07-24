@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using OrgSys.Controllers;
-using Service.BAL;
+using Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -73,7 +73,7 @@ namespace OrgSys.Areas.Invoices.Controllers
             if (ob.Id == 0)
             {
                 ob.CodeNumber = new InvoiceService().GetMaxCode(ob.TypeId);
-                ob.Code = "" + new InvoiceService().GetMaxCode(ob.TypeId);
+                ob.Code = "" + ob.CodeNumber;
                 ob.StoreId = StoreId;               
                 ob.DealerId = DealerId;                
                 ob.PaymentTypeId = PaymentTypeId;
@@ -93,18 +93,22 @@ namespace OrgSys.Areas.Invoices.Controllers
             return ob;
         }
 
-        [HttpGet]
-        public virtual ActionResult CreateTransaction(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1)
+        public ActionResult CreateTransaction(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1)
         {
-            var ob = new InvoiceService().CreateTransaction(id);
+            new TransactionService().CreateTransactionByInvoice(new InvoiceService().Get(id));
             return Redirect("/Invoices/Invoice/Index?ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" + ResultStatus.success + "&MsgError=Success");
         }
-      
+
+        public JsonResult CollectInvoice(long id)
+        {
+            new FinancialService().CreateFinancialByInvoice(new InvoiceService().Get(id));
+            return Json("Ok");
+        }
+
         public JsonResult GetInvoicesNotReturn(string txtSearch = "", long TypeId = 0, long InvId = 0, int page = 1, int pageSize = 10)
         {
             if (txtSearch != null)
                 txtSearch = txtSearch.Trim().ToLower();
-
            
             var itemsList = new InvoiceService().GetInvoicesNotReturn(txtSearch, TypeId, InvId, page, pageSize);
             var list = itemsList.Distinct().OrderBy(_ => _.Code)

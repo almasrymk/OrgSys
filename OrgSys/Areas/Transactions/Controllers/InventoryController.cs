@@ -1,23 +1,15 @@
 ﻿using Entity.ModelView;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using OrgSys.Controllers;
-using Service.BAL;
+using Service;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Utility;
 
 namespace OrgSys.Areas.Inventory.Controllers
 {
     [Area("Transactions")]
     public class InventoryController : BaseController<InventoryModelView>
-    {
-        public override void LoadViewBag(InventoryModelView model)
-        {           
-        }
-
+    {       
         public override InventoryModelView InitializeData(InventoryModelView ob)
         {
             var setting = new PreferenceService();
@@ -32,14 +24,13 @@ namespace OrgSys.Areas.Inventory.Controllers
             if (ob.Id == 0)
             {
                 ob.CodeNumber = new InventoryService().GetMaxCode(ob.TypeId);
-                ob.Code = "" + new InventoryService().GetMaxCode(ob.TypeId);
+                ob.Code = "" + ob.CodeNumber;
                 ob.StoreId = StoreId;
                 ob.Date = DateTime.Now;
                 ob.InventoryProducts = new List<InventoryProductModelView>();
               }
             ob.StoreName = new StoreService().Get(ob.StoreId).Name;
             return ob;
-        }
-       
+        }       
     }
 }

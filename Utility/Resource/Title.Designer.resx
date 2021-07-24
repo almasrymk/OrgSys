@@ -192,6 +192,9 @@
   <data name="Code" xml:space="preserve">
     <value>Code</value>
   </data>
+  <data name="Collect" xml:space="preserve">
+    <value>Collect</value>
+  </data>
   <data name="Collection" xml:space="preserve">
     <value>Collection</value>
   </data>
@@ -312,6 +315,9 @@
   <data name="FinancialNotices" xml:space="preserve">
     <value>Financial Notices</value>
   </data>
+  <data name="FromDate" xml:space="preserve">
+    <value>From Date</value>
+  </data>
   <data name="FromStore" xml:space="preserve">
     <value>From Store</value>
   </data>
@@ -363,6 +369,9 @@
   <data name="Name" xml:space="preserve">
     <value>Name</value>
   </data>
+  <data name="Net" xml:space="preserve">
+    <value>Net</value>
+  </data>
   <data name="New" xml:space="preserve">
     <value>New</value>
   </data>
@@ -413,6 +422,9 @@
   </data>
   <data name="OutlayTerms" xml:space="preserve">
     <value>Outlay Terms</value>
+  </data>
+  <data name="Paid" xml:space="preserve">
+    <value>Paid</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>Password</value>
@@ -470,6 +482,9 @@
   </data>
   <data name="Purchases" xml:space="preserve">
     <value>Purchases</value>
+  </data>
+  <data name="PurchasesReports" xml:space="preserve">
+    <value>Purchases Reports</value>
   </data>
   <data name="Quantity" xml:space="preserve">
     <value>Quantity</value>
@@ -531,8 +546,14 @@
   <data name="Sales" xml:space="preserve">
     <value>Sales</value>
   </data>
+  <data name="SalesDetail" xml:space="preserve">
+    <value>Sales Detail</value>
+  </data>
   <data name="SalesDetails" xml:space="preserve">
     <value>Sales details</value>
+  </data>
+  <data name="SalesReports" xml:space="preserve">
+    <value>Sales Reports</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Save</value>
@@ -615,6 +636,9 @@
   <data name="Time" xml:space="preserve">
     <value>Time</value>
   </data>
+  <data name="ToDate" xml:space="preserve">
+    <value>To Date</value>
+  </data>
   <data name="ToStore" xml:space="preserve">
     <value>To Store</value>
   </data>
@@ -656,6 +680,9 @@
   </data>
   <data name="UnitsMeasure" xml:space="preserve">
     <value>Units Measure</value>
+  </data>
+  <data name="UnpaidInvoice" xml:space="preserve">
+    <value>Unpaid Invoice</value>
   </data>
   <data name="User" xml:space="preserve">
     <value>User</value>

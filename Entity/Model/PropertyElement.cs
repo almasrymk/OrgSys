@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
-using Utility;
 
 namespace Entity.Model
 {
     [Table("PropertyElement")]
-
-   public class PropertyElement :BaseModel
+    public class PropertyElement : BaseModel
     {
         public long PropertyId { get; set; }
 

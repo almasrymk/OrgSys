@@ -54,7 +54,7 @@
                             <p class="text-muted">@Model[i].Net</p>
                         </td>
                         <td style="width:160px;vertical-align: middle;text-align:center;">
-                            @if ("" + Model[i].TransactionCode == "")
+                            @if ("" + Model[i].Transaction.Code == "")
                             {
                             <a href="/@ViewBag.area/@ViewBag.PageTitle/CreateTransaction?id=@Model[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.PageNumber"> <i class="iconsminds-synchronize-2"></i> Create </a>
                             }
@@ -64,7 +64,7 @@
                                     <h6>
                                         <span class="badge badge-primary">
                                             <i class="iconsminds-synchronize-2"></i>
-                                            @Model[i].TransactionCode
+                                            @Model[i].Transaction.Code
                                         </span>
                                     </h6>
                                 </a>
@@ -118,7 +118,7 @@
                                 @Model[i].Net
                             </div>
                             <div class="w-20 w-xs-100">
-                                @if ("" + Model[i].TransactionCode == "")
+                                @if ("" + Model[i].Transaction.Code == "")
                                 {
                                 <a href="/@ViewBag.area/@ViewBag.PageTitle/CreateTransaction?id=@Model[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.PageNumber"> <i class="iconsminds-synchronize-2"></i> Create </a>
                                 }
@@ -128,7 +128,7 @@
                                         <h6>
                                             <span class="badge badge-primary">
                                                 <i class="iconsminds-synchronize-2"></i>
-                                                @Model[i].TransactionCode
+                                                @Model[i].Transaction.Code
                                             </span>
                                         </h6>
                                     </a>

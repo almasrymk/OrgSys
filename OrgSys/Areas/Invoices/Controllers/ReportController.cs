@@ -1,0 +1,57 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using Service;
+using System;
+
+namespace OrgSys.Areas.Invoices.Controllers
+{
+    [Area("Invoices")]
+    public class ReportController : Controller
+    {
+        ReportService reportService;
+        public ReportController()
+        {
+            reportService = new ReportService();
+        }
+
+        public ActionResult Clients()
+        {
+            return View();
+        }
+
+        public ActionResult SalesDetail(DateTime? fromDate, DateTime? toDate, long dealerId = 0, long shiftId = 0, long branchId = 0, long userId = 0, int page = 1, int pageSize = 100)
+        {
+            if (fromDate == null)
+                fromDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+            if (toDate == null)
+                toDate = fromDate.Value.AddMonths(1).AddDays(-1);
+
+            if (dealerId == 1)
+                dealerId = 0;
+
+            ViewBag.FromDate = fromDate;            
+            ViewBag.ToDate = toDate; 
+            ViewBag.DealerId = dealerId;
+            ViewBag.ShiftId = shiftId;
+            ViewBag.BranchId = branchId;
+            ViewBag.UserId = userId;
+
+            ViewBag.DealerName = dealerId == 0 ? "..." : new DealerService().Get(dealerId).Name;
+            ViewBag.ShiftName = shiftId == 0 ? "..." : new ShiftService().Get(shiftId).Name;
+            ViewBag.BranchName = branchId == 0 ? "..." : new BranchService().Get(branchId).Name;
+            ViewBag.UserName = userId == 0 ? "..." : new UserService().Get(userId).Name;
+
+            var obList = reportService.InvoiceDetail(1, fromDate.Value, toDate.Value, dealerId, shiftId, branchId, userId , page , pageSize);
+            return Request.Headers["X-Requested-With"] == "XMLHttpRequest" ? (ActionResult)PartialView("List", obList) : View(obList);
+        }
+
+        public ActionResult TotalSales()
+        {
+            return View();
+        }
+
+        public ActionResult UnpaidInvoice()
+        {
+            return View();
+        }        
+    }
+}

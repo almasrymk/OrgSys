@@ -192,6 +192,9 @@
   <data name="Code" xml:space="preserve">
     <value>الكود</value>
   </data>
+  <data name="Collect" xml:space="preserve">
+    <value>حصل</value>
+  </data>
   <data name="Collection" xml:space="preserve">
     <value>التحصيل</value>
   </data>
@@ -312,6 +315,9 @@
   <data name="FinancialNotices" xml:space="preserve">
     <value>الاخطارات المالية</value>
   </data>
+  <data name="FromDate" xml:space="preserve">
+    <value>من تاريخ</value>
+  </data>
   <data name="FromStore" xml:space="preserve">
     <value>من متجر</value>
   </data>
@@ -363,6 +369,9 @@
   <data name="Name" xml:space="preserve">
     <value>الاسم</value>
   </data>
+  <data name="Net" xml:space="preserve">
+    <value>الصافي</value>
+  </data>
   <data name="New" xml:space="preserve">
     <value>جديد</value>
   </data>
@@ -413,6 +422,9 @@
   </data>
   <data name="OutlayTerms" xml:space="preserve">
     <value>بنود الصرف</value>
+  </data>
+  <data name="Paid" xml:space="preserve">
+    <value>مسدد</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>كلمة المرور</value>
@@ -470,6 +482,9 @@
   </data>
   <data name="Purchases" xml:space="preserve">
     <value>المشتريات</value>
+  </data>
+  <data name="PurchasesReports" xml:space="preserve">
+    <value>تقارير المشتريات</value>
   </data>
   <data name="Quantity" xml:space="preserve">
     <value>الكمية</value>
@@ -531,8 +546,14 @@
   <data name="Sales" xml:space="preserve">
     <value>المبيعات</value>
   </data>
+  <data name="SalesDetail" xml:space="preserve">
+    <value>تفاصيل المبيعات</value>
+  </data>
   <data name="SalesDetails" xml:space="preserve">
     <value>تفاصيل البيع</value>
+  </data>
+  <data name="SalesReports" xml:space="preserve">
+    <value>تقارير المبيعات</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>حفظ</value>
@@ -615,6 +636,9 @@
   <data name="Time" xml:space="preserve">
     <value>الوقت</value>
   </data>
+  <data name="ToDate" xml:space="preserve">
+    <value>الى تاريخ</value>
+  </data>
   <data name="ToStore" xml:space="preserve">
     <value>الي متجر</value>
   </data>
@@ -656,6 +680,9 @@
   </data>
   <data name="UnitsMeasure" xml:space="preserve">
     <value>وحدات القياس</value>
+  </data>
+  <data name="UnpaidInvoice" xml:space="preserve">
+    <value>فواتير غير مدفوعة</value>
   </data>
   <data name="User" xml:space="preserve">
     <value>مستخدم</value>

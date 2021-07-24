@@ -1,14 +1,10 @@
-﻿using Utility;
-using Entity.Model;
-using Utility.Resource;
-using System.ComponentModel.DataAnnotations;
-using System;
+﻿using Entity.Model;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Entity.ModelView
 {
-    public class TransactionModelView : BaseModel
+    public class TransactionModelView : MovementModel
     {
         public TransactionModelView()
         {
@@ -19,142 +15,176 @@ namespace Entity.ModelView
         {
             if (ob == null)
                 ob = new Transaction();
-            this.Id = ob.Id;
-            this.CodeNumber = ob.CodeNumber;
-            this.Code = ob.Code;
-            this.Date = ob.Date;
+
             this.DealerId = ob.DealerId;
+
             this.DealerName = ob.Dealer?.Name;
-            this.Hide = ob.Hide;
+
             this.Notes = ob.Notes;
+
             this.OrderId = ob.OrderId;
+
             this.StoreId = ob.StoreId;
+
             this.StoreName = ob.Store?.Name;
 
             this.ToStoreId = ob.ToStoreId;
+
             this.ToStoreName = ob.ToStore?.Name;
 
-            this.Total = ob.Total;           
-            this.Status = ob.Status;
+            this.Total = ob.Total;
+
+            this.BranchId = ob.BranchId;
+
+            this.BranchName = ob.Branch?.Name;
+
+            this.CreateUserId = ob.CreateUserId;
+
+            this.CreateUserName = ob.CreateUser?.Name;
+
+            this.ModifyUserId = ob.ModifyUserId;
+
+            this.ModifyUserName = ob.ModifyUser?.Name;
+
+            this.ShiftId = ob.ShiftId;
+
+            this.ShiftName = ob.Shift?.Name;
+
+            this.Date = ob.Date;
+
+            this.CreateDate = ob.CreateDate;
+
+            this.ModifyDate = ob.ModifyDate;
+
+            this.Id = ob.Id;
+
+            this.CodeNumber = ob.CodeNumber;
+
+            this.Code = ob.Code;
+
+            this.MaskText = ob.MaskText;
+
             this.ParentId = ob.ParentId;
+
             this.TypeId = ob.TypeId;
-            this.ImgPath = ob.ImgPath;          
+
+            this.Hide = ob.Hide;
+
+            this.ImgPath = ob.ImgPath;
+
+            this.Status = ob.Status;
+
             if (ob.TransactionProducts == null)
                 ob.TransactionProducts = new List<TransactionProduct>();
+
             this.TransactionProducts = ob.TransactionProducts.Select(e => new TransactionProductModelView(e)).ToList();
         }
 
-        public TransactionModelView UpdateData(Invoice ob)
+        public TransactionModelView(Invoice ob)
         {
             if (ob == null)
                 ob = new Invoice();
-            this.Date = ob.Date;
-            this.Hide = ob.Hide;
+
             this.Notes = ob.Notes;
-            this.Status = ob.Status;
+
             this.StoreId = ob.StoreId;
+
             this.DealerId = ob.DealerId;
+
+            this.Total = ob.Total;
+
+            this.BranchId = ob.BranchId;
+
+            this.CreateUserId = ob.CreateUserId;
+
+            this.ModifyUserId = ob.ModifyUserId;
+
+            this.ShiftId = ob.ShiftId;
+
+            this.Date = ob.Date;
+
+            this.CreateDate = ob.CreateDate;
+
+            this.ModifyDate = ob.ModifyDate;           
+
+            this.MaskText = ob.MaskText;
+
             this.ParentId = ob.ParentId;
+
+            this.TypeId = ob.TypeId == 2 || ob.TypeId == 3 ? 1 : 2;
+
+            this.Hide = ob.Hide;
+
             this.ImgPath = ob.ImgPath;
-            this.Total = ob.Total;           
+
+            this.Status = ob.Status;
+
             if (ob.InvoiceProducts == null)
                 ob.InvoiceProducts = new List<InvoiceProduct>();
-            this.TransactionProducts = ob.InvoiceProducts.Select(e => new TransactionProductModelView(e , ob.StoreId)).ToList();
-            return this;
+
+            this.TransactionProducts = ob.InvoiceProducts.Select(e => new TransactionProductModelView(e)).ToList();
         }
 
-        public TransactionModelView UpdateData(Inventory ob, long type)
-        {
-            if (ob == null)
-                ob = new Inventory();
-            this.Date = ob.Date;
-            this.Hide = ob.Hide;
-            this.Notes = ob.Notes;
-            this.Status = ob.Status;
-            this.StoreId = ob.StoreId;
-            this.ParentId = ob.Id;
-            this.ImgPath = ob.ImgPath;            
-            if (ob.InventoryProducts == null)
-                ob.InventoryProducts = new List<InventoryProduct>();
-            this.TransactionProducts = ob.InventoryProducts.Where(e=> (type == 5 && e.DiffQuantity > 0) || (type == 6 && e.DiffQuantity < 0)).Select(e => new TransactionProductModelView(e, ob.StoreId)).ToList();
-            return this;
-        }
-
-        public TransactionModelView UpdateData(Transaction ob)
-        {
-            if (ob == null)
-                ob = new Transaction();
-            this.Date = ob.Date;
-            this.Hide = ob.Hide;
-            this.Notes = ob.Notes;
-            this.Status = ob.Status;
-            this.StoreId = ob.ToStoreId.Value;
-            this.DealerId = ob.DealerId;
-            this.ParentId = ob.Id;
-            this.ImgPath = ob.ImgPath;
-            this.Total = ob.Total;
-            if (ob.TransactionProducts == null)
-                ob.TransactionProducts = new List<TransactionProduct>();
-            this.TransactionProducts = ob.TransactionProducts.Select(e => new TransactionProductModelView(e, ob.ToStoreId.Value)).ToList();
-            return this;
-        }
         public Transaction Model
         {
             get
             {
                 return new Transaction
                 {
-                    Id = this.Id,
-                    CodeNumber = this.CodeNumber,
-                    Code = this.Code,
-                    Date = this.Date,
                     DealerId = this.DealerId,
                     Total = this.Total,
-                    Hide = this.Hide,
                     Notes = this.Notes,
                     OrderId = this.OrderId,
                     StoreId = this.StoreId,
                     ToStoreId = this.ToStoreId,
-                    Status = this.Status,
+                    BranchId = this.BranchId,
+                    CreateUserId = this.CreateUserId,
+                    ModifyUserId = this.ModifyUserId,
+                    ShiftId = this.ShiftId,
+                    Date = this.Date,
+                    CreateDate = this.CreateDate,
+                    ModifyDate = this.ModifyDate,
+                    Id = this.Id,
+                    CodeNumber = this.CodeNumber,
+                    Code = this.Code,
                     MaskText = this.MaskText,
                     ParentId = this.ParentId,
                     TypeId = this.TypeId,
-                    ImgPath = this.ImgPath,                  
+                    Hide = this.Hide,
+                    Status = this.Status,
+                    ImgPath = this.ImgPath,
                     TransactionProducts = this.TransactionProducts != null ? this.TransactionProducts.Select(e => e.Model).ToList() : new List<TransactionProduct>()
                 };
             }
         }
 
-        public long CodeNumber { get; set; }
-
-        [Required]
-        public string Code { get; set; }
-
-        [Required]
-        public DateTime Date { get; set; }
-
         public long? DealerId { get; set; }
 
-        [Display(Name = nameof(Title_Designer.Client), ResourceType = typeof(Title_Designer))]
         public string DealerName { get; set; }
      
-        [Required]       
         public long StoreId { get; set; }
 
-        [Display(Name = nameof(Title_Designer.Store), ResourceType = typeof(Title_Designer))]
         public string StoreName { get; set; }
 
         public long? ToStoreId { get; set; }
+
         public string ToStoreName { get; set; }
 
         public long? OrderId { get; set; }
 
         public decimal Total { get; set; }
+
         public string ParentCode { get; set; }
 
-        [StringLength(500)]
         public string Notes { get; set; }
-      
+
+        public string BranchName { get; set; }
+
+        public string CreateUserName { get; set; }
+
+        public string ModifyUserName { get; set; }
+
+        public string ShiftName { get; set; }
 
         public List<TransactionProductModelView> TransactionProducts { get; set; }
     }

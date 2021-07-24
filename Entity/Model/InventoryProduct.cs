@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
-using Utility;
 
 namespace Entity.Model
 {
@@ -29,8 +25,11 @@ namespace Entity.Model
         public virtual Unit Unit { get; set; }               
 
         public decimal CalcBalance { get; set; }
+
         public decimal ActualBalance { get; set; }
+
         public decimal DiffQuantity { get; set; }
+
         public string Notes { get; set; }                       
     }
 }

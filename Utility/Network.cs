@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Net;
-using System.Net.NetworkInformation;
 using System.Net.Sockets;
-using System.Text;
 using System.Threading;
 
 namespace Utility
 {
-   public class Network
+    public class Network
     {
         static List<string> ips = new List<string>();
         static bool[] Lock = new bool[17];
@@ -58,7 +55,6 @@ namespace Utility
                 Lock[count] = false;
             }
         }
-
 
         public bool Ping(string ip)
         {

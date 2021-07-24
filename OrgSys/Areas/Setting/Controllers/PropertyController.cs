@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Entity.ModelView;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using OrgSys.Controllers;
-using Repository;
-using Service.BAL;
-using Utility;
 
 namespace OrgSys.Areas.Setting.Controllers
 {
@@ -21,6 +14,5 @@ namespace OrgSys.Areas.Setting.Controllers
                 ob.PropertyElements = new List<PropertyElementModelView>();
             return ob;
         }
-
     }
 }

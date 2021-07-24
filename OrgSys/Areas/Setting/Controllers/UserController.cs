@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
 using Entity.ModelView;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using OrgSys.Controllers;
-using Service.BAL;
-using Utility;
+using Service;
 
 namespace OrgSys.Areas.Setting.Controllers
 {
@@ -23,7 +17,6 @@ namespace OrgSys.Areas.Setting.Controllers
             ViewBag.RoleList = new SelectList(new RoleService().GetAll(model.ParentId, model.TypeId), "Id", "Name", model.RoleId);
         }
 
-        [HttpGet]
         public JsonResult CheckUDoublicat(string userName , int id)
         {
             return Json(new UserService().CheckDoublicat(userName , id));
@@ -41,5 +34,20 @@ namespace OrgSys.Areas.Setting.Controllers
             return res;
         }
 
+        public JsonResult GetList(string txtSearch = "", int page = 1, int pageSize = 10)
+        {
+            if (txtSearch != null)
+                txtSearch = txtSearch.Trim().ToLower();
+
+            var itemsList = new UserService().GetAll(txtSearch, 0, 0, page, pageSize);
+            var list = itemsList.Distinct().OrderBy(_ => _.Name)
+                .Select(_ => new
+                {
+                    _.Id,
+                    _.Name
+                })
+                .ToList();
+            return Json(list);
+        }
     }
 }

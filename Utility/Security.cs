@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 
 namespace Utility
 {
-   public static class Security
+    public static class Security
     {
         private readonly static string PASSWORD = "OrgSys";
        
@@ -21,7 +20,6 @@ namespace Utility
             var passwordBytes = Encoding.UTF8.GetBytes(PASSWORD);
             passwordBytes = SHA256.Create().ComputeHash(passwordBytes);
             var bytesEncrypted = Security.Encrypt(bytesToBeEncrypted, passwordBytes);
-
             return Convert.ToBase64String(bytesEncrypted);
         }
        

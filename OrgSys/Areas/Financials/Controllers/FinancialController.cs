@@ -2,12 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using OrgSys.Controllers;
-using Service.BAL;
+using Service;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Utility;
 
 namespace OrgSys.Areas.Financial.Controllers
 {
@@ -19,7 +16,6 @@ namespace OrgSys.Areas.Financial.Controllers
             var type = new FinancialTypeService().Get(TypeId);
             ViewBag.FinancialsType = type.Name;
             ViewBag.FinancialsIcon = type.Icon;
-
             base.LoadViewBagIndex();
         }
 
@@ -58,7 +54,7 @@ namespace OrgSys.Areas.Financial.Controllers
             if (ob.Id == 0)
             {
                 ob.CodeNumber = new FinancialService().GetMaxCode(ob.TypeId);
-                ob.Code = "" + new FinancialService().GetMaxCode(ob.TypeId);
+                ob.Code = "" + ob.CodeNumber;
                 ob.SafeId = SafeId;
                 ob.DealerId = DealerId;
                 ob.CurrencyId = long.Parse("0" + CurrencyId);

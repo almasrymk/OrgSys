@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
-using Utility;
 
 namespace Entity.Model
 {
@@ -22,9 +18,11 @@ namespace Entity.Model
 
         [Required]
         public long RoleId { get; set; }
+
         public virtual Role Role { get; set; }
  
         public long? BranchId { get; set; }
+
         public virtual Branch Branch { get; set; }
     }
 }

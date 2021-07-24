@@ -85,7 +85,7 @@
                                 @Model[i].Date.ToString("hh:mm t")
                             </td>
                             <td style="width:160px;vertical-align: middle;text-align:center;">
-                                @if ("" + Model[i].InvoiceCode == "")
+                                @if ("" + Model[i].Invoice.Code == "")
                                 {
                                     @if (Model[i].Status == Utility.Status.All)
                                     {
@@ -104,7 +104,7 @@
                                         <h6>
                                             <span class="badge badge-primary">
                                                 <i class="simple-icon-basket-loaded"></i>
-                                                @Model[i].InvoiceCode
+                                                @Model[i].Invoice.Code
                                             </span>
                                         </h6>
                                     </a>
@@ -136,40 +136,7 @@
         </div>
     </div>
     <div id="rowList" style="display:none;">
-        <div class="col-12 list m-0 p-0 pt-3" data-check-all="checkAll">
-            @*<div class="card d-flex flex-row mb-3" style="">
-                    <div class="d-flex flex-grow-1 min-width-zero" style="height:50px;">
-                        <div class="list-thumbnail responsive border-0 card-img-left " style="width:85px; font-size:xx-large;text-align:center; padding-top:22px;">
-
-                        </div>
-
-
-                        <div class="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
-                            <div class="list-item-heading mb-0 truncate w-20 w-xs-100 d-inline-block" href="Pages.Product.Detail.html">
-                                Table
-                            </div>
-                            <div class="list-item-heading mb-0 truncate w-20 w-xs-100 d-inline-block" href="Pages.Product.Detail.html">
-                                Date
-                            </div>
-                            <div class="list-item-heading mb-0 truncate w-20 w-xs-100 d-inline-block" href="Pages.Product.Detail.html">
-                                Shift
-                            </div>
-                            <div class="list-item-heading mb-0 truncate w-20 w-xs-100 d-inline-block" href="Pages.Product.Detail.html">
-                                Time
-                            </div>
-                            <div class="list-item-heading mb-0 truncate w-20 w-xs-100 d-inline-block" href="Pages.Product.Detail.html">
-                                Invoice
-                            </div>
-                            <div class="w-15 w-xs-100">
-                            </div>
-                        </div>
-
-                        <label class="custom-control custom-checkbox mb-1 align-self-center pr-4">
-
-                        </label>
-
-                    </div>
-                </div>*@
+        <div class="col-12 list m-0 p-0 pt-3" data-check-all="checkAll">           
             @for (int i = 0, x = ((Model.PageNumber - 1) * Model.PageSize) + 1; i < Model.Count; i++, x++)
             {
 
@@ -203,7 +170,7 @@
                                 @Model[i].Date.ToString("hh:mm t")
                             </div>
                             <div class="w-20 w-xs-100">
-                                @if ("" + Model[i].InvoiceCode == "")
+                                @if ("" + Model[i].Invoice.Code == "")
                                 {
                                     @if (Model[i].Status == Utility.Status.All)
                                     {
@@ -222,7 +189,7 @@
                                         <h6>
                                             <span class="badge badge-primary">
                                                 <i class="simple-icon-basket-loaded"></i>
-                                                @Model[i].InvoiceCode
+                                                @Model[i].Invoice.Code
                                             </span>
                                         </h6>
                                     </a>

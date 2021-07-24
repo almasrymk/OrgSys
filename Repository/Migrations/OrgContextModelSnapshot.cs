@@ -26,6 +26,12 @@ namespace Repository.Migrations
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
 
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
                     b.Property<bool>("Hide")
                         .HasColumnType("bit");
 
@@ -56,6 +62,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Name = "Main Branch",
                             ParentId = 0L,
@@ -79,6 +86,12 @@ namespace Repository.Migrations
 
                     b.Property<bool>("BeSold")
                         .HasColumnType("bit");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
 
                     b.Property<bool>("Hide")
                         .HasColumnType("bit");
@@ -114,6 +127,12 @@ namespace Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
 
                     b.Property<bool>("Hide")
                         .HasColumnType("bit");
@@ -160,7 +179,6 @@ namespace Repository.Migrations
                         .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("Code")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("CodeNumber")
@@ -227,11 +245,19 @@ namespace Repository.Migrations
                     b.Property<decimal>("AmountByDefaultCurrency")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<long?>("BranchId")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("Code")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("CreateUserId")
                         .HasColumnType("bigint");
 
                     b.Property<long>("CurrencyId")
@@ -252,6 +278,12 @@ namespace Repository.Migrations
                     b.Property<string>("MaskText")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime?>("ModifyDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("ModifyUserId")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("Notes")
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
@@ -271,6 +303,9 @@ namespace Repository.Migrations
                     b.Property<long>("SafeId")
                         .HasColumnType("bigint");
 
+                    b.Property<long?>("ShiftId")
+                        .HasColumnType("bigint");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -279,15 +314,23 @@ namespace Repository.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("BranchId");
+
+                    b.HasIndex("CreateUserId");
+
                     b.HasIndex("CurrencyId");
 
                     b.HasIndex("DealerId");
+
+                    b.HasIndex("ModifyUserId");
 
                     b.HasIndex("OutlayId");
 
                     b.HasIndex("PaymentTypeId");
 
                     b.HasIndex("SafeId");
+
+                    b.HasIndex("ShiftId");
 
                     b.ToTable("Financial");
                 });
@@ -301,6 +344,12 @@ namespace Repository.Migrations
 
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
 
                     b.Property<long>("FinancialId")
                         .HasColumnType("bigint");
@@ -345,6 +394,12 @@ namespace Repository.Migrations
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
 
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
                     b.Property<bool>("Hide")
                         .HasColumnType("bit");
 
@@ -381,6 +436,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Icon = "iconsminds-financial",
                             InOut = 1,
@@ -392,6 +448,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 2L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Icon = "iconsminds-handshake",
                             InOut = -1,
@@ -403,6 +460,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 3L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Icon = "iconsminds-wallet",
                             InOut = -1,
@@ -420,14 +478,22 @@ namespace Repository.Migrations
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
 
+                    b.Property<long?>("BranchId")
+                        .HasColumnType("bigint");
+
                     b.Property<bool>("Closed")
                         .HasColumnType("bit");
 
                     b.Property<string>("Code")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("CreateUserId")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime>("Date")
@@ -442,6 +508,12 @@ namespace Repository.Migrations
                     b.Property<string>("MaskText")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime?>("ModifyDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("ModifyUserId")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("Notes")
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
@@ -451,6 +523,9 @@ namespace Repository.Migrations
 
                     b.Property<bool>("Review")
                         .HasColumnType("bit");
+
+                    b.Property<long?>("ShiftId")
+                        .HasColumnType("bigint");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -465,6 +540,14 @@ namespace Repository.Migrations
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BranchId");
+
+                    b.HasIndex("CreateUserId");
+
+                    b.HasIndex("ModifyUserId");
+
+                    b.HasIndex("ShiftId");
 
                     b.HasIndex("StoreId");
 
@@ -485,6 +568,12 @@ namespace Repository.Migrations
 
                     b.Property<decimal>("CalcBalance")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
 
                     b.Property<decimal>("DiffQuantity")
                         .HasColumnType("decimal(18,2)");
@@ -540,11 +629,19 @@ namespace Repository.Migrations
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
 
+                    b.Property<long?>("BranchId")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("Code")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("CreateUserId")
                         .HasColumnType("bigint");
 
                     b.Property<decimal>("Credit")
@@ -576,6 +673,12 @@ namespace Repository.Migrations
 
                     b.Property<string>("MaskText")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifyDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("ModifyUserId")
+                        .HasColumnType("bigint");
 
                     b.Property<decimal>("Net")
                         .HasColumnType("decimal(18,2)");
@@ -634,9 +737,15 @@ namespace Repository.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("BranchId");
+
+                    b.HasIndex("CreateUserId");
+
                     b.HasIndex("CurrencyId");
 
                     b.HasIndex("DealerId");
+
+                    b.HasIndex("ModifyUserId");
 
                     b.HasIndex("PaymentTypeId");
 
@@ -655,6 +764,12 @@ namespace Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
 
                     b.Property<decimal>("Discount")
                         .HasColumnType("decimal(18,2)");
@@ -730,6 +845,12 @@ namespace Repository.Migrations
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
 
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("Group")
                         .HasColumnType("nvarchar(max)");
 
@@ -769,6 +890,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1L,
+                            CodeNumber = 0L,
                             Group = "Sales",
                             Hide = false,
                             Icon = "simple-icon-basket-loaded",
@@ -781,6 +903,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 2L,
+                            CodeNumber = 0L,
                             Group = "Purchases",
                             Hide = false,
                             Icon = "simple-icon-basket-loaded",
@@ -793,6 +916,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 3L,
+                            CodeNumber = 0L,
                             Group = "Sales",
                             Hide = false,
                             Icon = "simple-icon-action-undo",
@@ -805,6 +929,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 4L,
+                            CodeNumber = 0L,
                             Group = "Purchases",
                             Hide = false,
                             Icon = "simple-icon-action-undo",
@@ -822,6 +947,12 @@ namespace Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
@@ -904,14 +1035,22 @@ namespace Repository.Migrations
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
 
+                    b.Property<long?>("BranchId")
+                        .HasColumnType("bigint");
+
                     b.Property<bool>("CloseTable")
                         .HasColumnType("bit");
 
                     b.Property<string>("Code")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("CreateUserId")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime>("Date")
@@ -937,6 +1076,12 @@ namespace Repository.Migrations
 
                     b.Property<string>("MaskText")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifyDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("ModifyUserId")
+                        .HasColumnType("bigint");
 
                     b.Property<decimal>("Net")
                         .HasColumnType("decimal(18,2)");
@@ -977,9 +1122,15 @@ namespace Repository.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("BranchId");
+
+                    b.HasIndex("CreateUserId");
+
                     b.HasIndex("DealerId");
 
                     b.HasIndex("InvoiceId");
+
+                    b.HasIndex("ModifyUserId");
 
                     b.HasIndex("ShiftId");
 
@@ -994,6 +1145,12 @@ namespace Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
 
                     b.Property<decimal>("Discount")
                         .HasColumnType("decimal(18,2)");
@@ -1064,6 +1221,12 @@ namespace Repository.Migrations
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
 
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
                     b.Property<bool>("Hide")
                         .HasColumnType("bit");
 
@@ -1097,6 +1260,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Icon = "iconsminds-right-1",
                             Name = "Internal",
@@ -1107,6 +1271,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 2L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Icon = "iconsminds-left-1",
                             Name = "External",
@@ -1122,6 +1287,12 @@ namespace Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
 
                     b.Property<bool>("Hide")
                         .HasColumnType("bit");
@@ -1157,6 +1328,12 @@ namespace Repository.Migrations
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
 
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
                     b.Property<bool>("Hide")
                         .HasColumnType("bit");
 
@@ -1187,6 +1364,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Name = "Cash",
                             ParentId = 0L,
@@ -1196,6 +1374,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 2L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Name = "Check",
                             ParentId = 0L,
@@ -1211,6 +1390,12 @@ namespace Repository.Migrations
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
 
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
                     b.Property<bool>("Hide")
                         .HasColumnType("bit");
 
@@ -1224,9 +1409,6 @@ namespace Repository.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name2")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("ParentId")
@@ -1246,6 +1428,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Organizer",
                             Name = "Organizer",
@@ -1256,6 +1439,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 10L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Data.All",
                             Name = "Data",
@@ -1266,6 +1450,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 101L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Organization",
                             Name = "Organization",
@@ -1276,6 +1461,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 10101L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Branchs.All",
                             Name = "Branchs",
@@ -1286,6 +1472,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1010101L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Branchs.View",
                             Name = "View",
@@ -1296,6 +1483,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1010102L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Branchs.Add",
                             Name = "Add",
@@ -1306,6 +1494,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1010103L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Branchs.Edit",
                             Name = "Edit",
@@ -1316,6 +1505,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1010104L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Branchs.Delete",
                             Name = "Delete",
@@ -1326,6 +1516,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 10102L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Stores.All",
                             Name = "Stores",
@@ -1336,6 +1527,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1010201L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Stores.View",
                             Name = "View",
@@ -1346,6 +1538,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1010202L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Stores.Add",
                             Name = "Add",
@@ -1356,6 +1549,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1010203L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Stores.Edit",
                             Name = "Edit",
@@ -1366,6 +1560,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1010204L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Stores.Delete",
                             Name = "Delete",
@@ -1376,6 +1571,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 10103L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Tables.All",
                             Name = "Tables",
@@ -1386,6 +1582,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1010301L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Tables.View",
                             Name = "View",
@@ -1396,6 +1593,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1010302L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Tables.Add",
                             Name = "Add",
@@ -1406,6 +1604,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1010303L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Tables.Edit",
                             Name = "Edit",
@@ -1416,6 +1615,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1010304L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Tables.Delete",
                             Name = "Delete",
@@ -1426,6 +1626,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 102L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Security",
                             Name = "Security",
@@ -1436,6 +1637,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 10201L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Roles.All",
                             Name = "Roles",
@@ -1446,6 +1648,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1020101L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Roles.View",
                             Name = "View",
@@ -1456,6 +1659,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1020102L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Roles.Add",
                             Name = "Add",
@@ -1466,6 +1670,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1020103L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Roles.Edit",
                             Name = "Edit",
@@ -1476,6 +1681,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1020104L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Roles.Delete",
                             Name = "Delete",
@@ -1486,6 +1692,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 10202L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Users.All",
                             Name = "Users",
@@ -1496,6 +1703,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1020201L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Users.View",
                             Name = "View",
@@ -1506,6 +1714,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1020202L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Users.Add",
                             Name = "Add",
@@ -1516,6 +1725,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1020203L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Users.Edit",
                             Name = "Edit",
@@ -1526,6 +1736,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1020204L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Users.Delete",
                             Name = "Delete",
@@ -1536,6 +1747,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 10203L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Shifts.All",
                             Name = "Shifts",
@@ -1546,6 +1758,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1020301L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Shifts.View",
                             Name = "View",
@@ -1556,6 +1769,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1020302L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Shifts.Add",
                             Name = "Add",
@@ -1566,6 +1780,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1020303L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Shifts.Edit",
                             Name = "Edit",
@@ -1576,6 +1791,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1020304L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Shifts.Delete",
                             Name = "Delete",
@@ -1586,6 +1802,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 103L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Products",
                             Name = "Products",
@@ -1596,6 +1813,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 10301L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Products.All",
                             Name = "Products",
@@ -1606,6 +1824,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1030101L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Products.View",
                             Name = "View",
@@ -1616,6 +1835,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1030102L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Products.Add",
                             Name = "Add",
@@ -1626,6 +1846,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1030103L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Products.Edit",
                             Name = "Edit",
@@ -1636,6 +1857,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1030104L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Products.Delete",
                             Name = "Delete",
@@ -1646,6 +1868,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 10302L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Classifications.All",
                             Name = "Classifications",
@@ -1656,6 +1879,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1030201L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Classifications.View",
                             Name = "View",
@@ -1666,6 +1890,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1030202L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Classifications.Add",
                             Name = "Add",
@@ -1676,6 +1901,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1030203L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Classifications.Edit",
                             Name = "Edit",
@@ -1686,6 +1912,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1030204L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Classifications.Delete",
                             Name = "Delete",
@@ -1696,6 +1923,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 10303L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "UnitsMeasure.All",
                             Name = "Units Measure",
@@ -1706,6 +1934,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1030301L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "UnitsMeasure.View",
                             Name = "View",
@@ -1716,6 +1945,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1030302L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "UnitsMeasure.Add",
                             Name = "Add",
@@ -1726,6 +1956,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1030303L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "UnitsMeasure.Edit",
                             Name = "Edit",
@@ -1736,6 +1967,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1030304L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "UnitsMeasure.Delete",
                             Name = "Delete",
@@ -1746,6 +1978,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 104L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Dealers",
                             Name = "Dealers",
@@ -1756,6 +1989,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 10401L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Clients.All",
                             Name = "Clients",
@@ -1766,6 +2000,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1040101L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Clients.View",
                             Name = "View",
@@ -1776,6 +2011,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1040102L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Clients.Add",
                             Name = "Add",
@@ -1786,6 +2022,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1040103L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Clients.Edit",
                             Name = "Edit",
@@ -1796,6 +2033,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1040104L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Clients.Delete",
                             Name = "Delete",
@@ -1806,6 +2044,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 10402L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Suppliers.All",
                             Name = "Suppliers",
@@ -1816,6 +2055,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1040201L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Suppliers.View",
                             Name = "View",
@@ -1826,6 +2066,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1040202L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Suppliers.Add",
                             Name = "Add",
@@ -1836,6 +2077,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1040203L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Suppliers.Edit",
                             Name = "Edit",
@@ -1846,6 +2088,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1040204L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Suppliers.Delete",
                             Name = "Delete",
@@ -1856,6 +2099,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 105L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Financials",
                             Name = "Financials",
@@ -1866,6 +2110,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 10501L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Safes.All",
                             Name = "Safes",
@@ -1876,6 +2121,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1050101L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Safes.View",
                             Name = "View",
@@ -1886,6 +2132,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1050102L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Safes.Add",
                             Name = "Add",
@@ -1896,6 +2143,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1050103L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Safes.Edit",
                             Name = "Edit",
@@ -1906,6 +2154,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1050104L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Safes.Delete",
                             Name = "Delete",
@@ -1916,6 +2165,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 10502L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "OutlayTerms.All",
                             Name = "Outlay Terms",
@@ -1926,6 +2176,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1050201L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "OutlayTerms.View",
                             Name = "View",
@@ -1936,6 +2187,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1050202L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "OutlayTerms.Add",
                             Name = "Add",
@@ -1946,6 +2198,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1050203L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "OutlayTerms.Edit",
                             Name = "Edit",
@@ -1956,6 +2209,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1050204L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "OutlayTerms.Delete",
                             Name = "Delete",
@@ -1966,6 +2220,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 10503L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Currencies.All",
                             Name = "Currencies",
@@ -1976,6 +2231,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1050301L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Currencies.View",
                             Name = "View",
@@ -1986,6 +2242,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1050302L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Currencies.Add",
                             Name = "Add",
@@ -1996,6 +2253,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1050303L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Currencies.Edit",
                             Name = "Edit",
@@ -2006,6 +2264,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1050304L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Currencies.Delete",
                             Name = "Delete",
@@ -2016,6 +2275,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 20L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Orders.All",
                             Name = "Orders",
@@ -2026,6 +2286,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 201L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Orders",
                             Name = "Order Notices",
@@ -2036,6 +2297,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 20101L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Internal.All",
                             Name = "Internal",
@@ -2046,6 +2308,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 2010101L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Internal.View",
                             Name = "View",
@@ -2056,6 +2319,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 2010102L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Internal.Add",
                             Name = "Add",
@@ -2066,6 +2330,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 2010103L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Internal.Edit",
                             Name = "Edit",
@@ -2076,6 +2341,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 2010104L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Internal.Delete",
                             Name = "Delete",
@@ -2086,6 +2352,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 2010105L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Internal.Preference",
                             Name = "Preference",
@@ -2096,6 +2363,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 20102L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "External.All",
                             Name = "External",
@@ -2106,6 +2374,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 2010201L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "External.View",
                             Name = "View",
@@ -2116,6 +2385,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 2010202L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "External.Add",
                             Name = "Add",
@@ -2126,6 +2396,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 2010203L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "External.Edit",
                             Name = "Edit",
@@ -2136,6 +2407,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 2010204L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "External.Delete",
                             Name = "Delete",
@@ -2146,6 +2418,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 2010205L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "External.Preference",
                             Name = "Preference",
@@ -2156,6 +2429,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 30L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Invoices.All",
                             Name = "Invoices",
@@ -2166,6 +2440,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 301L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Sales",
                             Name = "Sales",
@@ -2176,6 +2451,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 30101L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "SalesInvoices.All",
                             Name = "Invoices",
@@ -2186,6 +2462,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 3010101L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "SalesInvoices.View",
                             Name = "View",
@@ -2196,6 +2473,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 3010102L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "SalesInvoices.Add",
                             Name = "Add",
@@ -2206,6 +2484,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 3010103L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "SalesInvoices.Edit",
                             Name = "Edit",
@@ -2216,6 +2495,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 3010104L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "SalesInvoices.Delete",
                             Name = "Delete",
@@ -2226,6 +2506,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 3010105L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "SalesInvoices.Preference",
                             Name = "Preference",
@@ -2236,6 +2517,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 30102L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "SalesReturns.All",
                             Name = "Returns",
@@ -2246,6 +2528,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 3010201L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "SalesReturns.View",
                             Name = "View",
@@ -2256,6 +2539,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 3010202L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "SalesReturns.Add",
                             Name = "Add",
@@ -2266,6 +2550,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 3010203L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "SalesReturns.Edit",
                             Name = "Edit",
@@ -2276,6 +2561,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 3010204L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "SalesReturns.Delete",
                             Name = "Delete",
@@ -2286,6 +2572,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 3010205L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "SalesReturns.Preference",
                             Name = "Preference",
@@ -2296,6 +2583,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 302L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Purchases",
                             Name = "Purchases",
@@ -2306,6 +2594,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 30201L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "PurchasesInvoices.All",
                             Name = "Invoices",
@@ -2316,6 +2605,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 3020101L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "PurchasesInvoices.View",
                             Name = "View",
@@ -2326,6 +2616,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 3020102L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "PurchasesInvoices.Add",
                             Name = "Add",
@@ -2336,6 +2627,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 3020103L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "PurchasesInvoices.Edit",
                             Name = "Edit",
@@ -2346,6 +2638,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 3020104L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "PurchasesInvoices.Delete",
                             Name = "Delete",
@@ -2356,6 +2649,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 3020105L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "PurchasesInvoices.Preference",
                             Name = "Preference",
@@ -2366,6 +2660,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 30202L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "PurchasesReturns.All",
                             Name = "Returns",
@@ -2376,6 +2671,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 3020201L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "PurchasesReturns.View",
                             Name = "View",
@@ -2386,6 +2682,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 3020202L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "PurchasesReturns.Add",
                             Name = "Add",
@@ -2396,6 +2693,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 3020203L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "PurchasesReturns.Edit",
                             Name = "Edit",
@@ -2406,6 +2704,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 3020204L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "PurchasesReturns.Delete",
                             Name = "Delete",
@@ -2416,6 +2715,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 3020205L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "PurchasesReturns.Preference",
                             Name = "Preference",
@@ -2426,6 +2726,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 40L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Transactions.All",
                             Name = "Transactions",
@@ -2436,6 +2737,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 401L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "TransactionNotices",
                             Name = "Transaction Notices",
@@ -2446,6 +2748,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 40101L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Addition.All",
                             Name = "Addition",
@@ -2456,6 +2759,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 4010101L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Addition.View",
                             Name = "View",
@@ -2466,6 +2770,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 4010102L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Addition.Add",
                             Name = "Add",
@@ -2476,6 +2781,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 4010103L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Addition.Edit",
                             Name = "Edit",
@@ -2486,6 +2792,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 4010104L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Addition.Delete",
                             Name = "Delete",
@@ -2496,6 +2803,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 4010105L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Addition.Preference",
                             Name = "Preference",
@@ -2506,6 +2814,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 40102L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Issue.All",
                             Name = "Issue",
@@ -2516,6 +2825,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 4010201L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Issue.View",
                             Name = "View",
@@ -2526,6 +2836,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 4010202L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Issue.Add",
                             Name = "Add",
@@ -2536,6 +2847,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 4010203L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Issue.Edit",
                             Name = "Edit",
@@ -2546,6 +2858,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 4010204L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Issue.Delete",
                             Name = "Delete",
@@ -2556,6 +2869,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 4010205L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Issue.Preference",
                             Name = "Preference",
@@ -2566,6 +2880,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 40103L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Transafer.All",
                             Name = "Transafer",
@@ -2576,6 +2891,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 4010301L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Transafer.View",
                             Name = "View",
@@ -2586,6 +2902,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 4010302L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Transafer.Add",
                             Name = "Add",
@@ -2596,6 +2913,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 4010303L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Transafer.Edit",
                             Name = "Edit",
@@ -2606,6 +2924,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 4010304L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Transafer.Delete",
                             Name = "Delete",
@@ -2616,6 +2935,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 4010305L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Transafer.Preference",
                             Name = "Preference",
@@ -2626,6 +2946,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 40104L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Received.All",
                             Name = "Received",
@@ -2636,6 +2957,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 4010401L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Received.View",
                             Name = "View",
@@ -2646,6 +2968,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 4010402L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Received.Add",
                             Name = "Add",
@@ -2656,6 +2979,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 4010403L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Received.Edit",
                             Name = "Edit",
@@ -2666,6 +2990,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 4010404L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Received.Delete",
                             Name = "Delete",
@@ -2676,6 +3001,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 4010405L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Received.Preference",
                             Name = "Preference",
@@ -2686,6 +3012,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 40105L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Inventory.All",
                             Name = "Inventory",
@@ -2696,6 +3023,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 4010501L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Inventory.View",
                             Name = "View",
@@ -2706,6 +3034,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 4010502L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Inventory.Add",
                             Name = "Add",
@@ -2716,6 +3045,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 4010503L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Inventory.Edit",
                             Name = "Edit",
@@ -2726,6 +3056,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 4010504L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Inventory.Delete",
                             Name = "Delete",
@@ -2736,6 +3067,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 4010505L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Inventory.Preference",
                             Name = "Preference",
@@ -2746,6 +3078,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 50L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Financials.All",
                             Name = "Financials",
@@ -2756,6 +3089,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 501L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "SafeNotices",
                             Name = "Safe Notices",
@@ -2766,6 +3100,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 50101L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Collection.All",
                             Name = "Collection",
@@ -2776,6 +3111,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 5010101L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Collection.View",
                             Name = "View",
@@ -2786,6 +3122,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 5010102L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Collection.Add",
                             Name = "Add",
@@ -2796,6 +3133,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 5010103L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Collection.Edit",
                             Name = "Edit",
@@ -2806,6 +3144,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 5010104L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Collection.Delete",
                             Name = "Delete",
@@ -2816,6 +3155,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 5010105L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Collection.Preference",
                             Name = "Preference",
@@ -2826,6 +3166,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 50102L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Payment.All",
                             Name = "Payment",
@@ -2836,6 +3177,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 5010201L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Payment.View",
                             Name = "View",
@@ -2846,6 +3188,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 5010202L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Payment.Add",
                             Name = "Add",
@@ -2856,6 +3199,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 5010203L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Payment.Edit",
                             Name = "Edit",
@@ -2866,6 +3210,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 5010204L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Payment.Delete",
                             Name = "Delete",
@@ -2876,6 +3221,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 5010205L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Payment.Preference",
                             Name = "Preference",
@@ -2886,6 +3232,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 50103L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Outlay.All",
                             Name = "Outlay",
@@ -2896,6 +3243,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 5010301L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Outlay.View",
                             Name = "View",
@@ -2906,6 +3254,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 5010302L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Outlay.Add",
                             Name = "Add",
@@ -2916,6 +3265,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 5010303L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Outlay.Edit",
                             Name = "Edit",
@@ -2926,6 +3276,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 5010304L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Outlay.Delete",
                             Name = "Delete",
@@ -2936,6 +3287,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 5010305L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "Outlay.Preference",
                             Name = "Preference",
@@ -2948,6 +3300,12 @@ namespace Repository.Migrations
             modelBuilder.Entity("Entity.Model.Preference", b =>
                 {
                     b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
                         .HasColumnType("bigint");
 
                     b.Property<bool>("Hide")
@@ -2988,6 +3346,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "DefaultStore",
                             ParentId = 0L,
@@ -2999,6 +3358,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 2L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "DefaultCustomer",
                             ParentId = 0L,
@@ -3010,6 +3370,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 3L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "DefaultPaymentType",
                             ParentId = 0L,
@@ -3021,6 +3382,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 4L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "DiscountValue",
                             ParentId = 0L,
@@ -3032,6 +3394,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 5L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "DefaultDiscountType",
                             ParentId = 0L,
@@ -3043,6 +3406,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 6L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "ServiceValue",
                             ParentId = 0L,
@@ -3054,6 +3418,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 7L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "DefaultServiceType",
                             ParentId = 0L,
@@ -3065,6 +3430,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 8L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "TaxValue",
                             ParentId = 0L,
@@ -3076,6 +3442,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 9L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "DefaultTaxType",
                             ParentId = 0L,
@@ -3087,6 +3454,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 10L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "NumberLine",
                             ParentId = 0L,
@@ -3098,6 +3466,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 11L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "OrderTabe",
                             ParentId = 0L,
@@ -3109,6 +3478,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 12L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "AutoSave",
                             ParentId = 0L,
@@ -3120,6 +3490,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 13L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "TypeSerial",
                             ParentId = 0L,
@@ -3131,6 +3502,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 14L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "AllowRepeated",
                             ParentId = 0L,
@@ -3142,6 +3514,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 15L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "SaveLastStatusSetting",
                             ParentId = 0L,
@@ -3153,6 +3526,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 16L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "AutoCreateTransaction",
                             ParentId = 0L,
@@ -3164,6 +3538,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 101L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "DefaultStore",
                             ParentId = 0L,
@@ -3175,6 +3550,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 102L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "DefaultSupplier",
                             ParentId = 0L,
@@ -3186,6 +3562,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 103L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "DefaultPaymentType",
                             ParentId = 0L,
@@ -3197,6 +3574,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 104L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "DiscountValue",
                             ParentId = 0L,
@@ -3208,6 +3586,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 105L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "DefaultDiscountType",
                             ParentId = 0L,
@@ -3219,6 +3598,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 106L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "ServiceValue",
                             ParentId = 0L,
@@ -3230,6 +3610,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 107L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "DefaultServiceType",
                             ParentId = 0L,
@@ -3241,6 +3622,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 108L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "TaxValue",
                             ParentId = 0L,
@@ -3252,6 +3634,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 109L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "DefaultTaxType",
                             ParentId = 0L,
@@ -3263,6 +3646,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 110L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "NumberLine",
                             ParentId = 0L,
@@ -3274,6 +3658,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 111L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "OrderTabe",
                             ParentId = 0L,
@@ -3285,6 +3670,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 112L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "AutoSave",
                             ParentId = 0L,
@@ -3296,6 +3682,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 113L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "TypeSerial",
                             ParentId = 0L,
@@ -3307,6 +3694,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 114L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "AllowRepeated",
                             ParentId = 0L,
@@ -3318,6 +3706,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 115L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "SaveLastStatusSetting",
                             ParentId = 0L,
@@ -3329,6 +3718,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 116L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "AutoCreateTransaction",
                             ParentId = 0L,
@@ -3340,6 +3730,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 201L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "DefaultStore",
                             ParentId = 0L,
@@ -3351,6 +3742,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 202L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "DefaultCustomer",
                             ParentId = 0L,
@@ -3362,6 +3754,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 203L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "DefaultPaymentType",
                             ParentId = 0L,
@@ -3373,6 +3766,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 204L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "DiscountValue",
                             ParentId = 0L,
@@ -3384,6 +3778,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 205L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "DefaultDiscountType",
                             ParentId = 0L,
@@ -3395,6 +3790,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 206L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "ServiceValue",
                             ParentId = 0L,
@@ -3406,6 +3802,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 207L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "DefaultServiceType",
                             ParentId = 0L,
@@ -3417,6 +3814,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 208L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "TaxValue",
                             ParentId = 0L,
@@ -3428,6 +3826,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 209L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "DefaultTaxType",
                             ParentId = 0L,
@@ -3439,6 +3838,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 210L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "NumberLine",
                             ParentId = 0L,
@@ -3450,6 +3850,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 211L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "OrderTabe",
                             ParentId = 0L,
@@ -3461,6 +3862,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 212L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "AutoSave",
                             ParentId = 0L,
@@ -3472,6 +3874,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 213L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "TypeSerial",
                             ParentId = 0L,
@@ -3483,6 +3886,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 214L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "AllowRepeated",
                             ParentId = 0L,
@@ -3494,6 +3898,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 215L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "SaveLastStatusSetting",
                             ParentId = 0L,
@@ -3505,6 +3910,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 216L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "AutoCreateTransaction",
                             ParentId = 0L,
@@ -3516,6 +3922,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 301L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "DefaultStore",
                             ParentId = 0L,
@@ -3527,6 +3934,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 302L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "DefaultSupplier",
                             ParentId = 0L,
@@ -3538,6 +3946,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 303L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "DefaultPaymentType",
                             ParentId = 0L,
@@ -3549,6 +3958,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 304L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "DiscountValue",
                             ParentId = 0L,
@@ -3560,6 +3970,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 305L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "DefaultDiscountType",
                             ParentId = 0L,
@@ -3571,6 +3982,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 306L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "ServiceValue",
                             ParentId = 0L,
@@ -3582,6 +3994,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 307L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "DefaultServiceType",
                             ParentId = 0L,
@@ -3593,6 +4006,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 308L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "TaxValue",
                             ParentId = 0L,
@@ -3604,6 +4018,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 309L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "DefaultTaxType",
                             ParentId = 0L,
@@ -3615,6 +4030,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 310L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "NumberLine",
                             ParentId = 0L,
@@ -3626,6 +4042,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 311L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "OrderTabe",
                             ParentId = 0L,
@@ -3637,6 +4054,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 312L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "AutoSave",
                             ParentId = 0L,
@@ -3648,6 +4066,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 313L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "TypeSerial",
                             ParentId = 0L,
@@ -3659,6 +4078,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 314L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "AllowRepeated",
                             ParentId = 0L,
@@ -3670,6 +4090,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 315L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "SaveLastStatusSetting",
                             ParentId = 0L,
@@ -3681,6 +4102,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 316L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "AutoCreateTransaction",
                             ParentId = 0L,
@@ -3692,6 +4114,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 401L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "DefaultStore",
                             ParentId = 0L,
@@ -3703,6 +4126,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 402L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "DefaultSupplier",
                             ParentId = 0L,
@@ -3714,6 +4138,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 403L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "NumberLine",
                             ParentId = 0L,
@@ -3725,6 +4150,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 404L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "OrderTabe",
                             ParentId = 0L,
@@ -3736,6 +4162,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 405L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "AutoSave",
                             ParentId = 0L,
@@ -3747,6 +4174,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 406L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "TypeSerial",
                             ParentId = 0L,
@@ -3758,6 +4186,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 407L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "AllowRepeated",
                             ParentId = 0L,
@@ -3769,6 +4198,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 408L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "SaveLastStatusSetting",
                             ParentId = 0L,
@@ -3780,6 +4210,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 501L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "DefaultStore",
                             ParentId = 0L,
@@ -3791,6 +4222,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 502L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "DefaultCustomer",
                             ParentId = 0L,
@@ -3802,6 +4234,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 503L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "NumberLine",
                             ParentId = 0L,
@@ -3813,6 +4246,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 504L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "OrderTabe",
                             ParentId = 0L,
@@ -3824,6 +4258,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 505L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "AutoSave",
                             ParentId = 0L,
@@ -3835,6 +4270,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 506L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "TypeSerial",
                             ParentId = 0L,
@@ -3846,6 +4282,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 507L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "AllowRepeated",
                             ParentId = 0L,
@@ -3857,6 +4294,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 508L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "SaveLastStatusSetting",
                             ParentId = 0L,
@@ -3868,6 +4306,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 601L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "DefaultStore",
                             ParentId = 0L,
@@ -3879,6 +4318,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 602L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "NumberLine",
                             ParentId = 0L,
@@ -3890,6 +4330,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 603L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "OrderTabe",
                             ParentId = 0L,
@@ -3901,6 +4342,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 604L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "AutoSave",
                             ParentId = 0L,
@@ -3912,6 +4354,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 605L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "TypeSerial",
                             ParentId = 0L,
@@ -3923,6 +4366,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 606L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "AllowRepeated",
                             ParentId = 0L,
@@ -3934,6 +4378,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 607L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "SaveLastStatusSetting",
                             ParentId = 0L,
@@ -3945,6 +4390,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 608L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "AutoReceived",
                             ParentId = 0L,
@@ -3956,6 +4402,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 701L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "DefaultStore",
                             ParentId = 0L,
@@ -3967,6 +4414,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 702L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "NumberLine",
                             ParentId = 0L,
@@ -3978,6 +4426,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 703L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "OrderTabe",
                             ParentId = 0L,
@@ -3989,6 +4438,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 704L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "AutoSave",
                             ParentId = 0L,
@@ -4000,6 +4450,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 705L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "TypeSerial",
                             ParentId = 0L,
@@ -4011,6 +4462,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 706L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "AllowRepeated",
                             ParentId = 0L,
@@ -4022,6 +4474,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 801L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "NumberLine",
                             ParentId = 0L,
@@ -4033,6 +4486,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 802L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "OrderTabe",
                             ParentId = 0L,
@@ -4044,6 +4498,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 803L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "AutoSave",
                             ParentId = 0L,
@@ -4055,6 +4510,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 804L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "TypeSerial",
                             ParentId = 0L,
@@ -4066,6 +4522,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 805L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "AllowRepeated",
                             ParentId = 0L,
@@ -4077,6 +4534,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 806L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "DiscountValue",
                             ParentId = 0L,
@@ -4088,6 +4546,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 807L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "DefaultDiscountType",
                             ParentId = 0L,
@@ -4099,6 +4558,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 808L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "ServiceValue",
                             ParentId = 0L,
@@ -4110,6 +4570,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 809L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "DefaultServiceType",
                             ParentId = 0L,
@@ -4121,6 +4582,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 810L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "TaxValue",
                             ParentId = 0L,
@@ -4132,6 +4594,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 811L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "DefaultTaxType",
                             ParentId = 0L,
@@ -4143,6 +4606,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 812L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "AutoCreateInvoice",
                             ParentId = 0L,
@@ -4154,6 +4618,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 813L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "DefaultCustomer",
                             ParentId = 0L,
@@ -4165,6 +4630,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 901L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "NumberLine",
                             ParentId = 0L,
@@ -4176,6 +4642,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 902L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "OrderTabe",
                             ParentId = 0L,
@@ -4187,6 +4654,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 903L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "AutoSave",
                             ParentId = 0L,
@@ -4198,6 +4666,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 904L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "TypeSerial",
                             ParentId = 0L,
@@ -4209,6 +4678,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 905L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "AllowRepeated",
                             ParentId = 0L,
@@ -4220,6 +4690,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 906L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "DiscountValue",
                             ParentId = 0L,
@@ -4231,6 +4702,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 907L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "DefaultDiscountType",
                             ParentId = 0L,
@@ -4242,6 +4714,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 908L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "ServiceValue",
                             ParentId = 0L,
@@ -4253,6 +4726,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 909L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "DefaultServiceType",
                             ParentId = 0L,
@@ -4264,6 +4738,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 910L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "TaxValue",
                             ParentId = 0L,
@@ -4275,6 +4750,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 911L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "DefaultTaxType",
                             ParentId = 0L,
@@ -4286,6 +4762,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 912L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "AutoCreateInvoice",
                             ParentId = 0L,
@@ -4297,6 +4774,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 913L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "DefaultCustomer",
                             ParentId = 0L,
@@ -4308,6 +4786,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1000L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "DefaultClient",
                             ParentId = 0L,
@@ -4319,6 +4798,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1001L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "DefaultSafe",
                             ParentId = 0L,
@@ -4330,6 +4810,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1002L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "DefaultPaymentType",
                             ParentId = 0L,
@@ -4341,6 +4822,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1003L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "DefaultCurrency",
                             ParentId = 0L,
@@ -4352,6 +4834,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1004L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "AutoSave",
                             ParentId = 0L,
@@ -4363,6 +4846,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1005L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "TypeSerial",
                             ParentId = 0L,
@@ -4374,6 +4858,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1100L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "DefaultSupplier",
                             ParentId = 0L,
@@ -4385,6 +4870,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1101L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "DefaultSafe",
                             ParentId = 0L,
@@ -4396,6 +4882,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1102L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "DefaultPaymentType",
                             ParentId = 0L,
@@ -4407,6 +4894,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1103L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "DefaultCurrency",
                             ParentId = 0L,
@@ -4418,6 +4906,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1104L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "AutoSave",
                             ParentId = 0L,
@@ -4429,6 +4918,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1105L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "TypeSerial",
                             ParentId = 0L,
@@ -4440,6 +4930,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1200L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "DefaultOutlay",
                             ParentId = 0L,
@@ -4451,6 +4942,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1201L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "DefaultSafe",
                             ParentId = 0L,
@@ -4462,6 +4954,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1202L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "DefaultPaymentType",
                             ParentId = 0L,
@@ -4473,6 +4966,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1203L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "DefaultCurrency",
                             ParentId = 0L,
@@ -4484,6 +4978,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1204L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "AutoSave",
                             ParentId = 0L,
@@ -4495,6 +4990,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1205L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "TypeSerial",
                             ParentId = 0L,
@@ -4506,6 +5002,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1300L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "DefaultStore",
                             ParentId = 0L,
@@ -4517,6 +5014,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1301L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "AutoSave",
                             ParentId = 0L,
@@ -4528,6 +5026,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1302L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Key = "TypeSerial",
                             ParentId = 0L,
@@ -4553,7 +5052,6 @@ namespace Repository.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("Code")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("CodeNumber")
@@ -4615,6 +5113,12 @@ namespace Repository.Migrations
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
 
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
                     b.Property<bool>("Hide")
                         .HasColumnType("bit");
 
@@ -4663,6 +5167,12 @@ namespace Repository.Migrations
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
 
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
                     b.Property<bool>("Hide")
                         .HasColumnType("bit");
 
@@ -4706,6 +5216,12 @@ namespace Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
 
                     b.Property<bool>("DefaultUnit")
                         .HasColumnType("bit");
@@ -4753,6 +5269,12 @@ namespace Repository.Migrations
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
 
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
                     b.Property<bool>("Hide")
                         .HasColumnType("bit");
 
@@ -4786,6 +5308,12 @@ namespace Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
 
                     b.Property<bool>("Hide")
                         .HasColumnType("bit");
@@ -4827,6 +5355,12 @@ namespace Repository.Migrations
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
 
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
                     b.Property<bool>("Hide")
                         .HasColumnType("bit");
 
@@ -4857,8 +5391,19 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1L,
+                            CodeNumber = 0L,
                             Hide = true,
                             Name = "Owner",
+                            ParentId = 0L,
+                            Status = 0,
+                            TypeId = 0L
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            CodeNumber = 0L,
+                            Hide = false,
+                            Name = "Admin",
                             ParentId = 0L,
                             Status = 0,
                             TypeId = 0L
@@ -4871,6 +5416,12 @@ namespace Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
 
                     b.Property<bool>("Hide")
                         .HasColumnType("bit");
@@ -4903,6 +5454,129 @@ namespace Repository.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("RolePermission");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            CodeNumber = 0L,
+                            Hide = false,
+                            ParentId = 0L,
+                            PermissionId = 102L,
+                            RoleId = 2L,
+                            Status = 0,
+                            TypeId = 0L
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            CodeNumber = 0L,
+                            Hide = false,
+                            ParentId = 0L,
+                            PermissionId = 10201L,
+                            RoleId = 2L,
+                            Status = 0,
+                            TypeId = 0L
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            CodeNumber = 0L,
+                            Hide = false,
+                            ParentId = 0L,
+                            PermissionId = 1020101L,
+                            RoleId = 2L,
+                            Status = 0,
+                            TypeId = 0L
+                        },
+                        new
+                        {
+                            Id = 4L,
+                            CodeNumber = 0L,
+                            Hide = false,
+                            ParentId = 0L,
+                            PermissionId = 1020102L,
+                            RoleId = 2L,
+                            Status = 0,
+                            TypeId = 0L
+                        },
+                        new
+                        {
+                            Id = 5L,
+                            CodeNumber = 0L,
+                            Hide = false,
+                            ParentId = 0L,
+                            PermissionId = 1020103L,
+                            RoleId = 2L,
+                            Status = 0,
+                            TypeId = 0L
+                        },
+                        new
+                        {
+                            Id = 6L,
+                            CodeNumber = 0L,
+                            Hide = false,
+                            ParentId = 0L,
+                            PermissionId = 1020104L,
+                            RoleId = 2L,
+                            Status = 0,
+                            TypeId = 0L
+                        },
+                        new
+                        {
+                            Id = 7L,
+                            CodeNumber = 0L,
+                            Hide = false,
+                            ParentId = 0L,
+                            PermissionId = 10202L,
+                            RoleId = 2L,
+                            Status = 0,
+                            TypeId = 0L
+                        },
+                        new
+                        {
+                            Id = 8L,
+                            CodeNumber = 0L,
+                            Hide = false,
+                            ParentId = 0L,
+                            PermissionId = 1020201L,
+                            RoleId = 2L,
+                            Status = 0,
+                            TypeId = 0L
+                        },
+                        new
+                        {
+                            Id = 9L,
+                            CodeNumber = 0L,
+                            Hide = false,
+                            ParentId = 0L,
+                            PermissionId = 1020202L,
+                            RoleId = 2L,
+                            Status = 0,
+                            TypeId = 0L
+                        },
+                        new
+                        {
+                            Id = 10L,
+                            CodeNumber = 0L,
+                            Hide = false,
+                            ParentId = 0L,
+                            PermissionId = 1020203L,
+                            RoleId = 2L,
+                            Status = 0,
+                            TypeId = 0L
+                        },
+                        new
+                        {
+                            Id = 11L,
+                            CodeNumber = 0L,
+                            Hide = false,
+                            ParentId = 0L,
+                            PermissionId = 1020204L,
+                            RoleId = 2L,
+                            Status = 0,
+                            TypeId = 0L
+                        });
                 });
 
             modelBuilder.Entity("Entity.Model.Safe", b =>
@@ -4911,6 +5585,12 @@ namespace Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
 
                     b.Property<bool>("Hide")
                         .HasColumnType("bit");
@@ -4942,6 +5622,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Name = "Main Safe",
                             ParentId = 0L,
@@ -4956,6 +5637,12 @@ namespace Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
 
                     b.Property<TimeSpan>("End")
                         .HasColumnType("time");
@@ -5000,6 +5687,12 @@ namespace Repository.Migrations
                     b.Property<long>("BranchId")
                         .HasColumnType("bigint");
 
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
                     b.Property<bool>("Hide")
                         .HasColumnType("bit");
 
@@ -5033,6 +5726,7 @@ namespace Repository.Migrations
                         {
                             Id = 1L,
                             BranchId = 1L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Name = "Main Store",
                             ParentId = 0L,
@@ -5047,6 +5741,12 @@ namespace Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -5088,11 +5788,19 @@ namespace Repository.Migrations
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
 
+                    b.Property<long?>("BranchId")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("Code")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("CreateUserId")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime>("Date")
@@ -5110,6 +5818,12 @@ namespace Repository.Migrations
                     b.Property<string>("MaskText")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime?>("ModifyDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("ModifyUserId")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("Notes")
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
@@ -5118,6 +5832,9 @@ namespace Repository.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("ShiftId")
                         .HasColumnType("bigint");
 
                     b.Property<int>("Status")
@@ -5137,9 +5854,17 @@ namespace Repository.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("BranchId");
+
+                    b.HasIndex("CreateUserId");
+
                     b.HasIndex("DealerId");
 
+                    b.HasIndex("ModifyUserId");
+
                     b.HasIndex("OrderId");
+
+                    b.HasIndex("ShiftId");
 
                     b.HasIndex("StoreId");
 
@@ -5154,6 +5879,12 @@ namespace Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
 
                     b.Property<decimal>("Cost")
                         .HasColumnType("decimal(18,2)");
@@ -5220,6 +5951,12 @@ namespace Repository.Migrations
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
 
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
                     b.Property<bool>("Hide")
                         .HasColumnType("bit");
 
@@ -5256,6 +5993,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Icon = "iconsminds-down-1",
                             InOut = 1,
@@ -5267,6 +6005,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 2L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Icon = "iconsminds-up-1",
                             InOut = -1,
@@ -5278,6 +6017,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 3L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Icon = "iconsminds-shuffle-1",
                             InOut = -1,
@@ -5289,6 +6029,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 4L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Icon = "iconsminds-file-edit",
                             InOut = 1,
@@ -5300,6 +6041,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 5L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Icon = "",
                             InOut = 1,
@@ -5311,6 +6053,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 6L,
+                            CodeNumber = 0L,
                             Hide = false,
                             Icon = "",
                             InOut = -1,
@@ -5327,6 +6070,12 @@ namespace Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
 
                     b.Property<bool>("Hide")
                         .HasColumnType("bit");
@@ -5363,6 +6112,12 @@ namespace Repository.Migrations
                         .UseIdentityColumn();
 
                     b.Property<long?>("BranchId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
                         .HasColumnType("bigint");
 
                     b.Property<bool>("Hide")
@@ -5411,6 +6166,7 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 1L,
+                            CodeNumber = 0L,
                             Hide = true,
                             Name = "Owner",
                             ParentId = 0L,
@@ -5419,11 +6175,34 @@ namespace Repository.Migrations
                             Status = 0,
                             TypeId = 0L,
                             UserName = "Owner"
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            CodeNumber = 0L,
+                            Hide = false,
+                            Name = "Admin",
+                            ParentId = 0L,
+                            Password = "mGs8bPJNLmeH75qTfY9f9Q==",
+                            RoleId = 2L,
+                            Status = 0,
+                            TypeId = 0L,
+                            UserName = "Admin"
                         });
                 });
 
             modelBuilder.Entity("Entity.Model.Financial", b =>
                 {
+                    b.HasOne("Entity.Model.Branch", "Branch")
+                        .WithMany()
+                        .HasForeignKey("BranchId");
+
+                    b.HasOne("Entity.Model.User", "CreateUser")
+                        .WithMany()
+                        .HasForeignKey("CreateUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Entity.Model.Currency", "Currency")
                         .WithMany()
                         .HasForeignKey("CurrencyId")
@@ -5433,6 +6212,10 @@ namespace Repository.Migrations
                     b.HasOne("Entity.Model.Dealer", "Dealer")
                         .WithMany()
                         .HasForeignKey("DealerId");
+
+                    b.HasOne("Entity.Model.User", "ModifyUser")
+                        .WithMany()
+                        .HasForeignKey("ModifyUserId");
 
                     b.HasOne("Entity.Model.Outlay", "Outlay")
                         .WithMany()
@@ -5450,15 +6233,27 @@ namespace Repository.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Entity.Model.Shift", "Shift")
+                        .WithMany()
+                        .HasForeignKey("ShiftId");
+
+                    b.Navigation("Branch");
+
+                    b.Navigation("CreateUser");
+
                     b.Navigation("Currency");
 
                     b.Navigation("Dealer");
+
+                    b.Navigation("ModifyUser");
 
                     b.Navigation("Outlay");
 
                     b.Navigation("PaymentType");
 
                     b.Navigation("Safe");
+
+                    b.Navigation("Shift");
                 });
 
             modelBuilder.Entity("Entity.Model.FinancialInvoice", b =>
@@ -5482,6 +6277,24 @@ namespace Repository.Migrations
 
             modelBuilder.Entity("Entity.Model.Inventory", b =>
                 {
+                    b.HasOne("Entity.Model.Branch", "Branch")
+                        .WithMany()
+                        .HasForeignKey("BranchId");
+
+                    b.HasOne("Entity.Model.User", "CreateUser")
+                        .WithMany()
+                        .HasForeignKey("CreateUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Entity.Model.User", "ModifyUser")
+                        .WithMany()
+                        .HasForeignKey("ModifyUserId");
+
+                    b.HasOne("Entity.Model.Shift", "Shift")
+                        .WithMany()
+                        .HasForeignKey("ShiftId");
+
                     b.HasOne("Entity.Model.Store", "Store")
                         .WithMany()
                         .HasForeignKey("StoreId")
@@ -5491,6 +6304,14 @@ namespace Repository.Migrations
                     b.HasOne("Entity.Model.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
+
+                    b.Navigation("Branch");
+
+                    b.Navigation("CreateUser");
+
+                    b.Navigation("ModifyUser");
+
+                    b.Navigation("Shift");
 
                     b.Navigation("Store");
 
@@ -5526,6 +6347,16 @@ namespace Repository.Migrations
 
             modelBuilder.Entity("Entity.Model.Invoice", b =>
                 {
+                    b.HasOne("Entity.Model.Branch", "Branch")
+                        .WithMany()
+                        .HasForeignKey("BranchId");
+
+                    b.HasOne("Entity.Model.User", "CreateUser")
+                        .WithMany()
+                        .HasForeignKey("CreateUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Entity.Model.Currency", "Currency")
                         .WithMany()
                         .HasForeignKey("CurrencyId")
@@ -5537,6 +6368,10 @@ namespace Repository.Migrations
                         .HasForeignKey("DealerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Entity.Model.User", "ModifyUser")
+                        .WithMany()
+                        .HasForeignKey("ModifyUserId");
 
                     b.HasOne("Entity.Model.PaymentType", "PaymentType")
                         .WithMany()
@@ -5558,9 +6393,15 @@ namespace Repository.Migrations
                         .WithMany()
                         .HasForeignKey("TransactionId");
 
+                    b.Navigation("Branch");
+
+                    b.Navigation("CreateUser");
+
                     b.Navigation("Currency");
 
                     b.Navigation("Dealer");
+
+                    b.Navigation("ModifyUser");
 
                     b.Navigation("PaymentType");
 
@@ -5608,6 +6449,16 @@ namespace Repository.Migrations
 
             modelBuilder.Entity("Entity.Model.Order", b =>
                 {
+                    b.HasOne("Entity.Model.Branch", "Branch")
+                        .WithMany()
+                        .HasForeignKey("BranchId");
+
+                    b.HasOne("Entity.Model.User", "CreateUser")
+                        .WithMany()
+                        .HasForeignKey("CreateUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Entity.Model.Dealer", "Dealer")
                         .WithMany()
                         .HasForeignKey("DealerId");
@@ -5615,6 +6466,10 @@ namespace Repository.Migrations
                     b.HasOne("Entity.Model.Invoice", "Invoice")
                         .WithMany()
                         .HasForeignKey("InvoiceId");
+
+                    b.HasOne("Entity.Model.User", "ModifyUser")
+                        .WithMany()
+                        .HasForeignKey("ModifyUserId");
 
                     b.HasOne("Entity.Model.Shift", "Shift")
                         .WithMany()
@@ -5624,9 +6479,15 @@ namespace Repository.Migrations
                         .WithMany()
                         .HasForeignKey("TableId");
 
+                    b.Navigation("Branch");
+
+                    b.Navigation("CreateUser");
+
                     b.Navigation("Dealer");
 
                     b.Navigation("Invoice");
+
+                    b.Navigation("ModifyUser");
 
                     b.Navigation("Shift");
 
@@ -5775,13 +6636,31 @@ namespace Repository.Migrations
 
             modelBuilder.Entity("Entity.Model.Transaction", b =>
                 {
+                    b.HasOne("Entity.Model.Branch", "Branch")
+                        .WithMany()
+                        .HasForeignKey("BranchId");
+
+                    b.HasOne("Entity.Model.User", "CreateUser")
+                        .WithMany()
+                        .HasForeignKey("CreateUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Entity.Model.Dealer", "Dealer")
                         .WithMany()
                         .HasForeignKey("DealerId");
 
+                    b.HasOne("Entity.Model.User", "ModifyUser")
+                        .WithMany()
+                        .HasForeignKey("ModifyUserId");
+
                     b.HasOne("Entity.Model.Order", "Order")
                         .WithMany()
                         .HasForeignKey("OrderId");
+
+                    b.HasOne("Entity.Model.Shift", "Shift")
+                        .WithMany()
+                        .HasForeignKey("ShiftId");
 
                     b.HasOne("Entity.Model.Store", "Store")
                         .WithMany()
@@ -5793,9 +6672,17 @@ namespace Repository.Migrations
                         .WithMany()
                         .HasForeignKey("ToStoreId");
 
+                    b.Navigation("Branch");
+
+                    b.Navigation("CreateUser");
+
                     b.Navigation("Dealer");
 
+                    b.Navigation("ModifyUser");
+
                     b.Navigation("Order");
+
+                    b.Navigation("Shift");
 
                     b.Navigation("Store");
 
