@@ -19,84 +19,89 @@
         </ol>
     </nav>
 
-    <div class="card">
-        <div class="card-header m-0">
-            <h3 class="mt-3">
-                @if (Model == null || Model.Id == 0)
-                {
-                    <span class="mb-4"> @Utility.Resource.Title_Designer.New ...</span>
-                }
-                else
-                {
-                    <span class="mb-4"> @Utility.Resource.Title_Designer.Edit ...</span>
-                }
-            </h3>
-            <div class="position-absolute card-top-buttons">
-                <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId" class="btn btn-primary"><i class="simple-icon-action-undo"></i>  @Utility.Resource.Title_Designer.Back</a>
-            </div>
-        </div>
+    <div class="row">
+        <div class="col-xl-12 col-lg-12 mb-4">
+            <div class="card h-100">
 
-        <form action="Save" method="post" enctype="multipart/form-data" novalidate>
-            <div class="card-body m-0 pl-5 pr-5 pt-2 pb-0">
-                <div class="row">
-                    @Html.HiddenFor(model => model.Id)
-                    @Html.HiddenFor(model => model.TypeId)
-                    @Html.HiddenFor(model => model.ParentId)
-                    @Html.HiddenFor(model => model.Status)
-                    @Html.HiddenFor(model => model.MaskText)
-                    @Html.HiddenFor(model => model.Code)
-                    @Html.HiddenFor(model => model.CodeNumber)
-                    @Html.HiddenFor(model => model.Hide)
-                    @Html.HiddenFor(model => model.ImgPath)
-                    <div class="col-md-12 col-sm-12 col-lg-9">
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Name)
-                            @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Name })
-                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.NameRequired!</small>
-                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger mt-3 m-1" })
-                        </div>
-                        <div class="form-group">
-                            <label>@Utility.Resource.Title_Designer.Check</label>
-                            <div class="custom-control custom-checkbox">
-                                @Html.CheckBoxFor(model => model.BePurchased, new { @class = "custom-control-input" })
-                                <label class="custom-control-label" for="BePurchased">
-                                    @Utility.Resource.Title_Designer.BePurchased
-                                </label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                @Html.CheckBoxFor(model => model.BeSold, new { @class = "custom-control-input" })
-                                <label class="custom-control-label" for="BeSold">
-                                    @Utility.Resource.Title_Designer.BeSold
-                                </label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                @Html.CheckBoxFor(model => model.BeManufactured, new { @class = "custom-control-input" })
-                                <label class="custom-control-label" for="BeManufactured">
-                                    @Utility.Resource.Title_Designer.BeManufactured
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-12 col-lg-3 pt-4 pb-4">
-                        <div class="card mb-4 p-3">
-                            <div class="position-absolute card-top-buttons" style="padding:21px;">
-                                <button type="button" onclick="document.getElementById('flImage').click();" class="btn btn-outline-white icon-button ">
-                                    <i class="simple-icon-pencil"></i>
-                                </button>
-                                <input id="flImage" type="file" name="file" onchange="SelectImage(this)" style="display:none" accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*" />
-                                <button type="button" class="btn btn-outline-white icon-button" onclick="document.getElementById('flImage').value ='' ;$('#img').attr('src', '/img/profiles/ClassificationCard.png')">
-                                    X
-                                </button>
-                            </div>
-                            @if ("" + Model.ImgPath != "")
+                <div class="card p-4">
+                    <div class="d-md-block" id="displayOptions">
+                        <h3 class="mr-4 mb-2 ml-4 d-inline-block float-md-left">
+                            @if (Model != null || Model.Id == 0)
                             {
-                                <img id="img" src="@Model.ImgPath" alt="Fruitcake" class="list-thumbnail border-0  badge-theme-1" style="min-height:150px;">
+                                <span class="mb-4"> @Utility.Resource.Title_Designer.New ...</span>
                             }
                             else
                             {
-                                <img id="img" src="~/img/profiles/ClassificationCard.png" alt="Fruitcake" class="list-thumbnail border-0  badge-theme-1" style="min-height:150px;">
+                                <span class="mb-4"> @Utility.Resource.Title_Designer.Edit ...</span>
                             }
+                        </h3>
+                        <div class="position-absolute card-top-buttons">
+                            <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId" class="btn btn-primary"><i class="simple-icon-action-undo"></i>  @Utility.Resource.Title_Designer.Back</a>
                         </div>
+                    </div>
+
+                    <hr />
+
+                    <div class="card-body p-0">
+                        <form action="Save" method="post" enctype="multipart/form-data" class="tooltip-label-right" novalidate>
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-lg-9">
+                                    @Html.HiddenFor(model => model.Id)
+                                    @Html.HiddenFor(model => model.TypeId)
+                                    @Html.HiddenFor(model => model.ParentId)
+                                    <div class="form-group position-relative error-l-50">
+                                        @Html.LabelFor(model => model.Name)
+                                        @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Name })
+                                       @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.NameRequired!</small>*@
+                                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger mt-3 m-1" })
+                                    </div>
+                                    <div class="form-group position-relative">
+                                        <label>@Utility.Resource.Title_Designer.Check</label>
+                                        <div class="custom-control custom-checkbox">
+                                            @Html.CheckBoxFor(model => model.BePurchased, new { @class = "custom-control-input" })                                            
+                                            <label class="custom-control-label" for="BePurchased">
+                                                @Utility.Resource.Title_Designer.BePurchased
+                                            </label>
+                                        </div>
+                                        <div class="custom-control custom-checkbox">
+                                            @Html.CheckBoxFor(model => model.BeSold, new { @class = "custom-control-input" })
+                                            <label class="custom-control-label" for="BeSold">
+                                                @Utility.Resource.Title_Designer.BeSold
+                                            </label>
+                                        </div>
+                                        <div class="custom-control custom-checkbox">
+                                            @Html.CheckBoxFor(model => model.BeManufactured, new { @class = "custom-control-input" })
+                                            <label class="custom-control-label" for="BeManufactured">
+                                                @Utility.Resource.Title_Designer.BeManufactured
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-12 col-lg-3 pt-4 pb-4">
+                                    <div class="card mb-4 p-3">
+                                        <div class="position-absolute card-top-buttons" style="padding:21px;">
+                                            <button type="button" onclick="document.getElementById('flImage').click();" class="btn btn-outline-white icon-button ">
+                                                <i class="simple-icon-pencil"></i>
+                                            </button>
+                                            <input id="flImage" type="file" name="file" onchange="SelectImage(this)" style="display:none" accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*" />
+                                            <button type="button" class="btn btn-outline-white icon-button" onclick="document.getElementById('flImage').value ='' ;$('#img').attr('src', '/img/profiles/ClassificationCard.png')">
+                                                X
+                                            </button>
+                                        </div>
+                                        @if ("" + Model.ImgPath != "")
+                                        {
+                                            <img id="img" src="@Model.ImgPath" alt="Fruitcake" class="list-thumbnail border-0  badge-theme-1" style="height:200px;">
+                                        }
+                                        else
+                                        {
+                                            <img id="img" src="~/img/profiles/ClassificationCard.png" alt="Fruitcake" class="list-thumbnail border-0  badge-theme-1" style="height:200px">
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+                            <button type="submit" class="btn btn-primary mb-0">@Utility.Resource.Title_Designer.Save</button>
+                        </form>
                     </div>
                 </div>
             </div>

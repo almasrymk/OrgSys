@@ -5,65 +5,69 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div id="HPage" class="container-fluid">
-    <h1> @Utility.Resource.Title_Designer.Branch</h1>
-    <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
-        <ol class="breadcrumb pt-0">
-            <li class="breadcrumb-item">
-                <a href="/">@Utility.Resource.Title_Designer.Home</a>
-            </li>
-            <li class="breadcrumb-item">
-                @Utility.Resource.Title_Designer.Setting
-            </li>
-            <li class="breadcrumb-item active" aria-current="page">@Utility.Resource.Title_Designer.Branch</li>
-        </ol>
-    </nav>
+    <div id="HPage" class="container-fluid">
+        <h1> @Utility.Resource.Title_Designer.Branchs</h1>
+        <nav class="breadcrumb-container d-none pb-3 d-sm-block d-lg-inline-block" aria-label="breadcrumb">
+            <ol class="breadcrumb pt-0">
+                <li class="breadcrumb-item">
+                    <a href="/">@Utility.Resource.Title_Designer.Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                    @Utility.Resource.Title_Designer.Setting
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">@Utility.Resource.Title_Designer.Branch</li>
+            </ol>
+        </nav>
 
-    <div class="card">
-        <div class="card-header m-0">
-            <h3 class="mt-3">
-                @if (Model == null || Model.Id == 0)
-                {
-                    <span class="mb-4"> @Utility.Resource.Title_Designer.New ...</span>
-                }
-                else
-                {
-                    <span class="mb-4"> @Utility.Resource.Title_Designer.Edit ...</span>
-                }
-            </h3>
-            <div class="position-absolute card-top-buttons">
-                <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId" class="btn btn-primary"><i class="simple-icon-action-undo"></i>  @Utility.Resource.Title_Designer.Back</a>
-            </div>
-        </div>
+        <div class="row">
+            <div class="col-xl-12 col-lg-12 mb-4">
+                <div class="card h-100">
 
-        <form action="Save" method="post" enctype="multipart/form-data" novalidate>
-            <div class="card-body m-0 pl-5 pr-5 pt-2 pb-0">
-                <div class="row">
-                    @Html.HiddenFor(model => model.Id)
-                    @Html.HiddenFor(model => model.TypeId)
-                    @Html.HiddenFor(model => model.ParentId)
-                    @Html.HiddenFor(model => model.Status)
-                    @Html.HiddenFor(model => model.MaskText)
-                    @Html.HiddenFor(model => model.Code)
-                    @Html.HiddenFor(model => model.CodeNumber)
-                    @Html.HiddenFor(model => model.Hide)
-                    @Html.HiddenFor(model => model.ImgPath)
-                    <div class="form-group col-8">
-                        @Html.LabelFor(model => model.Name)
-                        @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
-                        @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.NameRequired!</small>*@
-                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger mt-3 m-1" })
+                    <div class="card pl-4 pr-4 ">
+                        <div class="card-header m-0">
+                            <h3 class="mt-3">
+                                @if (Model == null || Model.Id == 0)
+                                {
+                                    <span class="mb-4"> @Utility.Resource.Title_Designer.New ...</span>
+                                }
+                                else
+                                {
+                                    <span class="mb-4"> @Utility.Resource.Title_Designer.Edit ...</span>
+                                }
+                            </h3>
+                            <div class="position-absolute card-top-buttons">
+                                <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId" class="btn btn-primary"><i class="simple-icon-action-undo"></i>  @Utility.Resource.Title_Designer.Back</a>
+                            </div>
+                        </div>
+
+                        <hr />
+
+                        <form action="Save" method="post" enctype="multipart/form-data" novalidate>
+                            <div class="card-body p-0 ">
+                                <div class="row">
+                                    @Html.HiddenFor(model => model.Id)
+                                    @Html.HiddenFor(model => model.TypeId)
+                                    @Html.HiddenFor(model => model.ParentId)
+                                    <div class="form-group col-12">
+                                        @Html.LabelFor(model => model.Name)
+                                        @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                                        @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.NameRequired!</small>*@
+                                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger mt-3 m-1" })
+                                    </div>
+                                </div>
+                            </div>
+                            @if (User.IsAllowed("Branchs.Edit"))
+                            {
+                                <div class="card-footer m-0" style="background-color:transparent;">
+
+                                    <button type="submit" class="btn btn-primary">@Utility.Resource.Title_Designer.Save</button>
+
+                                </div>
+                            }
+                        </form>
+     
                     </div>
                 </div>
             </div>
-            @if (User.IsAllowed("Branchs.Edit"))
-            {
-                <div class="card-footer m-0" style="background-color:transparent;">
-
-                    <button type="submit" class="btn btn-primary">@Utility.Resource.Title_Designer.Save</button>
-
-                </div>
-            }
-        </form>
+        </div>
     </div>
-</div>

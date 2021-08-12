@@ -6,9 +6,9 @@
 
 @if (Model != null && Model.Count > 0)
 {
-    <div id="tbList" class="card mt-2" style="display:none;">
-        <div class="card-body p-0">
-            <table class="table table-bordered responsive">
+    <div id="tbList" class="card" style="display:none;">
+        <div class="card-body p-2">
+            <table class="table table-bordered responsive nowrap mt-3" data-order="[[ 1, &quot;desc&quot; ]]">
                 <thead>
                     <tr>
                         <th style="text-align: center">#</th>
@@ -35,39 +35,36 @@
                             <td style="width:30px;vertical-align: middle;text-align:center">
                                 @x
                             </td>
-                            <td style="width:50px;vertical-align: middle;text-align:center">
-                                <div class="list-thumbnail responsive border-0 rounded-circle badge-theme-1 m-0" style="height:40px;width:40px;font-size:medium;text-align:center;padding-top:10px;">
-                                    <i class="iconsminds-coins"></i>
+                            <td style="width:60px;padding:7px; vertical-align: middle;">
+                                <div class="list-thumbnail responsive border-0 rounded-circle badge-theme-1 m-0" style="height:40px;width:40px;font-size:medium;text-align:center;padding:8px;">
+                                    <i class="iconsminds-dollar-sign-2"></i>
                                 </div>
                             </td>
                             <td style="vertical-align: middle;">
                                 <p class="text-muted">@Model[i].Name</p>
                             </td>
-                            @if (User.IsAllowed("Currencies.Edit"))
-                            {
-                                <td style="text-align: center;vertical-align: middle; width: 100px;">
-                                    <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit"></i> @Utility.Resource.Title_Designer.Edit</a>
-                                </td>
-                            }
-                            @if (User.IsAllowed("Currencies.Delete"))
-                            {
-                                <td style="text-align: center;vertical-align: middle; width: 100px;">
-                                    <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete</a>
-                                </td>
-
-                                <td style="width:40px;text-align:center;vertical-align: middle;">
-                                    @if (Model[i].Status == Utility.Status.All)
-                                    {
-                                        <label class="custom-control custom-checkbox m-0" style="text-align:center;vertical-align: middle;">
-                                            <input id="chk_@Model[i].Id" type="checkbox" class="custom-control-input m-0" style="position: relative">
-                                            <span class="custom-control-label m-0" style="position: relative"></span>
-                                            <input type="hidden" value="@Model[i].Id" />
-                                        </label>
-                                    }
-
-                                </td>
-
-                            }
+                            <td style="width:100px;vertical-align:middle;text-align:center;">
+                                @if (@Model[i].IsDefault)
+                                {
+                                    <i class="fa fa-check"> </i>
+                                }
+                            </td>
+                            <td style="text-align: center;vertical-align: middle; width: 100px;">
+                                <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit"></i> @Utility.Resource.Title_Designer.Edit</a>
+                            </td>
+                            <td style="text-align: center;vertical-align: middle; width: 100px;">
+                                <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete</a>
+                            </td>
+                            <td style="width:40px;text-align:center;vertical-align: middle;">
+                                @if (Model[i].Status == Utility.Status.All)
+                                {
+                                    <label class="custom-control custom-checkbox">
+                                        <input id="chk_@Model[i].Id" type="checkbox" class="custom-control-input chk">
+                                        <input type="hidden" value="@Model[i].Id" />
+                                        <span class="custom-control-label">&nbsp;</span>
+                                    </label>
+                                }
+                            </td>
                         </tr>
 
                     }
@@ -79,10 +76,10 @@
         <div class="col-12 list m-0 p-0 pt-2" data-check-all="checkAll">
             @for (int i = 0, x = ((Model.PageNumber - 1) * Model.PageSize) + 1; i < Model.Count; i++, x++)
             {
-                <div class="card d-flex flex-row mb-2" style="height:60px;">
-                    <div class="d-flex flex-grow-1 min-width-zero">
-                        <div class="list-thumbnail responsive border-0 card-img-left badge-theme-1" style=" height: 60px; width: 60px; font-size: x-large; text-align: center; padding-top: 15px;">
-                            <i class="iconsminds-coins"></i>
+                <div class="card d-flex flex-row mb-2">
+                    <div class="d-flex flex-grow-1 min-width-zero" style="height:60px;">
+                        <div class="list-thumbnail responsive border-0 card-img-left badge-theme-1" style=" height: 60px; width: 60px; font-size: x-large; text-align: center; padding:10px;">
+                            <i class="iconsminds-dollar-sign-2"></i>
                         </div>
 
                         <div class="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
@@ -94,14 +91,11 @@
                                 {
                                     <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit"></i> @Utility.Resource.Title_Designer.Edit</a>
                                 }
-                                @if (User.IsAllowed("Currencies.Edit") && User.IsAllowed("Currencies.Delete"))
-                                {
-                                    <span> &nbsp; | &nbsp; </span>
-                                }
-                                @if (User.IsAllowed("Currencies.Delete"))
-                                {
-                                    <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete</a>
-                                }
+                            </div>
+                            <div class="w-25 w-xs-100">
+                                <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit"></i> @Utility.Resource.Title_Designer.Edit</a>
+                                <span> &nbsp; | &nbsp; </span>
+                                <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete</a>
                             </div>
                         </div>
 
@@ -120,6 +114,52 @@
                 </div>
             }
         </div>
+    </div>
+    <div id="obList" class="row list disable-text-selection pt-2" data-check-all="checkAll" style="display:none;">
+        @for (int i = 0, x = ((Model.PageNumber - 1) * Model.PageSize) + 1; i < Model.Count; i++, x++)
+        {
+            <div href="#" class="card m-2 p-1">
+                <label class="custom-control custom-checkbox mr-1 ml-1">
+                    @if (Model[i].Status == Utility.Status.All)
+                    {
+                        <input id="chk_@Model[i].Id" type="checkbox" class="custom-control-input chk">
+                        <input type="hidden" value="@Model[i].Id" />
+                        <span class="custom-control-label">&nbsp;</span>
+                    }
+                </label>
+                <div class="position-absolute card-top-buttons m-0 p-2">
+                    <h3 class="card-text badge badge-pill badge-theme-1 text-small">@x</h3>
+                </div>
+                <div class="card-body text-center m-0 p-2">
+                    <div class="p-3">
+                        <div class="img-thumbnail border-0 rounded-circle m-0 list-thumbnail badge-theme-1" style="height: 120px; width: 120px; font-size:45px;text-align:center; padding-top:28px;">
+                            <i class="iconsminds-dollar-sign-2"></i>
+                        </div>
+                    </div>
+                    <div class="lead text-center">
+                        <p class="w-100" style="text-align:center;font-size:large;">
+                            @Model[i].Name
+                        </p>
+                    </div>
+                    <div class="lead text-center" style="height:30px;">
+                        <p style="text-align:center;font-size:small;">
+                            @if (@Model[i].IsDefault)
+                            {
+                            <span>
+                                Default : <i class="fa fa-check text-primary"> </i>
+                            </span>
+                                
+                            }
+                        </p>
+                    </div>                   
+                    <div class="m-0 p-0">
+                        <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit"></i> @Utility.Resource.Title_Designer.Edit</a>
+                        <span> &nbsp; | &nbsp; </span>
+                        <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete</a>
+                    </div>
+                </div>
+            </div>
+        }
     </div>
 }
 

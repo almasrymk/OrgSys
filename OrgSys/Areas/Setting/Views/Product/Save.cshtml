@@ -21,12 +21,12 @@
             </div>
         </div>
     </div>
-
+    
     <div class="row">
         <div class="col-12 mb-4">
             <div class="card h-100">
 
-                <div class="card pt-4 pb-4 pl-4 pr-4">
+                <div class="card p-4">
                     <div class="d-md-block" id="displayOptions">
                         <h2 class="mr-4 mb-2 ml-4 d-inline-block float-md-left">
                             @if (Model != null || Model.Id == 0)
@@ -41,7 +41,9 @@
                         </div>
                     </div>
 
-                    <div class="card-body">
+                    <hr />
+
+                    <div class="card-body p-0">
                         <form id="frmId" action="Save" method="post" enctype="multipart/form-data" class="tooltip-label-right " novalidate>
                             <div class="row">
                                 <div class="col-md-12 col-sm-12 col-lg-9 pl-4 pr-4">
@@ -65,7 +67,7 @@
                                                         <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
                                                     </div>
                                                 </div>
-                                                <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                                               @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                                             </div>
                                             @Html.ValidationMessageFor(model => model.ClassificationId, "", new { @class = "text-danger " })
                                         </div>
@@ -73,7 +75,7 @@
                                             @Html.LabelFor(model => model.Code)
                                             <div id="divCode">
                                                 @Html.TextBoxFor(model => model.Code, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Code })
-                                                <small class="form-text text-muted"> @Utility.Resource.Message_Designer.CodeIncreasedAutomaticallyCanBechanged</small>
+                                                @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.CodeIncreasedAutomaticallyCanBechanged</small>*@
                                             </div>
                                             @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger " })
                                         </div>
@@ -83,7 +85,7 @@
                                             @Html.LabelFor(model => model.Name)
                                             <div id="divName">
                                                 @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Name })
-                                                <small class="form-text text-muted"> @Utility.Resource.Message_Designer.NameRequired</small>
+                                                @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.NameRequired</small>*@
                                             </div>
                                             @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                                         </div>
@@ -91,7 +93,7 @@
                                             @Html.LabelFor(model => model.Nickname)
                                             <div id="divNickname">
                                                 @Html.TextBoxFor(model => model.Nickname, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Nickname })
-                                                <small class="form-text text-muted"> @Utility.Resource.Message_Designer.AbbreviatedNameProduct</small>
+                                                @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.AbbreviatedNameProduct</small>*@
                                             </div>
                                             @Html.ValidationMessageFor(model => model.Nickname, "", new { @class = "text-danger " })
                                         </div>
@@ -106,7 +108,7 @@
                                                     </div>
                                                     @Html.TextBoxFor(model => model.Barcode, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Barcode })
                                                 </div>
-                                                <small class="form-text text-muted"> @Utility.Resource.Message_Designer.ItConsists13Numbers</small>
+                                               @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.ItConsists13Numbers</small>*@
                                             </div>
                                             @Html.ValidationMessageFor(model => model.Barcode, "", new { @class = "text-danger " })
                                         </div>
@@ -119,7 +121,7 @@
                                                     </div>
                                                     @Html.TextBoxFor(model => model.Price, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Price })
                                                 </div>
-                                                <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SellingPriceProduct</small>
+                                               @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SellingPriceProduct</small>*@
                                             </div>
                                             @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger " })
                                         </div>
@@ -134,7 +136,7 @@
                                                     </div>
                                                     @Html.TextBoxFor(model => model.Cost, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Cost })
                                                 </div>
-                                                <small class="form-text text-muted"> @Utility.Resource.Message_Designer.PurchasePriceFromSuppliers</small>
+                                               @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.PurchasePriceFromSuppliers</small>*@
                                             </div>
                                             @Html.ValidationMessageFor(model => model.Cost, "", new { @class = "text-danger " })
                                         </div>
@@ -151,7 +153,7 @@
                                                         <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
                                                     </div>
                                                 </div>
-                                                <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                                                @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                                             </div>
                                             @Html.ValidationMessageFor(model => model.DealerId, "", new { @class = "text-danger " })
                                         </div>
@@ -160,7 +162,7 @@
                                         @Html.LabelFor(model => model.Description)
                                         <div id="divDescription">
                                             @Html.TextBoxFor(model => model.Description, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Description })
-                                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.PutYourNotesProduc</small>
+                                           @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.PutYourNotesProduc</small>*@
                                         </div>
                                         @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger mt-3 m-1" })
                                     </div>
@@ -314,6 +316,7 @@
                                     </div>
                                 </div>
                             </div>
+                            <hr />
                             <div class="pl-2 pr-2">
                                 <button type="button" onclick="Save()" class="btn btn-primary mb-0">@Utility.Resource.Title_Designer.Save</button>
                             </div>
