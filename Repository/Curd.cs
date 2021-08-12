@@ -21,8 +21,16 @@ namespace Repository
         public virtual long GetMaXCode(Func<entity, bool> filter = null)
         {
             IQueryable<entity> query = db.Set<entity>();
-            if (query.Any(filter))
-                return query.Where(filter).Max(e => e.CodeNumber) + 1;
+            if (filter != null)
+            {
+                if (query.Any(filter))
+                    return query.Where(filter).Max(e => e.CodeNumber) + 1;
+            }
+            else
+            {
+                if (query.Any())
+                    return query.Max(e => e.CodeNumber) + 1;
+            }
             return 1;
         }
 

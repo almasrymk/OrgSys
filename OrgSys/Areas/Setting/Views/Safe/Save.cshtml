@@ -28,7 +28,7 @@
         <div class="col-xl-12 col-lg-12 mb-4">
             <div class="card h-100">
 
-                <div class="card pt-4 pb-4 pl-4 pr-4">
+                <div class="card p-4">
                     <div class="d-md-block" id="displayOptions">
                         <h3 class="mr-4 mb-2 ml-4 d-inline-block float-md-left">
                             @if (Model != null || Model.Id == 0)
@@ -44,7 +44,8 @@
                             <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId" class="btn btn-primary"><i class="simple-icon-action-undo"></i>  @Utility.Resource.Title_Designer.Back</a>
                         </div>
                     </div>
-                    <div class="card-body">
+                    <hr />
+                    <div class="card-body p-0">
                         <form action="Save" method="post" enctype="multipart/form-data" class="tooltip-label-right" novalidate>
                             <div class="row">
                                 <div class="col-md-12 col-sm-12 col-lg-12">
@@ -54,11 +55,12 @@
                                     <div class="form-group position-relative error-l-50">
                                         @Html.LabelFor(model => model.Name)
                                         @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Name })
-                                        <small class="form-text text-muted"> @Utility.Resource.Message_Designer.NameRequired!</small>
+                                        @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.NameRequired!</small>*@
                                         @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger mt-3 m-1" })
                                     </div>                                   
                                 </div>                               
                             </div>
+                            <hr />
                             <button type="submit" class="btn btn-primary mb-0">@Utility.Resource.Title_Designer.Save</button>
                         </form>
                     </div>

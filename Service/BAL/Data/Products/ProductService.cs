@@ -150,7 +150,7 @@ namespace Service
 
         public long GetMaxCode(long type)
         {
-            return repo.productRepo.GetMaXCode();
+            return repo.productRepo.GetMaXCode(null);
         }
         #endregion
     }

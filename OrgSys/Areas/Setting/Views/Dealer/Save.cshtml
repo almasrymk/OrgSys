@@ -43,7 +43,7 @@
         <div class="col-12 mb-4">
             <div class="card h-100">
 
-                <div class="card pt-4 pb-4 pl-4 pr-4">
+                <div class="card p-4">
                     <div class="d-md-block" id="displayOptions">
                         <h2 class="mr-4 mb-2 ml-4 d-inline-block float-md-left">
                             @if (Model != null || Model.Id == 0)
@@ -59,8 +59,8 @@
                             <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId" class="btn btn-primary"><i class="simple-icon-action-undo"></i>  @Utility.Resource.Title_Designer.Back</a>
                         </div>
                     </div>
-
-                    <div class="card-body">
+                    <hr />
+                    <div class="card-body p-0">
                         <form action="Save" method="post" enctype="multipart/form-data" class="tooltip-label-right " novalidate>
                             <div class="row">
                                 <div class="col-md-12 col-sm-12 col-lg-9">
@@ -74,13 +74,13 @@
                                         <div class="form-group col-md-6">
                                             @Utility.Resource.Title_Designer.Code
                                             @Html.TextBoxFor(model => model.Code, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Code })
-                                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.CodeIncreasedAutomaticallyCanBechanged</small>
+                                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.CodeIncreasedAutomaticallyCanBechanged</small>*@
                                             @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger " })
                                         </div>
                                         <div class="form-group col-md-6">
                                             @Utility.Resource.Title_Designer.Name
                                             @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Name })
-                                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.NameRequired</small>
+                                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.NameRequired</small>*@
                                             @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
@@ -93,7 +93,7 @@
                                                 </div>
                                                 @Html.TextBoxFor(model => model.Phone, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Phone })
                                             </div>
-                                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SellingPriceProduct</small>
+                                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SellingPriceProduct</small>*@
                                             @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger " })
                                         </div>
                                         <div class="form-group col-md-6">
@@ -104,7 +104,7 @@
                                                 </div>
                                                 @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Email })
                                             </div>
-                                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SellingPriceProduct</small>
+                                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SellingPriceProduct</small>*@
                                             @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger " })
                                         </div>
                                     </div>
@@ -117,12 +117,12 @@
                                                 </div>
                                                 @Html.TextBoxFor(model => model.Address, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Address })
                                             </div>
-                                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SellingPriceProduct</small>
+                                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SellingPriceProduct</small>*@
                                             @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger " })
                                         </div>                                       
                                     </div>                                       
                                 </div>
-                                <div class="col-sm-12 col-md-12 col-lg-3 pt-4 pb-4">
+                                <div class="col-sm-12 col-md-12 col-lg-3 pt-2 pb-4">
                                     <div class="card mb-4 p-3">
                                         <div class="position-absolute card-top-buttons" style="padding:21px;">
                                             <button type="button" onclick="document.getElementById('flImage').click();" class="btn btn-outline-white icon-button ">
@@ -144,6 +144,7 @@
                                     </div>
                                 </div>
                             </div>
+                            <hr />
                             <button type="submit" class="btn btn-primary mb-0">@Utility.Resource.Title_Designer.Save</button>
                         </form>
                     </div>

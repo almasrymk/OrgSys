@@ -6,8 +6,8 @@
 @if (Model != null && Model.Count > 0)
 {
     <div id="tbList" class="card" style="display:none;">
-        <div class="card-body">
-            <table class="table table-bordered responsive nowrap mt-3" data-order="[[ 1, &quot;desc&quot; ]]">
+        <div class="card-body p-2">
+            <table class="table table-bordered responsive nowrap mt-1" data-order="[[ 1, &quot;desc&quot; ]]">
                 <thead>
                     <tr>
                         <th style="text-align: center">#</th>
@@ -33,7 +33,7 @@
                                 }
                                 else
                                 {
-                                    <div class="list-thumbnail responsive border-0 rounded-circle badge-theme-1 m-0" style="height:60px;width:60px;font-size:x-large;text-align:center;padding-top:13px;">
+                                    <div class="list-thumbnail responsive border-0 rounded-circle badge-theme-1 m-0" style="height:50px;width:50px;font-size:x-large;text-align:center;padding:7px;">
                                         <i class="simple-icon-people"></i>
                                     </div>
                                 }
@@ -41,10 +41,10 @@
                             <td style="vertical-align: middle;">
                                 <p class="text-muted">@Model[i].Name</p>
                             </td>
-                            <td style="width:70px;vertical-align: middle;">
+                            <td style="text-align: center;vertical-align: middle; width: 100px;">
                                 <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit"></i> @Utility.Resource.Title_Designer.Edit</a>
                             </td>
-                            <td style="width:80px;vertical-align: middle;">
+                            <td style="text-align: center;vertical-align: middle; width: 100px;">
                                 <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete</a>
                             </td>
                             <td style="width:40px;text-align:center;vertical-align: middle;">
@@ -71,7 +71,7 @@
                 if (Model[i].TypeId > 0)
                 {
                 <div class="card d-flex flex-row mb-3">
-                    <div class="d-flex flex-grow-1 min-width-zero">
+                    <div class="d-flex flex-grow-1 min-width-zero" style="height:60px">
                         @if ("" + Model[i].ImgPath != "")
                         {
                             <img alt="Thumbnail" src="@Model[i].ImgPath"
@@ -79,7 +79,7 @@
                         }
                         else
                         {
-                            <div class="list-thumbnail responsive border-0 card-img-left badge-theme-1" style="height:85px; width:85px; font-size:40px;text-align:center; padding-top:16px;">
+                            <div class="list-thumbnail responsive border-0 card-img-left badge-theme-1" style=" height: 60px; width: 60px; font-size: x-large; text-align: center; padding-top: 10px;">
                                 <i class="simple-icon-people"></i>
                             </div>
                         }
@@ -88,7 +88,7 @@
                                 <p class="list-item-heading mb-1 color-theme-1">@Model[i].Name</p>
                             </div>
                            
-                            <div class="w-15 w-xs-100">
+                            <div class="w-25 w-xs-100">
                                 <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit"></i> @Utility.Resource.Title_Designer.Edit</a>
                                 <span> &nbsp; | &nbsp; </span>
                                 <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete</a>
@@ -126,7 +126,7 @@
                     <h3 class="card-text badge badge-pill badge-theme-1 text-small">@x</h3>
                 </div>
                 <div class="card-body text-center m-0 p-2">
-                    <div class="pb-3">
+                    <div class="p-3">
                         @if ("" + Model[i].ImgPath != "")
                         {
                             <img alt="Profile" src="@Model[i].ImgPath" class="img-thumbnail border-0 rounded-circle m-0 list-thumbnail badge-theme-1" style="height:120px;width:120px;">
@@ -139,7 +139,7 @@
                         }
                     </div>
                     <div class="lead text-center">
-                        <p style="text-align:center;font-size:large;">
+                        <p style="text-align:center;font-size:large;" class="w-100">
                             @Model[i].Name
                         </p>
                     </div>
