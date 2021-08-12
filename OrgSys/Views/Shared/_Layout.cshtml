@@ -283,7 +283,7 @@
                             <span>@Utility.Resource.Title_Designer.Home</span>
                         </a>
                     </li>
-                    @if (User.IsAllowed("Branchs.All,Stores.All,Tables.All,Roles.All,Users.All,Shifts.All,Products.All,Classifications.All,Units.All,Clients.All,Suppliers.All,Safes.All,Outlays.All,Currencies.All"))
+                    @if (User.IsAllowed("Branchs.All,Stores.All,Tables.All,Roles.All,Users.All,Shifts.All,Products.All,Classifications.All,UnitsMeasure.All,Clients.All,Suppliers.All,Safes.All,OutlayTerms.All,Currencies.All"))
                     {
                         <li>
                             <a href="#setting">
@@ -331,7 +331,7 @@
         </div>
         <div class="sub-menu">
             <div class="scroll">
-                @if (User.IsAllowed("Branchs.All,Stores.All,Tables.All,Roles.All,Users.All,Shifts.All,Products.All,Classifications.All,Units.All,Clients.All,Suppliers.All,Safes.All,Outlays.All,Currencies.All"))
+                @if (User.IsAllowed("Branchs.All,Stores.All,Tables.All,Roles.All,Users.All,Shifts.All,Products.All,Classifications.All,UnitsMeasure.All,Clients.All,Suppliers.All,Safes.All,OutlayTerms.All,Currencies.All"))
                 {
                     <ul class="list-unstyled" data-link="setting">
                         @if (User.IsAllowed("Branchs.All,Stores.All,Tables.All"))
@@ -412,7 +412,7 @@
                             </li>
                         }
 
-                        @if (User.IsAllowed("Products.All,Classifications.All,Units.All"))
+                        @if (User.IsAllowed("Products.All,Classifications.All,UnitsMeasure.All"))
                         {
                             <li>
                                 <a href="#" data-toggle="collapse" data-target="#collapseProduct" aria-expanded="false"
@@ -437,7 +437,7 @@
                                                 </a>
                                             </li>
                                         }
-                                        @if (User.IsAllowed("Units.All"))
+                                        @if (User.IsAllowed("UnitsMeasure.All"))
                                         {
                                             <li>
                                                 <a href="/Setting/Unit">
@@ -481,7 +481,7 @@
                             </li>
                         }
 
-                        @if (User.IsAllowed("Safes.All,Outlays.All,Currencies.All"))
+                        @if (User.IsAllowed("Safes.All,OutlayTerms.All,Currencies.All"))
                         {
                             <li>
                                 <a href="#" data-toggle="collapse" data-target="#collapseDataFinancials" aria-expanded="false"
@@ -499,7 +499,7 @@
                                                 </a>
                                             </li>
                                         }
-                                        @if (User.IsAllowed("Outlays.All"))
+                                        @if (User.IsAllowed("OutlayTerms.All"))
                                         {
                                             <li>
                                                 <a href="/Setting/Outlay">
