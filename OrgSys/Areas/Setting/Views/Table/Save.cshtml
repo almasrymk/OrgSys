@@ -54,13 +54,13 @@
                                     @Html.HiddenFor(model => model.ParentId)                                                                        
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
-                                            @Html.LabelFor(model => model.Name)
+                                            <label>@Utility.Resource.Title_Designer.Name</label>
                                             @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Name })
                                             @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.NameRequired</small>*@
                                             @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                                         </div>
                                         <div class="form-group col-md-6 pt-2">
-                                            @Utility.Resource.Title_Designer.Description
+                                            <label>@Utility.Resource.Title_Designer.Description</label>
                                             @Html.TextBoxFor(model => model.Description, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Description })
                                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.CodeIncreasedAutomaticallyCanBechanged</small>*@
                                             @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger " })
@@ -68,7 +68,7 @@
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
-                                            @Utility.Resource.Title_Designer.NumberofPeople
+                                            <label>@Utility.Resource.Title_Designer.NumberofPeople</label>
                                             @Html.TextBoxFor(model => model.NumberOfPeople, new { @class = "form-control", @placeholder = "0" })
                                             @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.NameRequired</small>*@
                                             @Html.ValidationMessageFor(model => model.NumberOfPeople, "", new { @class = "text-danger" })

@@ -55,20 +55,20 @@
                                 @Html.HiddenFor(model => model.TypeId)
                                 @Html.HiddenFor(model => model.ParentId)
                                 <div class="form-group col-md-6 pr-0">
-                                    @Utility.Resource.Title_Designer.Name
+                                    <label>@Utility.Resource.Title_Designer.Name</label>
                                     @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Name })
                                    @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.NameRequired!</small>*@
                                     @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger mt-3 m-1" })
                                 </div>
                                 <div class="form-group col-md-3 pr-0 pl-1">
-                                    @Utility.Resource.Title_Designer.Start
+                                    <label>@Utility.Resource.Title_Designer.Start</label>
                                     @Html.TextBoxFor(model => model.Start, new { @type = "time", @class = "form-control", @placeholder = "00:00" })
                                    @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.NameRequired!</small>*@
                                     @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger mt-3 m-1" })
                                 </div>
 
                                 <div class="form-group col-md-3 pl-1">
-                                    @Utility.Resource.Title_Designer.End
+                                    <label>@Utility.Resource.Title_Designer.End</label>
                                     @Html.TextBoxFor(model => model.End, new { @type = "time", @class = "form-control", @placeholder = "00:00" })
                                    @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.NameRequired!</small>*@
                                     @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger mt-3 m-1" })

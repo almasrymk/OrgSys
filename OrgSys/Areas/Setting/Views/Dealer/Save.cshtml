@@ -70,13 +70,13 @@
                                     @Html.HiddenFor(model => model.ImgPath)
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
-                                            @Utility.Resource.Title_Designer.Code
+                                            <label>@Utility.Resource.Title_Designer.Code</label>
                                             @Html.TextBoxFor(model => model.Code, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Code })
                                             @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.CodeIncreasedAutomaticallyCanBechanged</small>*@
                                             @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger " })
                                         </div>
                                         <div class="form-group col-md-6">
-                                            @Utility.Resource.Title_Designer.Name
+                                            <label>@Utility.Resource.Title_Designer.Name</label>
                                             @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Name })
                                             @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.NameRequired</small>*@
                                             @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
@@ -84,7 +84,7 @@
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
-                                            @Utility.Resource.Title_Designer.Phone
+                                            <label>@Utility.Resource.Title_Designer.Phone</label>
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="simple-icon-phone"></i></span>
@@ -95,7 +95,7 @@
                                             @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger " })
                                         </div>
                                         <div class="form-group col-md-6">
-                                            @Utility.Resource.Title_Designer.Email
+                                            <label>@Utility.Resource.Title_Designer.Email</label>
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="iconsminds-mail"></i></span>
@@ -108,7 +108,7 @@
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-12">
-                                            @Utility.Resource.Title_Designer.Address
+                                            <label>@Utility.Resource.Title_Designer.Address</label>
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="simple-icon-location-pin"></i></span>

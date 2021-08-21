@@ -10,8 +10,8 @@
                 <thead>
                     <tr>
                         <th style="text-align: center">#</th>
-                        <th style="text-align: center">@Utility.Resource.Title_Designer.Image</th>
-                        <th>@Utility.Resource.Title_Designer.Name</th>
+                        <th class="w-10">@Utility.Resource.Title_Designer.Image</th>
+                        <th class="w-40">@Utility.Resource.Title_Designer.Name</th>
                         <th colspan="3"></th>
                     </tr>
                 </thead>
@@ -19,16 +19,16 @@
                     @for (int i = 0, x = ((Model.PageNumber - 1) * Model.PageSize) + 1; i < Model.Count; i++, x++)
                     {
                         <tr>
-                            <td style="width:50px;vertical-align: middle;text-align:center">
+                            <td style="width:50px;vertical-align:middle;text-align:center">
                                 <p class="list-item-heading">@x</p>
                             </td>
-                            <td style="width:80px;padding:7px; vertical-align: middle;">
+                            <td style="text-align:center; display:block ruby;">
                                 <div class="list-thumbnail responsive border-0 rounded-circle badge-theme-1 m-0" style="height:40px;width:40px;font-size:medium;text-align:center;padding-top:10px;">
                                     <i class="simple-icon-lock-open"></i>
                                 </div>
                             </td>
                             <td class="align-center p-3">
-                                <p class="text-muted">@Model[i].Name</p>
+                                <p class="text-muted"><a href="#">@Model[i].Name</a></p>
                             </td>
                             <td style="text-align: center;vertical-align: middle; width: 100px;">
                                 <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit"></i> @Utility.Resource.Title_Designer.Edit</a>
@@ -89,7 +89,7 @@
         </div>
     </div>
 
-    <div id="obList" class="row list disable-text-selection pt-2" data-check-all="checkAll" style="display:none;">
+    @*<div id="obList" class="row list disable-text-selection pt-2" data-check-all="checkAll" style="display:none;">
         @for (int i = 0, x = ((Model.PageNumber - 1) * Model.PageSize) + 1; i < Model.Count; i++, x++)
         {
             <div href="#" class="card m-2 p-1">
@@ -123,7 +123,7 @@
                 </div>
             </div>
         }
-    </div>
+    </div>*@
 }
 
 @Html.Partial("PagedList", Model)

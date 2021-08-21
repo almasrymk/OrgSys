@@ -50,7 +50,7 @@
                                     @Html.HiddenFor(model => model.TypeId)
                                     @Html.HiddenFor(model => model.ParentId)
                                     <div class="form-group position-relative error-l-50">
-                                        @Html.LabelFor(model => model.Name)
+                                        <label>@Utility.Resource.Title_Designer.Name</label>
                                         @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Name })
                                        @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.NameRequired!</small>*@
                                         @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger mt-3 m-1" })
@@ -99,23 +99,27 @@
                                     </div>
                                 </div>
                             </div>
-                            <hr />
-                            <button type="submit" class="btn btn-primary mb-0">@Utility.Resource.Title_Designer.Save</button>
+
+                         
+                          @if (User.IsAllowed("Branchs.Edit"))
+                            {
+                             <div class="card-footer m-0" style="background-color:transparent;">
+
+                             <button type="submit" class="btn btn-primary">@Utility.Resource.Title_Designer.Save</button>
+
+                             </div>
+                           }
                         </form>
                     </div>
                 </div>
             </div>
-            @if (User.IsAllowed("Branchs.Edit"))
-            {
-                <div class="card-footer m-0" style="background-color:transparent;">
-
-                    <button type="submit" class="btn btn-primary">@Utility.Resource.Title_Designer.Save</button>
-
-                </div>
-            }
-        </form>
+        </div>
     </div>
 </div>
+
+
+
+
 
 <script>
     function SelectImage(input) {
@@ -127,5 +131,5 @@
             }
             reader.readAsDataURL(input.files[0]);
         }
-    }
+            }
 </script>

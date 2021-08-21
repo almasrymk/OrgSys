@@ -48,9 +48,9 @@
                                     @Html.HiddenFor(model => model.Id)
                                     @Html.HiddenFor(model => model.TypeId)
                                     @Html.HiddenFor(model => model.ParentId)
-                                    <div class="form-group col-12">
-                                        @Html.LabelFor(model => model.Name)
-                                        @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                                    <div class="form-group col-11">
+                                        <label>@Utility.Resource.Title_Designer.Name</label>
+                                        @Html.TextBoxFor(model => model.Name, new { @class = "form-control" , @placeholder = @Utility.Resource.Title_Designer.Name })
                                         @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.NameRequired!</small>*@
                                         @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger mt-3 m-1" })
                                     </div>

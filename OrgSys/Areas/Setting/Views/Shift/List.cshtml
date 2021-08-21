@@ -102,7 +102,7 @@
         </div>
     </div>
 
-    <div id="obList" class="row list disable-text-selection pt-2" data-check-all="checkAll" style="display:none;">
+    @*<div id="obList" class="row list disable-text-selection pt-2" data-check-all="checkAll" style="display:none;">
         @for (int i = 0, x = ((Model.PageNumber - 1) * Model.PageSize) + 1; i < Model.Count; i++, x++)
         {
             <div href="#" class="card m-2 p-1">
@@ -136,7 +136,7 @@
                 </div>
             </div>
         }
-    </div>
+    </div>*@
 }
 
 @Html.Partial("PagedList", Model)

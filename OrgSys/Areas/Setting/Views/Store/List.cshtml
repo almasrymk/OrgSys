@@ -10,9 +10,9 @@
                 <thead>
                     <tr>
                         <th style="text-align: center">#</th>
-                        <th style="text-align: center"></th>
-                        <th>@Utility.Resource.Title_Designer.Name</th>
-                        <th>@Utility.Resource.Title_Designer.Branch</th>
+                        <th class="w-10"></th>
+                        <th class="w-30" >@Utility.Resource.Title_Designer.Name</th>
+                        <th class="w-20">@Utility.Resource.Title_Designer.Branch</th>
                         <th colspan="3"></th>
                     </tr>
                 </thead>
@@ -21,17 +21,17 @@
                     {
                     <tr>
                         <td style="width:50px;vertical-align: middle;text-align:center;">
-                            <p class="list-item-heading">@x</p>
+                            <p class="list-item-heading text-center">@x</p>
                         </td>
-                        <td style="width:80px;padding:7px; vertical-align: middle;">
+                        <td style="text-align:center; display:block ruby;">
                             <div class="list-thumbnail responsive border-0 rounded-circle badge-theme-1 m-0" style="height:40px;width:40px;font-size:medium;text-align:center;padding-top:10px;">
                                 <i class="iconsminds-clothing-store"></i>
                             </div>
                         </td>
-                        <td class="align-center p-3">
+                        <td class="align-middle">
                             <p class="text-muted">@Model[i].Name</p>
                         </td>
-                        <td style="text-align: center;vertical-align: middle; width: 100px;">
+                        <td class="align-middle">
                             <a href="/Setting/Branch/Save?id=@Model[i].BranchId">
                                 <p class="text-muted">@Model[i].BranchName</p>
                             </a>
@@ -98,7 +98,9 @@
         </div>
     </div>
 
-    <div id="obList" class="row list disable-text-selection pt-2" data-check-all="checkAll" style="display:none;">
+
+
+    @*<div id="obList" class="row list disable-text-selection pt-2" data-check-all="checkAll" style="display:none;">
         @for (int i = 0, x = ((Model.PageNumber - 1) * Model.PageSize) + 1; i < Model.Count; i++, x++)
         {
             <div href="#" class="card m-2 p-1">
@@ -135,7 +137,7 @@
                 </div>
             </div>
         }
-    </div>
+    </div>*@
 }
 
 @Html.Partial("PagedList", Model)

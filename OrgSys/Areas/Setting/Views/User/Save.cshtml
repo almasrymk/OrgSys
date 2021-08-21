@@ -59,7 +59,7 @@
                                     <input type="hidden" asp-for="Password" />
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
-                                            @Html.LabelFor(model => model.BranchId)
+                                            <label>@Utility.Resource.Title_Designer.Branch</label>
                                             <div id="divBranch" class="input-group">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="simple-icon-organization"></i></span>
@@ -72,7 +72,7 @@
                                             @Html.ValidationMessageFor(model => model.BranchId, "", new { @class = "text-danger " })
                                         </div>
                                         <div class="form-group col-md-6">
-                                            @Html.LabelFor(model => model.Name)
+                                            <label>@Utility.Resource.Title_Designer.Name</label>
                                             <input asp-for="Name" class="form-control" placeholder="@Utility.Resource.Title_Designer.Name" />
                                             @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.NameRequired</small>*@
                                             @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger " })
@@ -80,7 +80,7 @@
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
-                                            @Html.LabelFor(model => model.UserName)
+                                            <label>@Utility.Resource.Title_Designer.UserName</label>
                                             <input asp-for="UserName" class="form-control" placeholder="@Utility.Resource.Title_Designer.UserName" />
                                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.UsernameRequired</small>*@
                                             @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger " })
@@ -90,7 +90,7 @@
 
                                 <div class="col-sm-12 col-md-12 col-lg-4 pb-4 pl-1">
                                     <div class="form-group">
-                                        @Html.LabelFor(model => model.RoleId)
+                                        <label>@Utility.Resource.Title_Designer.Role</label>
                                         <div id="divRole" class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="simple-icon-lock-open"></i></span>

@@ -67,7 +67,7 @@
                                     @Html.ValidationMessageFor(model => model.BranchId, "", new { @class = "text-danger " })
                                 </div>
                                 <div class="form-group col-md-6">
-                                    @Html.LabelFor(model => model.Name)
+                                   <label>@Utility.Resource.Title_Designer.Name</label>
                                     <input asp-for="Name" class="form-control" placeholder="@Utility.Resource.Title_Designer.Name" />
                                     @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.NameRequired</small>*@
                                     @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger " })
