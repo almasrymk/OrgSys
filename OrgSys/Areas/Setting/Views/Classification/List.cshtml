@@ -12,7 +12,7 @@
                 <thead>
                     <tr>
                         <th style="text-align: center">#</th>
-                        <th style="text-align: center"></th>
+                        <th style="width:10px"></th>
                         <th>@Utility.Resource.Title_Designer.Name</th>
                         @if (User.IsAllowed("Classifications.Delete") && User.IsAllowed("Classifications.Edit"))
                         {
@@ -35,7 +35,7 @@
                             <td style="width:30px;vertical-align: middle;text-align:center">
                                 @x
                             </td>
-                            <td style="width:50px;vertical-align: middle;text-align:center">
+                            <td style="text-align:center; display:block ruby;">
                                 @if ("" + Model[i].ImgPath != "")
                                 {
                                     <img alt="Thumbnail" src="@Model[i].ImgPath"
@@ -49,7 +49,7 @@
                                 }
                             </td>
                             <td style="vertical-align: middle;">
-                                <p class="text-muted">@Model[i].Name</p>
+                                <a href="#"><p class="text-muted">@Model[i].Name</p></a>
                             </td>
                             @if (User.IsAllowed("Classifications.Edit"))
                             {

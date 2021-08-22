@@ -12,7 +12,7 @@
                 <thead>
                     <tr>
                         <th style="text-align: center">#</th>
-                        <th style="text-align: center"></th>
+                        <th style="width:10px"></th>
                         <th>@Utility.Resource.Title_Designer.Name</th>
                         @if (User.IsAllowed("Currencies.Delete") && User.IsAllowed("Currencies.Edit"))
                         {
@@ -35,20 +35,22 @@
                             <td style="width:30px;vertical-align: middle;text-align:center">
                                 @x
                             </td>
-                            <td style="width:60px;padding:7px; vertical-align: middle;">
+                            <td style="display:ruby block; text-align:center">
                                 <div class="list-thumbnail responsive border-0 rounded-circle badge-theme-1 m-0" style="height:40px;width:40px;font-size:medium;text-align:center;padding:8px;">
                                     <i class="iconsminds-dollar-sign-2"></i>
                                 </div>
                             </td>
-                            <td style="vertical-align: middle;">
-                                <p class="text-muted">@Model[i].Name</p>
+                            <td class="align-middle">
+                                <a href="#">
+                                    <p class="text-muted">@Model[i].Name</p>
+                                </a>
                             </td>
-                            <td style="width:100px;vertical-align:middle;text-align:center;">
+                            @*<td style="width:100px;vertical-align:middle;text-align:center;">
                                 @if (@Model[i].IsDefault)
                                 {
                                     <i class="fa fa-check"> </i>
                                 }
-                            </td>
+                            </td>*@
                             <td style="text-align: center;vertical-align: middle; width: 100px;">
                                 <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit"></i> @Utility.Resource.Title_Designer.Edit</a>
                             </td>
@@ -89,7 +91,7 @@
                             <div style="text-align:center;vertical-align: middle;">
                                 @if (User.IsAllowed("Currencies.Edit"))
                                 {
-                                    <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit"></i> @Utility.Resource.Title_Designer.Edit</a>
+                                    @*<a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit"></i> @Utility.Resource.Title_Designer.Edit</a>*@
                                 }
                             </div>
                             <div class="w-25 w-xs-100">
@@ -115,7 +117,9 @@
             }
         </div>
     </div>
-    <div id="obList" class="row list disable-text-selection pt-2" data-check-all="checkAll" style="display:none;">
+
+
+    @*<div id="obList" class="row list disable-text-selection pt-2" data-check-all="checkAll" style="display:none;">
         @for (int i = 0, x = ((Model.PageNumber - 1) * Model.PageSize) + 1; i < Model.Count; i++, x++)
         {
             <div href="#" class="card m-2 p-1">
@@ -160,7 +164,7 @@
                 </div>
             </div>
         }
-    </div>
+    </div>*@
 }
 
 @Html.Partial("PagedList", Model)

@@ -27,12 +27,13 @@
                         </li>
                         @if (ViewBag.TypeId == 1)
                         {
-                            <li class="breadcrumb-item active" aria-current="page">  <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId">@Utility.Resource.Title_Designer.Client</a></li>
+                            <li class="breadcrumb-item active" aria-current="page"><a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId">@Utility.Resource.Title_Designer.Client</a></li>
                         }
                         else if (ViewBag.TypeId == 2)
                         {
-                            <li class="breadcrumb-item active" aria-current="page">  <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId">@Utility.Resource.Title_Designer.Supplier</a></li>
+                            <li class="breadcrumb-item active" aria-current="page"><a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId">@Utility.Resource.Title_Designer.Supplier</a></li>
                         }
+
                     </ol>
                 </nav>
             </div>

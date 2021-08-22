@@ -58,7 +58,7 @@
                                     <input type="hidden" asp-for="ParentId" />
                                     <input type="hidden" asp-for="Password" />
                                     <div class="form-row">
-                                        <div class="form-group col-md-6">
+                                        <div class="form-group col-md-4 pr-1">
                                             <label>@Utility.Resource.Title_Designer.Branch</label>
                                             <div id="divBranch" class="input-group">
                                                 <div class="input-group-prepend">
@@ -71,7 +71,7 @@
                                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.BranchRequired</small>*@
                                             @Html.ValidationMessageFor(model => model.BranchId, "", new { @class = "text-danger " })
                                         </div>
-                                        <div class="form-group col-md-6">
+                                        <div class="form-group col-md-8 pr-2">
                                             <label>@Utility.Resource.Title_Designer.Name</label>
                                             <input asp-for="Name" class="form-control" placeholder="@Utility.Resource.Title_Designer.Name" />
                                             @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.NameRequired</small>*@
@@ -79,7 +79,7 @@
                                         </div>
                                     </div>
                                     <div class="form-row">
-                                        <div class="form-group col-md-6">
+                                        <div class="form-group col-md-6 pr-1">
                                             <label>@Utility.Resource.Title_Designer.UserName</label>
                                             <input asp-for="UserName" class="form-control" placeholder="@Utility.Resource.Title_Designer.UserName" />
                                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.UsernameRequired</small>*@
@@ -88,7 +88,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-sm-12 col-md-12 col-lg-4 pb-4 pl-1">
+                                <div class="col-sm-12 col-md-12 col-lg-4 pb-4 pr-4 pl-2">
                                     <div class="form-group">
                                         <label>@Utility.Resource.Title_Designer.Role</label>
                                         <div id="divRole" class="input-group">

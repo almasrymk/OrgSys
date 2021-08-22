@@ -59,7 +59,7 @@
                                             @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.NameRequired</small>*@
                                             @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                                         </div>
-                                        <div class="form-group col-md-6 pt-2">
+                                        <div class="form-group col-md-6">
                                             <label>@Utility.Resource.Title_Designer.Description</label>
                                             @Html.TextBoxFor(model => model.Description, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Description })
                                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.CodeIncreasedAutomaticallyCanBechanged</small>*@

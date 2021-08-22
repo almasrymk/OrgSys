@@ -5,12 +5,12 @@
 
 @if (Model != null && Model.Count > 0)
 {<div id="tbList" class="card" style="display:none;">
-        <div class="card-body p-0">
+        <div class="card-body p-2">
             <table class="table table-bordered responsive nowrap mt-3" data-order="[[ 1, &quot;desc&quot; ]]">
                 <thead>
                     <tr>
                         <th style="text-align: center">#</th>
-                        <th style="text-align: center">@Utility.Resource.Title_Designer.Image</th>
+                        <th style="width:10px"></th>
                         <th>@Utility.Resource.Title_Designer.Name</th>
                         <th colspan="3"></th>
                     </tr>
@@ -20,9 +20,9 @@
                     {
                         <tr>
                             <td style="width:50px;vertical-align: middle;text-align:center">
-                                <p class="list-item-heading">@x</p>
+                                <p class="list-item-heading text-center">@x</p>
                             </td>
-                            <td style="width:50px;padding:7px; vertical-align: middle;">
+                            <td style="text-align: center; display: block ruby;">
                                 @if ("" + Model[i].ImgPath != "")
                                 {
                                     <img alt="Thumbnail" src="@Model[i].ImgPath"
@@ -35,8 +35,10 @@
                                     </div>
                                 }
                             </td>
-                            <td class="align-center p-3">
-                                <p class="text-muted">@Model[i].Name</p>
+                            <td class="align-middle p-3">
+                                <a href="#">
+                                    <p class="text-muted">@Model[i].Name</p>
+                                </a>
                             </td>
                             <td style="text-align: center;vertical-align: middle; width: 100px;">
                                 <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit"></i> @Utility.Resource.Title_Designer.Edit</a>
