@@ -152,20 +152,20 @@
                     <h3 class="card-text badge badge-pill badge-theme-1 text-small">@x</h3>
                 </div>
                 <div class="card-body text-center m-0 p-0">
-                    <div class="p-2 text-center">
+                    <div class="p-1"style="display:block ruby;">
                         @if ("" + Model[i].ImgPath != "")
                         {
                             <img alt="Thumbnail" src="@Model[i].ImgPath"
-                                 class="img-thumbnail border-0 rounded-circle m-0 list-thumbnail badge-theme-1" style="height:110px;width:110px;font-size:40px;text-align:center;">
+                                 class="img-thumbnail border-0 rounded-circle m-0 list-thumbnail badge-theme-1" style="height:90px;width:90px;">
                         }
                         else
                         {
-                            <div class="img-thumbnail border-0 rounded-circle m-0 list-thumbnail badge-theme-1" style="height:110px;width:110px;font-size:40px;text-align:center;padding-top:25px;">
+                            <div class="img-thumbnail border-0 rounded-circle m-0 list-thumbnail badge-theme-1" style="height:90px;width:90px;font-size:35px;text-align:center;padding-top:20px;">
                                 <i class="simple-icon-share"></i>
                             </div>
                         }
                     </div>
-                    <div style="font-size:14px;max-width:100px;text-align:center;margin:10px;">
+                    <div style="font-size:13px;text-align:center;padding:10px;">
                         <h6>@Model[i].Name</h6>
 
                     </div>

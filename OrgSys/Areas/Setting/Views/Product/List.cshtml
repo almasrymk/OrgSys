@@ -28,7 +28,7 @@
                                 @if ("" + Model[i].ImgPath != "")
                                 {
                                     <img alt="Thumbnail" src="@Model[i].ImgPath"
-                                         class="list-thumbnail responsive border-0 rounded-circle badge-theme-1 m-0" style="height:60px;width:60px;" />
+                                         class="list-thumbnail responsive border-0 rounded-circle badge-theme-1 m-0" style="height:40px;width:40px;" />
                                 }
                                 else
                                 {
@@ -77,7 +77,7 @@
                         @if ("" + Model[i].ImgPath != "")
                         {
                             <img alt="Thumbnail" src="@Model[i].ImgPath"
-                                 class="list-thumbnail responsive border-0 card-img-left badge-theme-1" style="height:85px;width:85px;" />
+                                 class="list-thumbnail responsive border-0 card-img-left badge-theme-1" style="height:60px;width:60px;" />
                         }
                         else
                         {
@@ -89,10 +89,10 @@
                             <a class="list-item-heading mb-0 p-0 truncate w-20 w-xs-100 d-inline-block" href="Pages.Product.Detail.html">
                                 <p class="list-item-heading mb-1 color-theme-1">@Model[i].Name</p>
                             </a>
-                            <a class="list-item-heading mb-0 p-0 truncate w-20 w-xs-100 d-inline-block" href="Pages.Product.Detail.html">
+                            <a class="list-item-heading mb-0 p-0 truncate w-20 w-xs-100 d-inline-block mb-0" href="Pages.Product.Detail.html">
                                 <p class="list-item-heading mb-1 color-theme-1 text-small">@Model[i].Nickname</p>
                             </a>
-                            <a class="list-item-heading mb-0 p-0 truncate w-20 w-xs-100 d-inline-block" href="Pages.Product.Detail.html">
+                            <a class="list-item-heading mb-0 p-0 truncate w-20 w-xs-100 d-inline-block " href="Pages.Product.Detail.html">
                                 <p class="list-item-heading mb-1 color-theme-1 text-small ">@Model[i].ClassificationName</p>
                             </a>
                             <div class="w-25 w-xs-100">
@@ -117,7 +117,7 @@
     <div id="obList" class="row list disable-text-selection pt-2" data-check-all="checkAll" style="display:none;">
         @for (int i = 0, x = ((Model.PageNumber - 1) * Model.PageSize) + 1; i < Model.Count; i++, x++)
         {
-            <div href="#" class="card m-2 p-1">
+            <div href="#" class="card m-2"  style="box-shadow:0 1px 15px rgb(0 0 0 / 5%), 0 1px 5px rgb(0 0 0 / 5%) !important;">
                 <label class="custom-control custom-checkbox mr-1 ml-1">
                     @if (Model[i].Status == Utility.Status.All)
                     {
@@ -126,34 +126,36 @@
                         <span class="custom-control-label">&nbsp;</span>
                     }
                 </label>
-                <div class="position-absolute card-top-buttons m-0 p-2">
+                <div class="position-absolute card-top-buttons m-0 p-1">
                     <h3 class="card-text badge badge-pill badge-theme-1 text-small">@x</h3>
                 </div>
-                <div class="card-body text-center m-0 p-2">
-                    <div class="p-3">
+                <div class="card-body text-center m-0 p-0">
+                    <div class="p-1" style="display:block ruby ;">
                         @if ("" + Model[i].ImgPath != "")
                         {
-                            <img alt="Profile" src="@Model[i].ImgPath" class="img-thumbnail border-0  rounded-circle  m-0 list-thumbnail badge-theme-1" style="height:120px;width:120px;">
+                            <img alt="Profile" src="@Model[i].ImgPath" class="img-thumbnail border-0  rounded-circle  m-0 list-thumbnail badge-theme-1" style="height:90px;width:90px;font-size:18px;">
                         }
                         else
                         {
-                            <div class="img-thumbnail border-0 rounded-circle m-0 list-thumbnail badge-theme-1" style="height: 120px; width: 120px; font-size:70px;text-align:center; padding-top:10px;">
+                            <div class="img-thumbnail border-0 rounded-circle m-0 list-thumbnail badge-theme-1" style="height:90px;width:90px;font-size:35px;text-align:center;padding-top:18px;">
                                 <i class="iconsminds-shopping-basket"></i>
                             </div>
                         }
                     </div>
-                    <div class="lead text-center h-100">
-                        <p style="text-align:center;font-size:large;">
+                    <div class="lead text-center pt-2 h-100">
+                        <p style="text-align:center;font-size:large;margin-bottom:5px;">
                             @Model[i].Name
                         </p>
                         <p style="text-align:center;font-size:large;">
                             <small> @Model[i].ClassificationName </small>
                         </p>
                     </div>
-                    <div class="m-0 p-0">
-                        <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit"></i> @Utility.Resource.Title_Designer.Edit</a>
-                        <span> &nbsp; | &nbsp; </span>
-                        <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete</a>
+                    <div class="card-footer text-center m-0 p-2">
+                        <div class="m-0  p-0" style="font-size:12px;">
+                            <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit"></i> @Utility.Resource.Title_Designer.Edit</a>
+                            <span> &nbsp; | &nbsp; </span>
+                            <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete</a>
+                        </div>
                     </div>
                 </div>
             </div>
