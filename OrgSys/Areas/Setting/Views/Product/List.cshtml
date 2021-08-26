@@ -117,7 +117,7 @@
     <div id="obList" class="row list disable-text-selection pt-2" data-check-all="checkAll" style="display:none;">
         @for (int i = 0, x = ((Model.PageNumber - 1) * Model.PageSize) + 1; i < Model.Count; i++, x++)
         {
-            <div href="#" class="card m-2"  style="box-shadow:0 1px 15px rgb(0 0 0 / 5%), 0 1px 5px rgb(0 0 0 / 5%) !important;">
+            <div href="#" class="card m-2 w-15"  style="box-shadow:0 1px 15px rgb(0 0 0 / 5%), 0 1px 5px rgb(0 0 0 / 5%) !important;">
                 <label class="custom-control custom-checkbox mr-1 ml-1">
                     @if (Model[i].Status == Utility.Status.All)
                     {
@@ -142,7 +142,7 @@
                             </div>
                         }
                     </div>
-                    <div class="lead text-center pt-2 h-100">
+                    <div class="lead text-center pt-2 h-50">
                         <p style="text-align:center;font-size:large;margin-bottom:5px;">
                             @Model[i].Name
                         </p>
@@ -150,14 +150,14 @@
                             <small> @Model[i].ClassificationName </small>
                         </p>
                     </div>
-                    <div class="card-footer text-center m-0 p-2">
+                </div>
+                    <div class="card-footer align-bottom m-0 p-2">
                         <div class="m-0  p-0" style="font-size:12px;">
                             <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit"></i> @Utility.Resource.Title_Designer.Edit</a>
                             <span> &nbsp; | &nbsp; </span>
                             <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete</a>
                         </div>
                     </div>
-                </div>
             </div>
 
         }
