@@ -8,7 +8,7 @@
 {
     <div id="tbList" class="card mt-2" style="display:none;">
         <div class="card-body p-2">
-            <table class="table table-bordered responsive nowrap m-0" data-order="[[ 1, &quot;desc&quot; ]]">
+            <table class="table table-hover responsive nowrap m-0" data-order="[[ 1, &quot;desc&quot; ]]">
                 <thead>
                     <tr>
                         <th style="text-align: center">#</th>
@@ -39,11 +39,11 @@
                                 @if ("" + Model[i].ImgPath != "")
                                 {
                                     <img alt="Thumbnail" src="@Model[i].ImgPath"
-                                         class="list-thumbnail responsive border-0 rounded-circle badge-theme-1 m-0" style="height:40px;width:40px;font-size:medium;text-align:center;">
+                                         class="list-thumbnail  border-0 rounded-circle badge-theme-1 m-0" style="height:40px;width:40px;font-size:medium;text-align:center;">
                                 }
                                 else
                                 {
-                                    <div class="list-thumbnail responsive border-0 rounded-circle badge-theme-1 m-0" style="height:40px;width:40px;font-size:medium;text-align:center;padding-top:10px;">
+                                    <div class="list-thumbnail  border-0 rounded-circle badge-theme-1 m-0" style="height:40px;width:40px;font-size:medium;text-align:center;padding-top:10px;">
                                         <i class="simple-icon-layers"></i>
                                     </div>
                                 }
@@ -92,11 +92,11 @@
                         @if ("" + Model[i].ImgPath != "")
                         {
                             <img alt="Thumbnail" src="@Model[i].ImgPath"
-                                 class="list-thumbnail responsive border-0 card-img-left badge-theme-1" style=" height: 60px; width: 60px; font-size: x-large; text-align: center;">
+                                 class="list-thumbnail  border-0 card-img-left badge-theme-1" style=" height: 60px; width: 60px; font-size: x-large; text-align: center;">
                         }
                         else
                         {
-                            <div class="list-thumbnail responsive border-0 card-img-left badge-theme-1" style=" height: 60px; width: 60px; font-size: x-large; text-align: center; padding-top: 15px;">
+                            <div class="list-thumbnail  border-0 card-img-left badge-theme-1" style=" height: 60px; width: 60px; font-size: x-large; text-align: center; padding-top: 15px;">
                                 <i class="simple-icon-layers"></i>
                             </div>
                         }
@@ -153,7 +153,7 @@
                     <h3 class="card-text badge badge-pill badge-theme-1 text-small">@x</h3>
                 </div>
                 <div class="card-body text-center m-0 p-0">
-                    <div class="p-1"style="display:block ruby;">
+                    <div class="p-1"style="float: none; display: inline-block;">
                         @if ("" + Model[i].ImgPath != "")
                         {
                             <img alt="Thumbnail" src="@Model[i].ImgPath"
