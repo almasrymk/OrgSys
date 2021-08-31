@@ -1,5 +1,6 @@
 ﻿using Entity.Model;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entity.ModelView
 {
@@ -48,28 +49,25 @@ namespace Entity.ModelView
             this.Status = ob.Status;
         }
 
-        public User Model
+        public User Model()
         {
-            get
+            return new User
             {
-                return new User
-                {
-                    Name = this.Name,
-                    UserName = this.UserName,
-                    Password = this.Password,
-                    BranchId = this.BranchId,
-                    RoleId = this.RoleId,
-                    Id = this.Id,
-                    CodeNumber = this.CodeNumber,
-                    Code = this.Code,
-                    MaskText = this.MaskText,
-                    ParentId = this.ParentId,
-                    TypeId = this.TypeId,
-                    Hide = this.Hide,
-                    Status = this.Status,
-                    ImgPath = this.ImgPath
-                };
-            }
+                Name = this.Name,
+                UserName = this.UserName,
+                Password = this.Password,
+                BranchId = this.BranchId,
+                RoleId = this.RoleId,
+                Id = this.Id,
+                CodeNumber = this.CodeNumber,
+                Code = this.Code,
+                MaskText = this.MaskText,
+                ParentId = this.ParentId,
+                TypeId = this.TypeId,
+                Hide = this.Hide,
+                Status = this.Status,
+                ImgPath = this.ImgPath
+            };
         }
 
         public string Name { get; set; }

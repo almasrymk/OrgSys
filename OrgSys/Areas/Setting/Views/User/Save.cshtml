@@ -141,8 +141,8 @@
         if (CheckRequired("UserName", "UserName", '@Utility.Resource.Message_Designer.UsernameRequired'))
             Valid = false;
 
-        else if (CheckRage("UserName", "UserName", 5, 15, '@Utility.Resource.Message_Designer.UsernameRequired'))
-            Valid = false;
+        @*else if (CheckRage("UserName", "UserName", 5, 15, '@Utility.Resource.Message_Designer.UsernameRequired'))
+            Valid = false;*@
 
         else if (CheckUDoublicat())
             Valid = false;
@@ -157,7 +157,7 @@
                 UserName: $('#UserName').val().trim(),
                 RoleId: $('#RoleId').val().trim(),
                 ParentId: $('#ParentId').val(),
-                TypeId: $('#TypeId').val()
+                TypeId: $('#TypeId').val(),               
             };
 
             $.ajax({
@@ -169,7 +169,7 @@
                         window.location.replace(res.url);
                     }
                     else {
-                        LogError(data.Error);
+                       
                     }
                 }
             });
