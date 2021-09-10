@@ -40,14 +40,14 @@
                                 <li>
                                     <a id="tbProduct" href="#checkStep1">
                                         @Utility.Resource.Title_Designer.TransactionProducts<br />
-                                        <small>@Utility.Resource.Message_Designer.UnitsWhichProductMeasured</small>
+                                        @*<small>@Utility.Resource.Message_Designer.UnitsWhichProductMeasured</small>*@
                                         <div id="divProduct"></div>
                                     </a>
                                 </li>
                                 <li>
                                     <a id="tbHeader" href="#checkStep2">
                                         @Utility.Resource.Title_Designer.TransactionDetails<br />
-                                        <small>@Utility.Resource.Message_Designer.IngredientsThatProductMadeOf</small>
+                                       @* <small>@Utility.Resource.Message_Designer.IngredientsThatProductMadeOf</small>*@
                                         <div id="divHeader"></div>
                                     </a>
                                 </li>
@@ -59,14 +59,14 @@
                                 <li>
                                     <a id="tbHeader" href="#checkStep2">
                                         @Utility.Resource.Title_Designer.TransactionDetails<br />
-                                        <small>@Utility.Resource.Message_Designer.IngredientsThatProductMadeOf</small>
+                                        @*<small>@Utility.Resource.Message_Designer.IngredientsThatProductMadeOf</small>*@
                                         <div id="divHeader"></div>
                                     </a>
                                 </li>
                                 <li>
                                     <a id="tbProduct" href="#checkStep1">
                                         @Utility.Resource.Title_Designer.TransactionProducts<br />
-                                        <small>@Utility.Resource.Message_Designer.UnitsWhichProductMeasured</small>
+                                        @*<small>@Utility.Resource.Message_Designer.UnitsWhichProductMeasured</small>*@
                                         <div id="divProduct"></div>
                                     </a>
                                 </li>
@@ -257,7 +257,7 @@
                                             {
                                                 @Html.TextBoxFor(model => model.Code, new { @class = "form-control", @readonly = "true", @style = "background-color:transparent", @placeholder = @Utility.Resource.Title_Designer.Code })
                                             }
-                                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.CodeIncreasedAutomaticallyCanBechanged</small>
+                                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.CodeIncreasedAutomaticallyCanBechanged</small>*@
                                         </div>
                                         @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger " })
                                     </div>
@@ -270,7 +270,7 @@
                                                 </div>
                                                 @Html.TextBoxFor(model => model.Date, new { @class = "form-control datepicker" })
                                             </div>
-                                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                                         </div>
                                     </div>
                                     <div class="form-group col-md-4">
@@ -286,7 +286,7 @@
                                                     <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
                                                 </div>
                                             </div>
-                                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                                         </div>
                                         @Html.ValidationMessageFor(model => model.StoreId, "", new { @class = "text-danger " })
                                     </div>
@@ -309,7 +309,7 @@
                                                         <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
                                                     </div>
                                                 </div>
-                                                <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                                                @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                                             </div>
                                             @Html.ValidationMessageFor(model => model.DealerId, "", new { @class = "text-danger " })
                                         </div>
@@ -329,7 +329,7 @@
                                                         <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
                                                     </div>
                                                 </div>
-                                                <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                                                @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                                             </div>
                                             @Html.ValidationMessageFor(model => model.ToStoreId, "", new { @class = "text-danger " })
                                         </div>
@@ -346,7 +346,7 @@
                                                 </div>
                                                 @Html.TextBoxFor(model => model.Notes, new { @class = "form-control" })
                                             </div>
-                                            <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                                         </div>
                                         @Html.ValidationMessageFor(model => model.Notes, "", new { @class = "text-danger " })
                                     </div>
