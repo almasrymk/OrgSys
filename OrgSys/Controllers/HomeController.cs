@@ -31,6 +31,11 @@ namespace OrgSys.Controllers
         }
 
         public IActionResult Dashboard()
+        {           
+            return View();
+        }
+      
+        public IActionResult Index()
         {
             try
             {
@@ -43,12 +48,8 @@ namespace OrgSys.Controllers
 
                 throw;
             }
-            return View();
-        }
-      
-        public IActionResult Index()
-        {
-            return View();
+            return RedirectToAction("Dashboard");
+           // return View();
         }
         public IActionResult Notfound()
         {
