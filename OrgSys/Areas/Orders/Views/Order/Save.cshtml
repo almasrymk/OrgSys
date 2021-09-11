@@ -8,7 +8,15 @@
     <div class="row">
         <div class="col-12">
             <div class="mb-3">
-                <h1>@ViewBag.OrdersType</h1>
+                @if (Model.TypeId == 1)
+                {
+                    <h1>@Utility.Resource.Title_Designer.Internal</h1>
+                }
+                else if (Model.TypeId == 2)
+                {
+                    <h1>@Utility.Resource.Title_Designer.External</h1>
+                }
+
                 <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
                     <ol class="breadcrumb pt-0">
                         <li class="breadcrumb-item">
@@ -17,7 +25,16 @@
                         <li class="breadcrumb-item">
                             @Utility.Resource.Title_Designer.Orders
                         </li>
-                        <li class="breadcrumb-item active" aria-current="page">  <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId"> @ViewBag.OrdersType</a></li>
+                        @if (Model.TypeId == 1)
+                        {
+                            <li class="breadcrumb-item active" aria-current="page">  <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId"> @Utility.Resource.Title_Designer.Internal</a></li>
+                        }
+                        else if (Model.TypeId == 2)
+                        {
+                            <li class="breadcrumb-item active" aria-current="page">  <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId"> @Utility.Resource.Title_Designer.External</a></li>
+
+                        }
+
                     </ol>
                 </nav>
             </div>
@@ -301,17 +318,19 @@
                             <div class="form-row">
                                 @Html.HiddenFor(model => model.CodeNumber)
                                 <div class="form-group col-md-4">
-                                    @Html.LabelFor(model => model.Code)
+                                    <lable>@Utility.Resource.Title_Designer.Code</lable>
                                     <div id="divCode">
-                                        @if (ViewBag.TypeSerial == 1)
-                                        {
-                                            @Html.TextBoxFor(model => model.Code, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Code })
-                                        }
-                                        else
-                                        {
-                                            @Html.TextBoxFor(model => model.Code, new { @class = "form-control", @readonly = "true", @style = "background-color:transparent", @placeholder = @Utility.Resource.Title_Designer.Code })
-                                        }
-                                        @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.CodeIncreasedAutomaticallyCanBechanged</small>*@
+                                        <div class="input-group">
+                                            @if (ViewBag.TypeSerial == 1)
+                                            {
+                                                @Html.TextBoxFor(model => model.Code, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Code })
+                                            }
+                                            else
+                                            {
+                                                @Html.TextBoxFor(model => model.Code, new { @class = "form-control", @readonly = "true", @style = "background-color:transparent", @placeholder = @Utility.Resource.Title_Designer.Code })
+                                            }
+                                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.CodeIncreasedAutomaticallyCanBechanged</small>*@
+                                        </div>
                                     </div>
                                     @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger " })
                                 </div>
@@ -366,13 +385,13 @@
                             }
                             <div class="form-row">
                                 <div class="form-group col-md-12">
-                                    @Html.LabelFor(model => model.Notes)
+                                   <label>@Utility.Resource.Title_Designer.Notes</label>
                                     <div id="divNotes">
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="simple-icon-notebook"></i></span>
                                             </div>
-                                            @Html.TextBoxFor(model => model.Notes, new { @class = "form-control" })
+                                            @Html.TextBoxFor(model => model.Notes, new { @class = "form-control",@placeholder = Utility.Resource.Title_Designer.Notes })
                                         </div>
                                         @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                                     </div>

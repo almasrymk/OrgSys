@@ -20,7 +20,11 @@
                         <li class="breadcrumb-item">
                             @Utility.Resource.Title_Designer.InventoryNotices
                         </li>
-                        <li class="breadcrumb-item active" aria-current="page">  <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId">@ViewBag.InventorysType</a></li>
+                        @if (Model.TypeId == 0)
+                         {
+                           <li class="breadcrumb-item active" aria-current="page"> 
+                               <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId">@Utility.Resource.Title_Designer.Inventory</a></li>
+                         }
                     </ol>
                 </nav>
             </div>
@@ -42,7 +46,7 @@
                                 <div class="form-row">
                                     @Html.HiddenFor(model => model.CodeNumber)
                                     <div class="form-group col-md-3">
-                                        @Html.LabelFor(model => model.Code)
+                                       <label>@Utility.Resource.Title_Designer.Code</label>
 
                                         <div id="divCode">
                                             @if (ViewBag.TypeSerial == 1)
@@ -58,7 +62,7 @@
                                         @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger " })
                                     </div>
                                     <div class="form-group col-md-3">
-                                        @Html.LabelFor(model => model.Date)
+                                       <label>@Utility.Resource.Title_Designer.Date</label>
                                         <div id="divDate">
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
@@ -70,7 +74,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group col-md-6">
-                                        @Html.LabelFor(model => model.StoreName)
+                                        <label>@Utility.Resource.Title_Designer.Store</label>
                                         <div id="divStoreId">
                                             <div class="input-group">
                                                 <div class="input-group DropAutoComplete">
@@ -97,13 +101,13 @@
 
                                 <div class="form-row">
                                     <div class="form-group col-md-12">
-                                        @Html.LabelFor(model => model.Notes)
+                                        <label>@Utility.Resource.Title_Designer.Notes</label>
                                         <div id="divNotes">
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="simple-icon-notebook"></i></span>
                                                 </div>
-                                                @Html.TextBoxFor(model => model.Notes, new { @class = "form-control" })
+                                                @Html.TextBoxFor(model => model.Notes, new { @class = "form-control",@placeholder=Utility.Resource.Title_Designer.Notes })
                                             </div>
                                             @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                                         </div>

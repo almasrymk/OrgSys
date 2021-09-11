@@ -8,7 +8,14 @@
     <div class="row">
         <div class="col-12">
             <div class="mb-3">
-                <h1> @ViewBag.OrdersType</h1>
+                @if (ViewBag.TypeId == 1)
+                {
+                   <h1>@Utility.Resource.Title_Designer.Internal</h1>
+                }
+                else if (ViewBag.TypeId == 2)
+                {
+                  <h1>@Utility.Resource.Title_Designer.External</h1>
+                }
                 <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
                     <ol class="breadcrumb pt-0">
                         <li class="breadcrumb-item">
@@ -16,10 +23,19 @@
                         </li>
                         <li class="breadcrumb-item">
                             @Utility.Resource.Title_Designer.Orders
-                        </li>                       
-                        <li class="breadcrumb-item active" aria-current="page">
-                            @ViewBag.OrdersType
                         </li>
+                        @if (ViewBag.TypeId == 1)
+                        {
+                            <li class="breadcrumb-item active" aria-current="page">
+                                @Utility.Resource.Title_Designer.Internal
+                            </li>
+                        }
+                        else if (ViewBag.TypeId == 2)
+                        {
+                            <li class="breadcrumb-item active" aria-current="page">
+                                @Utility.Resource.Title_Designer.External
+                            </li>
+                        }
                     </ol>
                 </nav>
             </div>

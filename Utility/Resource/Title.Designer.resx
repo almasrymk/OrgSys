@@ -390,6 +390,9 @@
   <data name="Nickname" xml:space="preserve">
     <value>Nickname</value>
   </data>
+  <data name="Notes" xml:space="preserve">
+    <value>Notes</value>
+  </data>
   <data name="NumberofPeople" xml:space="preserve">
     <value>Number of People</value>
   </data>

@@ -8,7 +8,18 @@
     <div class="row">
         <div class="col-12">
             <div class="mb-3">
-                <h1> @ViewBag.FinancialsType </h1>
+                @if (ViewBag.TypeId == 1)
+                {
+                    <h1> @Utility.Resource.Title_Designer.Collection </h1>
+                }
+                else if (ViewBag.TypeId == 2)
+                {
+                    <h1> @Utility.Resource.Title_Designer.Payment</h1>
+                }
+                else if (ViewBag.TypeId == 3)
+                {
+                    <h1> @Utility.Resource.Title_Designer.Outlay</h1>
+                }
                 <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
                     <ol class="breadcrumb pt-0">
                         <li class="breadcrumb-item">
@@ -16,13 +27,28 @@
                         </li>
                         <li class="breadcrumb-item">
                             @Utility.Resource.Title_Designer.Setting
-                        </li>                        
+                        </li>
                         <li class="breadcrumb-item">
                             @Utility.Resource.Title_Designer.FinancialNotices
                         </li>
-                        <li class="breadcrumb-item active" aria-current="page">
-                            @ViewBag.FinancialsType                        
-                        </li>
+                        @if (ViewBag.TypeId == 1)
+                        {
+                            <li class="breadcrumb-item active" aria-current="page">
+                                @Utility.Resource.Title_Designer.Collection
+                            </li>
+                        }
+                        else if (ViewBag.TypeId == 2)
+                        {
+                            <li class="breadcrumb-item active" aria-current="page">
+                                @Utility.Resource.Title_Designer.Payment
+                            </li>
+                        }
+                        else if (ViewBag.TypeId == 3)
+                        {
+                            <li class="breadcrumb-item active" aria-current="page">
+                                @Utility.Resource.Title_Designer.Outlay
+                            </li>
+                        }
                     </ol>
                 </nav>
             </div>

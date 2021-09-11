@@ -8,7 +8,11 @@
     <div class="row">
         <div class="col-12">
             <div class="mb-3">
-                <h1> @ViewBag.InvoicesType</h1>
+                @if (ViewBag.TypeId == 1)
+                {<h1>@Utility.Resource.Title_Designer.Invoice</h1> }
+                else if (ViewBag.TypeId == 3)
+            {<h1>@Utility.Resource.Title_Designer.Return</h1>}
+
                 <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
                     <ol class="breadcrumb pt-0">
                         <li class="breadcrumb-item">
@@ -18,11 +22,21 @@
                             @Utility.Resource.Title_Designer.Invoices
                         </li>
                         <li class="breadcrumb-item">
-                            @ViewBag.InvoicesGroup
+                            @*@ViewBag.InvoicesGroup*@
+                            @Utility.Resource.Title_Designer.Sales
                         </li>
-                        <li class="breadcrumb-item active" aria-current="page">
-                            @ViewBag.InvoicesType
-                        </li>
+                        @if (ViewBag.TypeId == 1)
+                        {
+                            <li class="breadcrumb-item active" aria-current="page">
+                                @Utility.Resource.Title_Designer.Invoice
+                            </li>
+                        }
+                        else if (ViewBag.TypeId == 3)
+                        {
+                            <li class="breadcrumb-item active" aria-current="page">
+                                @Utility.Resource.Title_Designer.Return
+                            </li>
+                        }
                     </ol>
                 </nav>
             </div>

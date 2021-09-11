@@ -8,7 +8,18 @@
     <div class="row">
         <div class="col-12">
             <div class="mb-3">
-                <h1>@ViewBag.FinancialsType </h1>
+                @if (Model.TypeId == 1)
+                {
+                    <h1> @Utility.Resource.Title_Designer.Collection </h1>
+                }
+                else if (Model.TypeId == 2)
+                {
+                    <h1> @Utility.Resource.Title_Designer.Payment</h1>
+                }
+                else if (Model.TypeId == 3)
+                {
+                    <h1> @Utility.Resource.Title_Designer.Outlay</h1>
+                }
                 <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
                     <ol class="breadcrumb pt-0">
                         <li class="breadcrumb-item">
@@ -20,7 +31,24 @@
                         <li class="breadcrumb-item">
                             @Utility.Resource.Title_Designer.FinancialNotices
                         </li>
-                        <li class="breadcrumb-item active" aria-current="page">  <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId">@ViewBag.FinancialsType</a></li>
+                        @if (Model.TypeId == 1)
+                        {
+                            <li class="breadcrumb-item active" aria-current="page">
+                                <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId">@Utility.Resource.Title_Designer.Collection</a>
+                            </li>
+                        }
+                        else if (Model.TypeId == 2)
+                        {
+                            <li class="breadcrumb-item active" aria-current="page">
+                                <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId">@Utility.Resource.Title_Designer.Payment</a>
+                            </li>
+                        }
+                        else if(Model.TypeId == 3)
+                        {
+                        <li class="breadcrumb-item active" aria-current="page">
+                            <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId">@Utility.Resource.Title_Designer.Outlay</a>
+                        </li>
+                        }
                     </ol>
                 </nav>
             </div>
@@ -40,8 +68,7 @@
                             <div class="form-row">
                                 @Html.HiddenFor(model => model.CodeNumber)
                                 <div class="form-group col-md-4">
-                                    @Html.LabelFor(model => model.Code)
-
+                                    <label>@Utility.Resource.Title_Designer.Code</label>
                                     <div id="divCode">
                                         @if (ViewBag.TypeSerial == 1)
                                         {
@@ -56,7 +83,7 @@
                                     @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger " })
                                 </div>
                                 <div class="form-group col-md-4">
-                                    @Html.LabelFor(model => model.Date)
+                                   <label>@Utility.Resource.Title_Designer.Date</label>
                                     <div id="divDate">
                                         <div class="input-group">
                                             <div class="input-group-prepend">
@@ -110,7 +137,7 @@
                                     @Html.ValidationMessageFor(model => model.Rate, "", new { @class = "text-danger " })
                                 </div>
                                 <div class="form-group col-md-4">
-                                    @Html.LabelFor(model => model.PaymentTypeName)
+                                    <label>@Utility.Resource.Title_Designer.PaymentTypes</label>
                                     <div id="divPaymentTypeId">
                                         <div class="input-group">
                                             <div class="input-group-prepend">
@@ -180,13 +207,13 @@
 
                             <div class="form-row">
                                 <div class="form-group col-md-12">
-                                    @Html.LabelFor(model => model.Notes)
+                                    <label>@Utility.Resource.Title_Designer.Notes</label>
                                     <div id="divNotes">
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="simple-icon-notebook"></i></span>
                                             </div>
-                                            @Html.TextBoxFor(model => model.Notes, new { @class = "form-control" })
+                                            @Html.TextBoxFor(model => model.Notes, new { @class = "form-control",@placeholder= Utility.Resource.Title_Designer.Notes })
                                         </div>
                                         @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                                     </div>
