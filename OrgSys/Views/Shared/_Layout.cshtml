@@ -277,15 +277,15 @@
         <div class="main-menu">
             <div class="scroll">
                 <ul class="list-unstyled">
-                    <li class="active">
-                        <a href="/">
+                    <li class="@("Home".Contains(ViewContext.RouteData.Values["controller"].ToString()) ? "active" : "")">
+                        <a href="/Home/Dashboard">
                             <i class="iconsminds-home-3"></i>
                             <span>@Utility.Resource.Title_Designer.Home</span>
                         </a>
                     </li>
                     @if (User.IsAllowed("Branchs.All,Stores.All,Tables.All,Roles.All,Users.All,Shifts.All,Products.All,Classifications.All,UnitsMeasure.All,Clients.All,Suppliers.All,Safes.All,OutlayTerms.All,Currencies.All"))
                     {
-                        <li>
+                        <li class="@("Branch,Store,Table,Role,User,Shift,Product,Classification,Unit,Dealer,Safe,OutlayTerm,Currency".Contains(ViewContext.RouteData.Values["controller"].ToString()) ? "active" : "")">
                             <a href="#setting">
                                 <i class="iconsminds-big-data"></i>
                                 <span>@Utility.Resource.Title_Designer.Data</span>
@@ -338,14 +338,14 @@
                         {
                             <li>
                                 <a href="#" data-toggle="collapse" data-target="#collapseOrganization" aria-expanded="true"
-                                   aria-controls="collapseOrganization" class="rotate-arrow-icon opacity-50">
+                                   aria-controls="collapseOrganization" class="rotate-arrow-icon opacity-50 @("Branch,Store,Table".Contains(ViewContext.RouteData.Values["controller"].ToString()) ? "" : "collapsed")">
                                     <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Organization</span>
                                 </a>
-                                <div id="collapseOrganization" class="collapse show">
+                                <div id="collapseOrganization" class="collapse @("Branch,Store,Table".Contains(ViewContext.RouteData.Values["controller"].ToString()) ? "show" : "")">
                                     <ul class="list-unstyled inner-level-menu">
                                         @if (User.IsAllowed("Branchs.All"))
                                         {
-                                            <li class="active">
+                                            <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Branchs" ? "active" : "")">
                                                 <a href="/Setting/Branch">
                                                     <i class="simple-icon-share"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Branchs</span>
                                                 </a>
@@ -353,7 +353,7 @@
                                         }
                                         @if (User.IsAllowed("Stores.All"))
                                         {
-                                            <li>
+                                            <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Stores" ? "active" : "")">
                                                 <a href="/Setting/Store">
                                                     <i class="iconsminds-clothing-store"></i>
                                                     <span class="d-inline-block">@Utility.Resource.Title_Designer.Stores</span>
@@ -362,7 +362,7 @@
                                         }
                                         @if (User.IsAllowed("Tables.All"))
                                         {
-                                            <li>
+                                            <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Tables" ? "active" : "")">
                                                 <a href="/Setting/Table">
                                                     <i class="simple-icon-grid"></i>
                                                     <span class="d-inline-block">@Utility.Resource.Title_Designer.Tables</span>
@@ -378,14 +378,14 @@
                         {
                             <li>
                                 <a href="#" data-toggle="collapse" data-target="#collapseSecurity" aria-expanded="false"
-                                   aria-controls="collapseSecurity" class="rotate-arrow-icon opacity-50 collapsed">
+                                   aria-controls="collapseSecurity" class="rotate-arrow-icon opacity-50 @("Role,User,Shift".Contains(ViewContext.RouteData.Values["controller"].ToString()) ? "" : "collapsed")">
                                     <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Security</span>
                                 </a>
-                                <div id="collapseSecurity" class="collapse">
+                                <div id="collapseSecurity" class="collapse @("Role,User,Shift".Contains(ViewContext.RouteData.Values["controller"].ToString()) ? "show" : "")">
                                     <ul class="list-unstyled inner-level-menu">
                                         @if (User.IsAllowed("Roles.All"))
                                         {
-                                            <li>
+                                            <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Role" ? "active" : "")">
                                                 <a href="/Setting/Role">
                                                     <i class="simple-icon-lock-open"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Roles</span>
                                                 </a>
@@ -393,7 +393,7 @@
                                         }
                                         @if (User.IsAllowed("Users.All"))
                                         {
-                                            <li>
+                                            <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "User" ? "active" : "")">
                                                 <a href="/Setting/User">
                                                     <i class="iconsminds-add-user"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Users</span>
                                                 </a>
@@ -401,7 +401,7 @@
                                         }
                                         @if (User.IsAllowed("Shifts.All"))
                                         {
-                                            <li>
+                                            <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Shift" ? "active" : "")">
                                                 <a href="/Setting/Shift">
                                                     <i class="iconsminds-clock-back"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Shifts</span>
                                                 </a>
@@ -416,14 +416,14 @@
                         {
                             <li>
                                 <a href="#" data-toggle="collapse" data-target="#collapseProduct" aria-expanded="false"
-                                   aria-controls="collapseProduct" class="rotate-arrow-icon opacity-50 collapsed">
+                                   aria-controls="collapseProduct" class="rotate-arrow-icon opacity-50 @("Product,Classification,Unit".Contains(ViewContext.RouteData.Values["controller"].ToString()) ? "" : "collapsed")">
                                     <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Products</span>
                                 </a>
-                                <div id="collapseProduct" class="collapse">
+                                <div id="collapseProduct" class="collapse @("Product,Classification,Unit".Contains(ViewContext.RouteData.Values["controller"].ToString()) ? "show" : "")">
                                     <ul class="list-unstyled inner-level-menu">
                                         @if (User.IsAllowed("Products.All"))
                                         {
-                                            <li>
+                                            <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Product" ? "active" : "")">
                                                 <a href="/Setting/Product">
                                                     <i class="iconsminds-shopping-basket"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Products</span>
                                                 </a>
@@ -431,7 +431,7 @@
                                         }
                                         @if (User.IsAllowed("Classifications.All"))
                                         {
-                                            <li>
+                                            <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Classification" ? "active" : "")">
                                                 <a href="/Setting/Classification">
                                                     <i class="simple-icon-layers"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Classifications</span>
                                                 </a>
@@ -439,7 +439,7 @@
                                         }
                                         @if (User.IsAllowed("UnitsMeasure.All"))
                                         {
-                                            <li>
+                                            <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Unit" ? "active" : "")">
                                                 <a href="/Setting/Unit">
                                                     <i class="simple-icon-pie-chart"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.UnitsMeasure</span>
                                                 </a>
@@ -455,22 +455,22 @@
                         {
                             <li>
                                 <a href="#" data-toggle="collapse" data-target="#collapseDealers" aria-expanded="false"
-                                   aria-controls="collapseDealers" class="rotate-arrow-icon opacity-50 collapsed">
+                                   aria-controls="collapseDealers" class="rotate-arrow-icon opacity-50  @("Dealer".Contains(ViewContext.RouteData.Values["controller"].ToString()) ? "" : "collapsed")">
                                     <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Dealers</span>
                                 </a>
-                                <div id="collapseDealers" class="collapse">
+                                <div id="collapseDealers" class="collapse @("Dealer".Contains(ViewContext.RouteData.Values["controller"].ToString()) ? "show" : "")">
                                     <ul class="list-unstyled inner-level-menu">
                                         @if (User.IsAllowed("Clients.All"))
                                         {
-                                            <li>
-                                                <a href="/Setting/Dealer?TypeId=1">
-                                                    <i class="simple-icon-people"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Clients</span>
-                                                </a>
-                                            </li>
+                                        <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Dealer"  ? "active" : "")">
+                                            <a href="/Setting/Dealer?TypeId=1">
+                                                <i class="simple-icon-people"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Clients</span>
+                                            </a>
+                                        </li>
                                         }
                                         @if (User.IsAllowed("Suppliers.All"))
                                         {
-                                            <li>
+                                            <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Dealer"  ? "active" : "")">
                                                 <a href="/Setting/Dealer?TypeId=2">
                                                     <i class="simple-icon-people"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Suppliers</span>
                                                 </a>
@@ -485,14 +485,14 @@
                         {
                             <li>
                                 <a href="#" data-toggle="collapse" data-target="#collapseDataFinancials" aria-expanded="false"
-                                   aria-controls="collapseDataFinancials" class="rotate-arrow-icon opacity-50 collapsed">
+                                   aria-controls="collapseDataFinancials" class="rotate-arrow-icon opacity-50 @("Safe,OutlayTerm,Currency".Contains(ViewContext.RouteData.Values["controller"].ToString()) ? "" : "collapsed")">
                                     <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Financial</span>
                                 </a>
-                                <div id="collapseDataFinancials" class="collapse">
+                                <div id="collapseDataFinancials" class="collapse @("Safe,OutlayTerm,Currency".Contains(ViewContext.RouteData.Values["controller"].ToString()) ? "show" : "")">
                                     <ul class="list-unstyled inner-level-menu">
                                         @if (User.IsAllowed("Safes.All"))
                                         {
-                                            <li>
+                                            <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Safe" ? "active" : "")">
                                                 <a href="/Setting/Safe">
                                                     <i class="iconsminds-safe-box"></i>
                                                     <span class="d-inline-block">@Utility.Resource.Title_Designer.Safes</span>
@@ -501,7 +501,7 @@
                                         }
                                         @if (User.IsAllowed("OutlayTerms.All"))
                                         {
-                                            <li>
+                                            <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Outlay" ? "active" : "")">
                                                 <a href="/Setting/Outlay">
                                                     <i class="iconsminds-wallet"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.OutlayTerms</span>
                                                 </a>
@@ -509,7 +509,7 @@
                                         }
                                         @if (User.IsAllowed("Currencies.All"))
                                         {
-                                            <li>
+                                            <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Currency" ? "active" : "")">
                                                 <a href="/Setting/Currency">
                                                     <i class="iconsminds-coins"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Currencies</span>
                                                 </a>
@@ -854,8 +854,6 @@
     <main>
         <div class="col-lg-10 col-md-12 col-sm-12"> @RenderBody()</div>
         <div class="col-lg-2 col-md-12 col-sm-12"></div>
-
-
         <div class="MsgBox"></div>
     </main>
     <footer class="page-footer">
