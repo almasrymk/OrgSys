@@ -249,6 +249,9 @@
   <data name="SellingPriceProduct" xml:space="preserve">
     <value>سعر بيع المنتج</value>
   </data>
+  <data name="StartSearch" xml:space="preserve">
+    <value>ابدأ في كتابة المنتج للبحث ...</value>
+  </data>
   <data name="SupplierFromWhomProductPurchased" xml:space="preserve">
     <value>مورد الذى يتم شراء المنتج منه</value>
   </data>

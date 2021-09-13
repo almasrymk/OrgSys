@@ -510,6 +510,9 @@
   <data name="RegisterNewAccount" xml:space="preserve">
     <value>Register New Account</value>
   </data>
+  <data name="Remaining" xml:space="preserve">
+    <value>Remaining</value>
+  </data>
   <data name="RememberMe" xml:space="preserve">
     <value>Remember Me</value>
   </data>

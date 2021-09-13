@@ -466,6 +466,15 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Start typing product to search....
+        /// </summary>
+        public static string StartSearch {
+            get {
+                return ResourceManager.GetString("StartSearch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Store Required.
         /// </summary>
         public static string StoreRequired {

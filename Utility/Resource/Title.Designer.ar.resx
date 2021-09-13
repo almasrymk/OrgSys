@@ -510,6 +510,9 @@
   <data name="RegisterNewAccount" xml:space="preserve">
     <value>تسجيل حساب جديد</value>
   </data>
+  <data name="Remaining" xml:space="preserve">
+    <value>المتبقي</value>
+  </data>
   <data name="RememberMe" xml:space="preserve">
     <value>تذكرني</value>
   </data>

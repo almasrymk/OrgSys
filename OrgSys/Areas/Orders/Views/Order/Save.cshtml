@@ -121,7 +121,7 @@
                                                             </button>
                                                         </div>
                                                         <input type="text" class="form-control search-box Droptxt" name="query" id="query"
-                                                               placeholder="Start typing product to search..."
+                                                               placeholder= "@Utility.Resource.Message_Designer.StartSearch"
                                                                autocomplete="off" style="border-top:none;border-bottom:none;border-right:none;" value="@OrderProduct.ProductName">
                                                         <input type="hidden" id="ProductId" name="ProductId" class="ProductId" value="@OrderProduct.ProductId" />
                                                         <div style="text-align: center; vertical-align: middle;">
@@ -168,7 +168,7 @@
                                                                 </button>
                                                             </div>
                                                             <input type="text" class="form-control search-box Droptxt" name="query" id="query"
-                                                                   placeholder="Start typing product to search..."
+                                                                   placeholder="@Utility.Resource.Message_Designer.StartSearch"
                                                                    autocomplete="off" style="border-top:none;border-bottom:none;border-right:none;">
                                                             <input type="hidden" id="ProductId" name="ProductId" class="ProductId" />
                                                             <div style="text-align: center; vertical-align: middle;">
@@ -213,7 +213,7 @@
                                                         </button>
                                                     </div>
                                                     <input type="text" class="form-control search-box Droptxt" name="query" id="query"
-                                                           placeholder="Start typing product to search..."
+                                                           placeholder="@Utility.Resource.Message_Designer.StartSearch"
                                                            autocomplete="off" style="border-top:none;border-bottom:none;border-right:none;">
                                                     <input type="hidden" id="ProductId" name="ProductId" class="ProductId" />
                                                     <div style="text-align: center; vertical-align: middle;">
@@ -247,7 +247,7 @@
                                             <td style="min-width:100px;padding:0px;" colspan="4">
                                             </td>
                                             <td style="width:100px;padding:0px;text-align:center;vertical-align:middle;">
-                                                @Html.LabelFor(model => model.Total)
+                                                <label>@Utility.Resource.Title_Designer.Total</label>
                                             </td>
                                             <td style="width:100px;padding:0px;">
                                                 @Html.TextBoxFor(model => model.Total, new { @class = "form-control", @style = "border-top:none;border-bottom:none;border-right:none;background-color:transparent;", @placeholder = "0.0", @readonly = "true" })
@@ -259,7 +259,7 @@
                                             <td style="min-width:100px;padding:0px;" colspan="4">
                                             </td>
                                             <td style="width:100px;padding:0px;text-align:center;vertical-align:middle;">
-                                                @Html.LabelFor(model => model.Discount)
+                                                <label>@Utility.Resource.Title_Designer.Discount</label>
                                             </td>
                                             <td style="width:100px;padding:0px;">
                                                 @Html.TextBoxFor(model => model.Discount, new { @class = "form-control", @style = "border-top:none;border-bottom:none;border-right:none;", @placeholder = "0.0" })
@@ -273,7 +273,7 @@
                                             </td>
 
                                             <td style="width:100px;padding:0px;text-align:center;vertical-align:middle;">
-                                                @Html.LabelFor(model => model.Tax)
+                                               <label>@Utility.Resource.Title_Designer.Tax</label>
                                             </td>
                                             <td style="width:100px;padding:0px;">
                                                 @Html.TextBoxFor(model => model.Tax, new { @class = "form-control", @style = "border-top:none;border-bottom:none;border-right:none;", @placeholder = "0.0" })
@@ -287,8 +287,7 @@
                                             </td>
 
                                             <td style="width:100px;padding:0px;text-align:center;vertical-align:middle;">
-                                                @Html.LabelFor(model => model.Service)
-                                                Service
+                                               <label>@Utility.Resource.Title_Designer.Service</label>
                                             </td>
                                             <td style="width:100px;padding:0px;">
                                                 @Html.TextBoxFor(model => model.Service, new { @class = "form-control", @style = "border-top:none;border-bottom:none;border-right:none;", @placeholder = "0.0" })
@@ -302,7 +301,7 @@
                                             </td>
 
                                             <td style="width:100px;padding:0px;text-align:center;vertical-align:middle;">
-                                                @Html.LabelFor(model => model.Net)
+                                               <label>@Utility.Resource.Title_Designer.Net</label>
                                             </td>
                                             <td style="width:100px;padding:0px;">
                                                 @Html.TextBoxFor(model => model.Net, new { @id = "Net", @class = "form-control", @style = "border-top:none;border-bottom:none;border-right:none;background-color:transparent;", @placeholder = "0.0", @readonly = "true" })

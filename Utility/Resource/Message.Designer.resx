@@ -252,6 +252,9 @@
   <data name="SellingPriceProduct" xml:space="preserve">
     <value>The selling price of the product</value>
   </data>
+  <data name="StartSearch" xml:space="preserve">
+    <value>Start typing product to search...</value>
+  </data>
   <data name="StoreRequired" xml:space="preserve">
     <value>Store Required</value>
   </data>
