@@ -1,4 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Entity.Model;
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Utility;
 
 namespace Entity
@@ -19,7 +22,7 @@ namespace Entity
 
         public bool Hide { get; set; }
 
-        public string ImgPath { get; set; }
+        public string ImgPath { get; set; }      
 
         public Status Status { get; set; }        
     }

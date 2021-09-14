@@ -92,6 +92,10 @@
                         @Html.HiddenFor(model => model.ParentId)
                         @Html.HiddenFor(model => model.CloseTable)
                         @Html.HiddenFor(model => model.InvoiceId)
+                        @Html.HiddenFor(model => model.CreateUserId)
+                        @Html.HiddenFor(model => model.CreateDate)
+                        @Html.HiddenFor(model => model.ModifyUserId)
+                        @Html.HiddenFor(model => model.ModifyDate)
                         <div id="checkStep1">
                             <div class="card">
                                 <table id="tbl" class="table table-hover ">
@@ -121,7 +125,7 @@
                                                             </button>
                                                         </div>
                                                         <input type="text" class="form-control search-box Droptxt" name="query" id="query"
-                                                               placeholder= "@Utility.Resource.Message_Designer.StartSearch"
+                                                               placeholder="@Utility.Resource.Message_Designer.StartSearch"
                                                                autocomplete="off" style="border-top:none;border-bottom:none;border-right:none;" value="@OrderProduct.ProductName">
                                                         <input type="hidden" id="ProductId" name="ProductId" class="ProductId" value="@OrderProduct.ProductId" />
                                                         <div style="text-align: center; vertical-align: middle;">
@@ -133,7 +137,7 @@
                                                             <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
                                                         </div>
                                                     </div>
-                                                </td>                                               
+                                                </td>
                                                 <td style="width:150px;padding:0px;">
                                                     @Html.DropDownList("UnitId", new SelectList(OrderProduct.Units, "Id", "Name", OrderProduct.UnitId), null, new { @class = "form-control UnitId", @style = "border-top:none;border-bottom:none;border-right:none;" })
                                                 </td>
@@ -180,7 +184,7 @@
                                                                 <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
                                                             </div>
                                                         </div>
-                                                    </td>                                                   
+                                                    </td>
                                                     <td style="width:150px;padding:0px;">
 
                                                         <select type="text" id="UnitId" name="UnitId" class="form-control UnitId" style="border-top:none;border-bottom:none;border-right:none;"></select>
@@ -225,7 +229,7 @@
                                                         <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
                                                     </div>
                                                 </div>
-                                            </td>                                           
+                                            </td>
                                             <td style="width:150px;padding:0px;">
                                                 <select type="text" id="UnitId" name="UnitId" class="form-control UnitId" style="border-top:none;border-bottom:none;border-right:none;"></select>
                                             </td>
@@ -273,7 +277,7 @@
                                             </td>
 
                                             <td style="width:100px;padding:0px;text-align:center;vertical-align:middle;">
-                                               <label>@Utility.Resource.Title_Designer.Tax</label>
+                                                <label>@Utility.Resource.Title_Designer.Tax</label>
                                             </td>
                                             <td style="width:100px;padding:0px;">
                                                 @Html.TextBoxFor(model => model.Tax, new { @class = "form-control", @style = "border-top:none;border-bottom:none;border-right:none;", @placeholder = "0.0" })
@@ -287,7 +291,7 @@
                                             </td>
 
                                             <td style="width:100px;padding:0px;text-align:center;vertical-align:middle;">
-                                               <label>@Utility.Resource.Title_Designer.Service</label>
+                                                <label>@Utility.Resource.Title_Designer.Service</label>
                                             </td>
                                             <td style="width:100px;padding:0px;">
                                                 @Html.TextBoxFor(model => model.Service, new { @class = "form-control", @style = "border-top:none;border-bottom:none;border-right:none;", @placeholder = "0.0" })
@@ -301,7 +305,7 @@
                                             </td>
 
                                             <td style="width:100px;padding:0px;text-align:center;vertical-align:middle;">
-                                               <label>@Utility.Resource.Title_Designer.Net</label>
+                                                <label>@Utility.Resource.Title_Designer.Net</label>
                                             </td>
                                             <td style="width:100px;padding:0px;">
                                                 @Html.TextBoxFor(model => model.Net, new { @id = "Net", @class = "form-control", @style = "border-top:none;border-bottom:none;border-right:none;background-color:transparent;", @placeholder = "0.0", @readonly = "true" })
@@ -334,7 +338,7 @@
                                     @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger " })
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label> @Utility.Resource.Title_Designer.Date</label>                                   
+                                    <label> @Utility.Resource.Title_Designer.Date</label>
                                     <div id="divDate">
                                         <div class="input-group">
                                             <div class="input-group-prepend">
@@ -376,7 +380,7 @@
                                                 </div>
                                                 @Html.DropDownListFor(model => model.TableId, null, " ... ", new { @class = "form-control" })
                                             </div>
-                                           @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                                         </div>
                                         @Html.ValidationMessageFor(model => model.TableId, "", new { @class = "text-danger " })
                                     </div>
@@ -384,13 +388,13 @@
                             }
                             <div class="form-row">
                                 <div class="form-group col-md-12">
-                                   <label>@Utility.Resource.Title_Designer.Notes</label>
+                                    <label>@Utility.Resource.Title_Designer.Notes</label>
                                     <div id="divNotes">
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="simple-icon-notebook"></i></span>
                                             </div>
-                                            @Html.TextBoxFor(model => model.Notes, new { @class = "form-control",@placeholder = Utility.Resource.Title_Designer.Notes })
+                                            @Html.TextBoxFor(model => model.Notes, new { @class = "form-control", @placeholder = Utility.Resource.Title_Designer.Notes })
                                         </div>
                                         @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                                     </div>
@@ -1077,6 +1081,10 @@
                 Notes: $('#Notes').val(),
                 Remaining: $('#Remaining').val(),
                 Paid: $('#Paid').val(),
+                CreateUserId: $('#CreateUserId').val(),
+                CreateDate: $('#CreateDate').val(),
+                ModifyUserId: $('#ModifyUserId').val(),
+                ModifyDate: $('#ModifyDate').val(),
                 OrderProducts: list
             }
 

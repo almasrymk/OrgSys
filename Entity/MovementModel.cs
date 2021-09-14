@@ -1,6 +1,7 @@
 ﻿using Entity.Model;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entity
 {
@@ -9,12 +10,14 @@ namespace Entity
         [Required]
         public DateTime Date { get; set; }
 
+        [ForeignKey("CreateUser")]
         public long CreateUserId { get; set; }
 
         public virtual User CreateUser { get; set; }
 
         public DateTime CreateDate { get; set; }
 
+        [ForeignKey("ModifyUser")]
         public long? ModifyUserId { get; set; }
 
         public virtual User ModifyUser { get; set; }

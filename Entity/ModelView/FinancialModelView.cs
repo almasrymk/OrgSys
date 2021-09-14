@@ -1,4 +1,5 @@
 ﻿using Entity.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -58,6 +59,14 @@ namespace Entity.ModelView
 
             this.TypeId = ob.TypeId;
 
+            this.CreateUserId = ob.CreateUserId;
+
+            this.CreateDate = ob.CreateDate;
+
+            this.ModifyUserId = ob.ModifyUserId;
+
+            this.ModifyDate = ob.ModifyDate;
+
             this.Hide = ob.Hide;
 
             this.ImgPath = ob.ImgPath;
@@ -89,7 +98,9 @@ namespace Entity.ModelView
 
             this.AmountByDefaultCurrency = ob.Credit * this.Rate;
 
-            this.Id = ob.Id;
+            this.CreateUserId = ob.CreateUserId;
+
+            this.CreateDate = DateTime.Now;
 
             this.CodeNumber = ob.CodeNumber;
 
@@ -107,6 +118,8 @@ namespace Entity.ModelView
 
             this.Status = ob.Status;
 
+            if (this.FinancialInvoices == null)
+                this.FinancialInvoices = new List<FinancialInvoiceModelView>();
             this.FinancialInvoices.Add(new FinancialInvoiceModelView(ob));
         }
 
@@ -132,6 +145,10 @@ namespace Entity.ModelView
                     MaskText = this.MaskText,
                     ParentId = this.ParentId,
                     TypeId = this.TypeId,
+                    CreateUserId = this.CreateUserId,
+                    CreateDate = this.CreateDate,
+                    ModifyUserId = this.ModifyUserId,
+                    ModifyDate = this.ModifyDate,
                     Hide = this.Hide,
                     Status = this.Status,
                     ImgPath = this.ImgPath,

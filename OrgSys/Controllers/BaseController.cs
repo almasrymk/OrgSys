@@ -51,6 +51,7 @@ namespace OrgSys.Controllers
         {
             if (ModelState.IsValid)
             {
+                model= GetUserData(model);
                 model.ImgPath = SaveFile(model.ImgPath);
                 model = service.Save(model);
                 if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
@@ -228,6 +229,33 @@ namespace OrgSys.Controllers
             }
 
             return true;
+        }
+
+        public virtual entity GetUserData(entity model)
+        {
+            PropertyInfo CreateUserPro = model.GetType().GetProperty("CreateUserId");
+            if(CreateUserPro != null)
+            {
+                var userId = (long)CreateUserPro.GetValue(model);
+                if(userId == 0)
+                {
+                    CreateUserPro.SetValue(model , User.GetUserId());
+                    PropertyInfo DatePro = model.GetType().GetProperty("CreateDate");
+                    if(DatePro != null)
+                        DatePro.SetValue(model, DateTime.Now);
+                }
+            }
+           
+            if(model.Id > 0)
+            {
+                PropertyInfo ModifyUserPro = model.GetType().GetProperty("ModifyUserId");
+                if (ModifyUserPro != null)
+                    ModifyUserPro.SetValue(model, User.GetUserId());
+                PropertyInfo DatePro = model.GetType().GetProperty("ModifyDate");
+                if (DatePro != null)
+                    DatePro.SetValue(model, DateTime.Now);
+            }   
+            return model;
         }
     }
 }
