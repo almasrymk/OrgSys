@@ -48,7 +48,7 @@ namespace Service
 
             if (long.Parse("0" + new PreferenceService().GetByKey("AutoCreateInvoice", "Order", ob.TypeId, 0)?.Value) == 1 || ob.InvoiceId > 0)
             {
-               new InvoiceService().CreateInvoiceByOrder(new OrderModelView(Nwob));
+                new IntegrationServics().CreateInvoiceByOrder(Nwob);
             }
 
             return new OrderModelView(Nwob);
