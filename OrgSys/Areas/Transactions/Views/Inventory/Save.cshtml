@@ -7,7 +7,7 @@
 <div id="HPage" class="container-fluid">
     <div class="row">
         <div class="col-12">
-            <div class="mb-3">
+            <div class="mb-0">
                 <h1>@Utility.Resource.Title_Designer.Inventory </h1>
                 <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
                     <ol class="breadcrumb pt-0">
@@ -38,7 +38,7 @@
                 <div class="d-md-block">
 
                     <div class="d-md-block">
-                        <div class="card-body">
+                        <div class="card-body pt-4">
                             @Html.HiddenFor(model => model.Id)
                             @Html.HiddenFor(model => model.TypeId)
                             @Html.HiddenFor(model => model.ParentId)
@@ -146,7 +146,7 @@
                                                                 </button>
                                                             </div>
                                                             <input type="text" class="form-control search-box Droptxt" name="query" id="query"
-                                                                   placeholder="Start typing product to search..."
+                                                                   placeholder="@Utility.Resource.Message_Designer.StartSearch"
                                                                    autocomplete="off" style="border-top:none;border-bottom:none;border-right:none;" value="@InventoryProduct.ProductName">
                                                             <input type="hidden" id="ProductId" name="ProductId" class="ProductId" value="@InventoryProduct.ProductId" />
                                                             <div style="text-align: center; vertical-align: middle;">
@@ -185,7 +185,7 @@
                                                             </button>
                                                         </div>
                                                         <input type="text" class="form-control search-box Droptxt" name="query" id="query"
-                                                               placeholder="Start typing product to search..."
+                                                               placeholder="@Utility.Resource.Message_Designer.StartSearch"
                                                                autocomplete="off" style="border-top:none;border-bottom:none;border-right:none;">
                                                         <input type="hidden" id="ProductId" name="ProductId" class="ProductId" />
                                                         <div style="text-align: center; vertical-align: middle;">
@@ -271,8 +271,8 @@
     var Repeated;
     var ReCalc;
     jQuery(function ($) {
-        $(".datepicker").datepicker();
-        $(".datepicker").datepicker("option", "dateFormat", "yy/mm/dd");
+        //$(".datepicker").datepicker();
+        //$(".datepicker").datepicker("option", "dateFormat", "yy/mm/dd");
         $("#query").focus();
 
         $('#btn').click(function () {
