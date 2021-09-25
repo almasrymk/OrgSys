@@ -70,7 +70,7 @@ namespace Entity.ModelView
                 this.Units = ob.Product.ProductUnits.Select(e => new UnitModelView(e.Unit)).ToList();           
         }
 
-        public InvoiceProductModelView(OrderProduct ob)
+        public InvoiceProductModelView(OrderProduct ob , long storeId)
         {
             if (ob == null)
                 ob = new OrderProduct();
@@ -91,7 +91,7 @@ namespace Entity.ModelView
 
             this.Notes = ob.Notes;
 
-            this.StoreId = StoreId;
+            this.StoreId = storeId;
 
             this.Tax = ob.Tax;
 

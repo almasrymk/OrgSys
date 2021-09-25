@@ -1,4 +1,5 @@
 ﻿using Entity.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -82,11 +83,11 @@ namespace Entity.ModelView
 
             this.ShiftName = ob.Shift?.Name;
 
-            this.Date = ob.Date;
+            this.Date =  ob.Date;
 
-            this.CreateDate = ob.CreateDate;
+            this.CreateDate =  ob.CreateDate;
 
-            this.ModifyDate = ob.ModifyDate;
+            this.ModifyDate =  ob.ModifyDate;
 
             this.Id = ob.Id;
 
@@ -112,7 +113,7 @@ namespace Entity.ModelView
             this.InvoiceProducts = ob.InvoiceProducts.Select(e => new InvoiceProductModelView(e)).ToList();
         }
 
-        public InvoiceModelView(Order ob)
+        public InvoiceModelView(Order ob , long StoreId)
         {
             if (ob == null)
                 ob = new Order();
@@ -122,7 +123,10 @@ namespace Entity.ModelView
             if (ob.DealerId != null)
                 this.DealerId = ob.DealerId.Value;
 
-            this.CurrencyId = CurrencyId;
+            if (ob.InvoiceId != null)
+                this.Id = ob.InvoiceId ?? 0;
+
+            this.StoreId = StoreId;
 
             this.Total = ob.Total;
 
@@ -169,7 +173,7 @@ namespace Entity.ModelView
             if (ob.OrderProducts == null)
                 ob.OrderProducts = new List<OrderProduct>();
 
-            this.InvoiceProducts = ob.OrderProducts.Select(e => new InvoiceProductModelView(e)).ToList();
+            this.InvoiceProducts = ob.OrderProducts.Select(e => new InvoiceProductModelView(e , StoreId)).ToList();
         }
 
         public Invoice Model

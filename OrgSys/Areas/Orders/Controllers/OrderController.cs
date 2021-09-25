@@ -23,7 +23,7 @@ namespace OrgSys.Areas.Orders.Controllers
 
         public override void LoadViewBag(OrderModelView model)
         {
-            ViewBag.TableId = new SelectList(new TableService().GetAllClosed(model.ParentId, 0), "Id", "Name");
+            ViewBag.TableId = new SelectList(new TableService().GetAllClosed(model.Id, model.ParentId, 0), "Id", "Name");
 
             List<SelectListItem> selectListItems = new List<SelectListItem>();
             selectListItems.Add(new SelectListItem { Value = "1", Text = "Amount" });
@@ -85,8 +85,13 @@ namespace OrgSys.Areas.Orders.Controllers
          
         public ActionResult CreateInvoice(long id , string search, long ParentId = 0, long TypeId = 0, int page = 1)
         {
-            var ob = new InvoiceService().CreateInvoiceByOrder(new OrderService().Get(id));
-            return Redirect("/Orders/Order/Index?ParentId=" +  ParentId + "&TypeId=" + TypeId + "&page=" + page +"&status=" + ResultStatus.success + "&MsgError=Success");
+            var order = new OrderService().Get(id);
+            if (order != null)
+            {
+                new IntegrationServics().CreateInvoiceByOrder(order.Model);
+                return Redirect("/Orders/Order/Index?ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" + ResultStatus.success + "&MsgError=Success");
+            }
+            return Redirect("/Orders/Order/Index?ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" + ResultStatus.error + "&MsgError=Not find order");
         }
  
         public ActionResult Cancel(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1)

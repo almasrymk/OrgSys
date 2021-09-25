@@ -37,6 +37,8 @@ namespace OrgSys.Areas.Setting.Controllers
                 ViewBag.DiscountType = new SelectList(selectListItems, "Value", "Text", Service.FirstOrDefault(e => e.Key == "DefaultDiscountType")?.Value);
                 ViewBag.ServiceType = new SelectList(selectListItems, "Value", "Text", Service.FirstOrDefault(e => e.Key == "DefaultServiceType")?.Value);
                 ViewBag.TaxType = new SelectList(selectListItems, "Value", "Text", Service.FirstOrDefault(e => e.Key == "DefaultTaxType")?.Value);
+                ViewBag.Currencys = new SelectList(new CurrencyService().GetAll(0, 0), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultCurrency")?.Value);
+
                 ViewBag.DiscountValue = Service.FirstOrDefault(e => e.Key == "DiscountValue")?.Value;
                 ViewBag.ServiceValue = Service.FirstOrDefault(e => e.Key == "ServiceValue")?.Value;
                 ViewBag.TaxValue = Service.FirstOrDefault(e => e.Key == "TaxValue")?.Value;

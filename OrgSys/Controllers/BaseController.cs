@@ -54,6 +54,8 @@ namespace OrgSys.Controllers
                 model= GetUserData(model);
                 model.ImgPath = SaveFile(model.ImgPath);
                 model = service.Save(model);
+
+
                 if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
                     return Json(data: new { status = "success" , id = model.Id , url = "/" + AreaName + "/" + ControllerName + "?ParentId=" + model.ParentId + "&TypeId=" + model.TypeId + "&status=" + ResultStatus.success + "&MsgError=Success" });
                 return Redirect("/" + AreaName + "/" + ControllerName + "?ParentId=" + model.ParentId + "&TypeId=" + model.TypeId + "&status=" + ResultStatus.success + "&MsgError=Success");

@@ -94,6 +94,7 @@ namespace Entity.ModelView
             this.Total = ob.Total;
 
             this.BranchId = ob.BranchId;
+           
 
             this.CreateUserId = ob.CreateUserId;
 

@@ -85,7 +85,7 @@ namespace Entity.ModelView
 
             this.Total = ob.Net;
 
-            this.Id = ob.Id;
+            //this.Id = ob.Id;
 
             this.CodeNumber = ob.CodeNumber;
 

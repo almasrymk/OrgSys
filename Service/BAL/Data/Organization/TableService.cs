@@ -49,11 +49,11 @@ namespace Service
             return repo.tableRepo.GetList(e => e.OrderBy(e => e.Id), Includes, Utility.Status.New).Select(e => new TableModelView(e)).ToList();
         }
       
-        public List<TableModelView> GetAllClosed(long parentId = 0, long TypeId = 0)
+        public List<TableModelView> GetAllClosed(long id , long parentId = 0, long TypeId = 0)
         {
-            var ids = repo.orderRepo.GetList(e => e.CloseTable != true, null, "", Utility.Status.New).Select(e=>e.TableId).Distinct().ToList();
+            var ids = repo.orderRepo.GetList(e => e.Id == id || e.CloseTable != true, null, "", Utility.Status.New).Select(e=>e.TableId).Distinct().ToList();
 
-            return repo.tableRepo.GetList(e => !ids.Contains(e.Id), e => e.OrderBy(e => e.Id), Includes, Utility.Status.New).Select(e => new TableModelView(e)).ToList();
+            return repo.tableRepo.GetList(e => ids.Contains(e.Id), e => e.OrderBy(e => e.Id), Includes, Utility.Status.New).Select(e => new TableModelView(e)).ToList();
         }
       
         public List<TableModelView> GetAll(string textSearch , long parentId = 0, long TypeId = 0)

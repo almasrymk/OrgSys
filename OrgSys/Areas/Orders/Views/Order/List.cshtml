@@ -85,7 +85,7 @@
                                 @Model[i].Date.ToString("hh:mm t")
                             </td>
                             <td style="width:160px;vertical-align: middle;text-align:center;">
-                                @if ("" + Model[i].Invoice.Code == "")
+                                @if (Model[i].Invoice != null && "" + Model[i].Invoice.Code == "")
                                 {
                                     @if (Model[i].Status == Utility.Status.All)
                                     {
@@ -104,7 +104,7 @@
                                         <h6>
                                             <span class="badge badge-primary">
                                                 <i class="simple-icon-basket-loaded"></i>
-                                                @Model[i].Invoice.Code
+                                                @Model[i].Invoice?.Code
                                             </span>
                                         </h6>
                                     </a>
@@ -170,7 +170,7 @@
                                 @Model[i].Date.ToString("hh:mm t")
                             </div>
                             <div class="w-20 w-xs-100">
-                                @if ("" + Model[i].Invoice.Code == "")
+                                @if ("" + Model[i].Invoice?.Code == "")
                                 {
                                     @if (Model[i].Status == Utility.Status.All)
                                     {
@@ -189,7 +189,7 @@
                                         <h6>
                                             <span class="badge badge-primary">
                                                 <i class="simple-icon-basket-loaded"></i>
-                                                @Model[i].Invoice.Code
+                                                @Model[i].Invoice?.Code
                                             </span>
                                         </h6>
                                     </a>
