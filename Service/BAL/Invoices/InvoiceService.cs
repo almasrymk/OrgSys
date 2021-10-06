@@ -47,12 +47,12 @@ namespace Service
                 Nwob.InvoiceProducts = repo.invoiceProductRepo.GetList(e => e.InvoiceId == Nwob.Id, e => e.OrderBy(e => e.Id), "", Utility.Status.All).ToList();
             }
 
-            if (long.Parse("0" + new PreferenceService().GetByKey("AutoCreateTransaction", "Invoice", ob.TypeId, 0)?.Value) == 1 || ob.TransactionId > 0)
-            {
-                new TransactionService().CreateTransactionByInvoice(new InvoiceModelView(Nwob));
-            }
+           // if (long.Parse("0" + new PreferenceService().GetByKey("AutoCreateTransaction", "Invoice", ob.TypeId, 0)?.Value) == 1 || ob.TransactionId > 0)
+           // {
+           //     new TransactionService().CreateTransactionByInvoice(new InvoiceModelView(Nwob));
+           // }
 
-           new FinancialService().CreateFinancialByInvoice(new InvoiceModelView(Nwob));
+           //new FinancialService().CreateFinancialByInvoice(new InvoiceModelView(Nwob));
 
             return new InvoiceModelView(Nwob);
         }
