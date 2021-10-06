@@ -22,7 +22,7 @@ namespace Entity.ModelView
 
             this.InvoiceId = ob.InvoiceId;
 
-            this.Invoice = ob.Invoice;
+            this.Invoice = new InvoiceModelView(ob.Invoice);
 
             this.Notes = ob.Notes;
 
@@ -172,7 +172,7 @@ namespace Entity.ModelView
 
         public string ShiftName { get; set; }
 
-         public Invoice Invoice { get; set; }
+         public InvoiceModelView Invoice { get; set; }
 
         public List<OrderProductModelView> OrderProducts { get; set; }
     }

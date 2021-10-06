@@ -7,7 +7,7 @@
 <div id="HPage" class="container-fluid">
     <div class="row">
         <div class="col-12">
-            <div class="mb-3">
+            <div class="mb-0">
                 @if (Model.TypeId == 1)
                 {
                     <h1> @Utility.Resource.Title_Designer.Collection </h1>
@@ -60,7 +60,7 @@
         <div class="card pl-1 pr-1">
             <form action="Save" method="post" enctype="multipart/form-data" class="tooltip-label-right" novalidate>
                 <div class="d-md-block">
-                    <div class="card-body">
+                    <div class="card-body pt-4">
                         @Html.HiddenFor(model => model.Id)
                         @Html.HiddenFor(model => model.TypeId)
                         @Html.HiddenFor(model => model.ParentId)
@@ -361,8 +361,8 @@
     var AutoSave;
     var Repeated;
     jQuery(function ($) {
-        $(".datepicker").datepicker();
-        $(".datepicker").datepicker("option", "dateFormat", "yy/mm/dd");        
+        //$(".datepicker").datepicker();
+        //$(".datepicker").datepicker("option", "dateFormat", "yy/mm/dd");        
         $("#query").focus();
         
         setTimeout(function () {

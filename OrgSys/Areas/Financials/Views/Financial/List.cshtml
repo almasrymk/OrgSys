@@ -5,14 +5,14 @@
 
 @if (Model != null && Model.Count > 0)
 {<div id="tbList" class="card" style="display:none;">
-        <div class="card-body">
-            <table class="table table-bordered responsive nowrap mt-3" data-order="[[ 1, &quot;desc&quot; ]]">
+        <div class="card-body p-2">
+            <table class="table table-hover nowrap m-0" data-order="[[ 1, &quot;desc&quot; ]]">
                 <thead>
                     <tr>
-                        <th style="text-align: center">#</th>
-                        <th style="text-align: center">@Utility.Resource.Title_Designer.Image</th>
-                        <th>@Utility.Resource.Title_Designer.Code</th>
-                        <th>
+                        <th class="text-center">#</th>
+                        <th style="text-align: center; width:10px "></th>
+                        <th class="text-center">@Utility.Resource.Title_Designer.Code</th>
+                        <th class="text-center">
                             @if (ViewBag.TypeId == 1)
                             {
                             <span>@Utility.Resource.Title_Designer.Client</span>
@@ -27,9 +27,9 @@
                             }
 
                         </th>
-                        <th>@Utility.Resource.Title_Designer.Date</th>
-                        <th>@Utility.Resource.Title_Designer.Safe</th>
-                        <th>@Utility.Resource.Title_Designer.Amount</th>
+                        <th class="text-center">@Utility.Resource.Title_Designer.Date</th>
+                        <th class="text-center">@Utility.Resource.Title_Designer.Safe</th>
+                        <th class="text-center">@Utility.Resource.Title_Designer.Amount</th>
                         <th colspan="3"></th>
                     </tr>
                 </thead>
@@ -41,15 +41,15 @@
                             <td style="width:50px;vertical-align: middle;text-align:center">
                                 <p class="list-item-heading">@x</p>
                             </td>
-                            <td style="width:80px;padding:7px; vertical-align: middle;">
-                                <div class="list-thumbnail responsive border-0 rounded-circle badge-theme-1 m-0" style="height:60px;width:60px;font-size:x-large;text-align:center;padding-top:14px;">
+                            <td style="">
+                                <div class="list-thumbnail border-0 rounded-circle badge-theme-1 m-0" style="height:40px;width:40px;font-size:x-large;text-align:center;padding:2px;">
                                     <i class="@ViewBag.FinancialsIcon"></i>
                                 </div>
                             </td>
-                            <td style="width:80px;vertical-align: middle;">
+                            <td class="w-4 text-center align-middle">
                                 <p class="text-muted">@Model[i].Code</p>
                             </td>
-                            <td style="vertical-align: middle;">
+                            <td class="w-4 text-center align-middle">
                                 <p class="text-muted">
                                     @if (ViewBag.TypeId == 1 || ViewBag.TypeId == 2)
                                     {
@@ -61,22 +61,22 @@
                                     }
                                 </p>
                             </td>
-                            <td style="width:100px;vertical-align: middle;">
+                            <td class="w-4 text-center align-middle">
                                 @Model[i].Date.ToString("dd-MM-yyyy")
                             </td>
-                            <td style="vertical-align: middle;">
+                            <td class="w-4 text-center align-middle">
                                 <p class="text-muted">@Model[i].SafeName</p>
                             </td>
-                            <td style="width:100px;vertical-align: middle;">
+                            <td class="w-4 text-center align-middle">
                                 <p class="text-muted">@Model[i].Amount</p>
                             </td>
-                            <td style="width:70px;vertical-align: middle;">
-                                <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit"></i> @Utility.Resource.Title_Designer.Edit</a>
+                            <td class="w-10 text-center align-middle">
+                                <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit" style="color:green"></i> @Utility.Resource.Title_Designer.Edit</a>
                             </td>
-                            <td style="width:80px;vertical-align: middle;">
-                                <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete</a>
+                            <td class="w-10 text-center align-middle">
+                                <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> @Utility.Resource.Title_Designer.Delete</a>
                             </td>
-                            <td style="width:40px;text-align:center;vertical-align: middle;">
+                            <td class="align-middle p-0 pt-2">
                                 @if (Model[i].Status == Utility.Status.All)
                                 {
                                     <label class="custom-control custom-checkbox">
@@ -94,13 +94,13 @@
         </div>
     </div>
     <div id="rowList" style="display:none;">
-        <div class="col-12 list m-0 p-0 pt-3" data-check-all="checkAll">
+        <div class="col-12 list m-0 p-0 pt-2" data-check-all="checkAll">
             @for (int i = 0, x = ((Model.PageNumber - 1) * Model.PageSize) + 1; i < Model.Count; i++, x++)
             {
 
-                <div class="card d-flex flex-row mb-3">
-                    <div class="d-flex flex-grow-1 min-width-zero">
-                        <div class="list-thumbnail responsive border-0 card-img-left badge-theme-1" style="height:85px; width:85px; font-size:xx-large;text-align:center; padding-top:22px;">
+                <div class="card d-flex flex-row mb-2">
+                    <div class="d-flex flex-grow-1 min-width-zero" style="height:60px;">
+                        <div class="list-thumbnail border-0 card-img-left badge-theme-1" style="height:60px; width:60px; font-size:x-large; text-align:center; padding:6px;">
                             <i class="@ViewBag.FinancialsIcon"></i>
                         </div>
 
@@ -121,10 +121,10 @@
                             <div class="list-item-heading mb-0 truncate w-15 w-xs-100 d-inline-block" href="Pages.Product.Detail.html">
                                 @Model[i].Amount
                             </div>
-                            <div class="w-15 w-xs-100">
-                                <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit"></i> @Utility.Resource.Title_Designer.Edit</a>
+                            <div class="w-25 w-xs-100">
+                                <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit" style="color:green"></i> @Utility.Resource.Title_Designer.Edit</a>
                                 <span> &nbsp; | &nbsp; </span>
-                                <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete</a>
+                                <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> @Utility.Resource.Title_Designer.Delete</a>
                             </div>
                         </div>
 

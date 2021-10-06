@@ -35,7 +35,7 @@
     <link rel="stylesheet" href="~/css/jquery.bonsai.css" />
     <link rel="stylesheet" href="~/fontawesome-free-5.15.3-web/css/all.css" />
     <link rel="stylesheet" href="~/fontawesome-free-5.15.3-web/css/fontawesome.css" />
-    <link rel="stylesheet" href="~/css/jquery-ui.css" />
+    @*<link rel="stylesheet" href="~/css/jquery-ui.css" />*@
     <style>
         body {
             font-family: Roboto,-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif !important;
@@ -107,7 +107,7 @@
     }
 </head>
 
-<body id="app-container" class="menu-default show-spinner">
+<body id="app-container" class="menu-default show-spinner" >
     <nav class="navbar fixed-top">
         <div class="d-flex align-items-center navbar-left">
             @*<a href="#" class="menu-button d-none d-md-block">
@@ -893,7 +893,7 @@
     <script src="~/js/vendor/jquery.barrating.min.js"></script>
     <script src="~/js/vendor/select2.full.js"></script>
     <script src="~/js/vendor/nouislider.min.js"></script>
-    <script src="~/js/vendor/bootstrap-datepicker.js"></script>
+    <script src="~/js/vendor/bootstrap-datepicker.js" charset="UTF-8"></script>
     <script src="~/js/vendor/jquery.smartWizard.min.js"></script>
     <script src="~/js/vendor/jquery.validate/jquery.validate.min.js"></script>
     <script src="~/js/vendor/Sortable.js"></script>
@@ -907,12 +907,30 @@
     <script src="~/fontawesome-free-5.15.3-web/js/all.js"></script>
     <script src="~/fontawesome-free-5.15.3-web/js/fontawesome.js"></script>
     <script src="~/js/vendor/bootstrap3-typeahead.js"></script>
-    <script src="~/js/jquery-ui.js"></script>
+    @*<script src="~/js/jquery-ui.js"></script>*@
     <script src="~/js/PopupScript.js"></script>
+    
+
     <script>
         jQuery(function ($) {
-            $(".datepicker").datepicker();
-            $(".datepicker").datepicker("option", "dateFormat", "yy/mm/dd");
+            //$(".datepicker").datepicker();
+            //$(".datepicker").datepicker("option", "dateFormat", "yy/mm/dd");
+
+            //$('input[type=datetime]').datepicker({
+            //    dateFormate: 'dd M yy',
+            //    changeMonth: true,
+            //    changeYear: true,
+            //    yearRange: "-10:+10"
+            //});
+
+            $('.datepicker').datepicker({
+                format: "dd/mm/yyyy",
+                 today: 'Today',
+                 clear: 'Clear',
+            });
+
+         
+
 
             url = '@ViewBag.page';
             page = '@ViewBag.pageNumber';

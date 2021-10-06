@@ -47,15 +47,21 @@ namespace Service
                 Nwob.InvoiceProducts = repo.invoiceProductRepo.GetList(e => e.InvoiceId == Nwob.Id, e => e.OrderBy(e => e.Id), "", Utility.Status.All).ToList();
             }
 
-           // if (long.Parse("0" + new PreferenceService().GetByKey("AutoCreateTransaction", "Invoice", ob.TypeId, 0)?.Value) == 1 || ob.TransactionId > 0)
-           // {
-           //     new TransactionService().CreateTransactionByInvoice(new InvoiceModelView(Nwob));
-           // }
+            if (long.Parse("0" + new PreferenceService().GetByKey("AutoCreateTransaction", "Invoice", ob.TypeId, 0)?.Value) == 1 || ob.TransactionId > 0)
+            {
 
-           //new FinancialService().CreateFinancialByInvoice(new InvoiceModelView(Nwob));
+                new IntegrationServics().CreateTransactionByInvoice(new InvoiceModelView(Nwob));
+                new TransactionService().CreateTransactionByInvoice(new InvoiceModelView(Nwob));
+            }
+
+            //new IntegrationServics().CreateTransactionByInvoice(new InvoiceModelView(Nwob));
+
+            //new FinancialService().CreateFinancialByInvoice(new InvoiceModelView(Nwob));
 
             return new InvoiceModelView(Nwob);
         }
+
+       
 
         public bool Delete(long id)
         {
@@ -150,24 +156,7 @@ namespace Service
         #endregion
 
         #region Integration      
-        public bool CreateInvoiceByOrder(OrderModelView ord)
-        {
-            if (ord != null && ord.Id > 0)
-            {
-                var inv = new InvoiceModelView(ord.Model);
-                inv.StoreId = long.Parse("0" + new PreferenceService().GetByKey("DefaultStore", "Invoice", 1, 0)?.Value);
-                if (ord.DealerId == null || ord.DealerId == 0)
-                    inv.DealerId = long.Parse("0" + new PreferenceService().GetByKey("DefaultCustomer", "Invoice", 1, 0)?.Value);
-                else
-                    inv.DealerId = ord.DealerId.Value;
-                inv.PaymentTypeId = long.Parse("0" + new PreferenceService().GetByKey("DefaultPaymentType", "Invoice", 1, 0)?.Value);
-                inv.CodeNumber = GetMaxCode(1);
-                inv.Code = "" + inv.CodeNumber;
-                Save(inv);
-                return true;
-            }
-            return false;
-        }
+      
 
         public void UpdateCredit(List<long> ids)
         {

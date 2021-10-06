@@ -7,7 +7,7 @@
 <div id="HPage" class="container-fluid">
     <div class="row">
         <div class="col-12">
-            <div class="mb-3">
+            <div class="mb-0">
                 @if (Model.TypeId == 1)
                 {
                     <h1>@Utility.Resource.Title_Designer.Internal</h1>
@@ -86,7 +86,7 @@
                                 </li>
                             </ul>
                         }
-                    <div class="card-body">
+                    <div class="card-body pt-4">
                         @Html.HiddenFor(model => model.Id)
                         @Html.HiddenFor(model => model.TypeId)
                         @Html.HiddenFor(model => model.ParentId)
@@ -323,7 +323,7 @@
                                 <div class="form-group col-md-4">
                                     <lable>@Utility.Resource.Title_Designer.Code</lable>
                                     <div id="divCode">
-                                        <div class="input-group">
+                                        <div class="input-group mt-2">
                                             @if (ViewBag.TypeSerial == 1)
                                             {
                                                 @Html.TextBoxFor(model => model.Code, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Code })
@@ -338,7 +338,7 @@
                                     @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger " })
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label> @Utility.Resource.Title_Designer.Date</label>
+                                    <label>@Utility.Resource.Title_Designer.Date</label>
                                     <div id="divDate">
                                         <div class="input-group">
                                             <div class="input-group-prepend">
@@ -372,7 +372,7 @@
                             {
                                 <div class="form-row">
                                     <div class="form-group col-md-4">
-                                        @Utility.Resource.Title_Designer.Table
+                                        <label>@Utility.Resource.Title_Designer.Table</label>
                                         <div id="divStoreId">
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
@@ -481,8 +481,8 @@
 
     jQuery(function ($) {
         $("#query").focus();
-        $(".datepicker").datepicker();
-        $(".datepicker").datepicker("option", "dateFormat", "yy/mm/dd");
+        //$(".datepicker").datepicker();
+        //$(".datepicker").datepicker("option", "dateFormat", "yy/mm/dd");
 
         setTimeout(function () {
             $(".sw-toolbar-bottom").css("display", "none");
