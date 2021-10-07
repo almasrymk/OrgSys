@@ -10,11 +10,11 @@
             <div class="mb-0">
                 @if (Model.TypeId == 1)
                 {
-                    <h1>@Utility.Resource.Title_Designer.Internal</h1>
+                    <h1>@Utility.Resource.Title_Designer.InternalOrder</h1>
                 }
                 else if (Model.TypeId == 2)
                 {
-                    <h1>@Utility.Resource.Title_Designer.External</h1>
+                    <h1>@Utility.Resource.Title_Designer.ExternalOrder</h1>
                 }
 
                 <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
@@ -96,6 +96,13 @@
                         @Html.HiddenFor(model => model.CreateDate)
                         @Html.HiddenFor(model => model.ModifyUserId)
                         @Html.HiddenFor(model => model.ModifyDate)
+                        @Html.HiddenFor(model => model.MaskText)
+                        @Html.HiddenFor(model => model.Hide)
+                        @Html.HiddenFor(model => model.ImgPath)
+                        @Html.HiddenFor(model => model.Status)
+                        @Html.HiddenFor(model => model.ShiftId)
+                        @Html.HiddenFor(model => model.BranchId)
+
                         <div id="checkStep1">
                             <div class="card">
                                 <table id="tbl" class="table table-hover ">
@@ -743,7 +750,7 @@
             if (AllowRepeated == 2 && RowRepeated != "") {
                 var Quantity = Number(RowRepeated.find("#Quantity").val());
                 RowRepeated.find("#Quantity").val(++Quantity);
-                ReIndex();
+                ReIndex();              
                 ReCalc();
                 RowRepeated.find("#RepeatedWarning").css("display", "block");
 
@@ -954,7 +961,6 @@
             else {
                 $("#Remaining").val(parseFloat(Remianing).toFixed(1));
             }
-
             AutoSave();
         }
 
@@ -976,7 +982,6 @@
 
                 if (!Valid) {
                     $("#tbHeader").trigger("Click", SkipCallingAction = true)
-                    //alert("Sd");
                     window.location.replace("#checkStep2");
                 }
             }
@@ -1056,7 +1061,7 @@
                     }
                 }
             });
-           
+
             var data = {
                 Id: $('#Id').val(),
                 TypeId: $('#TypeId').val(),
@@ -1064,6 +1069,7 @@
                 ParentId: $('#ParentId').val(),
                 Code: $('#Code').val(),
                 CodeNumber: $('#CodeNumber').val(),
+                MaskText: $('#MaskText').val(),
                 Date: $('#Date').val(),
                 DealerId: $('#DealerId').val(),
                 TableId: $('#TableId').val(),
@@ -1085,6 +1091,11 @@
                 CreateDate: $('#CreateDate').val(),
                 ModifyUserId: $('#ModifyUserId').val(),
                 ModifyDate: $('#ModifyDate').val(),
+                Hide: $('#Hide').val(),
+                ImgPath: $('#ImgPath').val(),
+                Status: $('#Status').val(),
+                ShiftId: $('#ShiftId').val(),
+                BranchId: $('#BranchId').val(),
                 OrderProducts: list
             }
 
@@ -1105,8 +1116,6 @@
 
         RefreshSomeEventListener();
 
-        ReIndex();
-
-        ReCalc();
+        ReIndex();       
     });
 </script>

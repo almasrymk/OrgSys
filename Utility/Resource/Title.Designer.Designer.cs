@@ -232,6 +232,15 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Check.
         /// </summary>
         public static string Check {
@@ -327,6 +336,15 @@ namespace Utility.Resource {
         public static string Cost {
             get {
                 return ResourceManager.GetString("Cost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create.
+        /// </summary>
+        public static string Create {
+            get {
+                return ResourceManager.GetString("Create", resourceCulture);
             }
         }
         
@@ -628,6 +646,24 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to External order.
+        /// </summary>
+        public static string ExternalOrder {
+            get {
+                return ResourceManager.GetString("ExternalOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to External orders.
+        /// </summary>
+        public static string ExternalOrders {
+            get {
+                return ResourceManager.GetString("ExternalOrders", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Features.
         /// </summary>
         public static string Features {
@@ -705,6 +741,24 @@ namespace Utility.Resource {
         public static string Internal {
             get {
                 return ResourceManager.GetString("Internal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Internal order.
+        /// </summary>
+        public static string InternalOrder {
+            get {
+                return ResourceManager.GetString("InternalOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Internal orders.
+        /// </summary>
+        public static string InternalOrders {
+            get {
+                return ResourceManager.GetString("InternalOrders", resourceCulture);
             }
         }
         
@@ -1209,6 +1263,15 @@ namespace Utility.Resource {
         public static string RecentOrders {
             get {
                 return ResourceManager.GetString("RecentOrders", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Redo.
+        /// </summary>
+        public static string Redo {
+            get {
+                return ResourceManager.GetString("Redo", resourceCulture);
             }
         }
         

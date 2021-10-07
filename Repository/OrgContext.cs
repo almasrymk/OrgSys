@@ -129,14 +129,16 @@ namespace Repository
                             new Permission { Id = 2010102, Name = "Add", Key = "Internal.Add", ParentId = 20101, TypeId = 1 },
                             new Permission { Id = 2010103, Name = "Edit", Key = "Internal.Edit", ParentId = 20101, TypeId = 1 },
                             new Permission { Id = 2010104, Name = "Delete", Key = "Internal.Delete", ParentId = 20101, TypeId = 1 },
-                            new Permission { Id = 2010105, Name = "Preference", Key = "Internal.Preference", ParentId = 20101, TypeId = 1 },
+                            new Permission { Id = 2010105, Name = "Cancel", Key = "Internal.Cancel", ParentId = 20101, TypeId = 1 },
+                            new Permission { Id = 2010106, Name = "Preference", Key = "Internal.Preference", ParentId = 20101, TypeId = 1 },
 
                         new Permission { Id = 20102, Name = "External", Key = "External.All", ParentId = 201 },
                             new Permission { Id = 2010201, Name = "View", Key = "External.View", ParentId = 20102, TypeId = 1 },
                             new Permission { Id = 2010202, Name = "Add", Key = "External.Add", ParentId = 20102, TypeId = 1 },
                             new Permission { Id = 2010203, Name = "Edit", Key = "External.Edit", ParentId = 20102, TypeId = 1 },
                             new Permission { Id = 2010204, Name = "Delete", Key = "External.Delete", ParentId = 20102, TypeId = 1 },
-                            new Permission { Id = 2010205, Name = "Preference", Key = "External.Preference", ParentId = 20102, TypeId = 1 },
+                            new Permission { Id = 2010205, Name = "Cancel", Key = "External.Cancel", ParentId = 20102, TypeId = 1 },
+                            new Permission { Id = 2010206, Name = "Preference", Key = "External.Preference", ParentId = 20102, TypeId = 1 },
 
                 new Permission { Id = 30, Name = "Invoices", Key = "Invoices.All", ParentId = 1 },
 

@@ -23,7 +23,7 @@ namespace OrgSys.Areas.Orders.Controllers
 
         public override void LoadViewBag(OrderModelView model)
         {
-            ViewBag.TableId = new SelectList(new TableService().GetAllClosed(model.Id, model.ParentId, 0), "Id", "Name");
+            ViewBag.TableId = new SelectList(new TableService().GetAllClosed(model.Id, model.ParentId, 0), "Id", "Name" , model.TableId);
 
             List<SelectListItem> selectListItems = new List<SelectListItem>();
             selectListItems.Add(new SelectListItem { Value = "1", Text = "Amount" });
