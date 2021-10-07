@@ -120,8 +120,9 @@ namespace Service
         #region Integration
         public bool CreateFinancialByInvoice(InvoiceModelView inv)
         {
-            if (inv != null && inv.Id > 0 && inv.Credit > 0)
+            if (inv != null && inv.Id > 0 && inv.Paid - inv.Remaining + inv.Credit != inv.Net)
             {
+                //new FinancialInvoiceService().GetAll()
                 var financial = new FinancialModelView(inv.Model);
                 financial.SafeId = long.Parse("0" + new PreferenceService().GetByKey("DefaultSafe", "Financial", (inv.TypeId == 1 || inv.TypeId == 4 ? 1 : 2), 0)?.Value);
                 financial.PaymentTypeId = long.Parse("0" + new PreferenceService().GetByKey("DefaultPaymentType", "Financial", (inv.TypeId == 1 || inv.TypeId == 4 ? 1 : 2), 0)?.Value);

@@ -174,6 +174,9 @@
   <data name="Branchs" xml:space="preserve">
     <value>الفروع</value>
   </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>الغاء</value>
+  </data>
   <data name="Check" xml:space="preserve">
     <value>اختار</value>
   </data>
@@ -206,6 +209,9 @@
   </data>
   <data name="Cost" xml:space="preserve">
     <value>التكلفة</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>انشاء</value>
   </data>
   <data name="Credit" xml:space="preserve">
     <value>دائن</value>
@@ -306,6 +312,12 @@
   <data name="External" xml:space="preserve">
     <value>خارجي</value>
   </data>
+  <data name="ExternalOrder" xml:space="preserve">
+    <value>طلب خارجي</value>
+  </data>
+  <data name="ExternalOrders" xml:space="preserve">
+    <value>الطلبات الخارجية</value>
+  </data>
   <data name="Features" xml:space="preserve">
     <value>السمات</value>
   </data>
@@ -332,6 +344,12 @@
   </data>
   <data name="Internal" xml:space="preserve">
     <value>داخلي</value>
+  </data>
+  <data name="InternalOrder" xml:space="preserve">
+    <value>طلب داخلى</value>
+  </data>
+  <data name="InternalOrders" xml:space="preserve">
+    <value>الطلبات الداخلية</value>
   </data>
   <data name="Inventory" xml:space="preserve">
     <value>الجرد</value>
@@ -500,6 +518,9 @@
   </data>
   <data name="RecentOrders" xml:space="preserve">
     <value>الطلبات الاخيره</value>
+  </data>
+  <data name="Redo" xml:space="preserve">
+    <value>تراجع</value>
   </data>
   <data name="RefundRequests" xml:space="preserve">
     <value>طلبات الاسترداد</value>
