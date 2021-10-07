@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using OrgSys.Models;
 using Service;
@@ -23,11 +24,11 @@ namespace OrgSys.Controllers
     public class HomeController : Controller
     {       
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
-        {
-          
-            _logger = logger;           
+        IStringLocalizer<Utility.Resource.Title_Designer> _localizer;
+        public HomeController(ILogger<HomeController> logger , IStringLocalizer<Utility.Resource.Title_Designer> localizer)
+        {          
+            _logger = logger;
+            _localizer = localizer;
         }
 
         public IActionResult Dashboard()

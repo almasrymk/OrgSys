@@ -1249,6 +1249,15 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ratio.
+        /// </summary>
+        public static string Ratio {
+            get {
+                return ResourceManager.GetString("Ratio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Received.
         /// </summary>
         public static string Received {

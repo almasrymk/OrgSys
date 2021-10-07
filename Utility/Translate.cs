@@ -1,24 +1,14 @@
 ﻿namespace Utility
 {
     using Microsoft.Extensions.Localization;
+    using System.Resources;
     using Utility.Resource;
     public class Translate
-    {
-        IStringLocalizer<Title_Designer> _Titlelocalizer;
-        IStringLocalizer<Message_Designer> _Messagelocalizer;
-
-        public Translate(IStringLocalizer<Title_Designer> Titlelocalizer, IStringLocalizer<Message_Designer> Messagelocalizer)
+    {     
+        public static string GetTranslate(string value)
         {
-            this._Titlelocalizer = Titlelocalizer;
-            this._Messagelocalizer = Messagelocalizer;
-        }
-
-        public string GetTranslate(string value)
-        {
-            var val = this._Messagelocalizer.GetString(value);
-            if ("" + val == "" || val == value)
-                val = this._Titlelocalizer.GetString(value);
-            return val;
+            ResourceManager   _resourceManager = new ResourceManager("Utility.Resource.Title.Designer", typeof(Title_Designer).Assembly);
+            return _resourceManager.GetString(value);           
         }
     }
 }

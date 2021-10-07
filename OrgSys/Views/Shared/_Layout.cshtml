@@ -29,7 +29,8 @@
     <link rel="stylesheet" href="~/css/vendor/bootstrap-stars.css" />
     <link rel="stylesheet" href="~/css/vendor/nouislider.min.css" />
     <link rel="stylesheet" href="~/css/vendor/smart_wizard.min.css" />
-    <link rel="stylesheet" href="~/css/vendor/bootstrap-datepicker3.min.css" />
+    @*<link rel="stylesheet" href="~/css/vendor/bootstrap-datepicker3.min.css" />*@
+<link href="~/DatePicher/bootstrap-datepicker.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/vendor/component-custom-switch.min.css" />
     <link rel="stylesheet" href="~/css/main.css" />
     <link rel="stylesheet" href="~/css/jquery.bonsai.css" />
@@ -893,7 +894,8 @@
     <script src="~/js/vendor/jquery.barrating.min.js"></script>
     <script src="~/js/vendor/select2.full.js"></script>
     <script src="~/js/vendor/nouislider.min.js"></script>
-    <script src="~/js/vendor/bootstrap-datepicker.js" charset="UTF-8"></script>
+    @*<script src="~/js/vendor/bootstrap-datepicker.js" charset="UTF-8"></script>*@
+<script src="~/DatePicher/bootstrap-datepicker.min.js"></script>
     <script src="~/js/vendor/jquery.smartWizard.min.js"></script>
     <script src="~/js/vendor/jquery.validate/jquery.validate.min.js"></script>
     <script src="~/js/vendor/Sortable.js"></script>
@@ -913,8 +915,8 @@
 
     <script>
         jQuery(function ($) {
-            //$(".datepicker").datepicker();
-            //$(".datepicker").datepicker("option", "dateFormat", "yy/mm/dd");
+            $(".datepicker").datepicker();
+            $(".datepicker").datepicker("option", "dateFormat", "yy/mm/dd");
 
             //$('input[type=datetime]').datepicker({
             //    dateFormate: 'dd M yy',
@@ -923,13 +925,14 @@
             //    yearRange: "-10:+10"
             //});
 
-            $('.datepicker').datepicker({
-                format: "dd/mm/yyyy",
-                 today: 'Today',
-                 clear: 'Clear',
-            });
+            //$('.datepicker').datepicker({
+            //    format: "yyyy/dd/mm",
+            //     today: 'Today',
+            //    /* clear: 'Clear',*/
+            //});
 
-         
+            //$(".datepicker").datepicker();
+            //$(".datepicker").datepicker("option", "dateFormat", "yy/mm/dd");
 
 
             url = '@ViewBag.page';

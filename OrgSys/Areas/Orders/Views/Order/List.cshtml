@@ -6,6 +6,7 @@
     Layout = null;
     var IsRightToLeft = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft;
     var TextAlign = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "text-right" : "text-left";
+    var TextAlign2 = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "text-left" : "text-right";
     var DateFromate = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "yyyy-MM-dd" : "dd-MM-yyyy";
 }
 
@@ -57,11 +58,11 @@
                 <tbody>
                     @for (int i = 0, x = ((Model.PageNumber - 1) * Model.PageSize) + 1; i < Model.Count; i++, x++)
                     {
-                        <tr style="@(Model[i].Status == Utility.Status.Cancel ? "color:#a8a7a7;background:repeating-linear-gradient(60deg, white, white 5px, gainsboro 5px, gainsboro 6px);" : "")">
-                            <td style="width:50px;vertical-align: middle;text-align:center;">
+                        <tr style="@(Model[i].Status == Utility.Status.Cancel ? "color:#a8a7a7;background:repeating-linear-gradient(60deg, transparent, transparent 5px, gainsboro 5px, gainsboro 6px);" : "")">
+                            <td class="text-center align-middle" style="width:50px;">
                                 <p class="list-item-heading">@x</p>
                             </td>
-                            <td style="width:80px;padding:7px; vertical-align: middle;">
+                            <td class="text-center align-middle" style="width:50px;">
                                 <div class="list-thumbnail  border-0 rounded-circle badge-theme-1 m-0" style="height:40px;width:40px;font-size:large;text-align:center;padding:6px;">
                                     <i class="@ViewBag.OrdersIcon"></i>
                                 </div>
@@ -111,7 +112,7 @@
                             </td>
                             @if ((ViewBag.TypeId == 1 && (User.IsAllowed("Internal.Edit") || User.IsAllowed("Internal.Cancel") || User.IsAllowed("Internal.Delete"))) || (ViewBag.TypeId == 2 && (User.IsAllowed("External.Edit") || User.IsAllowed("External.Cancel") || User.IsAllowed("External.Delete"))))
                             {
-                                <td class="w-15 text-center align-middle">
+                                <td class="w-15 @TextAlign2 align-middle">
                                     @if (Model[i].Status == Utility.Status.Cancel)
                                     {
                                         <a href="/@ViewBag.area/@ViewBag.PageTitle/Redo?id=@Model[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.PageNumber"> <i class="simple-icon-action-redo"></i> </a>
@@ -123,7 +124,10 @@
                                             <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit" style="color:green"></i> </a>
                                             if ((ViewBag.TypeId == 1 && (User.IsAllowed("Internal.Cancel") || User.IsAllowed("Internal.Delete"))) || (ViewBag.TypeId == 2 && (User.IsAllowed("External.Cancel") || User.IsAllowed("External.Delete"))))
                                             {
-                                                <span>&nbsp; | &nbsp;</span>
+                                                if (Model[i].Invoice == null || "" + Model[i].Invoice.Code == "")
+                                                {
+                                                    <span>&nbsp; | &nbsp;</span>
+                                                }
                                             }
                                         }
                                         if (Model[i].Invoice == null || "" + Model[i].Invoice.Code == "")
@@ -146,10 +150,10 @@
                             }
                             @if ((ViewBag.TypeId == 1 && User.IsAllowed("Internal.Delete")) || (ViewBag.TypeId == 2 && User.IsAllowed("External.Delete")))
                             {
-                                <td class=" align-middle" style="width:30px">
+                                <td class="align-middle @TextAlign2" style="width:30px">
                                     @if ((Model[i].Invoice == null || "" + Model[i].Invoice.Code == "") && Model[i].Status != Utility.Status.Cancel)
                                     {
-                                        <label class="custom-control custom-checkbox">
+                                        <label class="custom-control custom-checkbox pt-2">
                                             <input id="chk_@Model[i].Id" type="checkbox" class="custom-control-input chk">
                                             <input type="hidden" value="@Model[i].Id" />
                                             <span class="custom-control-label">&nbsp;</span>
@@ -170,7 +174,7 @@
             {
 
                 <div class="card d-flex flex-row mb-2">
-                    <div class="d-flex flex-grow-1 min-width-zero" style="border-radius:15px; height:60px; @(Model[i].Status == Utility.Status.Cancel ? "color:#a8a7a7;background:repeating-linear-gradient(60deg, white, white 5px, gainsboro 5px, gainsboro 6px);" : "")">
+                    <div class="d-flex flex-grow-1 min-width-zero" style="border-radius:15px; height:60px; @(Model[i].Status == Utility.Status.Cancel ? "color:#a8a7a7;background:repeating-linear-gradient(60deg, transparent, transparent 5px, gainsboro 5px, gainsboro 6px);" : "")">
                         <div class="list-thumbnail  border-0 card-img-left badge-theme-1" style="height:60px; width:60px; font-size:x-large; text-align:center; padding:10px;">
                             <i class="@ViewBag.OrdersIcon"></i>
                         </div>
@@ -217,7 +221,7 @@
                                     }
                                 }
                             </div>
-                            <div class="w-15">
+                            <div class="w-15 @TextAlign2">
                                 @if (Model[i].Status == Utility.Status.Cancel)
                                 {
                                     <a href="/@ViewBag.area/@ViewBag.PageTitle/Redo?id=@Model[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.PageNumber"> <i class="simple-icon-action-redo"></i> </a>
@@ -229,7 +233,10 @@
                                         <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit" style="color:green"></i> </a>
                                         if ((ViewBag.TypeId == 1 && (User.IsAllowed("Internal.Cancel") || User.IsAllowed("Internal.Delete"))) || (ViewBag.TypeId == 2 && (User.IsAllowed("External.Cancel") || User.IsAllowed("External.Delete"))))
                                         {
-                                            <span>&nbsp; | &nbsp;</span>
+                                            if (Model[i].Invoice == null || "" + Model[i].Invoice.Code == "")
+                                            {
+                                                <span>&nbsp; | &nbsp;</span>
+                                            }
                                         }
                                     }
                                     if (Model[i].Invoice == null || "" + Model[i].Invoice.Code == "")
@@ -250,17 +257,19 @@
                                 }
                             </div>
                         </div>
-                        @if ((ViewBag.TypeId == 1 && User.IsAllowed("Internal.Delete")) || (ViewBag.TypeId == 2 && User.IsAllowed("External.Delete")))
-                        {
-                            @if ((Model[i].Invoice == null || "" + Model[i].Invoice.Code == "") && Model[i].Status != Utility.Status.Cancel)
+                        <div style="width:30px;">
+                            @if ((ViewBag.TypeId == 1 && User.IsAllowed("Internal.Delete")) || (ViewBag.TypeId == 2 && User.IsAllowed("External.Delete")))
                             {
-                                <label class="custom-control custom-checkbox pt-3">
-                                    <input id="chk_@Model[i].Id" type="checkbox" class="custom-control-input chk">
-                                    <input type="hidden" value="@Model[i].Id" />
-                                    <span class="custom-control-label">&nbsp;</span>
-                                </label>
+                                @if ((Model[i].Invoice == null || "" + Model[i].Invoice.Code == "") && Model[i].Status != Utility.Status.Cancel)
+                                {
+                                    <label class="custom-control custom-checkbox pt-3">
+                                        <input id="chk_@Model[i].Id" type="checkbox" class="custom-control-input chk">
+                                        <input type="hidden" value="@Model[i].Id" />
+                                        <span class="custom-control-label">&nbsp;</span>
+                                    </label>
+                                }
                             }
-                        }
+                        </div>
                     </div>
                 </div>
 

@@ -513,6 +513,9 @@
   <data name="Rate" xml:space="preserve">
     <value>Rate</value>
   </data>
+  <data name="Ratio" xml:space="preserve">
+    <value>Ratio</value>
+  </data>
   <data name="Received" xml:space="preserve">
     <value>Received</value>
   </data>

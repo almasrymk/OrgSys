@@ -3,18 +3,23 @@ using X.PagedList;
 using Repository;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Extensions.Localization;
+using System.Reflection;
+using System.Resources;
+using Utility.Resource;
+using Utility;
 
 namespace Service
 {
     public class RoleService : BaseService<RoleModelView>
     {
         string Includes = "";
-        UnitOfWork repo;
+        UnitOfWork repo;      
         public RoleService()
         {
-            repo = new UnitOfWork();
+            repo = new UnitOfWork();          
         }
-
+      
         #region Save / Delete
         public RoleModelView Save(RoleModelView ob)
         {          
@@ -51,7 +56,7 @@ namespace Service
             if (ob == null)
                 ob = new RoleModelView();
             var permission = repo.rolePermissionRepo.GetList(e => e.RoleId == Id, null, "Role,Permission", Utility.Status.New);
-            ob.PermissionsTree = repo.permissionRepo.GetList(e => e.OrderBy(e => e.Id), "").Select(e => new TreeView { Id = e.Id, Key = e.Key, Value = e.Name, ParentId = e.ParentId }).ToList();
+            ob.PermissionsTree = repo.permissionRepo.GetList(e => e.OrderBy(e => e.Id), "").Select(e => new TreeView { Id = e.Id, Key = e.Key, Value = Translate.GetTranslate(e.Name), ParentId = e.ParentId }).ToList();
             foreach (var item in ob.PermissionsTree)
             {
                 if (permission.Any(e => e.PermissionId == item.Id))
