@@ -67,6 +67,7 @@ namespace Entity.ModelView
                 Hide = this.Hide,
                 Status = this.Status,
                 ImgPath = this.ImgPath
+
             };
         }
 
@@ -83,6 +84,7 @@ namespace Entity.ModelView
         public long? BranchId { get; set; }
 
         public string BranchName { get; set; }
+        public string NewPassword { get; set; }
 
         public List<Permission> Permissions { get; set; }
     }

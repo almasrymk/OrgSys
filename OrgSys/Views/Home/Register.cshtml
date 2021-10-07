@@ -1,4 +1,6 @@
-﻿@{
+﻿@model Entity.ModelView.UserModelView
+
+@{
     Layout = "~/Views/Shared/_Layout_Website.cshtml";
 }
 <!-- Page title -->
@@ -28,65 +30,141 @@
 <section>
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 center no-padding">
-                <form class="form-transparent-grey">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <h3>Register New Account</h3>
-                            <p>Create an account by entering the information below. If you are a returning customer please login at the top of the page.</p>
-                        </div>
-                        <div class="col-lg-6 form-group">
-                            <label class="sr-only">First Name</label>
-                            <input type="text" value="" placeholder="First Name" class="form-control">
-                        </div>
-                        <div class="col-lg-6 form-group">
-                            <label class="sr-only">Last Name</label>
-                            <input type="text" value="" placeholder="Last Name" class="form-control">
-                        </div>
-                        <div class="col-lg-6 form-group">
-                            <label class="sr-only">Username</label>
-                            <input type="text" value="" placeholder="Username" class="form-control">
-                        </div>
-                        <div class="col-lg-6 form-group">
-                            <label class="sr-only">Password</label>
-                            <input type="password" value="" placeholder="Password" class="form-control">
-                        </div>
-                        <div class="col-lg-12 form-group">
-                            <label class="sr-only">Address</label>
-                            <input type="text" value="" placeholder="Address" class="form-control">
-                        </div>
-                        <div class="col-lg-6 form-group">
-                            <label class="sr-only">Apartment, suite, unit etc.</label>
-                            <input type="text" value="" placeholder="Apartment, suite, unit etc." class="form-control">
-                        </div>
-                        <div class="col-lg-6 form-group">
-                            <label class="sr-only">Town / City</label>
-                            <input type="text" value="" placeholder="Town / City" class="form-control">
-                        </div>
-                        <div class="col-lg-6 form-group">
-                            <label class="sr-only">State / County</label>
-                            <input type="text" value="" placeholder="State / County" class="form-control">
-                        </div>
-                        <div class="col-lg-6 form-group">
-                            <label class="sr-only">Postcode / Zip</label>
-                            <input type="text" value="" placeholder="Postcode / Zip" class="form-control">
-                        </div>
-                        <div class="col-lg-6 form-group">
-                            <label class="sr-only">Email</label>
-                            <input type="text" value="" placeholder="Email" class="form-control">
-                        </div>
-                        <div class="col-lg-6 form-group">
-                            <label class="sr-only">Phone</label>
-                            <input type="text" value="" placeholder="Phone" class="form-control">
-                        </div>
-                        <div class="col-lg-12 form-group">
-                            <button class="btn" type="button">Register New Account </button>
-                            <a href="~/home/login" class="btn btn-danger m-l-10">Cancel</a>
-                        </div>
-                    </div>
-                </form>
+            <div class="col-lg-8 center">
+                @*<form class="form-transparent-grey">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h3>Register New Account</h3>
+                    <p>Create an account by entering the information below. If you are a returning customer please login at the top of the page.</p>
+                </div>
+                <div class="col-lg-6 form-group">
+                    <label class="sr-only">First Name</label>
+                    <input type="text" value="" placeholder="First Name" class="form-control">
+                </div>
+                <div class="col-lg-6 form-group">
+                    <label class="sr-only">Last Name</label>
+                    <input type="text" value="" placeholder="Last Name" class="form-control">
+                </div>
+                <div class="col-lg-6 form-group">
+                    <label class="sr-only">Username</label>
+                    <input type="text" value="" placeholder="Username" class="form-control">
+                </div>
+                <div class="col-lg-6 form-group">
+                    <label class="sr-only">Password</label>
+                    <input type="password" value="" placeholder="Password" class="form-control">
+                </div>
+                <div class="col-lg-12 form-group">
+                    <label class="sr-only">Address</label>
+                    <input type="text" value="" placeholder="Address" class="form-control">
+                </div>
+                <div class="col-lg-6 form-group">
+                    <label class="sr-only">Apartment, suite, unit etc.</label>
+                    <input type="text" value="" placeholder="Apartment, suite, unit etc." class="form-control">
+                </div>
+                <div class="col-lg-6 form-group">
+                    <label class="sr-only">Town / City</label>
+                    <input type="text" value="" placeholder="Town / City" class="form-control">
+                </div>
+                <div class="col-lg-6 form-group">
+                    <label class="sr-only">State / County</label>
+                    <input type="text" value="" placeholder="State / County" class="form-control">
+                </div>
+                <div class="col-lg-6 form-group">
+                    <label class="sr-only">Postcode / Zip</label>
+                    <input type="text" value="" placeholder="Postcode / Zip" class="form-control">
+                </div>
+                <div class="col-lg-6 form-group">
+                    <label class="sr-only">Email</label>
+                    <input type="text" value="" placeholder="Email" class="form-control">
+                </div>
+                <div class="col-lg-6 form-group">
+                    <label class="sr-only">Phone</label>
+                    <input type="text" value="" placeholder="Phone" class="form-control">
+                </div>
+                <div class="col-lg-12 form-group">
+                    <button class="btn" type="button">Register New Account </button>
+                    <a href="~/home/login" class="btn btn-danger m-l-10">Cancel</a>
+                </div>
             </div>
-        </div>
-    </div>
+        </form>*@
+
+                @*/////////////////////////////////////////////////////////////////////////////////////*@
+
+                @*@using (Html.BeginForm("Register", "Home", FormMethod.Post))
+        {
+           @Html.AntiForgeryToken()
+           <div class="form-horizontal">
+
+
+               <div class="form-group">
+                   @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2 " })
+                   <div class="col-md-10">
+                       @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control " } })
+                       @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger " })
+                       @if (ViewBag.error != null)
+                       {
+                           <span class="badge badge-danger text-center">@ViewBag.error</span>
+                       }
+                   </div>
+               </div>
+
+               <div class="form-group">
+                   @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+                   <div class="col-md-10">
+                       @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                       @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                   </div>
+               </div>
+
+               <div class="form-group">
+                   <div class="col-md-offset-2 col-md-10">
+                       <input type="submit" value="Create" class="btn btn-default" />
+                   </div>
+               </div>
+           </div>
+        }*@
+                <div class="card h-100">
+                    <div class="panel-body">
+                        <h3 class="text-center card-header bg-info p-2">Register New Account</h3>
+
+                        <form action="" method="post">
+
+                            <div class="form-horizontal">
+                                <div class="form-group pt-3">
+
+                                    <div class="form-group center col-md-9 mb-2 mt-2">
+                                        <label class="text-center">@Utility.Resource.Title_Designer.UsernameOrEmail</label>
+                                        <input type="text" name="" id="" placeholder="User Name Or Emai" class="form-control">
+                                        <span class="badge badge-danger" id=" " style="display:none">your Confirm Password is Error</span>
+                                    </div>
+
+                                    <div class="form-group center col-md-9 mb-2 mt-2">
+                                        <label class="text-center">@Utility.Resource.Title_Designer.Password</label>
+                                        <input type="text" name="" id="" placeholder="Password" class="form-control">
+                                        <span class="badge badge-danger" id=" " style="display:none">your Confirm Password is Error</span>
+
+                                    </div>
+
+                                    <div class="form-group center col-md-9 mb-2 mt-2">
+                                        <label class="text-center">Confirm Password</label>
+                                        <input type="text" name="" id="" placeholder="Confirm Password" class="form-control">
+                                        <span class="badge badge-danger" id=" " style="display:none">your Confirm Password is Error</span>
+
+                                    </div>
+
+
+                                    <div class=" form-group center col-md-9 mb-2 mt-2 pt-4 pb-4">
+                                        <input type="button" value="Registeration" onclick=" " class="btn btn-block" />
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
 </section>
 <!-- end: Section -->

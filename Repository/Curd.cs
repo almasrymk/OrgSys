@@ -141,5 +141,13 @@ namespace Repository
             db.SaveChanges();
             return true;
         }
+
+        public virtual bool Any(Func<entity, bool> filter = null)
+        {
+            IQueryable<entity> query = db.Set<entity>();
+          
+            return query.Any(filter);
+        }
+
     }
 }
