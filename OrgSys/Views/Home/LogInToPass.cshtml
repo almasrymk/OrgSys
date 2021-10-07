@@ -1,0 +1,85 @@
+﻿@model Entity.ModelView.UserModelView
+
+@{
+    ViewData["Title"] = "LogInToPass";
+    Layout = "~/Views/Shared/_Layout_Website.cshtml";
+}
+
+<!-- Page title -->
+<section id="page-title" class="dark" style="background: url(/Assets/Web/images/pattern/pattern10.png)">
+    <div class="container">
+        <div class="breadcrumb">
+            <ul>
+                <li><a href="~/Home/Index">@Utility.Resource.Title_Designer.Home</a> </li>
+                <li><a href="#">Page title</a> </li>
+                <li class="active"><a href="#">Pattern background</a> </li>
+            </ul>
+        </div>
+        <div class="page-title">
+            <h1>Page title - Pattern background</h1>
+            <span>Simple page title with pattern background</span>
+        </div>
+    </div>
+</section>
+<!-- end: Page title -->
+<!-- Section -->
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 center no-padding">
+                <div class="panel ">
+                    <div class="panel-body">
+
+                        @*<form>
+                                <div class="form-group">
+                                    <label class="sr-only">@Utility.Resource.Title_Designer.UsernameOrEmail</label>
+                                    <input type="text" placeholder="Username or Email" class="form-control">
+                                </div>
+                                <div class="form-group m-b-5">
+                                    <label class="sr-only">@Utility.Resource.Title_Designer.Password</label>
+                                    <input type="password" placeholder="Password" class="form-control">
+                                </div>
+                                <div class="form-group form-inline m-b-10 ">
+                                    <div class="form-check">
+                                        <label>
+                                            <input type="checkbox"><small class="m-l-10"> @Utility.Resource.Title_Designer.RememberMe</small>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn" type="button">@Utility.Resource.Title_Designer.Login</button>
+                                </div>
+                            </form>*@
+                        <h3 class="text-center">@Utility.Resource.Title_Designer.Login</h3>
+                        <hr />
+
+                        @using (Html.BeginForm("LogInToPass", "Home", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="form-horizontal">
+
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2 " })
+                                    <div class="col-md-8">
+                                        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control " } })
+                                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger " })
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class=" col-md-2">
+                                        <input type="submit" value="LogIn" class="btn btn-default" />
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <p class="small">@Utility.Resource.Title_Designer.DonttHaveAccountYet <a href="~/home/register">@Utility.Resource.Title_Designer.RegisterNewAccount</a></p>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- end: Section -->

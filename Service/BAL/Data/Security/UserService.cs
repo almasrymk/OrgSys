@@ -10,9 +10,8 @@ namespace Service
 {
     public class UserService : BaseService<UserModelView>
     {
-        string Includes = "";
-        UnitOfWork repo;        
-
+        string Includes = "Role";
+        UnitOfWork repo;
         public UserService()
         {
             repo = new UnitOfWork();
@@ -55,6 +54,13 @@ namespace Service
             var ob = new UserModelView(repo.userRepo.Get(e => e.Name.Equals("" + textSearch), Includes));
             if (ob == null)
                 ob = new UserModelView();
+
+            var ids = repo.rolePermissionRepo.GetList(e => e.RoleId == ob.RoleId, null, "", Utility.Status.New).Select(e => e.PermissionId).Distinct().ToList();
+            if (ids == null)
+                ids = new List<long>();
+
+            ob.Permissions = repo.permissionRepo.GetList(e => ids.Contains(e.Id), null, "", Utility.Status.New).ToList();
+
             return ob;
         }
 
@@ -93,6 +99,13 @@ namespace Service
         {
             return repo.userRepo.GetMaXCode();
         }
+
+        public bool CheckEmail(string Email) => repo.userRepo.Any(e => e.UserName == Email);
+
+        public bool HavePassword(string Email) => "" + repo.userRepo.Get(e => e.UserName == Email).Password != "";
+
+        public bool CheckEmailAndPassword(string Email,string Passord) => repo.userRepo.Any(e => e.UserName == Email &&e.Password==Passord);
+
         #endregion
     }
 }
