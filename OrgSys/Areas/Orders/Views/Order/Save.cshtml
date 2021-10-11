@@ -57,14 +57,12 @@
                                 <li>
                                     <a id="tbProduct" href="#checkStep1">
                                         @Utility.Resource.Title_Designer.OrderProducts<br />
-                                        @*<small>@Utility.Resource.Message_Designer.UnitsWhichProductMeasured</small>*@
                                         <div id="divProduct"></div>
                                     </a>
                                 </li>
                                 <li>
                                     <a id="tbHeader" href="#checkStep2">
                                         @Utility.Resource.Title_Designer.OrderDetails<br />
-                                        @*<small>@Utility.Resource.Message_Designer.IngredientsThatProductMadeOf</small>*@
                                         <div id="divHeader"></div>
                                     </a>
                                 </li>
@@ -76,14 +74,12 @@
                                 <li>
                                     <a id="tbHeader" href="#checkStep2">
                                         @Utility.Resource.Title_Designer.OrderDetails<br />
-                                        @* <small>@Utility.Resource.Message_Designer.IngredientsThatProductMadeOf</small>*@
                                         <div id="divHeader"></div>
                                     </a>
                                 </li>
                                 <li>
                                     <a id="tbProduct" href="#checkStep1">
                                         @Utility.Resource.Title_Designer.OrderProducts<br />
-                                        @*<small>@Utility.Resource.Message_Designer.UnitsWhichProductMeasured</small>*@
                                         <div id="divProduct"></div>
                                     </a>
                                 </li>
@@ -157,7 +153,7 @@
                                                         <input type="text" id="Quantity" name="Quantity" class="form-control Quantity" value="@OrderProduct.Quantity" style="@BorderAlign" placeholder="0.0" autocomplete="off" />
                                                     </td>
                                                     <td style="width:100px;padding:0px;">
-                                                        <input type="text" id="Amount" name="Amount" class="form-control Amount" value="@OrderProduct.Total" readonly style="border-top:none;border-bottom:none;background-color:transparent;" placeholder="0.0" />
+                                                        <input type="text" id="Total" name="Total" class="form-control Total" value="@OrderProduct.Total" readonly style="border-top:none;border-bottom:none;background-color:transparent;" placeholder="0.0" />
                                                     </td>
                                                     <td class="text-center align-middle" style="width:100px;padding:0px;">
                                                         <a id="btnDelete" class="btnDelete" href="javascript:;" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash"></i> </a>
@@ -204,7 +200,7 @@
                                                             <input type="text" id="Quantity" name="Quantity" class="form-control Quantity" style="@BorderAlign" placeholder="0.0" autocomplete="off" />
                                                         </td>
                                                         <td style="width:100px;padding:0px;">
-                                                            <input type="text" id="Amount" name="Amount" class="form-control Amount" readonly style="border-top:none;border-bottom:none;background-color:transparent;" placeholder="0.0" />
+                                                            <input type="text" id="Total" name="Total" class="form-control Total" readonly style="border-top:none;border-bottom:none;background-color:transparent;" placeholder="0.0" />
                                                         </td>
                                                         <td class="text-center align-middle" style="width:100px;padding:0px;">
                                                             <a id="btnDelete" class="btnDelete" href="javascript:;" data-toggle="modal" data-target="#MsgModelId" style="display:none"><i class="simple-icon-trash"></i> </a>
@@ -247,7 +243,7 @@
                                                     <input type="text" id="Quantity" name="Quantity" class="form-control Quantity" style="@BorderAlign" placeholder="0.0" autocomplete="off" />
                                                 </td>
                                                 <td class="text-center align-middle"  style="width:100px;padding:0px;">
-                                                    <input type="text" id="Amount" name="Amount" readonly class="form-control Amount" style="border-top:none;border-bottom:none;background-color:transparent;" placeholder="0.0" />
+                                                    <input type="text" id="Total" name="Total" readonly class="form-control Total" style="border-top:none;border-bottom:none;background-color:transparent;" placeholder="0.0" />
                                                 </td>
                                                 <td class="text-center align-middle" style="width:100px;padding:0px;">
                                                     <a id="btnDelete" class="btnDelete" href="javascript:;" data-toggle="modal" data-target="#MsgModelId" style="display:none"><i class="simple-icon-trash"></i> </a>
@@ -339,7 +335,6 @@
                                                 {
                                                     @Html.TextBoxFor(model => model.Code, new { @class = "form-control", @readonly = "true", @style = "background-color:transparent", @placeholder = @Utility.Resource.Title_Designer.Code })
                                                 }
-                                                @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.CodeIncreasedAutomaticallyCanBechanged</small>*@
                                             </div>
                                         </div>
                                         @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger " })
@@ -353,7 +348,6 @@
                                                 </div>
                                                 @Html.TextBoxFor(model => model.Date, new { @class = "form-control datepicker", @autocomplete = "off" })
                                             </div>
-                                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                                         </div>
                                     </div>
                                     <div class="form-group col-md-4">
@@ -369,7 +363,6 @@
                                                     <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
                                                 </div>
                                             </div>
-                                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                                         </div>
                                         @Html.ValidationMessageFor(model => model.DealerId, "", new { @class = "text-danger " })
                                     </div>
@@ -403,7 +396,6 @@
                                                 </div>
                                                 @Html.TextBoxFor(model => model.Notes, new { @class = "form-control", @placeholder = Utility.Resource.Title_Designer.Notes })
                                             </div>
-                                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                                         </div>
                                         @Html.ValidationMessageFor(model => model.Notes, "", new { @class = "text-danger " })
                                     </div>
@@ -418,13 +410,7 @@
                             <a id="ShowPreference" href="javascript::" class="btn btn-primary .ShowPreference" data-toggle="modal" data-target=".Preference">
                                 <i class="iconsminds-gear-2"></i>
                                 @Utility.Resource.Title_Designer.Preference
-                            </a>
-
-                            @*<button id="ShowPreference" type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg" style="width:30px;padding:0px;color:white;">
-                                    <i class="iconsminds-gear-2"></i>
-                                    @Utility.Resource.Title_Designer.Setting
-                                </button>*@
-
+                            </a>                         
                             <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId" class="btn btn-primary ">
                                 <i class="simple-icon-action-undo"> </i>
                                 @Utility.Resource.Title_Designer.Back
@@ -449,8 +435,6 @@
                         </span>
                     </div>
                 </div>
-
-
             </form>
         </div>
     </div>
@@ -469,12 +453,12 @@
     </div>
 </div>
 
-
 <script src="~/js/vendor/jquery-3.3.1.min.js"></script>
 <script src="~/js/vendor/bootstrap3-typeahead.js"></script>
 <link href="~/css/jquery-ui.css" rel="stylesheet" />
 <script src="~/js/jquery-ui.js"></script>
 <script src="~/js/PopupScript.js"></script>
+
 <script>
     var AddNewRow;
     var AddNewProduct;
@@ -488,8 +472,6 @@
 
     jQuery(function ($) {
         $("#query").focus();
-        //$(".datepicker").datepicker();
-        //$(".datepicker").datepicker("option", "dateFormat", "yy/mm/dd");
 
         setTimeout(function () {
             $(".sw-toolbar-bottom").css("display", "none");
@@ -538,7 +520,7 @@
             NewRow.find("#Index").append();
             NewRow.find(".Price").val("");
             NewRow.find(".Quantity").val("");
-            NewRow.find(".Amount").val("");
+            NewRow.find(".Total").val("");
             NewRow.find("#btnDelete").css("display", "none");
             RefreshSomeEventListener();
         }
@@ -693,34 +675,44 @@
                 }
                 ReIndex();
                 ReCalc();
+                AutoSave();
             });
 
             $("#Discount").keyup(function () {
                 ReCalc();
+                AutoSave();
             });
             $("#Tax").keyup(function () {
                 ReCalc();
+                AutoSave();
             });
             $("#Service").keyup(function () {
                 ReCalc();
+                AutoSave();
             });
             $("#Paid").keyup(function () {
                 ReCalc();
+                AutoSave();
             });
             $(".Price").keyup(function () {
                 ReCalc();
+                AutoSave();
             });
             $(".Quantity").keyup(function () {
                 ReCalc();
+                AutoSave();
             });
             $("#DiscountType").change(function () {
                 ReCalc();
+                AutoSave();
             });
             $("#TaxType").change(function () {
                 ReCalc();
+                AutoSave();
             });
             $("#ServiceType").change(function () {
                 ReCalc();
+                AutoSave();
             });
 
             $("#Code").keyup(function () {
@@ -752,6 +744,7 @@
                 RowRepeated.find("#Quantity").val(++Quantity);
                 ReIndex();
                 ReCalc();
+                AutoSave();
                 RowRepeated.find("#RepeatedWarning").css("display", "block");
 
                 if ($row.find("#ProductId").val() == 0) {
@@ -800,7 +793,7 @@
 
                         $row.find("#Price").val(price);
                         $row.find("#Quantity").val(1);
-                        $row.find("#Amount").val(price);
+                        $row.find("#Total").val(price);
                         $row.find("#btnDelete").css("display", "block");
 
                         if ($row.hasClass("trNew") == true) {
@@ -816,6 +809,7 @@
 
                         ReIndex();
                         ReCalc();
+                        AutoSave();
                     }
                 });
             }
@@ -875,7 +869,7 @@
 
                         $row.find("#Price").val(price);
                         $row.find("#Quantity").val(1);
-                        $row.find("#Amount").val(price);
+                        $row.find("#Total").val(price);
                         $row.find("#btnDelete").css("display", "block");
                         if ($row.hasClass("trNew") == true) {
                             $row.find("#Index").append($("#tbl").find('.ProductRow').length);
@@ -890,6 +884,7 @@
 
                         ReIndex();
                         ReCalc();
+                        AutoSave();
                     }
                 });
 
@@ -915,8 +910,8 @@
                 if (parseFloat($(this).find("#Price").val()) > 0 && parseFloat($(this).find("#Quantity").val()) > 0) {
                     var Price = parseFloat($(this).find("#Price").val());
                     var Quantity = parseFloat($(this).find("#Quantity").val());
-                    $(this).find("#Amount").val(Price * Quantity);
-                    total += parseFloat($(this).find("#Amount").val());
+                    $(this).find("#Total").val(Price * Quantity);
+                    total += parseFloat($(this).find("#Total").val());
                 }
 
 
@@ -961,7 +956,6 @@
             else {
                 $("#Remaining").val(parseFloat(Remianing).toFixed(1));
             }
-            AutoSave();
         }
 
         Save = function () {
@@ -974,8 +968,7 @@
                     Valid = false;
 
                 if (CheckRequired("DealerId", "divDealerId", '@Utility.Resource.Message_Designer.CustomerRequired'))
-                    Valid = false;
-
+                    Valid = false;                 
 
                 if (CheckRequired("Date", "divDate", '@Utility.Resource.Message_Designer.DateRequired'))
                     Valid = false;
@@ -1029,6 +1022,7 @@
                             type: 'POST',
                             url: "/Orders/Order/Save",
                             data: { model: data },
+                            async : false,
                             success: function (res) {
                                 if (res != "Error") {
 
@@ -1045,10 +1039,30 @@
 
         function CollectData() {
             var list = [];
+            var total = $('#Total').val();
+            var discount = $('#Discount').val();
+            if ($("#DiscountType").val() == 2) {
+                discount = total * discount / 100
+            }
+
+            var tax = $('#Tax').val();
+            if ($("#TaxType").val() == 2) {
+                tax = total * tax / 100
+            }
+
+            var service = $('#Service').val();
+            if ($("#ServiceType").val() == 2) {
+                service = total * service / 100
+            }
+
             $('#tbl > tbody > .ProductRow').each(function () {
                 var currentRow = $(this);
                 if (!currentRow.hasClass('trNew')) {
                     if (currentRow.find('#ProductId').val() > 0) {
+                        var rate = currentRow.find('#Total').val() / total;
+                        var discountRow = discount * rate;
+                        var taxRow = tax * rate;
+                        var serviceRow = service * rate;
                         list.push({
                             OrderId: $('#Id').val(),
                             ProductId: currentRow.find('#ProductId').val(),
@@ -1056,7 +1070,11 @@
                             UnitId: currentRow.find('#UnitId').val(),
                             Quantity: currentRow.find('#Quantity').val(),
                             Price: currentRow.find('#Price').val(),
-                            Net: currentRow.find('#Net').val(),
+                            Total: currentRow.find('#Total').val(),
+                            Discount: discountRow,
+                            Tax: taxRow,
+                            Service: serviceRow,
+                            Net: currentRow.find('#Total').val() - discountRow + taxRow + serviceRow,
                         });
                     }
                 }

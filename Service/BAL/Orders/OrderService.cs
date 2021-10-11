@@ -118,10 +118,8 @@ namespace Service
         public long GetMaxCode(long type)
         {
             return repo.orderRepo.GetMaXCode(e => e.TypeId == type);
-        }
-        #endregion
-
-        #region Integration       
+        }       
+           
         public void Cancel(long Id)
         {
             var ob = repo.orderRepo.Get(e => e.Id == Id);

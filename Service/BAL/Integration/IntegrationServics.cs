@@ -3,6 +3,7 @@ using Entity.ModelView;
 using Repository;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Service
@@ -15,7 +16,7 @@ namespace Service
         {
             repo = new UnitOfWork();
         }
-      
+
         public bool CreateInvoiceByOrder(Order order)
         {
             if (order != null && order.Id > 0)
@@ -31,23 +32,40 @@ namespace Service
                 inv.StoreId = StoreId;
                 inv.CurrencyId = long.Parse("0" + new PreferenceService().GetByKey("DefaultCurrency", "Invoice", 1, 0)?.Value);
 
-                var InvLod = repo.invoiceRepo.Get(e => e.Id == long.Parse("0" +  order.InvoiceId));
+                var InvLod = repo.invoiceRepo.Get(e => e.Id == long.Parse("0" + order.InvoiceId));
                 if (InvLod != null)
                 {
                     inv.CodeNumber = InvLod.CodeNumber;
                     inv.Code = "" + InvLod.CodeNumber;
                 }
-                else               
+                else
                 {
                     inv.CodeNumber = new InvoiceService().GetMaxCode(1);
                     inv.Code = "" + inv.CodeNumber;
                 }
-              
+
                 var res = new InvoiceService().Save(inv);
                 order.InvoiceId = res.Id;
+                order.CloseTable = true;
                 repo.orderRepo.AddOrUpdate(order);
                 return true;
             }
+            return false;
+        }
+
+        public bool DeleteInvoice(long Id)
+        {
+            if (repo.orderRepo.Any(x => x.InvoiceId == Id))
+            {
+                var rps = repo.orderRepo.GetList(e => e.InvoiceId == Id, e => e.OrderBy(e => e.Id), "", Utility.Status.All);
+                foreach (var rp in rps)
+                {
+                    rp.InvoiceId = null;
+                    repo.orderRepo.AddOrUpdateTemp(rp);                    
+                }
+                return repo.orderRepo.SaveChanges();
+            }
+
             return false;
         }
 
@@ -72,8 +90,8 @@ namespace Service
 
 
                 //var transaction1 = new TransactionModelView( repo.transactionRepo.Get(e => e.ParentId == inv.Id, Includes));
-                var  transaction = new TransactionModelView(inv.Model);   
-                
+                var transaction = new TransactionModelView(inv.Model);
+
                 //= new TransactionModelView(inv.Model);
                 //inv.CodeNumber = GetMaxCode(inv.TypeId == 2 || inv.TypeId == 3 ? 1 : 2);
                 //inv.Code = "" + inv.CodeNumber;
@@ -89,5 +107,5 @@ namespace Service
     }
 
 
-   
+
 }

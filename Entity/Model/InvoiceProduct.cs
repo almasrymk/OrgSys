@@ -38,6 +38,7 @@ namespace Entity.Model
 
         public decimal Tax { get; set; }
 
+        public decimal Service { get; set; }
         public decimal Net { get; set; }
 
         public string Notes { get; set; }                       

@@ -44,6 +44,8 @@ namespace Entity.ModelView
             
             this.Tax = ob.Tax;
 
+            this.Service = ob.Service;
+
             this.Total = ob.Total;
 
             this.Id = ob.Id;
@@ -95,6 +97,8 @@ namespace Entity.ModelView
 
             this.Tax = ob.Tax;
 
+            this.Service = ob.Service;
+
             this.Total = ob.Total;
 
             this.CodeNumber = ob.CodeNumber;
@@ -133,6 +137,7 @@ namespace Entity.ModelView
                     Discount = this.Discount,
                     Total = this.Total,
                     Tax = this.Tax,
+                    Service = this.Service,
                     Net  = this.Net,
                     Notes = this.Notes,
                     Id = this.Id,
@@ -173,6 +178,8 @@ namespace Entity.ModelView
         public decimal Discount { get; set; }
 
         public decimal Tax { get; set; }
+
+        public decimal Service { get; set; }
 
         public decimal Net { get; set; }
 

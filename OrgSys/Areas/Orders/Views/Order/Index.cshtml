@@ -1,17 +1,19 @@
 ﻿@model X.PagedList.IPagedList<Entity.ModelView.OrderModelView>
 @using OrgSys
+@using Service
 @{
     ViewData["Title_Designer"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var openTables = new TableService().GetAllClosed(0, 0, 0)?.Count > 0;
 }
 
 @if (ViewBag.TypeId == 1)
 {
-<h1>@Utility.Resource.Title_Designer.InternalOrders</h1>
+    <h1>@Utility.Resource.Title_Designer.InternalOrders</h1>
 }
 else if (ViewBag.TypeId == 2)
 {
-<h1>@Utility.Resource.Title_Designer.ExternalOrders</h1>
+    <h1>@Utility.Resource.Title_Designer.ExternalOrders</h1>
 }
 <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
     <ol class="breadcrumb pt-0">
@@ -43,17 +45,17 @@ else if (ViewBag.TypeId == 2)
 <div class="collapse d-md-block" id="displayOptions">
     <div class="d-block d-md-inline-block mb-2">
         <span class="d-inline-block float-md-left">
-            @if ((ViewBag.TypeId == 1 && User.IsAllowed("Internal.Add")) || (ViewBag.TypeId == 2 && User.IsAllowed("External.Add")))
+            @if (openTables && ((ViewBag.TypeId == 1 && User.IsAllowed("Internal.Add")) || (ViewBag.TypeId == 2 && User.IsAllowed("External.Add"))))
             {
                 <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId" class="btn btn-outline-primary btn-add"><i class="iconsminds-folder-add--"></i> @Utility.Resource.Title_Designer.Add </a>
             }
-        <span class="btn-group group-add" role="group" aria-label="Basic example" style="display:none">
-            @if ((ViewBag.TypeId == 1 && User.IsAllowed("Internal.Add")) || (ViewBag.TypeId == 2 && User.IsAllowed("External.Add")))
-            {
-                <button onclick="location.href='/@ViewBag.area/@ViewBag.PageTitle/Save?ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId'" class="btn  btn-outline-primary"><i class="iconsminds-folder-add--"></i> @Utility.Resource.Title_Designer.Add</button>
-            }
-            <button data-toggle="modal" data-target="#MsgModel" type="button" class="btn  btn-outline-danger btn-deleteList"><i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete</button>
-        </span>
+            <span class="btn-group group-add" role="group" aria-label="Basic example" style="display:none">
+                @if (openTables && ((ViewBag.TypeId == 1 && User.IsAllowed("Internal.Add")) || (ViewBag.TypeId == 2 && User.IsAllowed("External.Add"))))
+                {
+                    <button onclick="location.href='/@ViewBag.area/@ViewBag.PageTitle/Save?ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId'" class="btn  btn-outline-primary"><i class="iconsminds-folder-add--"></i> @Utility.Resource.Title_Designer.Add</button>
+                }
+                <button data-toggle="modal" data-target="#MsgModel" type="button" class="btn  btn-outline-danger btn-deleteList"><i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete</button>
+            </span>
             &nbsp; &nbsp; &nbsp;
             <a href="javascript:;" class="mr-2 view-icon  mode-table">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19 19">
