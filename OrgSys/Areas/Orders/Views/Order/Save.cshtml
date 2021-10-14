@@ -1,10 +1,21 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
 @using System.Globalization
 @model Entity.ModelView.OrderModelView
+@using OrgSys
 @{
     ViewData["Title_Designer"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var BorderAlign = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "border-top:none;border-bottom:none;border-left:none;" : "border-top:none;border-bottom:none;border-right:none;";
+    var AllowPreference = false;
+
+    if (Model.TypeId == 1)
+    {
+        AllowPreference = User.IsAllowed("Internal.Preference");
+    }
+    if (Model.TypeId == 2)
+    {
+        AllowPreference = User.IsAllowed("External.Preference");
+    }
 }
 
 <div id="HPage" class="container-fluid">
@@ -242,7 +253,7 @@
                                                 <td class="text-center align-middle" style="width:100px;padding:0px;">
                                                     <input type="text" id="Quantity" name="Quantity" class="form-control Quantity" style="@BorderAlign" placeholder="0.0" autocomplete="off" />
                                                 </td>
-                                                <td class="text-center align-middle"  style="width:100px;padding:0px;">
+                                                <td class="text-center align-middle" style="width:100px;padding:0px;">
                                                     <input type="text" id="Total" name="Total" readonly class="form-control Total" style="border-top:none;border-bottom:none;background-color:transparent;" placeholder="0.0" />
                                                 </td>
                                                 <td class="text-center align-middle" style="width:100px;padding:0px;">
@@ -257,7 +268,7 @@
                                                     <label>@Utility.Resource.Title_Designer.Total</label>
                                                 </td>
                                                 <td class="text-center align-middle" style="width:100px;padding:0px;">
-                                                    @Html.TextBoxFor(model => model.Total, new { @class = "form-control", @style = @BorderAlign + "background-color:transparent;", @placeholder = "0.0", @readonly = "true" })
+                                                    @Html.TextBoxFor(model => model.Total, new { @id = "AllTotal", @class = "form-control", @style = @BorderAlign + "background-color:transparent;", @placeholder = "0.0", @readonly = "true" })
                                                 </td>
                                                 <td class="text-center align-middle" style="width:100px;padding:0px;">
                                                 </td>
@@ -407,10 +418,13 @@
 
                     <div class="position-absolute card-top-buttons">
                         <span class="btn-group group-add">
-                            <a id="ShowPreference" href="javascript::" class="btn btn-primary .ShowPreference" data-toggle="modal" data-target=".Preference">
-                                <i class="iconsminds-gear-2"></i>
-                                @Utility.Resource.Title_Designer.Preference
-                            </a>                         
+                            @if (AllowPreference)
+                            {
+                                <a id="ShowPreference" href="javascript::" class="btn btn-primary .ShowPreference" data-toggle="modal" data-target=".Preference">
+                                    <i class="iconsminds-gear-2"></i>
+                                    @Utility.Resource.Title_Designer.Preference
+                                </a>
+                            }
                             <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId" class="btn btn-primary ">
                                 <i class="simple-icon-action-undo"> </i>
                                 @Utility.Resource.Title_Designer.Back
@@ -424,14 +438,20 @@
                     </div>
                     <div class="col-5">
                         <span class="btn-group group-add mb-4" style="width:92%">
-                            <a href="/Setting/Product/Save" class="btn btn-primary ">
-                                <i class="iconsminds-shopping-basket"></i>
-                                @Utility.Resource.Title_Designer.NewProduct
-                            </a>
-                            <a href="/Setting/Classification/Save" class="btn btn-primary">
-                                <i class="simple-icon-layers"></i>
-                                @Utility.Resource.Title_Designer.NewClassification
-                            </a>
+                            @if (User.IsAllowed("Products.Add"))
+                            {
+                                <a href="/Setting/Product/Save" class="btn btn-primary ">
+                                    <i class="iconsminds-shopping-basket"></i>
+                                    @Utility.Resource.Title_Designer.NewProduct
+                                </a>
+                            }
+                            @if (User.IsAllowed("Classifications.Add"))
+                            {
+                                <a href="/Setting/Classification/Save" class="btn btn-primary">
+                                    <i class="simple-icon-layers"></i>
+                                    @Utility.Resource.Title_Designer.NewClassification
+                                </a>
+                            }
                         </span>
                     </div>
                 </div>
@@ -917,7 +937,7 @@
 
             });
 
-            $("#Total").val(total);
+            $("#AllTotal").val(total);
 
             if ($("#DiscountType").val() == 1) {
                 TotalAfterDiscount = total - $('#Discount').val();
@@ -968,7 +988,7 @@
                     Valid = false;
 
                 if (CheckRequired("DealerId", "divDealerId", '@Utility.Resource.Message_Designer.CustomerRequired'))
-                    Valid = false;                 
+                    Valid = false;
 
                 if (CheckRequired("Date", "divDate", '@Utility.Resource.Message_Designer.DateRequired'))
                     Valid = false;
@@ -1039,7 +1059,7 @@
 
         function CollectData() {
             var list = [];
-            var total = $('#Total').val();
+            var total = $('#AllTotal').val();
             var discount = $('#Discount').val();
             if ($("#DiscountType").val() == 2) {
                 discount = total * discount / 100
@@ -1094,7 +1114,7 @@
                 CloseTable: $('#CloseTable').val(),
                 PaymentTypeId: $('#PaymentTypeId').val(),
                 StoreId: $('#StoreId').val(),
-                Total: $('#Total').val(),
+                Total: $('#AllTotal').val(),
                 Discount: $('#Discount').val(),
                 DiscountType: $('#DiscountType').val(),
                 Tax: $('#Tax').val(),

@@ -29,8 +29,8 @@ namespace OrgSys.Areas.Invoices.Controllers
             ViewBag.PaymentTypeId = new SelectList(new PaymentTypeService().GetAll(model.ParentId, model.PaymentTypeId, 1, 20), "Id", "Name", model.PaymentTypeId);
             
             List<SelectListItem> selectListItems = new List<SelectListItem>();
-            selectListItems.Add(new SelectListItem { Value = "1", Text = "Amount" });
-            selectListItems.Add(new SelectListItem { Value = "2", Text = "Percentage" });
+            selectListItems.Add(new SelectListItem { Value = "1", Text = Translate.GetTranslate("Amount") });
+            selectListItems.Add(new SelectListItem { Value = "2", Text = Translate.GetTranslate("Ratio") });
 
             ViewBag.DiscountType = new SelectList(selectListItems, "Value", "Text");
             ViewBag.ServiceType = new SelectList(selectListItems, "Value", "Text");
@@ -98,13 +98,13 @@ namespace OrgSys.Areas.Invoices.Controllers
 
         public ActionResult CreateTransaction(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1)
         {
-            new TransactionService().CreateTransactionByInvoice(new InvoiceService().Get(id));
+            new IntegrationServics().CreateTransactionByInvoice(new InvoiceService().Get(id));
             return Redirect("/Invoices/Invoice/Index?ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" + ResultStatus.success + "&MsgError=Success");
         }
 
         public JsonResult CollectInvoice(long id)
         {
-            new FinancialService().CreateFinancialByInvoice(new InvoiceService().Get(id));
+            new IntegrationServics().CreateFinancialByInvoice(new InvoiceService().Get(id));
             return Json("Ok");
         }
 

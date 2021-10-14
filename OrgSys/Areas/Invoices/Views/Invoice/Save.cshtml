@@ -1,10 +1,31 @@
-﻿@using Microsoft.AspNetCore.Mvc.Localization
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.AspNetCore.Mvc.Localization
 @using System.Globalization
 @model Entity.ModelView.InvoiceModelView
+@using OrgSys
+@using Utility
 @{
     ViewData["Title_Designer"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var BorderAlign = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "border-top:none;border-bottom:none;border-left:none;" : "border-top:none;border-bottom:none;border-right:none;";
+    var AllowPreference = false;
+
+    if (Model.TypeId == 1)
+    {
+        AllowPreference = User.IsAllowed("SalesInvoices.Preference");
+    }
+    if (Model.TypeId == 2)
+    {
+        AllowPreference = User.IsAllowed("PurchasesInvoices.Preference");
+    }
+    if (Model.TypeId == 3)
+    {
+        AllowPreference = User.IsAllowed("SalesReturns.Preference");
+    }
+    if (Model.TypeId == 4)
+    {
+        AllowPreference = User.IsAllowed("PurchasesReturns.Preference");
+    }
 }
 
 <div id="HPage" class="container-fluid">
@@ -105,6 +126,7 @@
                             @Html.HiddenFor(model => model.Status)
                             @Html.HiddenFor(model => model.ShiftId)
                             @Html.HiddenFor(model => model.BranchId)
+                            @Html.HiddenFor(model => model.Cash)
 
                             <div id="checkStep1">
                                 <div class="card">
@@ -254,43 +276,68 @@
                                                 </td>
                                             </tr>
 
-                                            <tr class="tblFooter" style="margin-top:5px !important;">
-                                                <td class="text-center align-middle" style="min-width:100px;padding:0px;" colspan="4">
+                                            <tr style="margin-top:5px !important;">
+                                                <td style="min-width:100px;padding:0px;" colspan="2">
+                                                </td>
+                                                <td class="text-center align-middle" style="width:100px;padding:0px;">
+                                                    <label>@Utility.Resource.Title_Designer.Paid </label>
+                                                </td>
+                                                <td class="text-center align-middle" style="width:100px;padding:0px;">
+                                                    @if (Model.Paid > 0)
+                                                    {
+                                                        @Html.TextBoxFor(model => model.Paid, new { @class = "form-control", @style = @BorderAlign + "background-color:transparent;", @placeholder = "0.0", @readonly = "true" })
+                                                    }
+                                                    else
+                                                    {
+                                                        @Html.TextBoxFor(model => model.Paid, new { @class = "form-control", @style = @BorderAlign, @placeholder = "0.0" })
+                                                    }
                                                 </td>
                                                 <td class="text-center align-middle" style="width:100px;padding:0px;">
                                                     <label>@Utility.Resource.Title_Designer.Total</label>
                                                 </td>
                                                 <td class="text-center align-middle" style="width:100px;padding:0px;">
-                                                    @Html.TextBoxFor(model => model.Total, new { @class = "form-control", @style = @BorderAlign + "background-color:transparent;", @placeholder = "0.0", @readonly = "true" })
+                                                    @Html.TextBoxFor(model => model.Total, new { @id = "AllTotal", @class = "form-control", @style = @BorderAlign + "background-color:transparent;", @placeholder = "0.0", @readonly = "true" })
                                                 </td>
                                                 <td class="text-center align-middle" style="width:100px;padding:0px;">
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td class="text-center align-middle" style="min-width:100px;padding:0px;" colspan="4">
+                                                <td style="min-width:100px;padding:0px;" colspan="2">
                                                 </td>
                                                 <td class="text-center align-middle" style="width:100px;padding:0px;">
-                                                    <label>@Utility.Resource.Title_Designer.Discount</label>
+                                                    <label>@Utility.Resource.Title_Designer.Remaining </label>
+                                                </td>
+                                                <td class="text-center align-middle" style="width:100px;padding:0px;">
+                                                    @Html.TextBoxFor(model => model.Remaining, new { @class = "form-control", @style = @BorderAlign + "background-color:transparent;", @placeholder = "0.0", @readonly = "true" })
+                                                </td>
+                                                <td class="text-center align-middle" style="width:100px;padding:0px;">
+                                                    <label>@Utility.Resource.Title_Designer.Discount </label>
                                                 </td>
                                                 <td class="text-center align-middle" style="width:100px;padding:0px;">
                                                     @Html.TextBoxFor(model => model.Discount, new { @class = "form-control", @style = @BorderAlign, @placeholder = "0.0" })
                                                 </td>
                                                 <td class="text-center align-middle" style="width:100px;padding:0px;">
-                                                    @Html.DropDownListFor(model => model.DiscountType, null, " ... ", new { @class = "form-control", @style = @BorderAlign })
+                                                    @Html.DropDownListFor(model => model.DiscountType, null, null, new { @class = "form-control", @style = @BorderAlign })
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td class="text-center align-middle" style="min-width:100px;padding:0px;" colspan="4">
+                                                <td class="text-center align-middle" style="min-width:100px;padding:0px;" colspan="2">
+                                                </td>
+                                                <td class="text-center align-middle" style="width:100px;padding:0px;">
+                                                    <label>@Utility.Resource.Title_Designer.Credit </label>
+                                                </td>
+                                                <td class="text-center align-middle" style="width:100px;padding:0px;">
+                                                    @Html.TextBoxFor(model => model.Credit, new { @class = "form-control", @style = @BorderAlign + "background-color:transparent;", @placeholder = "0.0", @readonly = "true" })
                                                 </td>
 
                                                 <td class="text-center align-middle" style="width:100px;padding:0px;">
-                                                    <label>@Utility.Resource.Title_Designer.Tax</label>
+                                                    <label>@Utility.Resource.Title_Designer.Tax </label>
                                                 </td>
                                                 <td class="text-center align-middle" style="width:100px;padding:0px;">
                                                     @Html.TextBoxFor(model => model.Tax, new { @class = "form-control", @style = @BorderAlign, @placeholder = "0.0" })
                                                 </td>
                                                 <td class="text-center align-middle" style="width:100px;padding:0px;">
-                                                    @Html.DropDownListFor(model => model.TaxType, null, " ... ", new { @class = "form-control", @style = @BorderAlign })
+                                                    @Html.DropDownListFor(model => model.TaxType, null, null, new { @class = "form-control", @style = @BorderAlign })
                                                 </td>
                                             </tr>
                                             <tr>
@@ -298,13 +345,13 @@
                                                 </td>
 
                                                 <td class="text-center align-middle" style="width:100px;padding:0px;">
-                                                    <label>@Utility.Resource.Title_Designer.Service</label>
+                                                    <label>@Utility.Resource.Title_Designer.Service </label>
                                                 </td>
                                                 <td class="text-center align-middle" style="width:100px;padding:0px;">
                                                     @Html.TextBoxFor(model => model.Service, new { @class = "form-control", @style = @BorderAlign, @placeholder = "0.0" })
                                                 </td>
                                                 <td class="text-center align-middle" style="width:100px;padding:0px;">
-                                                    @Html.DropDownListFor(model => model.ServiceType, null, " ... ", new { @class = "form-control", @style = @BorderAlign })
+                                                    @Html.DropDownListFor(model => model.ServiceType, null, null, new { @class = "form-control", @style = @BorderAlign })
                                                 </td>
                                             </tr>
                                             <tr>
@@ -312,7 +359,7 @@
                                                 </td>
 
                                                 <td class="text-center align-middle" style="width:100px;padding:0px;">
-                                                    <label>@Utility.Resource.Title_Designer.Net</label>
+                                                    <label>@Utility.Resource.Title_Designer.Net </label>
                                                 </td>
                                                 <td class="text-center align-middle" style="width:100px;padding:0px;">
                                                     @Html.TextBoxFor(model => model.Net, new { @id = "Net", @class = "form-control", @style = @BorderAlign + "background-color:transparent;", @placeholder = "0.0", @readonly = "true" })
@@ -476,10 +523,13 @@
 
                     <div class="position-absolute card-top-buttons">
                         <span class="btn-group group-add">
-                            <a id="ShowPreference" href="javascript::" class="btn btn-primary .ShowPreference" data-toggle="modal" data-target=".Preference">
-                                <i class="iconsminds-gear-2"></i>
-                                @Utility.Resource.Title_Designer.Preference
-                            </a>
+                            @if (AllowPreference)
+                            {
+                                <a id="ShowPreference" href="javascript::" class="btn btn-primary .ShowPreference" data-toggle="modal" data-target=".Preference">
+                                    <i class="iconsminds-gear-2"></i>
+                                    @Utility.Resource.Title_Designer.Preference
+                                </a>
+                            }
                             <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId" class="btn btn-primary ">
                                 <i class="simple-icon-action-undo"> </i>
                                 @Utility.Resource.Title_Designer.Back
@@ -493,14 +543,20 @@
                     </div>
                     <div class="col-5">
                         <span class="btn-group group-add mb-4" style="width:92%">
-                            <a href="/Setting/Product/Save" class="btn btn-primary ">
-                                <i class="iconsminds-shopping-basket"></i>
-                                @Utility.Resource.Title_Designer.NewProduct
-                            </a>
-                            <a href="/Setting/Classification/Save" class="btn btn-primary">
-                                <i class="simple-icon-layers"></i>
-                                @Utility.Resource.Title_Designer.NewClassification
-                            </a>
+                            @if (User.IsAllowed("Products.Add"))
+                            {
+                                <a href="/Setting/Product/Save" class="btn btn-primary ">
+                                    <i class="iconsminds-shopping-basket"></i>
+                                    @Utility.Resource.Title_Designer.NewProduct
+                                </a>
+                            }
+                            @if (User.IsAllowed("Classifications.Add"))
+                            {
+                                <a href="/Setting/Classification/Save" class="btn btn-primary">
+                                    <i class="simple-icon-layers"></i>
+                                    @Utility.Resource.Title_Designer.NewClassification
+                                </a>
+                            }
                         </span>
                     </div>
                 </div>
@@ -508,7 +564,6 @@
         </div>
     </div>
 </div>
-
 
 <div class="modal fade bd-example-modal-lg ProductBody" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg" id="SearchProductBody">
@@ -518,6 +573,12 @@
 
 <div class="modal fade bd-example-modal-lg Preference" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg" id="ShowPreferenceBody">
+
+    </div>
+</div>
+
+<div class="modal fade bd-example-modal-lg Paid" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" id="ShowPaidBody">
 
     </div>
 </div>
@@ -539,10 +600,11 @@
     var AutoSave;
     var Repeated;
 
-    jQuery(function ($) {
-        $("#query").focus();
-
+    jQuery(function ($) {          
+       
         setTimeout(function () {
+            $("html, body").scrollTop($("#query").offset().top - 300);
+            $("#query").focus();
             $(".sw-toolbar-bottom").css("display", "none");
 
         }, 600);
@@ -604,9 +666,19 @@
                     var row = $(document.activeElement).parents("tr");
 
                     if (isProduct) {
+                        if (row.find(".Quantity").val() > 0) {
+                            isProduct = false;
+                            isQuantity = true;
+                        }
+                    }
+
+                    if (isProduct) {
                         setTimeout(function () {
                             row.find(".Quantity").focus();
                             row.find(".Quantity").select();
+                            if (row.find("#ProductId").val() == "0" || row.find("#ProductId").val() == "" || row.find("#ProductId").val() == null || row.find("#ProductId").val() == undefined) {
+                                row.find(".search-box").val("");
+                            }                           
                         }, 200);
                     }
                     else if (isQuantity) {
@@ -617,7 +689,8 @@
                         setTimeout(function () {
                             NextRow.find(".search-box").focus();
                             NextRow.find(".search-box").select();
-                            NextRow.find(".search-box").autocomplete("search", "");
+                            NextRow.find(".search-box").autocomplete("search", "");                            
+                            $("html, body").scrollTop(NextRow.find(".search-box").offset().top - 300);
                         }, 200);
                     }
                     return false;
@@ -627,6 +700,7 @@
             $(".search-box").autocomplete({
                 minLength: 0,
                 source: function (request, response) {
+
                     var searchPhrase = request.term.trim().toLowerCase();
                     var noResultsLabel = 'NoResultsFound';
                     $.ajax({
@@ -642,7 +716,11 @@
 
                                 response($.map(data, function (item) {
                                     return {
-                                        label: item.name, value: item.name, id: item.id,
+                                        label: item.name +
+                                            (item.code &&  item.code != "" ? " / " + item.code : "") +
+                                            (item.barcode && item.barcode != "" ? " / "  + item.barcode : "") +
+                                            (item.classificationName && item.classificationName != "" ? " / " + item.classificationName : "")
+                                        , value: item.name, id: item.id,
                                         barcode: item.barcode, price: item.price
                                     };
                                 }));
@@ -848,7 +926,8 @@
                 ReCalc();
                 AutoSave();
             });
-            $("#Paid").keyup(function () {
+            $("#Paid").change(function () {
+                $("#Cash").val(true);
                 ReCalc();
                 AutoSave();
             });
@@ -898,7 +977,7 @@
                         $("#Rate").val(data.rate);
                         AutoSave();
                     }
-                });               
+                });
             });
 
             $("#Rate").change(function () {
@@ -1096,7 +1175,7 @@
 
             });
 
-            $("#Total").val(total);
+            $("#AllTotal").val(total);
 
             if ($("#DiscountType").val() == 1) {
                 TotalAfterDiscount = total - $('#Discount').val();
@@ -1131,7 +1210,7 @@
             Remianing = parseFloat($("#Paid").val()) - totalafterservice;
             if (Remianing < 0) {
                 $("#Remaining").val(0);
-                $("#Credit").val(totalafterservice - parseFloat($("#Paid").val()));
+                $("#Credit").val(parseFloat(totalafterservice - parseFloat($("#Paid").val())).toFixed(1));
                 $("#CreditByDefaultCurrency").val((totalafterservice - parseFloat($("#Paid").val())) * $("#Rate").val());
             }
             else {
@@ -1240,7 +1319,7 @@
 
         function CollectData() {
             var list = [];
-            var total = $('#Total').val();
+            var total = $('#AllTotal').val();
             var discount = $('#Discount').val();
             if ($("#DiscountType").val() == 2) {
                 discount = total * discount / 100
@@ -1297,7 +1376,7 @@
                 CloseTable: $('#CloseTable').val(),
                 PaymentTypeId: $('#PaymentTypeId').val(),
                 StoreId: $('#StoreId').val(),
-                Total: $('#Total').val(),
+                Total: $('#AllTotal').val(),
                 Discount: $('#Discount').val(),
                 DiscountType: $('#DiscountType').val(),
                 Tax: $('#Tax').val(),
@@ -1317,6 +1396,8 @@
                 Status: $('#Status').val(),
                 ShiftId: $('#ShiftId').val(),
                 BranchId: $('#BranchId').val(),
+                Cash: $('#Cash').val(),
+                Credit: $('#Credit').val(),
                 InvoiceProducts: list
             }
            return data;

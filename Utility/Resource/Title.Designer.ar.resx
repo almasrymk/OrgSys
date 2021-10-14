@@ -327,6 +327,9 @@
   <data name="FinancialNotices" xml:space="preserve">
     <value>الاخطارات المالية</value>
   </data>
+  <data name="Financials" xml:space="preserve">
+    <value>المالية</value>
+  </data>
   <data name="FromDate" xml:space="preserve">
     <value>من تاريخ</value>
   </data>
@@ -361,7 +364,7 @@
     <value>فاتورة</value>
   </data>
   <data name="InvoiceDetails" xml:space="preserve">
-    <value>تفاصيل الفاتورة</value>
+    <value>بيانات الفاتورة</value>
   </data>
   <data name="InvoiceProducts" xml:space="preserve">
     <value>منتجات الفاتورة</value>
@@ -406,7 +409,7 @@
     <value>القادم</value>
   </data>
   <data name="Nickname" xml:space="preserve">
-    <value>الاسم المستعار</value>
+    <value>الاسم المختصر</value>
   </data>
   <data name="Notes" xml:space="preserve">
     <value>ملاحظات</value>
@@ -570,6 +573,9 @@
   <data name="Safe" xml:space="preserve">
     <value>الخزينة</value>
   </data>
+  <data name="Safe Notices" xml:space="preserve">
+    <value>منتجات الخزانة</value>
+  </data>
   <data name="Safes" xml:space="preserve">
     <value>الخزائن</value>
   </data>
@@ -725,6 +731,9 @@
   </data>
   <data name="Users" xml:space="preserve">
     <value>المستخدمين</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>عرض</value>
   </data>
   <data name="Warehouse" xml:space="preserve">
     <value>مخزن</value>

@@ -40,9 +40,9 @@ namespace OrgSys.Controllers
         {
             try
             {
-                //var us = new UserService().Get(2);
-                //if (us != null)
-                //    us.SignIn(HttpContext);
+                var us = new UserService().Get(2);
+                if (us != null)
+                    us.SignIn(HttpContext);
             }
             catch (Exception ex)
             {

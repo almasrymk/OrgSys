@@ -327,6 +327,9 @@
   <data name="FinancialNotices" xml:space="preserve">
     <value>Financial Notices</value>
   </data>
+  <data name="Financials" xml:space="preserve">
+    <value>Financials</value>
+  </data>
   <data name="FromDate" xml:space="preserve">
     <value>From Date</value>
   </data>
@@ -361,7 +364,7 @@
     <value>Invoice</value>
   </data>
   <data name="InvoiceDetails" xml:space="preserve">
-    <value>Invoice details</value>
+    <value>Invoice data</value>
   </data>
   <data name="InvoiceProducts" xml:space="preserve">
     <value>Invoice products</value>
@@ -570,6 +573,9 @@
   <data name="Safe" xml:space="preserve">
     <value>Safe</value>
   </data>
+  <data name="Safe Notices" xml:space="preserve">
+    <value>Safe Notices</value>
+  </data>
   <data name="Safes" xml:space="preserve">
     <value>Safes</value>
   </data>
@@ -725,6 +731,9 @@
   </data>
   <data name="Users" xml:space="preserve">
     <value>Users</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>View</value>
   </data>
   <data name="Warehouse" xml:space="preserve">
     <value>Warehouse</value>

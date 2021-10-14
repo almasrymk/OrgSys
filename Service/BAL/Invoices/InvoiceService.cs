@@ -48,7 +48,10 @@ namespace Service
             }
 
             if (long.Parse("0" + new PreferenceService().GetByKey("AutoCreateTransaction", "Invoice", ob.TypeId, 0)?.Value) == 1 || ob.TransactionId > 0)
-                new IntegrationServics().CreateTransactionByInvoice(new InvoiceModelView(Nwob));               
+                new IntegrationServics().CreateTransactionByInvoice(new InvoiceModelView(Nwob));
+
+            if (ob.Cash)
+                new IntegrationServics().CreateFinancialByInvoice(new InvoiceModelView(Nwob));
 
             return new InvoiceModelView(Nwob);
         }    
@@ -159,29 +162,6 @@ namespace Service
         {
             return repo.invoiceRepo.GetMaXCode(e => e.TypeId == type);
         }
-        #endregion
-
-        #region Integration      
-      
-
-        public void UpdateCredit(List<long> ids)
-        {
-            var invs = repo.invoiceRepo.GetList(e => ids.Contains(e.Id), null, "", Utility.Status.New).ToList();
-            if (invs == null)
-                invs = new List<Invoice>();
-
-            var financialsInvs = repo.financialInvoiceRepo.GetList(e => ids.Contains(e.InvoiceId), null, "", Utility.Status.New).ToList();
-            if (financialsInvs == null) 
-                financialsInvs = new List<FinancialInvoice>();
-
-            foreach (var inv in invs)
-            {               
-                var amount = financialsInvs.Where(e => e.InvoiceId == inv.Id)?.Sum(e => e.Amount) ?? 0;
-                inv.Credit = inv.Net - amount;
-                inv.Paid = inv.Net - inv.Credit;
-                var Nwob = repo.invoiceRepo.AddOrUpdate(inv);
-            }
-        }
-        #endregion
+        #endregion       
     }
 }

@@ -691,6 +691,15 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Financials.
+        /// </summary>
+        public static string Financials {
+            get {
+                return ResourceManager.GetString("Financials", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to From Date.
         /// </summary>
         public static string FromDate {
@@ -790,7 +799,7 @@ namespace Utility.Resource {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invoice details.
+        ///   Looks up a localized string similar to Invoice data.
         /// </summary>
         public static string InvoiceDetails {
             get {
@@ -1420,6 +1429,15 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Safe Notices.
+        /// </summary>
+        public static string Safe_Notices {
+            get {
+                return ResourceManager.GetString("Safe Notices", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Safes.
         /// </summary>
         public static string Safes {
@@ -1884,6 +1902,15 @@ namespace Utility.Resource {
         public static string Users {
             get {
                 return ResourceManager.GetString("Users", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View.
+        /// </summary>
+        public static string View {
+            get {
+                return ResourceManager.GetString("View", resourceCulture);
             }
         }
         

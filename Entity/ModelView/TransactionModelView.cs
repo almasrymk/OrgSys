@@ -95,18 +95,17 @@ namespace Entity.ModelView
 
             this.BranchId = ob.BranchId;
            
-
             this.CreateUserId = ob.CreateUserId;
 
+            this.CreateDate = ob.CreateDate;
+
             this.ModifyUserId = ob.ModifyUserId;
+
+            this.ModifyDate = ob.ModifyDate;
 
             this.ShiftId = ob.ShiftId;
 
             this.Date = ob.Date;
-
-            this.CreateDate = ob.CreateDate;
-
-            this.ModifyDate = ob.ModifyDate;           
 
             this.MaskText = ob.MaskText;
 

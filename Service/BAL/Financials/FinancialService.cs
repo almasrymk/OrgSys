@@ -43,7 +43,7 @@ namespace Service
             }
 
             if (Nwob.FinancialInvoices != null && Nwob.FinancialInvoices.Count > 0)
-                new InvoiceService().UpdateCredit(Nwob.FinancialInvoices.Select(e => e.InvoiceId).ToList());
+                new IntegrationServics().UpdateCredit(Nwob.FinancialInvoices.Select(e => e.InvoiceId).ToList());
             return new FinancialModelView(Nwob);
         }
 
@@ -114,24 +114,6 @@ namespace Service
         public long GetMaxCode(long type = 0)
         {
             return repo.financialRepo.GetMaXCode(e => e.TypeId == type);
-        }
-        #endregion
-
-        #region Integration
-        public bool CreateFinancialByInvoice(InvoiceModelView inv)
-        {
-            if (inv != null && inv.Id > 0 && inv.Paid - inv.Remaining + inv.Credit != inv.Net)
-            {
-                //new FinancialInvoiceService().GetAll()
-                var financial = new FinancialModelView(inv.Model);
-                financial.SafeId = long.Parse("0" + new PreferenceService().GetByKey("DefaultSafe", "Financial", (inv.TypeId == 1 || inv.TypeId == 4 ? 1 : 2), 0)?.Value);
-                financial.PaymentTypeId = long.Parse("0" + new PreferenceService().GetByKey("DefaultPaymentType", "Financial", (inv.TypeId == 1 || inv.TypeId == 4 ? 1 : 2), 0)?.Value);
-                inv.CodeNumber = GetMaxCode(inv.TypeId == 1 || inv.TypeId == 4 ? 1 : 2);
-                inv.Code = "" + inv.CodeNumber;
-                Save(financial);
-                return true;
-            }
-            return false;
         }
         #endregion
     }
