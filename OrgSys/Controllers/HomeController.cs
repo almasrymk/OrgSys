@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using OrgSys.Models;
 using Service;
@@ -39,9 +40,9 @@ namespace OrgSys.Controllers
         {
             try
             {
-                //var us = new UserService().Get(2);
-                //if (us != null)
-                //    us.SignIn(HttpContext);
+                var us = new UserService().Get(2);
+                if (us != null)
+                    us.SignIn(HttpContext);
             }
             catch (Exception ex)
             {

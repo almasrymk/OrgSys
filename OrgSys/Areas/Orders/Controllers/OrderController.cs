@@ -23,11 +23,11 @@ namespace OrgSys.Areas.Orders.Controllers
 
         public override void LoadViewBag(OrderModelView model)
         {
-            ViewBag.TableId = new SelectList(new TableService().GetAllClosed(model.Id, model.ParentId, 0), "Id", "Name" , model.TableId);
+            ViewBag.TableId = new SelectList(new TableService().GetAllClosed(model.Id, model.ParentId, 0), "Id", "Name", model.TableId);
 
             List<SelectListItem> selectListItems = new List<SelectListItem>();
-            selectListItems.Add(new SelectListItem { Value = "1", Text = "Amount" });
-            selectListItems.Add(new SelectListItem { Value = "2", Text = "Percentage" });
+            selectListItems.Add(new SelectListItem { Value = "1", Text = Translate.GetTranslate("Amount") });
+            selectListItems.Add(new SelectListItem { Value = "2", Text = Translate.GetTranslate("Ratio") });
 
             ViewBag.DiscountType = new SelectList(selectListItems, "Value", "Text");
             ViewBag.ServiceType = new SelectList(selectListItems, "Value", "Text");
@@ -77,13 +77,13 @@ namespace OrgSys.Areas.Orders.Controllers
                 ob.Service = ServiceValue;
                 ob.Tax = TaxValue;
                 ob.OrderProducts = new List<OrderProductModelView>();
-              }
+            }
 
-            ob.DealerName = new DealerService().Get(ob.DealerId??0).Name;
+            ob.DealerName = new DealerService().Get(ob.DealerId ?? 0).Name;
             return ob;
         }
-         
-        public ActionResult CreateInvoice(long id , string search, long ParentId = 0, long TypeId = 0, int page = 1)
+
+        public ActionResult CreateInvoice(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1)
         {
             var order = new OrderService().Get(id);
             if (order != null)
@@ -93,13 +93,13 @@ namespace OrgSys.Areas.Orders.Controllers
             }
             return Redirect("/Orders/Order/Index?ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" + ResultStatus.error + "&MsgError=Not find order");
         }
- 
+
         public ActionResult Cancel(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1)
         {
             new OrderService().Cancel(id);
             return Redirect("/Orders/Order/Index?ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" + ResultStatus.success + "&MsgError=Success");
         }
- 
+
         public ActionResult Redo(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1)
         {
             new OrderService().Redo(id);

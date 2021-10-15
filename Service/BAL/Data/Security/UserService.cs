@@ -3,6 +3,8 @@ using X.PagedList;
 using Repository;
 using System.Collections.Generic;
 using System.Linq;
+using Entity.Model;
+using Microsoft.Extensions.Localization;
 
 namespace Service
 {
@@ -14,7 +16,7 @@ namespace Service
         {
             repo = new UnitOfWork();
         }
-
+      
         #region Save / Delete
         public UserModelView Save(UserModelView ob)
         {

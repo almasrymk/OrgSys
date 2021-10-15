@@ -48,20 +48,13 @@ namespace Service
             }
 
             if (long.Parse("0" + new PreferenceService().GetByKey("AutoCreateTransaction", "Invoice", ob.TypeId, 0)?.Value) == 1 || ob.TransactionId > 0)
-            {
-
                 new IntegrationServics().CreateTransactionByInvoice(new InvoiceModelView(Nwob));
-                new TransactionService().CreateTransactionByInvoice(new InvoiceModelView(Nwob));
-            }
 
-            //new IntegrationServics().CreateTransactionByInvoice(new InvoiceModelView(Nwob));
-
-            //new FinancialService().CreateFinancialByInvoice(new InvoiceModelView(Nwob));
+            if (ob.Cash)
+                new IntegrationServics().CreateFinancialByInvoice(new InvoiceModelView(Nwob));
 
             return new InvoiceModelView(Nwob);
-        }
-
-       
+        }    
 
         public bool Delete(long id)
         {
@@ -69,6 +62,7 @@ namespace Service
             if (ob != null)
             {
                 repo.invoiceRepo.Delete(id);
+                new IntegrationServics().DeleteInvoice(id);
                 new TransactionService().Delete(ob.TransactionId ?? 0);
                 var fi = new FinancialService().GetByParent(id);
                 new FinancialService().Delete(fi.Id);
@@ -82,10 +76,11 @@ namespace Service
             var oblist = repo.invoiceRepo.GetList(e => ids.Contains(e.Id), null, "", Utility.Status.New);
             if (oblist != null && oblist.Count() > 0)
             {
-                repo.invoiceRepo.Delete(ids);
+                repo.invoiceRepo.Delete(ids);               
                 new TransactionService().Delete(oblist.Select(e => e.TransactionId ?? 0).ToList());
                 foreach (var id in ids)
                 {
+                    new IntegrationServics().DeleteInvoice(id);
                     var fi = new FinancialService().GetByParent(id);
                     new FinancialService().Delete(fi.Id);
                 }
@@ -93,6 +88,20 @@ namespace Service
                 return true;
             }
             return false;
+        }
+
+        public void Cancel(long Id)
+        {
+            var ob = repo.invoiceRepo.Get(e => e.Id == Id);
+            ob.Status = Utility.Status.Cancel;           
+            ob = repo.invoiceRepo.AddOrUpdate(ob);
+        }
+
+        public void Redo(long Id)
+        {
+            var ob = repo.invoiceRepo.Get(e => e.Id == Id);
+            ob.Status = Utility.Status.All;           
+            ob = repo.invoiceRepo.AddOrUpdate(ob);
         }
         #endregion
 
@@ -153,29 +162,6 @@ namespace Service
         {
             return repo.invoiceRepo.GetMaXCode(e => e.TypeId == type);
         }
-        #endregion
-
-        #region Integration      
-      
-
-        public void UpdateCredit(List<long> ids)
-        {
-            var invs = repo.invoiceRepo.GetList(e => ids.Contains(e.Id), null, "", Utility.Status.New).ToList();
-            if (invs == null)
-                invs = new List<Invoice>();
-
-            var financialsInvs = repo.financialInvoiceRepo.GetList(e => ids.Contains(e.InvoiceId), null, "", Utility.Status.New).ToList();
-            if (financialsInvs == null) 
-                financialsInvs = new List<FinancialInvoice>();
-
-            foreach (var inv in invs)
-            {               
-                var amount = financialsInvs.Where(e => e.InvoiceId == inv.Id)?.Sum(e => e.Amount) ?? 0;
-                inv.Credit = inv.Net - amount;
-                inv.Paid = inv.Net - inv.Credit;
-                var Nwob = repo.invoiceRepo.AddOrUpdate(inv);
-            }
-        }
-        #endregion
+        #endregion       
     }
 }

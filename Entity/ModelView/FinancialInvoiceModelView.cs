@@ -46,7 +46,7 @@ namespace Entity.ModelView
             this.Status = ob.Status;
         }
 
-        public FinancialInvoiceModelView(Invoice ob)
+        public FinancialInvoiceModelView(Invoice ob , decimal amount)
         {
             if (ob == null)
                 ob = new Invoice();
@@ -55,9 +55,9 @@ namespace Entity.ModelView
 
             this.InvoiceId = ob.Id;          
 
-            this.Net = ob.Credit;
+            this.Net = amount;
 
-            this.Amount = ob.Credit;
+            this.Amount = amount;
 
             this.CodeNumber = 1;
 

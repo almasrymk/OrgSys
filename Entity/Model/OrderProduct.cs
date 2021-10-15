@@ -32,6 +32,8 @@ namespace Entity.Model
 
         public decimal Discount { get; set; }
 
+        public decimal Service { get; set; }
+
         public decimal Tax { get; set; }
 
         public decimal Net { get; set; }

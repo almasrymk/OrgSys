@@ -107,7 +107,7 @@ namespace Service
        
         public IPagedList<ProductModelView> GetAll(string textSearch , long parentId = 0, long TypeId = 0, int page = 1, int pageSize = 20)
         {
-            return repo.productRepo.GetList(e => "" + textSearch == "" || e.Name.Contains("" + textSearch) || e.Code.Contains("" + textSearch) || e.Barcode.Contains("" + textSearch) || e.Classification.Name.Contains("" + textSearch), e => e.OrderBy(e => e.Id), Includes, Utility.Status.New).Select(e => new ProductModelView(e)).ToPagedList(page, pageSize);
+            return repo.productRepo.GetList(e => "" + textSearch == "" || e.Name.ToLower().Contains("" + textSearch) || e.Code.Equals("" + textSearch) || e.Barcode.Equals("" + textSearch) || e.Classification.Name.ToLower().Contains("" + textSearch), e => e.OrderBy(e => e.Id), Includes, Utility.Status.New).Select(e => new ProductModelView(e)).ToPagedList(page, pageSize);
         }
        
         public IPagedList<ProductModelView> GetAllOrderByName(string textSearch, int page = 1, int pageSize = 20)

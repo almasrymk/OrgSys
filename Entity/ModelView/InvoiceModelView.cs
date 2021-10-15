@@ -281,6 +281,8 @@ namespace Entity.ModelView
 
         public string ShiftName { get; set; }
 
+        public bool Cash { get; set; }
+
         public TransactionModelView Transaction { get; set; }
 
         public List<InvoiceProductModelView> InvoiceProducts { get; set; }

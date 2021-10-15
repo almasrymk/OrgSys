@@ -79,7 +79,7 @@ namespace Entity.ModelView
             this.FinancialInvoices = ob.FinancialInvoices.Select(e => new FinancialInvoiceModelView(e)).ToList();
         }
 
-        public FinancialModelView(Invoice ob)
+        public FinancialModelView(Invoice ob , decimal amount)
         {
             if (ob == null)
                 ob = new Invoice();
@@ -90,9 +90,11 @@ namespace Entity.ModelView
 
             this.CurrencyId = ob.CurrencyId;
 
+            this.PaymentTypeId = ob.PaymentTypeId;
+
             this.Notes = ob.Notes;
 
-            this.Amount = ob.Credit;          
+            this.Amount = amount;          
 
             this.Rate = ob.Rate > 0 ? ob.Rate : (ob.Currency?.Rate ?? 0);
 
@@ -120,7 +122,7 @@ namespace Entity.ModelView
 
             if (this.FinancialInvoices == null)
                 this.FinancialInvoices = new List<FinancialInvoiceModelView>();
-            this.FinancialInvoices.Add(new FinancialInvoiceModelView(ob));
+            this.FinancialInvoices.Add(new FinancialInvoiceModelView(ob , amount));
         }
 
         public Financial Model

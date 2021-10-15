@@ -55,9 +55,11 @@ namespace OrgSys.Areas.Setting.Controllers
                 {
                     _.Id,
                     _.Name,
-                    _.Barcode,
+                    Barcode = phrase == _.Barcode ? Utility.Resource.Title_Designer.Barcode + " " + _.Barcode : "",
                     _.Price,
                     _.Cost,
+                     Code = phrase == _.Code ? Utility.Resource.Title_Designer.Code + " " +  _.Code : "",
+                    ClassificationName = "" + phrase != "" && _.ClassificationName.ToLower().Contains("" + phrase) ? _.ClassificationName : ""
                 })
                 .ToList();
             return Json(list);

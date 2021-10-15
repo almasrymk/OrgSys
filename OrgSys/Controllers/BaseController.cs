@@ -7,6 +7,7 @@ using Entity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.Localization;
 using Service;
 using Utility;
 
@@ -18,6 +19,7 @@ namespace OrgSys.Controllers
         string AreaName = "";
         string ControllerName = "";
         BaseService<entity> service;
+               
         [HttpGet]
         public virtual ActionResult Index(string search, long ParentId = 0, long TypeId = 0, int page = 1, int pageSize = 10, ResultStatus Status = ResultStatus.nothing, string MsgError = "")
         {

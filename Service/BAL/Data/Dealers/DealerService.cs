@@ -23,7 +23,7 @@ namespace Service
 
         public bool Delete(long id)
         {
-            return repo.dealerRepo.Delete(id);
+            return repo.dealerRepo.Delete(id);           
         }
 
         public bool Delete(List<long> ids)

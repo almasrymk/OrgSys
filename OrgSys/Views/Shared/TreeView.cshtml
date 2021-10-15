@@ -1,6 +1,10 @@
 ﻿@model List<Entity.ModelView.TreeView>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.Extensions.Localization
 @using Microsoft.AspNetCore.Mvc.Localization
+@using System.Globalization
 @inject IHtmlLocalizer<Utility.Resource.Title_Designer> localizer
+@inject IStringLocalizer<Utility.Resource.Title_Designer> __Localizer
 @{
     Layout = null;
 }
@@ -12,8 +16,8 @@
     {
         if (ob.ParentId >= 1)
         {
-            <li id="@ob.Key"  class="" data-value="@ob.Id" @(ob.Select?"data-checked='true'":"")  >
-                &nbsp; @localizer[ob.Value].Value
+            <li id="@ob.Key" class="" data-value="@ob.Id" @(ob.Select ? "data-checked='true'" : "")>
+                &nbsp; @ob.Value
                 @if (Model.Any(e => e.ParentId == ob.Id))
                 {
                     ViewBag.parentId = ob.Id;
@@ -23,8 +27,8 @@
         }
         else
         {
-            <li id="@ob.Key"  class="expanded " data-value="@ob.Id"  @(ob.Select?"data-checked='true'":"")>
-                &nbsp; @localizer[ob.Value].Value
+            <li id="@ob.Key" class="expanded " data-value="@ob.Id" @(ob.Select ? "data-checked='true'" : "")>
+                &nbsp; @ob.Value
                 @if (Model.Any(e => e.ParentId == ob.Id))
                 {
                     ViewBag.parentId = ob.Id;

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repository;
 
 namespace Repository.Migrations
 {
     [DbContext(typeof(OrgContext))]
-    partial class OrgContextModelSnapshot : ModelSnapshot
+    [Migration("20211010132414_SerivceDetials")]
+    partial class SerivceDetials
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2550,17 +2552,6 @@ namespace Repository.Migrations
                             Id = 3010105L,
                             CodeNumber = 0L,
                             Hide = false,
-                            Key = "SalesInvoices.Cancel",
-                            Name = "Cancel",
-                            ParentId = 30101L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 3010106L,
-                            CodeNumber = 0L,
-                            Hide = false,
                             Key = "SalesInvoices.Preference",
                             Name = "Preference",
                             ParentId = 30101L,
@@ -2625,17 +2616,6 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 3010205L,
-                            CodeNumber = 0L,
-                            Hide = false,
-                            Key = "SalesReturns.Cancel",
-                            Name = "Cancel",
-                            ParentId = 30102L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 3010206L,
                             CodeNumber = 0L,
                             Hide = false,
                             Key = "SalesReturns.Preference",
@@ -2715,17 +2695,6 @@ namespace Repository.Migrations
                             Id = 3020105L,
                             CodeNumber = 0L,
                             Hide = false,
-                            Key = "PurchasesInvoices.Cancel",
-                            Name = "Cancel",
-                            ParentId = 30201L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 3020106L,
-                            CodeNumber = 0L,
-                            Hide = false,
                             Key = "PurchasesInvoices.Preference",
                             Name = "Preference",
                             ParentId = 30201L,
@@ -2790,17 +2759,6 @@ namespace Repository.Migrations
                         new
                         {
                             Id = 3020205L,
-                            CodeNumber = 0L,
-                            Hide = false,
-                            Key = "PurchasesReturns.Cancel",
-                            Name = "Cancel",
-                            ParentId = 30202L,
-                            Status = 0,
-                            TypeId = 1L
-                        },
-                        new
-                        {
-                            Id = 3020206L,
                             CodeNumber = 0L,
                             Hide = false,
                             Key = "PurchasesReturns.Preference",

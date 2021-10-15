@@ -50,26 +50,21 @@ namespace OrgSys
 
             });
 
-            //services.ConfigureApplicationCookie(options =>
-            //{
-            //    options.LoginPath = "/Home/LogIn";
-            //    //other properties
-            //});
-
 
             services.AddOptions();
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
             services.AddMvc(options => options.EnableEndpointRouting = false);
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
-
-            services.AddLocalization(options => options.ResourcesPath = "Resources");
-            services.AddMvc().AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix).AddDataAnnotationsLocalization();
+            
+            services.AddLocalization(options => options.ResourcesPath = "Resource");
+            services.AddMvc().AddViewLocalization(options => options.ResourcesPath = "Resource").
+                AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix).AddDataAnnotationsLocalization();
 
             services.Configure<RequestLocalizationOptions>(options =>
             {
-                options.AddSupportedUICultures("en-US", "ar-EG");
-                options.FallBackToParentUICultures = true;
+                options.AddSupportedUICultures("en", "ar");
+                options.FallBackToParentUICultures = true;                
             });
             services.AddRazorPages().AddRazorRuntimeCompilation();
             services.AddRazorPages().AddViewLocalization();

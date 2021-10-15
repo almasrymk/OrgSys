@@ -50,7 +50,7 @@ namespace Service
             {
                 var setting = new PreferenceService();
                 if (long.Parse("0" + setting.GetByKey("AutoReceived", "Transaction", ob.TypeId, 0)?.Value) == 1 || ob.ParentId > 0)
-                    CreateReceived(Nwob);
+                    new IntegrationServics().CreateReceived(Nwob);
             }
 
             return new TransactionModelView(Nwob);
@@ -137,37 +137,6 @@ namespace Service
         public long GetMaxCode(long type = 0)
         {
             return repo.transactionRepo.GetMaXCode(e => e.TypeId == type);
-        }
-        #endregion
-
-        #region Integration
-        public bool CreateTransactionByInvoice(InvoiceModelView inv)
-        {
-            if (inv != null && inv.Id > 0 && inv.Credit > 0)
-            {
-                var transaction = new TransactionModelView(inv.Model);               
-                inv.CodeNumber = GetMaxCode(inv.TypeId == 2 || inv.TypeId == 3 ? 1 : 2);
-                inv.Code = "" + inv.CodeNumber;
-                Save(transaction);
-                return true;
-            }
-            return false;
-        }
-
-        public bool CreateReceived(Transaction transaction)
-        {
-            if (transaction != null && transaction.Id > 0)
-            {
-                var received = new TransactionModelView(transaction);
-                received.TypeId = 4;
-                foreach (var item in received.TransactionProducts)
-                    item.TypeId = 4;
-                received.CodeNumber = GetMaxCode(4);
-                received.Code = "" + received.CodeNumber;
-                Save(received);
-                return true;
-            }
-            return false;
         }
         #endregion
     }

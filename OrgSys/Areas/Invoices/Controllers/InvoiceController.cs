@@ -29,8 +29,8 @@ namespace OrgSys.Areas.Invoices.Controllers
             ViewBag.PaymentTypeId = new SelectList(new PaymentTypeService().GetAll(model.ParentId, model.PaymentTypeId, 1, 20), "Id", "Name", model.PaymentTypeId);
             
             List<SelectListItem> selectListItems = new List<SelectListItem>();
-            selectListItems.Add(new SelectListItem { Value = "1", Text = "Amount" });
-            selectListItems.Add(new SelectListItem { Value = "2", Text = "Percentage" });
+            selectListItems.Add(new SelectListItem { Value = "1", Text = Translate.GetTranslate("Amount") });
+            selectListItems.Add(new SelectListItem { Value = "2", Text = Translate.GetTranslate("Ratio") });
 
             ViewBag.DiscountType = new SelectList(selectListItems, "Value", "Text");
             ViewBag.ServiceType = new SelectList(selectListItems, "Value", "Text");
@@ -54,6 +54,7 @@ namespace OrgSys.Areas.Invoices.Controllers
                 DealerId = long.Parse("0" + setting.GetByKey("DefaultSupplier", "Invoice", ob.TypeId, 0)?.Value);
 
             var PaymentTypeId = long.Parse("0" + setting.GetByKey("DefaultPaymentType", "Invoice", ob.TypeId, 0)?.Value);
+            var DefaultCurrencyId = long.Parse("0" + setting.GetByKey("DefaultCurrency", "Invoice", ob.TypeId, 0)?.Value);
             var DefaultDiscountType = int.Parse("0" + setting.GetByKey("DefaultDiscountType", "Invoice", ob.TypeId, 0)?.Value);
             var DefaultServiceType = int.Parse("0" + setting.GetByKey("DefaultServiceType", "Invoice", ob.TypeId, 0)?.Value);
             var DefaultTaxType = int.Parse("0" + setting.GetByKey("DefaultTaxType", "Invoice", ob.TypeId, 0)?.Value);
@@ -77,6 +78,7 @@ namespace OrgSys.Areas.Invoices.Controllers
                 ob.StoreId = StoreId;               
                 ob.DealerId = DealerId;                
                 ob.PaymentTypeId = PaymentTypeId;
+                ob.CurrencyId = DefaultCurrencyId;
                 ob.Date = DateTime.Now;
                 ob.DiscountType = DefaultDiscountType;
                 ob.ServiceType = DefaultServiceType;
@@ -90,18 +92,19 @@ namespace OrgSys.Areas.Invoices.Controllers
             ob.StoreName = new StoreService().Get(ob.StoreId).Name;
             ob.DealerName = new DealerService().Get(ob.DealerId).Name;
             ob.ParentCode = new InvoiceService().Get(ob.ParentId).Code;
+            ob.Rate = new CurrencyService().Get(ob.CurrencyId).Rate;
             return ob;
         }
 
         public ActionResult CreateTransaction(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1)
         {
-            new TransactionService().CreateTransactionByInvoice(new InvoiceService().Get(id));
+            new IntegrationServics().CreateTransactionByInvoice(new InvoiceService().Get(id));
             return Redirect("/Invoices/Invoice/Index?ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" + ResultStatus.success + "&MsgError=Success");
         }
 
         public JsonResult CollectInvoice(long id)
         {
-            new FinancialService().CreateFinancialByInvoice(new InvoiceService().Get(id));
+            new IntegrationServics().CreateFinancialByInvoice(new InvoiceService().Get(id));
             return Json("Ok");
         }
 
@@ -144,6 +147,18 @@ namespace OrgSys.Areas.Invoices.Controllers
                 credit = invoice.Credit
             };
             return Json(data);
+        }
+
+        public ActionResult Cancel(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1)
+        {
+            new InvoiceService().Cancel(id);
+            return Redirect("/Invoices/Invoice/Index?ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" + ResultStatus.success + "&MsgError=Success");
+        }
+
+        public ActionResult Redo(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1)
+        {
+            new InvoiceService().Redo(id);
+            return Redirect("/Invoices/Invoice/Index?ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" + ResultStatus.success + "&MsgError=Success");
         }
     }
 }
