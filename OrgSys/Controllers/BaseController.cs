@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Entity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Service;
@@ -11,6 +12,7 @@ using Utility;
 
 namespace OrgSys.Controllers
 {
+    [Authorize]
     public class BaseController<entity> : Controller where entity : BaseModel
     {
         string AreaName = "";

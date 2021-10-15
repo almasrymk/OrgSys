@@ -1,0 +1,171 @@
+﻿@model Entity.ModelView.UserModelView
+@using OrgSys
+@{
+    ViewData["Title"] = "Profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+
+            <div class="mb-0">
+                <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
+                    <ol class="breadcrumb pt-0">
+                        <li class="breadcrumb-item">
+                            <a href="#">Home</a>
+                        </li>
+                       
+                        <li class="breadcrumb-item active" aria-current="page">Profile</li>
+                    </ol>
+                </nav>
+            </div>
+
+            <div class="d-block d-md-inline-block">
+                <div class="d-inline-block float-md-left">
+                    @*<button  class="btn btn-outline-primary" id="EditUser" >@Utility.Resource.Title_Designer.Edit</button>*@
+                </div>
+
+                <div class="position-absolute card-top-buttons" id="BtnBack">
+                    <button  class="btn btn-primary"><i class="simple-icon-action-undo"></i>@Utility.Resource.Title_Designer.Back</button>
+                </div>
+            </div>
+            <div class="separator mb-1 mt-0"></div>
+
+            <div class="row">
+                <div class="col-12">
+
+                     <div class="card  mt-1">
+                        <div class="row">
+                            <div class="col-md-4 text-center">
+                                <div class="position-absolute card-top-buttons mt-4 mr-5">
+                                    @*<button id="ImgUser" class="btn btn-outline-primary icon-button d-none">
+                <i class="simple-icon-pencil"></i>
+            </button>*@
+
+                                    <button type="button" id="ImgUser" onclick="document.getElementById('flImage').click();" class="btn btn-outline-white icon-button">
+                                        <i class="simple-icon-pencil"></i>
+                                    </button>
+                                    <input id="flImage" type="file" name="file" onchange="SelectImage(this)" style="display:none" accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*" />
+                                    <button type="button" id="ImgClose" class="btn btn-outline-white icon-button" onclick="document.getElementById('flImage').value ='' ;$('#img').attr('src', '/img/profiles/ClientCard.png')">
+                                        X
+                                    </button>
+                                </div>
+                                @*<img src="~/img/profiles/1.jpg" class="list-thumbnail rounded-circle" style="height:200px;width:200px; margin-top:40px" alt="...">*@
+                                @if ("" + Model.ImgPath != "")
+                                {
+                                    <img id="img" src="@Model.ImgPath" alt="Profile" class="list-thumbnail border-0  badge-theme-1 pt-3" style="height:200px; width:200px; margin-top:40px"> }
+                                else
+                                {
+                                    <img id="img" src="~/img/profiles/ClientCard.png" alt="Profile" class="list-thumbnail border-0  badge-theme-1 pt-3 " style="height: 200px; width: 200px; margin-top: 40px; ">}
+
+                            </div>
+                            <div class="col-md-8 pl-0">
+                                <div class="card-body ">
+                                    @Html.HiddenFor(model => model.Id)
+                                    @Html.HiddenFor(Model => Model.RoleId)
+
+                                    <label class="label">Name</label>
+                                    <input class="form-control col-10" id="Name" name="Name" value="@Model.Name" />
+                                    <label class="label">E-mail</label>
+                                    <input class="form-control col-10" id="UserName" name="UserName" value="@Model.UserName" />
+                                    <label class="label">Password</label>
+                                    <input class="form-control col-10" id="Password" name="Password" value="@Utility.Security.Decrypt(Model.Password)" />
+                                    <label class="label"> New Password</label>
+                                    <input class="form-control col-10" id="Password" name="Password" value="" />
+                                    <label class="label">Confirm Password</label>
+                                    <input class="form-control col-10" id="Password" name="Password" value="" />
+                                </div>
+                            </div>
+                        </div>
+                        <div id="SaveUser" class="card-footer m-0 " style="background-color:transparent;">
+                            <button type="button" class="btn btn-primary" onclick="Save()">@Utility.Resource.Title_Designer.Save</button>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="~/js/vendor/jquery-3.3.1.min.js"></script>
+<script src="~/js/vendor/bootstrap3-typeahead.js"></script>
+<link href="~/css/jquery-ui.css" rel="stylesheet" />
+<script src="~/js/jquery-ui.js"></script>
+<script src="~/js/PopupScript.js"></script>
+
+<script>
+
+    $(document).ready(function () {
+        //$("#EditUser").click(function () {
+        //    $('input').prop('disabled', false);
+        //    $("#ImgUser").removeClass("d-none");
+        //    $("#ImgClose").removeClass("d-none");
+        //    $("#SaveUser").removeClass("d-none");
+        //    $("#BtnBack").removeClass("d-none");
+        //    $(this).hide();
+
+        //});
+
+        //$("#BtnBack").click(function () {
+        //    $("#EditUser").show();
+        //    $("#BtnBack").addClass("d-none");
+        //    $("#SaveUser").addClass("d-none");
+        //    $("#ImgUser").addClass("d-none");
+        //    $("#ImgClose").addClass("d-none");
+        //    $('input').prop('disabled', true);
+            
+        //});
+    });
+
+
+    function Save() {
+
+        var data = {
+            Id: $('#Id').val(),
+            Name: $('#Name').val().trim(),
+            UserName: $('#UserName').val().trim(),
+            Password: $('#Password').val().trim(),
+            //ImgPath: $('#ImgPath').val(), 
+        };
+
+        $.ajax({
+            type: 'POST',
+            url: "/Account/SaveProfileEdit",
+            data: { _profile: data },
+            success: function (res) {
+                if (res.status == "success") {
+
+                }
+                else {
+                   
+                }
+
+            }
+        });
+
+       
+    }
+
+     function SelectImage(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $("#img").attr("src", e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+     }
+
+
+
+   
+</script>
+
+
+
+

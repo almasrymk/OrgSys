@@ -49,7 +49,7 @@ namespace Service
 
         public UserModelView Get(string textSearch)
         {
-            var ob = new UserModelView(repo.userRepo.Get(e => e.Name.Equals("" + textSearch), Includes));
+            var ob = new UserModelView(repo.userRepo.Get(e => e.Name.Equals("" + textSearch.ToLower()), Includes));
             if (ob == null)
                 ob = new UserModelView();
 
@@ -98,11 +98,11 @@ namespace Service
             return repo.userRepo.GetMaXCode();
         }
 
-        public bool CheckEmail(string Email) => repo.userRepo.Any(e => e.UserName == Email);
+        public bool CheckEmail(string Email) => repo.userRepo.Any(e => e.UserName == Email.ToLower());
 
-        public bool HavePassword(string Email) => "" + repo.userRepo.Get(e => e.UserName == Email).Password != "";
+        public bool HavePassword(string Email) => "" + repo.userRepo.Get(e => e.UserName == Email.ToLower()).Password != "";
 
-        public bool CheckEmailAndPassword(string Email,string Passord) => repo.userRepo.Any(e => e.UserName == Email &&e.Password==Passord);
+        public bool CheckEmailAndPassword(string Email,string Passord) => repo.userRepo.Any(e => e.UserName == Email.ToLower() &&e.Password==Passord);
 
         #endregion
     }

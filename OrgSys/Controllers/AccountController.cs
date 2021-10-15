@@ -1,89 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using Entity.Model;
-using Entity.ModelView;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using Entity.ModelView;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using OrgSys.Models;
 using Service;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace OrgSys.Controllers
 {
-    //[Authorize]
-    public class HomeController : Controller
+    [AllowAnonymous]
+    public class AccountController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<AccountController> _logger;
+        UserService user = new UserService();
 
-        public HomeController(ILogger<HomeController> logger)
+        public AccountController(ILogger<AccountController> logger)
         {
 
             _logger = logger;
         }
 
-        public IActionResult Dashboard()
-        {
-            return View();
-        }
-
-        public IActionResult Index()
-        {
-            try
-            {
-                //var us = new UserService().Get(2);
-                //if (us != null)
-                //    us.SignIn(HttpContext);
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
-            return RedirectToAction("Dashboard");
-            // return View();
-        }
-        public IActionResult Notfound()
-        {
-            return View();
-        }
-        public IActionResult ServerError()
-        {
-            return View();
-        }
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-        public IActionResult Maintenance()
-        {
-            return View();
-        }
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-        [AllowAnonymous]
-        [HttpGet]
-        public JsonResult SetLanguage(string culture)
-        {
-            Response.Cookies.Append(
-                CookieRequestCultureProvider.DefaultCookieName,
-                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
-                new Microsoft.AspNetCore.Http.CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) }
-            );
-
-            return Json(culture);
-        }
 
         [AllowAnonymous]
         [HttpGet]
@@ -92,7 +30,6 @@ namespace OrgSys.Controllers
             return View();
         }
 
-        UserService user = new UserService();
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Register(UserModelView _user)
@@ -104,7 +41,7 @@ namespace OrgSys.Controllers
                 if (check == null)
                 {
                     user.Save(_user);
-                    return RedirectToAction("Dashboard");
+                    return RedirectToAction("Dashboard", "Home");
                 }
                 else
                 {
@@ -147,7 +84,7 @@ namespace OrgSys.Controllers
                     }
                 }
                 us.SignIn(HttpContext);
-                return RedirectToAction("Dashboard");
+                return RedirectToAction("Dashboard","Home");
             }
 
             return View("Register");
@@ -165,22 +102,38 @@ namespace OrgSys.Controllers
             return View();
         }
 
-        [AllowAnonymous]
         public ActionResult CheckEmail(string Email)
         {
             return Json(user.CheckEmail(Email));
         }
 
-        [AllowAnonymous]
         public ActionResult HavePassword(string Email)
         {
             return Json(user.HavePassword(Email));
         }
 
-        [AllowAnonymous]
         public ActionResult CheckPassword(string Email, string Password)
         {
             return Json(user.CheckEmailAndPassword(Email, Utility.Security.Encrypt(Password)));
         }
+
+
+        //------------------------ Profile Action ------------------------
+        [HttpGet]
+        public ActionResult Profile(int id)
+        {
+            var IdUser = user.Get(id);
+            return View("Profile", IdUser);
+        }
+
+        [HttpPost]
+        public ActionResult SaveProfileEdit(UserModelView _profile)
+        {
+            _profile.RoleId = User.GetRoleId();
+            new UserService().Save(_profile);
+            return View("Profile");
+        }
+
+
     }
 }
