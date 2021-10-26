@@ -100,11 +100,11 @@ namespace Service
             return repo.userRepo.GetMaXCode();
         }
 
-        public bool CheckEmail(string Email) => repo.userRepo.Any(e => e.UserName == Email.ToLower());
+        public bool CheckEmail(string Email) => repo.userRepo.Any(e => e.UserName == Email);
 
-        public bool HavePassword(string Email) => "" + repo.userRepo.Get(e => e.UserName == Email.ToLower()).Password != "";
+        public bool HavePassword(string Email) => "" + repo.userRepo.Get(e => e.UserName == Email).Password != "";
 
-        public bool CheckEmailAndPassword(string Email,string Passord) => repo.userRepo.Any(e => e.UserName == Email.ToLower() &&e.Password==Passord);
+        public bool CheckEmailAndPassword(string Email,string Passord) => repo.userRepo.Any(e => e.UserName== Email &&e.Password==Passord);
 
         #endregion
     }

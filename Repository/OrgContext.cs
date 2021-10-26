@@ -504,5 +504,8 @@ namespace Repository
         public virtual DbSet<Outlay> Outlays { get; set; }
         public virtual DbSet<Currency> Currencys { get; set; }
         public virtual DbSet<RolePermission> RolePermissions { get; set; }
+        public virtual DbSet<Request> Requests { get; set; }
+
+
     }
 }
