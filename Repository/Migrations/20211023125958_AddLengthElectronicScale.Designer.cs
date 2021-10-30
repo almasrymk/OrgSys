@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repository;
 
 namespace Repository.Migrations
 {
     [DbContext(typeof(OrgContext))]
-    partial class OrgContextModelSnapshot : ModelSnapshot
+    [Migration("20211023125958_AddLengthElectronicScale")]
+    partial class AddLengthElectronicScale
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -3655,19 +3657,7 @@ namespace Repository.Migrations
                             Reference = "Invoice",
                             Status = 0,
                             TypeId = 1L,
-                            Value = "7"
-                        },
-                        new
-                        {
-                            Id = 20L,
-                            CodeNumber = 0L,
-                            Hide = false,
-                            Key = "LengthQtyElectronicScale",
-                            ParentId = 0L,
-                            Reference = "Invoice",
-                            Status = 0,
-                            TypeId = 1L,
-                            Value = "5"
+                            Value = "4"
                         },
                         new
                         {
@@ -3895,19 +3885,7 @@ namespace Repository.Migrations
                             Reference = "Invoice",
                             Status = 0,
                             TypeId = 2L,
-                            Value = "7"
-                        },
-                        new
-                        {
-                            Id = 120L,
-                            CodeNumber = 0L,
-                            Hide = false,
-                            Key = "LengthQtyElectronicScale",
-                            ParentId = 0L,
-                            Reference = "Invoice",
-                            Status = 0,
-                            TypeId = 2L,
-                            Value = "5"
+                            Value = "4"
                         },
                         new
                         {

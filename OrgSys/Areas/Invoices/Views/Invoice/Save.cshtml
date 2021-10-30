@@ -324,7 +324,21 @@
                                                 <td class="text-center align-middle" style="min-width:100px;padding:0px;" colspan="2">
                                                 </td>
                                                 <td class="text-center align-middle" style="width:100px;padding:0px;">
-                                                    <label>@Utility.Resource.Title_Designer.Credit </label>
+                                                    <label id="lblDoCredit" style="@(Model.Credit > 0 ? "display:block;" : "display:none;")">
+                                                        <a href="/@ViewBag.area/@ViewBag.PageTitle/CreateFinancial?id=@Model.Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=1&dir=Save">
+                                                            @if (Model.TypeId == 1 || Model.TypeId == 4)
+                                                            {
+                                                                <i class="iconsminds-financial"> @Utility.Resource.Title_Designer.Credit </i>
+                                                            }
+                                                            else
+                                                            {
+                                                                <i class="iconsminds-handshake"> @Utility.Resource.Title_Designer.Credit </i>
+                                                            }
+                                                        </a>
+                                                    </label>
+                                                    <label id="lblCredit" style="@(Model.Credit > 0 ? "display:none;" : "display:block;")">
+                                                        @Utility.Resource.Title_Designer.Credit
+                                                    </label>
                                                 </td>
                                                 <td class="text-center align-middle" style="width:100px;padding:0px;">
                                                     @Html.TextBoxFor(model => model.Credit, new { @class = "form-control", @style = @BorderAlign + "background-color:transparent;", @placeholder = "0.0", @readonly = "true" })
@@ -600,13 +614,12 @@
     var AutoSave;
     var Repeated;
 
-    jQuery(function ($) {          
-       
+    jQuery(function ($) {
+
         setTimeout(function () {
             $("html, body").scrollTop($("#query").offset().top - 300);
             $("#query").focus();
             $(".sw-toolbar-bottom").css("display", "none");
-
         }, 600);
 
         $('#btn').click(function () {
@@ -623,21 +636,19 @@
                     $("#SearchProductBody").html(res);
                 }
             });
-
         });
 
         $('#ShowPreference').on("click", function () {
             $.ajax({
                 type: 'GET',
                 url: "/Setting/Preference/Show",
-                data: { Resource: 'Invoice', type: '@Model.TypeId'},
+                data: { Resource: 'Invoice', type: '@Model.TypeId' },
                 success: function (res) {
                     $("#ShowPreferenceBody").html(res);
                 }
             });
 
         });
-
 
         AddNewRow = function () {
             var Current = $('.trNew');
@@ -674,22 +685,36 @@
 
                     if (isProduct) {
                         setTimeout(function () {
-                            row.find(".Quantity").focus();
-                            row.find(".Quantity").select();
-                            if (row.find("#ProductId").val() == "0" || row.find("#ProductId").val() == "" || row.find("#ProductId").val() == null || row.find("#ProductId").val() == undefined) {
-                                row.find(".search-box").val("");
-                            }                           
+                            if (row.find(".search-box").val() != "") {
+                                $.ajax({
+                                    type: 'GET',
+                                    url: "/Setting/Product/SearchItemName?txtSearch=" + row.find(".search-box").val() + "&TypeInv=" + $("#TypeId").val(),
+                                    async: false,
+                                    success: function (res) {
+                                        if (res.id > 0) {
+                                            AddProduct(row, res.id, res.quantity );
+                                            row.find(".Quantity").focus();
+                                            row.find(".Quantity").select();
+                                        }
+                                        else {
+                                            row.find(".search-box").val("");
+                                        }
+                                    }
+                                });
+                                if (row.find("#ProductId").val() == "0" || row.find("#ProductId").val() == "" || row.find("#ProductId").val() == null || row.find("#ProductId").val() == undefined) {
+                                    row.find(".search-box").val("");
+                                }
+                            }
                         }, 200);
                     }
                     else if (isQuantity) {
                         var NextRow = row.next();
                         if (NextRow.find(".search-box").hasClass("trNew"))
                             AddNewRow();
-
                         setTimeout(function () {
                             NextRow.find(".search-box").focus();
                             NextRow.find(".search-box").select();
-                            NextRow.find(".search-box").autocomplete("search", "");                            
+                            NextRow.find(".search-box").autocomplete("search", "");
                             $("html, body").scrollTop(NextRow.find(".search-box").offset().top - 300);
                         }, 200);
                     }
@@ -717,11 +742,11 @@
                                 response($.map(data, function (item) {
                                     return {
                                         label: item.name +
-                                            (item.code &&  item.code != "" ? " / " + item.code : "") +
-                                            (item.barcode && item.barcode != "" ? " / "  + item.barcode : "") +
+                                            (item.code && item.code != "" ? " / " + item.code : "") +
+                                            (item.barcode && item.barcode != "" ? " / " + item.barcode : "") +
                                             (item.classificationName && item.classificationName != "" ? " / " + item.classificationName : "")
                                         , value: item.name, id: item.id,
-                                        barcode: item.barcode, price: item.price
+                                        barcode: item.barcode, price: item.price, quantity: item.quantity
                                     };
                                 }));
                             } catch (err) { }
@@ -734,7 +759,7 @@
                         return;
                     }
                     var $row = $(event.target).parents('tr');
-                    AddProduct($row, ui.item.id);
+                    AddProduct($row, ui.item.id, ui.item.quantity);
                 },
                 focus: function (event, ui) {
                     if (ui.item.label === 'NoResultsFound') {
@@ -752,7 +777,7 @@
                         url: "/Invoices/Invoice/GetInvoicesNotReturn",
                         type: "Get",
                         dataType: "json",
-                        data: { txtSearch: searchPhrase, TypeId: $("#TypeId").val(), InvId: $("#ParentId").val(), page: 1, pageSize : 7 },
+                        data: { txtSearch: searchPhrase, TypeId: $("#TypeId").val(), InvId: $("#ParentId").val(), page: 1, pageSize: 7 },
                         success: function (data) {
                             try {
                                 if (!data.length) {
@@ -851,7 +876,7 @@
 
                                 if ("" + $("#txtDealerId").val() == "") {
                                     $("#DealerId").val("");
-                                    $("#errorDealerId" ).remove();
+                                    $("#errorDealerId").remove();
                                 }
 
                                 response($.map(data, function (item) {
@@ -972,7 +997,7 @@
                 $.ajax({
                     url: "/Setting/Currency/GetRate",
                     type: "Get",
-                    data: { id: $("#CurrencyId").val()  },
+                    data: { id: $("#CurrencyId").val() },
                     success: function (data) {
                         $("#Rate").val(data.rate);
                         AutoSave();
@@ -993,12 +1018,14 @@
             });
         }
 
-        AddProduct = function ($row, itemId) {
+        AddProduct = function ($row, itemId, qty) {
+            if (qty == undefined)
+                qty = 1;
             var AllowRepeated = '@ViewBag.AllowRepeated';
             var RowRepeated = Repeated(itemId);
             if (AllowRepeated == 2 && RowRepeated != "") {
                 var Quantity = Number(RowRepeated.find("#Quantity").val());
-                RowRepeated.find("#Quantity").val(++Quantity);
+                RowRepeated.find("#Quantity").val(Quantity + qty);
                 ReIndex();
                 ReCalc();
                 AutoSave();
@@ -1049,7 +1076,7 @@
                         $UnitID.val(data.selectunitid).trigger("change", SkipCallingAction = true);
 
                         $row.find("#Price").val(price);
-                        $row.find("#Quantity").val(1);
+                        $row.find("#Quantity").val(qty);
                         $row.find("#Total").val(price);
                         $row.find("#btnDelete").css("display", "block");
 
@@ -1218,6 +1245,17 @@
                 $("#Credit").val(0);
                 $("#CreditByDefaultCurrency").val(0);
             }
+
+            if ($("#Credit").val() > 0) {
+                $("#lblCredit").hide();
+                $("#lblDoCredit").show();
+            }
+            else {
+                $("#lblDoCredit").hide();
+                $("#lblCredit").show();
+            }
+
+
         }
 
         Save = function () {
@@ -1258,6 +1296,7 @@
                 $.ajax({
                     type: 'POST',
                     url: "/Invoices/Invoice/Save",
+                    async: false,
                     data: { model: data },
                     success: function (res) {
                         window.location.replace(res.url);
@@ -1267,41 +1306,42 @@
             }
         }
 
-       AutoSave = function () {
+        AutoSave = function () {
             var Valid = true;
 
-           if (CheckRowCountWithValNoMessage("tbl", "ProductId"))
+            if (CheckRowCountWithValNoMessage("tbl", "ProductId"))
                 Valid = false;
             else {
-               if (CheckRequiredNoMessage("Code"))
+                if (CheckRequiredNoMessage("Code"))
                     Valid = false;
 
-               if (CheckRequiredNoMessage("DealerId"))
+                if (CheckRequiredNoMessage("DealerId"))
                     Valid = false;
 
-               if (CheckRequiredNoMessage("CurrencyId"))
-                   Valid = false;
+                if (CheckRequiredNoMessage("CurrencyId"))
+                    Valid = false;
 
-               if (CheckRequiredNoMessage("Date"))
+                if (CheckRequiredNoMessage("Date"))
                     Valid = false;
 
 
-               if (CheckRequiredNoMessage("StoreId"))
-                   Valid = false;
+                if (CheckRequiredNoMessage("StoreId"))
+                    Valid = false;
 
-               if (CheckRequiredNoMessage("PaymentTypeId"))
+                if (CheckRequiredNoMessage("PaymentTypeId"))
                     Valid = false;
             }
 
             if (Valid == true) {
                 if ('@ViewBag.AutoSave' == 1) {
-                   setTimeout(function () {
+                    setTimeout(function () {
 
                         var data = CollectData();
 
                         $.ajax({
                             type: 'POST',
                             url: "/Invoices/Invoice/Save",
+                            async: false,
                             data: { model: data },
                             success: function (res) {
                                 if (res != "Error") {
@@ -1400,7 +1440,7 @@
                 Credit: $('#Credit').val(),
                 InvoiceProducts: list
             }
-           return data;
+            return data;
         }
 
         Repeated = function (itemId) {

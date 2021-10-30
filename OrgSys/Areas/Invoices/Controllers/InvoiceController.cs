@@ -27,7 +27,7 @@ namespace OrgSys.Areas.Invoices.Controllers
         {
             ViewBag.CurrencyId = new SelectList(new CurrencyService().GetAll(model.ParentId, 0, 1, 20), "Id", "Name", model.CurrencyId);
             ViewBag.PaymentTypeId = new SelectList(new PaymentTypeService().GetAll(model.ParentId, model.PaymentTypeId, 1, 20), "Id", "Name", model.PaymentTypeId);
-            
+
             List<SelectListItem> selectListItems = new List<SelectListItem>();
             selectListItems.Add(new SelectListItem { Value = "1", Text = Translate.GetTranslate("Amount") });
             selectListItems.Add(new SelectListItem { Value = "2", Text = Translate.GetTranslate("Ratio") });
@@ -75,8 +75,8 @@ namespace OrgSys.Areas.Invoices.Controllers
             {
                 ob.CodeNumber = new InvoiceService().GetMaxCode(ob.TypeId);
                 ob.Code = "" + ob.CodeNumber;
-                ob.StoreId = StoreId;               
-                ob.DealerId = DealerId;                
+                ob.StoreId = StoreId;
+                ob.DealerId = DealerId;
                 ob.PaymentTypeId = PaymentTypeId;
                 ob.CurrencyId = DefaultCurrencyId;
                 ob.Date = DateTime.Now;
@@ -87,7 +87,7 @@ namespace OrgSys.Areas.Invoices.Controllers
                 ob.Service = ServiceValue;
                 ob.Tax = TaxValue;
                 ob.InvoiceProducts = new List<InvoiceProductModelView>();
-              }
+            }
 
             ob.StoreName = new StoreService().Get(ob.StoreId).Name;
             ob.DealerName = new DealerService().Get(ob.DealerId).Name;
@@ -102,6 +102,15 @@ namespace OrgSys.Areas.Invoices.Controllers
             return Redirect("/Invoices/Invoice/Index?ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" + ResultStatus.success + "&MsgError=Success");
         }
 
+        public ActionResult CreateFinancial(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1, string dir = "Index")
+        {
+            new IntegrationServics().CollectPaidInvoice(new InvoiceService().Get(id));
+            if (dir == "Index")
+                return Redirect("/Invoices/Invoice/Index?ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" + ResultStatus.success + "&MsgError=Success");
+            else
+                return Redirect("/Invoices/Invoice/Save?Id=" + id + "&ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" + ResultStatus.success + "&MsgError=Success");
+        }
+
         public JsonResult CollectInvoice(long id)
         {
             new IntegrationServics().CreateFinancialByInvoice(new InvoiceService().Get(id));
@@ -112,29 +121,29 @@ namespace OrgSys.Areas.Invoices.Controllers
         {
             if (txtSearch != null)
                 txtSearch = txtSearch.Trim().ToLower();
-           
+
             var itemsList = new InvoiceService().GetInvoicesNotReturn(txtSearch, TypeId, InvId, page, pageSize);
             var list = itemsList.Distinct().OrderBy(_ => _.Code)
                 .Select(_ => new
                 {
                     _.Id,
-                    _.Code                    
+                    _.Code
                 })
                 .ToList();
             return Json(list);
-        }       
+        }
 
-        public ActionResult SearchInvoices(string txt = "" , long dealerId = 0 , long currencyId =0, int page = 1 , long typeId = 1, int Type = 1, int index = 0 , string ids = "")
+        public ActionResult SearchInvoices(string txt = "", long dealerId = 0, long currencyId = 0, int page = 1, long typeId = 1, int Type = 1, int index = 0, string ids = "")
         {
             ViewBag.index = index;
             ViewBag.dealerId = dealerId;
             ViewBag.currencyId = currencyId;
-            ViewBag.Type = Type;          
-            ViewBag.ids = ids;            
-            var list = new InvoiceService().GetCreditAllByDealerId(txt , dealerId, currencyId , ids, 0 , typeId,  page, 10);
+            ViewBag.Type = Type;
+            ViewBag.ids = ids;
+            var list = new InvoiceService().GetCreditAllByDealerId(txt, dealerId, currencyId, ids, 0, typeId, page, 10);
             return Type != 1 ? (ActionResult)PartialView("SearchInvoicesList", list) : View("SearchInvoices", list);
         }
-       
+
         public JsonResult checkStock(int id)
         {
             var invoice = new InvoiceService().Get(id);

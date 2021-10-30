@@ -120,6 +120,19 @@ namespace Service
             return true;
         }
 
+        public bool CollectPaidInvoice(InvoiceModelView inv)
+        {
+            if (inv.Credit > 0)
+            {
+                var financial = new FinancialModelView(inv.Model, inv.Credit);
+                financial.SafeId = long.Parse("0" + new PreferenceService().GetByKey("DefaultSafe", "Financial", (inv.TypeId == 1 || inv.TypeId == 4 ? 1 : 2), 0)?.Value);
+                inv.CodeNumber = repo.financialRepo.GetMaXCode(e => e.TypeId == (inv.TypeId == 1 || inv.TypeId == 4 ? 1 : 2));
+                inv.Code = "" + inv.CodeNumber;
+                new FinancialService().Save(financial);
+            }
+            return true;
+        }
+
         public void UpdateCredit(List<long> ids)
         {
             var invs = repo.invoiceRepo.GetList(e => ids.Contains(e.Id), null, "", Utility.Status.New).ToList();

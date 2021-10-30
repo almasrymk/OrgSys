@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repository;
 
 namespace Repository.Migrations
 {
     [DbContext(typeof(OrgContext))]
-    partial class OrgContextModelSnapshot : ModelSnapshot
+    [Migration("20211023123325_AddCodeElectronicScale")]
+    partial class AddCodeElectronicScale
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -3647,30 +3649,6 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 19L,
-                            CodeNumber = 0L,
-                            Hide = false,
-                            Key = "LengthElectronicScale",
-                            ParentId = 0L,
-                            Reference = "Invoice",
-                            Status = 0,
-                            TypeId = 1L,
-                            Value = "7"
-                        },
-                        new
-                        {
-                            Id = 20L,
-                            CodeNumber = 0L,
-                            Hide = false,
-                            Key = "LengthQtyElectronicScale",
-                            ParentId = 0L,
-                            Reference = "Invoice",
-                            Status = 0,
-                            TypeId = 1L,
-                            Value = "5"
-                        },
-                        new
-                        {
                             Id = 101L,
                             CodeNumber = 0L,
                             Hide = false,
@@ -3884,30 +3862,6 @@ namespace Repository.Migrations
                             Status = 0,
                             TypeId = 2L,
                             Value = "009"
-                        },
-                        new
-                        {
-                            Id = 119L,
-                            CodeNumber = 0L,
-                            Hide = false,
-                            Key = "LengthElectronicScale",
-                            ParentId = 0L,
-                            Reference = "Invoice",
-                            Status = 0,
-                            TypeId = 2L,
-                            Value = "7"
-                        },
-                        new
-                        {
-                            Id = 120L,
-                            CodeNumber = 0L,
-                            Hide = false,
-                            Key = "LengthQtyElectronicScale",
-                            ParentId = 0L,
-                            Reference = "Invoice",
-                            Status = 0,
-                            TypeId = 2L,
-                            Value = "5"
                         },
                         new
                         {

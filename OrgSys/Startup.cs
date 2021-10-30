@@ -44,11 +44,11 @@ namespace OrgSys
 
 
 
-            services.AddMvc(o =>
-            {
-                o.Filters.Add(new AuthorizeFilter(new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build()));
+            //services.AddMvc(o =>
+            //{
+            //    o.Filters.Add(new AuthorizeFilter(new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build()));
 
-            });
+            //});
 
 
             services.AddOptions();

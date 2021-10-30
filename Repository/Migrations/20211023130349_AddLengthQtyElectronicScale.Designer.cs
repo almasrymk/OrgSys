@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repository;
 
 namespace Repository.Migrations
 {
     [DbContext(typeof(OrgContext))]
-    partial class OrgContextModelSnapshot : ModelSnapshot
+    [Migration("20211023130349_AddLengthQtyElectronicScale")]
+    partial class AddLengthQtyElectronicScale
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -3655,7 +3657,7 @@ namespace Repository.Migrations
                             Reference = "Invoice",
                             Status = 0,
                             TypeId = 1L,
-                            Value = "7"
+                            Value = "4"
                         },
                         new
                         {
@@ -3895,7 +3897,7 @@ namespace Repository.Migrations
                             Reference = "Invoice",
                             Status = 0,
                             TypeId = 2L,
-                            Value = "7"
+                            Value = "4"
                         },
                         new
                         {
