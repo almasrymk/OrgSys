@@ -143,10 +143,6 @@ namespace OrgSys.Controllers
              return View(_profile);
         }
 
-
-
-
-
         public virtual string SaveFile(string LastPath)
         {
             string NewPath = null;
