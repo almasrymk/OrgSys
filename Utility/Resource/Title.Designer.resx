@@ -724,10 +724,10 @@
     <value>User</value>
   </data>
   <data name="UserName" xml:space="preserve">
-    <value>UserName / Email</value>
+    <value>Username / Email</value>
   </data>
   <data name="UsernameOrEmail" xml:space="preserve">
-    <value>Username Or Email</value>
+    <value>Username or email</value>
   </data>
   <data name="Users" xml:space="preserve">
     <value>Users</value>

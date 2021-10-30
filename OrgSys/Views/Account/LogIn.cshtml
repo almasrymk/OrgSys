@@ -1,174 +1,180 @@
-﻿
-@{
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-<!-- Page title -->
-<section id="page-title" class="background-image" style="background:url('');">
-    <div class="container">
-        @*<div class="breadcrumb">
-                <ul>
-                    <li><a href="~/Home/Index">@Utility.Resource.Title_Designer.Home</a> </li>
-                    <li><a href="#">Page title</a> </li>
-                    <li class="active"><a href="#">Pattern background</a> </li>
-                </ul>
-            </div>
-            <div class="page-title">
-                <h1>Page title - Pattern background</h1>
-                <span>Simple page title with pattern background</span>
-            </div>*@
-    </div>
-</section>
-<!-- end: Page title -->
-<!-- Section -->
-<section class="text-center ">
-    <div class="card  float-none d-inline-block" style="width:50% ;">
-        <div class="card-header bg-light">
-            <h3 class="text-center card-header bg-light p-2">@Utility.Resource.Title_Designer.Login</h3>
-        </div>
-        <div class="card-body">
-            <form action="/Home/LogIn" method="post">
-
-                <div class="form-horizontal">
-                    <div class="form-group">
-
-                        <div class="form-group mb-2 mt-4">
-                            <label class="sr-only">@Utility.Resource.Title_Designer.UsernameOrEmail</label>
-                            <input type="hidden" name="UserName" id="UserName" placeholder="Username or Email" class="form-control">
+﻿@{Layout = null;}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>OrgSys Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="~/font/iconsmind-s/css/iconsminds.css" />
+    <link rel="stylesheet" href="~/font/simple-line-icons/css/simple-line-icons.css" />
+    <link rel="stylesheet" href="~/css/vendor/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/vendor/bootstrap.rtl.only.min.css" />
+    <link rel="stylesheet" href="~/css/vendor/bootstrap-float-label.min.css" />
+    <link rel="stylesheet" href="~/css/main.css" />
+</head>
+<body class="background show-spinner no-footer">
+    <div class="fixed-background"></div>
+    <main>
+        <div class="container">
+            <div class="row h-100">
+                <div class="col-12 col-md-10 mx-auto my-auto">
+                    <div class="card auth-card">
+                        <div class="position-relative image-side ">
+                            @*<p class=" text-white h2">MAGIC IS IN THE DETAILS</p>
+                            <p class="white mb-0">
+                                Please use your credentials to login.
+                                <br>If you are not a member, please
+                                <a href="#" class="white">register</a>.
+                            </p>*@
                         </div>
-
-                        <div class="form-group mb-2 mt-2" id="dvEmail" style="display:block">
-                            <label class="text-center">@Utility.Resource.Title_Designer.UsernameOrEmail</label>
-                            <input type="text" name="MyEmail" id="MyEmail" placeholder="Username or Email" class="form-control">
-                            <span class="badge badge-danger" id="UserNameError" style="display:none">your Name is Error</span>
-                            <div class="">
-                                <div class="pt-4 pb-4">
-                                    <input type="button" value="Next" onclick="CheckEmail()" class="btn btn-primary btn-block" />
+                        <div class="form-side">
+                            <a href="~/">
+                                <span class="logo-single"></span>
+                            </a>
+                            <h6 class="mb-4">Login</h6>
+                            <form action="/Home/LogIn" method="post">
+                                <div class="form-horizontal">
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <label class="sr-only">@Utility.Resource.Title_Designer.UsernameOrEmail</label>
+                                            <input type="hidden" required name="UserName" id="UserName" class="form-control">
+                                        </div>
+                                        <div class="form-group" id="dvEmail" style="display:block">
+                                            <label class="text-center">@Utility.Resource.Title_Designer.UsernameOrEmail</label>
+                                            <input type="text" name="MyEmail" id="MyEmail" required class="form-control">
+                                            <span class="badge badge-danger" id="UserNameError" style="display:none">Your name or email is incorrect</span>
+                                            <div class="pt-4 pb-4">
+                                                <input type="button" value="Next" onclick="CheckEmail()" class="btn btn-primary btn-block" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" id="dvPassword" style="display:none">
+                                        <label class="text-center">@Utility.Resource.Title_Designer.Password</label>
+                                        <input type="password" name="Password" id="Password" class="form-control">
+                                        <span class="badge badge-danger" id="PasswordError" style="display:none">your password is Error</span>
+                                        <div class=" ">
+                                            <div class="pt-4 pb-4">
+                                                <input type="button" value="Login" onclick="Login()" class="btn btn-primary btn-block" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="dvNewPassword" style="display:none">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>New password</label>
+                                                    <input type="password" name="NewPassword" id="NewPassword" class="form-control" />
+                                                    <span class="badge badge-danger" id="NewPasswordError" style="display:none">your password is incorrect</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Confirm new password</label>
+                                                    <input type="password" name="ConfirmPassword" id="ConfirmPassword" class="form-control">
+                                                    <span class="badge badge-danger" id="ConfirmPasswordError" style="display:none">confirm Password must be matched</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="pt-4 pb-4">
+                                                <input type="button" value="Login" onclick="LoginByNewPassword()" class="btn btn-primary btn-block" />
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                            </form>
+                            @*<form>
+                                    <label class="form-group has-float-label mb-4">
+                                        <input class="form-control" />
+                                        <span>E-mail</span>
+                                    </label>
 
+                                    <label class="form-group has-float-label mb-4">
+                                        <input class="form-control" type="password" placeholder="" />
+                                        <span>Password</span>
+                                    </label>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <a href="#">Forget password?</a>
+                                        <button class="btn btn-primary btn-lg btn-shadow" type="submit">LOGIN</button>
+                                    </div>
+                                </form>*@
                         </div>
-
                     </div>
-
-                    <div class="form-group  mb-2 mt-2" id="dvPassword" style="display:none">
-                        <label class="text-center">@Utility.Resource.Title_Designer.Password</label>
-                        <input type="text" name="Password" id="Password" placeholder="Password" class="form-control">
-                        <span class="badge badge-danger" id="PasswordError" style="display:none">your password is Error</span>
-                        <div class=" ">
-                            <div class="pt-4 pb-4">
-                                <input type="button" value="LogIn" onclick="Login()" class="btn btn-primary btn-block" />
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div class="form-group  mb-2 mt-2" id="dvNewPassword" style="display:none">
-                        <input type="text" name="NewPassword" id="NewPassword" placeholder="New Password" class="form-control m-1" />
-                        <span class="badge badge-danger" id="NewPasswordError" style="display:none">your password is Error</span>
-
-                        <input type="text" name="ConfirmPassword" id="ConfirmPassword" placeholder="Confirm New Password" class="form-control">
-                        <span class="badge badge-danger" id="ConfirmPasswordError" style="display:none">your Confirm Password is Error</span>
-                        <div class=" ">
-                            <div class="pt-4 pb-4">
-                                <input type="button" value="LogIn" onclick="LoginByNewPassword()" class="btn btn-primary btn-block" />
-                            </div>
-                        </div>
-
-                    </div>
-
                 </div>
-
-            </form>
+            </div>
         </div>
-        <div class="card-footer text-center pt-3">
-            @*<p class="small">@Utility.Resource.Title_Designer.DonttHaveAccountYet <a href="~/home/register">@Utility.Resource.Title_Designer.RegisterNewAccount</a></p>*@
-
-        </div>
-    </div>
-</section>
-
-<!-- end: Section -->
-
-<script src="~/js/vendor/jquery-3.3.1.min.js"></script>
-<script src="~/js/vendor/bootstrap3-typeahead.js"></script>
-<link href="~/css/jquery-ui.css" rel="stylesheet" />
-<script src="~/js/jquery-ui.js"></script>
-<script src="~/js/PopupScript.js"></script>
-
-<script>
-    $("#MyEmail").on("keyup", function () { $("#UserNameError").hide(); });
-    $("#Password").on("keyup", function () { $("#PasswordError").hide(); });
-    $("#NewPassword").on("keyup", function () { $("#NewPasswordError").hide(); });
-    $("#ConfirmPassword").on("keyup", function () { $("#ConfirmPasswordError").hide(); });
-
-    function CheckEmail() {
-        $("#UserNameError").hide();
-        $.ajax({
-            type: 'Get',
-            url: "/Account/CheckEmail?Email=" + $("#MyEmail").val(),
-            success: function (res) {
-                if (res == true) {
-                    $("#UserName").val($("#MyEmail").val())
-                    HavePassword();
+    </main>
+    <script src="~/js/vendor/jquery-3.3.1.min.js"></script>
+    <script src="~/js/vendor/bootstrap.bundle.min.js"></script>
+    <script src="~/js/dore.script.js"></script>
+    <script src="~/js/scripts.js"></script>
+    <script>
+        $("#MyEmail").on("keyup", function () { $("#UserNameError").hide(); });
+        $("#Password").on("keyup", function () { $("#PasswordError").hide(); });
+        $("#NewPassword").on("keyup", function () { $("#NewPasswordError").hide(); });
+        $("#ConfirmPassword").on("keyup", function () { $("#ConfirmPasswordError").hide(); });
+        function CheckEmail() {
+            $("#UserNameError").hide();
+            $.ajax({
+                type: 'Get',
+                url: "/Account/CheckEmail?Email=" + $("#MyEmail").val(),
+                success: function (res) {
+                    if (res == true) {
+                        $("#UserName").val($("#MyEmail").val())
+                        HavePassword();
+                    }
+                    else {
+                        $("#UserName").val("")
+                        $("#UserNameError").show();
+                    }
                 }
-                else {
-                    $("#UserName").val("")
-                    $("#UserNameError").show();
-                }
-            }
-        });
-    }
-
-    function HavePassword() {
-
-        $.ajax({
-            type: 'Get',
-            url: "/Account/HavePassword?Email=" + $("#UserName").val(),
-            success: function (res) {
-                $("#dvEmail").hide();
-                if (res == true) {
-                    $("#dvPassword").show();
-                }
-                else {
-                    $("#dvNewPassword").show();
-                }
-            }
-        });
-    }
-
-    function CheckPassword(Password) {
-
-        return false;
-    }
-
-    function Login() {
-        $.ajax({
-            type: 'Get',
-            url: "/Account/CheckPassword?Email=" + $("#UserName").val() + "&Password=" + $("#Password").val(),
-            success: function (res) {
-                if (res == true) {
-                    alert("1");
-                    $("form").submit();
-                }
-                else {
-                    alert("2123");
-                    $("#PasswordError").show();
-                }
-            }
-        });
-    }
-
-    function LoginByNewPassword() {
-
-        if ($("#NewPassword").val() == "") {
-            $("#NewPasswordError").show();
+            });
         }
-        else if ($("#NewPassword").val() == $("#ConfirmPassword").val()) {
-            $("form").submit();
+        function HavePassword() {
+            $.ajax({
+                type: 'Get',
+                url: "/Account/HavePassword?Email=" + $("#UserName").val(),
+                success: function (res) {
+                    $("#dvEmail").hide();
+                    if (res == true) {
+                        $("#dvPassword").show();
+                    }
+                    else {
+                        $("#dvNewPassword").show();
+                    }
+                }
+            });
         }
-        else {
-            $("#ConfirmPasswordError").show();
+        function CheckPassword(Password) {
+            return false;
         }
-    }
-
-</script>
+        function Login() {
+            $.ajax({
+                type: 'Get',
+                url: "/Account/CheckPassword?Email=" + $("#UserName").val() + "&Password=" + $("#Password").val(),
+                success: function (res) {
+                    if (res == true) {
+                        alert("1");
+                        $("form").submit();
+                    }
+                    else {
+                        alert("2123");
+                        $("#PasswordError").show();
+                    }
+                }
+            });
+        }
+        function LoginByNewPassword() {
+            if ($("#NewPassword").val() == "") {
+                $("#NewPasswordError").show();
+            }
+            else if ($("#NewPassword").val() == $("#ConfirmPassword").val()) {
+                $("form").submit();
+            }
+            else {
+                $("#ConfirmPasswordError").show();
+            }
+        }
+    </script>
+</body>
+</html>

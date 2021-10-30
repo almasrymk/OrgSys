@@ -248,6 +248,7 @@ namespace Repository
 
             modelBuilder.Entity<User>().HasData(new User { Id = 1, Name = "Owner", UserName = "Owner", Password = Security.Encrypt("OwnerAbc@123"), RoleId = 1, Hide = true });
             modelBuilder.Entity<User>().HasData(new User { Id = 2, Name = "Admin", UserName = "Admin", Password = Security.Encrypt("AdminAbc@123"), RoleId = 2, Hide = false });
+            modelBuilder.Entity<User>().HasData(new User { Id = 3, Name = "Emp", UserName = "Admin", RoleId = 2, Hide = false });
 
             modelBuilder.Entity<RolePermission>().HasData(
                new RolePermission { Id = 1, RoleId = 2, PermissionId = 102 },

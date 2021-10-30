@@ -1879,7 +1879,7 @@ namespace Utility.Resource {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to UserName / Email.
+        ///   Looks up a localized string similar to Username / Email.
         /// </summary>
         public static string UserName {
             get {
@@ -1888,7 +1888,7 @@ namespace Utility.Resource {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Username Or Email.
+        ///   Looks up a localized string similar to Username or email.
         /// </summary>
         public static string UsernameOrEmail {
             get {
