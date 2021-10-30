@@ -66,6 +66,9 @@ namespace OrgSys.Areas.Setting.Controllers
                 ViewBag.AutoSave = Service.FirstOrDefault(e => e.Key == "AutoSave")?.Value == "1";
                 ViewBag.AutoCreateTransaction = Service.FirstOrDefault(e => e.Key == "AutoCreateTransaction")?.Value == "1";
                 ViewBag.SaveLastStatusSetting = Service.FirstOrDefault(e => e.Key == "SaveLastStatusSetting")?.Value == "1";
+                ViewBag.CodeElectronicScale = Service.FirstOrDefault(e => e.Key == "CodeElectronicScale")?.Value;
+                ViewBag.LengthElectronicScale = Service.FirstOrDefault(e => e.Key == "LengthElectronicScale")?.Value;
+                ViewBag.LengthQtyElectronicScale = Service.FirstOrDefault(e => e.Key == "LengthQtyElectronicScale")?.Value;
 
             }
 
