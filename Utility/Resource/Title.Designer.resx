@@ -195,6 +195,9 @@
   <data name="Code" xml:space="preserve">
     <value>Code</value>
   </data>
+  <data name="CodeElectronicScale" xml:space="preserve">
+    <value>Start Code Electronic Scale</value>
+  </data>
   <data name="Collect" xml:space="preserve">
     <value>Collect</value>
   </data>
@@ -377,6 +380,9 @@
   </data>
   <data name="Issue" xml:space="preserve">
     <value>Issue</value>
+  </data>
+  <data name="LengthElectronicScale" xml:space="preserve">
+    <value>Length Electronic Scale</value>
   </data>
   <data name="Library" xml:space="preserve">
     <value>Library</value>

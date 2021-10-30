@@ -295,6 +295,15 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Start Code Electronic Scale.
+        /// </summary>
+        public static string CodeElectronicScale {
+            get {
+                return ResourceManager.GetString("CodeElectronicScale", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Collect.
         /// </summary>
         public static string Collect {
@@ -840,6 +849,15 @@ namespace Utility.Resource {
         public static string Issue {
             get {
                 return ResourceManager.GetString("Issue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Length Electronic Scale.
+        /// </summary>
+        public static string LengthElectronicScale {
+            get {
+                return ResourceManager.GetString("LengthElectronicScale", resourceCulture);
             }
         }
         

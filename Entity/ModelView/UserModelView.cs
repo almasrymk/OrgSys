@@ -1,5 +1,6 @@
 ﻿using Entity.Model;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entity.ModelView
@@ -20,7 +21,7 @@ namespace Entity.ModelView
 
             this.UserName = ob.UserName;
 
-            this.Password = Utility.Security.Encrypt( ob.Password);
+            this.Password =  ob.Password;
 
             this.BranchId = ob.BranchId;
 
@@ -55,7 +56,7 @@ namespace Entity.ModelView
             {
                 Name = this.Name,
                 UserName = this.UserName,
-                Password =Utility.Security.Encrypt(this.Password),
+                Password = this.Password,
                 BranchId = this.BranchId,
                 RoleId = this.RoleId,
                 Id = this.Id,
@@ -66,8 +67,8 @@ namespace Entity.ModelView
                 TypeId = this.TypeId,
                 Hide = this.Hide,
                 Status = this.Status,
-                ImgPath = this.ImgPath
-
+                ImgPath = this.ImgPath,
+                
             };
         }
 
@@ -81,10 +82,15 @@ namespace Entity.ModelView
 
         public string RoleName { get; set; }
 
-        public long? BranchId { get; set; }
+        public long? BranchId { get; set; } 
 
         public string BranchName { get; set; }
+        
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,15}$")]
         public string NewPassword { get; set; }
+       
+        [Compare("NewPassword")]
+        public string ConfirmPassword { get; set; }
 
         public List<Permission> Permissions { get; set; }
     }
