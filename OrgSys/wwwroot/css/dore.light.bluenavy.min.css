@@ -5583,7 +5583,7 @@ div.dataTables_wrapper div.dataTables_filter input {
 
     .auth-card .image-side {
         width: 40%;
-        background: url(../img/login/balloon.jpg) no-repeat center top;
+        background: url(../img/login/balloon.png) no-repeat center top;
         background-size: cover;
         padding: 80px 40px
     }
