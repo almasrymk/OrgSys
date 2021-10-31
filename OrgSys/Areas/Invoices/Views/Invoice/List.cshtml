@@ -227,18 +227,20 @@
                                 @Model[i].Net
                             </div>
                             <div class="w-10">
+                                
                                 @if ("" + Model[i].Transaction?.Code == "")
                                 {
                                     if (Model[i].Status != Utility.Status.Cancel && AllowAdd)
                                     {
-                                        <a href="/@ViewBag.area/@ViewBag.PageTitle/CreateInvoice?id=@Model[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.PageNumber"> <i class="iconsminds-synchronize-2"></i>  </a>
+                                        
+                                        <a href="/@ViewBag.area/@ViewBag.PageTitle/CreateTransaction?id=@Model[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.PageNumber"> <i class="iconsminds-synchronize-2"></i>  </a>
                                     }
                                 }
                                 else
                                 {
                                     if (AllowView || AllowEdit)
                                     {
-                                        <a href="/Transactiona/Transaction/Save?id=@Model[i].TransactionId&ParentId=0&amp;TypeId=1">
+                                        <a href="/Transactions/Transaction/Save?id=@Model[i].TransactionId&ParentId=0&amp;TypeId=1">
                                             @Model[i].Transaction?.Code
                                         </a>
                                     }
