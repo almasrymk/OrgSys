@@ -1,4 +1,6 @@
-﻿namespace Repository
+﻿using Repository.DAL.Input;
+
+namespace Repository
 {
     public class UnitOfWork
     {
@@ -486,13 +488,29 @@
         {
             get
             {
-
                 if (this._reportRepo == null)
                     this._reportRepo = new ReportRepo();
 
                 return _reportRepo;
             }
         }
+        #endregion
+
+
+        #region Request
+        private RequestRepo _requestRepo;
+        public RequestRepo requestRepo
+        {
+            get
+            {
+
+                if (this._requestRepo == null)
+                    this._requestRepo = new RequestRepo();
+
+                return _requestRepo;
+            }
+        }
+
         #endregion
     }
 }

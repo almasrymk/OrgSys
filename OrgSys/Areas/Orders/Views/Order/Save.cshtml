@@ -1005,6 +1005,7 @@
                 $.ajax({
                     type: 'POST',
                     url: "/Orders/Order/Save",
+                    async: false,
                     data: { model: data },
                     success: function (res) {
                         window.location.replace(res.url);

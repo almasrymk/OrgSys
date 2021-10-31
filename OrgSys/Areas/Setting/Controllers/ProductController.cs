@@ -44,10 +44,28 @@ namespace OrgSys.Areas.Setting.Controllers
             return Type != 1 ? (ActionResult)PartialView("SearchProductsList", list) : View("SearchProducts", list);
         }
 
-        public JsonResult SearchItems(string phrase = "")
+        public JsonResult SearchItems(string phrase = "", int TypeInv = 1)
         {
-            if (phrase != null)
-                phrase = phrase.Trim().ToLower();
+            decimal Quantity = 1;
+            var setting = new PreferenceService();
+            if (phrase == null)
+                phrase = "";
+            phrase = phrase.Trim().ToLower();
+
+            var CodeElectronicScale = setting.GetByKey("CodeElectronicScale", "Invoice", TypeInv, 0)?.Value;
+            var LengthElectronicScale = int.Parse(setting.GetByKey("LengthElectronicScale", "Invoice", TypeInv, 0)?.Value);
+            var LengthQtyElectronicScale = int.Parse(setting.GetByKey("LengthQtyElectronicScale", "Invoice", TypeInv, 0)?.Value);
+
+            if (phrase.Length >= LengthElectronicScale &&  "" + CodeElectronicScale != "" && "" + CodeElectronicScale != "0" && "" + LengthElectronicScale != "" && "" + LengthElectronicScale != "0")
+            {
+                if (phrase.StartsWith(CodeElectronicScale))
+                {
+                    var code = phrase.Substring(0, LengthElectronicScale);
+                    var qty = phrase.Substring(LengthElectronicScale);
+                    Quantity = decimal.Parse("0" + qty) / 1000;
+                    phrase = code;
+                }
+            }
 
             var itemsList = new ProductService().GetAll(phrase, 0, 0, 1, 10);
             var list = itemsList.Distinct().OrderBy(_ => _.Name)
@@ -58,11 +76,42 @@ namespace OrgSys.Areas.Setting.Controllers
                     Barcode = phrase == _.Barcode ? Utility.Resource.Title_Designer.Barcode + " " + _.Barcode : "",
                     _.Price,
                     _.Cost,
+                    quantity = Quantity,
                      Code = phrase == _.Code ? Utility.Resource.Title_Designer.Code + " " +  _.Code : "",
                     ClassificationName = "" + phrase != "" && _.ClassificationName.ToLower().Contains("" + phrase) ? _.ClassificationName : ""
                 })
                 .ToList();
             return Json(list);
+        }
+
+        public JsonResult SearchItemName(string txtSearch = "", int TypeInv = 1)
+        {
+            var setting = new PreferenceService();
+            decimal Quantity = 1;
+            if (txtSearch != null)
+                txtSearch = txtSearch.Trim().ToLower();
+
+            var CodeElectronicScale = setting.GetByKey("CodeElectronicScale", "Invoice", TypeInv, 0)?.Value;
+            var LengthElectronicScale = int.Parse(setting.GetByKey("LengthElectronicScale", "Invoice", TypeInv, 0)?.Value);
+            var LengthQtyElectronicScale = int.Parse(setting.GetByKey("LengthQtyElectronicScale", "Invoice", TypeInv, 0)?.Value);
+
+            if (txtSearch.Length >= LengthElectronicScale && "" + CodeElectronicScale != "" && "" + CodeElectronicScale != "0" && "" + LengthElectronicScale != "" && "" + LengthElectronicScale != "0") 
+            {
+                if (txtSearch.StartsWith(CodeElectronicScale))
+                {
+                    var code = txtSearch.Substring(0, LengthElectronicScale);
+                    var qty = txtSearch.Substring( LengthElectronicScale);
+                    Quantity = decimal.Parse("0" + qty) / 1000;
+                    txtSearch = code;
+                }
+            }
+
+            var item = new ProductService().Get(txtSearch);
+            if (item == null)
+                item = new ProductModelView();
+
+            item.Quantity = Quantity;
+            return Json(item);
         }
 
         public JsonResult checkStock(int id)

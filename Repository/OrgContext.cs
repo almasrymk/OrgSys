@@ -248,6 +248,7 @@ namespace Repository
 
             modelBuilder.Entity<User>().HasData(new User { Id = 1, Name = "Owner", UserName = "Owner", Password = Security.Encrypt("OwnerAbc@123"), RoleId = 1, Hide = true });
             modelBuilder.Entity<User>().HasData(new User { Id = 2, Name = "Admin", UserName = "Admin", Password = Security.Encrypt("AdminAbc@123"), RoleId = 2, Hide = false });
+            modelBuilder.Entity<User>().HasData(new User { Id = 3, Name = "Emp", UserName = "Admin", RoleId = 2, Hide = false });
 
             modelBuilder.Entity<RolePermission>().HasData(
                new RolePermission { Id = 1, RoleId = 2, PermissionId = 102 },
@@ -322,6 +323,9 @@ namespace Repository
                new Preference { Id = 15, Key = "SaveLastStatusSetting", Value = "1", Reference = "Invoice", TypeId = 1, Hide = false },
                new Preference { Id = 16, Key = "AutoCreateTransaction", Value = "0", Reference = "Invoice", TypeId = 1, Hide = false },
                new Preference { Id = 17, Key = "DefaultCurrency", Value = "1", Reference = "Invoice", TypeId = 1, Hide = false },
+               new Preference { Id = 18, Key = "CodeElectronicScale", Value = "009", Reference = "Invoice", TypeId = 1, Hide = false },
+               new Preference { Id = 19, Key = "LengthElectronicScale", Value = "7", Reference = "Invoice", TypeId = 1, Hide = false },
+               new Preference { Id = 20, Key = "LengthQtyElectronicScale", Value = "5", Reference = "Invoice", TypeId = 1, Hide = false },
 
                new Preference { Id = 101, Key = "DefaultStore", Value = "1", Reference = "Invoice", TypeId = 2, Hide = false },
                new Preference { Id = 102, Key = "DefaultSupplier", Value = "1", Reference = "Invoice", TypeId = 2, Hide = false },
@@ -340,6 +344,9 @@ namespace Repository
                new Preference { Id = 115, Key = "SaveLastStatusSetting", Value = "1", Reference = "Invoice", TypeId = 2, Hide = false },
                new Preference { Id = 116, Key = "AutoCreateTransaction", Value = "0", Reference = "Invoice", TypeId = 2, Hide = false },
                new Preference { Id = 117, Key = "DefaultCurrency", Value = "1", Reference = "Invoice", TypeId = 2, Hide = false },
+               new Preference { Id = 118, Key = "CodeElectronicScale", Value = "009", Reference = "Invoice", TypeId = 2, Hide = false },
+               new Preference { Id = 119, Key = "LengthElectronicScale", Value = "7", Reference = "Invoice", TypeId = 2, Hide = false },
+               new Preference { Id = 120, Key = "LengthQtyElectronicScale", Value = "5", Reference = "Invoice", TypeId = 2, Hide = false },
 
                new Preference { Id = 201, Key = "DefaultStore", Value = "1", Reference = "Invoice", TypeId = 3, Hide = false },
                new Preference { Id = 202, Key = "DefaultCustomer", Value = "1", Reference = "Invoice", TypeId = 3, Hide = false },
@@ -504,5 +511,8 @@ namespace Repository
         public virtual DbSet<Outlay> Outlays { get; set; }
         public virtual DbSet<Currency> Currencys { get; set; }
         public virtual DbSet<RolePermission> RolePermissions { get; set; }
+        public virtual DbSet<Request> Requests { get; set; }
+
+
     }
 }

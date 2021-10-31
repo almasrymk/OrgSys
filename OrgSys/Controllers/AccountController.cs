@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using Service;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -127,11 +128,51 @@ namespace OrgSys.Controllers
         }
 
         [HttpPost]
-        public ActionResult SaveProfileEdit(UserModelView _profile)
+        public ActionResult Profile(UserModelView _profile)
         {
             _profile.RoleId = User.GetRoleId();
-            new UserService().Save(_profile);
-            return View("Profile");
+
+            var IsExsit = user.CheckEmailAndPassword(_profile.UserName, Utility.Security.Encrypt(_profile.Password));
+            if (IsExsit)
+            {
+                _profile.Password = Utility.Security.Encrypt(_profile.NewPassword);
+                _profile.ImgPath = SaveFile(_profile.ImgPath);
+                new UserService().Save(_profile);
+            }
+
+             return View(_profile);
+        }
+
+        public virtual string SaveFile(string LastPath)
+        {
+            string NewPath = null;
+            string path = Path.GetFullPath("~/wwwroot").Replace("~\\", "");
+            string oldPath = Path.GetFullPath("~/wwwroot" + LastPath).Replace("~\\", "").Replace(@"\\", @"\");
+            if ("" + LastPath != "" && System.IO.File.Exists(oldPath))
+                System.IO.File.Delete(oldPath);
+
+            foreach (var formFile in Request.Form.Files)
+            {
+                if (formFile.Length > 0)
+                {
+                    if ("" + formFile.FileName != "")
+                    {
+                        NewPath = "/Files/" + ControllerContext.ActionDescriptor.ControllerName + string.Format("{0:000000000}", new Random().Next(999999999)) + Path.GetExtension(formFile.FileName);
+                        using (var inputStream = new FileStream(path + NewPath, FileMode.Create))
+                        {
+                            // read file to stream
+                            formFile.CopyTo(inputStream);
+                            // stream to byte array
+                            byte[] array = new byte[inputStream.Length];
+                            inputStream.Seek(0, SeekOrigin.Begin);
+                            inputStream.Read(array, 0, array.Length);
+                            // get file name
+                            string fName = formFile.FileName;
+                        }
+                    }
+                }
+            }
+            return NewPath;
         }
 
 

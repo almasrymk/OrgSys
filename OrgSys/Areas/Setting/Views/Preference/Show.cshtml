@@ -22,9 +22,9 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="iconsminds-clothing-store"></i></span>
                                 </div>
-                               @Html.DropDownList("Customers", null, null, new { @class = "form-control" })
+                                @Html.DropDownList("Customers", null, null, new { @class = "form-control" })
                             </div>
-                           @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
@@ -36,7 +36,7 @@
                                 </div>
                                 @Html.DropDownList("Stores", null, null, new { @class = "form-control" })
                             </div>
-                           @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
@@ -61,7 +61,7 @@
                                 @Html.DropDownList("DiscountType", null, null, new { @class = "form-control" })
                                 <input type="text" id="DiscountValue" name="DiscountValue" value="@ViewBag.DiscountValue" class="form-control" />
                             </div>
-                           @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
@@ -71,7 +71,7 @@
                                 @Html.DropDownList("ServiceType", null, null, new { @class = "form-control" })
                                 <input type="text" id="ServiceValue" name="ServiceValue" value="@ViewBag.ServiceValue" class="form-control" />
                             </div>
-                           @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
@@ -81,7 +81,7 @@
                                 @Html.DropDownList("TaxType", null, null, new { @class = "form-control" })
                                 <input type="text" id="TaxValue" name="TaxValue" value="@ViewBag.TaxValue" class="form-control" />
                             </div>
-                           @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                 </div>
@@ -96,7 +96,7 @@
                                 </div>
                                 @Html.DropDownList("OrderTabe", null, null, new { @class = "form-control" })
                             </div>
-                           @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
@@ -108,7 +108,7 @@
                                 </div>
                                 @Html.DropDownList("AllowRepeated", null, null, new { @class = "form-control" })
                             </div>
-                           @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
@@ -127,6 +127,20 @@
 
                 <div class="form-row">
                     <div class="form-group col-md-4">
+                        <label>
+                            @Utility.Resource.Title_Designer.DefaultCurrency
+                        </label>
+                        <div id="divPaymentTypeId">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="iconsminds-financial"></i></span>
+                                </div>
+                                @Html.DropDownList("Currencys", null, null, new { @class = "form-control" })
+                            </div>
+                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
                         <label>@Utility.Resource.Title_Designer.EmptyLineCount</label>
                         <div id="divStoreId">
                             <div class="input-group">
@@ -134,6 +148,34 @@
                                     <span class="input-group-text"><i class="iconsminds-clothing-store"></i></span>
                                 </div>
                                 <input type="text" id="NumberLine" name="NumberLine" value="@ViewBag.NumberLine" class="form-control" />
+                            </div>
+                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>@Utility.Resource.Title_Designer.CodeElectronicScale</label>
+                        <div id="divStoreId">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="iconsminds-clothing-store"></i></span>
+                                </div>
+                                <input type="text" id="CodeElectronicScale" name="CodeElectronicScale" value="@ViewBag.CodeElectronicScale" class="form-control" />
+                            </div>
+                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label>@Utility.Resource.Title_Designer.LengthElectronicScale</label>
+                        <div id="divStoreId">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="iconsminds-clothing-store"></i></span>
+                                </div>
+                                <input type="text" id="LengthElectronicScale" name="LengthElectronicScale" value="@ViewBag.LengthElectronicScale" class="form-control" />
                             </div>
                             @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
@@ -147,7 +189,7 @@
                                     <label class="custom-switch-btn" for="AutoSave"></label>
                                 </div>
                             </div>
-                           @* <small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
@@ -159,11 +201,10 @@
                                     <label class="custom-switch-btn" for="SaveLastStatusSetting"></label>
                                 </div>
                             </div>
-                           @* <small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                 </div>
-
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         <label>@Utility.Resource.Title_Designer.AutoCreateTransaction</label>
@@ -175,18 +216,6 @@
                                 </div>
                             </div>
                             @*<small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
-                        </div>
-                    </div>
-                    <div class="form-group col-md-4">
-                        @Utility.Resource.Title_Designer.DefaultCurrency
-                        <div id="divPaymentTypeId">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="iconsminds-financial"></i></span>
-                                </div>
-                                @Html.DropDownList("Currencys", null, null, new { @class = "form-control" })
-                            </div>
-                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                 </div>
@@ -228,7 +257,7 @@
                                 </div>
                                 @Html.DropDownList("PaymentTypes", null, null, new { @class = "form-control" })
                             </div>
-                           @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                 </div>
@@ -241,7 +270,7 @@
                                 @Html.DropDownList("DiscountType", null, null, new { @class = "form-control" })
                                 <input type="text" id="DiscountValue" name="DiscountValue" value="@ViewBag.DiscountValue" class="form-control" />
                             </div>
-                           @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
@@ -251,7 +280,7 @@
                                 @Html.DropDownList("ServiceType", null, null, new { @class = "form-control" })
                                 <input type="text" id="ServiceValue" name="ServiceValue" value="@ViewBag.ServiceValue" class="form-control" />
                             </div>
-                           @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
@@ -261,7 +290,7 @@
                                 @Html.DropDownList("TaxType", null, null, new { @class = "form-control" })
                                 <input type="text" id="TaxValue" name="TaxValue" value="@ViewBag.TaxValue" class="form-control" />
                             </div>
-                           @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                 </div>
@@ -300,7 +329,7 @@
                                 </div>
                                 @Html.DropDownList("TypeSerial", null, null, new { @class = "form-control" })
                             </div>
-                           @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                 </div>
@@ -315,7 +344,7 @@
                                 </div>
                                 <input type="text" id="NumberLine" name="NumberLine" value="@ViewBag.NumberLine" class="form-control" />
                             </div>
-                           @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
@@ -339,7 +368,7 @@
                                     <label class="custom-switch-btn" for="SaveLastStatusSetting"></label>
                                 </div>
                             </div>
-                           @* <small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                 </div>
@@ -396,7 +425,7 @@
                                 </div>
                                 @Html.DropDownList("Stores", null, null, new { @class = "form-control" })
                             </div>
-                           @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
@@ -431,7 +460,7 @@
                                 @Html.DropDownList("ServiceType", null, null, new { @class = "form-control" })
                                 <input type="text" id="ServiceValue" name="ServiceValue" value="@ViewBag.ServiceValue" class="form-control" />
                             </div>
-                           @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
@@ -441,7 +470,7 @@
                                 @Html.DropDownList("TaxType", null, null, new { @class = "form-control" })
                                 <input type="text" id="TaxValue" name="TaxValue" value="@ViewBag.TaxValue" class="form-control" />
                             </div>
-                           @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                 </div>
@@ -468,7 +497,7 @@
                                 </div>
                                 @Html.DropDownList("AllowRepeated", null, null, new { @class = "form-control" })
                             </div>
-                           @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
@@ -495,7 +524,7 @@
                                 </div>
                                 <input type="text" id="NumberLine" name="NumberLine" value="@ViewBag.NumberLine" class="form-control" />
                             </div>
-                           @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
@@ -507,7 +536,7 @@
                                     <label class="custom-switch-btn" for="AutoSave"></label>
                                 </div>
                             </div>
-                           @* <small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
@@ -768,7 +797,7 @@
                                 </div>
                                 @Html.DropDownList("OrderTabe", null, null, new { @class = "form-control" })
                             </div>
-                           @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                 </div>
@@ -835,7 +864,7 @@
                                     <label class="custom-switch-btn" for="SaveLastStatusSetting"></label>
                                 </div>
                             </div>
-                           @* <small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                 </div>
@@ -986,7 +1015,7 @@
                                 </div>
                                 @Html.DropDownList("AllowRepeated", null, null, new { @class = "form-control" })
                             </div>
-                           @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                 </div>
@@ -1000,7 +1029,7 @@
                                 </div>
                                 @Html.DropDownList("TypeSerial", null, null, new { @class = "form-control" })
                             </div>
-                           @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
@@ -1012,7 +1041,7 @@
                                 </div>
                                 <input type="text" id="NumberLine" name="NumberLine" value="@ViewBag.NumberLine" class="form-control" />
                             </div>
-                           @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
@@ -1024,7 +1053,7 @@
                                     <label class="custom-switch-btn" for="AutoSave"></label>
                                 </div>
                             </div>
-                           @* <small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                 </div>
@@ -1039,7 +1068,7 @@
                                     <label class="custom-switch-btn" for="SaveLastStatusSetting"></label>
                                 </div>
                             </div>
-                           @* <small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
@@ -1119,7 +1148,7 @@
                                 </div>
                                 <input type="text" id="NumberLine" name="NumberLine" value="@ViewBag.NumberLine" class="form-control" />
                             </div>
-                           @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
@@ -1146,7 +1175,7 @@
                                     <label class="custom-switch-btn" for="SaveLastStatusSetting"></label>
                                 </div>
                             </div>
-                           @* <small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                 </div>
@@ -1164,7 +1193,7 @@
                                 </div>
                                 @Html.DropDownList("Customers", null, null, new { @class = "form-control" })
                             </div>
-                           @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
@@ -1200,7 +1229,7 @@
                                 @Html.DropDownList("DiscountType", null, null, new { @class = "form-control" })
                                 <input type="text" id="DiscountValue" name="DiscountValue" value="@ViewBag.DiscountValue" class="form-control" />
                             </div>
-                           @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
@@ -1210,7 +1239,7 @@
                                 @Html.DropDownList("ServiceType", null, null, new { @class = "form-control" })
                                 <input type="text" id="ServiceValue" name="ServiceValue" value="@ViewBag.ServiceValue" class="form-control" />
                             </div>
-                          @*  <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*  <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
@@ -1246,7 +1275,7 @@
                                 </div>
                                 <input type="text" id="NumberLine" name="NumberLine" value="@ViewBag.NumberLine" class="form-control" />
                             </div>
-                           @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
@@ -1258,7 +1287,7 @@
                                     <label class="custom-switch-btn" for="AutoSave"></label>
                                 </div>
                             </div>
-                           @* <small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                 </div>
@@ -1284,7 +1313,7 @@
                                     <label class="custom-switch-btn" for="AutoCreateInvoice"></label>
                                 </div>
                             </div>
-                           @* <small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                 </div>
@@ -1295,73 +1324,73 @@
                 <div class="form-row">
                     @if (ViewBag.type == 1)
                     {
-                    <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.DefaultClient</label>
-                        <div id="divStoreId">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="iconsminds-clothing-store"></i></span>
+                        <div class="form-group col-md-4">
+                            <label>@Utility.Resource.Title_Designer.DefaultClient</label>
+                            <div id="divStoreId">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="iconsminds-clothing-store"></i></span>
+                                    </div>
+                                    @Html.DropDownList("Clients", null, null, new { @class = "form-control" })
                                 </div>
-                                @Html.DropDownList("Clients", null, null, new { @class = "form-control" })
+                                @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                             </div>
-                           @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
-                    </div>
                     }
                     else if (ViewBag.type == 2)
                     {
-                <div class="form-group col-md-4">
-                    <label>@Utility.Resource.Title_Designer.DefaultSupplier</label>
-                    <div id="divStoreId">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="iconsminds-clothing-store"></i></span>
+                        <div class="form-group col-md-4">
+                            <label>@Utility.Resource.Title_Designer.DefaultSupplier</label>
+                            <div id="divStoreId">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="iconsminds-clothing-store"></i></span>
+                                    </div>
+                                    @Html.DropDownList("Suppliers", null, null, new { @class = "form-control" })
+                                </div>
+                                @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                             </div>
-                            @Html.DropDownList("Suppliers", null, null, new { @class = "form-control" })
                         </div>
-                        @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
-                    </div>
-                </div>
                     }
                     else
                     {
-                <div class="form-group col-md-4">
-                    <label>@Utility.Resource.Title_Designer.DefaultOutlay</label>
-                    <div id="divStoreId">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="iconsminds-clothing-store"></i></span>
+                        <div class="form-group col-md-4">
+                            <label>@Utility.Resource.Title_Designer.DefaultOutlay</label>
+                            <div id="divStoreId">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="iconsminds-clothing-store"></i></span>
+                                    </div>
+                                    @Html.DropDownList("Outlays", null, null, new { @class = "form-control" })
+                                </div>
+                                @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                             </div>
-                            @Html.DropDownList("Outlays", null, null, new { @class = "form-control" })
                         </div>
-                        @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
-                    </div>
-                </div>
                     }
-                <div class="form-group col-md-4">
-                    <label> @Utility.Resource.Title_Designer.DefaultSafe</label>
-                    <div id="divPaymentTypeId">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="iconsminds-financial"></i></span>
+                    <div class="form-group col-md-4">
+                        <label> @Utility.Resource.Title_Designer.DefaultSafe</label>
+                        <div id="divPaymentTypeId">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="iconsminds-financial"></i></span>
+                                </div>
+                                @Html.DropDownList("Safes", null, null, new { @class = "form-control" })
                             </div>
-                            @Html.DropDownList("Safes", null, null, new { @class = "form-control" })
+                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
-                       @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                     </div>
-                </div>
-                <div class="form-group col-md-4">
-                    <label>@Utility.Resource.Title_Designer.DefaultCurrency</label>
-                    <div id="divPaymentTypeId">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="iconsminds-financial"></i></span>
+                    <div class="form-group col-md-4">
+                        <label>@Utility.Resource.Title_Designer.DefaultCurrency</label>
+                        <div id="divPaymentTypeId">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="iconsminds-financial"></i></span>
+                                </div>
+                                @Html.DropDownList("Currencys", null, null, new { @class = "form-control" })
                             </div>
-                            @Html.DropDownList("Currencys", null, null, new { @class = "form-control" })
+                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
-                        @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                     </div>
-                </div>
                 </div>
 
                 <div class="form-row">
@@ -1387,7 +1416,7 @@
                                 </div>
                                 @Html.DropDownList("TypeSerial", null, null, new { @class = "form-control" })
                             </div>
-                           @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
 
@@ -1400,7 +1429,7 @@
                                     <label class="custom-switch-btn" for="AutoSave"></label>
                                 </div>
                             </div>
-                           @* <small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                 </div>

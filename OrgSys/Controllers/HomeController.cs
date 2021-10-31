@@ -17,6 +17,7 @@ using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using OrgSys.Models;
 using Service;
+using Service.BAL.Data.Security;
 
 namespace OrgSys.Controllers
 {
@@ -24,7 +25,8 @@ namespace OrgSys.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
+        UserService user = new UserService();
+        
         public HomeController(ILogger<HomeController> logger)
         {
 
@@ -93,29 +95,20 @@ namespace OrgSys.Controllers
             return View();
         }
 
-        UserService user = new UserService();
+        
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Register(UserModelView _user)
+        [AllowAnonymous]
+        public ActionResult Register(RequestModelView _request)
         {
-
+           
+            _request.URL = "WWW.Ex@.Email.com";
+            _request.ExpireDate = DateTime.Now.AddDays(2);
             if (ModelState.IsValid)
             {
-                var check = user.Get(_user.UserName);
-                if (check == null)
-                {
-                    user.Save(_user);
-                    return RedirectToAction("Dashboard");
-                }
-                else
-                {
-                    ViewBag.error = "Email or UserName already exists";
-                    return View();
-                }
-
+                new RequestService().Save(_request);
             }
 
-            return View();
+            return Json(new { });
         }
 
 

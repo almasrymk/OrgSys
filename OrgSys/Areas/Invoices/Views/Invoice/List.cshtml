@@ -16,6 +16,7 @@
     var AllowDelete = false;
     var AllowCancel = false;
     var AllowRedo = false;
+    var AllowFinancial = false;
     if (ViewBag.TypeId == 1)
     {
         AllowView = User.IsAllowed("SalesInvoices.View");
@@ -24,6 +25,7 @@
         AllowDelete = User.IsAllowed("SalesInvoices.Delete");
         AllowCancel = User.IsAllowed("SalesInvoices.Cancel");
         AllowRedo = User.IsAllowed("SalesInvoices.Redo");
+        AllowFinancial = User.IsAllowed("Collection.View") && User.IsAllowed("Collection.Add");
     }
     if (ViewBag.TypeId == 2)
     {
@@ -33,6 +35,7 @@
         AllowDelete = User.IsAllowed("PurchasesInvoices.Delete");
         AllowCancel = User.IsAllowed("PurchasesInvoices.Cancel");
         AllowRedo = User.IsAllowed("PurchasesInvoices.Redo");
+        AllowFinancial = User.IsAllowed("Payment.View") && User.IsAllowed("Payment.Add");
     }
     if (ViewBag.TypeId == 3)
     {
@@ -42,6 +45,7 @@
         AllowDelete = User.IsAllowed("SalesReturns.Delete");
         AllowCancel = User.IsAllowed("SalesReturns.Cancel");
         AllowRedo = User.IsAllowed("SalesReturns.Redo");
+        AllowFinancial = User.IsAllowed("Payment.View") && User.IsAllowed("Payment.Add");
     }
     if (ViewBag.TypeId == 4)
     {
@@ -51,6 +55,7 @@
         AllowDelete = User.IsAllowed("PurchasesReturns.Delete");
         AllowCancel = User.IsAllowed("PurchasesReturns.Cancel");
         AllowRedo = User.IsAllowed("PurchasesReturns.Redo");
+        AllowFinancial = User.IsAllowed("Collection.View") && User.IsAllowed("Collection.Add");
     }
 }
 
@@ -77,6 +82,16 @@
                         </th>
                         <th class="text-center">@Utility.Resource.Title_Designer.Date</th>
                         <th class="text-center">@Utility.Resource.Title_Designer.Total</th>
+                        <th class="text-center">
+                            @if (ViewBag.TypeId == 1 || ViewBag.TypeId == 4)
+                            {
+                                @Utility.Resource.Title_Designer.Collect
+                            }
+                            else
+                            {
+                                @Utility.Resource.Title_Designer.Paid
+                            }
+                        </th>
                         <th class="text-center">@Utility.Resource.Title_Designer.Transactions</th>
                         @if (AllowEdit || AllowCancel || AllowDelete)
                         {
@@ -111,14 +126,39 @@
                             <td class="@TextAlign align-middle">
                                 @Model[i].DealerName
                             </td>
-                            <td class="w-15 text-center align-middle">
+                            <td class="w-12 text-center align-middle">
                                 @Model[i].Date.ToString(DateFromate, new CultureInfo("en-US"))
                             </td>
                             <td class="w-10 text-center align-middle">
                                 @Model[i].Net
                             </td>
-
                             <td class="w-10 text-center align-middle">
+                                @if (@Model[i].Credit == 0)
+                                {                                    
+                                    <small><i class="fa fa-check"></i> </small>
+                                }
+                                else
+                                {
+                                    if (AllowFinancial && Model[i].Status != Utility.Status.Cancel)
+                                    {
+                                        <a href="/@ViewBag.area/@ViewBag.PageTitle/CreateFinancial?id=@Model[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.PageNumber">
+                                            @if (@Model[i].TypeId == 1 || @Model[i].TypeId == 4)
+                                            {
+                                                <i class="iconsminds-financial"> <small> @Model[i].Credit </small>  </i>
+                                            }
+                                            else
+                                            {
+                                                <i class="iconsminds-handshake"> <small> @Model[i].Credit </small> </i>
+                                            }
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <small> @Model[i].Credit </small>
+                                    }
+                                }
+                            </td>
+                            <td class="text-center align-middle" style="width:10px;">
                                 @if (Model[i].Transaction == null || "" + Model[i].Transaction.Code == "")
                                 {
                                     if (Model[i].Status != Utility.Status.Cancel && User.IsAllowed("Addition.Add"))

@@ -195,6 +195,9 @@
   <data name="Code" xml:space="preserve">
     <value>الكود</value>
   </data>
+  <data name="CodeElectronicScale" xml:space="preserve">
+    <value>كود الميزان الالكترونى</value>
+  </data>
   <data name="Collect" xml:space="preserve">
     <value>حصل</value>
   </data>
@@ -377,6 +380,9 @@
   </data>
   <data name="Issue" xml:space="preserve">
     <value>الصرف</value>
+  </data>
+  <data name="LengthElectronicScale" xml:space="preserve">
+    <value>طول كود الميزان الالكترونى</value>
   </data>
   <data name="Library" xml:space="preserve">
     <value>المكتبة</value>

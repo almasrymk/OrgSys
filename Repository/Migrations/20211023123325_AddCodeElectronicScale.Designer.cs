@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repository;
 
 namespace Repository.Migrations
 {
     [DbContext(typeof(OrgContext))]
-    partial class OrgContextModelSnapshot : ModelSnapshot
+    [Migration("20211023123325_AddCodeElectronicScale")]
+    partial class AddCodeElectronicScale
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -199,8 +201,8 @@ namespace Repository.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("Email")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<bool>("Hide")
                         .HasColumnType("bit");
@@ -3647,30 +3649,6 @@ namespace Repository.Migrations
                         },
                         new
                         {
-                            Id = 19L,
-                            CodeNumber = 0L,
-                            Hide = false,
-                            Key = "LengthElectronicScale",
-                            ParentId = 0L,
-                            Reference = "Invoice",
-                            Status = 0,
-                            TypeId = 1L,
-                            Value = "7"
-                        },
-                        new
-                        {
-                            Id = 20L,
-                            CodeNumber = 0L,
-                            Hide = false,
-                            Key = "LengthQtyElectronicScale",
-                            ParentId = 0L,
-                            Reference = "Invoice",
-                            Status = 0,
-                            TypeId = 1L,
-                            Value = "5"
-                        },
-                        new
-                        {
                             Id = 101L,
                             CodeNumber = 0L,
                             Hide = false,
@@ -3884,30 +3862,6 @@ namespace Repository.Migrations
                             Status = 0,
                             TypeId = 2L,
                             Value = "009"
-                        },
-                        new
-                        {
-                            Id = 119L,
-                            CodeNumber = 0L,
-                            Hide = false,
-                            Key = "LengthElectronicScale",
-                            ParentId = 0L,
-                            Reference = "Invoice",
-                            Status = 0,
-                            TypeId = 2L,
-                            Value = "7"
-                        },
-                        new
-                        {
-                            Id = 120L,
-                            CodeNumber = 0L,
-                            Hide = false,
-                            Key = "LengthQtyElectronicScale",
-                            ParentId = 0L,
-                            Reference = "Invoice",
-                            Status = 0,
-                            TypeId = 2L,
-                            Value = "5"
                         },
                         new
                         {
@@ -5552,60 +5506,6 @@ namespace Repository.Migrations
                     b.HasIndex("PropertyId");
 
                     b.ToTable("PropertyElement");
-                });
-
-            modelBuilder.Entity("Entity.Model.Request", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("CodeNumber")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("CompanyName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("ExpireDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("Hide")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ImgPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MaskText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("ParentId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Phone")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<long>("TypeId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("URL")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Request");
                 });
 
             modelBuilder.Entity("Entity.Model.Role", b =>
