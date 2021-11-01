@@ -4,14 +4,14 @@ namespace Entity.ModelView
 {
     public class DealerModelView : BaseModel
     {
-        public DealerModelView() 
-        { 
+        public DealerModelView()
+        {
 
         }
 
         public DealerModelView(Dealer ob)
         {
-            if (ob == null) 
+            if (ob == null)
                 ob = new Dealer();
 
             this.Name = ob.Name;
@@ -41,28 +41,25 @@ namespace Entity.ModelView
             this.Status = ob.Status;
         }
 
-        public Dealer Model
+        public Dealer Model()
         {
-            get
+            return new Dealer
             {
-                return new Dealer
-                {
-                    Name = this.Name,
-                    Phone = this.Phone,
-                    Email = this.Email,
-                    Address = this.Address,
-                    Id = this.Id,
-                    CodeNumber = this.CodeNumber,
-                    Code = this.Code,
-                    MaskText = this.MaskText,
-                    ParentId = this.ParentId,
-                    TypeId = this.TypeId,
-                    Hide = this.Hide,
-                    Status = this.Status,
-                    ImgPath = this.ImgPath
-                };
-            }
-        }           
+                Name = this.Name,
+                Phone = this.Phone,
+                Email = this.Email,
+                Address = this.Address,
+                Id = this.Id,
+                CodeNumber = this.CodeNumber,
+                Code = this.Code,
+                MaskText = this.MaskText,
+                ParentId = this.ParentId,
+                TypeId = this.TypeId,
+                Hide = this.Hide,
+                Status = this.Status,
+                ImgPath = this.ImgPath
+            };
+        }
 
         public string Name { get; set; }
 
@@ -70,6 +67,6 @@ namespace Entity.ModelView
 
         public string Email { get; set; }
 
-        public string Address { get; set; }        
+        public string Address { get; set; }
     }
 }

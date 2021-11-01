@@ -41,29 +41,26 @@ namespace Entity.ModelView
             this.Status = ob.Status;
         }
 
-        public InvoiceType Model
+        public InvoiceType Model()
         {
-            get
+            return new InvoiceType
             {
-                return new InvoiceType
-                {
-                    Name = this.Name,
-                    Group = this.Group,
-                    InOut = this.InOut,
-                    Icon = this.Icon,
-                    Id = this.Id,
-                    CodeNumber = this.CodeNumber,
-                    Code = this.Code,
-                    MaskText = this.MaskText,
-                    ParentId = this.ParentId,
-                    TypeId = this.TypeId,
-                    Hide = this.Hide,
-                    Status = this.Status,
-                    ImgPath = this.ImgPath
-                };
-            }
+                Name = this.Name,
+                Group = this.Group,
+                InOut = this.InOut,
+                Icon = this.Icon,
+                Id = this.Id,
+                CodeNumber = this.CodeNumber,
+                Code = this.Code,
+                MaskText = this.MaskText,
+                ParentId = this.ParentId,
+                TypeId = this.TypeId,
+                Hide = this.Hide,
+                Status = this.Status,
+                ImgPath = this.ImgPath
+            };
         }
-      
+
         public string Name { get; set; }
 
         public int InOut { get; set; }

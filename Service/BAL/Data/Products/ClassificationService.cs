@@ -18,7 +18,7 @@ namespace Service
         #region Save / Delete
         public ClassificationModelView Save(ClassificationModelView ob)
         {
-            return new ClassificationModelView(repo.classificationRepo.AddOrUpdate(ob.Model));
+            return new ClassificationModelView(repo.classificationRepo.AddOrUpdate(ob.Model()));
         }
  
         public bool Delete(long id)

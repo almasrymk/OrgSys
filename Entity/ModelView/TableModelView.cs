@@ -39,26 +39,23 @@ namespace Entity.ModelView
             this.Status = ob.Status;
         }
 
-        public Table Model
+        public Table Model()
         {
-            get
+            return new Table
             {
-                return new Table
-                {
-                    Name = this.Name,
-                    Description = this.Description,
-                    NumberOfPeople = this.NumberOfPeople,
-                    Id = this.Id,
-                    CodeNumber = this.CodeNumber,
-                    Code = this.Code,
-                    MaskText = this.MaskText,
-                    ParentId = this.ParentId,
-                    TypeId = this.TypeId,
-                    Hide = this.Hide,
-                    Status = this.Status,
-                    ImgPath = this.ImgPath
-                };
-            }
+                Name = this.Name,
+                Description = this.Description,
+                NumberOfPeople = this.NumberOfPeople,
+                Id = this.Id,
+                CodeNumber = this.CodeNumber,
+                Code = this.Code,
+                MaskText = this.MaskText,
+                ParentId = this.ParentId,
+                TypeId = this.TypeId,
+                Hide = this.Hide,
+                Status = this.Status,
+                ImgPath = this.ImgPath
+            };
         }
 
         public string Name { get; set; }

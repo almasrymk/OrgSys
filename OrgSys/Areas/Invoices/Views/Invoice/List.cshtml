@@ -60,7 +60,8 @@
 }
 
 @if (Model != null && Model.Count > 0)
-{<div id="tbList" class="card" style="display:none;">
+{
+    <div id="tbList" class="card" style="display:none;">
         <div class="card-body pl-0 pr-0 pb-2 pt-0">
             <table class="table table-hover responsive nowrap m-0" data-order="[[ 1, &quot;desc&quot; ]]">
                 <thead>
@@ -265,6 +266,32 @@
                             </div>
                             <div class="w-10">
                                 @Model[i].Net
+                            </div>
+                            <div class="w-10">
+                                @if (@Model[i].Credit == 0)
+                                {
+                                    <small><i class="fa fa-check"></i> </small>
+                                }
+                                else
+                                {
+                                    if (AllowFinancial && Model[i].Status != Utility.Status.Cancel)
+                                    {
+                                        <a href="/@ViewBag.area/@ViewBag.PageTitle/CreateFinancial?id=@Model[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.PageNumber">
+                                            @if (@Model[i].TypeId == 1 || @Model[i].TypeId == 4)
+                                            {
+                                                <i class="iconsminds-financial"> <small> @Model[i].Credit </small>  </i>
+                                            }
+                                            else
+                                            {
+                                                <i class="iconsminds-handshake"> <small> @Model[i].Credit </small> </i>
+                                            }
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <small> @Model[i].Credit </small>
+                                    }
+                                }
                             </div>
                             <div class="w-10">
                                 

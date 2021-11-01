@@ -40,8 +40,8 @@ namespace Entity.ModelView
 
             this.Net = ob.Net;
 
-            this.Notes = ob.Notes;  
-            
+            this.Notes = ob.Notes;
+
             this.Tax = ob.Tax;
 
             this.Service = ob.Service;
@@ -69,10 +69,10 @@ namespace Entity.ModelView
             this.Units = new List<UnitModelView>();
 
             if (ob.Product != null && ob.Product.ProductUnits != null)
-                this.Units = ob.Product.ProductUnits.Select(e => new UnitModelView(e.Unit)).ToList();           
+                this.Units = ob.Product.ProductUnits.Select(e => new UnitModelView(e.Unit)).ToList();
         }
 
-        public InvoiceProductModelView(OrderProduct ob , long storeId)
+        public InvoiceProductModelView(OrderProduct ob, long storeId)
         {
             if (ob == null)
                 ob = new OrderProduct();
@@ -121,36 +121,33 @@ namespace Entity.ModelView
             if (ob.Product != null && ob.Product.ProductUnits != null)
                 this.Units = ob.Product.ProductUnits.Select(e => new UnitModelView(e.Unit)).ToList();
         }
-        public InvoiceProduct Model
+        public InvoiceProduct Model()
         {
-            get
+            return new InvoiceProduct
             {
-                return new InvoiceProduct
-                {
-                    InvoiceId = this.InvoiceId,
-                    ProductId = this.ProductId,
-                    StoreId = this.StoreId,
-                    UnitId = this.UnitId,
-                    Quantity = this.Quantity,
-                    Price = this.Price,
-                    RowNumber = this.RowNumber,
-                    Discount = this.Discount,
-                    Total = this.Total,
-                    Tax = this.Tax,
-                    Service = this.Service,
-                    Net  = this.Net,
-                    Notes = this.Notes,
-                    Id = this.Id,
-                    CodeNumber = this.CodeNumber,
-                    Code = this.Code,
-                    MaskText = this.MaskText,
-                    ParentId = this.ParentId,
-                    TypeId = this.TypeId,
-                    Hide = this.Hide,
-                    Status = this.Status,
-                    ImgPath = this.ImgPath
-                };
-            }
+                InvoiceId = this.InvoiceId,
+                ProductId = this.ProductId,
+                StoreId = this.StoreId,
+                UnitId = this.UnitId,
+                Quantity = this.Quantity,
+                Price = this.Price,
+                RowNumber = this.RowNumber,
+                Discount = this.Discount,
+                Total = this.Total,
+                Tax = this.Tax,
+                Service = this.Service,
+                Net = this.Net,
+                Notes = this.Notes,
+                Id = this.Id,
+                CodeNumber = this.CodeNumber,
+                Code = this.Code,
+                MaskText = this.MaskText,
+                ParentId = this.ParentId,
+                TypeId = this.TypeId,
+                Hide = this.Hide,
+                Status = this.Status,
+                ImgPath = this.ImgPath
+            };
         }
 
         public long RowNumber { get; set; }

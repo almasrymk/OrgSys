@@ -19,7 +19,7 @@ namespace Service
         #region Save / Delete
         public ProductModelView Save(ProductModelView ob)
         {    // Save
-            var Nwob = repo.productRepo.AddOrUpdate(ob.Model);
+            var Nwob = repo.productRepo.AddOrUpdate(ob.Model());
 
             var ids = ob.ProductUnits.Select(e => e.Id).ToList();
             if (ids == null) ids = new List<long>();
@@ -35,7 +35,7 @@ namespace Service
         
             foreach (var productUnit in ob.ProductUnits)
             {
-                var model = productUnit.Model;
+                var model = productUnit.Model();
                 model.ProductId = Nwob.Id;
                 repo.productUnitRepo.AddOrUpdate(model);
             }

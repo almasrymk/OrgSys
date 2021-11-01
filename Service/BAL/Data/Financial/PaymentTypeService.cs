@@ -18,7 +18,7 @@ namespace Service
         #region Save / Delete
         public PaymentTypeModelView Save(PaymentTypeModelView ob)
         {
-            return new PaymentTypeModelView(repo.paymentTypeRepo.AddOrUpdate(ob.Model));
+            return new PaymentTypeModelView(repo.paymentTypeRepo.AddOrUpdate(ob.Model()));
         }
       
         public bool Delete(long id)

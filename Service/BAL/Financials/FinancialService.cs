@@ -19,7 +19,7 @@ namespace Service
         public FinancialModelView Save(FinancialModelView ob)
         {
             // Save
-            var Nwob = repo.financialRepo.AddOrUpdate(ob.Model);
+            var Nwob = repo.financialRepo.AddOrUpdate(ob.Model());
             if (ob.FinancialInvoices == null)
                 ob.FinancialInvoices = new List<FinancialInvoiceModelView>();
 
@@ -35,7 +35,7 @@ namespace Service
 
                 foreach (var productUnit in ob.FinancialInvoices)
                 {
-                    var model = productUnit.Model;
+                    var model = productUnit.Model();
                     model.FinancialId = Nwob.Id;
                     repo.financialInvoiceRepo.AddOrUpdate(model);
                 }

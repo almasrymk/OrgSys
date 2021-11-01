@@ -22,7 +22,7 @@ namespace Service
         public InventoryModelView Save(InventoryModelView ob)
         {
             // Save
-            var Nwob = repo.inventoryRepo.AddOrUpdate(ob.Model);
+            var Nwob = repo.inventoryRepo.AddOrUpdate(ob.Model());
 
             if (ob.Id > 0)
             {
@@ -36,7 +36,7 @@ namespace Service
 
                 foreach (var productUnit in ob.InventoryProducts)
                 {
-                    var model = productUnit.Model;
+                    var model = productUnit.Model();
                     model.InventoryId = Nwob.Id;
                     repo.inventoryProductRepo.AddOrUpdate(model);
                 }
@@ -106,8 +106,8 @@ namespace Service
         public void CreateTransaction(long Id)
         {
             var ob = Get(Id);
-            CreateTransaction(ob.Model, 5);
-            CreateTransaction(ob.Model, 6);
+            CreateTransaction(ob.Model(), 5);
+            CreateTransaction(ob.Model(), 6);
         }
 
         public void CreateTransaction(Inventory ob, long typeId)

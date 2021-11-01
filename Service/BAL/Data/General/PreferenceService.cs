@@ -18,7 +18,7 @@ namespace Service
         #region Save / Delete
         public PreferenceModelView Save(PreferenceModelView ob)
         {
-            return new PreferenceModelView(repo.preferenceRepo.AddOrUpdate(ob.Model));
+            return new PreferenceModelView(repo.preferenceRepo.AddOrUpdate(ob.Model()));
         }
       
         public bool Delete(long id)

@@ -19,7 +19,7 @@ namespace Service
         #region Save / Delete
         public BranchModelView Save(BranchModelView ob)
         {
-            return new BranchModelView(repo.branchRepo.AddOrUpdate(ob.Model));
+            return new BranchModelView(repo.branchRepo.AddOrUpdate(ob.Model()));
         }
       
         public bool Delete(long id)

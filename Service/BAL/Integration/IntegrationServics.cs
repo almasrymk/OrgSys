@@ -69,7 +69,7 @@ namespace Service
       
         public bool CreateTransactionByInvoice(InvoiceModelView inv)
         {
-            var transaction  = new TransactionModelView(inv.Model);
+            var transaction  = new TransactionModelView(inv.Model());
             var transactionOld = repo.transactionRepo.Get(e => e.Id == inv.TransactionId);
             if (transactionOld == null || transactionOld.Id == 0)
             {
@@ -85,7 +85,7 @@ namespace Service
            
             transaction = new TransactionService().Save(transaction);
             inv.TransactionId = transaction.Id;
-            repo.invoiceRepo.AddOrUpdate(inv.Model);
+            repo.invoiceRepo.AddOrUpdate(inv.Model());
             return true;
         }
 
@@ -111,7 +111,7 @@ namespace Service
             if(inv.Paid > TotalCredit)
             {
                 var amount = inv.Paid - inv.Remaining - TotalCredit;
-                var financial = new FinancialModelView(inv.Model , amount);
+                var financial = new FinancialModelView(inv.Model(), amount);
                 financial.SafeId = long.Parse("0" + new PreferenceService().GetByKey("DefaultSafe", "Financial", (inv.TypeId == 1 || inv.TypeId == 4 ? 1 : 2), 0)?.Value);
                 inv.CodeNumber = repo.financialRepo.GetMaXCode(e => e.TypeId == (inv.TypeId == 1 || inv.TypeId == 4 ? 1 : 2));
                 inv.Code = "" + inv.CodeNumber;
@@ -124,7 +124,7 @@ namespace Service
         {
             if (inv.Credit > 0)
             {
-                var financial = new FinancialModelView(inv.Model, inv.Credit);
+                var financial = new FinancialModelView(inv.Model(), inv.Credit);
                 financial.SafeId = long.Parse("0" + new PreferenceService().GetByKey("DefaultSafe", "Financial", (inv.TypeId == 1 || inv.TypeId == 4 ? 1 : 2), 0)?.Value);
                 inv.CodeNumber = repo.financialRepo.GetMaXCode(e => e.TypeId == (inv.TypeId == 1 || inv.TypeId == 4 ? 1 : 2));
                 inv.Code = "" + inv.CodeNumber;
