@@ -123,7 +123,7 @@ namespace Service
         public List<TreeView> GetProperties(long productId)
         {
             List<TreeView> obList = new List<TreeView>();
-            var pro = repo.propertyRepo.GetList(null, "", Utility.Status.New).ToList();
+            var pro = repo.propertyRepo.GetList(null , null, "", Utility.Status.New).ToList();
             foreach (var item in pro)
             {
                 obList.Add(new TreeView { Id = item.Id, Value = item.Name, Key = "" + item.Id });

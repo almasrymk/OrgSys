@@ -8,11 +8,11 @@
     <div class="row">
         <div class="col-12">
             <div class="mb-3">
-                @if (ViewBag.TypeId == 1)
+                @if (ViewBag.TypeId == 1 || ViewBag.TypeId == 2)
                 {
                     <h1>@Utility.Resource.Title_Designer.Invoice</h1>
                 }
-                else if (ViewBag.TypeId == 3)
+                else if (ViewBag.TypeId == 3 || ViewBag.TypeId == 4)
                 {
                     <h1>@Utility.Resource.Title_Designer.Return</h1>
                 }
@@ -23,23 +23,18 @@
                             <a href="/">@Utility.Resource.Title_Designer.Home</a>
                         </li>
                         <li class="breadcrumb-item">
-                            @Utility.Resource.Title_Designer.Invoices
+                            <span>@Utility.Resource.Title_Designer.Invoices</span>
                         </li>
                         <li class="breadcrumb-item">
-                            @Utility.Resource.Title_Designer.Sales
+                            @if (ViewBag.TypeId == 1 || ViewBag.TypeId == 3)
+                            {
+                                @Utility.Resource.Title_Designer.Sales
+                            }
+                            else
+                            {
+                                @Utility.Resource.Title_Designer.Purchases
+                            }
                         </li>
-                        @if (ViewBag.TypeId == 1)
-                        {
-                            <li class="breadcrumb-item active" aria-current="page">
-                                @Utility.Resource.Title_Designer.Invoice
-                            </li>
-                        }
-                        else if (ViewBag.TypeId == 3)
-                        {
-                            <li class="breadcrumb-item active" aria-current="page">
-                                @Utility.Resource.Title_Designer.Return
-                            </li>
-                        }
                     </ol>
                 </nav>
             </div>

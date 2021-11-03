@@ -135,11 +135,11 @@ namespace Service
 
         public void UpdateCredit(List<long> ids)
         {
-            var invs = repo.invoiceRepo.GetList(e => ids.Contains(e.Id), null, "", Utility.Status.New).ToList();
+            var invs = repo.invoiceRepo.GetList(e => ids.Contains(e.Id) , null, "", Utility.Status.New).ToList();
             if (invs == null)
                 invs = new List<Invoice>();
 
-            var financialsInvs = repo.financialInvoiceRepo.GetList(e => ids.Contains(e.InvoiceId), null, "", Utility.Status.New).ToList();
+            var financialsInvs = repo.financialInvoiceRepo.GetList(e => ids.Contains(e.InvoiceId) && e.Financial.Status ==  Utility.Status.All , null, "Financial", Utility.Status.New).ToList();
             if (financialsInvs == null)
                 financialsInvs = new List<FinancialInvoice>();
 

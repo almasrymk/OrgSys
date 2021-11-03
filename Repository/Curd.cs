@@ -63,7 +63,7 @@ namespace Repository
                 return query.Where(e => (e.Status != Status.Deleted || status == Status.All) && e.Hide != true);
             }
         }
-    
+
         public virtual IQueryable<entity> GetList(Expression<Func<entity, bool>> filter, Func<IQueryable<entity>, IOrderedQueryable<entity>> orderBy, string includeProperties = "", Status status = Status.All)
         {
             IQueryable<entity> query = db.Set<entity>();
@@ -88,6 +88,23 @@ namespace Repository
             }
         }
 
+        public virtual IQueryable<entity> GetList(Expression<Func<entity, bool>> filter, string includeProperties = "", Status status = Status.All)
+        {
+            IQueryable<entity> query = db.Set<entity>();
+
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(includeProperty);
+            }
+
+            return query.Where(e => (e.Status != Status.Deleted || status == Status.All) && e.Hide != true);
+        }
+
         public virtual entity AddOrUpdate(entity ob)
         {
             if (ob.Id == 0)
@@ -103,13 +120,13 @@ namespace Repository
             if (ob.Id == 0)
                 db.Set<entity>().Add(ob);
             else
-                db.Entry<entity>(db.Set<entity>().Find(ob.Id)).CurrentValues.SetValues(ob);            
+                db.Entry<entity>(db.Set<entity>().Find(ob.Id)).CurrentValues.SetValues(ob);
             return ob;
         }
 
         public virtual bool SaveChanges()
-        {           
-           return db.SaveChanges() > -1;           
+        {
+            return db.SaveChanges() > -1;
         }
 
         public virtual bool Delete(long Id)
@@ -161,7 +178,7 @@ namespace Repository
         public virtual bool Any(Func<entity, bool> filter = null)
         {
             IQueryable<entity> query = db.Set<entity>();
-          
+
             return query.Any(filter);
         }
 
