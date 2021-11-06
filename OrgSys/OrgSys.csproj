@@ -70,4 +70,10 @@
     <Folder Include="wwwroot\Files\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\jquery-ui-1.13.0.custom\external\jquery\jquery.js" />
+    <None Include="wwwroot\jquery-ui-1.13.0.custom\jquery-ui.js" />
+    <None Include="wwwroot\jquery-ui-1.13.0.custom\jquery-ui.min.js" />
+  </ItemGroup>
+
 </Project>

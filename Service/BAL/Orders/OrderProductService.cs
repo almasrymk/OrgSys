@@ -18,7 +18,7 @@ namespace Service
         #region Save / Delete
         public OrderProductModelView Save(OrderProductModelView ob)
         {
-            return new OrderProductModelView(repo.orderProductRepo.AddOrUpdate(ob.Model));
+            return new OrderProductModelView(repo.orderProductRepo.AddOrUpdate(ob.Model()));
         }
          
         public bool Delete(long id)

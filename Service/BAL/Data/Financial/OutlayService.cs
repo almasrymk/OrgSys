@@ -19,7 +19,7 @@ namespace Service
         #region Save / Delete
         public OutlayModelView Save(OutlayModelView ob)
         {
-            return new OutlayModelView(repo.outlayRepo.AddOrUpdate(ob.Model));
+            return new OutlayModelView(repo.outlayRepo.AddOrUpdate(ob.Model()));
         }
        
         public bool Delete(long id)

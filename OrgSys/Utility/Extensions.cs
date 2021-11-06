@@ -96,6 +96,31 @@ namespace OrgSys
             return long.Parse("0" + identityClaims);
         }
 
+        public static string GetName(this ClaimsPrincipal ob)
+        {
+            var identity = ob;
+
+            if (identity == null)
+            {
+                return "";
+            }
+
+            var identityClaims = identity.Claims.FirstOrDefault(c => c.Type == "Name")?.Value;
+            return "" + identityClaims;
+        }
+
+        public static string GetImage(this ClaimsPrincipal ob)
+        {
+            var identity = ob;
+
+            if (identity == null)
+            {
+                return "";
+            }
+
+            var identityClaims = identity.Claims.FirstOrDefault(c => c.Type == "ImgPath")?.Value;
+            return "" + identityClaims;
+        }
         public static bool SignUp(this UserModelView us)
         {
             try
@@ -133,11 +158,12 @@ namespace OrgSys
                       new Claim("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name", "" + us.Name ),
                       new Claim("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier", "" + us.UserName),
                       new Claim("http://schemas.microsoft.com/accesscontrolservice/2010/07/claims/identityprovider", "Organizer"),
-                      new Claim(ClaimTypes.Name,  "" + us.Name) ,
+                      new Claim("Name",  "" + us.Name) ,
                       new Claim("RoleId", us.RoleId.ToString()),
                       new Claim(ClaimTypes.Role,  "" + us.RoleName) ,
                       new Claim(ClaimTypes.Webpage,  string.Join(",",  us.Permissions.Select(r=>r.Key).ToList())),
-                      new Claim("Id", us.Id.ToString())
+                      new Claim("Id", us.Id.ToString()),
+                      new Claim("ImgPath", "" + us.ImgPath),
                    };
 
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

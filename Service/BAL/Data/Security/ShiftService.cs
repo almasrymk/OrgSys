@@ -18,7 +18,7 @@ namespace Service
         #region Save / Delete
         public ShiftModelView Save(ShiftModelView ob)
         {
-            return new ShiftModelView(repo.shiftRepo.AddOrUpdate(ob.Model));
+            return new ShiftModelView(repo.shiftRepo.AddOrUpdate(ob.Model()));
         }
          
         public bool Delete(long id)

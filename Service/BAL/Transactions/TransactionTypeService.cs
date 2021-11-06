@@ -19,7 +19,7 @@ namespace Service
         #region Save / Delete
         public TransactionTypeModelView Save(TransactionTypeModelView ob)
         {
-            return new TransactionTypeModelView(repo.transactionTypeRepo.AddOrUpdate(ob.Model));
+            return new TransactionTypeModelView(repo.transactionTypeRepo.AddOrUpdate(ob.Model()));
         }
          
         public bool Delete(long id)

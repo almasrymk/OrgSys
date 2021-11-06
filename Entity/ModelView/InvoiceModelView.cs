@@ -176,11 +176,9 @@ namespace Entity.ModelView
             this.InvoiceProducts = ob.OrderProducts.Select(e => new InvoiceProductModelView(e , StoreId)).ToList();
         }
 
-        public Invoice Model
+        public Invoice Model()
         {
-            get
-            {
-                return new Invoice
+            return new Invoice
                 {
                     DealerId = this.DealerId,
                     Total = this.Total,
@@ -218,10 +216,9 @@ namespace Entity.ModelView
                     Hide = this.Hide,
                     Status = this.Status,
                     ImgPath = this.ImgPath,
-                    InvoiceProducts = this.InvoiceProducts != null ? this.InvoiceProducts.Select(e => e.Model).ToList() : new List<InvoiceProduct>()
-                };
-            }
-        }
+                    InvoiceProducts = this.InvoiceProducts != null ? this.InvoiceProducts.Select(e => e.Model()).ToList() : new List<InvoiceProduct>()
+    };
+}
       
         public long DealerId { get; set; }
      

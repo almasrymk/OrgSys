@@ -19,7 +19,7 @@ namespace Service
         #region Save / Delete
         public CurrencyModelView Save(CurrencyModelView ob)
         {
-            ob = new CurrencyModelView(repo.currencyRepo.AddOrUpdate(ob.Model));
+            ob = new CurrencyModelView(repo.currencyRepo.AddOrUpdate(ob.Model()));
             if(ob.IsDefault )
             {
                  var obOldIsDefault = repo.currencyRepo.Get(e => e.IsDefault && e.Id != ob.Id);

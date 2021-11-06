@@ -37,27 +37,24 @@ namespace Entity.ModelView
             this.Status = ob.Status;
         }
 
-        public OrderType Model
+        public OrderType Model()
         {
-            get
+            return new OrderType
             {
-                return new OrderType
-                {
-                    Name = this.Name,
-                    Icon = this.Icon,
-                    Id = this.Id,
-                    CodeNumber = this.CodeNumber,
-                    Code = this.Code,
-                    MaskText = this.MaskText,
-                    ParentId = this.ParentId,
-                    TypeId = this.TypeId,
-                    Hide = this.Hide,
-                    Status = this.Status,
-                    ImgPath = this.ImgPath
-                };
-            }
+                Name = this.Name,
+                Icon = this.Icon,
+                Id = this.Id,
+                CodeNumber = this.CodeNumber,
+                Code = this.Code,
+                MaskText = this.MaskText,
+                ParentId = this.ParentId,
+                TypeId = this.TypeId,
+                Hide = this.Hide,
+                Status = this.Status,
+                ImgPath = this.ImgPath
+            };
         }
-      
+
         public string Name { get; set; }
 
         public string Icon { get; set; }

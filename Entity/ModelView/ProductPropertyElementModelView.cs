@@ -2,7 +2,7 @@
 
 namespace Entity.ModelView
 {
-    public class ProductPropertyElementModelView :BaseModel
+    public class ProductPropertyElementModelView : BaseModel
     {
         public ProductPropertyElementModelView()
         {
@@ -37,26 +37,23 @@ namespace Entity.ModelView
             this.Status = ob.Status;
         }
 
-        public ProductPropertyElement Model
+        public ProductPropertyElement Model()
         {
-            get
+            return new ProductPropertyElement
             {
-                return new ProductPropertyElement
-                {
-                    ProductId = this.ProductId,
-                    PropertyId=this.PropertyId,
-                    PropertyElementId = this.PropertyElementId,
-                    Id = this.Id,
-                    CodeNumber = this.CodeNumber,
-                    Code = this.Code,
-                    MaskText = this.MaskText,
-                    ParentId = this.ParentId,
-                    TypeId = this.TypeId,
-                    Hide = this.Hide,
-                    Status = this.Status,
-                    ImgPath = this.ImgPath
-                };
-            }
+                ProductId = this.ProductId,
+                PropertyId = this.PropertyId,
+                PropertyElementId = this.PropertyElementId,
+                Id = this.Id,
+                CodeNumber = this.CodeNumber,
+                Code = this.Code,
+                MaskText = this.MaskText,
+                ParentId = this.ParentId,
+                TypeId = this.TypeId,
+                Hide = this.Hide,
+                Status = this.Status,
+                ImgPath = this.ImgPath
+            };
         }
 
         public long ProductId { get; set; }

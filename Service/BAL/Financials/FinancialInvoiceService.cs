@@ -18,7 +18,7 @@ namespace Service
         #region Save / Delete
         public FinancialInvoiceModelView Save(FinancialInvoiceModelView ob)
         {
-            return new FinancialInvoiceModelView(repo.financialInvoiceRepo.AddOrUpdate(ob.Model));
+            return new FinancialInvoiceModelView(repo.financialInvoiceRepo.AddOrUpdate(ob.Model()));
         }
          
         public bool Delete(long id)

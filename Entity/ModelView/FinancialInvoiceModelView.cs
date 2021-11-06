@@ -46,14 +46,14 @@ namespace Entity.ModelView
             this.Status = ob.Status;
         }
 
-        public FinancialInvoiceModelView(Invoice ob , decimal amount)
+        public FinancialInvoiceModelView(Invoice ob, decimal amount)
         {
             if (ob == null)
                 ob = new Invoice();
 
             this.RowNumber = 1;
 
-            this.InvoiceId = ob.Id;          
+            this.InvoiceId = ob.Id;
 
             this.Net = amount;
 
@@ -76,27 +76,24 @@ namespace Entity.ModelView
             this.Status = ob.Status;
         }
 
-        public FinancialInvoice Model
+        public FinancialInvoice Model()
         {
-            get
+            return new FinancialInvoice
             {
-                return new FinancialInvoice
-                {
-                    FinancialId = this.FinancialId,
-                    InvoiceId = this.InvoiceId,
-                    RowNumber = this.RowNumber,
-                    Amount = this.Amount,
-                    Id = this.Id,
-                    CodeNumber = this.CodeNumber,
-                    Code = this.Code,
-                    MaskText = this.MaskText,
-                    ParentId = this.ParentId,
-                    TypeId = this.TypeId,
-                    Hide = this.Hide,
-                    Status = this.Status,
-                    ImgPath = this.ImgPath
-                };
-            }
+                FinancialId = this.FinancialId,
+                InvoiceId = this.InvoiceId,
+                RowNumber = this.RowNumber,
+                Amount = this.Amount,
+                Id = this.Id,
+                CodeNumber = this.CodeNumber,
+                Code = this.Code,
+                MaskText = this.MaskText,
+                ParentId = this.ParentId,
+                TypeId = this.TypeId,
+                Hide = this.Hide,
+                Status = this.Status,
+                ImgPath = this.ImgPath
+            };
         }
 
         public long RowNumber { get; set; }

@@ -13,7 +13,7 @@ namespace Entity.ModelView
         {
             if (ob == null)
                 ob = new Store();
-            
+
             this.Name = ob.Name;
             this.BranchId = ob.BranchId;
 
@@ -38,25 +38,22 @@ namespace Entity.ModelView
             this.Status = ob.Status;
         }
 
-        public Store Model
+        public Store Model()
         {
-            get
+            return new Store
             {
-                return new Store
-                {
-                    Name = this.Name,
-                    BranchId = this.BranchId,
-                    Id = this.Id,
-                    CodeNumber = this.CodeNumber,
-                    Code = this.Code,
-                    MaskText = this.MaskText,
-                    ParentId = this.ParentId,
-                    TypeId = this.TypeId,
-                    Hide = this.Hide,
-                    Status = this.Status,
-                    ImgPath = this.ImgPath
-                };
-            }
+                Name = this.Name,
+                BranchId = this.BranchId,
+                Id = this.Id,
+                CodeNumber = this.CodeNumber,
+                Code = this.Code,
+                MaskText = this.MaskText,
+                ParentId = this.ParentId,
+                TypeId = this.TypeId,
+                Hide = this.Hide,
+                Status = this.Status,
+                ImgPath = this.ImgPath
+            };
         }
 
         public string Name { get; set; }

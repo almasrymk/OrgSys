@@ -19,7 +19,7 @@ namespace Service
         public FinancialModelView Save(FinancialModelView ob)
         {
             // Save
-            var Nwob = repo.financialRepo.AddOrUpdate(ob.Model);
+            var Nwob = repo.financialRepo.AddOrUpdate(ob.Model());
             if (ob.FinancialInvoices == null)
                 ob.FinancialInvoices = new List<FinancialInvoiceModelView>();
 
@@ -35,7 +35,7 @@ namespace Service
 
                 foreach (var productUnit in ob.FinancialInvoices)
                 {
-                    var model = productUnit.Model;
+                    var model = productUnit.Model();
                     model.FinancialId = Nwob.Id;
                     repo.financialInvoiceRepo.AddOrUpdate(model);
                 }
@@ -50,15 +50,12 @@ namespace Service
         public bool Delete(long id)
         {
             bool res = false;
-            var ob = repo.financialRepo.Get(e => e.Id == id);
+            var ob = repo.financialRepo.Get(e => e.Id == id, Includes);
             if (ob != null)
             {
-                res = repo.financialRepo.Delete(id);
-                if (res)
-                {
-                    var InvIds = ob.FinancialInvoices.Select(e => e.InvoiceId).ToList();
-                    //new InvoiceService().UpdateCredit(InvIds);
-                }
+                repo.financialRepo.Delete(id);
+                if (ob.FinancialInvoices != null && ob.FinancialInvoices.Count > 0)
+                    new IntegrationServics().UpdateCredit(ob.FinancialInvoices.Select(e => e.InvoiceId).ToList());
             }
 
             return res;
@@ -66,7 +63,34 @@ namespace Service
 
         public bool Delete(List<long> ids)
         {
-            return repo.financialRepo.Delete(ids);
+            bool res = false;
+            var obList = repo.financialRepo.GetList(e => ids.Contains(e.Id), Includes);
+            if (obList != null && obList.Count() > 0)
+            {
+                res = repo.financialRepo.Delete(ids);
+                foreach (var ob in obList)
+                    if (ob.FinancialInvoices != null && ob.FinancialInvoices.Count > 0)
+                        new IntegrationServics().UpdateCredit(ob.FinancialInvoices.Select(e => e.InvoiceId).ToList());
+            }
+            return res;
+        }
+
+        public void Cancel(long Id)
+        {
+            var ob = repo.financialRepo.Get(e => e.Id == Id , Includes);
+            ob.Status = Utility.Status.Cancel;
+            ob = repo.financialRepo.AddOrUpdate(ob);
+            if (ob.FinancialInvoices != null && ob.FinancialInvoices.Count > 0)
+                new IntegrationServics().UpdateCredit(ob.FinancialInvoices.Select(e => e.InvoiceId).ToList());
+        }
+
+        public void Redo(long Id)
+        {
+            var ob = repo.financialRepo.Get(e => e.Id == Id , Includes);
+            ob.Status = Utility.Status.All;
+            ob = repo.financialRepo.AddOrUpdate(ob);
+            if (ob.FinancialInvoices != null && ob.FinancialInvoices.Count > 0)
+                new IntegrationServics().UpdateCredit(ob.FinancialInvoices.Select(e => e.InvoiceId).ToList());
         }
         #endregion
 

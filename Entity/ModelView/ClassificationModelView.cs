@@ -41,27 +41,24 @@ namespace Entity.ModelView
             this.Status = ob.Status;
         }
 
-        public Classification Model
+        public Classification Model()
         {
-            get
+            return new Classification
             {
-                return new Classification
-                {
-                    Name = this.Name,
-                    BePurchased = this.BePurchased,
-                    BeSold = this.BeSold,
-                    BeManufactured = this.BeManufactured,
-                    Id = this.Id,
-                    CodeNumber = this.CodeNumber,
-                    Code = this.Code,
-                    MaskText = this.MaskText,
-                    ParentId = this.ParentId,
-                    TypeId = this.TypeId,
-                    Hide = this.Hide,
-                    Status = this.Status,
-                    ImgPath = this.ImgPath
-                };
-            }
+                Name = this.Name,
+                BePurchased = this.BePurchased,
+                BeSold = this.BeSold,
+                BeManufactured = this.BeManufactured,
+                Id = this.Id,
+                CodeNumber = this.CodeNumber,
+                Code = this.Code,
+                MaskText = this.MaskText,
+                ParentId = this.ParentId,
+                TypeId = this.TypeId,
+                Hide = this.Hide,
+                Status = this.Status,
+                ImgPath = this.ImgPath
+            };
         }
 
         public string Name { get; set; }

@@ -19,7 +19,7 @@ namespace Service
         #region Save / Delete
         public SafeModelView Save(SafeModelView ob)
         {
-            return new SafeModelView(repo.safeRepo.AddOrUpdate(ob.Model));
+            return new SafeModelView(repo.safeRepo.AddOrUpdate(ob.Model()));
         }
 
         public bool Delete(long id)

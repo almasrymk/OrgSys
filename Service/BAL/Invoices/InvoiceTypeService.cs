@@ -19,7 +19,7 @@ namespace Service
         #region Save / Delete
         public InvoiceTypeModelView Save(InvoiceTypeModelView ob)
         {
-            return new InvoiceTypeModelView(repo.invoiceTypeRepo.AddOrUpdate(ob.Model));
+            return new InvoiceTypeModelView(repo.invoiceTypeRepo.AddOrUpdate(ob.Model()));
         }
          
         public bool Delete(long id)

@@ -19,7 +19,7 @@ namespace Service
         #region Save / Delete
         public TableModelView Save(TableModelView ob)
         {
-            return new TableModelView(repo.tableRepo.AddOrUpdate(ob.Model));
+            return new TableModelView(repo.tableRepo.AddOrUpdate(ob.Model()));
         }
 
         public bool Delete(long id)

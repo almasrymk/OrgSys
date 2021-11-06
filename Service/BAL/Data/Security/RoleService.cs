@@ -23,7 +23,7 @@ namespace Service
         #region Save / Delete
         public RoleModelView Save(RoleModelView ob)
         {          
-            var Nwob = repo.roleRepo.AddOrUpdate(ob.Model);
+            var Nwob = repo.roleRepo.AddOrUpdate(ob.Model());
 
             var deleted = repo.rolePermissionRepo.GetList(e => e.RoleId == ob.Id, e => e.OrderBy(e => e.Id), "", Utility.Status.All).ToList();
             if (deleted != null && deleted.Count > 0)

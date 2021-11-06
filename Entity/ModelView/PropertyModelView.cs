@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Entity.ModelView
 {
-    public class PropertyModelView :BaseModel
+    public class PropertyModelView : BaseModel
     {
         public PropertyModelView()
         {
@@ -36,25 +36,22 @@ namespace Entity.ModelView
             this.PropertyElements = ob.propertyElements.Select(e => new PropertyElementModelView(e)).ToList();
         }
 
-        public Property Model
+        public Property Model()
         {
-            get
+            return new Property
             {
-                return new Property
-                {
-                    Name = this.Name,
-                    Id = this.Id,
-                    CodeNumber = this.CodeNumber,
-                    Code = this.Code,
-                    MaskText = this.MaskText,
-                    ParentId = this.ParentId,
-                    TypeId = this.TypeId,
-                    Hide = this.Hide,
-                    Status = this.Status,
-                    ImgPath = this.ImgPath,
-                    propertyElements =null
-                };
-            }
+                Name = this.Name,
+                Id = this.Id,
+                CodeNumber = this.CodeNumber,
+                Code = this.Code,
+                MaskText = this.MaskText,
+                ParentId = this.ParentId,
+                TypeId = this.TypeId,
+                Hide = this.Hide,
+                Status = this.Status,
+                ImgPath = this.ImgPath,
+                propertyElements = null
+            };
         }
 
         public string Name { get; set; }

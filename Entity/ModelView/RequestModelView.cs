@@ -1,13 +1,11 @@
 ﻿using Entity.Model;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace Entity.ModelView
 {
-   public class RequestModelView:BaseModel
-   {
+    public class RequestModelView : BaseModel
+    {
         public RequestModelView()
         {
 
@@ -36,32 +34,26 @@ namespace Entity.ModelView
 
         }
 
-
-
-        public Request Model
+        public Request Model()
         {
-            get
+            return new Request
             {
-                return new Request
-                {
-                    Id= this.Id,
-                    CodeNumber=this.CodeNumber,
-                    Code=this.Code,
-                    MaskText = this.MaskText,
-                    ParentId = this.ParentId,
-                    TypeId = this.TypeId,
-                    Hide = this.Hide,
-                    ImgPath = this.ImgPath,
-                    Status = this.Status,
-                    Name = this.Name ,
-                    Email = this.Email,
-                    Phone = this.Phone,
-                    CompanyName =this.CompanyName,
-                    URL =this.URL,
-                    ExpireDate =this.ExpireDate
-
+                Id = this.Id,
+                CodeNumber = this.CodeNumber,
+                Code = this.Code,
+                MaskText = this.MaskText,
+                ParentId = this.ParentId,
+                TypeId = this.TypeId,
+                Hide = this.Hide,
+                ImgPath = this.ImgPath,
+                Status = this.Status,
+                Name = this.Name,
+                Email = this.Email,
+                Phone = this.Phone,
+                CompanyName = this.CompanyName,
+                URL = this.URL,
+                ExpireDate = this.ExpireDate
             };
-            }
         }
 
         [Required]
@@ -72,14 +64,7 @@ namespace Entity.ModelView
         public string Phone { get; set; }
         [Required]
         public string CompanyName { get; set; }
-
         public string URL { get; set; }
         public DateTime ExpireDate { get; set; }
-
-
     }
-
-   
-
-
 }

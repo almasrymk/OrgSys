@@ -76,36 +76,33 @@ namespace Entity.ModelView
             this.InventoryProducts = ob.InventoryProducts.Select(e => new InventoryProductModelView(e)).ToList();
         }
 
-        public Inventory Model
+        public Inventory Model()
         {
-            get
+            return new Inventory
             {
-                return new Inventory
-                {
-                    StoreId = this.StoreId,
-                    UserId = this.UserId,
-                    Closed = this.Closed,
-                    Review = this.Review,
-                    Notes = this.Notes,
-                    BranchId = this.BranchId,
-                    CreateUserId = this.CreateUserId,
-                    ModifyUserId = this.ModifyUserId,
-                    ShiftId = this.ShiftId,
-                    Date = this.Date,
-                    CreateDate = this.CreateDate,
-                    ModifyDate = this.ModifyDate,
-                    Id = this.Id,
-                    CodeNumber = this.CodeNumber,
-                    Code = this.Code,
-                    MaskText = this.MaskText,
-                    ParentId = this.ParentId,
-                    TypeId = this.TypeId,
-                    Hide = this.Hide,
-                    Status = this.Status,
-                    ImgPath = this.ImgPath,
-                    InventoryProducts = this.InventoryProducts != null ? this.InventoryProducts.Select(e => e.Model).ToList() : new List<InventoryProduct>()
-                };
-            }
+                StoreId = this.StoreId,
+                UserId = this.UserId,
+                Closed = this.Closed,
+                Review = this.Review,
+                Notes = this.Notes,
+                BranchId = this.BranchId,
+                CreateUserId = this.CreateUserId,
+                ModifyUserId = this.ModifyUserId,
+                ShiftId = this.ShiftId,
+                Date = this.Date,
+                CreateDate = this.CreateDate,
+                ModifyDate = this.ModifyDate,
+                Id = this.Id,
+                CodeNumber = this.CodeNumber,
+                Code = this.Code,
+                MaskText = this.MaskText,
+                ParentId = this.ParentId,
+                TypeId = this.TypeId,
+                Hide = this.Hide,
+                Status = this.Status,
+                ImgPath = this.ImgPath,
+                InventoryProducts = this.InventoryProducts != null ? this.InventoryProducts.Select(e => e.Model()).ToList() : new List<InventoryProduct>()
+            };
         }
 
         public long StoreId { get; set; }

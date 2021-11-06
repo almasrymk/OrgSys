@@ -19,7 +19,7 @@ namespace Service
         #region Save / Delete
         public FinancialTypeModelView Save(FinancialTypeModelView ob)
         {
-            return new FinancialTypeModelView(repo.financialTypeRepo.AddOrUpdate(ob.Model));
+            return new FinancialTypeModelView(repo.financialTypeRepo.AddOrUpdate(ob.Model()));
         }
          
         public bool Delete(long id)

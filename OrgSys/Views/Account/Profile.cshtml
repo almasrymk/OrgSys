@@ -8,25 +8,16 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-12">
-
-            <div class="mb-0">
-                <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
+            <div class="mb-1">
+                <h1>Profile</h1>
+                @*<nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
                     <ol class="breadcrumb pt-0">
                         <li class="breadcrumb-item">
-                            <a href="#">Home</a>
+                            <a href="/">@Utility.Resource.Title_Designer.Home</a>
                         </li>
-                       
-                        <li class="breadcrumb-item active" aria-current="page">Profile</li>
                     </ol>
-                </nav>
+                </nav>*@
             </div>
-
-            <div class="d-block d-md-inline-block">
-                <div class="position-absolute card-top-buttons">
-                    <button  class="btn btn-primary"><i class="simple-icon-action-undo"></i>@Utility.Resource.Title_Designer.Back</button>
-                </div>
-            </div>
-            <div class="separator mb-1 mt-0"></div>
 
             <div class="row">
                 <div class="col-12">
@@ -35,7 +26,7 @@
                             <div class="row">
                                 <div class="col-md-4 text-center">
                                     <div class="position-absolute card-top-buttons mt-4 mr-5">
-                                       
+
                                         <button type="button" id="ImgUser" onclick="document.getElementById('flImage').click();" class="btn btn-outline-white icon-button">
                                             <i class="simple-icon-pencil"></i>
                                         </button>
@@ -44,14 +35,14 @@
                                             X
                                         </button>
                                     </div>
-                                    
-                                    @if(""+ Model.ImgPath != "")
+
+                                    @if ("" + Model.ImgPath != "")
                                     {
-                                        <img id="img" src="@Model.ImgPath" alt="Profile" class="list-thumbnail border-0  badge-theme-1 " style="height: 220px; width: 200px; margin-top: 40px"/>
+                                        <img id="img" src="@Model.ImgPath" alt="Profile" class="list-thumbnail border-0  badge-theme-1 " style="height: 220px; width: 200px; margin-top: 40px" />
                                     }
                                     else
                                     {
-                                        <img id="img" src="~/img/profiles/ClientCard.png" alt="Profile" class="list-thumbnail border-0  badge-theme-1 " style="height: 220px; width: 200px; margin-top: 40px;"/>
+                                        <img id="img" src="~/img/profiles/ClientCard.png" alt="Profile" class="list-thumbnail border-0  badge-theme-1 " style="height: 220px; width: 200px; margin-top: 40px;" />
                                     }
 
                                 </div>
@@ -59,24 +50,33 @@
                                     <div class="card-body">
                                         @Html.HiddenFor(model => model.Id)
                                         @Html.HiddenFor(Model => Model.RoleId)
-                                        @Html.HiddenFor(model =>model.ImgPath)
+                                        @Html.HiddenFor(model => model.ImgPath)
 
-                                        <label class="label">Name</label>
-                                        <input class="form-control col-10" id="Name" name="Name" value="@Model.Name" />
-                                        <label class="label">E-mail</label>
-                                        <input class="form-control col-10" id="UserName" name="UserName" value="@Model.UserName" />
-                                        <label class="label">Current Password</label>
-                                        <input class="form-control col-10" id="CurrentPassword" type="password" name="Password" placeholder="Current Password" value="" autocomplete="off" />
-                                        <label class="label">New Password</label>
-                                        <input class="form-control col-10" type="password" id="NewPassword" name="NewPassword" placeholder="New Password" autocomplete="off" />
-                                        <span class="badge badge-danger" style="display:none" id="message">"Password must contain at least 1 capital letter,\n\n1 small letter, 1 number and 1 special character.\n\nFor special characters you can pick one of these -,(,!,@@,#,$,),%,<>"</span>
-                                        <label class="label">Confirm Password</label>
-                                        <input class="form-control col-10" type="password" id="ConfirmPassword" name="ConfirmPassword" placeholder="Confirm Password"  autocomplete="off"/>
-                                        
+                                        <div class="form-group">
+                                            <label class="label">Name</label>
+                                            <input class="form-control col-10" id="Name" name="Name" value="@Model.Name" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="label">E-mail</label>
+                                            <input class="form-control col-10" id="UserName" name="UserName" value="@Model.UserName" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="label">Current Password</label>
+                                            <input class="form-control col-10" id="CurrentPassword" type="password" name="Password" placeholder="Current Password" value="" autocomplete="off" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="label">New Password</label>
+                                            <input class="form-control col-10" type="password" id="NewPassword" name="NewPassword" placeholder="New Password" autocomplete="off" />
+                                            <span class="badge badge-danger" style="display:none" id="message">"Password must contain at least 1 capital letter,\n\n1 small letter, 1 number and 1 special character.\n\nFor special characters you can pick one of these -,(,!,@@,#,$,),%,<>"</span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="label">Confirm Password</label>
+                                            <input class="form-control col-10" type="password" id="ConfirmPassword" name="ConfirmPassword" placeholder="Confirm Password" autocomplete="off" />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div  class="card-footer m-0 " style="background-color:transparent;">
+                            <div class="card-footer m-0 " style="background-color:transparent;">
                                 <button class="btn btn-primary" disabled="disabled" id="SaveUser" onclick="Save()" value="">@Utility.Resource.Title_Designer.Save</button>
                             </div>
                         </div>
@@ -123,7 +123,7 @@
 
     });
 
-    
+
 
 
     function Save() {
@@ -155,15 +155,15 @@
 
     }
 
-     function SelectImage(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    $("#img").attr("src", e.target.result);
-                }
-                reader.readAsDataURL(input.files[0]);
+    function SelectImage(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $("#img").attr("src", e.target.result);
             }
-     }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
 
 
 

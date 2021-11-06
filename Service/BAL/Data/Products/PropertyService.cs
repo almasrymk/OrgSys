@@ -18,7 +18,7 @@ namespace Service
         #region Save / Delete
         public PropertyModelView Save(PropertyModelView ob)
         {    // Save
-            var Nwob = repo.propertyRepo.AddOrUpdate(ob.Model);
+            var Nwob = repo.propertyRepo.AddOrUpdate(ob.Model());
             var ids = ob.PropertyElements.Select(e => e.Id).ToList();
             if (ids == null) ids = new List<long>();
 
@@ -28,7 +28,7 @@ namespace Service
                 repo.propertyelementRepo.ShiftDelete(deleted.Select(e => e.Id).ToList());
             foreach (var propertyelement in ob.PropertyElements)
             {
-                var model = propertyelement.Model;
+                var model = propertyelement.Model();
                 model.PropertyId = Nwob.Id;
                 repo.propertyelementRepo.AddOrUpdate(model);
             }

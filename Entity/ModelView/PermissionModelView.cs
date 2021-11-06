@@ -13,7 +13,7 @@ namespace Entity.ModelView
         {
             if (ob == null)
                 ob = new Permission();
-          
+
             this.Key = ob.Key;
 
             this.Name = ob.Name;
@@ -37,25 +37,22 @@ namespace Entity.ModelView
             this.Status = ob.Status;
         }
 
-        public Permission Model
+        public Permission Model()
         {
-            get
+            return new Permission
             {
-                return new Permission
-                {
-                    Key = this.Key,
-                    Name = this.Name,
-                    Id = this.Id,
-                    CodeNumber = this.CodeNumber,
-                    Code = this.Code,
-                    MaskText = this.MaskText,
-                    ParentId = this.ParentId,
-                    TypeId = this.TypeId,
-                    Hide = this.Hide,
-                    Status = this.Status,
-                    ImgPath = this.ImgPath
-                };
-            }
+                Key = this.Key,
+                Name = this.Name,
+                Id = this.Id,
+                CodeNumber = this.CodeNumber,
+                Code = this.Code,
+                MaskText = this.MaskText,
+                ParentId = this.ParentId,
+                TypeId = this.TypeId,
+                Hide = this.Hide,
+                Status = this.Status,
+                ImgPath = this.ImgPath
+            };
         }
 
         public string Key { get; set; }

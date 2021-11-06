@@ -57,34 +57,31 @@ namespace Entity.ModelView
             this.Units = new List<UnitModelView>();
 
             if (ob.Product != null && ob.Product.ProductUnits != null)
-                this.Units = ob.Product.ProductUnits.Select(e => new UnitModelView(e.Unit)).ToList();           
+                this.Units = ob.Product.ProductUnits.Select(e => new UnitModelView(e.Unit)).ToList();
         }
 
-        public InventoryProduct Model
+        public InventoryProduct Model()
         {
-            get
+            return new InventoryProduct
             {
-                return new InventoryProduct
-                {
-                    ProductId = this.ProductId,
-                    UnitId = this.UnitId,
-                    ActualBalance = this.ActualBalance,
-                    CalcBalance = this.CalcBalance,
-                    DiffQuantity = this.DiffQuantity,
-                    InventoryId = this.InventoryId,
-                    RowNumber = this.RowNumber,
-                    Notes = this.Notes,
-                    Id = this.Id,
-                    CodeNumber = this.CodeNumber,
-                    Code = this.Code,
-                    MaskText = this.MaskText,
-                    ParentId = this.ParentId,
-                    TypeId = this.TypeId,
-                    Hide = this.Hide,
-                    Status = this.Status,
-                    ImgPath = this.ImgPath
-                };
-            }
+                ProductId = this.ProductId,
+                UnitId = this.UnitId,
+                ActualBalance = this.ActualBalance,
+                CalcBalance = this.CalcBalance,
+                DiffQuantity = this.DiffQuantity,
+                InventoryId = this.InventoryId,
+                RowNumber = this.RowNumber,
+                Notes = this.Notes,
+                Id = this.Id,
+                CodeNumber = this.CodeNumber,
+                Code = this.Code,
+                MaskText = this.MaskText,
+                ParentId = this.ParentId,
+                TypeId = this.TypeId,
+                Hide = this.Hide,
+                Status = this.Status,
+                ImgPath = this.ImgPath
+            };
         }
 
         public long RowNumber { get; set; }
