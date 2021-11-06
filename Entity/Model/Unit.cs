@@ -6,7 +6,7 @@ namespace Entity.Model
     [Table("Unit")]
     public class Unit : BaseModel
     {
-        [StringLength(50, MinimumLength = 3)]
+        [StringLength(50, MinimumLength = 2)]
         public string Name { get; set; }
     }
 }
