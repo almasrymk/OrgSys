@@ -1,77 +1,117 @@
-﻿@model X.PagedList.IPagedList<Entity.ModelView.BranchModelView>
+﻿@using System.Globalization
+@model X.PagedList.IPagedList<Entity.ModelView.BranchModelView>
 @using OrgSys
 @{
     Layout = null;
+    var IsRightToLeft = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft;
+    var TextAlign = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "text-right" : "text-left";
+    var TextAlign2 = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "text-left" : "text-right";
+    var DateFromate = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "yyyy-MM-dd" : "dd-MM-yyyy";
+    var TimeFromate = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "mm:hh t" : "hh:mm t";
+    var AllowView = false;
+    var AllowAdd = false;
+    var AllowEdit = false;
+    var AllowDelete = false;
+    var AllowCancel = false;
+    var AllowRedo = false;
+    AllowView = User.IsAllowed("Branchs.View");
+    AllowAdd = User.IsAllowed("Branchs.Add");
+    AllowEdit = User.IsAllowed("Branchs.Edit");
+    AllowDelete = User.IsAllowed("Branchs.Delete");
+    AllowCancel = User.IsAllowed("Branchs.Cancel");
+    AllowRedo = User.IsAllowed("Branchs.Redo");
 }
 
 @if (Model != null && Model.Count > 0)
 {
-    <div id="tbList" class="card mt-2" style="display:none;">
-        <div class="card-body p-2">
-            <table class="table table-hover responsive mb-0">
+    <div id="tbList" class="card" style="display:none;">
+        <div class="card-body pl-0 pr-0 pb-2 pt-0">
+            <table class="table table-hover responsive nowrap m-0" data-order="[[ 1, &quot;desc&quot; ]]">
                 <thead>
                     <tr>
-                        <th style="text-align: center">#</th>
-                        <th style="width:10px"></th>
-                        <th>@Utility.Resource.Title_Designer.Name</th>
-                        @if (User.IsAllowed("Branchs.Delete") && User.IsAllowed("Branchs.Edit"))
+                        <th class="text-center">#</th>
+                        <th style="text-align:center"></th>
+                        <th class="@TextAlign align-middle">@Utility.Resource.Title_Designer.Name</th>
+                        @if (AllowEdit || AllowCancel || AllowDelete)
                         {
-                            <th colspan="3"></th>
+                            <th>
+
+                            </th>
                         }
-                        else if (User.IsAllowed("Branchs.Edit"))
+                        @if (AllowDelete)
                         {
-                            <th></th>
-                        }
-                        else if (User.IsAllowed("Branchs.Delete"))
-                        {
-                            <th colspan="2"></th>
+                            <th>
+
+                            </th>
                         }
                     </tr>
                 </thead>
                 <tbody>
                     @for (int i = 0, x = ((Model.PageNumber - 1) * Model.PageSize) + 1; i < Model.Count; i++, x++)
                     {
-                        <tr>
-                            <td style="width:30px;vertical-align: middle;text-align:center">
-                                @x
+                        <tr style="@(Model[i].Status == Utility.Status.Cancel ? "color:#a8a7a7;background:repeating-linear-gradient(60deg, transparent, transparent 5px, gainsboro 5px, gainsboro 6px);" : "")">
+                            <td class="text-center align-middle" style="width:50px;">
+                                <p class="list-item-heading">@x</p>
                             </td>
-                            <td style="text-align:center; float:none; display:inline-block; ">
-                                <div class="list-thumbnail border-0 rounded-circle badge-theme-1 m-0" style="height:40px;width:40px;font-size:medium;text-align:center;padding-top:10px;">
+                            <td class="text-center align-middle" style="width:50px;">
+                                <div class="list-thumbnail  border-0 rounded-circle badge-theme-1 m-0" style="height:40px;width:40px;font-size:17px;text-align:center;padding:9px;">
                                     <i class="simple-icon-share"></i>
                                 </div>
                             </td>
-                            <td style="vertical-align: middle;">
-                                <a href="#">
-                                    <p class="text-muted">@Model[i].Name</p>
-                                </a>
+                            <td class="@TextAlign align-middle">
+                                @Model[i].Name
                             </td>
-                            @if (User.IsAllowed("Branchs.Edit"))
+                            @if (AllowEdit || AllowCancel || AllowDelete)
                             {
-                                <td style="text-align: center; vertical-align: middle; width: 100px; padding-right: 0px;">
-                                    <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId" > <i class="iconsminds-folder-edit" style="color:green;"></i> @Utility.Resource.Title_Designer.Edit</a>
+                                <td class="w-15 @TextAlign2 align-middle">
+                                    @if (Model[i].Status == Utility.Status.Cancel)
+                                    {
+                                        <a href="/@ViewBag.area/@ViewBag.PageTitle/Redo?id=@Model[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.PageNumber"> <i class="simple-icon-action-redo"></i> </a>
+                                        if (AllowDelete)
+                                        {
+                                            <span>&nbsp; | &nbsp;</span>
+                                            <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (AllowEdit)
+                                        {
+                                            <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit" style="color:green"></i> </a>
+                                            if (AllowCancel || AllowDelete)
+                                            {
+                                                <span>&nbsp; | &nbsp;</span>
+                                            }
+                                        }
+                                        if (AllowCancel)
+                                        {
+                                            <a href="/@ViewBag.area/@ViewBag.PageTitle/Cancel?id=@Model[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.PageNumber"> <i>X</i> </a>
+                                            @if (AllowDelete)
+                                            {
+                                                <span>&nbsp; | &nbsp;</span>
+                                            }
+                                        }
+                                        if (AllowDelete)
+                                        {
+                                            <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
+                                        }
+                                    }
                                 </td>
                             }
-                            @if (User.IsAllowed("Branchs.Delete"))
+                            @if (AllowDelete)
                             {
-                                <td style="text-align: center; vertical-align: middle; width: 110px; padding-left:0px;">
-                                    <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> @Utility.Resource.Title_Designer.Delete</a>
-                                </td>
-
-                                <td style="width:40px;text-align:center;vertical-align: middle;">
-                                    @if (Model[i].Status == Utility.Status.All)
-                                    {                                   
-                                        <label class="custom-control custom-checkbox m-0" style="text-align:center;vertical-align: middle;">
-                                            <input id="chk_@Model[i].Id" type="checkbox" class="custom-control-input chk m-0" style="position: relative">
-                                            <span class="custom-control-label m-0"  style="position: relative" ></span>
+                                <td class="align-middle @TextAlign2" style="width:30px">
+                                    @if (Model[i].Status != Utility.Status.Cancel)
+                                    {
+                                        <label class="custom-control custom-checkbox pt-2">
+                                            <input id="chk_@Model[i].Id" type="checkbox" class="custom-control-input chk">
                                             <input type="hidden" value="@Model[i].Id" />
+                                            <span class="custom-control-label">&nbsp;</span>
                                         </label>
                                     }
-
                                 </td>
-
                             }
                         </tr>
-
                     }
                 </tbody>
             </table>
@@ -81,50 +121,71 @@
         <div class="col-12 list m-0 p-0 pt-2" data-check-all="checkAll">
             @for (int i = 0, x = ((Model.PageNumber - 1) * Model.PageSize) + 1; i < Model.Count; i++, x++)
             {
-                <div class="card d-flex flex-row mb-2" style="height:60px;">
-                    <div class="d-flex flex-grow-1 min-width-zero">
-                        <div class="list-thumbnail  border-0 card-img-left badge-theme-1" style=" height: 60px; width: 60px; font-size: x-large; text-align: center; padding-top: 15px;">
-                            <i class="simple-icon-share"></i>                            
+                <div class="card d-flex flex-row mb-2">
+                    <div class="d-flex flex-grow-1 min-width-zero" style="border-radius:15px; height:60px; @(Model[i].Status == Utility.Status.Cancel ? "color:#a8a7a7;background:repeating-linear-gradient(60deg, transparent, transparent 5px, gainsboro 5px, gainsboro 6px);" : "")">
+                        <div class="list-thumbnail  border-0 card-img-left badge-theme-1" style="height:60px; width:60px; font-size:x-large; text-align:center; padding:14px;">
+                            <i class="simple-icon-share"></i>
                         </div>
 
-                        <div class="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
-                            <div style="vertical-align: middle;">
-                                <a href="#">
-                                    @Model[i].Name
-                                </a>
+                        <div class="card-body align-self-center d-flex flex-column flex-md-row  align-items-md-center">
+                            <div class="list-item-heading mb-0 w-90">
+                                @Model[i].Name
                             </div>
-                            <div style="text-align:center;vertical-align: middle;">
-                                @if (User.IsAllowed("Branchs.Edit"))
+                            <div class="w-15 @TextAlign2">
+                                @if (Model[i].Status == Utility.Status.Cancel)
                                 {
-                                    <a  href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit" style="color:green;"></i> @Utility.Resource.Title_Designer.Edit</a>
+                                    <a href="/@ViewBag.area/@ViewBag.PageTitle/Redo?id=@Model[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.PageNumber"> <i class="simple-icon-action-redo"></i> </a>
+                                    if (AllowDelete)
+                                    {
+                                        <span>&nbsp; | &nbsp;</span>
+                                        <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
+                                    }
                                 }
-                                @if (User.IsAllowed("Branchs.Edit") && User.IsAllowed("Branchs.Delete"))
+                                else
                                 {
-                                    <span> &nbsp; | &nbsp; </span>
-                                }
-                                @if (User.IsAllowed("Branchs.Delete"))
-                                {
-                                    <a  href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;" ></i> @Utility.Resource.Title_Designer.Delete</a>
+                                    if (AllowEdit)
+                                    {
+                                        <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit" style="color:green"></i> </a>
+                                        if (AllowCancel || AllowDelete)
+                                        {
+                                            <span>&nbsp; | &nbsp;</span>
+                                        }
+                                    }
+                                    if (AllowCancel)
+                                    {
+                                        <a href="/@ViewBag.area/@ViewBag.PageTitle/Cancel?id=@Model[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.PageNumber"> <i>X</i> </a>
+                                        @if (AllowDelete)
+                                        {
+                                            <span>&nbsp; | &nbsp;</span>
+                                        }
+                                    }
+                                    if (AllowDelete)
+                                    {
+                                        <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
+                                    }
                                 }
                             </div>
                         </div>
 
-                        <label class="custom-control custom-checkbox m-1 pr-4 align-self-center">
-                            @if (Model[i].Status == Utility.Status.All)
+                        <div style="width:30px;">
+                            @if (AllowDelete)
                             {
-                                <label class="custom-control custom-checkbox m-0" style="text-align:center;vertical-align: middle;">
-                                    <input id="chk_@Model[i].Id" type="checkbox" class="custom-control-input chk m-0" style="position: relative">
-                                    <span class="custom-control-label m-0" style="position: relative"></span>
-                                    <input type="hidden" value="@Model[i].Id" />
-                                </label>
+                                @if (Model[i].Status != Utility.Status.Cancel)
+                                {
+                                    <label class="custom-control custom-checkbox pt-3">
+                                        <input id="chk_@Model[i].Id" type="checkbox" class="custom-control-input chk">
+                                        <input type="hidden" value="@Model[i].Id" />
+                                        <span class="custom-control-label">&nbsp;</span>
+                                    </label>
+                                }
                             }
-                        </label>
+                        </div>
 
                     </div>
                 </div>
             }
         </div>
-    </div>   
+    </div>
 }
 
 @Html.Partial("PagedList", Model)
