@@ -2,7 +2,7 @@
 
 namespace Entity.ModelView
 {
-    public class ProductRecipeModelView :BaseModel
+    public class ProductRecipeModelView : BaseModel
     {
         public ProductRecipeModelView()
         {
@@ -39,34 +39,31 @@ namespace Entity.ModelView
 
             this.Status = ob.Status;
         }
-        public ProductRecipe Model
+        public ProductRecipe Model()
         {
-            get
+            return new ProductRecipe
             {
-                return new ProductRecipe
-                {
-                    RecipeId=this.RecipeId,
-                    ProductId = this.ProductId,
-                    UnitId = this.UnitId,
-                    Quantity = this.Quantity,
-                    Id = this.Id,
-                    CodeNumber = this.CodeNumber,
-                    Code = this.Code,
-                    MaskText = this.MaskText,
-                    ParentId = this.ParentId,
-                    TypeId = this.TypeId,
-                    Hide = this.Hide,
-                    Status = this.Status,
-                    ImgPath = this.ImgPath
-                };
-            }
+                RecipeId = this.RecipeId,
+                ProductId = this.ProductId,
+                UnitId = this.UnitId,
+                Quantity = this.Quantity,
+                Id = this.Id,
+                CodeNumber = this.CodeNumber,
+                Code = this.Code,
+                MaskText = this.MaskText,
+                ParentId = this.ParentId,
+                TypeId = this.TypeId,
+                Hide = this.Hide,
+                Status = this.Status,
+                ImgPath = this.ImgPath
+            };
         }
-        
+
         public long RecipeId { get; set; }
-        
+
         public long ProductId { get; set; }
-   
-        public long UnitId { get; set; }       
+
+        public long UnitId { get; set; }
 
         public decimal Quantity { get; set; }
     }

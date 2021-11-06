@@ -35,24 +35,21 @@ namespace Entity.ModelView
             this.Status = ob.Status;
         }
 
-        public PaymentType Model
+        public PaymentType Model()
         {
-            get
+            return new PaymentType
             {
-                return new PaymentType
-                {
-                    Name = this.Name,
-                    Id = this.Id,
-                    CodeNumber = this.CodeNumber,
-                    Code = this.Code,
-                    MaskText = this.MaskText,
-                    ParentId = this.ParentId,
-                    TypeId = this.TypeId,
-                    Hide = this.Hide,
-                    Status = this.Status,
-                    ImgPath = this.ImgPath
-                };
-            }
+                Name = this.Name,
+                Id = this.Id,
+                CodeNumber = this.CodeNumber,
+                Code = this.Code,
+                MaskText = this.MaskText,
+                ParentId = this.ParentId,
+                TypeId = this.TypeId,
+                Hide = this.Hide,
+                Status = this.Status,
+                ImgPath = this.ImgPath
+            };
         }
 
         public string Name { get; set; }

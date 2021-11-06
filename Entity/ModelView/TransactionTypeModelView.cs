@@ -14,8 +14,8 @@ namespace Entity.ModelView
             if (ob == null)
                 ob = new TransactionType();
 
-            this.Name = ob.Name;      
-            
+            this.Name = ob.Name;
+
             this.InOut = ob.InOut;
 
             this.Icon = ob.Icon;
@@ -39,28 +39,25 @@ namespace Entity.ModelView
             this.Status = ob.Status;
         }
 
-        public TransactionType Model
+        public TransactionType Model()
         {
-            get
+            return new TransactionType
             {
-                return new TransactionType
-                {
-                    Name = this.Name,
-                    InOut = this.InOut,
-                    Icon = this.Icon,
-                    Id = this.Id,
-                    CodeNumber = this.CodeNumber,
-                    Code = this.Code,
-                    MaskText = this.MaskText,
-                    ParentId = this.ParentId,
-                    TypeId = this.TypeId,
-                    Hide = this.Hide,
-                    Status = this.Status,
-                    ImgPath = this.ImgPath
-                };
-            }
+                Name = this.Name,
+                InOut = this.InOut,
+                Icon = this.Icon,
+                Id = this.Id,
+                CodeNumber = this.CodeNumber,
+                Code = this.Code,
+                MaskText = this.MaskText,
+                ParentId = this.ParentId,
+                TypeId = this.TypeId,
+                Hide = this.Hide,
+                Status = this.Status,
+                ImgPath = this.ImgPath
+            };
         }
-      
+
         public string Name { get; set; }
 
         public int InOut { get; set; }

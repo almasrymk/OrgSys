@@ -5,6 +5,7 @@ using OrgSys.Controllers;
 using Service;
 using System;
 using System.Collections.Generic;
+using Utility;
 
 namespace OrgSys.Areas.Financial.Controllers
 {
@@ -68,6 +69,18 @@ namespace OrgSys.Areas.Financial.Controllers
             ob.SafeName = new SafeService().Get(ob.SafeId).Name;
             ob.DealerName = new DealerService().Get(ob.DealerId??0).Name;
             return ob;
-        }      
+        }
+
+        public ActionResult Cancel(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1)
+        {
+            new FinancialService().Cancel(id);
+            return Redirect("/Financials/Financial/Index?ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" + ResultStatus.success + "&MsgError=Success");
+        }
+
+        public ActionResult Redo(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1)
+        {
+            new FinancialService().Redo(id);
+            return Redirect("/Financials/Financial/Index?ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" + ResultStatus.success + "&MsgError=Success");
+        }
     }
 }

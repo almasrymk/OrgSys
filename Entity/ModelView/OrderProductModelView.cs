@@ -38,8 +38,8 @@ namespace Entity.ModelView
 
             this.Net = ob.Net;
 
-            this.Notes = ob.Notes; 
-            
+            this.Notes = ob.Notes;
+
             this.Tax = ob.Tax;
 
             this.Total = ob.Total;
@@ -65,38 +65,35 @@ namespace Entity.ModelView
             this.Units = new List<UnitModelView>();
 
             if (ob.Product != null && ob.Product.ProductUnits != null)
-                this.Units = ob.Product.ProductUnits.Select(e => new UnitModelView(e.Unit)).ToList();           
+                this.Units = ob.Product.ProductUnits.Select(e => new UnitModelView(e.Unit)).ToList();
         }
 
-        public OrderProduct Model
+        public OrderProduct Model()
         {
-            get
+            return new OrderProduct
             {
-                return new OrderProduct
-                {
-                    OrderId = this.OrderId,
-                    ProductId = this.ProductId,
-                    UnitId = this.UnitId,
-                    Quantity = this.Quantity,
-                    Price = this.Price,
-                    RowNumber = this.RowNumber,
-                    Discount = this.Discount,
-                    Total = this.Total,
-                    Tax = this.Tax,
-                    Service = this.Service,
-                    Net  = this.Net,
-                    Notes = this.Notes,
-                    Id = this.Id,
-                    CodeNumber = this.CodeNumber,
-                    Code = this.Code,
-                    MaskText = this.MaskText,
-                    ParentId = this.ParentId,
-                    TypeId = this.TypeId,
-                    Hide = this.Hide,
-                    Status = this.Status,
-                    ImgPath = this.ImgPath
-                };
-            }
+                OrderId = this.OrderId,
+                ProductId = this.ProductId,
+                UnitId = this.UnitId,
+                Quantity = this.Quantity,
+                Price = this.Price,
+                RowNumber = this.RowNumber,
+                Discount = this.Discount,
+                Total = this.Total,
+                Tax = this.Tax,
+                Service = this.Service,
+                Net = this.Net,
+                Notes = this.Notes,
+                Id = this.Id,
+                CodeNumber = this.CodeNumber,
+                Code = this.Code,
+                MaskText = this.MaskText,
+                ParentId = this.ParentId,
+                TypeId = this.TypeId,
+                Hide = this.Hide,
+                Status = this.Status,
+                ImgPath = this.ImgPath
+            };
         }
 
         public long RowNumber { get; set; }

@@ -61,7 +61,7 @@ namespace Entity.ModelView
             this.Units = new List<UnitModelView>();
 
             if (ob.Product != null && ob.Product.ProductUnits != null)
-                this.Units = ob.Product.ProductUnits.Select(e => new UnitModelView(e.Unit)).ToList();           
+                this.Units = ob.Product.ProductUnits.Select(e => new UnitModelView(e.Unit)).ToList();
         }
 
         public TransactionProductModelView(InvoiceProduct ob)
@@ -124,12 +124,12 @@ namespace Entity.ModelView
 
             this.UnitName = ob.Unit?.Name;
 
-            this.Quantity = ob.DiffQuantity < 0 ? -1 *  ob.DiffQuantity : ob.DiffQuantity;
+            this.Quantity = ob.DiffQuantity < 0 ? -1 * ob.DiffQuantity : ob.DiffQuantity;
 
             this.Cost = 0;
 
-            this.Notes = ob.Notes; 
-            
+            this.Notes = ob.Notes;
+
             this.Total = 0;
 
             this.Id = ob.Id;
@@ -155,33 +155,30 @@ namespace Entity.ModelView
             if (ob.Product != null && ob.Product.ProductUnits != null)
                 this.Units = ob.Product.ProductUnits.Select(e => new UnitModelView(e.Unit)).ToList();
         }
-      
-        public TransactionProduct Model
+
+        public TransactionProduct Model()
         {
-            get
+            return new TransactionProduct
             {
-                return new TransactionProduct
-                {
-                    TransactionId = this.TransactionId,
-                    ProductId = this.ProductId,
-                    StoreId = this.StoreId,
-                    UnitId = this.UnitId,
-                    Quantity = this.Quantity,
-                    RowNumber = this.RowNumber,
-                    Cost = this.Cost,
-                    Total = this.Total,
-                    Notes = this.Notes,
-                    Id = this.Id,
-                    CodeNumber = this.CodeNumber,
-                    Code = this.Code,
-                    MaskText = this.MaskText,
-                    ParentId = this.ParentId,
-                    TypeId = this.TypeId,
-                    Hide = this.Hide,
-                    Status = this.Status,
-                    ImgPath = this.ImgPath
-                };
-            }
+                TransactionId = this.TransactionId,
+                ProductId = this.ProductId,
+                StoreId = this.StoreId,
+                UnitId = this.UnitId,
+                Quantity = this.Quantity,
+                RowNumber = this.RowNumber,
+                Cost = this.Cost,
+                Total = this.Total,
+                Notes = this.Notes,
+                Id = this.Id,
+                CodeNumber = this.CodeNumber,
+                Code = this.Code,
+                MaskText = this.MaskText,
+                ParentId = this.ParentId,
+                TypeId = this.TypeId,
+                Hide = this.Hide,
+                Status = this.Status,
+                ImgPath = this.ImgPath
+            };
         }
 
         public long RowNumber { get; set; }

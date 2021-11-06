@@ -18,7 +18,7 @@ namespace Service
         #region Save / Delete
         public ProductPropertyElementModelView Save(ProductPropertyElementModelView ob)
         {
-            return new ProductPropertyElementModelView(repo.productpropertyelementRepo.AddOrUpdate(ob.Model));
+            return new ProductPropertyElementModelView(repo.productpropertyelementRepo.AddOrUpdate(ob.Model()));
         }
  
         public bool Delete(long id)

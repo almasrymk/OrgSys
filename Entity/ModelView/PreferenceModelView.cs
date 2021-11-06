@@ -41,27 +41,24 @@ namespace Entity.ModelView
             this.Status = ob.Status;
         }
 
-        public Preference Model
+        public Preference Model()
         {
-            get
+            return new Preference
             {
-                return new Preference
-                {
-                    Key = this.Key,
-                    Value = this.Value,
-                    Reference = this.Reference,
-                    UserId = this.UserId,
-                    Id = this.Id,
-                    CodeNumber = this.CodeNumber,
-                    Code = this.Code,
-                    MaskText = this.MaskText,
-                    ParentId = this.ParentId,
-                    TypeId = this.TypeId,
-                    Hide = this.Hide,
-                    Status = this.Status,
-                    ImgPath = this.ImgPath
-                };
-            }
+                Key = this.Key,
+                Value = this.Value,
+                Reference = this.Reference,
+                UserId = this.UserId,
+                Id = this.Id,
+                CodeNumber = this.CodeNumber,
+                Code = this.Code,
+                MaskText = this.MaskText,
+                ParentId = this.ParentId,
+                TypeId = this.TypeId,
+                Hide = this.Hide,
+                Status = this.Status,
+                ImgPath = this.ImgPath
+            };
         }
 
         public string Key { get; set; }

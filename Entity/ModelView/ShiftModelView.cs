@@ -40,26 +40,23 @@ namespace Entity.ModelView
             this.Status = ob.Status;
         }
 
-        public Shift Model
+        public Shift Model()
         {
-            get
+            return new Shift
             {
-                return new Shift
-                {
-                    Name = this.Name,
-                    Start = this.Start,
-                    End = this.End,
-                    Id = this.Id,
-                    CodeNumber = this.CodeNumber,
-                    Code = this.Code,
-                    MaskText = this.MaskText,
-                    ParentId = this.ParentId,
-                    TypeId = this.TypeId,
-                    Hide = this.Hide,
-                    Status = this.Status,
-                    ImgPath = this.ImgPath
-                };
-            }
+                Name = this.Name,
+                Start = this.Start,
+                End = this.End,
+                Id = this.Id,
+                CodeNumber = this.CodeNumber,
+                Code = this.Code,
+                MaskText = this.MaskText,
+                ParentId = this.ParentId,
+                TypeId = this.TypeId,
+                Hide = this.Hide,
+                Status = this.Status,
+                ImgPath = this.ImgPath
+            };
         }
 
         public string Name { get; set; }

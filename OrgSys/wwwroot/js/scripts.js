@@ -37,19 +37,26 @@ function loadStyle(href, callback) {
         Dropzone.autoDiscover = false;
     }
 
-    var themeColorsDom = /*html*/`
-   <div class="theme-colors">
-    <div class="p-4">
-     <p class="text-muted mb-2">Language</p>
-     <div class="custom-control custom-radio custom-control-inline">
-     <input type="radio" id="ltrRadio" name="directionRadio" class="custom-control-input direction-radio" data-direction="ltr">
-     <label class="custom-control-label" for="ltrRadio">English</label>
+    var LanguageDom = /*html*/`
+<div class="theme-colors" style='top:41%;'>
+  <div class="pl-3 pr-3 p-1">
+    <div class="custom-control custom-radio custom-control-inline">
+      <input type="radio" id="ltrRadio" name="directionRadio" class="custom-control-input direction-radio" data-direction="ltr">
+      <label class="custom-control-label" for="ltrRadio">English</label>
     </div>
     <div class="custom-control custom-radio custom-control-inline">
       <input type="radio" id="rtlRadio" name="directionRadio" class="custom-control-input direction-radio" data-direction="rtl">
       <label class="custom-control-label" for="rtlRadio">عربي</label>
-     </div>
     </div>
+  </div>
+
+<a href="#" class="theme-button"> <i class="fa fa-globe"></i> </a>
+</div>
+`;
+
+    var themeColorsDom = /*html*/`
+   <div class="theme-colors">
+   
     <div class="p-4">
     <p class="text-muted mb-2">Light Theme</p>
     <div class="d-flex flex-row justify-content-between mb-3">
@@ -98,8 +105,10 @@ function loadStyle(href, callback) {
 </div>
 `;
 
+    $("body").append(LanguageDom);
     $("body").append(themeColorsDom);
-
+  
+    
 
     /* Default Theme Color, Border Radius and  Direction */
     var theme = "dore.light.bluenavy.min.css";

@@ -41,26 +41,24 @@ namespace Entity.ModelView
             this.Status = ob.Status;
         }
 
-        public RolePermission Model
+        public RolePermission Model()
         {
-            get
+            return new RolePermission
             {
-                return new RolePermission
-                {
-                    RoleId = this.RoleId,
-                    PermissionId = this.PermissionId,
-                    Id = this.Id,
-                    CodeNumber = this.CodeNumber,
-                    Code = this.Code,
-                    MaskText = this.MaskText,
-                    ParentId = this.ParentId,
-                    TypeId = this.TypeId,
-                    Hide = this.Hide,
-                    Status = this.Status,
-                    ImgPath = this.ImgPath
-                };
-            }
+                RoleId = this.RoleId,
+                PermissionId = this.PermissionId,
+                Id = this.Id,
+                CodeNumber = this.CodeNumber,
+                Code = this.Code,
+                MaskText = this.MaskText,
+                ParentId = this.ParentId,
+                TypeId = this.TypeId,
+                Hide = this.Hide,
+                Status = this.Status,
+                ImgPath = this.ImgPath
+            };
         }
+
         public long RoleId { get; set; }
 
         public string RoleName { get; set; }

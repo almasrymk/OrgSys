@@ -43,7 +43,7 @@ namespace Entity.ModelView
 
             this.SafeName = ob.Safe?.Name;
 
-            this.Rate = ob.Rate > 0 ? ob.Rate : (ob.Currency?.Rate??0);
+            this.Rate = ob.Rate > 0 ? ob.Rate : (ob.Currency?.Rate ?? 0);
 
             this.AmountByDefaultCurrency = ob.AmountByDefaultCurrency;
 
@@ -79,7 +79,7 @@ namespace Entity.ModelView
             this.FinancialInvoices = ob.FinancialInvoices.Select(e => new FinancialInvoiceModelView(e)).ToList();
         }
 
-        public FinancialModelView(Invoice ob , decimal amount)
+        public FinancialModelView(Invoice ob, decimal amount)
         {
             if (ob == null)
                 ob = new Invoice();
@@ -94,7 +94,7 @@ namespace Entity.ModelView
 
             this.Notes = ob.Notes;
 
-            this.Amount = amount;          
+            this.Amount = amount;
 
             this.Rate = ob.Rate > 0 ? ob.Rate : (ob.Currency?.Rate ?? 0);
 
@@ -112,7 +112,7 @@ namespace Entity.ModelView
 
             this.ParentId = ob.ParentId;
 
-            this.TypeId = ob.TypeId == 1 ||  ob.TypeId == 4 ? 1 : 2;
+            this.TypeId = ob.TypeId == 1 || ob.TypeId == 4 ? 1 : 2;
 
             this.Hide = ob.Hide;
 
@@ -122,47 +122,44 @@ namespace Entity.ModelView
 
             if (this.FinancialInvoices == null)
                 this.FinancialInvoices = new List<FinancialInvoiceModelView>();
-            this.FinancialInvoices.Add(new FinancialInvoiceModelView(ob , amount));
+            this.FinancialInvoices.Add(new FinancialInvoiceModelView(ob, amount));
         }
 
-        public Financial Model
+        public Financial Model()
         {
-            get
+            return new Financial
             {
-                return new Financial
-                {
-                    Date = this.Date,
-                    DealerId = this.DealerId,
-                    PaymentTypeId = this.PaymentTypeId,
-                    CurrencyId = this.CurrencyId,
-                    OutlayId = this.OutlayId,
-                    Rate = this.Rate,
-                    Amount = this.Amount,
-                    AmountByDefaultCurrency = this.AmountByDefaultCurrency,
-                    Notes = this.Notes,
-                    SafeId = this.SafeId,
-                    Id = this.Id,
-                    CodeNumber = this.CodeNumber,
-                    Code = this.Code,
-                    MaskText = this.MaskText,
-                    ParentId = this.ParentId,
-                    TypeId = this.TypeId,
-                    CreateUserId = this.CreateUserId,
-                    CreateDate = this.CreateDate,
-                    ModifyUserId = this.ModifyUserId,
-                    ModifyDate = this.ModifyDate,
-                    Hide = this.Hide,
-                    Status = this.Status,
-                    ImgPath = this.ImgPath,
-                    FinancialInvoices = this.FinancialInvoices != null ? this.FinancialInvoices.Select(e => e.Model).ToList() : new List<FinancialInvoice>()
-                };
-            }
+                Date = this.Date,
+                DealerId = this.DealerId,
+                PaymentTypeId = this.PaymentTypeId,
+                CurrencyId = this.CurrencyId,
+                OutlayId = this.OutlayId,
+                Rate = this.Rate,
+                Amount = this.Amount,
+                AmountByDefaultCurrency = this.AmountByDefaultCurrency,
+                Notes = this.Notes,
+                SafeId = this.SafeId,
+                Id = this.Id,
+                CodeNumber = this.CodeNumber,
+                Code = this.Code,
+                MaskText = this.MaskText,
+                ParentId = this.ParentId,
+                TypeId = this.TypeId,
+                CreateUserId = this.CreateUserId,
+                CreateDate = this.CreateDate,
+                ModifyUserId = this.ModifyUserId,
+                ModifyDate = this.ModifyDate,
+                Hide = this.Hide,
+                Status = this.Status,
+                ImgPath = this.ImgPath,
+                FinancialInvoices = this.FinancialInvoices != null ? this.FinancialInvoices.Select(e => e.Model()).ToList() : new List<FinancialInvoice>()
+            };
         }
-      
+
         public long? DealerId { get; set; }
 
         public string DealerName { get; set; }
-        
+
         public long PaymentTypeId { get; set; }
 
         public string PaymentTypeName { get; set; }
@@ -178,7 +175,7 @@ namespace Entity.ModelView
         public decimal Amount { get; set; }
 
         public string Notes { get; set; }
- 
+
         public long CurrencyId { get; set; }
 
         public string CurrencyName { get; set; }

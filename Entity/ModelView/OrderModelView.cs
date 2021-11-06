@@ -29,7 +29,7 @@ namespace Entity.ModelView
             this.TableId = ob.TableId;
 
             this.TableName = ob.Table?.Name;
-          
+
             this.CloseTable = ob.CloseTable;
 
             this.Total = ob.Total;
@@ -94,44 +94,41 @@ namespace Entity.ModelView
             this.OrderProducts = ob.OrderProducts.Select(e => new OrderProductModelView(e)).ToList();
         }
 
-        public Order Model
+        public Order Model()
         {
-            get
+            return new Order
             {
-                return new Order
-                {
-                    DealerId = this.DealerId,
-                    InvoiceId = this.InvoiceId,
-                    Total = this.Total,                   
-                    Net  = this.Net,
-                    Notes = this.Notes,
-                    TableId = this.TableId,
-                    CloseTable = this.CloseTable,
-                    Service = this.Service,
-                    ServiceType = this.ServiceType,
-                    Tax = this.Tax,
-                    TaxType = this.TaxType,
-                    Discount = this.Discount,
-                    DiscountType = this.DiscountType,
-                    BranchId = this.BranchId,
-                    CreateUserId = this.CreateUserId,
-                    ModifyUserId = this.ModifyUserId,
-                    ShiftId = this.ShiftId,
-                    Date = this.Date,
-                    CreateDate = this.CreateDate,
-                    ModifyDate = this.ModifyDate,
-                    Id = this.Id,
-                    CodeNumber = this.CodeNumber,
-                    Code = this.Code,
-                    MaskText = this.MaskText,
-                    ParentId = this.ParentId,
-                    TypeId = this.TypeId,
-                    Hide = this.Hide,
-                    Status = this.Status,
-                    ImgPath = this.ImgPath,
-                    OrderProducts = this.OrderProducts != null ? this.OrderProducts.Select(e => e.Model).ToList() : new List<OrderProduct>()
-                };
-            }
+                DealerId = this.DealerId,
+                InvoiceId = this.InvoiceId,
+                Total = this.Total,
+                Net = this.Net,
+                Notes = this.Notes,
+                TableId = this.TableId,
+                CloseTable = this.CloseTable,
+                Service = this.Service,
+                ServiceType = this.ServiceType,
+                Tax = this.Tax,
+                TaxType = this.TaxType,
+                Discount = this.Discount,
+                DiscountType = this.DiscountType,
+                BranchId = this.BranchId,
+                CreateUserId = this.CreateUserId,
+                ModifyUserId = this.ModifyUserId,
+                ShiftId = this.ShiftId,
+                Date = this.Date,
+                CreateDate = this.CreateDate,
+                ModifyDate = this.ModifyDate,
+                Id = this.Id,
+                CodeNumber = this.CodeNumber,
+                Code = this.Code,
+                MaskText = this.MaskText,
+                ParentId = this.ParentId,
+                TypeId = this.TypeId,
+                Hide = this.Hide,
+                Status = this.Status,
+                ImgPath = this.ImgPath,
+                OrderProducts = this.OrderProducts != null ? this.OrderProducts.Select(e => e.Model()).ToList() : new List<OrderProduct>()
+            };
         }
 
         public long? TableId { get; set; }
@@ -141,10 +138,10 @@ namespace Entity.ModelView
         public string TableName { get; set; }
 
         public bool CloseTable { get; set; }
-                
+
         public long? DealerId { get; set; }
 
-        public string DealerName { get; set; }       
+        public string DealerName { get; set; }
 
         public decimal Total { get; set; }
 
@@ -172,7 +169,7 @@ namespace Entity.ModelView
 
         public string ShiftName { get; set; }
 
-         public InvoiceModelView Invoice { get; set; }
+        public InvoiceModelView Invoice { get; set; }
 
         public List<OrderProductModelView> OrderProducts { get; set; }
     }

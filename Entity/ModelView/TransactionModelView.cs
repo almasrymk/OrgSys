@@ -125,11 +125,9 @@ namespace Entity.ModelView
             this.TransactionProducts = ob.InvoiceProducts.Select(e => new TransactionProductModelView(e)).ToList();
         }
 
-        public Transaction Model
+        public Transaction Model()
         {
-            get
-            {
-                return new Transaction
+           return new Transaction
                 {
                     DealerId = this.DealerId,
                     Total = this.Total,
@@ -153,10 +151,9 @@ namespace Entity.ModelView
                     Hide = this.Hide,
                     Status = this.Status,
                     ImgPath = this.ImgPath,
-                    TransactionProducts = this.TransactionProducts != null ? this.TransactionProducts.Select(e => e.Model).ToList() : new List<TransactionProduct>()
-                };
-            }
-        }
+                    TransactionProducts = this.TransactionProducts != null ? this.TransactionProducts.Select(e => e.Model()).ToList() : new List<TransactionProduct>()
+    };
+}
 
         public long? DealerId { get; set; }
 

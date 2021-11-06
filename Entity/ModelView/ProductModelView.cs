@@ -59,32 +59,29 @@ namespace Entity.ModelView
             this.ProductUnits = ob.ProductUnits.Select(e => new ProductUnitModelView(e)).ToList();
         }
 
-        public Product Model
+        public Product Model()
         {
-            get
+            return new Product
             {
-                return new Product
-                {
-                    Name = this.Name,
-                    Nickname = this.Nickname,
-                    Barcode = this.Barcode,
-                    Description = this.Description,
-                    Price = this.Price,
-                    Cost = this.Cost,
-                    ClassificationId = this.ClassificationId,
-                    DealerId = this.DealerId,
-                    Recipe = this.Recipe,
-                    Id = this.Id,
-                    CodeNumber = this.CodeNumber,
-                    Code = this.Code,
-                    MaskText = this.MaskText,
-                    ParentId = this.ParentId,
-                    TypeId = this.TypeId,
-                    Hide = this.Hide,
-                    Status = this.Status,
-                    ImgPath = this.ImgPath
-                };
-            }
+                Name = this.Name,
+                Nickname = this.Nickname,
+                Barcode = this.Barcode,
+                Description = this.Description,
+                Price = this.Price,
+                Cost = this.Cost,
+                ClassificationId = this.ClassificationId,
+                DealerId = this.DealerId,
+                Recipe = this.Recipe,
+                Id = this.Id,
+                CodeNumber = this.CodeNumber,
+                Code = this.Code,
+                MaskText = this.MaskText,
+                ParentId = this.ParentId,
+                TypeId = this.TypeId,
+                Hide = this.Hide,
+                Status = this.Status,
+                ImgPath = this.ImgPath
+            };
         }
 
         public string Name { get; set; }

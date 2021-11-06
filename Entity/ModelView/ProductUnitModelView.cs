@@ -45,27 +45,24 @@ namespace Entity.ModelView
             this.Status = ob.Status;
         }
 
-        public ProductUnit Model
+        public ProductUnit Model()
         {
-            get
+            return new ProductUnit
             {
-                return new ProductUnit
-                {
-                    ProductId = this.ProductId,
-                    UnitId = this.UnitId,
-                    Rate = this.Rate,
-                    DefaultUnit = this.DefaultUnit,
-                    Id = this.Id,
-                    CodeNumber = this.CodeNumber,
-                    Code = this.Code,
-                    MaskText = this.MaskText,
-                    ParentId = this.ParentId,
-                    TypeId = this.TypeId,
-                    Hide = this.Hide,
-                    Status = this.Status,
-                    ImgPath = this.ImgPath
-                };
-            }
+                ProductId = this.ProductId,
+                UnitId = this.UnitId,
+                Rate = this.Rate,
+                DefaultUnit = this.DefaultUnit,
+                Id = this.Id,
+                CodeNumber = this.CodeNumber,
+                Code = this.Code,
+                MaskText = this.MaskText,
+                ParentId = this.ParentId,
+                TypeId = this.TypeId,
+                Hide = this.Hide,
+                Status = this.Status,
+                ImgPath = this.ImgPath
+            };
         }
 
         public long ProductId { get; set; }
@@ -78,6 +75,6 @@ namespace Entity.ModelView
 
         public decimal Rate { get; set; }
 
-        public bool DefaultUnit { get; set; }    
+        public bool DefaultUnit { get; set; }
     }
 }

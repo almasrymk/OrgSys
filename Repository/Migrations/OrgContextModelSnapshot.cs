@@ -199,8 +199,8 @@ namespace Repository.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("Email")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<bool>("Hide")
                         .HasColumnType("bit");

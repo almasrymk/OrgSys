@@ -39,28 +39,25 @@ namespace Entity.ModelView
             this.Status = ob.Status;
         }
 
-        public FinancialType Model
+        public FinancialType Model()
         {
-            get
+            return new FinancialType
             {
-                return new FinancialType
-                {
-                    Name = this.Name,
-                    InOut = this.InOut,
-                    Icon = this.Icon,
-                    Id = this.Id,
-                    CodeNumber = this.CodeNumber,
-                    Code = this.Code,
-                    MaskText = this.MaskText,
-                    ParentId = this.ParentId,
-                    TypeId = this.TypeId,
-                    Hide = this.Hide,
-                    Status = this.Status,
-                    ImgPath = this.ImgPath
-                };
-            }
+                Name = this.Name,
+                InOut = this.InOut,
+                Icon = this.Icon,
+                Id = this.Id,
+                CodeNumber = this.CodeNumber,
+                Code = this.Code,
+                MaskText = this.MaskText,
+                ParentId = this.ParentId,
+                TypeId = this.TypeId,
+                Hide = this.Hide,
+                Status = this.Status,
+                ImgPath = this.ImgPath
+            };
         }
-      
+
         public string Name { get; set; }
 
         public int InOut { get; set; }

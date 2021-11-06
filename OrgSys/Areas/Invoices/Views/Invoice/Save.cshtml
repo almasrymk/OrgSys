@@ -47,23 +47,18 @@
                             <a href="/">@Utility.Resource.Title_Designer.Home</a>
                         </li>
                         <li class="breadcrumb-item">
-                            @Utility.Resource.Title_Designer.Invoices
+                            <span>@Utility.Resource.Title_Designer.Invoices</span>
                         </li>
                         <li class="breadcrumb-item">
-                            @Utility.Resource.Title_Designer.Invoice
+                            @if (Model.TypeId == 1 || Model.TypeId == 3)
+                            {
+                                @Utility.Resource.Title_Designer.Sales
+                            }
+                            else
+                            {
+                                @Utility.Resource.Title_Designer.Purchases
+                            }
                         </li>
-                        @if (Model.TypeId == 1 || Model.TypeId == 2)
-                        {
-                            <li class="breadcrumb-item active" aria-current="page">
-                                <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId"> @Utility.Resource.Title_Designer.Invoice</a>
-                            </li>
-                        }
-                        else if (Model.TypeId == 3 || Model.TypeId == 4)
-                        {
-                            <li class="breadcrumb-item active" aria-current="page">
-                                <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId"> @Utility.Resource.Title_Designer.Return</a>
-                            </li>
-                        }
                     </ol>
                 </nav>
             </div>
@@ -581,7 +576,7 @@
 
 <div class="modal fade bd-example-modal-lg ProductBody" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg" id="SearchProductBody">
-
+       
     </div>
 </div>
 

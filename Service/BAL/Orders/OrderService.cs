@@ -25,7 +25,7 @@ namespace Service
             }
 
             // Save
-            var Nwob = repo.orderRepo.AddOrUpdate(ob.Model);
+            var Nwob = repo.orderRepo.AddOrUpdate(ob.Model());
 
             if (ob.Id > 0)
             {
@@ -39,7 +39,7 @@ namespace Service
 
                 foreach (var productUnit in ob.OrderProducts)
                 {
-                    var model = productUnit.Model;
+                    var model = productUnit.Model();
                     model.OrderId = Nwob.Id;
                     repo.orderProductRepo.AddOrUpdate(model);
                 }

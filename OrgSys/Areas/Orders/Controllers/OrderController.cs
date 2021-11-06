@@ -88,7 +88,7 @@ namespace OrgSys.Areas.Orders.Controllers
             var order = new OrderService().Get(id);
             if (order != null)
             {
-                new IntegrationServics().CreateInvoiceByOrder(order.Model);
+                new IntegrationServics().CreateInvoiceByOrder(order.Model());
                 return Redirect("/Orders/Order/Index?ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" + ResultStatus.success + "&MsgError=Success");
             }
             return Redirect("/Orders/Order/Index?ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" + ResultStatus.error + "&MsgError=Not find order");

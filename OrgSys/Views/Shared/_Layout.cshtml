@@ -31,7 +31,7 @@
     <link rel="stylesheet" href="~/css/vendor/nouislider.min.css" />
     <link rel="stylesheet" href="~/css/vendor/smart_wizard.min.css" />
     @*<link rel="stylesheet" href="~/css/vendor/bootstrap-datepicker3.min.css" />*@
-<link href="~/DatePicher/bootstrap-datepicker.min.css" rel="stylesheet" />
+    <link href="~/DatePicher/bootstrap-datepicker.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/vendor/component-custom-switch.min.css" />
     <link rel="stylesheet" href="~/css/main.css" />
     <link rel="stylesheet" href="~/css/jquery.bonsai.css" />
@@ -163,99 +163,99 @@
                             <label class="custom-switch-btn" for="switchDark"></label>
                         </div>
                     </div>
-                    <div class="position-relative d-none d-sm-inline-block">
-                        <button class="header-icon btn btn-empty" type="button" id="iconMenuButton" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
-                            <i class="simple-icon-grid"></i>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right mt-3  position-absolute" id="iconMenuDropdown">
-                            <a href="#" class="icon-menu-item">
-                                <i class="iconsminds-equalizer d-block"></i>
-                                <span>@Utility.Resource.Title_Designer.Settings</span>
-                            </a>
-                            <a href="#" class="icon-menu-item">
-                                <i class="iconsminds-male-female d-block"></i>
-                                <span>@Utility.Resource.Title_Designer.Users</span>
-                            </a>
-                            <a href="#" class="icon-menu-item">
-                                <i class="iconsminds-puzzle d-block"></i>
-                                <span>@Utility.Resource.Title_Designer.Components</span>
-                            </a>
-                            <a href="#" class="icon-menu-item">
-                                <i class="iconsminds-bar-chart-4 d-block"></i>
-                                <span>@Utility.Resource.Title_Designer.Profits</span>
-                            </a>
-                            <a href="#" class="icon-menu-item">
-                                <i class="iconsminds-file d-block"></i>
-                                <span>@Utility.Resource.Title_Designer.Surveys</span>
-                            </a>
-                            <a href="#" class="icon-menu-item">
-                                <i class="iconsminds-suitcase d-block"></i>
-                                <span>@Utility.Resource.Title_Designer.Tasks</span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="position-relative d-inline-block">
-                        <button class="header-icon btn btn-empty" type="button" id="notificationButton"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="simple-icon-bell"></i>
-                            <span class="count">3</span>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right mt-3 position-absolute" id="notificationDropdown">
-                            <div class="scroll">
-                                <div class="d-flex flex-row mb-3 pb-3 border-bottom">
-                                    <a href="#">
-                                        <img src="~/img/profiles/l-2.jpg" alt="Notification Image"
-                                             class="~/img-thumbnail list-thumbnail xsmall border-0 rounded-circle" />
-                                    </a>
-                                    <div class="pl-3">
+                    @*<div class="position-relative d-none d-sm-inline-block">
+                            <button class="header-icon btn btn-empty" type="button" id="iconMenuButton" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">
+                                <i class="simple-icon-grid"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right mt-3  position-absolute" id="iconMenuDropdown">
+                                <a href="#" class="icon-menu-item">
+                                    <i class="iconsminds-equalizer d-block"></i>
+                                    <span>@Utility.Resource.Title_Designer.Settings</span>
+                                </a>
+                                <a href="#" class="icon-menu-item">
+                                    <i class="iconsminds-male-female d-block"></i>
+                                    <span>@Utility.Resource.Title_Designer.Users</span>
+                                </a>
+                                <a href="#" class="icon-menu-item">
+                                    <i class="iconsminds-puzzle d-block"></i>
+                                    <span>@Utility.Resource.Title_Designer.Components</span>
+                                </a>
+                                <a href="#" class="icon-menu-item">
+                                    <i class="iconsminds-bar-chart-4 d-block"></i>
+                                    <span>@Utility.Resource.Title_Designer.Profits</span>
+                                </a>
+                                <a href="#" class="icon-menu-item">
+                                    <i class="iconsminds-file d-block"></i>
+                                    <span>@Utility.Resource.Title_Designer.Surveys</span>
+                                </a>
+                                <a href="#" class="icon-menu-item">
+                                    <i class="iconsminds-suitcase d-block"></i>
+                                    <span>@Utility.Resource.Title_Designer.Tasks</span>
+                                </a>
+                            </div>
+                        </div>*@
+                    @*<div class="position-relative d-inline-block">
+                            <button class="header-icon btn btn-empty" type="button" id="notificationButton"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="simple-icon-bell"></i>
+                                <span class="count">3</span>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right mt-3 position-absolute" id="notificationDropdown">
+                                <div class="scroll">
+                                    <div class="d-flex flex-row mb-3 pb-3 border-bottom">
                                         <a href="#">
-                                            <p class="font-weight-medium mb-1">Joisse Kaycee just sent a new comment!</p>
-                                            <p class="text-muted mb-0 text-small">09.04.2018 - 12:45</p>
+                                            <img src="~/img/profiles/l-2.jpg" alt="Notification Image"
+                                                 class="~/img-thumbnail list-thumbnail xsmall border-0 rounded-circle" />
                                         </a>
+                                        <div class="pl-3">
+                                            <a href="#">
+                                                <p class="font-weight-medium mb-1">Joisse Kaycee just sent a new comment!</p>
+                                                <p class="text-muted mb-0 text-small">09.04.2018 - 12:45</p>
+                                            </a>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="d-flex flex-row mb-3 pb-3 border-bottom">
-                                    <a href="#">
-                                        <img src="~/img/notifications/1.jpg" alt="Notification Image"
-                                             class="~/img-thumbnail list-thumbnail xsmall border-0 rounded-circle" />
-                                    </a>
-                                    <div class="pl-3">
+                                    <div class="d-flex flex-row mb-3 pb-3 border-bottom">
                                         <a href="#">
-                                            <p class="font-weight-medium mb-1">1 item is out of stock!</p>
-                                            <p class="text-muted mb-0 text-small">09.04.2018 - 12:45</p>
+                                            <img src="~/img/notifications/1.jpg" alt="Notification Image"
+                                                 class="~/img-thumbnail list-thumbnail xsmall border-0 rounded-circle" />
                                         </a>
+                                        <div class="pl-3">
+                                            <a href="#">
+                                                <p class="font-weight-medium mb-1">1 item is out of stock!</p>
+                                                <p class="text-muted mb-0 text-small">09.04.2018 - 12:45</p>
+                                            </a>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="d-flex flex-row mb-3 pb-3 border-bottom">
-                                    <a href="#">
-                                        <img src="~/img/notifications/2.jpg" alt="Notification Image"
-                                             class="~/img-thumbnail list-thumbnail xsmall border-0 rounded-circle" />
-                                    </a>
-                                    <div class="pl-3">
+                                    <div class="d-flex flex-row mb-3 pb-3 border-bottom">
                                         <a href="#">
-                                            <p class="font-weight-medium mb-1">New order received! It is total $147,20.</p>
-                                            <p class="text-muted mb-0 text-small">09.04.2018 - 12:45</p>
+                                            <img src="~/img/notifications/2.jpg" alt="Notification Image"
+                                                 class="~/img-thumbnail list-thumbnail xsmall border-0 rounded-circle" />
                                         </a>
+                                        <div class="pl-3">
+                                            <a href="#">
+                                                <p class="font-weight-medium mb-1">New order received! It is total $147,20.</p>
+                                                <p class="text-muted mb-0 text-small">09.04.2018 - 12:45</p>
+                                            </a>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="d-flex flex-row mb-3 pb-3 ">
-                                    <a href="#">
-                                        <img src="~/img/notifications/3.jpg" alt="Notification Image"
-                                             class="~/img-thumbnail list-thumbnail xsmall border-0 rounded-circle" />
-                                    </a>
-                                    <div class="pl-3">
+                                    <div class="d-flex flex-row mb-3 pb-3 ">
                                         <a href="#">
-                                            <p class="font-weight-medium mb-1">
-                                                3 items just added to wish list by a user!
-                                            </p>
-                                            <p class="text-muted mb-0 text-small">09.04.2018 - 12:45</p>
+                                            <img src="~/img/notifications/3.jpg" alt="Notification Image"
+                                                 class="~/img-thumbnail list-thumbnail xsmall border-0 rounded-circle" />
                                         </a>
+                                        <div class="pl-3">
+                                            <a href="#">
+                                                <p class="font-weight-medium mb-1">
+                                                    3 items just added to wish list by a user!
+                                                </p>
+                                                <p class="text-muted mb-0 text-small">09.04.2018 - 12:45</p>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
+                        </div>*@
                     <button class="header-icon btn btn-empty d-none d-sm-inline-block" type="button" id="fullScreenButton">
                         <i class="simple-icon-size-fullscreen"></i>
                         <i class="simple-icon-size-actual"></i>
@@ -264,16 +264,25 @@
                 <div class="user d-inline-block">
                     <button class="btn btn-empty p-0" type="button" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false">
-                        <span class="name">Sarah Kortney</span>
-                        <span>
-                            <img alt="Profile Picture" src="~/img/profiles/l-1.jpg" />
-                        </span>
+                        <span class="name" style="font-size:15px;">@User.GetName()</span>
+                        @if (User.GetImage() == "")
+                        {
+                            <span class="rounded-circle badge-theme-1  m-2" style="font-size:x-large;padding-top:5px;padding-bottom:5px;padding-right:3px;padding-left:3px">
+                                <i class="iconsminds-add-user"></i>
+                            </span>
+                        }
+                        else
+                        {
+                            <span>
+                                <img alt="Profile Picture" src="@User.GetImage()" />
+                            </span>
+                        }
                     </button>
                     <div class="dropdown-menu dropdown-menu-right mt-3">
                         <div class="dropdown-item">@Html.ActionLink(Utility.Resource.Title_Designer.Account, "Profile", "Account", new { id = User.GetUserId() }) </div>
-                        <a class="dropdown-item" href="#">@Utility.Resource.Title_Designer.Features</a>
-                        <a class="dropdown-item" href="#">@Utility.Resource.Title_Designer.History</a>
-                        <a class="dropdown-item" href="#">@Utility.Resource.Title_Designer.Support</a>
+                        @*<a class="dropdown-item" href="#">@Utility.Resource.Title_Designer.Features</a>
+                            <a class="dropdown-item" href="#">@Utility.Resource.Title_Designer.History</a>
+                            <a class="dropdown-item" href="#">@Utility.Resource.Title_Designer.Support</a>*@
                         <a class="dropdown-item" href="#">@Utility.Resource.Title_Designer.SignOut</a>
                     </div>
                 </div>
@@ -281,10 +290,10 @@
         }
     </nav>
 
-        @if (User.Identity.IsAuthenticated)
-        {
-            @Html.Partial("_MainMenu");
-        }
+    @if (User.Identity.IsAuthenticated)
+    {
+        @Html.Partial("_MainMenu");
+    }
 
     <main>
         <div class="col-lg-10 col-md-12 col-sm-12"> @RenderBody()</div>
@@ -329,7 +338,7 @@
     <script src="~/js/vendor/select2.full.js"></script>
     <script src="~/js/vendor/nouislider.min.js"></script>
     @*<script src="~/js/vendor/bootstrap-datepicker.js" charset="UTF-8"></script>*@
-<script src="~/DatePicher/bootstrap-datepicker.min.js"></script>
+    <script src="~/DatePicher/bootstrap-datepicker.min.js"></script>
     <script src="~/js/vendor/jquery.smartWizard.min.js"></script>
     <script src="~/js/vendor/jquery.validate/jquery.validate.min.js"></script>
     <script src="~/js/vendor/Sortable.js"></script>
@@ -349,8 +358,8 @@
 
     <script>
         jQuery(function ($) {
-            $(".datepicker").datepicker();
-            $(".datepicker").datepicker("option", "dateFormat", "yy/mm/dd");
+            //$(".datepicker").datepicker();
+            //$(".datepicker").datepicker("option", "dateFormat", "yy/mm/dd");
 
             //$('input[type=datetime]').datepicker({
             //    dateFormate: 'dd M yy',
@@ -359,11 +368,11 @@
             //    yearRange: "-10:+10"
             //});
 
-            $('.datepicker').datepicker({
-                format: "dd/mm/yyyy",
-                 today: 'Today',
-                 clear: 'Clear',
-            });
+            //$('.datepicker').datepicker({
+            //    format: "dd/mm/yyyy",
+            //     today: 'Today',
+            //     clear: 'Clear',
+            //});
 
 
 

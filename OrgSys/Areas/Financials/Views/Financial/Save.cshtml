@@ -1,13 +1,18 @@
 ﻿@model Entity.ModelView.FinancialModelView
+@using System.Globalization
 @{
     ViewData["Title_Designer"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var IsRightToLeft = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft;
+    var TextAlign = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "text-right" : "text-left";
+    var DateFromate = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "yyyy-MM-dd" : "dd-MM-yyyy";
+    var TimeFromate = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "mm:hh t" : "hh:mm t";
 }
 
 <div id="HPage" class="container-fluid">
     <div class="row">
         <div class="col-12">
-            <div class="mb-0">
+            <div class="mb-3">
                 @if (Model.TypeId == 1)
                 {
                     <h1> @Utility.Resource.Title_Designer.Collection </h1>
@@ -26,29 +31,11 @@
                             <a href="/">@Utility.Resource.Title_Designer.Home</a>
                         </li>
                         <li class="breadcrumb-item">
-                            @Utility.Resource.Title_Designer.Setting
+                            @Utility.Resource.Title_Designer.Financial
                         </li>
                         <li class="breadcrumb-item">
-                            @Utility.Resource.Title_Designer.FinancialNotices
+                            @Utility.Resource.Title_Designer.Safe_Notices
                         </li>
-                        @if (Model.TypeId == 1)
-                        {
-                            <li class="breadcrumb-item active" aria-current="page">
-                                <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId">@Utility.Resource.Title_Designer.Collection</a>
-                            </li>
-                        }
-                        else if (Model.TypeId == 2)
-                        {
-                            <li class="breadcrumb-item active" aria-current="page">
-                                <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId">@Utility.Resource.Title_Designer.Payment</a>
-                            </li>
-                        }
-                        else if(Model.TypeId == 3)
-                        {
-                        <li class="breadcrumb-item active" aria-current="page">
-                            <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId">@Utility.Resource.Title_Designer.Outlay</a>
-                        </li>
-                        }
                     </ol>
                 </nav>
             </div>
@@ -60,7 +47,7 @@
         <div class="card pl-1 pr-1">
             <form action="Save" method="post" enctype="multipart/form-data" class="tooltip-label-right" novalidate>
                 <div class="d-md-block">
-                    <div class="card-body pt-4">
+                    <div class="card-body">
                         @Html.HiddenFor(model => model.Id)
                         @Html.HiddenFor(model => model.TypeId)
                         @Html.HiddenFor(model => model.ParentId)
@@ -83,13 +70,13 @@
                                     @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger " })
                                 </div>
                                 <div class="form-group col-md-4">
-                                   <label>@Utility.Resource.Title_Designer.Date</label>
+                                    <label>@Utility.Resource.Title_Designer.Date</label>
                                     <div id="divDate">
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="simple-icon-calendar"></i></span>
                                             </div>
-                                            @Html.TextBoxFor(model => model.Date, new { @class = "form-control datepicker" })
+                                            @Html.TextBoxFor(model => model.Date, new { @class = "form-control dpicker" })
                                         </div>
                                         @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                                     </div>
@@ -108,7 +95,7 @@
                                             </div>
                                         </div>
                                         @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
-                                    </div>                                   
+                                    </div>
                                     @Html.ValidationMessageFor(model => model.SafeId, "", new { @class = "text-danger " })
                                 </div>
                             </div>
@@ -153,30 +140,30 @@
                             <div class="form-row">
                                 @if (Model.TypeId == 1 || Model.TypeId == 2)
                                 {
-                                <div class="form-group col-md-4">
-                                    @if (Model.TypeId == 1)
-                                    {
-                                        <label>@Utility.Resource.Title_Designer.Client</label>
-                                    }
-                                    else
-                                    {
-                                        <label>@Utility.Resource.Title_Designer.Supplier</label>
-                                    }
-                                    <div id="divDealerId">
-                                        <div class="input-group DropAutoComplete">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><i class="simple-icon-people"></i></span>
+                                    <div class="form-group col-md-4">
+                                        @if (Model.TypeId == 1)
+                                        {
+                                            <label>@Utility.Resource.Title_Designer.Client</label>
+                                        }
+                                        else
+                                        {
+                                            <label>@Utility.Resource.Title_Designer.Supplier</label>
+                                        }
+                                        <div id="divDealerId">
+                                            <div class="input-group DropAutoComplete">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="simple-icon-people"></i></span>
+                                                </div>
+                                                <input type="text" class="form-control Droptxt" id="txtDealerId" value="@Model.DealerName" autocomplete="off" />
+                                                @Html.HiddenFor(model => model.DealerId)
+                                                <div class="input-group-prepend Dropbtn">
+                                                    <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
+                                                </div>
                                             </div>
-                                            <input type="text" class="form-control Droptxt" id="txtDealerId" value="@Model.DealerName" autocomplete="off" />
-                                            @Html.HiddenFor(model => model.DealerId)
-                                            <div class="input-group-prepend Dropbtn">
-                                                <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
-                                            </div>
+                                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                                         </div>
-                                        @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                                        @Html.ValidationMessageFor(model => model.DealerId, "", new { @class = "text-danger " })
                                     </div>
-                                    @Html.ValidationMessageFor(model => model.DealerId, "", new { @class = "text-danger " })
-                                </div>
                                 }
                                 else
                                 {
@@ -213,7 +200,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="simple-icon-notebook"></i></span>
                                             </div>
-                                            @Html.TextBoxFor(model => model.Notes, new { @class = "form-control",@placeholder= Utility.Resource.Title_Designer.Notes })
+                                            @Html.TextBoxFor(model => model.Notes, new { @class = "form-control", @placeholder = Utility.Resource.Title_Designer.Notes })
                                         </div>
                                         @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                                     </div>
@@ -239,13 +226,13 @@
                                             @foreach (var FinancialInvoice in Model.FinancialInvoices)
                                             {
                                                 <tr class="invoice-empty InvoiceRow">
-                                                    <td style="width:35px;padding:0px;text-align:center;vertical-align:middle;">
+                                                    <td class="text-center align-middle" style="width:35px;padding:0px;">
                                                         <span id="Index">  </span>
                                                     </td>
                                                     <td class="input-group typeahead-container" style="padding:0px;">
-                                                        <div class="input-group">
-                                                            <div class="input-group-append " style="border-top:none;border-bottom:none;border-right:none;border-left:none;">
-                                                                <button id="SearchInvoice" type="button" class="btn btn-primary SearchInvoice" data-toggle="modal" data-target=".bd-example-modal-lg" style="width:30px;padding:0px;color:white;">
+                                                        <div class="input-group typeahead-container DropAutoComplete">
+                                                            <div class="input-group-append " style="border:none;">
+                                                                <button id="SearchInvoice" type="button" class="btn btn-primary SearchInvoice text-center align-middle" data-toggle="modal" data-target=".bd-example-modal-lg" style="width:30px;padding:0px;color:white;">
                                                                     <i class="simple-icon-magnifier"></i>
                                                                 </button>
                                                             </div>
@@ -254,45 +241,45 @@
                                                         </div>
                                                     </td>
                                                     <td style="padding:0px;">
-                                                        <input type="text" id="Date" name="Date" class="form-control Date" value="@FinancialInvoice.Invoice.Date.ToString("yyyy-MM-dd")" readonly style="border-top:none;border-bottom:none;background-color:transparent;" />
+                                                        <input type="text" id="Date" name="Date" class="form-control Date" value="@FinancialInvoice.Invoice.Date.ToString(DateFromate, new CultureInfo("en-US"))" readonly style="border-top:none;border-bottom:none;background-color:transparent;" />
                                                     </td>
                                                     <td style="padding:0px;">
                                                         <input type="text" id="Net" name="Net" class="form-control Net" value="@FinancialInvoice.Net" readonly style="border-top:none;border-bottom:none;background-color:transparent;" placeholder="0.0" />
                                                     </td>
                                                     <td style="padding:0px;">
-                                                        <input type="text" id="Amount" name="Amount" class="form-control Amount" value="@FinancialInvoice.Amount"  style="border-top:none;border-bottom:none;background-color:transparent;" placeholder="0.0" />
+                                                        <input type="text" id="Amount" name="Amount" class="form-control Amount" value="@FinancialInvoice.Amount" style="border-top:none;border-bottom:none;background-color:transparent;" placeholder="0.0" />
                                                     </td>
-                                                    <td style="width:100px;padding:0px;text-align:center;vertical-align:middle;">
-                                                        <a id="btnDelete" class="btnDelete" href="javascript:;" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete</a>
+                                                    <td class="text-center align-middle" style="width:100px;padding:0px;">
+                                                        <a id="btnDelete" class="btnDelete" href="javascript:;" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash"></i> </a>
                                                     </td>
                                                 </tr>
                                             }
                                             <tr class="invoice-empty InvoiceRow trNew">
-                                                <td style="width:35px;padding:0px;text-align:center;vertical-align:middle;">
+                                                <td class="text-center align-middle" style="width:35px;padding:0px;">
                                                     <span id="Index">  </span>
                                                 </td>
                                                 <td class="input-group typeahead-container" style="padding:0px;">
-                                                    <div class="input-group">
-                                                        <div class="input-group-append " style="border-top:none;border-bottom:none;border-right:none;border-left:none;">
-                                                            <button id="SearchInvoice" type="button" class="btn btn-primary SearchInvoice" data-toggle="modal" data-target=".bd-example-modal-lg" style="width:30px;padding:0px;color:white;">
+                                                    <div class="input-group typeahead-container DropAutoComplete">
+                                                        <div class="input-group-append " style="border:none;">
+                                                            <button id="SearchInvoice" type="button" class="btn btn-primary SearchInvoice text-center align-middle" data-toggle="modal" data-target=".bd-example-modal-lg" style="width:30px;padding:0px;color:white;">
                                                                 <i class="simple-icon-magnifier"></i>
                                                             </button>
                                                         </div>
                                                         <input type="text" class="form-control" name="query" id="query" style="border-top:none;border-bottom:none;border-right:none;" readonly>
                                                         <input type="hidden" id="InvoiceId" name="InvoiceId" class="InvoiceId" />
                                                     </div>
-                                                </td>                                               
+                                                </td>
                                                 <td style="padding:0px;">
-                                                    <input type="text" id="Date" name="Date" class="form-control Date" readonly style="border-top:none;border-bottom:none;background-color:transparent;"  />
+                                                    <input type="text" id="Date" name="Date" class="form-control Date" readonly style="border-top:none;border-bottom:none;background-color:transparent;" />
                                                 </td>
                                                 <td style="padding:0px;">
                                                     <input type="text" id="Net" name="Net" class="form-control Net" readonly style="border-top:none;border-bottom:none;background-color:transparent;" placeholder="0.0" />
                                                 </td>
                                                 <td style="padding:0px;">
-                                                    <input type="text" id="Amount" name="Amount"  class="form-control Amount" style="border-top:none;border-bottom:none;background-color:transparent;" placeholder="0.0" />
+                                                    <input type="text" id="Amount" name="Amount" class="form-control Amount" style="border-top:none;border-bottom:none;background-color:transparent;" placeholder="0.0" />
                                                 </td>
-                                                <td style="width:100px;padding:0px;text-align:center;vertical-align:middle;">
-                                                    <a id="btnDelete" class="btnDelete" href="javascript:;" data-toggle="modal" data-target="#MsgModelId" style="display:none"><i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete</a>
+                                                <td class="text-center align-middle" style="width:100px;padding:0px;">
+                                                    <a id="btnDelete" class="btnDelete" href="javascript:;" data-toggle="modal" data-target="#MsgModelId" style="display:none"><i class="simple-icon-trash"></i> </a>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -361,11 +348,12 @@
     var AutoSave;
     var Repeated;
     jQuery(function ($) {
-        //$(".datepicker").datepicker();
-        //$(".datepicker").datepicker("option", "dateFormat", "yy/mm/dd");        
+        $(".dpicker").datepicker();
+        $(".dpicker").datepicker("option", "dateFormat", "dd/mm/yy");
         $("#query").focus();
-        
+
         setTimeout(function () {
+            $("html, body").scrollTop($("#HPage").offset().top - 300);
             $(".sw-toolbar-bottom").css("display", "none");
 
         }, 600);
@@ -374,12 +362,12 @@
             Save();
         });
 
-        $('#CurrencyId').on("change", function () {            
+        $('#CurrencyId').on("change", function () {
             $.ajax({
                 type: 'GET',
                 url: "/Setting/Currency/GetRate",
                 data: { id: $("#CurrencyId").val()},
-                success: function (data) { 
+                success: function (data) {
                     $("#Rate").val(data.rate);
                     $(".InvoiceRow").not(".trNew").remove();
                 }
@@ -419,7 +407,7 @@
             RefreshSomeEventListener();
         }
 
-        RefreshSomeEventListener = function () {   
+        RefreshSomeEventListener = function () {
             $('.SearchInvoice').on("click", function () {
                 var idsList = "";
                 $('#tbl > tbody > .InvoiceRow').each(function () {
@@ -430,7 +418,7 @@
                         }
                     }
                 });
-                
+
                 var index = $(this).parents("tr").find("#Index").html();
                 $.ajax({
                     type: 'GET',
@@ -567,9 +555,9 @@
             });
 
             $('.btnDelete').click(function () {
-                $(this).parent().parent().remove();                
-                ReIndex();               
-            });          
+                $(this).parent().parent().remove();
+                ReIndex();
+            });
 
             $("#Code").keyup(function () {
                 AutoSave();
@@ -642,6 +630,7 @@
                         var date = new Date(data.date);
                         $row.find("#InvoiceId").val(id);
                         $row.find("#query").val(data.code);
+
                         $row.find("#Date").val(leftPad(date.getDay(), 2) + "-" + leftPad(date.getMonth(), 2) + "-" + date.getFullYear());
                         $row.find("#Net").val(data.net);
                         $row.find("#Amount").val(data.credit);
@@ -682,7 +671,12 @@
                         var date = new Date(data.date);
                         $row.find("#InvoiceId").val(id);
                         $row.find("#query").val(data.code);
-                        $row.find("#Date").val(leftPad(date.getDay(), 2) + "-" + leftPad(date.getMonth(),2) + "-" + date.getFullYear());
+                        if ('@IsRightToLeft') {
+                            $row.find("#Date").val(leftPad(date.getDay(), 2) + "-" + leftPad(date.getMonth(), 2) + "-" + date.getFullYear());
+                        }
+                        else {
+                            $row.find("#Date").val(date.getFullYear() + "-" + leftPad(date.getMonth(), 2) + "-" + leftPad(date.getDay(), 2));
+                        }
                         $row.find("#Net").val(data.net);
                         $row.find("#Amount").val(data.credit);
                         $row.find("#btnDelete").css("display", "block");
@@ -707,7 +701,7 @@
                 $(this).find("#Index").empty();
                 $(this).find("#Index").append(index + 1);
             });
-        }       
+        }
 
         Save = function () {
             var Valid = true;
@@ -746,9 +740,9 @@
                 $("#tbHeader").trigger("Click", SkipCallingAction = true)
                 window.location.replace("#checkStep2");
             }
-           
+
             if (Valid == true) {
-                var data = CollectData();                
+                var data = CollectData();
                 $.ajax({
                     type: 'POST',
                     url: "/Financials/Financial/Save",
@@ -822,7 +816,7 @@
             $('#tbl > tbody > .InvoiceRow').each(function () {
                 var currentRow = $(this);
                 if (!currentRow.hasClass('trNew')) {
-                    if (currentRow.find('#InvoiceId').val() > 0) {                      
+                    if (currentRow.find('#InvoiceId').val() > 0) {
                         list.push({
                             FinancialId: $('#Id').val(),
                             InvoiceId: currentRow.find('#InvoiceId').val(),
@@ -831,7 +825,7 @@
                     }
                 }
             });
-
+            
             var data = {
                 Id: $('#Id').val(),
                 TypeId: $('#TypeId').val(),

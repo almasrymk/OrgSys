@@ -68,7 +68,7 @@ namespace Service.BAL.Data.Security
 
         public RequestModelView Save(RequestModelView ob)
         {
-            return new RequestModelView(repo.requestRepo.AddOrUpdate(ob.Model));
+            return new RequestModelView(repo.requestRepo.AddOrUpdate(ob.Model()));
         }
     }
 }

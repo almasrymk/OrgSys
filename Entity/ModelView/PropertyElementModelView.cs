@@ -38,25 +38,22 @@ namespace Entity.ModelView
             this.Status = ob.Status;
         }
 
-        public PropertyElement Model
+        public PropertyElement Model()
         {
-            get
+            return new PropertyElement
             {
-                return new PropertyElement
-                {
-                    PropertyId = this.PropertyId,
-                    Name = this.Name,
-                    Id = this.Id,
-                    CodeNumber = this.CodeNumber,
-                    Code = this.Code,
-                    MaskText = this.MaskText,
-                    ParentId = this.ParentId,
-                    TypeId = this.TypeId,
-                    Hide = this.Hide,
-                    Status = this.Status,
-                    ImgPath = this.ImgPath
-                };
-            }
+                PropertyId = this.PropertyId,
+                Name = this.Name,
+                Id = this.Id,
+                CodeNumber = this.CodeNumber,
+                Code = this.Code,
+                MaskText = this.MaskText,
+                ParentId = this.ParentId,
+                TypeId = this.TypeId,
+                Hide = this.Hide,
+                Status = this.Status,
+                ImgPath = this.ImgPath
+            };
         }
 
         public long PropertyId { get; set; }

@@ -18,7 +18,7 @@ namespace Service
         #region Save / Delete
         public DealerModelView Save(DealerModelView ob)
         {
-            return new DealerModelView(repo.dealerRepo.AddOrUpdate(ob.Model));
+            return new DealerModelView(repo.dealerRepo.AddOrUpdate(ob.Model()));
         }
 
         public bool Delete(long id)
