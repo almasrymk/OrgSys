@@ -1,0 +1,38 @@
+﻿@{Layout = null;}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="~/css/login.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="wrapper fadeInDown">
+        <div id="formContent">
+            <!-- Tabs Titles -->
+            <h2 class="active"> Register </h2>
+            <!-- Icon -->
+            <div class="fadeIn first">
+                <img src="~/logos/Logo.png" style="width:150px !important" id="icon" alt="User Icon" />
+            </div>
+            <!-- Login Form -->
+            <form>
+                <input type="text" id="FieldType " class="fadeIn second" name="FieldType" placeholder="Field Type">
+                <input type="text" id="Location " class="fadeIn second" name="Location" placeholder="Location">
+                <input type="text" id="Address" class="fadeIn second" name="Address" placeholder="Address">
+                <input type="password" id="password" class="fadeIn third" name="password" placeholder="password">
+                <input type="password" id="ConfirmPassword" class="fadeIn third" name="ConfirmPassword" placeholder="Confirm Password">
+                <input type="submit" class="fadeIn fourth" value="Log In">
+            </form>
+            <!-- Remind Passowrd -->
+            <div id="formFooter">
+                <a class="underlineHover" href="~/Account/Login">already have account?</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/js/vendor/jquery-3.3.1.min.js"></script>
+    <script src="~/js/vendor/bootstrap.bundle.min.js"></script>
+    <script src="~/js/dore.script.js"></script>
+
+
+</body>
+</html>

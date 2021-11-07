@@ -1,0 +1,35 @@
+﻿@{Layout = null;}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="~/css/login.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="wrapper fadeInDown">
+        <div id="formContent">
+            <!-- Tabs Titles -->
+            <h2 class="active"> Request </h2>
+            <!-- Icon -->
+            <div class="fadeIn first">
+                <img src="~/logos/Logo.png" style="width:150px !important" id="icon" alt="User Icon" />
+            </div>
+            <!-- Login Form -->
+            <form>
+                <input type="text" id="Name" class="fadeIn second" name="Name" placeholder="Name">
+                <input type="text" id="CompanyName" class="fadeIn second" name="CompanyName" placeholder="Company Name">
+                <input type="email" id="Email" class="fadeIn second" name="Email" placeholder="Email">
+                <input type="text" id="Phone" class="fadeIn second" name="Phone" placeholder="Phone">
+                <input type="text" id="password" class="fadeIn third" name="login" placeholder="password">
+                <input type="submit" class="fadeIn fourth" value="Log In">
+            </form>
+            <!-- Remind Passowrd -->
+        </div>
+    </div>
+
+    <script src="~/js/vendor/jquery-3.3.1.min.js"></script>
+    <script src="~/js/vendor/bootstrap.bundle.min.js"></script>
+    <script src="~/js/dore.script.js"></script>
+
+
+</body>
+</html>
