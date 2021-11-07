@@ -3,7 +3,8 @@
 /* BASIC */
 
 html {
-    background-color: #56baed !important;
+    /*    background-image: url('../img/login/balloon-lg.jpg');*/
+    background-color: #7190ca !important;
 }
 
 body {
@@ -12,7 +13,7 @@ body {
 }
 
 a {
-    color: #92badd;
+    color: #6496fa;
     display: inline-block;
     text-decoration: none;
     font-weight: 400;
@@ -83,7 +84,7 @@ h2.active {
 /* FORM TYPOGRAPHY*/
 
 input[type=button], input[type=submit], input[type=reset] {
-    background-color: #56baed;
+    background-color: #6496fa;
     border: none;
     color: white;
     padding: 15px 80px;
