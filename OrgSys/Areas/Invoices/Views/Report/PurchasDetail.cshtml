@@ -126,7 +126,7 @@
     {
         <div class="row m-1">
             <div id="List" class="col-12" data-check-all="checkAll">
-                @Html.Partial("SalesDetailList", Model)
+                @Html.Partial("PurchasDetailList", Model)
             </div>
         </div>
     }
@@ -394,12 +394,12 @@
             var userId = $("#UserId").val();
 
             $.ajax({
-                url: "/Invoices/Report/SalesDetail",
+                url: "/Invoices/Report/PurchasDetail",
                 data: { fromDate: fromDate, toDate: toDate, dealerId: dealerId, shiftId: shiftId, branchId: branchId, userId: userId, page: page, pageSize: 100 },
                 success: function (data) {
                     console.log(data);
-                    $("#List").empty();
-                    $("#List").html(data);
+                    $("#PurchasDetailList").empty();
+                    $("#PurchasDetailList").html(data);
                 }, error: function (err) {
                     console.log(err);
                 }

@@ -24,6 +24,7 @@ namespace Entity
 
         public string ImgPath { get; set; }      
 
-        public Status Status { get; set; }        
+        public Status Status { get; set; }
+        
     }
 }
