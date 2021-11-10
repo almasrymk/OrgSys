@@ -21,7 +21,7 @@
 
             <div class="row">
                 <div class="col-12">
-                    <form action="" method="post" enctype="multipart/form-data">
+                    <form action="" method="post" id="ProfileForm" enctype="multipart/form-data">
                         <div class="card  mt-1">
                             <div class="row">
                                 <div class="col-md-4 text-center">
@@ -55,19 +55,22 @@
                                         <div class="form-group">
                                             <label class="label">Name</label>
                                             <input class="form-control col-10" id="Name" name="Name" value="@Model.Name" />
+                                           
                                         </div>
                                         <div class="form-group">
                                             <label class="label">E-mail</label>
                                             <input class="form-control col-10" id="UserName" name="UserName" value="@Model.UserName" />
+                                          
                                         </div>
                                         <div class="form-group">
                                             <label class="label">Current Password</label>
                                             <input class="form-control col-10" id="CurrentPassword" type="password" name="Password" placeholder="Current Password" value="" autocomplete="off" />
+                                        
                                         </div>
                                         <div class="form-group">
                                             <label class="label">New Password</label>
                                             <input class="form-control col-10" type="password" id="NewPassword" name="NewPassword" placeholder="New Password" autocomplete="off" />
-                                            <span class="badge badge-danger" style="display:none" id="message">"Password must contain at least 1 capital letter,\n\n1 small letter, 1 number and 1 special character.\n\nFor special characters you can pick one of these -,(,!,@@,#,$,),%,<>"</span>
+                                       
                                         </div>
                                         <div class="form-group">
                                             <label class="label">Confirm Password</label>
@@ -77,7 +80,7 @@
                                 </div>
                             </div>
                             <div class="card-footer m-0 " style="background-color:transparent;">
-                                <button class="btn btn-primary" disabled="disabled" id="SaveUser" onclick="Save()" value="">@Utility.Resource.Title_Designer.Save</button>
+                                <button class="btn btn-primary"  id="SaveUser" onclick="Save()" value="">@Utility.Resource.Title_Designer.Save</button>
                             </div>
                         </div>
                     </form>
@@ -101,28 +104,102 @@
 
 
 <script>
-    $("#NewPassword").on("keyup", function () { $("#message").hide(); });
+    //$("#NewPassword").on("keyup", function () { $("#message").hide(); });
 
-    $('#NewPassword,#NewPassword,#ConfirmPassword').on('keyup', function () {
+    //$('#NewPassword,#NewPassword,#ConfirmPassword').on('keyup', function () {
 
-        //var passwordvalid = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@@#\$%\^&\*])$/;
-        //var NewPassword = $('#NewPassword').val();
-        //if (NewPassword != passwordvalid) {
-        //    $("#message").show();
+    //    //var passwordvalid = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@@#\$%\^&\*])$/;
+    //    //var NewPassword = $('#NewPassword').val();
+    //    //if (NewPassword != passwordvalid) {
+    //    //    $("#message").show();
 
-        //} else { $("#message").hide(); }
+    //    //} else { $("#message").hide(); }
 
 
-        if ($('#NewPassword').val() != $('#CurrentPassword').val()) {
-            if ($('#NewPassword').val() == $('#ConfirmPassword').val()) {
-                $('#SaveUser').prop('disabled', false);
+    //    if ($('#NewPassword').val() != $('#CurrentPassword').val()) {
+    //        if ($('#NewPassword').val() == $('#ConfirmPassword').val()) {
+    //            $('#SaveUser').prop('disabled', false);
 
-            } else
-                $('#SaveUser').prop('disabled', true);
-        }
+    //        } else
+    //            $('#SaveUser').prop('disabled', true);
+    //    }
+
+    //});
+
+
+    $(document).ready(function () {
+        $('#ProfileForm').focusout(function (e) {
+            e.preventDefault();
+            var name = $('#Name').val();
+            var userName = $('#UserName').val();
+            var currentPassword = $('#CurrentPassword').val();
+            var newPassword = $('#NewPassword').val();
+            var confirmPassword = $('#ConfirmPassword').val();
+            $(".error").remove();
+
+
+            if (name.length < 1) {
+                $('#Name').after('<span class="error badge badge-danger ">The Name is required</span>');
+            }
+           
+
+            if (userName.length < 1)
+            {
+                $('#UserName').after('<span class="error badge badge-danger">This field is required</span>');
+            }
+            else {
+                var regex = /^([a-zA-Z0-9_.+-])+\@@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+                var validEmail = regex.test(userName);
+                    if (!validEmail)
+                    {
+                        $('#UserName').after('<span class="error badge badge-danger">Enter a valid email</span>');
+                        return 0;
+                    }
+                    else
+                    {
+                        $.ajax({
+                            type: 'POST',
+                            url: "/Account/CheckEmail?Email=" + $("#UserName").val(),
+                            success: function (res)
+                            {
+                                if (res.status == "success")
+                                {
+                                  
+                                }
+                                else
+                                {
+                                  
+                                   $('#UserName').after('<span class="error badge badge-success">You Email Or UserName Is Exist</span>');
+
+                                }
+
+                            }
+                        });
+                    }
+            }
+        
+
+            if (currentPassword.length > 1)
+            {
+                $.ajax({
+                    type: 'POST',
+                    url: "/Account/CheckPassword?Email=" + $("#UserName").val() + "&Password=" + $("#CurrentPassword").val(),
+                    success: function (res) {
+                        if (res.status == "success") {
+                            alert("doneeeee");
+                        }
+                        else {
+                            $('#CurrentPassword').after('<span class="error badge badge-danger">The Current Password Invalid</span>');
+                        }
+
+                    }
+                });
+            
+            }
+
+        });
 
     });
-
 
 
 

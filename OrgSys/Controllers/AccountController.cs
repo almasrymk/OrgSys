@@ -113,6 +113,7 @@ namespace OrgSys.Controllers
             return Json(user.HavePassword(Email));
         }
 
+
         public ActionResult CheckPassword(string Email, string Password)
         {
             return Json(user.CheckEmailAndPassword(Email, Utility.Security.Encrypt(Password)));

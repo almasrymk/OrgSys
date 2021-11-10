@@ -106,9 +106,18 @@ namespace OrgSys.Controllers
             if (ModelState.IsValid)
             {
                 new RequestService().Save(_request);
+                
             }
 
-            return Json(new { });
+            return RedirectToAction("RegDone");
+
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public ActionResult RegDone()
+        {
+            return View();
         }
 
 
