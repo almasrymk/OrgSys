@@ -1,0 +1,5 @@
+﻿Add-Migration CreateDb -Context AdminContext -OutputDir Migrations\AdminMigrations
+Add-Migration CreateDb -Context OrgContext -OutputDir Migrations\OrgMigrations
+
+Update-Database -Context AdminContext
+Update-Database -Context OrgContext

@@ -1789,7 +1789,7 @@ namespace Utility.Resource {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Transaction Details.
+        ///   Looks up a localized string similar to Transaction Data.
         /// </summary>
         public static string TransactionDetails {
             get {

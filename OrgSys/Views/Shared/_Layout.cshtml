@@ -30,7 +30,7 @@
     <link rel="stylesheet" href="~/css/vendor/bootstrap-stars.css" />
     <link rel="stylesheet" href="~/css/vendor/nouislider.min.css" />
     <link rel="stylesheet" href="~/css/vendor/smart_wizard.min.css" />
-    <link href="~/DatePicher/bootstrap-datepicker.min.css" rel="stylesheet" />
+    @*<link href="~/DatePicher/bootstrap-datepicker.min.css" rel="stylesheet" />*@
     <link rel="stylesheet" href="~/css/vendor/component-custom-switch.min.css" />
     <link rel="stylesheet" href="~/css/main.css" />
     <link rel="stylesheet" href="~/css/jquery.bonsai.css" />
@@ -278,6 +278,8 @@
                     </button>
                     <div class="dropdown-menu dropdown-menu-right mt-3">
                         <div class="dropdown-item">@Html.ActionLink(Utility.Resource.Title_Designer.Account, "Profile", "Account", new { id = User.GetUserId() }) </div>
+                        <div class="dropdown-item"><a href="~/Home/PaymentMethod">Payment Method</a> </div>
+
                         @*<a class="dropdown-item" href="#">@Utility.Resource.Title_Designer.Features</a>
                             <a class="dropdown-item" href="#">@Utility.Resource.Title_Designer.History</a>
                             <a class="dropdown-item" href="#">@Utility.Resource.Title_Designer.Support</a>*@
@@ -336,7 +338,7 @@
     <script src="~/js/vendor/select2.full.js"></script>
     <script src="~/js/vendor/nouislider.min.js"></script>
     @*<script src="~/js/vendor/bootstrap-datepicker.js" charset="UTF-8"></script>*@
-    <script src="~/DatePicher/bootstrap-datepicker.min.js"></script>
+    @*<script src="~/DatePicher/bootstrap-datepicker.min.js"></script>*@
     <script src="~/js/vendor/jquery.smartWizard.min.js"></script>
     <script src="~/js/vendor/jquery.validate/jquery.validate.min.js"></script>
     <script src="~/js/vendor/Sortable.js"></script>

@@ -22,8 +22,12 @@ namespace OrgSys.Controllers
 
             _logger = logger;
         }
-
-
+        [AllowAnonymous]
+        [HttpGet]
+        public IActionResult Requests()
+        {
+            return View();
+        }
         [AllowAnonymous]
         [HttpGet]
         public IActionResult Register()

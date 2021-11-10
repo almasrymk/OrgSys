@@ -20,6 +20,7 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace OrgSys
 {
@@ -69,9 +70,12 @@ namespace OrgSys
             services.AddRazorPages().AddRazorRuntimeCompilation();
             services.AddRazorPages().AddViewLocalization();
 
-            services.AddDbContext<OrgContext>(options => options.UseSqlServer(Configuration.GetConnectionString("OrgConnection")));
+            services.AddDbContext<AdminContext>(options => options.UseSqlServer(Configuration.GetConnectionString("OrgConnection"), x => x.MigrationsHistoryTable("__AdminMigrationsHistory", "admin")));
+            services.AddDbContext<OrgContext>(options => options.UseSqlServer(Configuration.GetConnectionString("OrgConnection"), x => x.MigrationsHistoryTable("__OrgMigrationsHistory", "org")).ReplaceService<IModelCacheKeyFactory, DbSchemaAwareModelCacheKeyFactory>()) ;
             services.AddControllersWithViews();
+            services.AddSession();
             services.AddMvc();
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -93,6 +97,7 @@ namespace OrgSys
                 .AddSupportedCultures(supportedCultures)
                 .AddSupportedUICultures(supportedCultures);
 
+            app.UseSession();
             app.UseRequestLocalization(localizationOptions);
 
             app.UseHttpsRedirection();
@@ -108,6 +113,7 @@ namespace OrgSys
             app.UseAuthentication();
             app.UseAuthorization();
 
+          
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

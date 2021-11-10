@@ -122,6 +122,7 @@ namespace OrgSys.Areas.Setting.Controllers
                 id = product.Id,
                 name = product.Name,
                 price = product.Price,
+                cost = product.Cost,
                 selectunitid = product.ProductUnits.FirstOrDefault(e => e.DefaultUnit).UnitId,
                 selectunitName = product.ProductUnits.FirstOrDefault(e => e.DefaultUnit).UnitName,
                 unitlist = new UnitService().GetAllByProductId(id)

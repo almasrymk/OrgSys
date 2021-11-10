@@ -1,0 +1,421 @@
+﻿@model X.PagedList.IPagedList<Entity.ModelReport.InvoiceDetail>
+@{
+    ViewData["Title_Designer"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid disable-text-selection">
+    <h1> @Utility.Resource.Title_Designer.SalesDetails</h1>
+    <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
+        <ol class="breadcrumb pt-0">
+            <li class="breadcrumb-item">
+                <a href="/Home/Dashboard">@Utility.Resource.Title_Designer.Home</a>
+            </li>
+            <li class="breadcrumb-item">
+                @Utility.Resource.Title_Designer.Invoices
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">@Utility.Resource.Title_Designer.Report</li>
+        </ol>
+    </nav>
+</div>
+
+<div class="card">
+    <div class="form-row m-2">
+        <div class="col-4">
+            <div id="divFromDate" class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" style="width:100px"><i class="simple-icon-calendar"></i> &nbsp;  @Utility.Resource.Title_Designer.FromDate</span>
+                    </div>
+                    <input type="text" id="FromDate" name="FromDate" value="@ViewBag.FromDate" class="form-control datepicker" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div id="divShiftId" class="input-group DropAutoComplete">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" style="width:100px"><i class="iconsminds-clock-back"></i> &nbsp; @Utility.Resource.Title_Designer.Shift</span>
+                    </div>
+                    <input type="text" class="form-control Droptxt" id="txtShiftId" value="@ViewBag.ShiftName" autocomplete="off" />
+                    <input type="hidden" id="ShiftId" name="ShiftId" value="@ViewBag.ShiftId" />
+                    <div class="input-group-prepend Dropbtn">
+                        <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="form-group ">
+                <div id="divToDate" class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" style="width:100px"><i class="simple-icon-calendar"></i> &nbsp; @Utility.Resource.Title_Designer.ToDate</span>
+                    </div>
+                    <input type="text" id="ToDate" name="ToDate" value="@ViewBag.ToDate" class="form-control datepicker" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div id="divBranchId" class="input-group DropAutoComplete">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" style="width:100px"><i class="iconsminds-clock-back"></i> &nbsp; @Utility.Resource.Title_Designer.Branch</span>
+                    </div>
+                    <input type="text" class="form-control Droptxt" id="txtBranchId" value="@ViewBag.BranchName" autocomplete="off" />
+                    <input type="hidden" id="BranchId" name="BranchId" value="@ViewBag.BranchId" />
+                    <div class="input-group-prepend Dropbtn">
+                        <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="form-group">
+                <div id="divDealerId" class="input-group DropAutoComplete">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" style="width:100px"><i class="simple-icon-people"></i> &nbsp; @Utility.Resource.Title_Designer.Dealer</span>
+                    </div>
+                    <input type="text" class="form-control Droptxt" id="txtDealerId" value="@ViewBag.DealerName" autocomplete="off" />
+                    <input type="hidden" id="DealerId" name="DealerId" value="@ViewBag.DealerId" />
+                    <div class="input-group-prepend Dropbtn">
+                        <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div id="divUserId" class="input-group DropAutoComplete">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" style="width:100px"><i class="iconsminds-clock-back"></i> &nbsp; @Utility.Resource.Title_Designer.User</span>
+                    </div>
+                    <input type="text" class="form-control Droptxt" id="txtUserId" value="@ViewBag.UserName" autocomplete="off" />
+                    <input type="hidden" id="UserId" name="UserId" value="@ViewBag.BranchId" />
+                    <div class="input-group-prepend Dropbtn">
+                        <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-7">
+                <button id="btn" type="button" class="btn btn-primary ml-4 mr-4 mb-4">@Utility.Resource.Title_Designer.Save</button>
+            </div>
+
+        </div>
+        @*<div class="form-group row m-2">
+                <div class="custom-control custom-radio">
+                    <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input" checked>
+                    <label class="custom-control-label" for="customRadio1">
+                        Table
+                    </label>
+                </div>
+                <span> &nbsp;  | &nbsp;  </span>
+                <div class="custom-control custom-radio">
+                    <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
+                    <label class="custom-control-label" for="customRadio2">
+                        Chart
+                    </label>
+                </div>
+                <span> &nbsp;  | &nbsp;  </span>
+                <div class="custom-control custom-radio">
+                    <input type="radio" id="customRadio3" name="customRadio" class="custom-control-input">
+                    <label class="custom-control-label" for="customRadio3">
+                        Table & Chart
+                    </label>
+                </div>
+            </div>*@
+    </div>
+
+    <div class="separator mb-2"></div>
+
+    @if (Model != null && Model.Count > 0)
+    {
+        <div class="row m-1">
+            <div id="List" class="col-12" data-check-all="checkAll">
+                @Html.Partial("PurchasDetailList", Model)
+            </div>
+        </div>
+    }
+</div>
+
+<script src="~/js/vendor/jquery-3.3.1.min.js"></script>
+<script src="~/js/vendor/bootstrap3-typeahead.js"></script>
+<link href="~/css/jquery-ui.css" rel="stylesheet" />
+<script src="~/js/jquery-ui.js"></script>
+<script src="~/js/PopupScript.js"></script>
+
+<script>
+    var DoSearch;
+    var CollectInvoice;
+
+    jQuery(function ($) {
+        $('#FromDate').on("change", function () {
+            //DoSearch(1);
+        });
+
+        $('#ToDate').on("change", function () {
+            //DoSearch(1);
+        });
+
+        $("#txtDealerId").autocomplete({
+            minLength: 0,
+            source: function (request, response) {
+                var searchPhrase = $("#txtDealerId").val();//request.term.trim().toLowerCase();
+                var noResultsLabel = 'NoResultsFound';
+                if (searchPhrase == "...")
+                    searchPhrase = "";
+                $.ajax({
+                    url: "/Setting/Dealer/GetList",
+                    type: "Get",
+                    dataType: "json",
+                    data: { txtSearch: searchPhrase, TypeId: 1, page: 1, pageSize: 7 },
+                    success: function (data) {
+                        try {
+                            if (!data.length) {
+                                data = [{ name: noResultsLabel }];
+                            }
+
+                            if ("" + $("#txtDealerId").val() == "") {
+                                $("#DealerId").val("");
+                                $("#txtDealerId").val("...");
+                                $("#errorDealerId").remove();
+                                //DoSearch(1);
+                            }
+
+                            response($.map(data, function (item) {
+                                return {
+                                    label: item.name, value: item.name, id: item.id
+                                };
+                            }));
+                        } catch (err) { }
+                    }
+                });
+            },
+            select: function (event, ui) {
+                if (ui.item.label === 'NoResultsFound') {
+                    event.preventDefault();
+                    return;
+                }
+                $("#DealerId").val(ui.item.id);
+                $("#errorDealerId").remove();
+                //DoSearch(1);
+            },
+            focus: function (event, ui) {
+                if (ui.item.label === 'NoResultsFound') {
+                    event.preventDefault();
+                }
+            }
+        });
+
+        $("#txtBranchId").autocomplete({
+            minLength: 0,
+            source: function (request, response) {
+                var searchPhrase = $("#txtBranchId").val();//request.term.trim().toLowerCase();
+                var noResultsLabel = 'NoResultsFound';
+                if (searchPhrase == "...")
+                    searchPhrase = "";
+                $.ajax({
+                    url: "/Setting/Branch/GetList",
+                    type: "Get",
+                    dataType: "json",
+                    data: { txtSearch: searchPhrase, page: 1, pageSize: 7 },
+                    success: function (data) {
+                        try {
+                            if (!data.length) {
+                                data = [{ name: noResultsLabel }];
+                            }
+
+                            if ("" + $("#txtBranchId").val() == "") {
+                                $("#BranchId").val("");
+                                $("#txtBranchId").val("...");
+                                $("#errorBranchId").remove();
+                                //DoSearch(1);
+                            }
+
+                            response($.map(data, function (item) {
+                                return {
+                                    label: item.name, value: item.name, id: item.id
+                                };
+                            }));
+                        } catch (err) { }
+                    }
+                });
+            },
+            select: function (event, ui) {
+                if (ui.item.label === 'NoResultsFound') {
+                    event.preventDefault();
+                    return;
+                }
+                $("#BranchId").val(ui.item.id);
+                $("#errorBranchId").remove();
+                //DoSearch(1);
+            },
+            focus: function (event, ui) {
+                if (ui.item.label === 'NoResultsFound') {
+                    event.preventDefault();
+                }
+            }
+        });
+
+        $("#txtShiftId").autocomplete({
+            minLength: 0,
+            source: function (request, response) {
+                var searchPhrase = $("#txtShiftId").val();//request.term.trim().toLowerCase();
+                var noResultsLabel = 'NoResultsFound';
+                if (searchPhrase == "...")
+                    searchPhrase = "";
+                $.ajax({
+                    url: "/Setting/Shift/GetList",
+                    type: "Get",
+                    dataType: "json",
+                    data: { txtSearch: searchPhrase, page: 1, pageSize: 7 },
+                    success: function (data) {
+                        try {
+                            if (!data.length) {
+                                data = [{ name: noResultsLabel }];
+                            }
+
+                            if ("" + $("#txtShiftId").val() == "") {
+                                $("#ShiftId").val("");
+                                $("#txtShiftId").val("...");
+                                $("#errorShiftId").remove();
+                                //DoSearch(1);
+                            }
+
+                            response($.map(data, function (item) {
+                                return {
+                                    label: item.name, value: item.name, id: item.id
+                                };
+                            }));
+                        } catch (err) { }
+                    }
+                });
+            },
+            select: function (event, ui) {
+                if (ui.item.label === 'NoResultsFound') {
+                    event.preventDefault();
+                    return;
+                }
+                $("#ShiftId").val(ui.item.id);
+                $("#errorShiftId").remove();
+                DoSearch(1);
+            },
+            focus: function (event, ui) {
+                if (ui.item.label === 'NoResultsFound') {
+                    event.preventDefault();
+                }
+            }
+        });
+
+        $("#txtUserId").autocomplete({
+            minLength: 0,
+            source: function (request, response) {
+                var searchPhrase = $("#txtUserId").val();//request.term.trim().toLowerCase();
+                var noResultsLabel = 'NoResultsFound';
+                if (searchPhrase == "...")
+                    searchPhrase = "";
+                $.ajax({
+                    url: "/Setting/User/GetList",
+                    type: "Get",
+                    dataType: "json",
+                    data: { txtSearch: searchPhrase, page: 1, pageSize: 7 },
+                    success: function (data) {
+                        try {
+                            if (!data.length) {
+                                data = [{ name: noResultsLabel }];
+                            }
+
+                            if ("" + $("#txtUserId").val() == "") {
+                                $("#UserId").val("");
+                                $("#txtUserId").val("...");
+                                $("#errorUserId").remove();
+                                //DoSearch(1);
+                            }
+
+                            response($.map(data, function (item) {
+                                return {
+                                    label: item.name, value: item.name, id: item.id
+                                };
+                            }));
+                        } catch (err) { }
+                    }
+                });
+            },
+            select: function (event, ui) {
+                if (ui.item.label === 'NoResultsFound') {
+                    event.preventDefault();
+                    return;
+                }
+                $("#UserId").val(ui.item.id);
+                $("#errorUserId").remove();
+                DoSearch(1);
+            },
+            focus: function (event, ui) {
+                if (ui.item.label === 'NoResultsFound') {
+                    event.preventDefault();
+                }
+            }
+        });
+
+        $(".Droptxt").click(function () {
+            event.preventDefault();
+            if ($(this).val() == "" || $(this).val() == "...")
+                $(this).autocomplete("search", "");
+            return;
+        });
+
+        $(".Dropbtn").click(function () {
+            event.preventDefault();
+            $(this).parent().find(".Droptxt").autocomplete("search", "");
+            return;
+        });
+
+        $(".Dropbtn2").click(function () {
+            event.preventDefault();
+            $(this).parent().find(".Droptxt").autocomplete("search", "");
+            return;
+        });
+
+        $(".Droptxt").dblclick(function () {
+            event.preventDefault();
+            if ($(this).val() != "")
+                $(this).autocomplete("search", "");
+            return;
+        });
+
+
+        $("#btn").click(function () {
+            DoSearch(1);
+        });
+
+
+
+
+        DoSearch = function (page) {
+            var fromDate = $("#FromDate").val();
+            var toDate = $("#ToDate").val();
+            var dealerId = $("#DealerId").val();
+            var shiftId = $("#ShiftId").val();
+            var branchId = $("#BranchId").val();
+            var userId = $("#UserId").val();
+
+            $.ajax({
+                url: "/Invoices/Report/PurchasDetail",
+                data: { fromDate: fromDate, toDate: toDate, dealerId: dealerId, shiftId: shiftId, branchId: branchId, userId: userId, page: page, pageSize: 100 },
+                success: function (data) {
+                    console.log(data);
+                    $("#PurchasDetailList").empty();
+                    $("#PurchasDetailList").html(data);
+                }, error: function (err) {
+                    console.log(err);
+                }
+            });
+        }
+
+        CollectInvoice = function (id, page) {
+            $.ajax({
+                url: "/Invoices/Invoice/CollectInvoice",
+                data: { id: id },
+                success: function (data) {
+                    DoSearch(page);
+                }, error: function (err) {
+                    console.log(err);
+                }
+            });
+        }
+    });
+</script>

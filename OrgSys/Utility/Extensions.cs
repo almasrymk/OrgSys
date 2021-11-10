@@ -83,6 +83,19 @@ namespace OrgSys
             return long.Parse("0" + identityClaims);
         }
 
+        public static bool IsOwner(this ClaimsPrincipal ob)
+        {
+            var identity = ob;
+
+            if (identity == null)
+            {
+                return false;
+            }
+
+            var identityClaims = identity.Claims.FirstOrDefault(c => c.Type == "RoleId")?.Value;
+            return long.Parse("0" + identityClaims) == 1;
+        }
+        
         public static long GetUserId(this ClaimsPrincipal ob)
         {
             var identity = ob;
