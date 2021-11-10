@@ -37,7 +37,14 @@ namespace OrgSys.Controllers
         {
             return View();
         }
-
+        public IActionResult PaymentMethod()
+        {
+            return View();
+        }
+        public IActionResult Pricing()
+        {
+            return View();
+        }
         public IActionResult Index()
         {
             try
