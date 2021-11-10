@@ -694,13 +694,13 @@
     <value>اجمالى البيع بالاصناف</value>
   </data>
   <data name="TransactionDetails" xml:space="preserve">
-    <value>تفاصيل المعاملات</value>
+    <value>بيانات الحركات</value>
   </data>
   <data name="TransactionNotices" xml:space="preserve">
-    <value>اشعارات المعاملات</value>
+    <value>اشعارات الحركات</value>
   </data>
   <data name="TransactionProducts" xml:space="preserve">
-    <value>منتجات المعاملات</value>
+    <value>منتجات الحركات</value>
   </data>
   <data name="Transactions" xml:space="preserve">
     <value>الحركات</value>

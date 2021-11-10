@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Utility;
 using Entity.ModelReport;
+using Microsoft.Extensions.Configuration;
 
 namespace Repository
 {

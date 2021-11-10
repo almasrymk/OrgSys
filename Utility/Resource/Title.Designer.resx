@@ -694,7 +694,7 @@
     <value>Total sales of prodects</value>
   </data>
   <data name="TransactionDetails" xml:space="preserve">
-    <value>Transaction Details</value>
+    <value>Transaction Data</value>
   </data>
   <data name="TransactionNotices" xml:space="preserve">
     <value>Transaction Notices</value>
