@@ -10,7 +10,7 @@ using Repository;
 namespace Repository.Migrations.OrgMigrations
 {
     [DbContext(typeof(OrgContext))]
-    [Migration("20211110183142_CreateDb")]
+    [Migration("20211110192711_CreateDb")]
     partial class CreateDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -121,6 +121,139 @@ namespace Repository.Migrations.OrgMigrations
                     b.HasKey("Id");
 
                     b.ToTable("Classification", "org");
+                });
+
+            modelBuilder.Entity("Entity.Model.CompanyProfile", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Address1")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("Address2")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<long>("ClientId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("CommercialRegister")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email1")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("Email2")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("Fax1")
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
+
+                    b.Property<string>("Fax2")
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Mobile1")
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
+
+                    b.Property<string>("Mobile2")
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("NationalityId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Phone1")
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
+
+                    b.Property<string>("Phone2")
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
+
+                    b.Property<long>("SizeOfCompany")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TaxCard")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<long>("TypeActivity")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Watsapp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Website")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CompanyProfile", "org");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            ClientId = 1L,
+                            Code = "1",
+                            CodeNumber = 1L,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email1 = "info@org.com",
+                            Hide = true,
+                            Mobile1 = "0201111105784",
+                            Name = "Owner",
+                            NationalityId = 68L,
+                            ParentId = 0L,
+                            Phone1 = "0201111105784",
+                            SizeOfCompany = 1L,
+                            Status = 0,
+                            TypeActivity = 0L,
+                            TypeId = 0L
+                        });
                 });
 
             modelBuilder.Entity("Entity.Model.Currency", b =>
@@ -6377,7 +6510,7 @@ namespace Repository.Migrations.OrgMigrations
                             Id = 1L,
                             CodeNumber = 0L,
                             Hide = true,
-                            LoginUserId = 0L,
+                            LoginUserId = 1L,
                             Name = "Owner",
                             ParentId = 0L,
                             Password = "iebLM3YfOZ4fcXYL1jInxA==",
@@ -6391,7 +6524,7 @@ namespace Repository.Migrations.OrgMigrations
                             Id = 2L,
                             CodeNumber = 0L,
                             Hide = false,
-                            LoginUserId = 0L,
+                            LoginUserId = 2L,
                             Name = "Admin",
                             ParentId = 0L,
                             Password = "mGs8bPJNLmeH75qTfY9f9Q==",

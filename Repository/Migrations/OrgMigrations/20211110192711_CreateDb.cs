@@ -58,6 +58,48 @@ namespace Repository.Migrations.OrgMigrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CompanyProfile",
+                schema: "org",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Phone1 = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: true),
+                    Phone2 = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: true),
+                    Mobile1 = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: true),
+                    Mobile2 = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: true),
+                    Fax1 = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: true),
+                    Fax2 = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: true),
+                    Email1 = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
+                    Email2 = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
+                    Address1 = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
+                    Address2 = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
+                    CommercialRegister = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
+                    TaxCard = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
+                    Website = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Watsapp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    TypeActivity = table.Column<long>(type: "bigint", nullable: false),
+                    NationalityId = table.Column<long>(type: "bigint", nullable: false),
+                    SizeOfCompany = table.Column<long>(type: "bigint", nullable: false),
+                    ClientId = table.Column<long>(type: "bigint", nullable: false),
+                    CodeNumber = table.Column<long>(type: "bigint", nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MaskText = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ParentId = table.Column<long>(type: "bigint", nullable: false),
+                    TypeId = table.Column<long>(type: "bigint", nullable: false),
+                    Hide = table.Column<bool>(type: "bit", nullable: false),
+                    ImgPath = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CompanyProfile", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Currency",
                 schema: "org",
                 columns: table => new
@@ -1496,6 +1538,12 @@ namespace Repository.Migrations.OrgMigrations
 
             migrationBuilder.InsertData(
                 schema: "org",
+                table: "CompanyProfile",
+                columns: new[] { "Id", "Address1", "Address2", "ClientId", "Code", "CodeNumber", "CommercialRegister", "DateCreated", "Description", "Email1", "Email2", "Fax1", "Fax2", "Hide", "ImgPath", "MaskText", "Mobile1", "Mobile2", "Name", "NationalityId", "ParentId", "Phone1", "Phone2", "SizeOfCompany", "Status", "TaxCard", "TypeActivity", "TypeId", "Watsapp", "Website" },
+                values: new object[] { 1L, null, null, 1L, "1", 1L, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "info@org.com", null, null, null, true, null, null, "0201111105784", null, "Owner", 68L, 0L, "0201111105784", null, 1L, 0, null, 0L, 0L, null, null });
+
+            migrationBuilder.InsertData(
+                schema: "org",
                 table: "Currency",
                 columns: new[] { "Id", "Code", "CodeNumber", "Hide", "ImgPath", "IsDefault", "MaskText", "Name", "ParentId", "Rate", "Status", "TypeId" },
                 values: new object[] { 1L, null, 0L, false, null, false, null, "Epg", 0L, 0m, 0, 0L });
@@ -1555,7 +1603,6 @@ namespace Repository.Migrations.OrgMigrations
                 columns: new[] { "Id", "Code", "CodeNumber", "Hide", "ImgPath", "Key", "MaskText", "Name", "ParentId", "Status", "TypeId" },
                 values: new object[,]
                 {
-                    { 3020202L, null, 0L, false, null, "PurchasesReturns.Add", null, "Add", 30202L, 0, 1L },
                     { 3020102L, null, 0L, false, null, "PurchasesInvoices.Add", null, "Add", 30201L, 0, 1L },
                     { 3020103L, null, 0L, false, null, "PurchasesInvoices.Edit", null, "Edit", 30201L, 0, 1L },
                     { 3020104L, null, 0L, false, null, "PurchasesInvoices.Delete", null, "Delete", 30201L, 0, 1L },
@@ -1563,6 +1610,7 @@ namespace Repository.Migrations.OrgMigrations
                     { 3020106L, null, 0L, false, null, "PurchasesInvoices.Preference", null, "Preference", 30201L, 0, 1L },
                     { 30202L, null, 0L, false, null, "PurchasesReturns.All", null, "Returns", 302L, 0, 0L },
                     { 3020201L, null, 0L, false, null, "PurchasesReturns.View", null, "View", 30202L, 0, 1L },
+                    { 3020202L, null, 0L, false, null, "PurchasesReturns.Add", null, "Add", 30202L, 0, 1L },
                     { 3020203L, null, 0L, false, null, "PurchasesReturns.Edit", null, "Edit", 30202L, 0, 1L },
                     { 4010101L, null, 0L, false, null, "Addition.View", null, "View", 40101L, 0, 1L },
                     { 3020205L, null, 0L, false, null, "PurchasesReturns.Cancel", null, "Cancel", 30202L, 0, 1L },
@@ -1581,8 +1629,7 @@ namespace Repository.Migrations.OrgMigrations
                     { 2010205L, null, 0L, false, null, "External.Cancel", null, "Cancel", 20102L, 0, 1L },
                     { 2010206L, null, 0L, false, null, "External.Preference", null, "Preference", 20102L, 0, 1L },
                     { 30L, null, 0L, false, null, "Invoices.All", null, "Invoices", 1L, 0, 0L },
-                    { 301L, null, 0L, false, null, "Sales", null, "Sales", 30L, 0, 0L },
-                    { 30101L, null, 0L, false, null, "SalesInvoices.All", null, "Invoices", 301L, 0, 0L }
+                    { 301L, null, 0L, false, null, "Sales", null, "Sales", 30L, 0, 0L }
                 });
 
             migrationBuilder.InsertData(
@@ -1591,6 +1638,7 @@ namespace Repository.Migrations.OrgMigrations
                 columns: new[] { "Id", "Code", "CodeNumber", "Hide", "ImgPath", "Key", "MaskText", "Name", "ParentId", "Status", "TypeId" },
                 values: new object[,]
                 {
+                    { 30101L, null, 0L, false, null, "SalesInvoices.All", null, "Invoices", 301L, 0, 0L },
                     { 3010101L, null, 0L, false, null, "SalesInvoices.View", null, "View", 30101L, 0, 1L },
                     { 3010102L, null, 0L, false, null, "SalesInvoices.Add", null, "Add", 30101L, 0, 1L },
                     { 302L, null, 0L, false, null, "Purchases", null, "Purchases", 30L, 0, 0L },
@@ -1605,7 +1653,7 @@ namespace Repository.Migrations.OrgMigrations
                     { 3010205L, null, 0L, false, null, "SalesReturns.Cancel", null, "Cancel", 30102L, 0, 1L },
                     { 3010104L, null, 0L, false, null, "SalesInvoices.Delete", null, "Delete", 30101L, 0, 1L },
                     { 4010105L, null, 0L, false, null, "Addition.Preference", null, "Preference", 40101L, 0, 1L },
-                    { 40103L, null, 0L, false, null, "Transafer.All", null, "Transafer", 401L, 0, 0L },
+                    { 4010301L, null, 0L, false, null, "Transafer.View", null, "View", 40103L, 0, 1L },
                     { 4010201L, null, 0L, false, null, "Issue.View", null, "View", 40102L, 0, 1L },
                     { 501L, null, 0L, false, null, "SafeNotices", null, "Safe Notices", 50L, 0, 0L },
                     { 50101L, null, 0L, false, null, "Collection.All", null, "Collection", 501L, 0, 0L },
@@ -1631,8 +1679,7 @@ namespace Repository.Migrations.OrgMigrations
                     { 4010503L, null, 0L, false, null, "Inventory.Edit", null, "Edit", 40105L, 0, 1L },
                     { 4010202L, null, 0L, false, null, "Issue.Add", null, "Add", 40102L, 0, 1L },
                     { 4010203L, null, 0L, false, null, "Issue.Edit", null, "Edit", 40102L, 0, 1L },
-                    { 4010204L, null, 0L, false, null, "Issue.Delete", null, "Delete", 40102L, 0, 1L },
-                    { 4010205L, null, 0L, false, null, "Issue.Preference", null, "Preference", 40102L, 0, 1L }
+                    { 4010204L, null, 0L, false, null, "Issue.Delete", null, "Delete", 40102L, 0, 1L }
                 });
 
             migrationBuilder.InsertData(
@@ -1641,8 +1688,9 @@ namespace Repository.Migrations.OrgMigrations
                 columns: new[] { "Id", "Code", "CodeNumber", "Hide", "ImgPath", "Key", "MaskText", "Name", "ParentId", "Status", "TypeId" },
                 values: new object[,]
                 {
+                    { 4010205L, null, 0L, false, null, "Issue.Preference", null, "Preference", 40102L, 0, 1L },
+                    { 40103L, null, 0L, false, null, "Transafer.All", null, "Transafer", 401L, 0, 0L },
                     { 2010203L, null, 0L, false, null, "External.Edit", null, "Edit", 20102L, 0, 1L },
-                    { 4010301L, null, 0L, false, null, "Transafer.View", null, "View", 40103L, 0, 1L },
                     { 4010302L, null, 0L, false, null, "Transafer.Add", null, "Add", 40103L, 0, 1L },
                     { 4010303L, null, 0L, false, null, "Transafer.Edit", null, "Edit", 40103L, 0, 1L },
                     { 4010304L, null, 0L, false, null, "Transafer.Delete", null, "Delete", 40103L, 0, 1L },
@@ -1681,8 +1729,7 @@ namespace Repository.Migrations.OrgMigrations
                     { 1020303L, null, 0L, false, null, "Shifts.Edit", null, "Edit", 10203L, 0, 1L },
                     { 1020102L, null, 0L, false, null, "Roles.Add", null, "Add", 10201L, 0, 1L },
                     { 1020101L, null, 0L, false, null, "Roles.View", null, "View", 10201L, 0, 1L },
-                    { 10201L, null, 0L, false, null, "Roles.All", null, "Roles", 102L, 0, 0L },
-                    { 2010201L, null, 0L, false, null, "External.View", null, "View", 20102L, 0, 1L }
+                    { 10201L, null, 0L, false, null, "Roles.All", null, "Roles", 102L, 0, 0L }
                 });
 
             migrationBuilder.InsertData(
@@ -1691,6 +1738,7 @@ namespace Repository.Migrations.OrgMigrations
                 columns: new[] { "Id", "Code", "CodeNumber", "Hide", "ImgPath", "Key", "MaskText", "Name", "ParentId", "Status", "TypeId" },
                 values: new object[,]
                 {
+                    { 2010201L, null, 0L, false, null, "External.View", null, "View", 20102L, 0, 1L },
                     { 1L, null, 0L, false, null, "Organizer", null, "Organizer", 0L, 0, 0L },
                     { 10L, null, 0L, false, null, "Data.All", null, "Data", 1L, 0, 0L },
                     { 101L, null, 0L, false, null, "Organization", null, "Organization", 10L, 0, 0L },
@@ -1731,8 +1779,7 @@ namespace Repository.Migrations.OrgMigrations
                     { 2010104L, null, 0L, false, null, "Internal.Delete", null, "Delete", 20101L, 0, 1L },
                     { 2010105L, null, 0L, false, null, "Internal.Cancel", null, "Cancel", 20101L, 0, 1L },
                     { 1030203L, null, 0L, false, null, "Classifications.Edit", null, "Edit", 10302L, 0, 1L },
-                    { 1050304L, null, 0L, false, null, "Currencies.Delete", null, "Delete", 10503L, 0, 1L },
-                    { 1050103L, null, 0L, false, null, "Safes.Edit", null, "Edit", 10501L, 0, 1L }
+                    { 1050304L, null, 0L, false, null, "Currencies.Delete", null, "Delete", 10503L, 0, 1L }
                 });
 
             migrationBuilder.InsertData(
@@ -1741,6 +1788,7 @@ namespace Repository.Migrations.OrgMigrations
                 columns: new[] { "Id", "Code", "CodeNumber", "Hide", "ImgPath", "Key", "MaskText", "Name", "ParentId", "Status", "TypeId" },
                 values: new object[,]
                 {
+                    { 1050103L, null, 0L, false, null, "Safes.Edit", null, "Edit", 10501L, 0, 1L },
                     { 2010102L, null, 0L, false, null, "Internal.Add", null, "Add", 20101L, 0, 1L },
                     { 1050101L, null, 0L, false, null, "Safes.View", null, "View", 10501L, 0, 1L },
                     { 10303L, null, 0L, false, null, "UnitsMeasure.All", null, "Units Measure", 103L, 0, 0L },
@@ -1789,8 +1837,7 @@ namespace Repository.Migrations.OrgMigrations
                     { 706L, null, 0L, false, null, "AllowRepeated", null, 0L, "Transaction", 0, 4L, null, "1" },
                     { 607L, null, 0L, false, null, "SaveLastStatusSetting", null, 0L, "Transaction", 0, 3L, null, "1" },
                     { 604L, null, 0L, false, null, "AutoSave", null, 0L, "Transaction", 0, 3L, null, "0" },
-                    { 605L, null, 0L, false, null, "TypeSerial", null, 0L, "Transaction", 0, 3L, null, "1" },
-                    { 406L, null, 0L, false, null, "TypeSerial", null, 0L, "Transaction", 0, 1L, null, "1" }
+                    { 605L, null, 0L, false, null, "TypeSerial", null, 0L, "Transaction", 0, 3L, null, "1" }
                 });
 
             migrationBuilder.InsertData(
@@ -1799,6 +1846,7 @@ namespace Repository.Migrations.OrgMigrations
                 columns: new[] { "Id", "Code", "CodeNumber", "Hide", "ImgPath", "Key", "MaskText", "ParentId", "Reference", "Status", "TypeId", "UserId", "Value" },
                 values: new object[,]
                 {
+                    { 406L, null, 0L, false, null, "TypeSerial", null, 0L, "Transaction", 0, 1L, null, "1" },
                     { 810L, null, 0L, false, null, "TaxValue", null, 0L, "Order", 0, 1L, null, "14" },
                     { 405L, null, 0L, false, null, "AutoSave", null, 0L, "Transaction", 0, 1L, null, "0" },
                     { 407L, null, 0L, false, null, "AllowRepeated", null, 0L, "Transaction", 0, 1L, null, "1" },
@@ -1839,8 +1887,7 @@ namespace Repository.Migrations.OrgMigrations
                     { 813L, null, 0L, false, null, "DefaultCustomer", null, 0L, "Order", 0, 1L, null, "1" },
                     { 901L, null, 0L, false, null, "NumberLine", null, 0L, "Order", 0, 2L, null, "6" },
                     { 902L, null, 0L, false, null, "OrderTabe", null, 0L, "Order", 0, 2L, null, "2" },
-                    { 903L, null, 0L, false, null, "AutoSave", null, 0L, "Order", 0, 2L, null, "0" },
-                    { 904L, null, 0L, false, null, "TypeSerial", null, 0L, "Order", 0, 2L, null, "1" }
+                    { 903L, null, 0L, false, null, "AutoSave", null, 0L, "Order", 0, 2L, null, "0" }
                 });
 
             migrationBuilder.InsertData(
@@ -1849,6 +1896,7 @@ namespace Repository.Migrations.OrgMigrations
                 columns: new[] { "Id", "Code", "CodeNumber", "Hide", "ImgPath", "Key", "MaskText", "ParentId", "Reference", "Status", "TypeId", "UserId", "Value" },
                 values: new object[,]
                 {
+                    { 904L, null, 0L, false, null, "TypeSerial", null, 0L, "Order", 0, 2L, null, "1" },
                     { 905L, null, 0L, false, null, "AllowRepeated", null, 0L, "Order", 0, 2L, null, "1" },
                     { 906L, null, 0L, false, null, "DiscountValue", null, 0L, "Order", 0, 2L, null, "" },
                     { 811L, null, 0L, false, null, "DefaultTaxType", null, 0L, "Order", 0, 1L, null, "2" },
@@ -1889,8 +1937,7 @@ namespace Repository.Migrations.OrgMigrations
                     { 4L, null, 0L, false, null, "DiscountValue", null, 0L, "Invoice", 0, 1L, null, "" },
                     { 5L, null, 0L, false, null, "DefaultDiscountType", null, 0L, "Invoice", 0, 1L, null, "2" },
                     { 6L, null, 0L, false, null, "ServiceValue", null, 0L, "Invoice", 0, 1L, null, "" },
-                    { 7L, null, 0L, false, null, "DefaultServiceType", null, 0L, "Invoice", 0, 1L, null, "2" },
-                    { 8L, null, 0L, false, null, "TaxValue", null, 0L, "Invoice", 0, 1L, null, "14" }
+                    { 7L, null, 0L, false, null, "DefaultServiceType", null, 0L, "Invoice", 0, 1L, null, "2" }
                 });
 
             migrationBuilder.InsertData(
@@ -1899,6 +1946,7 @@ namespace Repository.Migrations.OrgMigrations
                 columns: new[] { "Id", "Code", "CodeNumber", "Hide", "ImgPath", "Key", "MaskText", "ParentId", "Reference", "Status", "TypeId", "UserId", "Value" },
                 values: new object[,]
                 {
+                    { 8L, null, 0L, false, null, "TaxValue", null, 0L, "Invoice", 0, 1L, null, "14" },
                     { 9L, null, 0L, false, null, "DefaultTaxType", null, 0L, "Invoice", 0, 1L, null, "2" },
                     { 10L, null, 0L, false, null, "NumberLine", null, 0L, "Invoice", 0, 1L, null, "6" },
                     { 11L, null, 0L, false, null, "OrderTabe", null, 0L, "Invoice", 0, 1L, null, "1" },
@@ -1939,8 +1987,7 @@ namespace Repository.Migrations.OrgMigrations
                     { 207L, null, 0L, false, null, "DefaultServiceType", null, 0L, "Invoice", 0, 3L, null, "2" },
                     { 203L, null, 0L, false, null, "DefaultPaymentType", null, 0L, "Invoice", 0, 3L, null, "1" },
                     { 209L, null, 0L, false, null, "DefaultTaxType", null, 0L, "Invoice", 0, 3L, null, "2" },
-                    { 210L, null, 0L, false, null, "NumberLine", null, 0L, "Invoice", 0, 3L, null, "6" },
-                    { 211L, null, 0L, false, null, "OrderTabe", null, 0L, "Invoice", 0, 3L, null, "1" }
+                    { 210L, null, 0L, false, null, "NumberLine", null, 0L, "Invoice", 0, 3L, null, "6" }
                 });
 
             migrationBuilder.InsertData(
@@ -1949,6 +1996,7 @@ namespace Repository.Migrations.OrgMigrations
                 columns: new[] { "Id", "Code", "CodeNumber", "Hide", "ImgPath", "Key", "MaskText", "ParentId", "Reference", "Status", "TypeId", "UserId", "Value" },
                 values: new object[,]
                 {
+                    { 211L, null, 0L, false, null, "OrderTabe", null, 0L, "Invoice", 0, 3L, null, "1" },
                     { 212L, null, 0L, false, null, "AutoSave", null, 0L, "Invoice", 0, 3L, null, "0" },
                     { 213L, null, 0L, false, null, "TypeSerial", null, 0L, "Invoice", 0, 3L, null, "1" },
                     { 214L, null, 0L, false, null, "AllowRepeated", null, 0L, "Invoice", 0, 3L, null, "1" },
@@ -2017,8 +2065,8 @@ namespace Repository.Migrations.OrgMigrations
                 columns: new[] { "Id", "BranchId", "Code", "CodeNumber", "Hide", "ImgPath", "LoginUserId", "MaskText", "Name", "ParentId", "Password", "RoleId", "Status", "TypeId", "UserName" },
                 values: new object[,]
                 {
-                    { 1L, null, null, 0L, true, null, 0L, null, "Owner", 0L, "iebLM3YfOZ4fcXYL1jInxA==", 1L, 0, 0L, "Owner" },
-                    { 2L, null, null, 0L, false, null, 0L, null, "Admin", 0L, "mGs8bPJNLmeH75qTfY9f9Q==", 2L, 0, 0L, "Admin" },
+                    { 1L, null, null, 0L, true, null, 1L, null, "Owner", 0L, "iebLM3YfOZ4fcXYL1jInxA==", 1L, 0, 0L, "Owner" },
+                    { 2L, null, null, 0L, false, null, 2L, null, "Admin", 0L, "mGs8bPJNLmeH75qTfY9f9Q==", 2L, 0, 0L, "Admin" },
                     { 3L, null, null, 0L, false, null, 0L, null, "Emp", 0L, null, 2L, 0, 0L, "Admin" }
                 });
 
@@ -2548,6 +2596,10 @@ namespace Repository.Migrations.OrgMigrations
                 name: "FK_Order_Invoice_InvoiceId",
                 schema: "org",
                 table: "Order");
+
+            migrationBuilder.DropTable(
+                name: "CompanyProfile",
+                schema: "org");
 
             migrationBuilder.DropTable(
                 name: "FinancialInvoice",
