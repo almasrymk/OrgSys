@@ -117,7 +117,7 @@ namespace Service
         }
 
         public bool CheckEmail(string Email) => repo.userRepo.Any(e => e.UserName.ToLower().Trim() == Email.ToLower().Trim());
-
+        public bool CheckCurrentPassword(long Id, string CurrentPassword) => repo.userRepo.Any(e => e.Id == Id && e.Password == CurrentPassword);
         public bool HavePassword(string Email) => "" + repo.userRepo.Get(e => e.UserName.ToLower().Trim() == Email.ToLower().Trim())?.Password != "";
 
         public bool CheckEmailAndPassword(string Email,string Passord) => repo.userRepo.Any(e => e.UserName.ToLower().Trim() == Email.ToLower().Trim() && e.Password==Passord);

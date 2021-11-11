@@ -2,7 +2,7 @@
 
 namespace Repository
 {
-    public class OutlayRepo : Curd<Outlay>
+    public class OutlayRepo : CurdOrg<Outlay>
     {
         
     }

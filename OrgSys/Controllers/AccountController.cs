@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Utility;
 
 namespace OrgSys.Controllers
 {
@@ -119,17 +120,25 @@ namespace OrgSys.Controllers
             return Json(user.HavePassword(Email));
         }
 
-
         public ActionResult CheckPassword(string Email, string Password)
         {
             return Json(user.CheckEmailAndPassword(Email, Utility.Security.Encrypt(Password)));
         }
 
+        public ActionResult CheckCurrentPassword(long Id, string CurrentPassword)
+        {
+            return Json(user.CheckCurrentPassword(Id,Utility.Security.Encrypt(CurrentPassword)));
+        }
+
 
         //------------------------ Profile Action ------------------------
         [HttpGet]
-        public ActionResult Profile(int id)
+        public ActionResult Profile(int id, ResultStatus Status = ResultStatus.nothing, string MsgError = "")
         {
+            if ("" + MsgError != "")
+                ViewBag.message = MsgError;
+            ViewBag.status = Status.ToString();
+
             var IdUser = user.Get(id);
             return View("Profile", IdUser);
         }
@@ -137,17 +146,22 @@ namespace OrgSys.Controllers
         [HttpPost]
         public ActionResult Profile(UserModelView _profile)
         {
-            _profile.RoleId = User.GetRoleId();
-
-            var IsExsit = user.CheckEmailAndPassword(_profile.UserName, Utility.Security.Encrypt(_profile.Password));
-            if (IsExsit)
+            try
             {
-                _profile.Password = Utility.Security.Encrypt(_profile.NewPassword);
+                _profile.RoleId = User.GetRoleId();
                 _profile.ImgPath = SaveFile(_profile.ImgPath);
-                new UserService().Save(_profile);
-            }
 
-             return View(_profile);
+                if (_profile.NewPassword != null)
+                    _profile.Password = _profile.NewPassword;
+                else
+                    //_profile.Password 
+                new UserService().Save(_profile);
+                return Json(data: new { status = "success", id = _profile.Id, url = "/Account/Profile?id=" + _profile.Id + "&status=" + ResultStatus.success + "&MsgError=Success" });
+            }
+            catch (Exception ex)
+            {
+                return Json(ex.Message);
+            }
         }
 
         public virtual string SaveFile(string LastPath)

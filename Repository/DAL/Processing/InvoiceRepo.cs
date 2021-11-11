@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Repository
 {
-    public class InvoiceRepo : Curd<Invoice>
+    public class InvoiceRepo : CurdOrg<Invoice>
     {
         public List<Invoice> GetInvoicesNotReturn(string txtSearch = "" , long TypeId = 0 , long InvId = 0 , int page = 1 , int pageSize = 20)
         {

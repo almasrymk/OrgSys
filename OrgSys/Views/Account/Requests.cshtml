@@ -14,13 +14,25 @@
                 <img src="~/logos/Logo.png" style="width:150px !important" id="icon" alt="User Icon" />
             </div>
             <!-- Login Form -->
-            <form>
-                <input type="text" id="Name" class="fadeIn second" name="Name" placeholder="Name">
-                <input type="text" id="CompanyName" class="fadeIn second" name="CompanyName" placeholder="Company Name">
-                <input type="email" id="Email" class="fadeIn second" name="Email" placeholder="Email">
-                <input type="text" id="Phone" class="fadeIn second" name="Phone" placeholder="Phone">
-                <input type="text" id="password" class="fadeIn third" name="login" placeholder="password">
-                <input type="submit" class="fadeIn fourth" value="Log In">
+            <form action="/Home/Register" id="RegForm" method="post">
+
+                @*<input type="text" id="Name" class="fadeIn second" name="Name" placeholder="Name">*@
+                <input type="text" name="Name" id="Name" placeholder="Name" class="fadeIn second">
+
+                @*<input type="email" id="Email" class="fadeIn second" name="Email" placeholder="Email">*@
+                <input type="email" name="Email" id="Email" placeholder="E-mail" class="fadeIn second">
+
+
+                @*<input type="text" id="Phone" class="fadeIn second" name="Phone" placeholder="Phone">*@
+                <input type="text" name="Phone" id="Phone" placeholder="Phone" class="fadeIn second">
+
+
+                @*<input type="text" id="CompanyName" class="fadeIn second" name="CompanyName" placeholder="Company Name">*@
+                <input type="text" name="CompanyName" id="CompanyName" placeholder="Company Name" class="fadeIn second">
+
+                @*<input type="text" id="password" class="fadeIn third" name="login" placeholder="password">*@
+                <input type="submit" class="fadeIn fourth" onclick="submit()" value="Send Request">
+                
             </form>
             <!-- Remind Passowrd -->
         </div>
@@ -30,6 +42,53 @@
     <script src="~/js/vendor/bootstrap.bundle.min.js"></script>
     <script src="~/js/dore.script.js"></script>
 
+    <link href="~/css/jquery-ui.css" rel="stylesheet" />
+    <script src="~/js/jquery-ui.js"></script>
+    <script src="~/js/PopupScript.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+
+    <script>
+
+        $(document).ready(function () {
+
+            $('#RegForm').submit(function (e) {
+                e.preventDefault();
+                var name = $('#Name').val();
+                var email = $('#Email').val();
+                var phone = $('#Phone').val();
+                $(".error").remove();
+
+                if (name.length < 1) {
+                    $('#Name').after('<span class="error alert alert-danger">This field is required</span>');
+                }
+
+                if (email.length < 1) {
+                    $('#Email').after('<span class="error alert alert-danger">This field is required</span>');
+                }
+                else {
+                    var regEx = /^[A-Z0-9][A-Z0-9._%+-]{0,63}@@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/;
+                    var validEmail = regEx.test(email);
+                    if (!validEmail) {
+                        $('#Email').after('<span class="error alert alert-danger">Enter a valid email</span>');
+                    }
+                }
+
+                if (phone.length < 1) {
+                    $('#Phone').after('<span class="error alert alert-danger">This field is required</span>');
+                }
+                else {
+                   /* var regEx =(201)[0 - 9]{ 9 };*/
+                    var validPhone = regEx.test(phone);
+                    if (!validPhone) {
+                        $('#Phone').after('<span class="error alert alert-danger">Enter a valid Phone</span>');
+                    }
+                }
+            });
+        });
+
+    </script>
 
 </body>
 </html>

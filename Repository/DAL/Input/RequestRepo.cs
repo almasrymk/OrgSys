@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Repository.DAL.Input
 {
-    public class RequestRepo: Curd<Request>
+    public class RequestRepo: CurdAdmin<Request>
     {
 
     }

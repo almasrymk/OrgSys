@@ -2,7 +2,7 @@
 
 namespace Repository
 {
-    public class PaymentTypeRepo : Curd<PaymentType>
+    public class PaymentTypeRepo : CurdOrg<PaymentType>
     {
 
     }

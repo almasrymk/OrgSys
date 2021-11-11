@@ -2,7 +2,7 @@
 
 namespace Repository
 {
-    public class PreferenceRepo : Curd<Preference>
+    public class PreferenceRepo : CurdOrg<Preference>
     {
 
     }

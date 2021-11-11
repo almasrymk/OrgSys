@@ -2,7 +2,7 @@
 
 namespace Repository
 {
-    public class DealerRepo : Curd<Dealer>
+    public class DealerRepo : CurdOrg<Dealer>
     {
         
     }
