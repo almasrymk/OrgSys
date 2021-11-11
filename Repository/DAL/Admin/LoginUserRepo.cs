@@ -2,7 +2,7 @@
 
 namespace Repository
 {
-    public class LoginUserRepo : Curd<LoginUser>
+    public class LoginUserRepo : CurdAdmin<LoginUser>
     {
 
     }
