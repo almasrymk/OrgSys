@@ -1,0 +1,140 @@
+﻿@{Layout = null;}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="~/css/login.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="wrapper fadeInDown">
+        <div id="formContent">
+            <!-- Tabs Titles -->
+            <h2 class="active"> Request </h2>
+            <!-- Icon -->
+            <div class="fadeIn first">
+                <img src="~/logos/Logo.png" style="width:150px !important" id="icon" alt="User Icon" />
+            </div>
+            <!-- Login Form -->
+            <form action="/Home/RequestReg" id="RequestForm" method="post">
+
+                <input type="text" name="Name" id="Name" placeholder="Name" class="fadeIn second">
+                <div id="NameRequerd" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
+                    <span>your name is Requerd</span>
+                </div>
+
+                <input type="text" name="CompanyName" id="CompanyName" placeholder="Company Name" class="fadeIn second">
+                <div id="CompanyNameRequerd" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
+                    <span>your company name is Requerd</span>
+                </div>
+
+                <input type="email" name="Email" id="Email" placeholder="E-mail" class="fadeIn second">
+                <div id="EmailRequerd" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
+                    <span>your email is Requerd</span>
+                </div>
+                <div id="EmailError" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
+                    <span>your email is Error</span>
+                </div>
+
+                <input type="text" name="Phone" id="Phone" placeholder="Phone" class="fadeIn second">
+                <div id="PhoneRequerd" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
+                    <span>your phone is Requerd</span>
+                </div>
+                <div id="PhoneError" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
+                    <span>your phone is Error</span>
+                </div>
+
+                <div class="">
+                    <div>
+                        <small>
+                            <input id="chkAgree" type="checkbox" class="fadeIn" name="KeepLoggedIn" onchange="Agree()" />&nbsp; I agree to the <a class="underlineHover" href="javascript::" onclick="Back()"> terms & conditions</a>
+                        </small>
+                    </div>
+                    <div style="padding-top:10px;">
+                        <input id="btnSave" type="button" class="fadeIn fourth" onclick="Save()" style="color:gray;" value="Send Request" disabled>
+                    </div>
+                </div>
+            </form>
+            <div id="formFooter" style="padding:10px;">
+                <a class="underlineHover" href="/Home/Login">Login</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/js/vendor/jquery-3.3.1.min.js"></script>
+    <script src="~/js/vendor/bootstrap.bundle.min.js"></script>
+    <script src="~/js/dore.script.js"></script>
+    <link href="~/css/jquery-ui.css" rel="stylesheet" />
+    <script src="~/js/jquery-ui.js"></script>
+    <script src="~/js/PopupScript.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+    <script>
+        $("#Name").on("keyup", function () { $("#NameRequerd").hide(); });
+        $("#CompanyName").on("keyup", function () { $("#CompanyNameRequerd").hide(); });
+        $("#Phone").on("keyup", function () { $("#PhoneRequerd").hide(); });
+        $("#Email").on("keyup", function () { $("#EmailRequerd").hide(); });
+        $("#Phone").on("keyup", function () { $("#PhoneError").hide(); });
+        $("#Email").on("keyup", function () { $("#EmailError").hide(); });
+
+        function Save() {
+            var valid = true;
+            var name = $('#Name').val();
+            var companyName = $('#CompanyName').val();
+            var email = $('#Email').val();
+            var phone = $('#Phone').val();
+            $(".error").remove();
+
+            if (name.length < 1) {
+                $("#NameRequerd").show();
+                valid = false;
+            }
+
+            if (companyName.length < 1) {
+                $("#CompanyNameRequerd").show();
+                valid = false;
+            }
+
+            if (email.length < 1) {
+                $("#EmailRequerd").show();
+                valid = false;
+            }
+            else {
+                var regEx = /^([a-zA-Z0-9_\-\.]+)@@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
+                var validEmail = regEx.test(email);
+                if (!validEmail) {
+                    $("#EmailError").show();
+                    valid = false;
+                }
+            }
+
+            if (phone.length < 1) {
+                $("#PhoneRequerd").show();
+                valid = false;
+            }
+            else {
+                var regEx =/^[0][0-9]{10}$/;
+                var validPhone = regEx.test(phone);
+                if (!validPhone) {
+                    $("#PhoneError").show();
+                    valid = false;
+                }
+            }
+
+            if (valid)
+                $('#RequestForm').submit();
+        }
+
+        function Agree() {
+            if ($("#chkAgree").is(":checked")) {
+                $("#btnSave").removeAttr("disabled");
+                $("#btnSave").css("color", "white")
+            }
+            else {
+                $("#btnSave").attr("disabled", true);
+                $("#btnSave").css("color", "gray")
+            }
+        }
+    </script>
+
+</body>
+</html>

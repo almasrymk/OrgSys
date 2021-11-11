@@ -20,6 +20,9 @@ namespace Entity.ModelView
             this.Id = ob.Id;
             this.CodeNumber = ob.CodeNumber;
             this.Code = ob.Code;
+            this.ClientId = ob.ClientId;
+            this.ClientName = ob.Client?.Name;
+            this.Schema = ob.Client?.DbSchema;
             this.MaskText = ob.MaskText;
             this.ParentId = ob.ParentId;
             this.TypeId = ob.TypeId;
@@ -54,5 +57,13 @@ namespace Entity.ModelView
         public string Password { get; set; }
        
         public long ClientId { get; set; }
+
+        public string ClientName { get; set; }
+
+        public string Schema { get; set; }
+
+        public string NewPassword { get; set; }
+
+        public bool KeepLoggedIn { get; set; }
     }
 }

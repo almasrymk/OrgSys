@@ -4,8 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entity.Model
 {    
-    [Table("Client" , Schema = "admin")]
-    public class Client : BaseModel
+    public class ClientModelView : BaseModel
     {
         [Required]
         public string Name { get; set; }
@@ -28,12 +27,14 @@ namespace Entity.Model
 
         public long TypeActivityId { get; set; }
 
+        public string TypeActivityName { get; set; }
+
         public long NationalityId { get; set; }
+
+        public string NationalityName { get; set; }
 
         public long SizeOfCompany { get; set; }
 
-        public long RequestId { get; set; }
-        public virtual TypeActivity TypeActivity { get; set; }
-        public virtual Nationality Nationality { get; set; }
+        public long RequestId { get; set; }    
     }
 }

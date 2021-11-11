@@ -12,5 +12,7 @@ namespace Entity.Model
         public string Password { get; set; }
        
         public long ClientId { get; set; }
+
+        public virtual Client Client { get; set; }
     }
 }

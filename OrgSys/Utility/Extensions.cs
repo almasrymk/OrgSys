@@ -147,7 +147,7 @@ namespace OrgSys
             var identityClaims = identity.Claims.FirstOrDefault(c => c.Type == "ImgPath")?.Value;
             return "" + identityClaims;
         }
-        public static bool SignUp(this UserModelView us)
+        public static bool SignUp(this LoginUserModelView us)
         {
             try
             {
@@ -209,7 +209,7 @@ namespace OrgSys
             }
         }
 
-        public static bool SignOut(this UserModelView us, HttpContext httpContext)
+        public static bool SignOut(this LoginUserModelView us, HttpContext httpContext)
         {
             try
             {               

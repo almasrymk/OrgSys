@@ -496,8 +496,7 @@ namespace Repository
         }
         #endregion
 
-
-        #region Request
+        #region Admin
         private RequestRepo _requestRepo;
         public RequestRepo requestRepo
         {
@@ -511,6 +510,18 @@ namespace Repository
             }
         }
 
+        private LoginUserRepo _loginUserRepo;
+        public LoginUserRepo loginUserRepo
+        {
+            get
+            {
+
+                if (this._loginUserRepo == null)
+                    this._loginUserRepo = new LoginUserRepo();
+
+                return _loginUserRepo;
+            }
+        }        
         #endregion
     }
 }

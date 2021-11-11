@@ -30,6 +30,7 @@ namespace Entity.ModelView
             this.Phone = ob.Phone;
             this.CompanyName = ob.CompanyName;
             this.URL = ob.URL;
+            this.Key = ob.Key;
             this.ExpireDate = ob.ExpireDate;
 
         }
@@ -52,6 +53,7 @@ namespace Entity.ModelView
                 Phone = this.Phone,
                 CompanyName = this.CompanyName,
                 URL = this.URL,
+                Key = this.Key,
                 ExpireDate = this.ExpireDate
             };
         }
@@ -65,6 +67,7 @@ namespace Entity.ModelView
         [Required]
         public string CompanyName { get; set; }
         public string URL { get; set; }
+        public string Key { get; set; }
         public DateTime ExpireDate { get; set; }
     }
 }

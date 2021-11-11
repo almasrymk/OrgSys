@@ -16,7 +16,7 @@ namespace OrgSys.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        UserService user = new UserService();
+        LoginUserService user = new LoginUserService();
         
         public HomeController(ILogger<HomeController> logger)
         {
@@ -43,11 +43,13 @@ namespace OrgSys.Controllers
             return View("Dashboard");
         }
 
+        [AllowAnonymous]
         public IActionResult Notfound()
         {
             return View();
         }
 
+        [AllowAnonymous]
         public IActionResult ServerError()
         {
             return View();
@@ -80,30 +82,7 @@ namespace OrgSys.Controllers
             );
 
             return Json(culture);
-        }
-
-        [AllowAnonymous]
-        [HttpGet]
-        public IActionResult Register()
-        {
-            return View();
-        }
-        
-        [HttpPost]
-        [AllowAnonymous]
-        public ActionResult Register(RequestModelView _request)
-        {           
-            _request.URL = "WWW.Ex@.Email.com";
-            _request.ExpireDate = DateTime.Now.AddDays(2);
-            if (ModelState.IsValid)
-            {
-                new RequestService().Save(_request);
-                
-            }
-
-            return RedirectToAction("RegDone");
-
-        }
+        }       
 
         [AllowAnonymous]
         [HttpGet]
@@ -121,7 +100,7 @@ namespace OrgSys.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public IActionResult LogIn(UserModelView _user)
+        public IActionResult LogIn(LoginUserModelView _user)
         {
             try
             {
@@ -131,7 +110,10 @@ namespace OrgSys.Controllers
                     us.Password = Utility.Security.Encrypt(_user.NewPassword);
                     user.Save(us);
                 }
-                us.SignIn(HttpContext , _user.KeepLoggedIn);
+                var usSys  = new UserService().GetByLoginUserId(us.Id);
+                usSys.SignIn(HttpContext , _user.KeepLoggedIn);
+                Utility.General.HttpContext = HttpContext;
+                Utility.General.SetSchema(us.Schema);
                 return RedirectToAction("Dashboard");
             }
             catch (Exception)
@@ -148,16 +130,43 @@ namespace OrgSys.Controllers
             us.SignOut(HttpContext);
             return RedirectToAction("LogIn");
         }
-
+      
         [HttpGet]
-        public IActionResult LogInToPass()
+        [AllowAnonymous]
+        public IActionResult RequestReg()
         {
             return View();
         }
-
+       
         [HttpPost]
-        public IActionResult LogInToPass(UserModelView _user)
+        [AllowAnonymous]
+        public ActionResult RequestReg(RequestModelView _request)
         {
+            var Key = string.Format("{0:000000000}", new Random().Next(0, 999999999));
+            _request.Key = Key;
+            _request.URL = $"{Request.Scheme}://{Request.Host}{Request.PathBase}/Home/Register?Key=" + Utility.Security.Encrypt(Key);
+            _request.ExpireDate = DateTime.Now.AddDays(2);
+
+            var old = new RequestService().GetEmail(_request.Email);
+            if(old != null && old.Id > 0)           
+                new RequestService().Delete(old.Id);
+
+            new RequestService().Save(_request);
+            Utility.General.SendEmail(_request.Email, "Organizer", "Wellcom", _request.URL);
+            return RedirectToAction("RegDone");
+        }
+      
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult Register(string Key)
+        {
+            Key = Key.Replace(" ", "+");
+            var ky = Utility.Security.Decrypt(Key);
+            var rq = new RequestService().GetByKey(ky);
+            if (rq == null || rq.Id == 0 || rq.ExpireDate < DateTime.Now)
+                return RedirectToAction("Notfound");
+
+            
             return View();
         }
 

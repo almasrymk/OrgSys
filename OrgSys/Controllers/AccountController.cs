@@ -16,19 +16,14 @@ namespace OrgSys.Controllers
     public class AccountController : Controller
     {
         private readonly ILogger<AccountController> _logger;
-        UserService user = new UserService();
+        LoginUserService user = new LoginUserService();
 
         public AccountController(ILogger<AccountController> logger)
         {
 
             _logger = logger;
         }
-        [AllowAnonymous]
-        [HttpGet]
-        public IActionResult Requests()
-        {
-            return View();
-        }
+        
         [AllowAnonymous]
         [HttpGet]
         public IActionResult Register()
@@ -38,7 +33,7 @@ namespace OrgSys.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(UserModelView _user)
+        public ActionResult Register(LoginUserModelView _user)
         {
 
             if (ModelState.IsValid)
@@ -71,9 +66,9 @@ namespace OrgSys.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public IActionResult LogIn(UserModelView _user)
+        public IActionResult LogIn(LoginUserModelView _user)
         {
-            var us = user.GetUserName(_user.UserName);
+            var us = user.GetLoginUserName(_user.UserName);
 
             if (us != null)
             {
@@ -89,7 +84,8 @@ namespace OrgSys.Controllers
                         return View(_user);
                     }
                 }
-                us.SignIn(HttpContext , _user.KeepLoggedIn);
+                var usSys = new UserService().GetByLoginUserId(us.Id);
+                usSys.SignIn(HttpContext , _user.KeepLoggedIn);
                 return RedirectToAction("Dashboard","Home");
             }
 

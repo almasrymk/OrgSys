@@ -49,6 +49,20 @@ namespace Service
             return ob;
         }
 
+        public UserModelView GetByLoginUserId(long LoginUserId)
+        {
+            var ob = new UserModelView(repo.userRepo.Get(e => e.LoginUserId == LoginUserId, Includes));
+            if (ob == null)
+                ob = new UserModelView();
+
+            var ids = repo.rolePermissionRepo.GetList(e => e.RoleId == ob.RoleId, null, "", Utility.Status.New).Select(e => e.PermissionId).Distinct().ToList();
+            if (ids == null)
+                ids = new List<long>();
+
+            ob.Permissions = repo.permissionRepo.GetList(e => ids.Contains(e.Id), null, "", Utility.Status.New).ToList();
+            return ob;
+        }
+
         public UserModelView Get(string textSearch)
         {
             var ob = new UserModelView(repo.userRepo.Get(e => e.Name.ToLower().Trim().Equals("" + textSearch.ToLower().Trim()) || e.UserName.ToLower().Trim().Equals("" + textSearch.ToLower().Trim()), Includes));

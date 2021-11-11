@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using System.IO;
+using System.Net.Mail;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 
@@ -50,6 +51,29 @@ namespace Utility
             MemoryStream ms = new MemoryStream(obs);
             object obj = bf.Deserialize(ms);
             return (IConfiguration)obj;
+        }
+
+        public static void SendEmail(string Email , string Sender, string Subject, string Body)
+        {
+            SmtpClient client = new SmtpClient();
+            client.Host = "mail.organizersys.com";
+            client.Port = 25;
+            client.UseDefaultCredentials = false;
+            client.Credentials = new System.Net.NetworkCredential("info@organizersys.com", "Testg@83");
+            client.EnableSsl = false;
+            client.Timeout = 50000;
+
+            MailMessage mailMessage = null;           
+            mailMessage = new MailMessage();
+            mailMessage.From = new MailAddress("info@organizersys.com", Sender);
+            mailMessage.To.Add(Email);
+            Attachment oAttachment = new Attachment(@"wwwroot/logos/Logo.png");
+            oAttachment.ContentId = "imgId";
+            mailMessage.Attachments.Add(oAttachment);
+            mailMessage.Body = Body;
+            mailMessage.Subject = Subject;
+            mailMessage.IsBodyHtml = true;
+            client.Send(mailMessage);
         }
     }
 }

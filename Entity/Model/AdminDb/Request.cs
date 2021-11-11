@@ -6,14 +6,13 @@ namespace Entity.Model
 {
     [Table("Request", Schema = "admin")]
    public class Request : BaseModel
-    {
-        
+    {        
         public string Name { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
         public string CompanyName { get; set; }
-
         public string URL { get; set; }
+        public string Key { get; set; }
         public DateTime ExpireDate { get; set; }
     }
 }
