@@ -43,20 +43,9 @@ namespace OrgSys
 
             });
 
-
-
-            //services.AddMvc(o =>
-            //{
-            //    o.Filters.Add(new AuthorizeFilter(new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build()));
-
-            //});
-
-
             services.AddOptions();
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
-            services.AddMvc(options => options.EnableEndpointRouting = false);
-
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+            services.AddMvc(options => options.EnableEndpointRouting = false);            
             
             services.AddLocalization(options => options.ResourcesPath = "Resource");
             services.AddMvc().AddViewLocalization(options => options.ResourcesPath = "Resource").
@@ -72,10 +61,25 @@ namespace OrgSys
 
             services.AddDbContext<AdminContext>(options => options.UseSqlServer(Configuration.GetConnectionString("OrgConnection"), x => x.MigrationsHistoryTable("__AdminMigrationsHistory", "admin")));
             services.AddDbContext<OrgContext>(options => options.UseSqlServer(Configuration.GetConnectionString("OrgConnection"), x => x.MigrationsHistoryTable("__OrgMigrationsHistory", "org")).ReplaceService<IModelCacheKeyFactory, DbSchemaAwareModelCacheKeyFactory>()) ;
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.Cookie.HttpOnly = true;
+                options.ExpireTimeSpan = TimeSpan.FromDays(30);
+                options.LoginPath = "/Home/Login";
+                //options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+                options.SlidingExpiration = true;
+            });
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
+            {
+             options.LoginPath = "/Home/login";
+             options.LogoutPath = "/Home/logout";
+            });
+
             services.AddControllersWithViews();
             services.AddSession();
             services.AddMvc();
-           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -112,7 +116,6 @@ namespace OrgSys
             app.UseCookiePolicy(cookiePolicyOptions);
             app.UseAuthentication();
             app.UseAuthorization();
-
           
             app.UseEndpoints(endpoints =>
             {

@@ -1,178 +1,205 @@
-﻿
-@{
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-<!-- Page title -->
-<section id="page-title" class="dark" style="background: url(/Assets/Web/images/pattern/pattern10.png)">
-    @*<div class="container">
-        <div class="breadcrumb">
-            <ul>
-                <li><a href="~/Home/Index">@Utility.Resource.Title_Designer.Home</a> </li>
-                <li><a href="#">Page title</a> </li>
-                <li class="active"><a href="#">Pattern background</a> </li>
-            </ul>
-        </div>
-        <div class="page-title">
-            <h1>Page title - Pattern background</h1>
-            <span>Simple page title with pattern background</span>
-        </div>
-    </div>*@
-</section>
-<!-- end: Page title -->
-<!-- Section -->
-<section class="text-center ">
-    <div class="card  float-none d-inline-block" style="width:50% ;">
-        <div class="card-header bg-light">
-            <h3 class="text-center card-header bg-light p-2">@Utility.Resource.Title_Designer.Login</h3>
-        </div>
-        <div class="card-body">
+﻿@{Layout = null;}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="~/css/login.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/fontawesome-free-5.15.3-web/css/all.css" />
+    <link rel="stylesheet" href="~/fontawesome-free-5.15.3-web/css/fontawesome.css" />
+</head>
+<body>
+    <div class="wrapper fadeInDown">
+        <div id="formContent">
+            <!-- Tabs Titles -->
+            <h2 class="active"> @Utility.Resource.Title_Designer.Login </h2>
+
+            <!-- Icon -->
+            <div class="fadeIn first">
+                <img src="~/logos/Logo.png" style="width:150px !important" id="icon" alt="User Icon" />
+            </div>
+            <!-- Login Form -->
             <form action="/Home/LogIn" method="post">
+                <input type="hidden" name="UserName" id="UserName" placeholder="login" />
 
-                <div class="form-horizontal">
-                    <div class="form-group">
-
-                        <div class="form-group mb-2 mt-4">
-                            <label class="sr-only">@Utility.Resource.Title_Designer.UsernameOrEmail</label>
-                            <input type="hidden" name="UserName" id="UserName" placeholder="Username or Email" class="form-control">
+                <div id="dvEmail">
+                    <input type="text" name="MyEmail" id="MyEmail" placeholder="@Utility.Resource.Title_Designer.UsernameOrEmail" autocomplete="off">
+                    <div id="UserNameError" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
+                        <span>your Name is Error</span>
+                    </div>
+                    <div class="">
+                        <div style="padding-top: 15px;">
+                            <input id="btEmail" type="button" value="Next" onclick="Next()" class="fadeIn second" tabindex="-1" />
                         </div>
+                    </div>
+                </div>
 
-                        <div class="form-group mb-2 mt-2" id="dvEmail" style="display:block">
-                            <label class="text-center">@Utility.Resource.Title_Designer.UsernameOrEmail</label>
-                            <input type="text" name="MyEmail" id="MyEmail" placeholder="Username or Email" class="form-control">
-                            <span class="badge badge-danger" id="UserNameError" style="display:none">your Name is Error</span>
-                            <div class="">
-                                <div class="pt-4 pb-4">
-                                    <input type="button" value="Next" onclick="CheckEmail()" class="btn btn-primary btn-block" />
-                                </div>
-                            </div>
-
+                <div id="dvPassword" style="display:none">
+                    <input type="Password" name="Password" id="Password" placeholder="Password" class="fadeIn" autocomplete="off">
+                    <div id="PasswordError" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
+                        <span>your password is Error</span>
+                    </div>
+                    <div class="">
+                        <div>
+                            <small>
+                                <input type="checkbox" class="fadeIn" name="KeepLoggedIn" />&nbsp;Keep me logged in
+                            </small>
+                            <span> &nbsp; | &nbsp;</span>
+                            <small>
+                                <a class="underlineHover" href="javascript::" onclick="Back()"> <i class="fa fa-undo"></i> Another user</a>
+                            </small>
                         </div>
+                        <small>
+                            <a class="underlineHover" href="#">Forgot Password?</a>
+                        </small>
+                        <div style="padding-top:10px;padding-bottom:5px;">
+                            <input id="btPassword"  type="button" value="LogIn" onclick="Login()" class="fadeIn" />
+                        </div>
+                    </div>
+                </div>
 
+                <div id="dvNewPassword" style="display:none">
+                    <br />
+                    <input type="Password" name="NewPassword" id="NewPassword" placeholder="New Password" />
+                    <div id="NewPasswordError" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
+                        <span>your password is Error</span>
                     </div>
 
-                    <div class="form-group  mb-2 mt-2" id="dvPassword" style="display:none">
-                        <label class="text-center">@Utility.Resource.Title_Designer.Password</label>
-                        <input type="text" name="Password" id="Password" placeholder="Password" class="form-control">
-                        <span class="badge badge-danger" id="PasswordError" style="display:none">your password is Error</span>
-                        <div class=" ">
-                            <div class="pt-4 pb-4">
-                                <input type="button" value="LogIn" onclick="Login()" class="btn btn-primary btn-block" />
-                            </div>
-                        </div>
-
+                    <input type="Password" name="ConfirmPassword" id="ConfirmPassword" placeholder="Confirm New Password">
+                    <div id="ConfirmPasswordError" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
+                        <span>your Confirm Password is Error</span>
                     </div>
 
-                    <div class="form-group  mb-2 mt-2" id="dvNewPassword" style="display:none">
-                        <input type="text" name="NewPassword" id="NewPassword" placeholder="New Password" class="form-control mb-1" />
-                        <span class="badge badge-danger" id="NewPasswordError" style="display:none">your password is Error</span>
-
-                        <input type="text" name="ConfirmPassword" id="ConfirmPassword" placeholder="Confirm New Password" class="form-control">
-                        <span class="badge badge-danger" id="ConfirmPasswordError" style="display:none">your Confirm Password is Error</span>
-                        <div class=" ">
-                            <div class="pt-4 pb-4">
-                                <input type="button" value="LogIn" onclick="LoginByNewPassword()" class="btn btn-primary btn-block" />
-                            </div>
+                    <div>
+                        <div>
+                            <small>
+                                <input type="checkbox" class="fadeIn" name="KeepLoggedIn" />&nbsp;Keep me logged in
+                            </small>
+                            <span> &nbsp; | &nbsp;</span>
+                            <small>
+                                <a class="underlineHover" href="javascript::" onclick="Back()"> <i class="fa fa-undo"></i> Another user</a>
+                            </small>
+                        </div>                        
+                        <div style="padding-top:10px;padding-bottom:5px;">
+                            <input  id="btNewPassword"  type="button" value="LogIn" onclick="LoginByNewPassword()" class="fadeIn" />
                         </div>
-
                     </div>
-
                 </div>
 
             </form>
-        </div>
-        <div class="card-footer text-center pt-3">
-            @*<p class="small">@Utility.Resource.Title_Designer.DonttHaveAccountYet <a href="~/home/register">@Utility.Resource.Title_Designer.RegisterNewAccount</a></p>*@
+            <div id="formFooter">
+                <a class="underlineHover" href="#">SignUp</a>
 
+            </div>
         </div>
     </div>
-</section>
-<!-- end: Section -->
 
-<script src="~/js/vendor/jquery-3.3.1.min.js"></script>
-<script src="~/js/vendor/bootstrap3-typeahead.js"></script>
-<link href="~/css/jquery-ui.css" rel="stylesheet" />
-<script src="~/js/jquery-ui.js"></script>
-<script src="~/js/PopupScript.js"></script>
+    <script src="~/js/vendor/jquery-3.3.1.min.js"></script>
+    <script src="~/js/vendor/bootstrap.bundle.min.js"></script>
+    <script src="~/js/dore.script.js"></script>
 
-<script>
-    $("#MyEmail").on("keyup", function () { $("#UserNameError").hide(); });
-    $("#Password").on("keyup", function () { $("#PasswordError").hide(); });
-    $("#NewPassword").on("keyup", function () { $("#NewPasswordError").hide(); });
-    $("#ConfirmPassword").on("keyup", function () { $("#ConfirmPasswordError").hide(); });
 
-    function CheckEmail() {
-        $("#UserNameError").hide();
-        $.ajax({
-            type: 'Get',
-            url: "/Home/CheckEmail?Email=" + $("#MyEmail").val(),
-            success: function (res) {
-                if (res == true) {
-                    $("#UserName").val($("#MyEmail").val())
-                    HavePassword();
+    <script>
+        $("#MyEmail").on("keyup", function () { $("#UserNameError").hide(); });
+        $("#Password").on("keyup", function () { $("#PasswordError").hide(); });
+        $("#NewPassword").on("keyup", function () { $("#NewPasswordError").hide(); });
+        $("#ConfirmPassword").on("keyup", function () { $("#ConfirmPasswordError").hide(); });
+
+        $("#MyEmail").focus();
+        $("#MyEmail").select();
+
+        $(document).on('keyup keypress', 'input', function (e) {
+            if (e.which == 13) {
+                e.preventDefault();
+                if ($("#dvEmail").is(":visible")) {
+                    $("#btEmail").click();
                 }
-                else {
-                    $("#UserName").val("")
-                    $("#UserNameError").show();
+
+                if ($("#dvPassword").is(":visible")) {
+                    $("#btPassword").click();
                 }
+
+                if ($("#dvNewPassword").is(":visible")) {
+                    $("#btNewPassword").click();
+                }
+                return false;
             }
         });
-    }
 
-    function HavePassword() {
+        function Next() {
+            $("#UserNameError").hide();
+            $.ajax({
+                type: 'Get',
+                url: "/Account/CheckEmail?Email=" + $("#MyEmail").val(),
+                success: function (res) {
+                    if (res) {
+                        $("#UserName").val($("#MyEmail").val())
+                        HavePassword();
+                    }
+                    else {
+                        $("#UserName").val("")
+                        $("#UserNameError").show();
+                    }
+                }
+            });
+        }
 
-        $.ajax({
-            type: 'Get',
-            url: "/Home/HavePassword?Email=" + $("#UserName").val(),
-            success: function (res) {
-                $("#dvEmail").hide();
-                if (res == true)
-                {
-                    $("#dvPassword").show();
+        function HavePassword() {
+            $.ajax({
+                type: 'Get',
+                url: "/Account/HavePassword?Email=" + $("#UserName").val(),
+                success: function (res) {
+                    $("#dvEmail").hide();
+                    $("#dvPassword").hide();
+                    $("#dvNewPassword").hide();
+                    if (res == true) {
+                        $("#dvPassword").show();
+                        $("#Password").focus();
+                        $("#Password").select();
+                    }
+                    else {
+                        $("#dvNewPassword").show();
+                        $("#NewPassword").focus();
+                        $("#NewPassword").select();
+                    }
                 }
-                else
-                {
-                    $("#dvNewPassword").show();
+            });
+        }
+
+        function Login() {
+            $.ajax({
+                type: 'Get',
+                url: "/Account/CheckPassword?Email=" + $("#UserName").val() + "&Password=" + $("#Password").val(),
+                success: function (res) {
+                    if (res == true) {
+                        $("form").submit();
+                    }
+                    else {
+                        $("#PasswordError").show();
+                    }
                 }
+            });
+        }
+
+        function LoginByNewPassword() {
+            if ($("#NewPassword").val() == "") {
+                $("#NewPasswordError").show();
             }
-        });
-    }
-
-    function CheckPassword(Password) {
-
-        return false;
-    }
-
-    function Login() {
-        $.ajax({
-            type: 'Get',
-            url: "/Home/CheckPassword?Email=" + $("#UserName").val() + "&Password=" + $("#Password").val(),           
-            success: function (res) {
-                if (res == true) {          
-                    $("form").submit();
-                }
-                else {                   
-                    $("#PasswordError").show();
-                }
+            else if ($("#NewPassword").val() == $("#ConfirmPassword").val()) {
+                $("form").submit();
             }
-        });       
-    }
-    
-    function LoginByNewPassword() {
 
-        if ($("#NewPassword").val() == "")
-        {
-            $("#NewPasswordError").show();
-        }
-        else if ($("#NewPassword").val() == $("#ConfirmPassword").val())
-        {
-            $("form").submit();
-        }
-        else
-        {
-            $("#ConfirmPasswordError").show();
+            else {
+                $("#ConfirmPasswordError").show();
+            }
+
 
         }
-  
-    }
 
-</script>
+        function Back() {           
+            $("#dvPassword").hide();
+            $("#dvNewPassword").hide();
+            $("#dvEmail").show();
+        }
+    </script>
+
+</body>
+</html>

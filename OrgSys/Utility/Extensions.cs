@@ -175,7 +175,7 @@ namespace OrgSys
             }
         }
 
-        public static bool SignIn(this UserModelView us, HttpContext httpContext)
+        public static bool SignIn(this UserModelView us, HttpContext httpContext , bool KeepMeLoggedin = true)
         {
             try
             {
@@ -194,12 +194,26 @@ namespace OrgSys
                    };
 
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                var authProperties = new AuthenticationProperties();
+                var authProperties = new AuthenticationProperties() { IsPersistent = KeepMeLoggedin };                
                 httpContext.SignOutAsync();
                 httpContext.SignInAsync(
                     CookieAuthenticationDefaults.AuthenticationScheme,
                     new ClaimsPrincipal(claimsIdentity),
                     authProperties);
+                return true;
+            }
+            catch
+            {
+                return false;
+                throw;
+            }
+        }
+
+        public static bool SignOut(this UserModelView us, HttpContext httpContext)
+        {
+            try
+            {               
+                httpContext.SignOutAsync();               
                 return true;
             }
             catch

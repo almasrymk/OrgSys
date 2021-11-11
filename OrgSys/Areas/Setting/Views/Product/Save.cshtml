@@ -231,13 +231,15 @@
                                                                                 <div id="DefaultUnit" class="custom-switch custom-switch-primary-inverse custom-switch-small">
                                                                                     <input onchange="CheckDefaultUnit($(this).parent().parent().parent())" class="custom-switch-input chkUnit" id="chkUnit_@ob.UnitId" type="checkbox" checked>
                                                                                     <label class="custom-switch-btn" for="chkUnit_@ob.UnitId"></label>
-                                                                                </div> }
+                                                                                </div> 
+                                                                                }
                                                                             else
                                                                             {
                                                                                 <div id="DefaultUnit" class="custom-switch custom-switch-primary-inverse custom-switch-small">
                                                                                     <input onchange="CheckDefaultUnit($(this).parent().parent().parent())" class="custom-switch-input chkUnit" id="chkUnit_@ob.UnitId" type="checkbox">
                                                                                     <label class="custom-switch-btn" for="chkUnit_@ob.UnitId"></label>
-                                                                                </div>}
+                                                                                </div>
+                                                                                }
                                                                         </td>
                                                                         <td style="width:100px;vertical-align:middle;">
                                                                             @if (ob != null && ob.Id >= 0)

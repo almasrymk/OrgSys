@@ -37,6 +37,8 @@ namespace Entity.ModelView
 
             this.Code = ob.Code;
 
+            this.LoginUserId = ob.LoginUserId;
+
             this.MaskText = ob.MaskText;
 
             this.ParentId = ob.ParentId;
@@ -68,7 +70,7 @@ namespace Entity.ModelView
                 Hide = this.Hide,
                 Status = this.Status,
                 ImgPath = this.ImgPath,
-                
+                LoginUserId = this.LoginUserId,
             };
         }
 
@@ -82,10 +84,13 @@ namespace Entity.ModelView
 
         public string RoleName { get; set; }
 
-        public long? BranchId { get; set; } 
+        public long? BranchId { get; set; }
+
+        public long LoginUserId { get; set; }
 
         public string BranchName { get; set; }
-        
+        public bool KeepLoggedIn { get; set; }
+
         [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,15}$")]
         public string NewPassword { get; set; }
        

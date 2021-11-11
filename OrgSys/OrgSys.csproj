@@ -76,4 +76,11 @@
     <None Include="wwwroot\jquery-ui-1.13.0.custom\jquery-ui.min.js" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Views\Home\LogIn.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

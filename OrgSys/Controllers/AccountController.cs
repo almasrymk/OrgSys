@@ -72,7 +72,7 @@ namespace OrgSys.Controllers
         [HttpPost]
         public IActionResult LogIn(UserModelView _user)
         {
-            var us = user.Get(_user.UserName);
+            var us = user.GetUserName(_user.UserName);
 
             if (us != null)
             {
@@ -88,7 +88,7 @@ namespace OrgSys.Controllers
                         return View(_user);
                     }
                 }
-                us.SignIn(HttpContext);
+                us.SignIn(HttpContext , _user.KeepLoggedIn);
                 return RedirectToAction("Dashboard","Home");
             }
 
@@ -109,6 +109,8 @@ namespace OrgSys.Controllers
 
         public ActionResult CheckEmail(string Email)
         {
+            if (Email == null)
+                Email = "";
             return Json(user.CheckEmail(Email));
         }
 
