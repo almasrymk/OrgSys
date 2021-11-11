@@ -21,7 +21,7 @@ namespace Entity.ModelView
 
             this.UserName = ob.UserName;
 
-            this.Password =  ob.Password;
+            this.Password =  Utility.Security.Decrypt(ob.Password);
 
             this.BranchId = ob.BranchId;
 
@@ -56,7 +56,7 @@ namespace Entity.ModelView
             {
                 Name = this.Name,
                 UserName = this.UserName,
-                Password = this.Password,
+                Password = Utility.Security.Encrypt(this.Password),
                 BranchId = this.BranchId,
                 RoleId = this.RoleId,
                 Id = this.Id,

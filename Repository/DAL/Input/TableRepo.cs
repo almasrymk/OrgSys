@@ -2,7 +2,7 @@
 
 namespace Repository
 {
-    public class TableRepo : Curd<Table>
+    public class TableRepo : CurdOrg<Table>
     {
 
     }

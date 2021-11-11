@@ -2,7 +2,7 @@
 
 namespace Repository
 {
-    public class SafeRepo : Curd<Safe>
+    public class SafeRepo : CurdOrg<Safe>
     {
         
     }

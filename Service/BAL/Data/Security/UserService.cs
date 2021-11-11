@@ -102,6 +102,8 @@ namespace Service
 
         public bool CheckEmail(string Email) => repo.userRepo.Any(e => e.UserName == Email);
 
+        public bool CheckCurrentPassword(long Id , string CurrentPassword) => repo.userRepo.Any(e =>e.Id == Id && e.Password == CurrentPassword);
+
         public bool HavePassword(string Email) => "" + repo.userRepo.Get(e => e.UserName == Email).Password != "";
 
         public bool CheckEmailAndPassword(string Email,string Passord) => repo.userRepo.Any(e => e.UserName== Email &&e.Password==Passord);

@@ -2,7 +2,7 @@
 
 namespace Repository
 {
-    public class RolechRepo : Curd<Role>
+    public class RolechRepo : CurdOrg<Role>
     {
 
     }

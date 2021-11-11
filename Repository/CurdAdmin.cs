@@ -9,14 +9,14 @@ using Utility;
 
 namespace Repository
 {
-    public class Curd<entity> where entity : BaseModel
+    public class CurdAdmin<entity> where entity : BaseModel
     {
-        public OrgContext db;
+        public AdminContext db;
 
-        public Curd()
+        public CurdAdmin()
         {
             if (this.db == null)
-                this.db = new OrgContext(new DbContextOptions<OrgContext>());
+                this.db = new AdminContext(new DbContextOptions<AdminContext>());
         }
 
         public virtual long GetMaXCode(Func<entity, bool> filter = null)

@@ -2,7 +2,7 @@
 
 namespace Repository
 {
-    public class ClassificationRepo : Curd<Classification>
+    public class ClassificationRepo : CurdOrg<Classification>
     {
 
     }

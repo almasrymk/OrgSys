@@ -2,7 +2,7 @@
 
 namespace Repository
 {
-    public class PropertyRepo : Curd<Property>
+    public class PropertyRepo : CurdOrg<Property>
     {
 
     }

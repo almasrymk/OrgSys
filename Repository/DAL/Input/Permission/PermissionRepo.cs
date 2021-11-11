@@ -2,7 +2,7 @@
 
 namespace Repository
 {
-    public class PermissionRepo : Curd<Permission>
+    public class PermissionRepo : CurdOrg<Permission>
     {
 
     }

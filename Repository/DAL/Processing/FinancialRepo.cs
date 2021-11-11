@@ -2,7 +2,7 @@
 
 namespace Repository
 {
-    public class FinancialRepo : Curd<Financial>
+    public class FinancialRepo : CurdOrg<Financial>
     {
       
     }

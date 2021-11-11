@@ -2,7 +2,7 @@
 
 namespace Repository
 {
-    public class ShiftRepo : Curd<Shift>
+    public class ShiftRepo : CurdOrg<Shift>
     {
 
     }
