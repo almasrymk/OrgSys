@@ -333,6 +333,9 @@
   <data name="Financials" xml:space="preserve">
     <value>المالية</value>
   </data>
+  <data name="ForgetPassword" xml:space="preserve">
+    <value>نسيت كلمة المرور</value>
+  </data>
   <data name="FromDate" xml:space="preserve">
     <value>من تاريخ</value>
   </data>

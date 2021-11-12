@@ -35,7 +35,12 @@ namespace OrgSys.Controllers
         {
             return View();
         }
-
+        [AllowAnonymous]
+        public IActionResult ForgetPassword()
+        {
+            return View();
+        }
+        [AllowAnonymous]
         public IActionResult Pricing()
         {
             return View();

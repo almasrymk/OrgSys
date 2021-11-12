@@ -3,18 +3,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="~/css/vendor/bootstrap.min.css" rel="stylesheet" />
     <link href="~/css/login.css" rel="stylesheet" />
-
+    <style>
+        .vl {
+            border-left: 2px solid #5fbae9;
+            height: 280px;
+            position: absolute;
+            left: 50%;
+            margin-left: -3px;
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            border-radius: 10px 10px 10px 10px;
+        }
+    </style>
 </head>
-<body>
-    <div class="wrapper fadeInDown">
-        <div id="formContent">
+<body style="background-color: #7190ca !important;">
+    <div class="container wrapper fadeInDown">
+        <div id="formContent" style="max-width: 100% !important">
             <!-- Tabs Titles -->
-            <h2 class="active"> Register </h2>
             <!-- Icon -->
-            <div class="fadeIn first">
-                <img src="~/logos/Logo.png" style="width:150px !important" id="icon" alt="User Icon" />
+            <div class="container" style="padding-top:15px !important">
+                <div class="fadeIn first" style="text-align: left !important">
+                    <img src="~/logos/Logo.png" style="width:150px !important" id="icon" alt="User Icon" />
+                </div>
             </div>
+
+            <h2 class="active"> Register </h2>
+
             <!-- Login Form -->
             <form>
                 @Html.HiddenFor(model => model.Id)
@@ -23,55 +43,90 @@
                 @Html.HiddenFor(model => model.Code)
                 @Html.HiddenFor(model => model.CodeNumber)
                 @Html.HiddenFor(model => model.RequestId)
+                <div class="row">
+                    <div class="col-md-6" style="padding:0px !important">
+                        <input type="text" id="Name" class="fadeIn second" name="Name" placeholder="Name" value="@Model.Name">
+                        <div id="NameRequired" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
+                            <span>your Name is Required</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6" style="padding:0px !important">
+                        <input type="text" id="CompanyName" class="fadeIn second" name="CompanyName" placeholder="Company Name" value="@Model.CompanyName">
+                        <div id="CompanyNameRequired" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
+                            <span>your company name is Required</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6" style="padding:0px !important">
+                        <input type="text" id="Email" class="fadeIn second" name="Email" placeholder="Email" value="@Model.Email">
+                        <div id="EmailRequired" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
+                            <span>your Email is Required</span>
+                        </div>
+                        <div id="EmailError" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
+                            <span>your Email is Error</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6" style="padding:0px !important">
+                        <input type="text" id="Mobile" class="fadeIn second" name="Mobile" placeholder="Mobile" value="@Model.Mobile">
+                        <div id="MobileRequired" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
+                            <span>your Mobile is Required</span>
+                        </div>
+                        <div id="MobileError" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
+                            <span>your Mobile is Error</span>
+                        </div>
+                    </div>
 
-                <input type="text" id="Name" class="fadeIn second" name="Name" placeholder="Name" value="@Model.Name">
-                <div id="NameRequired" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                    <span>your Name is Required</span>
-                </div>
-                <input type="text" id="CompanyName" class="fadeIn second" name="CompanyName" placeholder="Company Name" value="@Model.CompanyName">
-                <div id="CompanyNameRequired" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                    <span>your company name is Required</span>
-                </div>
-                <input type="text" id="Description" class="fadeIn second" name="Description" placeholder="Description" value="@Model.Description">
-                <div id="DescriptionRequired" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                    <span>your description is Required</span>
-                </div>
-                <input type="text" id="Email" class="fadeIn second" name="Email" placeholder="Email" value="@Model.Email">
-                <div id="EmailRequired" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                    <span>your Email is Required</span>
-                </div>
-                <div id="EmailError" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                    <span>your Email is Error</span>
-                </div>
-                <input type="text" id="Phone" class="fadeIn second" name="Phone" placeholder="Phone" value="@Model.Phone">
-                <div id="PhoneRequired" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                    <span>your Phone is Required</span>
-                </div>
-                <div id="PhoneError" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                    <span>your Phone is Error</span>
-                </div>
-                <input type="text" id="Mobile" class="fadeIn second" name="Mobile" placeholder="Mobile" value="@Model.Mobile">
-                <div id="MobileRequired" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                    <span>your Mobile is Required</span>
-                </div>
-                <div id="MobileError" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                    <span>your Mobile is Error</span>
-                </div>
-                <input type="text" id="Fax" class="fadeIn second" name="Fax" placeholder="Fax" value="@Model.Fax">
-                <div id="FaxError" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                    <span>your Fax is Error</span>
-                </div>
-                @Html.DropDownListFor(model => model.TypeActivityId, null, null, new { @placeholder = "Field Type", @class = "fadeIn second" })
-                <div id="TypeActivityRequired" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                    <span>your Type Activity is Required</span>
-                </div>
-                @Html.DropDownListFor(model => model.NationalityId, null, null, new { @placeholder = "Field Type", @class = "fadeIn second" })
-                <div id="NationalityRequired" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                    <span>your Nationality is Required</span>
-                </div>
-                @Html.DropDownListFor(model => model.SizeOfCompany, null, null, new { @placeholder = "Field Type", @class = "fadeIn second" })
-                <div id="SizeOfCompanyRequired" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                    <span>your Size Of Company is Required</span>
+
+
+
+                    <div class="col-md-6" style="padding:0px !important">
+                        <input type="text" class="fadeIn second" name="Mobile" placeholder="Phone Number">
+                        <div id="MobileRequired" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
+                            <span>your Mobile is Required</span>
+                        </div>
+                        <div id="MobileError" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
+                            <span>your Mobile is Error</span>
+                        </div>
+                    </div>
+                    <div class="vl"></div>
+
+
+
+                    <div class="col-md-6" style="padding:0px !important">
+                        @Html.DropDownListFor(model => model.TypeActivityId, null, null, new { @placeholder = "Field Type", @class = "fadeIn second" })
+                        <div id="TypeActivityRequired" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
+                            <span>your Type Activity is Required</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6" style="padding:0px !important">
+                        @Html.DropDownListFor(model => model.NationalityId, null, null, new { @placeholder = "Field Type", @class = "fadeIn second" })
+                        <div id="NationalityRequired" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
+                            <span>your Nationality is Required</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6" style="padding:0px !important">
+                        @Html.DropDownListFor(model => model.SizeOfCompany, null, null, new { @placeholder = "Field Type", @class = "fadeIn second" })
+                        <div id="SizeOfCompanyRequired" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
+                            <span>your Size Of Company is Required</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6" style="padding:0px !important">
+                        <input type="text" class="fadeIn second" name="Mobile" placeholder="Password">
+                        <div id="MobileRequired" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
+                            <span>your Mobile is Required</span>
+                        </div>
+                        <div id="MobileError" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
+                            <span>your Mobile is Error</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6" style="padding:0px !important">
+                        <input type="text" class="fadeIn second" name="Mobile" placeholder="Confirm Password">
+                        <div id="MobileRequired" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
+                            <span>your Mobile is Required</span>
+                        </div>
+                        <div id="MobileError" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
+                            <span>your Mobile is Error</span>
+                        </div>
+                    </div>
                 </div>
                 <div class="">
                     <div style="padding-top:10px;">
@@ -81,10 +136,10 @@
             </form>
             <!-- Remind Passowrd -->
             <div id="formFooter" style="padding:10px;">
+                <a class="underlineHover" href="/Home/Login">Login</a>
             </div>
         </div>
     </div>
-
     <script src="~/js/vendor/jquery-3.3.1.min.js"></script>
     <script src="~/js/vendor/bootstrap.bundle.min.js"></script>
     <script src="~/js/dore.script.js"></script>
@@ -177,7 +232,7 @@
                 }
             }
 
-            
+
             var validfax = regEx.test(fax);
             if (!validfax) {
                 $("#FaxError").show();
@@ -203,5 +258,5 @@
         }
 
     </script>
-    </body>
+</body>
 </html>

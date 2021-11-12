@@ -57,7 +57,7 @@ namespace Utility
         {
             SmtpClient client = new SmtpClient();
             client.Host = "mail.organizersys.com";
-            client.Port = 25;
+            client.Port = 8889;
             client.UseDefaultCredentials = false;
             client.Credentials = new System.Net.NetworkCredential("info@organizersys.com", "Testg@83");
             client.EnableSsl = false;

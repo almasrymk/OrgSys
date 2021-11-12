@@ -333,6 +333,9 @@
   <data name="Financials" xml:space="preserve">
     <value>Financials</value>
   </data>
+  <data name="ForgetPassword" xml:space="preserve">
+    <value>Forget Password</value>
+  </data>
   <data name="FromDate" xml:space="preserve">
     <value>From Date</value>
   </data>
