@@ -1,0 +1,126 @@
+﻿
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_Layout_Website.cshtml";
+}
+
+<!-- Section -->
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 center">
+                <div class="card h-100">
+                    <div class="panel-body">
+                        <h3 class="text-center card-header bg-light p-2">Register New Account</h3>
+
+                        <form action="/Home/Register" id="RegForm" method="post">
+
+                            <div class="form-horizontal">
+                                <div class="form-group pt-3">
+
+                                    <div class="form-group center col-md-9 mb-2 mt-2">
+                                        <input type="text" name="Name" id="Name" placeholder="Name" class="form-control">
+                                    </div>
+
+                                    <div class="form-group center col-md-9 mb-2 mt-2">
+                                        <input type="text" name="Email" id="Email" placeholder="E-mail" class="form-control">
+                                    </div>
+
+                                    <div class="form-group center col-md-9 mb-2 mt-2">
+                                        <input type="text" name="Phone" id="Phone" placeholder="Phone" class="form-control">
+                                    </div>
+
+                                    <div class="form-group center col-md-9 mb-2 mt-2">
+                                        <input type="text" name="CompanyName" id="CompanyName" placeholder="Company Name" class="form-control">
+                                    </div>
+
+                                    <div class=" form-group center col-md-9 mb-2 mt-2 pt-4 pb-4">
+                                        <input type="submit" value="Send Registeration"  class="btn btn-block" />
+                                    </div>
+
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</section>
+<!-- end: Section -->
+
+    <script src="~/js/vendor/jquery-3.3.1.min.js"></script>
+    <script src="~/js/vendor/bootstrap3-typeahead.js"></script>
+    <link href="~/css/jquery-ui.css" rel="stylesheet" />
+    <script src="~/js/jquery-ui.js"></script>
+    <script src="~/js/PopupScript.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#RegForm').submit(function (e) {
+                e.preventDefault();
+                var name = $('#Name').val();
+                var email = $('#Email').val();
+                var phone = $('#Phone').val();
+                $(".error").remove();
+
+                if (name.length < 1) {
+                    $('##Name').after('<span class="error alert alert-danger">This field is required</span>');
+                }
+
+                if (email.length < 1) {
+                    $('#Email').after('<span class="error alert alert-danger">This field is required</span>');
+                }
+                else {
+                    var regEx = /^[A-Z0-9][A-Z0-9._%+-]{0,63}@@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/;
+                    var validEmail = regEx.test(email);
+                    if (!validEmail) {
+                        $('#Email').after('<span class="error alert alert-danger">Enter a valid email</span>');
+                    }
+                }
+
+                if (phone.length < 1) {
+                    $('#Phone').after('<span class="error alert alert-danger">This field is required</span>');
+                }
+                else {
+                    var regEx = (201)[0 - 9]{ 9 };
+                    var validPhone = regEx.test(phone);
+                    if (!validPhone) {
+                        $('#Phone').after('<span class="error alert alert-danger">Enter a valid Phone</span>');
+                    }
+                }
+            });
+        });
+
+
+    //function SaveReq() {
+
+    //        var data = {
+    //            Name: $('#Name').val().trim(),
+    //            Email: $('#Email').val().trim(),
+    //            Phone: $('#Phone').val().trim(),
+    //            CompanyName: $('#CompanyName').val().trim(),
+    //        };
+
+    //        $.ajax({
+    //            type: 'POST',
+    //            url: "/Home/Register",
+    //            data: { _request: data },
+    //            success: function (res) {
+    //                if (res.status == "success") {
+
+
+    //                }
+    //                else {
+
+    //                }
+
+    //            }
+    //        });
+
+    //}
+    </script>

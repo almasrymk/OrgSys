@@ -1,58 +1,93 @@
-﻿
-@{
-    ViewData["Title"] = "Register";
-    Layout = "~/Views/Shared/_Layout_Website.cshtml";
-}
+﻿@model Entity.ModelView.ClientModelView
+@{Layout = null;}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="~/css/login.css" rel="stylesheet" />
 
-<!-- Section -->
-<section>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 center">
-                <div class="card h-100">
-                    <div class="panel-body">
-                        <h3 class="text-center card-header bg-light p-2">Register New Account</h3>
+</head>
+<body>
+    <div class="wrapper fadeInDown">
+        <div id="formContent">
+            <!-- Tabs Titles -->
+            <h2 class="active"> Register </h2>
+            <!-- Icon -->
+            <div class="fadeIn first">
+                <img src="~/logos/Logo.png" style="width:150px !important" id="icon" alt="User Icon" />
+            </div>
+            <!-- Login Form -->
+            <form>
+                @Html.HiddenFor(model => model.Id)
+                @Html.HiddenFor(model => model.TypeId)
+                @Html.HiddenFor(model => model.ParentId)
+                @Html.HiddenFor(model => model.Code)
+                @Html.HiddenFor(model => model.CodeNumber)
+                @Html.HiddenFor(model => model.RequestId)
 
-                        <form action="/Home/Register" id="RegForm" method="post">
-
-                            <div class="form-horizontal">
-                                <div class="form-group pt-3">
-
-                                    <div class="form-group center col-md-9 mb-2 mt-2">
-                                        <input type="text" name="Name" id="Name" placeholder="Name" class="form-control">
-                                    </div>
-
-                                    <div class="form-group center col-md-9 mb-2 mt-2">
-                                        <input type="text" name="Email" id="Email" placeholder="E-mail" class="form-control">
-                                    </div>
-
-                                    <div class="form-group center col-md-9 mb-2 mt-2">
-                                        <input type="text" name="Phone" id="Phone" placeholder="Phone" class="form-control">
-                                    </div>
-
-                                    <div class="form-group center col-md-9 mb-2 mt-2">
-                                        <input type="text" name="CompanyName" id="CompanyName" placeholder="Company Name" class="form-control">
-                                    </div>
-
-                                    <div class=" form-group center col-md-9 mb-2 mt-2 pt-4 pb-4">
-                                        <input type="submit" value="Send Registeration"  class="btn btn-block" />
-                                    </div>
-
-                                </div>
-                            </div>
-                        </form>
+                <input type="text" id="Name" class="fadeIn second" name="Name" placeholder="Name" value="@Model.Name">
+                <div id="NameRequired" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
+                    <span>your Name is Required</span>
+                </div>
+                <input type="text" id="CompanyName" class="fadeIn second" name="CompanyName" placeholder="Company Name" value="@Model.CompanyName">
+                <div id="CompanyNameRequired" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
+                    <span>your company name is Required</span>
+                </div>
+                <input type="text" id="Description" class="fadeIn second" name="Description" placeholder="Description" value="@Model.Description">
+                <div id="DescriptionRequired" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
+                    <span>your description is Required</span>
+                </div>
+                <input type="text" id="Email" class="fadeIn second" name="Email" placeholder="Email" value="@Model.Email">
+                <div id="EmailRequired" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
+                    <span>your Email is Required</span>
+                </div>
+                <div id="EmailError" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
+                    <span>your Email is Error</span>
+                </div>
+                <input type="text" id="Phone" class="fadeIn second" name="Phone" placeholder="Phone" value="@Model.Phone">
+                <div id="PhoneRequired" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
+                    <span>your Phone is Required</span>
+                </div>
+                <div id="PhoneError" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
+                    <span>your Phone is Error</span>
+                </div>
+                <input type="text" id="Mobile" class="fadeIn second" name="Mobile" placeholder="Mobile" value="@Model.Mobile">
+                <div id="MobileRequired" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
+                    <span>your Mobile is Required</span>
+                </div>
+                <div id="MobileError" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
+                    <span>your Mobile is Error</span>
+                </div>
+                <input type="text" id="Fax" class="fadeIn second" name="Fax" placeholder="Fax" value="@Model.Fax">
+                <div id="FaxError" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
+                    <span>your Fax is Error</span>
+                </div>
+                @Html.DropDownListFor(model => model.TypeActivityId, null, null, new { @placeholder = "Field Type", @class = "fadeIn second" })
+                <div id="TypeActivityRequired" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
+                    <span>your Type Activity is Required</span>
+                </div>
+                @Html.DropDownListFor(model => model.NationalityId, null, null, new { @placeholder = "Field Type", @class = "fadeIn second" })
+                <div id="NationalityRequired" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
+                    <span>your Nationality is Required</span>
+                </div>
+                @Html.DropDownListFor(model => model.SizeOfCompany, null, null, new { @placeholder = "Field Type", @class = "fadeIn second" })
+                <div id="SizeOfCompanyRequired" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
+                    <span>your Size Of Company is Required</span>
+                </div>
+                <div class="">
+                    <div style="padding-top:10px;">
+                        <input id="btnSave" type="button" class="fadeIn fourth" onclick="Save()" value="Done">
                     </div>
                 </div>
-
+            </form>
+            <!-- Remind Passowrd -->
+            <div id="formFooter" style="padding:10px;">
             </div>
-
         </div>
     </div>
-</section>
-<!-- end: Section -->
 
     <script src="~/js/vendor/jquery-3.3.1.min.js"></script>
-    <script src="~/js/vendor/bootstrap3-typeahead.js"></script>
+    <script src="~/js/vendor/bootstrap.bundle.min.js"></script>
+    <script src="~/js/dore.script.js"></script>
     <link href="~/css/jquery-ui.css" rel="stylesheet" />
     <script src="~/js/jquery-ui.js"></script>
     <script src="~/js/PopupScript.js"></script>
@@ -60,67 +95,113 @@
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
 
     <script>
-        $(document).ready(function () {
-            $('#RegForm').submit(function (e) {
-                e.preventDefault();
-                var name = $('#Name').val();
-                var email = $('#Email').val();
-                var phone = $('#Phone').val();
-                $(".error").remove();
+        $("#Name").on("keyup", function () { $("#NameRequired").hide(); });
+        $("#CompanyName").on("keyup", function () { $("#CompanyNameRequired").hide(); });
+        $("#Description").on("keyup", function () { $("#DescriptionRequired").hide(); });
+        $("#Phone").on("keyup", function () { $("#PhoneRequired").hide(); });
+        $("#Phone").on("keyup", function () { $("#PhoneError").hide(); });
+        $("#Mobile").on("keyup", function () { $("#MobileRequired").hide(); });
+        $("#Mobile").on("keyup", function () { $("#MobileError").hide(); });
+        $("#Fax").on("keyup", function () { $("#FaxRequired").hide(); });
+        $("#Email").on("keyup", function () { $("#EmailRequired").hide(); });
+        $("#Email").on("keyup", function () { $("#EmailError").hide(); });
+        $("#TypeActivityId").on("keyup", function () { $("#TypeActivityRequired").hide(); });
+        $("#NationalityId").on("keyup", function () { $("#NationalityRequired").hide(); });
+        $("#SizeOfCompany").on("keyup", function () { $("#SizeOfCompanyRequired").hide(); });
 
-                if (name.length < 1) {
-                    $('##Name').after('<span class="error alert alert-danger">This field is required</span>');
+        function Save() {
+            var valid = true;
+            var name = $('#Name').val();
+            var companyName = $('#CompanyName').val();
+            var description = $('#Description').val();
+            var phone = $('#Phone').val();
+            var mobile = $('#Mobile').val();
+            var fax = $('#Fax').val();
+            var email = $('#Email').val();
+            var typeActivityId = $('#TypeActivityId').val();
+            var nationalityId = $('#NationalityId').val();
+            var sizeOfCompany = $('#SizeOfCompany').val();
+            $(".error").remove();
+
+            if (name.length < 1) {
+                $("#NameRequired").show();
+                valid = false;
+            }
+
+            if (companyName.length < 1) {
+                $("#CompanyNameRequired").show();
+                valid = false;
+            }
+
+            if (description.length < 1) {
+                $("#DescriptionRequired").show();
+                valid = false;
+            }
+
+            if (email.length < 1) {
+                $("#EmailRequired").show();
+                valid = false;
+            }
+            else {
+                var regEx = /^([a-zA-Z0-9_\-\.]+)@@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
+                var validEmail = regEx.test(email);
+                if (!validEmail) {
+                    $("#EmailError").show();
+                    valid = false;
                 }
+            }
 
-                if (email.length < 1) {
-                    $('#Email').after('<span class="error alert alert-danger">This field is required</span>');
+            var regEx = /^[0][0-9]{10}$/;
+
+            if (phone.length < 1) {
+                $("#PhoneRequired").show();
+                valid = false;
+            }
+            else {
+                var validPhone = regEx.test(phone);
+                if (!validPhone) {
+                    $("#PhoneError").show();
+                    valid = false;
                 }
-                else {
-                    var regEx = /^[A-Z0-9][A-Z0-9._%+-]{0,63}@@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/;
-                    var validEmail = regEx.test(email);
-                    if (!validEmail) {
-                        $('#Email').after('<span class="error alert alert-danger">Enter a valid email</span>');
-                    }
+            }
+
+            if (mobile.length < 1) {
+                $("#MobileRequired").show();
+                valid = false;
+            }
+            else {
+                var validmobile = regEx.test(mobile);
+                if (!validmobile) {
+                    $("#MobileError").show();
+                    valid = false;
                 }
+            }
 
-                if (phone.length < 1) {
-                    $('#Phone').after('<span class="error alert alert-danger">This field is required</span>');
-                }
-                else {
-                    var regEx = (201)[0 - 9]{ 9 };
-                    var validPhone = regEx.test(phone);
-                    if (!validPhone) {
-                        $('#Phone').after('<span class="error alert alert-danger">Enter a valid Phone</span>');
-                    }
-                }
-            });
-        });
+            
+            var validfax = regEx.test(fax);
+            if (!validfax) {
+                $("#FaxError").show();
+                valid = false;
+            }
 
+            if (typeActivityId.length < 1 || typeActivityId == 0) {
+                $("#TypeActivityRequired").show();
+                valid = false;
+            }
 
-    //function SaveReq() {
+            if (nationalityId.length < 1 || nationalityId == 0) {
+                $("#NationalityRequired").show();
+                valid = false;
+            }
 
-    //        var data = {
-    //            Name: $('#Name').val().trim(),
-    //            Email: $('#Email').val().trim(),
-    //            Phone: $('#Phone').val().trim(),
-    //            CompanyName: $('#CompanyName').val().trim(),
-    //        };
+            if (sizeOfCompany.length < 1 || sizeOfCompany == 0) {
+                $("#SizeOfCompanyRequired").show();
+                valid = false;
+            }
+            if (valid)
+                $('#RequestForm').submit();
+        }
 
-    //        $.ajax({
-    //            type: 'POST',
-    //            url: "/Home/Register",
-    //            data: { _request: data },
-    //            success: function (res) {
-    //                if (res.status == "success") {
-
-
-    //                }
-    //                else {
-
-    //                }
-
-    //            }
-    //        });
-
-    //}
     </script>
+    </body>
+</html>

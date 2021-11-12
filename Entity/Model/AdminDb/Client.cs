@@ -10,6 +10,8 @@ namespace Entity.Model
         [Required]
         public string Name { get; set; }
 
+        public string CompanyName { get; set; }
+
         public string Description { get; set; }
 
         [StringLength(25, MinimumLength = 8)]        

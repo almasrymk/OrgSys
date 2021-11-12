@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using Entity.Model;
 using Entity.ModelView;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using OrgSys.Models;
 using Service;
@@ -161,13 +164,34 @@ namespace OrgSys.Controllers
         public IActionResult Register(string Key)
         {
             Key = Key.Replace(" ", "+");
-            var ky = Utility.Security.Decrypt(Key);
-            var rq = new RequestService().GetByKey(ky);
-            if (rq == null || rq.Id == 0 || rq.ExpireDate < DateTime.Now)
+            var keyNumber = Utility.Security.Decrypt(Key);
+            var request = new RequestService().GetByKey(keyNumber);
+            if (request == null || request.Id == 0 || request.ExpireDate < DateTime.Now)
                 return RedirectToAction("Notfound");
 
-            
-            return View();
+            var client = new ClientService().GetRequstId(request.Id);
+            if (client != null && client.Id > 0)
+                return RedirectToAction("Notfound");
+
+            if (client == null)
+                client = new ClientModelView();
+
+            client.Name = request.Name;
+            client.CompanyName = request.CompanyName;
+            client.Email = request.Email;
+            client.Mobile = request.Phone;
+            client.CodeNumber = new ClientService().GetMaxCode();
+            client.Code = "" + client.CodeNumber;
+            ViewBag.TypeActivityId = new SelectList(new TypeActivityService().GetAll(0, 0, 1, 10000), "Id", "Name");
+            ViewBag.NationalityId = new SelectList(new NationalityService().GetAll(0, 0, 1, 10000), "Id", "Name");
+            List<SelectListItem> items = new List<SelectListItem>();
+            items.Add(new SelectListItem { Value = "1", Text = "1 to 5" });
+            items.Add(new SelectListItem { Value = "1", Text = "5 to 50" });
+            items.Add(new SelectListItem { Value = "1", Text = "50 to 150" });
+            items.Add(new SelectListItem { Value = "1", Text = "150 to 1500" });
+            items.Add(new SelectListItem { Value = "1", Text = "More then 1500" });
+            ViewBag.SizeOfCompany = new SelectList(items, "Value", "Text");
+            return View(client);
         }
 
         [AllowAnonymous]
