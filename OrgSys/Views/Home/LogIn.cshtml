@@ -18,7 +18,8 @@
             </div>
             <!-- Login Form -->
             <form action="/Home/LogIn" method="post">
-                <input type="hidden" name="UserName" id="UserName" placeholder="login" />
+                <input type="hidden" name="UserName" id="UserName"/>
+                <input type="hidden" name="KeepLoggedIn" id="KeepLoggedIn"/>
 
                 <div id="dvEmail">
                     <input type="text" name="MyEmail" id="MyEmail" placeholder="@Utility.Resource.Title_Designer.UsernameOrEmail" autocomplete="off">
@@ -40,7 +41,7 @@
                     <div class="">
                         <div>
                             <small>
-                                <input type="checkbox" class="fadeIn" name="KeepLoggedIn" />&nbsp;Keep me logged in
+                                <input type="checkbox" class="fadeIn" onclick="Check(this)" />&nbsp;Keep me logged in
                             </small>
                             <span> &nbsp; | &nbsp;</span>
                             <small>
@@ -51,7 +52,7 @@
                             <a class="underlineHover" href="#">Forgot Password?</a>
                         </small>
                         <div style="padding-top:10px;padding-bottom:5px;">
-                            <input id="btPassword"  type="button" value="LogIn" onclick="Login()" class="fadeIn" />
+                            <input id="btPassword" type="button" value="LogIn" onclick="Login()" class="fadeIn" />
                         </div>
                     </div>
                 </div>
@@ -71,15 +72,15 @@
                     <div>
                         <div>
                             <small>
-                                <input type="checkbox" class="fadeIn" name="KeepLoggedIn" />&nbsp;Keep me logged in
+                                <input type="checkbox" class="fadeIn" onclick="Check(this)" />&nbsp;Keep me logged in
                             </small>
                             <span> &nbsp; | &nbsp;</span>
                             <small>
                                 <a class="underlineHover" href="javascript::" onclick="Back()"> <i class="fa fa-undo"></i> Another user</a>
                             </small>
-                        </div>                        
+                        </div>
                         <div style="padding-top:10px;padding-bottom:5px;">
-                            <input  id="btNewPassword"  type="button" value="LogIn" onclick="LoginByNewPassword()" class="fadeIn" />
+                            <input id="btNewPassword" type="button" value="LogIn" onclick="LoginByNewPassword()" class="fadeIn" />
                         </div>
                     </div>
                 </div>
@@ -128,7 +129,7 @@
             $("#UserNameError").hide();
             $.ajax({
                 type: 'Get',
-                url: "/Account/CheckEmail?Email=" + $("#MyEmail").val(),
+                url: "/Home/CheckEmail?Email=" + $("#MyEmail").val(),
                 success: function (res) {
                     if (res) {
                         $("#UserName").val($("#MyEmail").val())
@@ -145,7 +146,7 @@
         function HavePassword() {
             $.ajax({
                 type: 'Get',
-                url: "/Account/HavePassword?Email=" + $("#UserName").val(),
+                url: "/Home/HavePassword?Email=" + $("#UserName").val(),
                 success: function (res) {
                     $("#dvEmail").hide();
                     $("#dvPassword").hide();
@@ -167,7 +168,7 @@
         function Login() {
             $.ajax({
                 type: 'Get',
-                url: "/Account/CheckPassword?Email=" + $("#UserName").val() + "&Password=" + $("#Password").val(),
+                url: "/Home/CheckPassword?Email=" + $("#UserName").val() + "&Password=" + $("#Password").val(),
                 success: function (res) {
                     if (res == true) {
                         $("form").submit();
@@ -198,6 +199,15 @@
             $("#dvPassword").hide();
             $("#dvNewPassword").hide();
             $("#dvEmail").show();
+        }
+
+        function Check(data) {
+            if ($(data).is(":Checked")) {
+                $("#KeepLoggedIn").val(true);
+            }
+            else {
+                $("#KeepLoggedIn").val(false);
+            }
         }
     </script>
 

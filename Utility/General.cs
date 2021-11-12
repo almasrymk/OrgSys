@@ -14,44 +14,48 @@ namespace Utility
 
     public static class General
     {
-        public static HttpContext HttpContext { get; set; }
+        //public static HttpContext HttpContext { get; set; }
+        private static string _Schema { get; set; }
         public static void SetSchema(string Schema)
         {
-            HttpContext.Session.Set("Schema", Encoding.ASCII.GetBytes(Schema));
+            _Schema = Schema;
+            //HttpContext.Session.Remove("Schema");
+            //HttpContext.Session.Set("Schema", Encoding.ASCII.GetBytes(Schema));
         }
 
-        public static void SetConfiguration(IConfiguration configuration)
-        {
-            BinaryFormatter bf = new BinaryFormatter();
-            MemoryStream ms = new MemoryStream();
-            bf.Serialize(ms, configuration);
-            HttpContext.Session.Set("Configuration", ms.ToArray());
-        }
+        //public static void SetConfiguration(IConfiguration configuration)
+        //{
+        //    BinaryFormatter bf = new BinaryFormatter();
+        //    MemoryStream ms = new MemoryStream();
+        //    bf.Serialize(ms, configuration);
+        //    HttpContext.Session.Set("Configuration", ms.ToArray());
+        //}
 
         public static string GetSchema()
         {
-            if (HttpContext == null || HttpContext.Session == null)
-                return "";
-            byte[] obs = null;
-            HttpContext.Session.TryGetValue("Schema", out obs);
-            if (obs == null)
-                return "";
-            return Encoding.ASCII.GetString(obs);
+            //if (HttpContext == null || HttpContext.Session == null)
+            //    return "";
+            //byte[] obs = null;
+            //HttpContext.Session.TryGetValue("Schema", out obs);
+            //if (obs == null)
+            //    return "";
+            //return Encoding.ASCII.GetString(obs);
+            return _Schema;
         }
 
-        public static IConfiguration GetConfiguration()
-        {
-            if (HttpContext == null || HttpContext.Session == null)
-                return null;
-            byte[] obs = null;
-            HttpContext.Session.TryGetValue("Configuration", out obs);
-            if (obs == null)
-                return null;
-            BinaryFormatter bf = new BinaryFormatter();
-            MemoryStream ms = new MemoryStream(obs);
-            object obj = bf.Deserialize(ms);
-            return (IConfiguration)obj;
-        }
+        //public static IConfiguration GetConfiguration()
+        //{
+        //    if (HttpContext == null || HttpContext.Session == null)
+        //        return null;
+        //    byte[] obs = null;
+        //    HttpContext.Session.TryGetValue("Configuration", out obs);
+        //    if (obs == null)
+        //        return null;
+        //    BinaryFormatter bf = new BinaryFormatter();
+        //    MemoryStream ms = new MemoryStream(obs);
+        //    object obj = bf.Deserialize(ms);
+        //    return (IConfiguration)obj;
+        //}
 
         public static void SendEmail(string Email , string Sender, string Subject, string Body)
         {

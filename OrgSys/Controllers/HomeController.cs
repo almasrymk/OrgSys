@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using Entity.Model;
 using Entity.ModelView;
 using Microsoft.AspNetCore.Authorization;
@@ -12,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using OrgSys.Models;
 using Service;
 using Service.BAL.Data.Security;
+using Utility;
 
 namespace OrgSys.Controllers
 {
@@ -113,13 +115,13 @@ namespace OrgSys.Controllers
                     us.Password = Utility.Security.Encrypt(_user.NewPassword);
                     user.Save(us);
                 }
-                var usSys  = new UserService().GetByLoginUserId(us.Id);
-                usSys.SignIn(HttpContext , _user.KeepLoggedIn);
-                Utility.General.HttpContext = HttpContext;
+               
                 Utility.General.SetSchema(us.Schema);
+                var usSys  = new UserService().GetByLoginUserId(us.Id);
+                usSys.SignIn(HttpContext , _user.KeepLoggedIn);             
                 return RedirectToAction("Dashboard");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 throw;
             }
@@ -210,6 +212,75 @@ namespace OrgSys.Controllers
         public ActionResult CheckPassword(string Email, string Password)
         {
             return Json(user.CheckEmailAndPassword(Email, Utility.Security.Encrypt(Password)));
+        }
+
+        public ActionResult CheckCurrentPassword(long Id, string CurrentPassword)
+        {
+            return Json(user.CheckCurrentPassword(Id, Utility.Security.Encrypt(CurrentPassword)));
+        }
+
+        [HttpGet]
+        public ActionResult Profile(int id, ResultStatus Status = ResultStatus.nothing, string MsgError = "")
+        {
+            if ("" + MsgError != "")
+                ViewBag.message = MsgError;
+            ViewBag.status = Status.ToString();
+
+            var IdUser = new UserService().Get(id);
+            return View("Profile", IdUser);
+        }
+
+        [HttpPost]
+        public ActionResult Profile(UserModelView _profile)
+        {
+            try
+            {
+                _profile.RoleId = User.GetRoleId();
+                _profile.ImgPath = SaveFile(_profile.ImgPath);
+
+                if (_profile.NewPassword != null)
+                    _profile.Password = _profile.NewPassword;
+                else
+                    //_profile.Password 
+                    new UserService().Save(_profile);
+                return Json(data: new { status = "success", id = _profile.Id, url = "/Home/Profile?id=" + _profile.Id + "&status=" + ResultStatus.success + "&MsgError=Success" });
+            }
+            catch (Exception ex)
+            {
+                return Json(ex.Message);
+            }
+        }
+
+        public virtual string SaveFile(string LastPath)
+        {
+            string NewPath = null;
+            string path = Path.GetFullPath("~/wwwroot").Replace("~\\", "");
+            string oldPath = Path.GetFullPath("~/wwwroot" + LastPath).Replace("~\\", "").Replace(@"\\", @"\");
+            if ("" + LastPath != "" && System.IO.File.Exists(oldPath))
+                System.IO.File.Delete(oldPath);
+
+            foreach (var formFile in Request.Form.Files)
+            {
+                if (formFile.Length > 0)
+                {
+                    if ("" + formFile.FileName != "")
+                    {
+                        NewPath = "/Files/" + ControllerContext.ActionDescriptor.ControllerName + string.Format("{0:000000000}", new Random().Next(999999999)) + Path.GetExtension(formFile.FileName);
+                        using (var inputStream = new FileStream(path + NewPath, FileMode.Create))
+                        {
+                            // read file to stream
+                            formFile.CopyTo(inputStream);
+                            // stream to byte array
+                            byte[] array = new byte[inputStream.Length];
+                            inputStream.Seek(0, SeekOrigin.Begin);
+                            inputStream.Read(array, 0, array.Length);
+                            // get file name
+                            string fName = formFile.FileName;
+                        }
+                    }
+                }
+            }
+            return NewPath;
         }
     }
 }

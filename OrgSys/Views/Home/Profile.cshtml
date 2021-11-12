@@ -9,16 +9,8 @@
     <div class="row">
         <div class="col-12">
             <div class="mb-1">
-                <h1>Profile</h1>
-                @*<nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
-                        <ol class="breadcrumb pt-0">
-                            <li class="breadcrumb-item">
-                                <a href="/">@Utility.Resource.Title_Designer.Home</a>
-                            </li>
-                        </ol>
-                    </nav>*@
+                <h1>Profile</h1>             
             </div>
-
             <div class="row">
                 <div class="col-12">
                     <form action="" method="post" id="ProfileForm" enctype="multipart/form-data">
@@ -26,7 +18,6 @@
                             <div class="row">
                                 <div class="col-md-4 text-center">
                                     <div class="position-absolute card-top-buttons mt-4 mr-5">
-
                                         <button type="button" id="ImgUser" onclick="document.getElementById('flImage').click();" class="btn btn-outline-white icon-button">
                                             <i class="simple-icon-pencil"></i>
                                         </button>
@@ -35,7 +26,6 @@
                                             X
                                         </button>
                                     </div>
-
                                     @if ("" + Model.ImgPath != "")
                                     {
                                         <img id="img" src="@Model.ImgPath" alt="Profile" class="list-thumbnail border-0  badge-theme-1 " style="height: 220px; width: 200px; margin-top: 40px" />
@@ -44,36 +34,29 @@
                                     {
                                         <img id="img" src="~/img/profiles/ClientCard.png" alt="Profile" class="list-thumbnail border-0  badge-theme-1 " style="height: 220px; width: 200px; margin-top: 40px;" />
                                     }
-
                                 </div>
                                 <div class="col-md-8 pl-0">
                                     <div class="card-body">
                                         @Html.HiddenFor(model => model.Id)
                                         @Html.HiddenFor(Model => Model.RoleId)
                                         @Html.HiddenFor(model => model.ImgPath)
-
                                         <div class="form-group">
                                             <label class="label">Name</label>
                                             <input class="form-control col-10" id="Name" name="Name" value="@Model.Name" />
-
                                         </div>
                                         <div class="form-group">
                                             <label class="label">E-mail</label>
                                             <input class="form-control col-10" id="UserName" name="UserName" value="@Model.UserName" />
                                             <input class="form-control col-10" id="OldUserName" type="hidden" name="OldUserName" value="@Model.UserName" />
                                         </div>
-
                                         <div class="form-group">
                                             <label class="label">Current Password</label>
                                             <input class="form-control col-10" id="CurrentPassword" type="password" name="Password" placeholder="Current Password" value="" autocomplete="off" />
                                             <input class="form-control col-10" id="CurrentPassword" type="" name="Password" placeholder="Current Password" value="@Model.Password" autocomplete="off" />
-
                                         </div>
-
                                         <div class="form-group">
                                             <label class="label">New Password</label>
                                             <input class="form-control col-10" type="password" id="NewPassword" name="NewPassword" placeholder="New Password" autocomplete="off" />
-
                                         </div>
                                         <div class="form-group">
                                             <label class="label">Confirm Password</label>
@@ -87,12 +70,8 @@
                             </div>
                         </div>
                     </form>
-
-
                 </div>
-
             </div>
-
         </div>
     </div>
 </div>
@@ -105,113 +84,92 @@
 <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
 <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
 
-
 <script>
-    //$("#NewPassword").on("keyup", function () { $("#message").hide(); });
-
-    //$('#NewPassword,#NewPassword,#ConfirmPassword').on('keyup', function () {
-
-    //    //var passwordvalid = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@@#\$%\^&\*])$/;
-    //    //var NewPassword = $('#NewPassword').val();
-    //    //if (NewPassword != passwordvalid) {
-    //    //    $("#message").show();
-
-    //    //} else { $("#message").hide(); }
-
-
-    //    if ($('#NewPassword').val() != $('#CurrentPassword').val()) {
-    //        if ($('#NewPassword').val() == $('#ConfirmPassword').val()) {
-    //            $('#SaveUser').prop('disabled', false);
-
-    //        } else
-    //            $('#SaveUser').prop('disabled', true);
-    //    }
-
-    //});
-
-
     $(document).ready(function () {
         $('#ProfileForm').focusout(function (e) {
             e.preventDefault();
-            var name = $('#Name').val();
-            var userName = $('#UserName').val();
-            var oldUserName = $('#OldUserName').val();
-            var currentPassword = $('#CurrentPassword').val();
-
-            var newPassword = $('#NewPassword').val();
-            var confirmPassword = $('#ConfirmPassword').val();
             $(".error").remove();
-
-            if (name.length < 1) {
-                $('#Name').after('<span class="error badge badge-danger ">The Name is required</span>');
-            }
-
-            if (userName.length < 1) {
-                $('#UserName').after('<span class="error badge badge-danger">This field is required</span>');
-            }
-            else {
-                var regex = /^([a-zA-Z0-9_.+-])+\@@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-                var validEmail = regex.test(userName);
-                if (!validEmail) {
-                    $('#UserName').after('<span class="error badge badge-danger">Enter a valid email</span>');
-                }
-                else {
-                    if (userName != oldUserName) {
-                        $.ajax({
-                            type: 'POST',
-                            url: "/Account/CheckEmail?Email=" + $("#UserName").val(),
-                            success: function (res) {
-                                if (res) {
-                                    $('#UserName').after('<span class="error badge badge-success">You Email Or UserName Is Exist</span>');
-                                }
-                            }
-                        });
-                    }
-                }
-            }
-            if (currentPassword.length > 1)
-            {
-                
-                $.ajax({
-                    type: 'POST',
-                    url: "/Account/CheckCurrentPassword?Id=" + @Model.Id + "&CurrentPassword=" + $("#CurrentPassword").val(),
-                    success: function (res)
-                    {
-                        if (res)
-                        {
-                            
-                        } else
-                        {
-                            $('#CurrentPassword').after('<span class="error badge badge-danger">The Current Password Invalid</span>');
-                        }
-                    }
-                });
-
-            }
         });
     });
 
+    function Valid() {
+        var isValid = true;
+        var name = $('#Name').val();
+        var userName = $('#UserName').val();
+        var oldUserName = $('#OldUserName').val();
+        var currentPassword = $('#CurrentPassword').val();
+        var newPassword = $('#NewPassword').val();
+        var confirmPassword = $('#ConfirmPassword').val();
 
+
+        if (name.length < 1) {
+            $('#Name').after('<span class="error badge badge-danger ">The Name is required</span>');
+            isValid = false;
+        }
+        if (userName.length < 1) {
+            $('#UserName').after('<span class="error badge badge-danger">This field is required</span>');
+            isValid = false;
+        }
+        else {
+            var regex = /^([a-zA-Z0-9_.+-])+\@@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+            var validEmail = regex.test(userName);
+            if (!validEmail) {
+                $('#UserName').after('<span class="error badge badge-danger">Enter a valid email</span>');
+                isValid = false;
+            }
+            else {
+                if (userName != oldUserName) {
+                    $.ajax({
+                        async: false,
+                        type: 'POST',
+                        url: "/Home/CheckEmail?Email=" + $("#UserName").val(),
+                        success: function (res) {
+                            if (res) {
+                                $('#UserName').after('<span class="error badge badge-success">You Email Or UserName Is Exist</span>');
+                                isValid = false;
+                            }
+                        }
+                    });
+                }
+            }
+        }
+        if (currentPassword.length > 1) {
+            $.ajax({
+                async: false,
+                type: 'POST',
+                url: "/Home/CheckCurrentPassword?Id=" + @Model.Id + "&CurrentPassword=" + $("#CurrentPassword").val(),
+                success: function (res) {
+                    if (res == false) {
+                        $('#CurrentPassword').after('<span class="error badge badge-danger">The Current Password Invalid</span>');
+                        isValid = false;
+                    }
+                }
+            });
+        }
+
+        return isValid;
+    }
 
     function Save() {
+        if (Valid()) {
+            var data = {
+                Id: $('#Id').val(),
+                Name: $('#Name').val().trim(),
+                UserName: $('#UserName').val().trim(),
+                Password: $('#CurrentPassword').val().trim(),
+                NewPassword: $('#NewPassword').val().trim(),
+                ImgPath: $('#ImgPath').val(),
+            };
 
-        var data = {
-            Id: $('#Id').val(),
-            Name: $('#Name').val().trim(),
-            UserName: $('#UserName').val().trim(),
-            Password: $('#CurrentPassword').val().trim(),
-            NewPassword: $('#NewPassword').val().trim(),
-            ImgPath: $('#ImgPath').val(),
-        };
-
-        $.ajax({
-            type: 'POST',
-            url: "/Account/Profile",
-            data: { _profile: data },
-            success: function (res) {
-                window.location.replace(res.url);
-            }
-        });
+            $.ajax({
+                type: 'POST',
+                url: "/Home/Profile",
+                data: { _profile: data },
+                success: function (res) {
+                    window.location.replace(res.url);
+                }
+            });
+        }
     }
 
     function SelectImage(input) {
@@ -223,12 +181,4 @@
             reader.readAsDataURL(input.files[0]);
         }
     }
-
-
-
-
 </script>
-
-
-
-
