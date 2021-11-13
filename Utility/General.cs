@@ -15,7 +15,7 @@ namespace Utility
     public static class General
     {
         //public static HttpContext HttpContext { get; set; }
-        private static string _Schema { get; set; }
+        public static string _Schema { get; set; }
         public static void SetSchema(string Schema)
         {
             _Schema = Schema;
