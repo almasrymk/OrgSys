@@ -43,6 +43,21 @@ namespace OrgSys.Controllers
             return View();
         }
         [AllowAnonymous]
+        public IActionResult RestPassword()
+        {
+            return View();
+        }
+        [AllowAnonymous]
+        public IActionResult Invoice()
+        {
+            return View();
+        }
+        [AllowAnonymous]
+        public IActionResult InvoicePrint()
+        {
+            return View();
+        }
+        [AllowAnonymous]
         public IActionResult Pricing()
         {
             return View();

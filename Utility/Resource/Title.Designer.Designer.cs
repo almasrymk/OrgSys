@@ -646,11 +646,29 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter your confirm new password.
+        /// </summary>
+        public static string EnterYourConfirmNewPassword {
+            get {
+                return ResourceManager.GetString("EnterYourConfirmNewPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter your email to recover your password.
         /// </summary>
         public static string EnterYourEmailToRecoverYourPassword {
             get {
                 return ResourceManager.GetString("EnterYourEmailToRecoverYourPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter your new password.
+        /// </summary>
+        public static string EnterYourNewPassword {
+            get {
+                return ResourceManager.GetString("EnterYourNewPassword", resourceCulture);
             }
         }
         
