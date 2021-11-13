@@ -646,6 +646,15 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter your email to recover your password.
+        /// </summary>
+        public static string EnterYourEmailToRecoverYourPassword {
+            get {
+                return ResourceManager.GetString("EnterYourEmailToRecoverYourPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to External.
         /// </summary>
         public static string External {
@@ -1632,6 +1641,15 @@ namespace Utility.Resource {
         public static string SignOut {
             get {
                 return ResourceManager.GetString("SignOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sign Up.
+        /// </summary>
+        public static string SignUp {
+            get {
+                return ResourceManager.GetString("SignUp", resourceCulture);
             }
         }
         

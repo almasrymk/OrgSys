@@ -15,6 +15,7 @@
     <Compile Remove="Areas\Setting\Models\**" />
     <Compile Remove="Areas\Transactions\Data\**" />
     <Compile Remove="Areas\Transactions\Models\**" />
+    <Compile Remove="Views\Account\**" />
     <Compile Remove="wwwroot\Assets\Revolutions\**" />
     <Content Remove="Areas\Financials\Data\**" />
     <Content Remove="Areas\Financials\Models\**" />
@@ -26,6 +27,7 @@
     <Content Remove="Areas\Setting\Models\**" />
     <Content Remove="Areas\Transactions\Data\**" />
     <Content Remove="Areas\Transactions\Models\**" />
+    <Content Remove="Views\Account\**" />
     <Content Remove="wwwroot\Assets\Revolutions\**" />
     <EmbeddedResource Remove="Areas\Financials\Data\**" />
     <EmbeddedResource Remove="Areas\Financials\Models\**" />
@@ -37,6 +39,7 @@
     <EmbeddedResource Remove="Areas\Setting\Models\**" />
     <EmbeddedResource Remove="Areas\Transactions\Data\**" />
     <EmbeddedResource Remove="Areas\Transactions\Models\**" />
+    <EmbeddedResource Remove="Views\Account\**" />
     <EmbeddedResource Remove="wwwroot\Assets\Revolutions\**" />
     <None Remove="Areas\Financials\Data\**" />
     <None Remove="Areas\Financials\Models\**" />
@@ -48,6 +51,7 @@
     <None Remove="Areas\Setting\Models\**" />
     <None Remove="Areas\Transactions\Data\**" />
     <None Remove="Areas\Transactions\Models\**" />
+    <None Remove="Views\Account\**" />
     <None Remove="wwwroot\Assets\Revolutions\**" />
   </ItemGroup>
 
@@ -67,7 +71,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Account\" />
     <Folder Include="wwwroot\Files\" />
   </ItemGroup>
 
