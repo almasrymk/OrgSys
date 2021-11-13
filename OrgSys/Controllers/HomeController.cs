@@ -67,7 +67,11 @@ namespace OrgSys.Controllers
         {
             return View();
         }
-
+        [AllowAnonymous]
+        public IActionResult TermsAndConditions()
+        {
+            return View();
+        }
         public IActionResult Index()
         {            
             return View("Dashboard");
