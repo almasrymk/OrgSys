@@ -36,7 +36,7 @@
             <h2 class="active"> Register </h2>
 
             <!-- Login Form -->
-            <form>
+            <form id="RegisterForm" method="post" action="/Home/Register">
                 @Html.HiddenFor(model => model.Id)
                 @Html.HiddenFor(model => model.TypeId)
                 @Html.HiddenFor(model => model.ParentId)
@@ -76,19 +76,15 @@
                     </div>
 
 
-
-
                     <div class="col-md-6" style="padding:0px !important">
-                        <input type="text" class="fadeIn second" name="Mobile" placeholder="Phone Number">
-                        <div id="MobileRequired" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                            <span>your Mobile is Required</span>
+                        <input type="text" class="fadeIn second" name="Fax" placeholder="Fax Number">
+                        <div id="FaxRequired" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
+                            <span>your Fax is Required</span>
                         </div>
-                        <div id="MobileError" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                            <span>your Mobile is Error</span>
+                        <div id="FaxError" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
+                            <span>your Fax is Error</span>
                         </div>
                     </div>
-                    <div class="vl"></div>
-
 
 
                     <div class="col-md-6" style="padding:0px !important">
@@ -110,21 +106,21 @@
                         </div>
                     </div>
                     <div class="col-md-6" style="padding:0px !important">
-                        <input type="text" class="fadeIn second" name="Mobile" placeholder="Password">
-                        <div id="MobileRequired" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                            <span>your Mobile is Required</span>
+                        <input type="password" class="fadeIn second" id="Password" name="Password" placeholder="Password">
+                        <div id="PasswordRequired" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
+                            <span>your Password is Required</span>
                         </div>
-                        <div id="MobileError" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                            <span>your Mobile is Error</span>
+                        <div id="PasswordError" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
+                            <span>your Password At Least 8 Char</span>
                         </div>
                     </div>
                     <div class="col-md-6" style="padding:0px !important">
-                        <input type="text" class="fadeIn second" name="Mobile" placeholder="Confirm Password">
-                        <div id="MobileRequired" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                            <span>your Mobile is Required</span>
+                        <input type="password" class="fadeIn second" name="ConfirmPassword" id="ConfirmPassword" placeholder="Confirm Password">
+                        <div id="ConfirmPasswordRequired" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
+                            <span>your Confirm Password is Required</span>
                         </div>
-                        <div id="MobileError" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                            <span>your Mobile is Error</span>
+                        <div id="ConfirmPasswordError" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
+                            <span>your Confirm Password Not Equal Password </span>
                         </div>
                     </div>
                 </div>
@@ -152,9 +148,6 @@
     <script>
         $("#Name").on("keyup", function () { $("#NameRequired").hide(); });
         $("#CompanyName").on("keyup", function () { $("#CompanyNameRequired").hide(); });
-        $("#Description").on("keyup", function () { $("#DescriptionRequired").hide(); });
-        $("#Phone").on("keyup", function () { $("#PhoneRequired").hide(); });
-        $("#Phone").on("keyup", function () { $("#PhoneError").hide(); });
         $("#Mobile").on("keyup", function () { $("#MobileRequired").hide(); });
         $("#Mobile").on("keyup", function () { $("#MobileError").hide(); });
         $("#Fax").on("keyup", function () { $("#FaxRequired").hide(); });
@@ -163,19 +156,24 @@
         $("#TypeActivityId").on("keyup", function () { $("#TypeActivityRequired").hide(); });
         $("#NationalityId").on("keyup", function () { $("#NationalityRequired").hide(); });
         $("#SizeOfCompany").on("keyup", function () { $("#SizeOfCompanyRequired").hide(); });
+        $("#Password").on("keyup", function () { $("#PasswordRequired").hide(); });
+        $("#Password").on("keyup", function () { $("#PasswordError").hide(); });
+        $("#ConfirmPassword").on("keyup", function () { $("#ConfirmPasswordRequired").hide(); });
+        $("#ConfirmPassword").on("keyup", function () { $("#ConfirmPasswordError").hide(); });
+
 
         function Save() {
             var valid = true;
             var name = $('#Name').val();
             var companyName = $('#CompanyName').val();
-            var description = $('#Description').val();
-            var phone = $('#Phone').val();
             var mobile = $('#Mobile').val();
             var fax = $('#Fax').val();
             var email = $('#Email').val();
             var typeActivityId = $('#TypeActivityId').val();
             var nationalityId = $('#NationalityId').val();
             var sizeOfCompany = $('#SizeOfCompany').val();
+            var password = $('#Password').val();
+            var confirmPassword = $('#ConfirmPassword').val();
             $(".error").remove();
 
             if (name.length < 1) {
@@ -185,11 +183,6 @@
 
             if (companyName.length < 1) {
                 $("#CompanyNameRequired").show();
-                valid = false;
-            }
-
-            if (description.length < 1) {
-                $("#DescriptionRequired").show();
                 valid = false;
             }
 
@@ -206,25 +199,13 @@
                 }
             }
 
-            var regEx = /^[0][0-9]{10}$/;
-
-            if (phone.length < 1) {
-                $("#PhoneRequired").show();
-                valid = false;
-            }
-            else {
-                var validPhone = regEx.test(phone);
-                if (!validPhone) {
-                    $("#PhoneError").show();
-                    valid = false;
-                }
-            }
 
             if (mobile.length < 1) {
                 $("#MobileRequired").show();
                 valid = false;
             }
             else {
+                var regEx = /^[0][0-9]{10}$/;
                 var validmobile = regEx.test(mobile);
                 if (!validmobile) {
                     $("#MobileError").show();
@@ -233,11 +214,11 @@
             }
 
 
-            var validfax = regEx.test(fax);
-            if (!validfax) {
-                $("#FaxError").show();
-                valid = false;
-            }
+            //var validfax = regEx.test(fax);
+            //if (!validfax) {
+            //    $("#FaxError").show();
+            //    valid = false;
+            //}
 
             if (typeActivityId.length < 1 || typeActivityId == 0) {
                 $("#TypeActivityRequired").show();
@@ -253,8 +234,32 @@
                 $("#SizeOfCompanyRequired").show();
                 valid = false;
             }
+
+            if (password.length < 1) {
+                $("#PasswordRequired").show();
+                valid = false;
+            }
+            else {
+                if (password.length < 8) {
+                    $("#PasswordError").show();
+                    valid = false;
+                }
+            }
+
+            if (confirmPassword.length < 1) {
+                $("#ConfirmPasswordRequired").show();
+                valid = false;
+            }
+            else {
+                if (confirmPassword != password) {
+                    $("#ConfirmPasswordError").show();
+                    valid = false;
+                }
+            }
+
+
             if (valid)
-                $('#RequestForm').submit();
+                $('#RegisterForm').submit();
         }
 
     </script>
