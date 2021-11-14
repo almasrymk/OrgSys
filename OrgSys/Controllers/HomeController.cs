@@ -58,11 +58,20 @@ namespace OrgSys.Controllers
             return View();
         }
         [AllowAnonymous]
+        public IActionResult MailTemplate()
+        {
+            return View();
+        }
+        [AllowAnonymous]
         public IActionResult Pricing()
         {
             return View();
         }
-
+        [AllowAnonymous]
+        public IActionResult TermsAndConditions()
+        {
+            return View();
+        }
         public IActionResult Index()
         {            
             return View("Dashboard");
