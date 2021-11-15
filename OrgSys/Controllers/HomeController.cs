@@ -22,7 +22,7 @@ namespace OrgSys.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         LoginUserService user = new LoginUserService();
-        
+
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
@@ -49,7 +49,7 @@ namespace OrgSys.Controllers
         }
 
         public IActionResult Index()
-        {            
+        {
             return View("Dashboard");
         }
 
@@ -92,7 +92,7 @@ namespace OrgSys.Controllers
             );
 
             return Json(culture);
-        }       
+        }
 
         [AllowAnonymous]
         [HttpGet]
@@ -106,7 +106,7 @@ namespace OrgSys.Controllers
         public IActionResult LogIn()
         {
             return View();
-        }       
+        }
 
         [AllowAnonymous]
         [HttpPost]
@@ -120,17 +120,17 @@ namespace OrgSys.Controllers
                     us.Password = Utility.Security.Encrypt(_user.NewPassword);
                     user.Save(us);
                 }
-               
+
                 Utility.General.SetSchema(us.Schema);
-                var usSys  = new UserService().GetByLoginUserId(us.Id);
-                usSys.SignIn(HttpContext , _user.KeepLoggedIn);             
+                var usSys = new UserService().GetByLoginUserId(us.Id);
+                usSys.SignIn(HttpContext, _user.KeepLoggedIn);
                 return RedirectToAction("Dashboard");
             }
             catch (Exception ex)
             {
                 throw;
             }
-           
+
         }
 
         [HttpGet]
@@ -140,14 +140,14 @@ namespace OrgSys.Controllers
             us.SignOut(HttpContext);
             return RedirectToAction("LogIn");
         }
-      
+
         [HttpGet]
         [AllowAnonymous]
         public IActionResult RequestReg()
         {
             return View();
         }
-       
+
         [HttpPost]
         [AllowAnonymous]
         public ActionResult RequestReg(RequestModelView _request)
@@ -158,14 +158,14 @@ namespace OrgSys.Controllers
             _request.ExpireDate = DateTime.Now.AddDays(2);
 
             var old = new RequestService().GetEmail(_request.Email);
-            if(old != null && old.Id > 0)           
+            if (old != null && old.Id > 0)
                 new RequestService().Delete(old.Id);
 
             new RequestService().Save(_request);
             Utility.General.SendEmail(_request.Email, "Organizer", "Wellcom", _request.URL);
             return RedirectToAction("RegDone");
         }
-      
+
         [HttpGet]
         [AllowAnonymous]
         public IActionResult Register(string Key)
@@ -200,6 +200,29 @@ namespace OrgSys.Controllers
             ViewBag.SizeOfCompany = new SelectList(items, "Value", "Text");
             return View(client);
         }
+
+
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult Register(ClientModelView _client, string Password)
+        {
+            if (ModelState.IsValid)
+            {
+                var client = new ClientService().Save(_client);
+                if (client.Id > 0)
+                {
+                    var loginUser = new LoginUserModelView();
+                    loginUser.ClientId = client.Id;
+                    loginUser.UserName = client.Name;
+                    loginUser.Password = Password;
+                    if (loginUser != null)
+                        new LoginUserService().Save(loginUser);
+                }
+            }
+
+            return RedirectToAction(nameof(Dashboard));
+        }
+
 
         [AllowAnonymous]
         public ActionResult CheckEmail(string Email)

@@ -38,6 +38,7 @@ namespace Entity.ModelView
             return new LoginUser
             {
                 Id = this.Id,
+                ClientId =this.ClientId,
                 CodeNumber = this.CodeNumber,
                 Code = this.Code,
                 MaskText = this.MaskText,
