@@ -10,7 +10,7 @@ namespace OrgSys.Areas.Setting.Controllers
     {
         public JsonResult GetRate(int id)
         {
-            var ob = new CurrencyService().Get(id);
+            var ob = new CurrencyService(User.GetSchema()).Get(id);
             var data = new
             {
                 rate = ob.Rate

@@ -9,11 +9,11 @@ namespace Service
     public class InvoiceTypeService : BaseService<InvoiceTypeModelView>
     {
         string Includes = "";
-        UnitOfWork repo;
-        public InvoiceTypeService()
+        UnitOfWorkOrg repo;
+        public void SetSchema(string Schema)
         {
             if (repo == null)
-                repo = new UnitOfWork();
+                repo = new UnitOfWorkOrg(Schema);
         }
 
         #region Save / Delete

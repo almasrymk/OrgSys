@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entity.Model
 {
-    [Table("CompanyProfile", Schema = "org")]
+    [Table("CompanyProfile")]
     public class CompanyProfile : BaseModel
     {
         [Required]

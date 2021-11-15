@@ -4,7 +4,7 @@ using Utility;
 
 namespace Entity.Model
 {
-    [Table("LogSys", Schema = "org")]
+    [Table("LogSys")]
     public class LogSys : BaseModel
     {
         public long UserId { get; set; }

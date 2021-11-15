@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entity.Model
 {
-    [Table("User", Schema = "org")]
+    [Table("User")]
     public class User : BaseModel
     {
         [Required]
@@ -14,11 +14,12 @@ namespace Entity.Model
        
         public string Password { get; set; }
 
-        [Required]
+        [ForeignKey("Role")]
         public long RoleId { get; set; }
 
         public virtual Role Role { get; set; }
- 
+
+        [ForeignKey("Branch")]
         public long? BranchId { get; set; }
 
         public virtual Branch Branch { get; set; }

@@ -11,12 +11,13 @@ namespace Service
     public class UserService : BaseService<UserModelView>
     {
         string Includes = "Role";
-        UnitOfWork repo;
-        public UserService()
+        UnitOfWorkOrg repo;
+
+        public UserService(string Schema)
         {
-            repo = new UnitOfWork();
+            repo = new UnitOfWorkOrg(Schema);
         }
-      
+
         #region Save / Delete
         public UserModelView Save(UserModelView ob)
         {
@@ -134,7 +135,7 @@ namespace Service
         public bool CheckCurrentPassword(long Id, string CurrentPassword) => repo.userRepo.Any(e => e.Id == Id && e.Password == CurrentPassword);
         public bool HavePassword(string Email) => "" + repo.userRepo.Get(e => e.UserName.ToLower().Trim() == Email.ToLower().Trim())?.Password != "";
 
-        public bool CheckEmailAndPassword(string Email,string Passord) => repo.userRepo.Any(e => e.UserName.ToLower().Trim() == Email.ToLower().Trim() && e.Password==Passord);
+        public bool CheckEmailAndPassword(string Email, string Passord) => repo.userRepo.Any(e => e.UserName.ToLower().Trim() == Email.ToLower().Trim() && e.Password == Passord);
 
         #endregion
     }

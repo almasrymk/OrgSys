@@ -9,11 +9,10 @@ namespace Service
     public class TableService : BaseService<TableModelView>
     {
         string Includes = "";
-        UnitOfWork repo;
-        public TableService()
+        UnitOfWorkOrg repo;
+        public TableService(string Schema)
         {
-            if (repo == null)
-                repo = new UnitOfWork();
+            repo = new UnitOfWorkOrg(Schema);
         }
 
         #region Save / Delete

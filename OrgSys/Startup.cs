@@ -45,6 +45,7 @@ namespace OrgSys
 
             services.AddOptions();
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+            services.AddSingleton<DbContextOptions<OrgContext>, MyDbContextOptions<OrgContext>>();
             services.AddMvc(options => options.EnableEndpointRouting = false);            
             
             services.AddLocalization(options => options.ResourcesPath = "Resource");
@@ -60,7 +61,7 @@ namespace OrgSys
             services.AddRazorPages().AddViewLocalization();
 
             services.AddDbContext<AdminContext>(options => options.UseSqlServer(Configuration.GetConnectionString("OrgConnection"), x => x.MigrationsHistoryTable("__AdminMigrationsHistory", "admin")));
-            services.AddDbContext<OrgContext>(options => options.UseSqlServer(Configuration.GetConnectionString("OrgConnection"), x => x.MigrationsHistoryTable("__OrgMigrationsHistory", "org")).ReplaceService<IModelCacheKeyFactory, DbSchemaAwareModelCacheKeyFactory>()) ;
+            services.AddDbContext<OrgContext>(options => options.UseSqlServer(Configuration.GetConnectionString("OrgConnection"), x => x.MigrationsHistoryTable("__orgMigrationsHistory", "org")).ReplaceService<IModelCacheKeyFactory, DbSchemaAwareModelCacheKeyFactory>()) ;
 
             services.ConfigureApplicationCookie(options =>
             {

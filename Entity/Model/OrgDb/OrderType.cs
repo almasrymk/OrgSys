@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entity.Model
 {
-    [Table("OrderType", Schema = "org")]
+    [Table("OrderType")]
     public class OrderType : BaseModel
     {
         [StringLength(50, MinimumLength = 3)]

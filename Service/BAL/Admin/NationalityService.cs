@@ -11,12 +11,13 @@ namespace Service
     public class NationalityService : BaseService<NationalityModelView>
     {
         string Includes = "";
-        UnitOfWork repo;
+        UnitOfWorkAdmin repo;
+
         public NationalityService()
         {
-            repo = new UnitOfWork();
+            repo = new UnitOfWorkAdmin();
         }
-      
+
         #region Save / Delete
         public NationalityModelView Save(NationalityModelView ob)
         {

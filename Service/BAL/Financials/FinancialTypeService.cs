@@ -9,11 +9,11 @@ namespace Service
     public class FinancialTypeService : BaseService<FinancialTypeModelView>
     {
         string Includes = "";
-        UnitOfWork repo;
-        public FinancialTypeService()
+        UnitOfWorkOrg repo;
+        public void SetSchema(string Schema)
         {
             if (repo == null)
-                repo = new UnitOfWork();
+                repo = new UnitOfWorkOrg(Schema);
         }
 
         #region Save / Delete

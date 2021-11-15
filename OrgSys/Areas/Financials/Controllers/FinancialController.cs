@@ -22,10 +22,10 @@ namespace OrgSys.Areas.Financial.Controllers
 
         public override void LoadViewBag(FinancialModelView model)
         {
-            ViewBag.OutlayId = new SelectList(new OutlayService().GetAll(model.ParentId, 0, 1, 20), "Id", "Name", model.OutlayId);
-            ViewBag.CurrencyId = new SelectList(new CurrencyService().GetAll(model.ParentId, 0, 1, 20), "Id", "Name", model.CurrencyId);
-            ViewBag.PaymentTypeId = new SelectList(new PaymentTypeService().GetAll(model.ParentId, 0, 1, 20), "Id", "Name", model.PaymentTypeId);
-            ViewBag.SafeId = new SelectList(new SafeService().GetAll(model.ParentId, 0, 1, 20), "Id", "Name", model.SafeId);
+            ViewBag.OutlayId = new SelectList(new OutlayService(User.GetSchema()).GetAll(model.ParentId, 0, 1, 20), "Id", "Name", model.OutlayId);
+            ViewBag.CurrencyId = new SelectList(new CurrencyService(User.GetSchema()).GetAll(model.ParentId, 0, 1, 20), "Id", "Name", model.CurrencyId);
+            ViewBag.PaymentTypeId = new SelectList(new PaymentTypeService(User.GetSchema()).GetAll(model.ParentId, 0, 1, 20), "Id", "Name", model.PaymentTypeId);
+            ViewBag.SafeId = new SelectList(new SafeService(User.GetSchema()).GetAll(model.ParentId, 0, 1, 20), "Id", "Name", model.SafeId);
             var type = new TransactionTypeService().Get(model.TypeId);
             ViewBag.TransactionsType = type.Name;
             ViewBag.TransactionsType = type.Icon;
@@ -33,7 +33,7 @@ namespace OrgSys.Areas.Financial.Controllers
 
         public override FinancialModelView InitializeData(FinancialModelView ob)
         {
-            var setting = new PreferenceService();
+            var setting = new PreferenceService(User.GetSchema());
             var SafeId = long.Parse("0" + setting.GetByKey("DefaultSafe", "Financial", ob.TypeId, 0)?.Value);
             var PaymentTypeId = long.Parse("0" + setting.GetByKey("DefaultPaymentType", "Financial", ob.TypeId, 0)?.Value);
             var CurrencyId = long.Parse("0" + setting.GetByKey("DefaultCurrency", "Financial", ob.TypeId, 0)?.Value);
@@ -59,15 +59,15 @@ namespace OrgSys.Areas.Financial.Controllers
                 ob.SafeId = SafeId;
                 ob.DealerId = DealerId;
                 ob.CurrencyId = long.Parse("0" + CurrencyId);
-                ob.Rate = new CurrencyService().Get(long.Parse("0" + CurrencyId))?.Rate??0;
+                ob.Rate = new CurrencyService(User.GetSchema()).Get(long.Parse("0" + CurrencyId))?.Rate??0;
                 ob.PaymentTypeId = PaymentTypeId;
                 ob.OutlayId = OutlayId;
                 ob.Date = DateTime.Now;
                 ob.FinancialInvoices = new List<FinancialInvoiceModelView>();
             }
 
-            ob.SafeName = new SafeService().Get(ob.SafeId).Name;
-            ob.DealerName = new DealerService().Get(ob.DealerId??0).Name;
+            ob.SafeName = new SafeService(User.GetSchema()).Get(ob.SafeId).Name;
+            ob.DealerName = new DealerService(User.GetSchema()).Get(ob.DealerId??0).Name;
             return ob;
         }
 

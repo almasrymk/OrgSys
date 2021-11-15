@@ -13,9 +13,9 @@ namespace OrgSys.Areas.Setting.Controllers
             var res = base.Save(model);
             if (User.IsCurrentUserAndRole(User.GetUserId(), model.Id))
             {
-                var us = new UserService().Get(User.GetUserId());
+                var us = new UserService(User.GetSchema()).Get(User.GetUserId());
                 if (us != null)
-                    us.SignIn(HttpContext);
+                    us.SignIn(HttpContext , User.GetSchema());
             }
             return res;
         }

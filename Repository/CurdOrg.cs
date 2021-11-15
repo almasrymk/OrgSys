@@ -12,11 +12,9 @@ namespace Repository
     public class CurdOrg<entity> where entity : BaseModel
     {
         public OrgContext db;
-
-        public CurdOrg()
+        public CurdOrg(string Schema)
         {
-            if (this.db == null)
-                this.db = new OrgContext(new DbContextOptions<OrgContext>());
+            this.db = new OrgContext(new DbContextOptions<OrgContext>() , Schema);
         }
 
         public virtual long GetMaXCode(Func<entity, bool> filter = null)

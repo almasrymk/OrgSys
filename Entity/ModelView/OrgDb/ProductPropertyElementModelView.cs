@@ -56,10 +56,10 @@ namespace Entity.ModelView
             };
         }
 
-        public long ProductId { get; set; }
+        public long? ProductId { get; set; }
 
-        public long PropertyId { get; set; }
+        public long? PropertyId { get; set; }
 
-        public long PropertyElementId { get; set; }
+        public long? PropertyElementId { get; set; }
     }
 }

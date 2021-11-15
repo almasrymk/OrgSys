@@ -3,21 +3,23 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entity.Model
 {
-    [Table("ProductPropertyElement", Schema = "org")]
+    [Table("ProductPropertyElement")]
    public class ProductPropertyElement :BaseModel
     {
-        public long ProductId { get; set; }
+        [ForeignKey("Product")]
+        public long? ProductId { get; set; }
 
-        public virtual Product Product { get; set; }
+        public Product Product { get; set; }
 
-        public long PropertyId { get; set; }
+        [ForeignKey("Property")]
+        public long? PropertyId { get; set; }
 
-        public virtual Property Property { get; set; }
+        public Property Property { get; set; }
 
-        public long PropertyElementId { get; set; }
+        [ForeignKey("PropertyElement")]
+        public long? PropertyElementId { get; set; }
 
-        public virtual PropertyElement PropertyElement { get; set; }
-
-        public Boolean IsChecked { get; set; }
+        public PropertyElement PropertyElement { get; set; }
+        public bool IsChecked { get; set; }
     }
 }

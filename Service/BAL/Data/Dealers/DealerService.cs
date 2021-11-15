@@ -9,10 +9,11 @@ namespace Service
     public class DealerService : BaseService<DealerModelView>
     {
         string Includes = "";
-        UnitOfWork repo;
-        public DealerService()
+        UnitOfWorkOrg repo;
+
+        public DealerService(string Schema)
         {
-            repo = new UnitOfWork();
+            repo = new UnitOfWorkOrg(Schema);
         }
 
         #region Save / Delete

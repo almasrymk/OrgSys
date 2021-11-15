@@ -9,11 +9,10 @@ namespace Service
     public class OutlayService : BaseService<OutlayModelView>
     {
         string Includes = "";
-        UnitOfWork repo;
-        public OutlayService()
+        UnitOfWorkOrg repo;
+        public OutlayService(string Schema)
         {
-            if (repo == null)
-                repo = new UnitOfWork();
+            repo = new UnitOfWorkOrg(Schema);
         }
 
         #region Save / Delete

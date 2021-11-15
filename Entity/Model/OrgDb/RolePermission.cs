@@ -2,15 +2,17 @@
 
 namespace Entity.Model
 {
-    [Table("RolePermission", Schema = "org")]
+    [Table("RolePermission")]
     public class RolePermission : BaseModel
     {
+        [ForeignKey("Role")]
         public long RoleId { get; set; }
 
+        [ForeignKey("Permission")]
         public long PermissionId { get; set; }
 
-        public virtual Role Role { get; set; }
+        public Role Role { get; set; }
 
-        public virtual Permission Permission { get; set; }
+        public Permission Permission { get; set; }
     }
 }

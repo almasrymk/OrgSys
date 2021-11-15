@@ -21,6 +21,10 @@ namespace OrgSys
                 return false;
             }
 
+            var identityClaimsOwner = identity.Claims.FirstOrDefault(c => c.Type == "RoleId")?.Value;
+            if (long.Parse("0" + identityClaimsOwner) == 1)
+                return true;
+
             var identityClaims = identity.Claims.Where(c => c.Type == ClaimTypes.Webpage)
                                .Select(c => c.Value).SingleOrDefault();
 
@@ -135,6 +139,19 @@ namespace OrgSys
             return "" + identityClaims;
         }
 
+        public static string GetSchema(this ClaimsPrincipal ob)
+        {
+            var identity = ob;
+
+            if (identity == null)
+            {
+                return "";
+            }
+
+            var identityClaims = identity.Claims.FirstOrDefault(c => c.Type == "Schema")?.Value;
+            return "" + identityClaims;
+        }
+
         public static string GetImage(this ClaimsPrincipal ob)
         {
             var identity = ob;
@@ -175,7 +192,7 @@ namespace OrgSys
             }
         }
 
-        public static bool SignIn(this UserModelView us, HttpContext httpContext , bool KeepMeLoggedin = true)
+        public static bool SignIn(this UserModelView us, HttpContext httpContext , string Schema , bool KeepMeLoggedin = true)
         {
             try
             {
@@ -187,8 +204,9 @@ namespace OrgSys
                       new Claim("Name",  "" + us.Name) ,
                       new Claim("UserName",  "" + us.UserName) ,
                       new Claim("RoleId", us.RoleId.ToString()),
+                      new Claim("Schema", Schema),
                       new Claim(ClaimTypes.Role,  "" + us.RoleName) ,
-                      new Claim(ClaimTypes.Webpage,  string.Join(",",  us.Permissions.Select(r=>r.Key).ToList())),
+                      new Claim(ClaimTypes.Webpage, us.RoleId == 1 ? "" :  string.Join(",",  us.Permissions.Select(r=>r.Key).ToList())),
                       new Claim("Id", us.Id.ToString()),
                       new Claim("ImgPath", "" + us.ImgPath),
                    };

@@ -10,10 +10,13 @@ namespace Service
     public class InvoiceService : BaseService<InvoiceModelView>
     {
         string Includes = "Dealer,Transaction,InvoiceProducts,InvoiceProducts.Product,InvoiceProducts.Product.ProductUnits,,InvoiceProducts.Product.ProductUnits.Unit";
-        UnitOfWork repo;
-        public InvoiceService()
+        UnitOfWorkOrg repo; 
+        private string _Schema;
+        public InvoiceService(string Schema)
         {
-            repo = new UnitOfWork();
+            this._Schema = Schema;
+            if (repo == null)
+                repo = new UnitOfWorkOrg(Schema);
         }
 
         #region Save / Delete
@@ -47,11 +50,11 @@ namespace Service
                 Nwob.InvoiceProducts = repo.invoiceProductRepo.GetList(e => e.InvoiceId == Nwob.Id, e => e.OrderBy(e => e.Id), "", Utility.Status.All).ToList();
             }
 
-            if (long.Parse("0" + new PreferenceService().GetByKey("AutoCreateTransaction", "Invoice", ob.TypeId, 0)?.Value) == 1 || ob.TransactionId > 0)
-                new IntegrationServics().CreateTransactionByInvoice(new InvoiceModelView(Nwob));
+            if (long.Parse("0" + new PreferenceService(_Schema).GetByKey("AutoCreateTransaction", "Invoice", ob.TypeId, 0)?.Value) == 1 || ob.TransactionId > 0)
+                new IntegrationServics(_Schema).CreateTransactionByInvoice(new InvoiceModelView(Nwob));
 
             if (ob.Cash)
-                new IntegrationServics().CreateFinancialByInvoice(new InvoiceModelView(Nwob));
+                new IntegrationServics(_Schema).CreateFinancialByInvoice(new InvoiceModelView(Nwob));
 
             return new InvoiceModelView(Nwob);
         }    
@@ -62,7 +65,7 @@ namespace Service
             if (ob != null)
             {
                 repo.invoiceRepo.Delete(id);
-                new IntegrationServics().DeleteInvoice(id);
+                new IntegrationServics(_Schema).DeleteInvoice(id);
                 new TransactionService().Delete(ob.TransactionId ?? 0);
                 var fi = new FinancialService().GetByParent(id);
                 new FinancialService().Delete(fi.Id);
@@ -80,7 +83,7 @@ namespace Service
                 new TransactionService().Delete(oblist.Select(e => e.TransactionId ?? 0).ToList());
                 foreach (var id in ids)
                 {
-                    new IntegrationServics().DeleteInvoice(id);
+                    new IntegrationServics(_Schema).DeleteInvoice(id);
                     var fi = new FinancialService().GetByParent(id);
                     new FinancialService().Delete(fi.Id);
                 }

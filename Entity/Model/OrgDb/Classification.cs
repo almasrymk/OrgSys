@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entity.Model
 {
-    [Table("Classification", Schema = "org")]
+    [Table("Classification")]
     public class Classification : BaseModel
     {
         [Required]

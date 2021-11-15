@@ -10,26 +10,28 @@ namespace Service
 {
     public class IntegrationServics
     {
-        UnitOfWork repo;
-        public IntegrationServics()
+        UnitOfWorkOrg repo;
+        private string _Schema;
+        public IntegrationServics(string Schema)
         {
-            repo = new UnitOfWork();
+            this._Schema = Schema;
+            repo = new UnitOfWorkOrg(Schema);
         }
 
         public bool CreateInvoiceByOrder(Order order)
         {
             if (order != null && order.Id > 0)
             {
-                var StoreId = long.Parse("0" + new PreferenceService().GetByKey("DefaultStore", "Invoice", 1, 0)?.Value);
+                var StoreId = long.Parse("0" + new PreferenceService(_Schema).GetByKey("DefaultStore", "Invoice", 1, 0)?.Value);
                 var inv = new InvoiceModelView(order, StoreId);
-                inv.StoreId = long.Parse("0" + new PreferenceService().GetByKey("DefaultStore", "Invoice", 1, 0)?.Value);
+                inv.StoreId = long.Parse("0" + new PreferenceService(_Schema).GetByKey("DefaultStore", "Invoice", 1, 0)?.Value);
                 if (order.DealerId == null || order.DealerId == 0)
-                    inv.DealerId = long.Parse("0" + new PreferenceService().GetByKey("DefaultCustomer", "Invoice", 1, 0)?.Value);
+                    inv.DealerId = long.Parse("0" + new PreferenceService(_Schema).GetByKey("DefaultCustomer", "Invoice", 1, 0)?.Value);
                 else
                     inv.DealerId = order.DealerId.Value;
-                inv.PaymentTypeId = long.Parse("0" + new PreferenceService().GetByKey("DefaultPaymentType", "Invoice", 1, 0)?.Value);
+                inv.PaymentTypeId = long.Parse("0" + new PreferenceService(_Schema).GetByKey("DefaultPaymentType", "Invoice", 1, 0)?.Value);
                 inv.StoreId = StoreId;
-                inv.CurrencyId = long.Parse("0" + new PreferenceService().GetByKey("DefaultCurrency", "Invoice", 1, 0)?.Value);
+                inv.CurrencyId = long.Parse("0" + new PreferenceService(_Schema).GetByKey("DefaultCurrency", "Invoice", 1, 0)?.Value);
 
                 var InvLod = repo.invoiceRepo.Get(e => e.Id == long.Parse("0" + order.InvoiceId));
                 if (InvLod != null)
@@ -39,11 +41,11 @@ namespace Service
                 }
                 else
                 {
-                    inv.CodeNumber = new InvoiceService().GetMaxCode(1);
+                    inv.CodeNumber = new InvoiceService(_Schema).GetMaxCode(1);
                     inv.Code = "" + inv.CodeNumber;
                 }
 
-                var res = new InvoiceService().Save(inv);
+                var res = new InvoiceService(_Schema).Save(inv);
                 order.InvoiceId = res.Id;
                 order.CloseTable = true;
                 repo.orderRepo.AddOrUpdate(order);
@@ -112,7 +114,7 @@ namespace Service
             {
                 var amount = inv.Paid - inv.Remaining - TotalCredit;
                 var financial = new FinancialModelView(inv.Model(), amount);
-                financial.SafeId = long.Parse("0" + new PreferenceService().GetByKey("DefaultSafe", "Financial", (inv.TypeId == 1 || inv.TypeId == 4 ? 1 : 2), 0)?.Value);
+                financial.SafeId = long.Parse("0" + new PreferenceService(_Schema).GetByKey("DefaultSafe", "Financial", (inv.TypeId == 1 || inv.TypeId == 4 ? 1 : 2), 0)?.Value);
                 inv.CodeNumber = repo.financialRepo.GetMaXCode(e => e.TypeId == (inv.TypeId == 1 || inv.TypeId == 4 ? 1 : 2));
                 inv.Code = "" + inv.CodeNumber;
                 new FinancialService().Save(financial);
@@ -125,7 +127,7 @@ namespace Service
             if (inv.Credit > 0)
             {
                 var financial = new FinancialModelView(inv.Model(), inv.Credit);
-                financial.SafeId = long.Parse("0" + new PreferenceService().GetByKey("DefaultSafe", "Financial", (inv.TypeId == 1 || inv.TypeId == 4 ? 1 : 2), 0)?.Value);
+                financial.SafeId = long.Parse("0" + new PreferenceService(_Schema).GetByKey("DefaultSafe", "Financial", (inv.TypeId == 1 || inv.TypeId == 4 ? 1 : 2), 0)?.Value);
                 inv.CodeNumber = repo.financialRepo.GetMaXCode(e => e.TypeId == (inv.TypeId == 1 || inv.TypeId == 4 ? 1 : 2));
                 inv.Code = "" + inv.CodeNumber;
                 new FinancialService().Save(financial);
@@ -139,7 +141,7 @@ namespace Service
             if (invs == null)
                 invs = new List<Invoice>();
 
-            var financialsInvs = repo.financialInvoiceRepo.GetList(e => ids.Contains(e.InvoiceId) && e.Financial.Status ==  Utility.Status.All , null, "Financial", Utility.Status.New).ToList();
+            var financialsInvs = repo.financialInvoiceRepo.GetList(e => ids.Contains(e.InvoiceId??0) && e.Financial.Status ==  Utility.Status.All , null, "Financial", Utility.Status.New).ToList();
             if (financialsInvs == null)
                 financialsInvs = new List<FinancialInvoice>();
 

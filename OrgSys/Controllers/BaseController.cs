@@ -115,8 +115,11 @@ namespace OrgSys.Controllers
         {
             AreaName = "" + context.RouteData.Values["area"];
             ControllerName = ControllerContext.ActionDescriptor.ControllerName;
-            Assembly assembly = Assembly.Load("Service");
-            service = (BaseService<entity>)assembly.CreateInstance("Service." + RouteData.Values["controller"] + "Service");
+            Assembly assembly = Assembly.Load("Service");            
+            var ServiceName = "Service." + ControllerName + "Service";
+            var type = assembly.GetType(ServiceName);
+            service = (BaseService<entity>) Activator.CreateInstance(type, User.GetSchema());
+            //service = (BaseService<entity>)assembly.CreateInstance("Service." + RouteData.Values["controller"] + "Service");
             ViewBag.Page = "/" + context.RouteData.Values["area"] + "/" + ControllerContext.ActionDescriptor.ControllerName;
             ViewBag.area = AreaName;
             ViewBag.PageTitle = ControllerContext.ActionDescriptor.ControllerName;

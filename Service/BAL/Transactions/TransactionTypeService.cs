@@ -9,11 +9,11 @@ namespace Service
     public class TransactionTypeService : BaseService<TransactionTypeModelView>
     {
         string Includes = "";
-        UnitOfWork repo;
-        public TransactionTypeService()
+        UnitOfWorkOrg repo;
+        public void SetSchema(string Schema)
         {
             if (repo == null)
-                repo = new UnitOfWork();
+                repo = new UnitOfWorkOrg(Schema);
         }
 
         #region Save / Delete

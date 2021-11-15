@@ -10,10 +10,12 @@ namespace Service
     public class TransactionService : BaseService<TransactionModelView>
     {
         string Includes = "Dealer,Store,ToStore,TransactionProducts,TransactionProducts.Product,TransactionProducts.Product.ProductUnits,,TransactionProducts.Product.ProductUnits.Unit";
-        UnitOfWork repo;
-        public TransactionService()
+        UnitOfWorkOrg repo;
+        private string _Schema;
+        public void SetSchema(string Schema)
         {
-            repo = new UnitOfWork();
+            this._Schema = Schema;
+            repo = new UnitOfWorkOrg(Schema);
         }
 
         #region Save / Delete
@@ -48,9 +50,9 @@ namespace Service
 
             if (ob.TypeId == 3)
             {
-                var setting = new PreferenceService();
+                var setting = new PreferenceService(_Schema);
                 if (long.Parse("0" + setting.GetByKey("AutoReceived", "Transaction", ob.TypeId, 0)?.Value) == 1 || ob.ParentId > 0)
-                    new IntegrationServics().CreateReceived(Nwob);
+                    new IntegrationServics(_Schema).CreateReceived(Nwob);
             }
 
             return new TransactionModelView(Nwob);

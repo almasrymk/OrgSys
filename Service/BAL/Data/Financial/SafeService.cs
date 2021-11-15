@@ -9,11 +9,10 @@ namespace Service
     public class SafeService : BaseService<SafeModelView>
     {
         string Includes = "";
-        UnitOfWork repo;
-        public SafeService()
+        UnitOfWorkOrg repo;
+        public SafeService(string Schema)
         {
-            if (repo == null)
-                repo = new UnitOfWork();
+            repo = new UnitOfWorkOrg(Schema);
         }
 
         #region Save / Delete

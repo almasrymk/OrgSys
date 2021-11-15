@@ -10,10 +10,11 @@ namespace Service
     public class ProductService : BaseService<ProductModelView>
     {
         string Includes = "Classification";
-        UnitOfWork repo;
-        public ProductService()
+        UnitOfWorkOrg repo;
+       
+        public ProductService(string Schema)
         {
-            repo = new UnitOfWork();
+            repo = new UnitOfWorkOrg(Schema);
         }
 
         #region Save / Delete

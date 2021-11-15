@@ -4,27 +4,28 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entity.Model
 {
-    [Table("Invoice", Schema = "org")]
+    [Table("Invoice")]
     public class Invoice : MovementModel
     {
-        [Required]
+        [ForeignKey("Dealer")]
         public long DealerId { get; set; }
 
-        public virtual Dealer Dealer { get; set; }
+        public Dealer Dealer { get; set; }
 
-        [Required]
+        [ForeignKey("PaymentType")]
         public long PaymentTypeId { get; set; }
 
-        public virtual PaymentType PaymentType { get; set; }
+        public PaymentType PaymentType { get; set; }
 
-        [Required]
-        public long StoreId { get; set; }
+        [ForeignKey("Store")]
+        public long? StoreId { get; set; }
 
-        public virtual Store Store { get; set; }            
-        
+        public Store Store { get; set; }
+
+        [ForeignKey("Transaction")]
         public long? TransactionId { get; set; }
 
-        public virtual Transaction Transaction { get; set; }
+        public Transaction Transaction { get; set; }
 
         public decimal Total { get; set; }
 
@@ -40,10 +41,10 @@ namespace Entity.Model
 
         public int ServiceType { get; set; }
 
-        [Required]
+        [ForeignKey("Currency")]
         public long CurrencyId { get; set; }
 
-        public virtual Currency Currency { get; set; }
+        public Currency Currency { get; set; }
 
         public decimal Rate { get; set; }
 
@@ -62,6 +63,6 @@ namespace Entity.Model
 
         public decimal CreditByDefaultCurrency { get; set; }
 
-        public virtual List<InvoiceProduct> InvoiceProducts { get; set; }
+        public ICollection<InvoiceProduct> InvoiceProducts { get; set; }
     }
 }

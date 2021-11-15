@@ -3,28 +3,29 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entity.Model
 {
-    [Table("TransactionProduct", Schema = "org")]
+    [Table("TransactionProduct")]
     public class TransactionProduct : BaseModel
     {
         [Required]
         public long RowNumber { get; set; }
 
-        [Required]
+        [ForeignKey("Transaction")]
         public long TransactionId { get; set; }
 
         public virtual Transaction Transaction { get; set; }
 
-        [Required]
+        [ForeignKey("Product")]
         public long ProductId { get; set; }
 
         public virtual Product Product { get; set; }
 
-        [Required]
+        [ForeignKey("Unit")]
         public long UnitId { get; set; }
 
         public virtual Unit Unit { get; set; }
-        
-        public long StoreId { get; set; }
+
+        [ForeignKey("Store")]
+        public long? StoreId { get; set; }
 
         public virtual Store Store { get; set; }
 

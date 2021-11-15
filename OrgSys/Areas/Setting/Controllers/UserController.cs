@@ -13,13 +13,13 @@ namespace OrgSys.Areas.Setting.Controllers
     {
         public override void LoadViewBag(UserModelView model)
         {
-            ViewBag.BranchList = new SelectList(new BranchService().GetAll(model.ParentId, model.TypeId), "Id", "Name", model.BranchId);
-            ViewBag.RoleList = new SelectList(new RoleService().GetAll(model.ParentId, model.TypeId), "Id", "Name", model.RoleId);
+            ViewBag.BranchList = new SelectList(new BranchService(User.GetSchema()).GetAll(model.ParentId, model.TypeId), "Id", "Name", model.BranchId);
+            ViewBag.RoleList = new SelectList(new RoleService(User.GetSchema()).GetAll(model.ParentId, model.TypeId), "Id", "Name", model.RoleId);
         }
 
         public JsonResult CheckUDoublicat(string userName , int id)
         {
-            return Json(new UserService().CheckDoublicat(userName , id));
+            return Json(new UserService(User.GetSchema()).CheckDoublicat(userName , id));
         }
 
         public override ActionResult Save(UserModelView model)
@@ -27,9 +27,9 @@ namespace OrgSys.Areas.Setting.Controllers
             var res = base.Save(model);
             if(User.IsCurrentUserAndRole(model.Id , model.RoleId))
             {
-                var us = new UserService().Get(model.Id);
+                var us = new UserService(User.GetSchema()).Get(model.Id);
                 if (us != null)
-                    us.SignIn(HttpContext);
+                    us.SignIn(HttpContext , User.GetSchema());
             }
             return res;
         }
@@ -39,7 +39,7 @@ namespace OrgSys.Areas.Setting.Controllers
             if (txtSearch != null)
                 txtSearch = txtSearch.Trim().ToLower();
 
-            var itemsList = new UserService().GetAll(txtSearch, 0, 0, page, pageSize);
+            var itemsList = new UserService(User.GetSchema()).GetAll(txtSearch, 0, 0, page, pageSize);
             var list = itemsList.Distinct().OrderBy(_ => _.Name)
                 .Select(_ => new
                 {

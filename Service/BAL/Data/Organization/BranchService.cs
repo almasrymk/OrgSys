@@ -9,11 +9,10 @@ namespace Service
     public class BranchService : BaseService<BranchModelView>
     {
         string Includes = "";
-        UnitOfWork repo;
-        public BranchService()
+        UnitOfWorkOrg repo;
+        public BranchService(string Schema)
         {
-            if (repo == null)
-                repo = new UnitOfWork();
+            repo = new UnitOfWorkOrg(Schema);
         }
 
         #region Save / Delete

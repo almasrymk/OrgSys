@@ -10,10 +10,11 @@ namespace Service
     public class UnitService : BaseService<UnitModelView>
     {
         string Includes = "";
-        UnitOfWork repo;
-        public UnitService()
+        UnitOfWorkOrg repo;
+        public UnitService(string Schema)
         {
-            repo = new UnitOfWork();
+            if (repo == null)
+                repo = new UnitOfWorkOrg(Schema);
         }
 
         #region Save / Delete

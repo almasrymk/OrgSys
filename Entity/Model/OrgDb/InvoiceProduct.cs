@@ -3,30 +3,31 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entity.Model
 {
-    [Table("InvoiceProduct", Schema = "org")]
+    [Table("InvoiceProduct")]
     public class InvoiceProduct : BaseModel
     {
         [Required]
         public long RowNumber { get; set; }
 
-        [Required]
+        [ForeignKey("Invoice")]
         public long InvoiceId { get; set; }
 
-        public virtual Invoice Invoice { get; set; }
+        public Invoice Invoice { get; set; }
 
-        [Required]
+        [ForeignKey("Product")]
         public long ProductId { get; set; }
 
-        public virtual Product Product { get; set; }
+        public Product Product { get; set; }
 
-        [Required]
+        [ForeignKey("Unit")]
         public long UnitId { get; set; }
 
-        public virtual Unit Unit { get; set; }
-        
-        public long StoreId { get; set; }
+        public Unit Unit { get; set; }
 
-        public virtual Store Store { get; set; }
+        [ForeignKey("Store")]
+        public long? StoreId { get; set; }
+
+        public Store Store { get; set; }
 
         public decimal Quantity { get; set; }
         

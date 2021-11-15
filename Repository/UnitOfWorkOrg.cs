@@ -2,8 +2,15 @@
 
 namespace Repository
 {
-    public class UnitOfWork
+    public class UnitOfWorkOrg
     {
+        public string Schema;
+       
+        public UnitOfWorkOrg(string _Schema)
+        {
+            Schema = _Schema;            
+        }
+
         #region Input
         #region Organization
         private BranchRepo _branchRepo;
@@ -13,7 +20,7 @@ namespace Repository
             {
 
                 if (this._branchRepo == null)
-                    this._branchRepo = new BranchRepo();
+                    this._branchRepo = new BranchRepo (Schema);
 
                 return _branchRepo;
             }
@@ -26,7 +33,7 @@ namespace Repository
             {
 
                 if (this._storeRepo == null)
-                    this._storeRepo = new StoreRepo();
+                    this._storeRepo = new StoreRepo(Schema);
 
                 return _storeRepo;
             }
@@ -39,7 +46,7 @@ namespace Repository
             {
 
                 if (this._shiftRepo == null)
-                    this._shiftRepo = new ShiftRepo();
+                    this._shiftRepo = new ShiftRepo(Schema);
 
                 return _shiftRepo;
             }
@@ -54,7 +61,7 @@ namespace Repository
             {
 
                 if (this._roleRepo == null)
-                    this._roleRepo = new RolechRepo();
+                    this._roleRepo = new RolechRepo(Schema);
 
                 return _roleRepo;
             }
@@ -67,7 +74,7 @@ namespace Repository
             {
 
                 if (this._userRepo == null)
-                    this._userRepo = new UserRepo();
+                    this._userRepo = new UserRepo(Schema);
 
                 return _userRepo;
             }
@@ -80,7 +87,7 @@ namespace Repository
             {
 
                 if (this._permissionRepo == null)
-                    this._permissionRepo = new PermissionRepo();
+                    this._permissionRepo = new PermissionRepo(Schema);
 
                 return _permissionRepo;
             }
@@ -93,7 +100,7 @@ namespace Repository
             {
 
                 if (this._rolePermissionRepo == null)
-                    this._rolePermissionRepo = new RolePermissionRepo();
+                    this._rolePermissionRepo = new RolePermissionRepo(Schema);
 
                 return _rolePermissionRepo;
             }
@@ -108,7 +115,7 @@ namespace Repository
             {
 
                 if (this._orderTypeRepo == null)
-                    this._orderTypeRepo = new OrderTypeRepo();
+                    this._orderTypeRepo = new OrderTypeRepo(Schema);
 
                 return _orderTypeRepo;
             }
@@ -121,7 +128,7 @@ namespace Repository
             {
 
                 if (this._invoiceTypeRepo == null)
-                    this._invoiceTypeRepo = new InvoiceTypeRepo();
+                    this._invoiceTypeRepo = new InvoiceTypeRepo(Schema);
 
                 return _invoiceTypeRepo;
             }
@@ -134,7 +141,7 @@ namespace Repository
             {
 
                 if (this._transactionTypeRepo == null)
-                    this._transactionTypeRepo = new TransactionTypeRepo();
+                    this._transactionTypeRepo = new TransactionTypeRepo(Schema);
 
                 return _transactionTypeRepo;
             }
@@ -147,7 +154,7 @@ namespace Repository
             {
 
                 if (this._financialTypeRepo == null)
-                    this._financialTypeRepo = new FinancialTypeRepo();
+                    this._financialTypeRepo = new FinancialTypeRepo(Schema);
 
                 return _financialTypeRepo;
             }
@@ -160,7 +167,7 @@ namespace Repository
             {
 
                 if (this._paymentTypeRepo == null)
-                    this._paymentTypeRepo = new PaymentTypeRepo();
+                    this._paymentTypeRepo = new PaymentTypeRepo(Schema);
 
                 return _paymentTypeRepo;
             }
@@ -174,7 +181,7 @@ namespace Repository
             {
 
                 if (this._unitRepo == null)
-                    this._unitRepo = new UnitRepo();
+                    this._unitRepo = new UnitRepo(Schema);
 
                 return _unitRepo;
             }
@@ -187,7 +194,7 @@ namespace Repository
             {
 
                 if (this._propertyRepo == null)
-                    this._propertyRepo = new PropertyRepo();
+                    this._propertyRepo = new PropertyRepo(Schema);
 
                 return _propertyRepo;
             }
@@ -200,7 +207,7 @@ namespace Repository
             {
 
                 if (this._productpropertyelementRepo == null)
-                    this._productpropertyelementRepo = new ProductPropertyElementRepo();
+                    this._productpropertyelementRepo = new ProductPropertyElementRepo(Schema);
 
                 return _productpropertyelementRepo;
             }
@@ -213,7 +220,7 @@ namespace Repository
             {
 
                 if (this._dealerRepo == null)
-                    this._dealerRepo = new DealerRepo();
+                    this._dealerRepo = new DealerRepo(Schema);
 
                 return _dealerRepo;
             }
@@ -226,7 +233,7 @@ namespace Repository
             {
 
                 if (this._propertyElementRepo == null)
-                    this._propertyElementRepo = new PropertyElementRepo();
+                    this._propertyElementRepo = new PropertyElementRepo(Schema);
 
                 return _propertyElementRepo;
             }
@@ -239,7 +246,7 @@ namespace Repository
             {
 
                 if (this._classificationRepo == null)
-                    this._classificationRepo = new ClassificationRepo();
+                    this._classificationRepo = new ClassificationRepo(Schema);
 
                 return _classificationRepo;
             }
@@ -252,7 +259,7 @@ namespace Repository
             {
 
                 if (this._productRepo == null)
-                    this._productRepo = new ProductRepo();
+                    this._productRepo = new ProductRepo(Schema);
 
                 return _productRepo;
             }
@@ -265,7 +272,7 @@ namespace Repository
             {
 
                 if (this._productUnitRepo == null)
-                    this._productUnitRepo = new ProductUnitRepo();
+                    this._productUnitRepo = new ProductUnitRepo(Schema);
 
                 return _productUnitRepo;
             }
@@ -278,7 +285,7 @@ namespace Repository
             {
 
                 if (this._recipeRepo == null)
-                    this._recipeRepo = new RecipeRepo();
+                    this._recipeRepo = new RecipeRepo(Schema);
 
                 return _recipeRepo;
             }
@@ -291,7 +298,7 @@ namespace Repository
             {
 
                 if (this._preferenceRepo == null)
-                    this._preferenceRepo = new PreferenceRepo();
+                    this._preferenceRepo = new PreferenceRepo(Schema);
 
                 return _preferenceRepo;
             }
@@ -304,7 +311,7 @@ namespace Repository
             {
 
                 if (this._tableRepo == null)
-                    this._tableRepo = new TableRepo();
+                    this._tableRepo = new TableRepo(Schema);
 
                 return _tableRepo;
             }
@@ -317,7 +324,7 @@ namespace Repository
             {
 
                 if (this._safeRepo == null)
-                    this._safeRepo = new SafeRepo();
+                    this._safeRepo = new SafeRepo(Schema);
 
                 return _safeRepo;
             }
@@ -330,7 +337,7 @@ namespace Repository
             {
 
                 if (this._outlayRepo == null)
-                    this._outlayRepo = new OutlayRepo();
+                    this._outlayRepo = new OutlayRepo(Schema);
 
                 return _outlayRepo;
             }
@@ -343,7 +350,7 @@ namespace Repository
             {
 
                 if (this._currencyRepo == null)
-                    this._currencyRepo = new CurrencyRepo();
+                    this._currencyRepo = new CurrencyRepo(Schema);
 
                 return _currencyRepo;
             }
@@ -358,7 +365,7 @@ namespace Repository
             {
 
                 if (this._orderRepo == null)
-                    this._orderRepo = new OrderRepo();
+                    this._orderRepo = new OrderRepo(Schema);
 
                 return _orderRepo;
             }
@@ -371,7 +378,7 @@ namespace Repository
             {
 
                 if (this._orderProductRepo == null)
-                    this._orderProductRepo = new OrderProductRepo();
+                    this._orderProductRepo = new OrderProductRepo(Schema);
 
                 return _orderProductRepo;
             }
@@ -384,7 +391,7 @@ namespace Repository
             {
 
                 if (this._invoiceRepo == null)
-                    this._invoiceRepo = new InvoiceRepo();
+                    this._invoiceRepo = new InvoiceRepo(Schema);
 
                 return _invoiceRepo;
             }
@@ -397,7 +404,7 @@ namespace Repository
             {
 
                 if (this._invoiceProductRepo == null)
-                    this._invoiceProductRepo = new InvoiceProductRepo();
+                    this._invoiceProductRepo = new InvoiceProductRepo(Schema);
 
                 return _invoiceProductRepo;
             }
@@ -410,7 +417,7 @@ namespace Repository
             {
 
                 if (this._transactionRepo == null)
-                    this._transactionRepo = new TransactionRepo();
+                    this._transactionRepo = new TransactionRepo(Schema);
 
                 return _transactionRepo;
             }
@@ -423,7 +430,7 @@ namespace Repository
             {
 
                 if (this._transactionProductRepo == null)
-                    this._transactionProductRepo = new TransactionProductRepo();
+                    this._transactionProductRepo = new TransactionProductRepo(Schema);
 
                 return _transactionProductRepo;
             }
@@ -436,7 +443,7 @@ namespace Repository
             {
 
                 if (this._inventoryRepo == null)
-                    this._inventoryRepo = new InventoryRepo();
+                    this._inventoryRepo = new InventoryRepo(Schema);
 
                 return _inventoryRepo;
             }
@@ -449,7 +456,7 @@ namespace Repository
             {
 
                 if (this._inventoryProductRepo == null)
-                    this._inventoryProductRepo = new InventoryProductRepo();
+                    this._inventoryProductRepo = new InventoryProductRepo(Schema);
 
                 return _inventoryProductRepo;
             }
@@ -462,7 +469,7 @@ namespace Repository
             {
 
                 if (this._financialRepo == null)
-                    this._financialRepo = new FinancialRepo();
+                    this._financialRepo = new FinancialRepo(Schema);
 
                 return _financialRepo;
             }
@@ -475,7 +482,7 @@ namespace Repository
             {
 
                 if (this._financialInvoiceRepo == null)
-                    this._financialInvoiceRepo = new FinancialInvoiceRepo();
+                    this._financialInvoiceRepo = new FinancialInvoiceRepo(Schema);
 
                 return _financialInvoiceRepo;
             }
@@ -489,76 +496,9 @@ namespace Repository
             get
             {
                 if (this._reportRepo == null)
-                    this._reportRepo = new ReportRepo();
+                    this._reportRepo = new ReportRepo(Schema);
 
                 return _reportRepo;
-            }
-        }
-        #endregion
-
-        #region Admin
-        private RequestRepo _requestRepo;
-        public RequestRepo requestRepo
-        {
-            get
-            {
-
-                if (this._requestRepo == null)
-                    this._requestRepo = new RequestRepo();
-
-                return _requestRepo;
-            }
-        }
-
-        private LoginUserRepo _loginUserRepo;
-        public LoginUserRepo loginUserRepo
-        {
-            get
-            {
-
-                if (this._loginUserRepo == null)
-                    this._loginUserRepo = new LoginUserRepo();
-
-                return _loginUserRepo;
-            }
-        }
-
-        private ClientRepo _clientRepo;
-        public ClientRepo clientRepo
-        {
-            get
-            {
-
-                if (this._clientRepo == null)
-                    this._clientRepo = new ClientRepo();
-
-                return _clientRepo;
-            }
-        }
-
-        private NationalityRepo _nationalityRepo;
-        public NationalityRepo nationalityRepo
-        {
-            get
-            {
-
-                if (this._nationalityRepo == null)
-                    this._nationalityRepo = new NationalityRepo();
-
-                return _nationalityRepo;
-            }
-        }
-
-        private TypeActivityRepo _typeActivityRepo;
-        public TypeActivityRepo typeActivityRepo
-        {
-            get
-            {
-
-                if (this._typeActivityRepo == null)
-                    this._typeActivityRepo = new TypeActivityRepo();
-
-                return _typeActivityRepo;
             }
         }
         #endregion

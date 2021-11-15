@@ -3,26 +3,26 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entity.Model
 {
-    [Table("InventoryProduct", Schema = "org")]
+    [Table("InventoryProduct")]
     public class InventoryProduct : BaseModel
     {
         [Required]
         public long RowNumber { get; set; }
 
-        [Required]
+        [ForeignKey("Inventory")]
         public long InventoryId { get; set; }
 
-        public virtual Inventory Inventory { get; set; }
+        public Inventory Inventory { get; set; }
 
-        [Required]
+        [ForeignKey("Product")]
         public long ProductId { get; set; }
 
-        public virtual Product Product { get; set; }
+        public Product Product { get; set; }
 
-        [Required]
+        [ForeignKey("Unit")]
         public long UnitId { get; set; }
 
-        public virtual Unit Unit { get; set; }               
+        public Unit Unit { get; set; }               
 
         public decimal CalcBalance { get; set; }
 

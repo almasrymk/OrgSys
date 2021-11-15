@@ -9,10 +9,10 @@ namespace Service
     public class ClassificationService : BaseService<ClassificationModelView>
     {
         string Includes = "";
-        UnitOfWork repo;
-        public ClassificationService()
+        UnitOfWorkOrg repo;
+        public ClassificationService(string Schema)
         {
-            repo = new UnitOfWork();
+            repo = new UnitOfWorkOrg(Schema);
         }
 
         #region Save / Delete

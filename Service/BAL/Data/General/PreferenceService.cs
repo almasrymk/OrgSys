@@ -9,10 +9,10 @@ namespace Service
     public class PreferenceService : BaseService<PreferenceModelView>
     {
         string Includes = "";
-        UnitOfWork repo;
-        public PreferenceService()
+        UnitOfWorkOrg repo;
+        public PreferenceService(string Schema)
         {
-            repo = new UnitOfWork();
+            repo = new UnitOfWorkOrg(Schema);
         }
 
         #region Save / Delete

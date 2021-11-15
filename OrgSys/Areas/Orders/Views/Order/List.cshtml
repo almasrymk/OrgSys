@@ -5,7 +5,7 @@
 @using Service
 @{
     Layout = null;
-    var openTables = new TableService().GetAllClosed(0, 0, 0)?.Count > 0;
+    var openTables = new TableService(User.GetSchema()).GetAllClosed(0, 0, 0)?.Count > 0;
     var CurrentUICulture = CultureInfo.CurrentUICulture;
     var IsRightToLeft = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft;
     var TextAlign = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "text-right" : "text-left";

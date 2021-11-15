@@ -1,7 +1,12 @@
 ﻿using Entity.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.SqlServer.Migrations.Internal;
+using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Configuration;
+using System.Text;
 using Utility;
 
 namespace Repository
@@ -9,14 +14,16 @@ namespace Repository
     public class OrgContext : DbContext
     {
         public string schema { get; set; } = "org";
-        //public IConfiguration Configuration { get; set; }
 
         public OrgContext(DbContextOptions<OrgContext> options) : base(options)
         {
-            if ("" + Utility.General._Schema != "")
-                schema = Utility.General._Schema;
-            //if (Utility.General.GetConfiguration() != null)
-            //    Configuration = Utility.General.GetConfiguration();
+
+        }
+
+        public OrgContext(DbContextOptions<OrgContext> MyOptions , string Schema) : base(MyOptions)
+        {
+            if ("" + Schema != "")
+                schema = Schema;
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -24,11 +31,13 @@ namespace Repository
             base.OnConfiguring(optionsBuilder);
             var builder = new ConfigurationBuilder().AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
             IConfigurationRoot config = builder.Build();
-            optionsBuilder.UseSqlServer(config.GetConnectionString("OrgConnection"), e => e.MigrationsHistoryTable("__OrgMigrationsHistory", schema));
+            optionsBuilder.UseSqlServer(config.GetConnectionString("OrgConnection"), e => e.MigrationsHistoryTable($"__{schema}MigrationsHistory", schema)).ReplaceService<IModelCacheKeyFactory, DbSchemaAwareModelCacheKeyFactory>();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.HasDefaultSchema(schema);
+
             modelBuilder.Entity<Permission>().HasData(
                 new Permission { Id = 1, Name = "Organizer", Key = "Organizer", ParentId = 0 },
                     new Permission { Id = 10, Name = "Data", Key = "Data.All", ParentId = 1 },
@@ -253,11 +262,11 @@ namespace Repository
             modelBuilder.Entity<Role>().HasData(new Role { Id = 1, Name = "Owner", Hide = true });
             modelBuilder.Entity<Role>().HasData(new Role { Id = 2, Name = "Admin", Hide = false });
 
-            modelBuilder.Entity<User>().HasData(new User { Id = 1, Name = "Owner", UserName = "Owner", Password = Security.Encrypt("OwnerAbc@123"), RoleId = 1 , LoginUserId = 1 , Hide = true });
+            modelBuilder.Entity<User>().HasData(new User { Id = 1, Name = "Owner", UserName = "Owner", Password = Security.Encrypt("OwnerAbc@123"), RoleId = 1, LoginUserId = 1, Hide = true });
             modelBuilder.Entity<User>().HasData(new User { Id = 2, Name = "Admin", UserName = "Admin", Password = Security.Encrypt("AdminAbc@123"), RoleId = 2, LoginUserId = 2, Hide = false });
             modelBuilder.Entity<User>().HasData(new User { Id = 3, Name = "Emp", UserName = "Admin2", RoleId = 2, Hide = false });
 
-            modelBuilder.Entity<CompanyProfile>().HasData(new CompanyProfile { Id = 1 , ClientId = 1 , Name = "Owner" , Code = "1" , CodeNumber = 1 , Email1 = "info@org.com" , Mobile1 = "0201111105784" , Phone1 = "0201111105784" , NationalityId = 68 , SizeOfCompany = 1, Hide = true });
+            modelBuilder.Entity<CompanyProfile>().HasData(new CompanyProfile { Id = 1, ClientId = 1, Name = "Owner", Code = "1", CodeNumber = 1, Email1 = "info@org.com", Mobile1 = "0201111105784", Phone1 = "0201111105784", NationalityId = 68, SizeOfCompany = 1, Hide = true });
 
             modelBuilder.Entity<RolePermission>().HasData(
                new RolePermission { Id = 1, RoleId = 2, PermissionId = 102 },
@@ -548,5 +557,10 @@ namespace Repository
         {
             return _schemaName.GetHashCode();
         }
+    }
+  
+    public class MyDbContextOptions<t> : DbContextOptions<t> where t : DbContext
+    {        
+        public string Schema { get; set; }
     }
 }

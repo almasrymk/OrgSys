@@ -4,18 +4,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entity.Model
 {
-    [Table("Product", Schema = "org")]
+    [Table("Product")]
     public class Product : BaseModel
-    {
-        public Product()
-        {
-            ProductUnits = new HashSet<ProductUnit>();
-
-            ProductRecipes = new HashSet<ProductRecipe>();
-
-            ProductPropertyElements = new HashSet<ProductPropertyElement>();
-        }
-     
+    {       
         [Required]
         public string Name { get; set; }
 
@@ -30,14 +21,15 @@ namespace Entity.Model
 
         public decimal Cost { get; set; }
 
-        [Required]
+        [ForeignKey("Classification")]
         public long ClassificationId { get; set; }
 
-        public virtual Classification Classification { get; set; }
+        public Classification Classification { get; set; }
 
+        [ForeignKey("Dealer")]
         public long? DealerId { get; set; }
 
-        public virtual Dealer Dealer { get; set; }
+        public Dealer Dealer { get; set; }
 
         public string Recipe { get; set; }
 

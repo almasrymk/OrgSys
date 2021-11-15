@@ -9,10 +9,10 @@ namespace Service
     public class PaymentTypeService : BaseService<PaymentTypeModelView>
     {
         string Includes = "";
-        UnitOfWork repo;
-        public PaymentTypeService()
+        UnitOfWorkOrg repo;
+        public PaymentTypeService(string Schema)
         {
-            repo = new UnitOfWork();
+            repo = new UnitOfWorkOrg(Schema);
         }
 
         #region Save / Delete

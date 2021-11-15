@@ -14,12 +14,12 @@ namespace Service
     public class RoleService : BaseService<RoleModelView>
     {
         string Includes = "";
-        UnitOfWork repo;      
-        public RoleService()
+        UnitOfWorkOrg repo;
+        public RoleService(string Schema)
         {
-            repo = new UnitOfWork();          
+            repo = new UnitOfWorkOrg(Schema);
         }
-      
+
         #region Save / Delete
         public RoleModelView Save(RoleModelView ob)
         {          

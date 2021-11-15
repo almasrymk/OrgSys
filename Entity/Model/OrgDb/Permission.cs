@@ -2,7 +2,7 @@
 
 namespace Entity.Model
 {
-    [Table("Permission", Schema = "org")]
+    [Table("Permission")]
     public class Permission : BaseModel
     {
         public string Key { get; set; }

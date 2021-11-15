@@ -2,7 +2,7 @@
 
 namespace Entity.Model
 {
-    [Table("ProductRecipe", Schema = "org")]
+    [Table("ProductRecipe")]
     public class ProductRecipe : BaseModel
     {            
         public long ProductId { get; set; } 

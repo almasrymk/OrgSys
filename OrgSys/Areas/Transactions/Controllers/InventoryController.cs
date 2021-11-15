@@ -12,7 +12,7 @@ namespace OrgSys.Areas.Inventory.Controllers
     {       
         public override InventoryModelView InitializeData(InventoryModelView ob)
         {
-            var setting = new PreferenceService();
+            var setting = new PreferenceService(User.GetSchema());
             var StoreId = long.Parse("0" + setting.GetByKey("DefaultStore", "Inventory", ob.TypeId, 0)?.Value);           
             ViewBag.AutoSave = int.Parse("0" + setting.GetByKey("AutoSave", "Inventory", ob.TypeId, 0)?.Value);
             var TypeCode = int.Parse("0" + setting.GetByKey("TypeSerial", "Inventory", ob.TypeId, 0)?.Value);
@@ -29,7 +29,7 @@ namespace OrgSys.Areas.Inventory.Controllers
                 ob.Date = DateTime.Now;
                 ob.InventoryProducts = new List<InventoryProductModelView>();
               }
-            ob.StoreName = new StoreService().Get(ob.StoreId).Name;
+            ob.StoreName = new StoreService(User.GetSchema()).Get(ob.StoreId??0).Name;
             return ob;
         }       
     }

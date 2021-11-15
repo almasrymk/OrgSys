@@ -4,7 +4,7 @@
 @{
     ViewData["Title_Designer"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var openTables = new TableService().GetAllClosed(0, 0, 0)?.Count > 0;
+    var openTables = new TableService(User.GetSchema()).GetAllClosed(0, 0, 0)?.Count > 0;
 }
 
 <div class="container-fluid disable-text-selection">

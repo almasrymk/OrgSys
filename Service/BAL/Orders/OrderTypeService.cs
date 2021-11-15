@@ -9,10 +9,11 @@ namespace Service
     public class OrderTypeService : BaseService<OrderTypeModelView>
     {
         string Includes = "";
-        UnitOfWork repo;
-        public OrderTypeService()
+        UnitOfWorkOrg repo;
+        public void SetSchema(string Schema)
         {
-            repo = new UnitOfWork();
+            if (repo == null)
+                repo = new UnitOfWorkOrg(Schema);
         }
 
         #region Save / Delete

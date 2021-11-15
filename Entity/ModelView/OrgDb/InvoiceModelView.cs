@@ -228,7 +228,7 @@ namespace Entity.ModelView
 
         public string PaymentTypeName { get; set; }
 
-        public long StoreId { get; set; }
+        public long? StoreId { get; set; }
 
         public string StoreName { get; set; }
      

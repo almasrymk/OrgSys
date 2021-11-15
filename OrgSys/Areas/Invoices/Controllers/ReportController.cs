@@ -10,7 +10,7 @@ namespace OrgSys.Areas.Invoices.Controllers
         ReportService reportService;
         public ReportController()
         {
-            reportService = new ReportService();
+            reportService = new ReportService(User.GetSchema());
         }
 
         public ActionResult Clients()
@@ -35,10 +35,10 @@ namespace OrgSys.Areas.Invoices.Controllers
             ViewBag.BranchId = branchId;
             ViewBag.UserId = userId;
 
-            ViewBag.DealerName = dealerId == 0 ? "..." : new DealerService().Get(dealerId).Name;
-            ViewBag.ShiftName = shiftId == 0 ? "..." : new ShiftService().Get(shiftId).Name;
-            ViewBag.BranchName = branchId == 0 ? "..." : new BranchService().Get(branchId).Name;
-            ViewBag.UserName = userId == 0 ? "..." : new UserService().Get(userId).Name;
+            ViewBag.DealerName = dealerId == 0 ? "..." : new DealerService(User.GetSchema()).Get(dealerId).Name;
+            ViewBag.ShiftName = shiftId == 0 ? "..." : new ShiftService(User.GetSchema()).Get(shiftId).Name;
+            ViewBag.BranchName = branchId == 0 ? "..." : new BranchService(User.GetSchema()).Get(branchId).Name;
+            ViewBag.UserName = userId == 0 ? "..." : new UserService(User.GetSchema()).Get(userId).Name;
 
             var obList = reportService.InvoiceDetail(1, fromDate.Value, toDate.Value, dealerId, shiftId, branchId, userId , page , pageSize);
             return Request.Headers["X-Requested-With"] == "XMLHttpRequest" ? (ActionResult)PartialView("SalesDetailList", obList) : View(obList);
@@ -62,10 +62,10 @@ namespace OrgSys.Areas.Invoices.Controllers
             ViewBag.BranchId = branchId;
             ViewBag.UserId = userId;
 
-            ViewBag.DealerName = dealerId == 0 ? "..." : new DealerService().Get(dealerId).Name;
-            ViewBag.ShiftName = shiftId == 0 ? "..." : new ShiftService().Get(shiftId).Name;
-            ViewBag.BranchName = branchId == 0 ? "..." : new BranchService().Get(branchId).Name;
-            ViewBag.UserName = userId == 0 ? "..." : new UserService().Get(userId).Name;
+            ViewBag.DealerName = dealerId == 0 ? "..." : new DealerService(User.GetSchema()).Get(dealerId).Name;
+            ViewBag.ShiftName = shiftId == 0 ? "..." : new ShiftService(User.GetSchema()).Get(shiftId).Name;
+            ViewBag.BranchName = branchId == 0 ? "..." : new BranchService(User.GetSchema()).Get(branchId).Name;
+            ViewBag.UserName = userId == 0 ? "..." : new UserService(User.GetSchema()).Get(userId).Name;
 
 
             var obList = reportService.PurchesDetail(2, fromDate.Value, toDate.Value, dealerId, shiftId, branchId, userId, page, pageSize);
@@ -76,7 +76,7 @@ namespace OrgSys.Areas.Invoices.Controllers
         public ActionResult Customer(long dealerId = 0, int page = 1, int pageSize = 100)
         {
             ViewBag.DealerId = dealerId;
-            ViewBag.DealerName = dealerId == 0 ? "..." : new DealerService().Get(dealerId).Name;
+            ViewBag.DealerName = dealerId == 0 ? "..." : new DealerService(User.GetSchema()).Get(dealerId).Name;
             var obList = reportService.Customers(1, dealerId, page, pageSize);
             return Request.Headers["X-Requested-With"] == "XMLHttpRequest" ? (ActionResult)PartialView("Customer", obList) : View(obList);
         }

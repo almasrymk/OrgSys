@@ -9,10 +9,10 @@ namespace Service
     public class StoreService : BaseService<StoreModelView>
     {
         string Includes = "Branch";
-        UnitOfWork repo;
-        public StoreService()
+        UnitOfWorkOrg repo;
+        public StoreService(string Schema)
         {
-            repo = new UnitOfWork();
+            repo = new UnitOfWorkOrg(Schema);
         }
 
         #region Save / Delete

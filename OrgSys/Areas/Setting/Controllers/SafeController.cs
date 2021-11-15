@@ -15,7 +15,7 @@ namespace OrgSys.Areas.Setting.Controllers
             if (txtSearch != null)
                 txtSearch = txtSearch.Trim().ToLower();
 
-            var itemsList = new SafeService().GetAll(txtSearch, 0, 0, page, pageSize);
+            var itemsList = new SafeService(User.GetSchema()).GetAll(txtSearch, 0, 0, page, pageSize);
             var list = itemsList.Distinct().OrderBy(_ => _.Name)
                 .Select(_ => new
                 {

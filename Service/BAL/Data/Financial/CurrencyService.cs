@@ -9,13 +9,13 @@ namespace Service
     public class CurrencyService : BaseService<CurrencyModelView>
     {
         string Includes = "";
-        UnitOfWork repo;
-        public CurrencyService()
-        {
-            if (repo == null)
-                repo = new UnitOfWork();
-        }
+        UnitOfWorkOrg repo;
 
+        public CurrencyService(string Schema)
+        {
+            repo = new UnitOfWorkOrg(Schema);
+        }
+ 
         #region Save / Delete
         public CurrencyModelView Save(CurrencyModelView ob)
         {

@@ -11,30 +11,6 @@ namespace Repository.Migrations.AdminMigrations
                 name: "admin");
 
             migrationBuilder.CreateTable(
-                name: "LoginUser",
-                schema: "admin",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ClientId = table.Column<long>(type: "bigint", nullable: false),
-                    CodeNumber = table.Column<long>(type: "bigint", nullable: false),
-                    Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    MaskText = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ParentId = table.Column<long>(type: "bigint", nullable: false),
-                    TypeId = table.Column<long>(type: "bigint", nullable: false),
-                    Hide = table.Column<bool>(type: "bit", nullable: false),
-                    ImgPath = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Status = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_LoginUser", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Nationality",
                 schema: "admin",
                 columns: table => new
@@ -90,6 +66,7 @@ namespace Repository.Migrations.AdminMigrations
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CompanyName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     URL = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Key = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ExpireDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CodeNumber = table.Column<long>(type: "bigint", nullable: false),
                     Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -171,6 +148,7 @@ namespace Repository.Migrations.AdminMigrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CompanyName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Phone = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: true),
                     Mobile = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: true),
@@ -180,6 +158,7 @@ namespace Repository.Migrations.AdminMigrations
                     TypeActivityId = table.Column<long>(type: "bigint", nullable: false),
                     NationalityId = table.Column<long>(type: "bigint", nullable: false),
                     SizeOfCompany = table.Column<long>(type: "bigint", nullable: false),
+                    RequestId = table.Column<long>(type: "bigint", nullable: false),
                     CodeNumber = table.Column<long>(type: "bigint", nullable: false),
                     Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     MaskText = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -278,14 +257,35 @@ namespace Repository.Migrations.AdminMigrations
                         onDelete: ReferentialAction.NoAction);
                 });
 
-            migrationBuilder.InsertData(
+            migrationBuilder.CreateTable(
+                name: "LoginUser",
                 schema: "admin",
-                table: "LoginUser",
-                columns: new[] { "Id", "ClientId", "Code", "CodeNumber", "Hide", "ImgPath", "MaskText", "ParentId", "Password", "Status", "TypeId", "UserName" },
-                values: new object[,]
+                columns: table => new
                 {
-                    { 1L, 1L, "1", 1L, false, null, null, 0L, "8wxxrb+Qv++WfvIH95KL1g==", 0, 0L, "Owner" },
-                    { 2L, 1L, "1", 1L, false, null, null, 0L, "8wxxrb+Qv++WfvIH95KL1g==", 0, 0L, "Admin" }
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ClientId = table.Column<long>(type: "bigint", nullable: false),
+                    CodeNumber = table.Column<long>(type: "bigint", nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MaskText = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ParentId = table.Column<long>(type: "bigint", nullable: false),
+                    TypeId = table.Column<long>(type: "bigint", nullable: false),
+                    Hide = table.Column<bool>(type: "bit", nullable: false),
+                    ImgPath = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LoginUser", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_LoginUser_Client_ClientId",
+                        column: x => x.ClientId,
+                        principalSchema: "admin",
+                        principalTable: "Client",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.InsertData(
@@ -294,6 +294,7 @@ namespace Repository.Migrations.AdminMigrations
                 columns: new[] { "Id", "Code", "CodeNumber", "Hide", "ImgPath", "MaskText", "Name", "ParentId", "Status", "TypeId" },
                 values: new object[,]
                 {
+                    { 1L, null, 0L, false, null, null, "Andorran", 0L, 0, 0L },
                     { 168L, null, 0L, false, null, null, "New Caledonian", 0L, 0, 0L },
                     { 169L, null, 0L, false, null, null, "Nigerian", 0L, 0, 0L },
                     { 170L, null, 0L, false, null, null, "Norfolk Islander", 0L, 0, 0L },
@@ -324,8 +325,8 @@ namespace Repository.Migrations.AdminMigrations
                     { 195L, null, 0L, false, null, null, "U.S. Miscellaneous Pacific Islands", 0L, 0, 0L },
                     { 196L, null, 0L, false, null, null, "Palauan", 0L, 0, 0L },
                     { 167L, null, 0L, false, null, null, "Namibian", 0L, 0, 0L },
+                    { 197L, null, 0L, false, null, null, "Paraguayan", 0L, 0, 0L },
                     { 166L, null, 0L, false, null, null, "Mozambican", 0L, 0, 0L },
-                    { 165L, null, 0L, false, null, null, "Malaysian", 0L, 0, 0L },
                     { 164L, null, 0L, false, null, null, "Mexican", 0L, 0, 0L },
                     { 135L, null, 0L, false, null, null, "Liechtensteiner", 0L, 0, 0L },
                     { 136L, null, 0L, false, null, null, "Sri Lankan", 0L, 0, 0L },
@@ -333,7 +334,8 @@ namespace Repository.Migrations.AdminMigrations
                     { 138L, null, 0L, false, null, null, "Mosotho", 0L, 0, 0L },
                     { 139L, null, 0L, false, null, null, "Lithuanian", 0L, 0, 0L },
                     { 140L, null, 0L, false, null, null, "Luxembourger", 0L, 0, 0L },
-                    { 141L, null, 0L, false, null, null, "Latvian", 0L, 0, 0L }
+                    { 141L, null, 0L, false, null, null, "Latvian", 0L, 0, 0L },
+                    { 142L, null, 0L, false, null, null, "Libyan", 0L, 0, 0L }
                 });
 
             migrationBuilder.InsertData(
@@ -342,7 +344,6 @@ namespace Repository.Migrations.AdminMigrations
                 columns: new[] { "Id", "Code", "CodeNumber", "Hide", "ImgPath", "MaskText", "Name", "ParentId", "Status", "TypeId" },
                 values: new object[,]
                 {
-                    { 142L, null, 0L, false, null, null, "Libyan", 0L, 0, 0L },
                     { 143L, null, 0L, false, null, null, "Moroccan", 0L, 0, 0L },
                     { 144L, null, 0L, false, null, null, "Monegasque", 0L, 0, 0L },
                     { 145L, null, 0L, false, null, null, "Moldovan", 0L, 0, 0L },
@@ -364,9 +365,9 @@ namespace Repository.Migrations.AdminMigrations
                     { 161L, null, 0L, false, null, null, "Mauritian", 0L, 0, 0L },
                     { 162L, null, 0L, false, null, null, "Maldivan", 0L, 0, 0L },
                     { 163L, null, 0L, false, null, null, "Malawian", 0L, 0, 0L },
-                    { 197L, null, 0L, false, null, null, "Paraguayan", 0L, 0, 0L },
+                    { 165L, null, 0L, false, null, null, "Malaysian", 0L, 0, 0L },
+                    { 134L, null, 0L, false, null, null, "Saint Lucian", 0L, 0, 0L },
                     { 198L, null, 0L, false, null, null, "Panama Canal Zone", 0L, 0, 0L },
-                    { 199L, null, 0L, false, null, null, "Qatari", 0L, 0, 0L },
                     { 200L, null, 0L, false, null, null, "French", 0L, 0, 0L },
                     { 234L, null, 0L, false, null, null, "Tunisian", 0L, 0, 0L },
                     { 235L, null, 0L, false, null, null, "Tongan", 0L, 0, 0L },
@@ -383,7 +384,8 @@ namespace Repository.Migrations.AdminMigrations
                     { 246L, null, 0L, false, null, null, "Uzbekistani", 0L, 0, 0L },
                     { 247L, null, 0L, false, null, null, "Italian", 0L, 0, 0L },
                     { 248L, null, 0L, false, null, null, "Saint Vincentian", 0L, 0, 0L },
-                    { 249L, null, 0L, false, null, null, "North Vietnam", 0L, 0, 0L }
+                    { 249L, null, 0L, false, null, null, "North Vietnam", 0L, 0, 0L },
+                    { 250L, null, 0L, false, null, null, "Venezuelan", 0L, 0, 0L }
                 });
 
             migrationBuilder.InsertData(
@@ -392,7 +394,6 @@ namespace Repository.Migrations.AdminMigrations
                 columns: new[] { "Id", "Code", "CodeNumber", "Hide", "ImgPath", "MaskText", "Name", "ParentId", "Status", "TypeId" },
                 values: new object[,]
                 {
-                    { 250L, null, 0L, false, null, null, "Venezuelan", 0L, 0, 0L },
                     { 251L, null, 0L, false, null, null, "Virgin Islander", 0L, 0, 0L },
                     { 252L, null, 0L, false, null, null, "Virgin Islander", 0L, 0, 0L },
                     { 253L, null, 0L, false, null, null, "Vietnamese", 0L, 0, 0L },
@@ -406,7 +407,7 @@ namespace Repository.Migrations.AdminMigrations
                     { 261L, null, 0L, false, null, null, "Zambian", 0L, 0, 0L },
                     { 262L, null, 0L, false, null, null, "Zimbabwean", 0L, 0, 0L },
                     { 233L, null, 0L, false, null, null, "Turkmen", 0L, 0, 0L },
-                    { 134L, null, 0L, false, null, null, "Saint Lucian", 0L, 0, 0L },
+                    { 199L, null, 0L, false, null, null, "Qatari", 0L, 0, 0L },
                     { 232L, null, 0L, false, null, null, "East Timorese", 0L, 0, 0L },
                     { 230L, null, 0L, false, null, null, "Tadzhik", 0L, 0, 0L },
                     { 201L, null, 0L, false, null, null, "Romanian", 0L, 0, 0L },
@@ -433,7 +434,8 @@ namespace Repository.Migrations.AdminMigrations
                     { 222L, null, 0L, false, null, null, "Salvadoran", 0L, 0, 0L },
                     { 223L, null, 0L, false, null, null, "Syrian", 0L, 0, 0L },
                     { 224L, null, 0L, false, null, null, "Swazi", 0L, 0, 0L },
-                    { 225L, null, 0L, false, null, null, "Turks and Caicos Islander", 0L, 0, 0L }
+                    { 225L, null, 0L, false, null, null, "Turks and Caicos Islander", 0L, 0, 0L },
+                    { 226L, null, 0L, false, null, null, "Chadian", 0L, 0, 0L }
                 });
 
             migrationBuilder.InsertData(
@@ -442,15 +444,13 @@ namespace Repository.Migrations.AdminMigrations
                 columns: new[] { "Id", "Code", "CodeNumber", "Hide", "ImgPath", "MaskText", "Name", "ParentId", "Status", "TypeId" },
                 values: new object[,]
                 {
-                    { 226L, null, 0L, false, null, null, "Chadian", 0L, 0, 0L },
                     { 227L, null, 0L, false, null, null, "French", 0L, 0, 0L },
                     { 228L, null, 0L, false, null, null, "Togolese", 0L, 0, 0L },
                     { 229L, null, 0L, false, null, null, "Thai", 0L, 0, 0L },
                     { 231L, null, 0L, false, null, null, "Tokelauan", 0L, 0, 0L },
-                    { 133L, null, 0L, false, null, null, "Lebanese", 0L, 0, 0L },
                     { 132L, null, 0L, false, null, null, "Laotian", 0L, 0, 0L },
-                    { 64L, null, 0L, false, null, null, "Dominican", 0L, 0, 0L },
-                    { 34L, null, 0L, false, null, null, "Bhutanese", 0L, 0, 0L },
+                    { 133L, null, 0L, false, null, null, "Lebanese", 0L, 0, 0L },
+                    { 65L, null, 0L, false, null, null, "Algerian", 0L, 0, 0L },
                     { 35L, null, 0L, false, null, null, "Bouvet Island", 0L, 0, 0L },
                     { 36L, null, 0L, false, null, null, "Motswana", 0L, 0, 0L },
                     { 37L, null, 0L, false, null, null, "Belarusian", 0L, 0, 0L },
@@ -479,11 +479,13 @@ namespace Repository.Migrations.AdminMigrations
                     { 60L, null, 0L, false, null, null, "German", 0L, 0, 0L },
                     { 61L, null, 0L, false, null, null, "Djibouti", 0L, 0, 0L },
                     { 62L, null, 0L, false, null, null, "Danish", 0L, 0, 0L },
-                    { 33L, null, 0L, false, null, null, "Bahamian", 0L, 0, 0L },
                     { 63L, null, 0L, false, null, null, "Dominican", 0L, 0, 0L },
-                    { 32L, null, 0L, false, null, null, "Brazilian", 0L, 0, 0L },
-                    { 30L, null, 0L, false, null, null, "Bolivian", 0L, 0, 0L },
-                    { 1L, null, 0L, false, null, null, "Andorran", 0L, 0, 0L }
+                    { 34L, null, 0L, false, null, null, "Bhutanese", 0L, 0, 0L },
+                    { 64L, null, 0L, false, null, null, "Dominican", 0L, 0, 0L },
+                    { 33L, null, 0L, false, null, null, "Bahamian", 0L, 0, 0L },
+                    { 31L, null, 0L, false, null, null, "Dutch", 0L, 0, 0L },
+                    { 2L, null, 0L, false, null, null, "Emirati", 0L, 0, 0L },
+                    { 3L, null, 0L, false, null, null, "Afghan", 0L, 0, 0L }
                 });
 
             migrationBuilder.InsertData(
@@ -492,8 +494,6 @@ namespace Repository.Migrations.AdminMigrations
                 columns: new[] { "Id", "Code", "CodeNumber", "Hide", "ImgPath", "MaskText", "Name", "ParentId", "Status", "TypeId" },
                 values: new object[,]
                 {
-                    { 2L, null, 0L, false, null, null, "Emirati", 0L, 0, 0L },
-                    { 3L, null, 0L, false, null, null, "Afghan", 0L, 0, 0L },
                     { 4L, null, 0L, false, null, null, "Antiguan, Barbudan", 0L, 0, 0L },
                     { 5L, null, 0L, false, null, null, "Anguillian", 0L, 0, 0L },
                     { 6L, null, 0L, false, null, null, "Albanian", 0L, 0, 0L },
@@ -520,12 +520,11 @@ namespace Repository.Migrations.AdminMigrations
                     { 27L, null, 0L, false, null, null, "Saint Barthélemy Islander", 0L, 0, 0L },
                     { 28L, null, 0L, false, null, null, "Bermudian", 0L, 0, 0L },
                     { 29L, null, 0L, false, null, null, "Bruneian", 0L, 0, 0L },
-                    { 31L, null, 0L, false, null, null, "Dutch", 0L, 0, 0L },
+                    { 30L, null, 0L, false, null, null, "Bolivian", 0L, 0, 0L },
+                    { 32L, null, 0L, false, null, null, "Brazilian", 0L, 0, 0L },
                     { 131L, null, 0L, false, null, null, "Kazakhstani", 0L, 0, 0L },
-                    { 65L, null, 0L, false, null, null, "Algerian", 0L, 0, 0L },
-                    { 99L, null, 0L, false, null, null, "Guyanese", 0L, 0, 0L },
-                    { 100L, null, 0L, false, null, null, "Chinese", 0L, 0, 0L },
-                    { 101L, null, 0L, false, null, null, "Heard and McDonald Islander", 0L, 0, 0L },
+                    { 66L, null, 0L, false, null, null, "Ecuadorean", 0L, 0, 0L },
+                    { 67L, null, 0L, false, null, null, "Estonian", 0L, 0, 0L },
                     { 102L, null, 0L, false, null, null, "Honduran", 0L, 0, 0L },
                     { 103L, null, 0L, false, null, null, "Croatian", 0L, 0, 0L },
                     { 104L, null, 0L, false, null, null, "Haitian", 0L, 0, 0L },
@@ -533,7 +532,10 @@ namespace Repository.Migrations.AdminMigrations
                     { 106L, null, 0L, false, null, null, "Indonesian", 0L, 0, 0L },
                     { 107L, null, 0L, false, null, null, "Irish", 0L, 0, 0L },
                     { 108L, null, 0L, false, null, null, "Israeli", 0L, 0, 0L },
-                    { 109L, null, 0L, false, null, null, "Manx", 0L, 0, 0L }
+                    { 109L, null, 0L, false, null, null, "Manx", 0L, 0, 0L },
+                    { 110L, null, 0L, false, null, null, "Indian", 0L, 0, 0L },
+                    { 111L, null, 0L, false, null, null, "Indian", 0L, 0, 0L },
+                    { 112L, null, 0L, false, null, null, "Iraqi", 0L, 0, 0L }
                 });
 
             migrationBuilder.InsertData(
@@ -542,9 +544,6 @@ namespace Repository.Migrations.AdminMigrations
                 columns: new[] { "Id", "Code", "CodeNumber", "Hide", "ImgPath", "MaskText", "Name", "ParentId", "Status", "TypeId" },
                 values: new object[,]
                 {
-                    { 110L, null, 0L, false, null, null, "Indian", 0L, 0, 0L },
-                    { 111L, null, 0L, false, null, null, "Indian", 0L, 0, 0L },
-                    { 112L, null, 0L, false, null, null, "Iraqi", 0L, 0, 0L },
                     { 113L, null, 0L, false, null, null, "Iranian", 0L, 0, 0L },
                     { 114L, null, 0L, false, null, null, "Icelander", 0L, 0, 0L },
                     { 115L, null, 0L, false, null, null, "Italian", 0L, 0, 0L },
@@ -561,11 +560,12 @@ namespace Repository.Migrations.AdminMigrations
                     { 126L, null, 0L, false, null, null, "Kittian and Nevisian", 0L, 0, 0L },
                     { 127L, null, 0L, false, null, null, "North Korean", 0L, 0, 0L },
                     { 128L, null, 0L, false, null, null, "South Korean", 0L, 0, 0L },
-                    { 66L, null, 0L, false, null, null, "Ecuadorean", 0L, 0, 0L },
                     { 129L, null, 0L, false, null, null, "Kuwaiti", 0L, 0, 0L },
+                    { 130L, null, 0L, false, null, null, "Caymanian", 0L, 0, 0L },
+                    { 101L, null, 0L, false, null, null, "Heard and McDonald Islander", 0L, 0, 0L },
+                    { 100L, null, 0L, false, null, null, "Chinese", 0L, 0, 0L },
+                    { 99L, null, 0L, false, null, null, "Guyanese", 0L, 0, 0L },
                     { 98L, null, 0L, false, null, null, "Guinea-Bissauan", 0L, 0, 0L },
-                    { 96L, null, 0L, false, null, null, "Guatemalan", 0L, 0, 0L },
-                    { 67L, null, 0L, false, null, null, "Estonian", 0L, 0, 0L },
                     { 68L, null, 0L, false, null, null, "Egyptian", 0L, 0, 0L },
                     { 69L, null, 0L, false, null, null, "Sahrawi", 0L, 0, 0L },
                     { 70L, null, 0L, false, null, null, "Eritrean", 0L, 0, 0L },
@@ -581,9 +581,11 @@ namespace Repository.Migrations.AdminMigrations
                     { 80L, null, 0L, false, null, null, "Metropolitan France", 0L, 0, 0L },
                     { 81L, null, 0L, false, null, null, "Gabonese", 0L, 0, 0L },
                     { 82L, null, 0L, false, null, null, "British", 0L, 0, 0L },
-                    { 83L, null, 0L, false, null, null, "Grenadian", 0L, 0, 0L },
+                    { 91L, null, 0L, false, null, null, "Guinean", 0L, 0, 0L },
                     { 84L, null, 0L, false, null, null, "Georgian", 0L, 0, 0L },
-                    { 85L, null, 0L, false, null, null, "French Guiana", 0L, 0, 0L }
+                    { 85L, null, 0L, false, null, null, "French Guiana", 0L, 0, 0L },
+                    { 86L, null, 0L, false, null, null, "Channel Islander", 0L, 0, 0L },
+                    { 87L, null, 0L, false, null, null, "Ghanaian", 0L, 0, 0L }
                 });
 
             migrationBuilder.InsertData(
@@ -592,18 +594,16 @@ namespace Repository.Migrations.AdminMigrations
                 columns: new[] { "Id", "Code", "CodeNumber", "Hide", "ImgPath", "MaskText", "Name", "ParentId", "Status", "TypeId" },
                 values: new object[,]
                 {
-                    { 86L, null, 0L, false, null, null, "Channel Islander", 0L, 0, 0L },
-                    { 87L, null, 0L, false, null, null, "Ghanaian", 0L, 0, 0L },
                     { 88L, null, 0L, false, null, null, "Gibraltar", 0L, 0, 0L },
                     { 89L, null, 0L, false, null, null, "Greenlandic", 0L, 0, 0L },
                     { 90L, null, 0L, false, null, null, "Gambian", 0L, 0, 0L },
-                    { 91L, null, 0L, false, null, null, "Guinean", 0L, 0, 0L },
+                    { 83L, null, 0L, false, null, null, "Grenadian", 0L, 0, 0L },
                     { 92L, null, 0L, false, null, null, "Guadeloupian", 0L, 0, 0L },
                     { 93L, null, 0L, false, null, null, "Equatorial Guinean", 0L, 0, 0L },
                     { 94L, null, 0L, false, null, null, "Greek", 0L, 0, 0L },
                     { 95L, null, 0L, false, null, null, "South Georgia and the South Sandwich Islander", 0L, 0, 0L },
-                    { 97L, null, 0L, false, null, null, "Guamanian", 0L, 0, 0L },
-                    { 130L, null, 0L, false, null, null, "Caymanian", 0L, 0, 0L }
+                    { 96L, null, 0L, false, null, null, "Guatemalan", 0L, 0, 0L },
+                    { 97L, null, 0L, false, null, null, "Guamanian", 0L, 0, 0L }
                 });
 
             migrationBuilder.InsertData(
@@ -619,8 +619,8 @@ namespace Repository.Migrations.AdminMigrations
             migrationBuilder.InsertData(
                 schema: "admin",
                 table: "Request",
-                columns: new[] { "Id", "Code", "CodeNumber", "CompanyName", "Email", "ExpireDate", "Hide", "ImgPath", "MaskText", "Name", "ParentId", "Phone", "Status", "TypeId", "URL" },
-                values: new object[] { 1L, "1", 1L, "org", "info@org.com", new DateTime(2021, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, null, null, "Mohammed Khaled", 0L, "0201111105784", 0, 0L, "" });
+                columns: new[] { "Id", "Code", "CodeNumber", "CompanyName", "Email", "ExpireDate", "Hide", "ImgPath", "Key", "MaskText", "Name", "ParentId", "Phone", "Status", "TypeId", "URL" },
+                values: new object[] { 1L, "1", 1L, "org", "info@org.com", new DateTime(2021, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, null, null, null, "Mohammed Khaled", 0L, "0201111105784", 0, 0L, "" });
 
             migrationBuilder.InsertData(
                 schema: "admin",
@@ -631,8 +631,8 @@ namespace Repository.Migrations.AdminMigrations
             migrationBuilder.InsertData(
                 schema: "admin",
                 table: "Client",
-                columns: new[] { "Id", "Code", "CodeNumber", "DbSchema", "Description", "Email", "Fax", "Hide", "ImgPath", "MaskText", "Mobile", "Name", "NationalityId", "ParentId", "Phone", "SizeOfCompany", "Status", "TypeActivityId", "TypeId" },
-                values: new object[] { 1L, "1", 1L, "org", null, "info@org.com", null, false, null, null, "0201111105784", "Org", 68L, 0L, "0201111105784", 1L, 0, 1L, 0L });
+                columns: new[] { "Id", "Code", "CodeNumber", "CompanyName", "DbSchema", "Description", "Email", "Fax", "Hide", "ImgPath", "MaskText", "Mobile", "Name", "NationalityId", "ParentId", "Phone", "RequestId", "SizeOfCompany", "Status", "TypeActivityId", "TypeId" },
+                values: new object[] { 1L, "1", 1L, null, "org", null, "info@org.com", null, false, null, null, "0201111105784", "Org", 68L, 0L, "0201111105784", 0L, 1L, 0, 1L, 0L });
 
             migrationBuilder.InsertData(
                 schema: "admin",
@@ -651,6 +651,18 @@ namespace Repository.Migrations.AdminMigrations
                 table: "ClientPlan",
                 columns: new[] { "Id", "ClientId", "Code", "CodeNumber", "EndDate", "Hide", "ImgPath", "MaskText", "ParentId", "PlanId", "StartDate", "Status", "TypeId" },
                 values: new object[] { 1L, 1L, "1", 1L, new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, null, null, 0L, 1L, new DateTime(2021, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, 0L });
+
+            migrationBuilder.InsertData(
+                schema: "admin",
+                table: "LoginUser",
+                columns: new[] { "Id", "ClientId", "Code", "CodeNumber", "Hide", "ImgPath", "MaskText", "ParentId", "Password", "Status", "TypeId", "UserName" },
+                values: new object[] { 1L, 1L, "1", 1L, false, null, null, 0L, "8wxxrb+Qv++WfvIH95KL1g==", 0, 0L, "Owner" });
+
+            migrationBuilder.InsertData(
+                schema: "admin",
+                table: "LoginUser",
+                columns: new[] { "Id", "ClientId", "Code", "CodeNumber", "Hide", "ImgPath", "MaskText", "ParentId", "Password", "Status", "TypeId", "UserName" },
+                values: new object[] { 2L, 1L, "1", 1L, false, null, null, 0L, "8wxxrb+Qv++WfvIH95KL1g==", 0, 0L, "Admin" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Client_NationalityId",
@@ -675,6 +687,12 @@ namespace Repository.Migrations.AdminMigrations
                 schema: "admin",
                 table: "ClientPlan",
                 column: "PlanId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LoginUser_ClientId",
+                schema: "admin",
+                table: "LoginUser",
+                column: "ClientId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Plan_PlanTypeId",

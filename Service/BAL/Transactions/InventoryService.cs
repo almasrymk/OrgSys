@@ -12,10 +12,11 @@ namespace Service
     public class InventoryService : BaseService<InventoryModelView>
     {
         string Includes = "Store,InventoryProducts,InventoryProducts.Product,InventoryProducts.Unit";
-        UnitOfWork repo;
-        public InventoryService()
+        UnitOfWorkOrg repo;
+        public void SetSchema(string Schema)
         {
-            repo = new UnitOfWork();
+            if (repo == null)
+                repo = new UnitOfWorkOrg(Schema);
         }
 
         #region Save / Delete

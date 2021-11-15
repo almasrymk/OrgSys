@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entity.Model
 {
-    [Table("Shift", Schema = "org")]
+    [Table("Shift")]
     public class Shift : BaseModel
     {
         [StringLength(50, MinimumLength = 3)]

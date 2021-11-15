@@ -4,14 +4,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entity.Model
 {
-    [Table("Property", Schema = "org")]
+    [Table("Property")]
    public class Property : BaseModel
-    {
-        public Property()
-        {
-            propertyElements = new HashSet<PropertyElement>();
-        }
-
+    {       
         [StringLength(50, MinimumLength = 3)]
         public string Name { get; set; }
 

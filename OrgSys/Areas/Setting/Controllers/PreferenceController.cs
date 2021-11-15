@@ -15,7 +15,7 @@ namespace OrgSys.Areas.Setting.Controllers
         PreferenceService service;
         public PreferenceController()
         {
-            service = new PreferenceService();
+            service = new PreferenceService(User.GetSchema());
         }
 
         public ActionResult Show(string Resource = "", int type = 0)
@@ -30,14 +30,14 @@ namespace OrgSys.Areas.Setting.Controllers
                 selectListItems.Add(new SelectListItem { Value = "1", Text = "Amount" });
                 selectListItems.Add(new SelectListItem { Value = "2", Text = "Percentage" });
 
-                ViewBag.Customers = new SelectList(new DealerService().GetAll(0, 1), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultCustomer")?.Value);
-                ViewBag.Suppliers = new SelectList(new DealerService().GetAll(0, 2), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultSupplier")?.Value);
-                ViewBag.Stores = new SelectList(new StoreService().GetAll(0, 0), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultStore")?.Value);
-                ViewBag.PaymentTypes = new SelectList(new PaymentTypeService().GetAll(0, 0), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultPaymentType")?.Value);
+                ViewBag.Customers = new SelectList(new DealerService(User.GetSchema()).GetAll(0, 1), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultCustomer")?.Value);
+                ViewBag.Suppliers = new SelectList(new DealerService(User.GetSchema()).GetAll(0, 2), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultSupplier")?.Value);
+                ViewBag.Stores = new SelectList(new StoreService(User.GetSchema()).GetAll(0, 0), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultStore")?.Value);
+                ViewBag.PaymentTypes = new SelectList(new PaymentTypeService(User.GetSchema()).GetAll(0, 0), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultPaymentType")?.Value);
                 ViewBag.DiscountType = new SelectList(selectListItems, "Value", "Text", Service.FirstOrDefault(e => e.Key == "DefaultDiscountType")?.Value);
                 ViewBag.ServiceType = new SelectList(selectListItems, "Value", "Text", Service.FirstOrDefault(e => e.Key == "DefaultServiceType")?.Value);
                 ViewBag.TaxType = new SelectList(selectListItems, "Value", "Text", Service.FirstOrDefault(e => e.Key == "DefaultTaxType")?.Value);
-                ViewBag.Currencys = new SelectList(new CurrencyService().GetAll(0, 0), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultCurrency")?.Value);
+                ViewBag.Currencys = new SelectList(new CurrencyService(User.GetSchema()).GetAll(0, 0), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultCurrency")?.Value);
 
                 ViewBag.DiscountValue = Service.FirstOrDefault(e => e.Key == "DiscountValue")?.Value;
                 ViewBag.ServiceValue = Service.FirstOrDefault(e => e.Key == "ServiceValue")?.Value;
@@ -74,9 +74,9 @@ namespace OrgSys.Areas.Setting.Controllers
 
             if (Resource == "Transaction")
             {
-                ViewBag.Customers = new SelectList(new DealerService().GetAll(0, 1), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultCustomer")?.Value);
-                ViewBag.Suppliers = new SelectList(new DealerService().GetAll(0, 2), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultSupplier")?.Value);
-                ViewBag.Stores = new SelectList(new StoreService().GetAll(0, 0), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultStore")?.Value);
+                ViewBag.Customers = new SelectList(new DealerService(User.GetSchema()).GetAll(0, 1), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultCustomer")?.Value);
+                ViewBag.Suppliers = new SelectList(new DealerService(User.GetSchema()).GetAll(0, 2), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultSupplier")?.Value);
+                ViewBag.Stores = new SelectList(new StoreService(User.GetSchema()).GetAll(0, 0), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultStore")?.Value);
 
                 List<SelectListItem> selectListItems = new List<SelectListItem>();
                 selectListItems.Add(new SelectListItem { Value = "1", Text = "Data after product" });
@@ -109,7 +109,7 @@ namespace OrgSys.Areas.Setting.Controllers
 
             if (Resource == "Order")
             {
-                ViewBag.Customers = new SelectList(new DealerService().GetAll(0, 1), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultCustomer")?.Value);
+                ViewBag.Customers = new SelectList(new DealerService(User.GetSchema()).GetAll(0, 1), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultCustomer")?.Value);
 
                 List<SelectListItem> selectListItems = new List<SelectListItem>();
                 selectListItems.Add(new SelectListItem { Value = "1", Text = "Data after product" });
@@ -149,12 +149,12 @@ namespace OrgSys.Areas.Setting.Controllers
 
             if (Resource == "Financial")
             {
-                ViewBag.Clients = new SelectList(new DealerService().GetAll(0, 1), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultClient")?.Value);
-                ViewBag.Suppliers = new SelectList(new DealerService().GetAll(0, 2), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultSupplier")?.Value);
-                ViewBag.Safes = new SelectList(new SafeService().GetAll(0, 0), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultSafe")?.Value);
-                ViewBag.PaymentTypes = new SelectList(new PaymentTypeService().GetAll(0, 0), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultPaymentType")?.Value);
-                ViewBag.Currencys = new SelectList(new CurrencyService().GetAll(0, 0), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultCurrency")?.Value);
-                ViewBag.Outlays = new SelectList(new OutlayService().GetAll(0, 0), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultOutlay")?.Value);
+                ViewBag.Clients = new SelectList(new DealerService(User.GetSchema()).GetAll(0, 1), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultClient")?.Value);
+                ViewBag.Suppliers = new SelectList(new DealerService(User.GetSchema()).GetAll(0, 2), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultSupplier")?.Value);
+                ViewBag.Safes = new SelectList(new SafeService(User.GetSchema()).GetAll(0, 0), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultSafe")?.Value);
+                ViewBag.PaymentTypes = new SelectList(new PaymentTypeService(User.GetSchema()).GetAll(0, 0), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultPaymentType")?.Value);
+                ViewBag.Currencys = new SelectList(new CurrencyService(User.GetSchema()).GetAll(0, 0), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultCurrency")?.Value);
+                ViewBag.Outlays = new SelectList(new OutlayService(User.GetSchema()).GetAll(0, 0), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultOutlay")?.Value);
 
                 List<SelectListItem> selectListItems = new List<SelectListItem>();
                 selectListItems.Add(new SelectListItem { Value = "1", Text = "Data after product" });
@@ -172,7 +172,7 @@ namespace OrgSys.Areas.Setting.Controllers
 
             if (Resource == "Inventory")
             {
-                ViewBag.Stores = new SelectList(new StoreService().GetAll(0, 1), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultStore")?.Value);
+                ViewBag.Stores = new SelectList(new StoreService(User.GetSchema()).GetAll(0, 1), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultStore")?.Value);
 
                 var selectListItems = new List<SelectListItem>();
                 selectListItems.Add(new SelectListItem { Value = "1", Text = "Allow" });

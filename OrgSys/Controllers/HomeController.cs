@@ -9,8 +9,14 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using OrgSys.Models;
+using Repository;
 using Service;
 using Service.BAL.Data.Security;
 using Utility;
@@ -21,11 +27,20 @@ namespace OrgSys.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        LoginUserService user = new LoginUserService();
-
+        LoginUserService _loginUserService;
+        UserService _userService;
+        DbContextOptions<OrgContext> _option;
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
+            _option = new DbContextOptions<OrgContext>();
+
+            if (_loginUserService == null)
+                _loginUserService = new LoginUserService();
+
+            if (User != null && User.Identity != null && User.Identity.IsAuthenticated)
+                if (_userService == null)
+                    _userService = new UserService(User.GetSchema());
         }
 
         public IActionResult Dashboard()
@@ -114,16 +129,16 @@ namespace OrgSys.Controllers
         {
             try
             {
-                var us = user.Get(_user.UserName);
+                var us = _loginUserService.Get(_user.UserName);
                 if (!string.IsNullOrEmpty(_user.NewPassword))
                 {
                     us.Password = Utility.Security.Encrypt(_user.NewPassword);
-                    user.Save(us);
+                    _loginUserService.Save(us);
                 }
 
-                Utility.General.SetSchema(us.Schema);
-                var usSys = new UserService().GetByLoginUserId(us.Id);
-                usSys.SignIn(HttpContext, _user.KeepLoggedIn);
+                _userService = new UserService(us.Schema);
+                var usSys = _userService.GetByLoginUserId(us.Id);
+                usSys.SignIn(HttpContext, us.Schema, _user.KeepLoggedIn);
                 return RedirectToAction("Dashboard");
             }
             catch (Exception ex)
@@ -136,7 +151,7 @@ namespace OrgSys.Controllers
         [HttpGet]
         public IActionResult LogOut()
         {
-            var us = user.Get(User.GetUserName());
+            var us = _loginUserService.Get(User.GetUserName());
             us.SignOut(HttpContext);
             return RedirectToAction("LogIn");
         }
@@ -208,43 +223,72 @@ namespace OrgSys.Controllers
         {
             if (ModelState.IsValid)
             {
+                _client.DbSchema = _client.Email.Replace("@", "").Replace(".", "").ToUpper();
                 var client = new ClientService().Save(_client);
                 if (client.Id > 0)
                 {
                     var loginUser = new LoginUserModelView();
                     loginUser.ClientId = client.Id;
-                    loginUser.UserName = client.Name;
+                    loginUser.UserName = client.Email;
                     loginUser.Password = Password;
                     if (loginUser != null)
-                        new LoginUserService().Save(loginUser);
+                        loginUser = new LoginUserService().Save(loginUser);
+
+                    OrgContext _orgContext = new OrgContext(_option, client.DbSchema);
+                    RelationalDatabaseCreator creator = (RelationalDatabaseCreator)_orgContext.Database.GetService<IRelationalDatabaseCreator>();
+                    creator.CreateTables();
+                    string createEFMigrationsHistoryCommand = $@"
+                        USE [{_orgContext.Database.GetDbConnection().Database}];
+                        SET ANSI_NULLS ON;
+                        SET QUOTED_IDENTIFIER ON;
+                        CREATE TABLE [{client.DbSchema}].[__{client.DbSchema}MigrationsHistory](
+                        [MigrationId] [nvarchar](150) NOT NULL,
+                        [ProductVersion] [nvarchar](32) NOT NULL,
+                        CONSTRAINT [PK__{client.DbSchema}MigrationsHistory] PRIMARY KEY CLUSTERED 
+                        (
+                        [MigrationId] ASC
+                        )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+                        ) ON [PRIMARY];
+                        ";
+                    _orgContext.Database.ExecuteSqlRaw(createEFMigrationsHistoryCommand);
+                    _orgContext.Database.ExecuteSqlRaw($"INSERT INTO [{client.DbSchema}].[__{client.DbSchema}MigrationsHistory](MigrationId,ProductVersion) SELECT MigrationId,ProductVersion FROM org.__OrgMigrationsHistory");
+
+                    var usSys = new UserModelView { BranchId = 1, RoleId = 1, Code = "1", CodeNumber = 1, UserName = loginUser.UserName, LoginUserId = loginUser.Id, Name = client.Name };
+                    _userService = new UserService(client.DbSchema);
+                    usSys = _userService.Save(usSys);
+
+                    // Save Company Profile from Client Data
+
+                    usSys.SignIn(HttpContext, client.DbSchema);
+                    return RedirectToAction("Dashboard");
                 }
             }
+            return View(_client);
 
-            return RedirectToAction(nameof(Dashboard));
         }
 
 
         [AllowAnonymous]
         public ActionResult CheckEmail(string Email)
         {
-            return Json(user.CheckEmail(Email));
+            return Json(_loginUserService.CheckEmail(Email));
         }
 
         [AllowAnonymous]
         public ActionResult HavePassword(string Email)
         {
-            return Json(user.HavePassword(Email));
+            return Json(_loginUserService.HavePassword(Email));
         }
 
         [AllowAnonymous]
         public ActionResult CheckPassword(string Email, string Password)
         {
-            return Json(user.CheckEmailAndPassword(Email, Utility.Security.Encrypt(Password)));
+            return Json(_loginUserService.CheckEmailAndPassword(Email, Utility.Security.Encrypt(Password)));
         }
 
         public ActionResult CheckCurrentPassword(long Id, string CurrentPassword)
         {
-            return Json(user.CheckCurrentPassword(Id, Utility.Security.Encrypt(CurrentPassword)));
+            return Json(_loginUserService.CheckCurrentPassword(Id, Utility.Security.Encrypt(CurrentPassword)));
         }
 
         [HttpGet]
@@ -254,7 +298,7 @@ namespace OrgSys.Controllers
                 ViewBag.message = MsgError;
             ViewBag.status = Status.ToString();
 
-            var IdUser = new UserService().Get(id);
+            var IdUser = _userService.Get(id);
             return View("Profile", IdUser);
         }
 
@@ -270,7 +314,7 @@ namespace OrgSys.Controllers
                     _profile.Password = _profile.NewPassword;
                 else
                     //_profile.Password 
-                    new UserService().Save(_profile);
+                    _userService.Save(_profile);
                 return Json(data: new { status = "success", id = _profile.Id, url = "/Home/Profile?id=" + _profile.Id + "&status=" + ResultStatus.success + "&MsgError=Success" });
             }
             catch (Exception ex)

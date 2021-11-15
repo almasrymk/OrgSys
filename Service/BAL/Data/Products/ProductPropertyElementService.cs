@@ -9,10 +9,10 @@ namespace Service
     public class ProductPropertyElementService : BaseService<ProductPropertyElementModelView>
     {
         string Includes = "";
-        UnitOfWork repo;
-        public ProductPropertyElementService()
+        UnitOfWorkOrg repo;
+        public ProductPropertyElementService(string Schema)
         {
-            repo = new UnitOfWork();
+            repo = new UnitOfWorkOrg(Schema);
         }
 
         #region Save / Delete

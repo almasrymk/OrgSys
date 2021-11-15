@@ -3,26 +3,26 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entity.Model
 {
-    [Table("OrderProduct", Schema = "org")]
+    [Table("OrderProduct")]
     public class OrderProduct : BaseModel
     {
         [Required]
-        public long RowNumber { get; set; }        
+        public long RowNumber { get; set; }
 
-        [Required]
+        [ForeignKey("Order")]
         public long OrderId { get; set; }
 
-        public virtual Order Order { get; set; }
+        public Order Order { get; set; }
 
-        [Required]
+        [ForeignKey("Product")]
         public long ProductId { get; set; }
 
-        public virtual Product Product { get; set; }
+        public Product Product { get; set; }
 
-        [Required]
+        [ForeignKey("Unit")]
         public long UnitId { get; set; }
 
-        public virtual Unit Unit { get; set; }               
+        public Unit Unit { get; set; }               
 
         public decimal Quantity { get; set; }
         

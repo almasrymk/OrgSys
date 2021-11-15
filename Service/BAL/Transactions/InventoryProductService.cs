@@ -9,10 +9,11 @@ namespace Service
     public class InventoryProductService : BaseService<InventoryProductModelView>
     {
         string Includes = "Product";
-        UnitOfWork repo;
-        public InventoryProductService()
+        UnitOfWorkOrg repo;
+        public void SetSchema(string Schema)
         {
-            repo = new UnitOfWork();
+            if (repo == null)
+                repo = new UnitOfWorkOrg(Schema);
         }
 
         #region Save / Delete

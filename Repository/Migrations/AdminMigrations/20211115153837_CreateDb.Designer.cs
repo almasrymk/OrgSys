@@ -10,7 +10,7 @@ using Repository;
 namespace Repository.Migrations.AdminMigrations
 {
     [DbContext(typeof(AdminContext))]
-    [Migration("20211110192635_CreateDb")]
+    [Migration("20211115153837_CreateDb")]
     partial class CreateDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,6 +33,9 @@ namespace Repository.Migrations.AdminMigrations
 
                     b.Property<long>("CodeNumber")
                         .HasColumnType("bigint");
+
+                    b.Property<string>("CompanyName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DbSchema")
                         .HasColumnType("nvarchar(max)");
@@ -75,6 +78,9 @@ namespace Repository.Migrations.AdminMigrations
                         .HasMaxLength(25)
                         .HasColumnType("nvarchar(25)");
 
+                    b.Property<long>("RequestId")
+                        .HasColumnType("bigint");
+
                     b.Property<long>("SizeOfCompany")
                         .HasColumnType("bigint");
 
@@ -109,6 +115,7 @@ namespace Repository.Migrations.AdminMigrations
                             NationalityId = 68L,
                             ParentId = 0L,
                             Phone = "0201111105784",
+                            RequestId = 0L,
                             SizeOfCompany = 1L,
                             Status = 0,
                             TypeActivityId = 1L,
@@ -226,6 +233,8 @@ namespace Repository.Migrations.AdminMigrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ClientId");
 
                     b.ToTable("LoginUser", "admin");
 
@@ -3155,6 +3164,9 @@ namespace Repository.Migrations.AdminMigrations
                     b.Property<string>("ImgPath")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Key")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("MaskText")
                         .HasColumnType("nvarchar(max)");
 
@@ -3287,6 +3299,17 @@ namespace Repository.Migrations.AdminMigrations
                     b.Navigation("Client");
 
                     b.Navigation("Plan");
+                });
+
+            modelBuilder.Entity("Entity.Model.LoginUser", b =>
+                {
+                    b.HasOne("Entity.Model.Client", "Client")
+                        .WithMany()
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Client");
                 });
 
             modelBuilder.Entity("Entity.Model.Plan", b =>

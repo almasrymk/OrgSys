@@ -9,10 +9,11 @@ namespace Service
     public class FinancialInvoiceService : BaseService<FinancialInvoiceModelView>
     {
         string Includes = "";
-        UnitOfWork repo;
-        public FinancialInvoiceService()
+        UnitOfWorkOrg repo;
+        public void SetSchema(string Schema)
         {
-            repo = new UnitOfWork();
+            if (repo == null)
+                repo = new UnitOfWorkOrg(Schema);
         }
 
         #region Save / Delete

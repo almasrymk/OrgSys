@@ -4,17 +4,17 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entity.Model
 {
-    [Table("Inventory", Schema = "org")]
+    [Table("Inventory")]
     public class Inventory : MovementModel
     {      
         public long? UserId { get; set; }
 
-        public virtual User User { get; set; }
+        public User User { get; set; }
 
-        [Required]
-        public long StoreId { get; set; }
+        [ForeignKey("Store")]
+        public long? StoreId { get; set; }
 
-        public virtual Store Store { get; set; }
+        public Store Store { get; set; }
 
         [StringLength(500)]
         public string Notes { get; set; }
@@ -23,6 +23,6 @@ namespace Entity.Model
 
         public bool Closed { get; set; }
 
-        public virtual List<InventoryProduct> InventoryProducts { get; set; }
+        public  ICollection<InventoryProduct> InventoryProducts { get; set; }
     }
 }

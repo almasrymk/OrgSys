@@ -9,10 +9,12 @@ namespace Service
     public class FinancialService : BaseService<FinancialModelView>
     {
         string Includes = "Dealer,Outlay,Safe,FinancialInvoices,FinancialInvoices.Invoice";
-        UnitOfWork repo;
-        public FinancialService()
+        UnitOfWorkOrg repo;
+        private string _Schema;
+        public void SetSchema(string Schema)
         {
-            repo = new UnitOfWork();
+            this._Schema = Schema;
+                repo = new UnitOfWorkOrg(Schema);
         }
 
         #region Save / Delete
@@ -43,7 +45,7 @@ namespace Service
             }
 
             if (Nwob.FinancialInvoices != null && Nwob.FinancialInvoices.Count > 0)
-                new IntegrationServics().UpdateCredit(Nwob.FinancialInvoices.Select(e => e.InvoiceId).ToList());
+                new IntegrationServics(_Schema).UpdateCredit(Nwob.FinancialInvoices.Select(e => e.InvoiceId??0).ToList());
             return new FinancialModelView(Nwob);
         }
 
@@ -55,7 +57,7 @@ namespace Service
             {
                 repo.financialRepo.Delete(id);
                 if (ob.FinancialInvoices != null && ob.FinancialInvoices.Count > 0)
-                    new IntegrationServics().UpdateCredit(ob.FinancialInvoices.Select(e => e.InvoiceId).ToList());
+                    new IntegrationServics(_Schema).UpdateCredit(ob.FinancialInvoices.Select(e => e.InvoiceId??0).ToList());
             }
 
             return res;
@@ -70,7 +72,7 @@ namespace Service
                 res = repo.financialRepo.Delete(ids);
                 foreach (var ob in obList)
                     if (ob.FinancialInvoices != null && ob.FinancialInvoices.Count > 0)
-                        new IntegrationServics().UpdateCredit(ob.FinancialInvoices.Select(e => e.InvoiceId).ToList());
+                        new IntegrationServics(_Schema).UpdateCredit(ob.FinancialInvoices.Select(e => e.InvoiceId??0).ToList());
             }
             return res;
         }
@@ -81,7 +83,7 @@ namespace Service
             ob.Status = Utility.Status.Cancel;
             ob = repo.financialRepo.AddOrUpdate(ob);
             if (ob.FinancialInvoices != null && ob.FinancialInvoices.Count > 0)
-                new IntegrationServics().UpdateCredit(ob.FinancialInvoices.Select(e => e.InvoiceId).ToList());
+                new IntegrationServics(_Schema).UpdateCredit(ob.FinancialInvoices.Select(e => e.InvoiceId??0).ToList());
         }
 
         public void Redo(long Id)
@@ -90,7 +92,7 @@ namespace Service
             ob.Status = Utility.Status.All;
             ob = repo.financialRepo.AddOrUpdate(ob);
             if (ob.FinancialInvoices != null && ob.FinancialInvoices.Count > 0)
-                new IntegrationServics().UpdateCredit(ob.FinancialInvoices.Select(e => e.InvoiceId).ToList());
+                new IntegrationServics(_Schema).UpdateCredit(ob.FinancialInvoices.Select(e => e.InvoiceId??0).ToList());
         }
         #endregion
 

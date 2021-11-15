@@ -9,10 +9,11 @@ namespace Service
     public class OrderProductService : BaseService<OrderProductModelView>
     {
         string Includes = "Product";
-        UnitOfWork repo;
-        public OrderProductService()
+        UnitOfWorkOrg repo;
+        public void SetSchema(string Schema)
         {
-            repo = new UnitOfWork();
+            if (repo == null)
+                repo = new UnitOfWorkOrg(Schema);
         }
 
         #region Save / Delete

@@ -193,7 +193,7 @@ namespace Entity.ModelView
 
         public string UnitName { get; set; }
 
-        public long StoreId { get; set; }
+        public long? StoreId { get; set; }
 
         public string StoreName { get; set; }
 

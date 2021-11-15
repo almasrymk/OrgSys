@@ -23,7 +23,7 @@ namespace OrgSys.Areas.Orders.Controllers
 
         public override void LoadViewBag(OrderModelView model)
         {
-            ViewBag.TableId = new SelectList(new TableService().GetAllClosed(model.Id, model.ParentId, 0), "Id", "Name", model.TableId);
+            ViewBag.TableId = new SelectList(new TableService(User.GetSchema()).GetAllClosed(model.Id, model.ParentId, 0), "Id", "Name", model.TableId);
 
             List<SelectListItem> selectListItems = new List<SelectListItem>();
             selectListItems.Add(new SelectListItem { Value = "1", Text = Translate.GetTranslate("Amount") });
@@ -40,7 +40,7 @@ namespace OrgSys.Areas.Orders.Controllers
 
         public override OrderModelView InitializeData(OrderModelView ob)
         {
-            var setting = new PreferenceService();
+            var setting = new PreferenceService(User.GetSchema());
 
             long DealerId = 0;
             if (ob.TypeId == 1 || ob.TypeId == 3)
@@ -79,7 +79,7 @@ namespace OrgSys.Areas.Orders.Controllers
                 ob.OrderProducts = new List<OrderProductModelView>();
             }
 
-            ob.DealerName = new DealerService().Get(ob.DealerId ?? 0).Name;
+            ob.DealerName = new DealerService(User.GetSchema()).Get(ob.DealerId ?? 0).Name;
             return ob;
         }
 
@@ -88,7 +88,7 @@ namespace OrgSys.Areas.Orders.Controllers
             var order = new OrderService().Get(id);
             if (order != null)
             {
-                new IntegrationServics().CreateInvoiceByOrder(order.Model());
+                new IntegrationServics(User.GetSchema()).CreateInvoiceByOrder(order.Model());
                 return Redirect("/Orders/Order/Index?ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" + ResultStatus.success + "&MsgError=Success");
             }
             return Redirect("/Orders/Order/Index?ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" + ResultStatus.error + "&MsgError=Not find order");

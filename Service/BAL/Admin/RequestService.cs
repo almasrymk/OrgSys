@@ -10,10 +10,11 @@ namespace Service.BAL.Data.Security
    public class RequestService : BaseService<RequestModelView>
    {
         string Includes = "";
-        UnitOfWork repo;
-        public RequestService()
+        UnitOfWorkAdmin repo;
+
+        public RequestService( )
         {
-            repo = new UnitOfWork();
+            repo = new UnitOfWorkAdmin();
         }
 
         #region Save / Delete

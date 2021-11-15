@@ -100,7 +100,7 @@ namespace Entity.ModelView
 
         public long FinancialId { get; set; }
 
-        public long InvoiceId { get; set; }
+        public long? InvoiceId { get; set; }
 
         public Invoice Invoice { get; set; }
 

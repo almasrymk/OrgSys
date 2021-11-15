@@ -11,12 +11,13 @@ namespace Service
     public class LoginUserService : BaseService<LoginUserModelView>
     {
         string Includes = "Client";
-        UnitOfWork repo;
+        UnitOfWorkAdmin repo;
+        
         public LoginUserService()
         {
-            repo = new UnitOfWork();
+            repo = new UnitOfWorkAdmin();
         }
-      
+
         #region Save / Delete
         public LoginUserModelView Save(LoginUserModelView ob)
         {

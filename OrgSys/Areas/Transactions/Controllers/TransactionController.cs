@@ -27,7 +27,7 @@ namespace OrgSys.Areas.Transaction.Controllers
 
         public override TransactionModelView InitializeData(TransactionModelView ob)
         {
-            var setting = new PreferenceService();
+            var setting = new PreferenceService(User.GetSchema());
             var StoreId = long.Parse("0" + setting.GetByKey("DefaultStore", "Transaction", ob.TypeId, 0)?.Value);
 
             long DealerId = 0;
@@ -55,9 +55,9 @@ namespace OrgSys.Areas.Transaction.Controllers
                 ob.Date = DateTime.Now;
                 ob.TransactionProducts = new List<TransactionProductModelView>();
             }
-            ob.StoreName = new StoreService().Get(ob.StoreId).Name;
-            ob.ToStoreName = new StoreService().Get(ob.ToStoreId??0).Name;
-            ob.DealerName = new DealerService().Get(ob.DealerId??0).Name;
+            ob.StoreName = new StoreService(User.GetSchema()).Get(ob.StoreId??0).Name;
+            ob.ToStoreName = new StoreService(User.GetSchema()).Get(ob.ToStoreId??0).Name;
+            ob.DealerName = new DealerService(User.GetSchema()).Get(ob.DealerId??0).Name;
             return ob;
         }
     }

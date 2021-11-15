@@ -16,7 +16,7 @@ namespace OrgSys.Areas.Setting.Controllers
                 ob = new DealerModelView();
             if (ob.Id == 0)
             {
-                ob.CodeNumber = new DealerService().GetMaxCode(ob.TypeId);
+                ob.CodeNumber = new DealerService(User.GetSchema()).GetMaxCode(ob.TypeId);
                 ob.Code = "" + ob.CodeNumber;
             }
             return ob;
@@ -28,7 +28,7 @@ namespace OrgSys.Areas.Setting.Controllers
                 txtSearch = txtSearch.Trim().ToLower();
             long TypeDealerId = TypeId == 1 || TypeId == 3 ? 1 : 2;
 
-            var itemsList = new DealerService().GetAll(txtSearch , 0 , TypeDealerId, page , pageSize);
+            var itemsList = new DealerService(User.GetSchema()).GetAll(txtSearch , 0 , TypeDealerId, page , pageSize);
             var list = itemsList.Distinct().OrderBy(_ => _.Name)
                 .Select(_ => new
                 {

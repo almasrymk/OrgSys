@@ -15,6 +15,7 @@ namespace Repository.Migrations.OrgMigrations
         {
 #pragma warning disable 612, 618
             modelBuilder
+                .HasDefaultSchema("org")
                 .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.1");
@@ -56,7 +57,7 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Branch", "org");
+                    b.ToTable("Branch");
 
                     b.HasData(
                         new
@@ -118,7 +119,7 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Classification", "org");
+                    b.ToTable("Classification");
                 });
 
             modelBuilder.Entity("Entity.Model.CompanyProfile", b =>
@@ -230,7 +231,7 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CompanyProfile", "org");
+                    b.ToTable("CompanyProfile");
 
                     b.HasData(
                         new
@@ -297,7 +298,7 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Currency", "org");
+                    b.ToTable("Currency");
 
                     b.HasData(
                         new
@@ -363,7 +364,7 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Dealer", "org");
+                    b.ToTable("Dealer");
 
                     b.HasData(
                         new
@@ -479,7 +480,7 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasIndex("ShiftId");
 
-                    b.ToTable("Financial", "org");
+                    b.ToTable("Financial");
                 });
 
             modelBuilder.Entity("Entity.Model.FinancialInvoice", b =>
@@ -507,7 +508,7 @@ namespace Repository.Migrations.OrgMigrations
                     b.Property<string>("ImgPath")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("InvoiceId")
+                    b.Property<long?>("InvoiceId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("MaskText")
@@ -531,7 +532,7 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasIndex("InvoiceId");
 
-                    b.ToTable("FinancialInvoice", "org");
+                    b.ToTable("FinancialInvoice");
                 });
 
             modelBuilder.Entity("Entity.Model.FinancialType", b =>
@@ -577,7 +578,7 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("FinancialType", "org");
+                    b.ToTable("FinancialType");
 
                     b.HasData(
                         new
@@ -677,7 +678,7 @@ namespace Repository.Migrations.OrgMigrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<long>("StoreId")
+                    b.Property<long?>("StoreId")
                         .HasColumnType("bigint");
 
                     b.Property<long>("TypeId")
@@ -700,7 +701,7 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Inventory", "org");
+                    b.ToTable("Inventory");
                 });
 
             modelBuilder.Entity("Entity.Model.InventoryProduct", b =>
@@ -766,7 +767,7 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasIndex("UnitId");
 
-                    b.ToTable("InventoryProduct", "org");
+                    b.ToTable("InventoryProduct");
                 });
 
             modelBuilder.Entity("Entity.Model.Invoice", b =>
@@ -864,7 +865,7 @@ namespace Repository.Migrations.OrgMigrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<long>("StoreId")
+                    b.Property<long?>("StoreId")
                         .HasColumnType("bigint");
 
                     b.Property<decimal>("Tax")
@@ -902,7 +903,7 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasIndex("TransactionId");
 
-                    b.ToTable("Invoice", "org");
+                    b.ToTable("Invoice");
                 });
 
             modelBuilder.Entity("Entity.Model.InvoiceProduct", b =>
@@ -960,7 +961,7 @@ namespace Repository.Migrations.OrgMigrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<long>("StoreId")
+                    b.Property<long?>("StoreId")
                         .HasColumnType("bigint");
 
                     b.Property<decimal>("Tax")
@@ -985,7 +986,7 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasIndex("UnitId");
 
-                    b.ToTable("InvoiceProduct", "org");
+                    b.ToTable("InvoiceProduct");
                 });
 
             modelBuilder.Entity("Entity.Model.InvoiceType", b =>
@@ -1034,7 +1035,7 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("InvoiceType", "org");
+                    b.ToTable("InvoiceType");
 
                     b.HasData(
                         new
@@ -1175,7 +1176,7 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("LogSys", "org");
+                    b.ToTable("LogSys");
                 });
 
             modelBuilder.Entity("Entity.Model.Order", b =>
@@ -1286,7 +1287,7 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasIndex("TableId");
 
-                    b.ToTable("Order", "org");
+                    b.ToTable("Order");
                 });
 
             modelBuilder.Entity("Entity.Model.OrderProduct", b =>
@@ -1364,7 +1365,7 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasIndex("UnitId");
 
-                    b.ToTable("OrderProduct", "org");
+                    b.ToTable("OrderProduct");
                 });
 
             modelBuilder.Entity("Entity.Model.OrderType", b =>
@@ -1407,7 +1408,7 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("OrderType", "org");
+                    b.ToTable("OrderType");
 
                     b.HasData(
                         new
@@ -1471,7 +1472,7 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Outlay", "org");
+                    b.ToTable("Outlay");
                 });
 
             modelBuilder.Entity("Entity.Model.PaymentType", b =>
@@ -1511,7 +1512,7 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PaymentType", "org");
+                    b.ToTable("PaymentType");
 
                     b.HasData(
                         new
@@ -1575,7 +1576,7 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Permission", "org");
+                    b.ToTable("Permission");
 
                     b.HasData(
                         new
@@ -3559,7 +3560,7 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Preference", "org");
+                    b.ToTable("Preference");
 
                     b.HasData(
                         new
@@ -5442,7 +5443,7 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasIndex("DealerId");
 
-                    b.ToTable("Product", "org");
+                    b.ToTable("Product");
                 });
 
             modelBuilder.Entity("Entity.Model.ProductPropertyElement", b =>
@@ -5473,13 +5474,13 @@ namespace Repository.Migrations.OrgMigrations
                     b.Property<long>("ParentId")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("ProductId")
+                    b.Property<long?>("ProductId")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("PropertyElementId")
+                    b.Property<long?>("PropertyElementId")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("PropertyId")
+                    b.Property<long?>("PropertyId")
                         .HasColumnType("bigint");
 
                     b.Property<int>("Status")
@@ -5496,7 +5497,7 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasIndex("PropertyId");
 
-                    b.ToTable("ProductPropertyElement", "org");
+                    b.ToTable("ProductPropertyElement");
                 });
 
             modelBuilder.Entity("Entity.Model.ProductRecipe", b =>
@@ -5546,7 +5547,7 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductRecipe", "org");
+                    b.ToTable("ProductRecipe");
                 });
 
             modelBuilder.Entity("Entity.Model.ProductUnit", b =>
@@ -5598,7 +5599,7 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasIndex("UnitId");
 
-                    b.ToTable("ProductUnit", "org");
+                    b.ToTable("ProductUnit");
                 });
 
             modelBuilder.Entity("Entity.Model.Property", b =>
@@ -5638,7 +5639,7 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Property", "org");
+                    b.ToTable("Property");
                 });
 
             modelBuilder.Entity("Entity.Model.PropertyElement", b =>
@@ -5684,7 +5685,7 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasIndex("PropertyId");
 
-                    b.ToTable("PropertyElement", "org");
+                    b.ToTable("PropertyElement");
                 });
 
             modelBuilder.Entity("Entity.Model.Role", b =>
@@ -5724,7 +5725,7 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Role", "org");
+                    b.ToTable("Role");
 
                     b.HasData(
                         new
@@ -5792,7 +5793,7 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("RolePermission", "org");
+                    b.ToTable("RolePermission");
 
                     b.HasData(
                         new
@@ -5955,7 +5956,7 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Safe", "org");
+                    b.ToTable("Safe");
 
                     b.HasData(
                         new
@@ -6013,7 +6014,7 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Shift", "org");
+                    b.ToTable("Shift");
                 });
 
             modelBuilder.Entity("Entity.Model.Store", b =>
@@ -6058,7 +6059,7 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasIndex("BranchId");
 
-                    b.ToTable("Store", "org");
+                    b.ToTable("Store");
 
                     b.HasData(
                         new
@@ -6117,7 +6118,7 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Table", "org");
+                    b.ToTable("Table");
                 });
 
             modelBuilder.Entity("Entity.Model.Transaction", b =>
@@ -6179,7 +6180,7 @@ namespace Repository.Migrations.OrgMigrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<long>("StoreId")
+                    b.Property<long?>("StoreId")
                         .HasColumnType("bigint");
 
                     b.Property<long?>("ToStoreId")
@@ -6209,7 +6210,7 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasIndex("ToStoreId");
 
-                    b.ToTable("Transaction", "org");
+                    b.ToTable("Transaction");
                 });
 
             modelBuilder.Entity("Entity.Model.TransactionProduct", b =>
@@ -6255,7 +6256,7 @@ namespace Repository.Migrations.OrgMigrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<long>("StoreId")
+                    b.Property<long?>("StoreId")
                         .HasColumnType("bigint");
 
                     b.Property<decimal>("Total")
@@ -6280,7 +6281,7 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasIndex("UnitId");
 
-                    b.ToTable("TransactionProduct", "org");
+                    b.ToTable("TransactionProduct");
                 });
 
             modelBuilder.Entity("Entity.Model.TransactionType", b =>
@@ -6326,7 +6327,7 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TransactionType", "org");
+                    b.ToTable("TransactionType");
 
                     b.HasData(
                         new
@@ -6440,7 +6441,7 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Unit", "org");
+                    b.ToTable("Unit");
                 });
 
             modelBuilder.Entity("Entity.Model.User", b =>
@@ -6500,7 +6501,7 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("User", "org");
+                    b.ToTable("User");
 
                     b.HasData(
                         new
@@ -6542,7 +6543,7 @@ namespace Repository.Migrations.OrgMigrations
                             RoleId = 2L,
                             Status = 0,
                             TypeId = 0L,
-                            UserName = "Admin"
+                            UserName = "Admin2"
                         });
                 });
 
@@ -6621,9 +6622,7 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasOne("Entity.Model.Invoice", "Invoice")
                         .WithMany()
-                        .HasForeignKey("InvoiceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("InvoiceId");
 
                     b.Navigation("Financial");
 
@@ -6652,9 +6651,7 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasOne("Entity.Model.Store", "Store")
                         .WithMany()
-                        .HasForeignKey("StoreId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("StoreId");
 
                     b.HasOne("Entity.Model.User", "User")
                         .WithMany()
@@ -6740,9 +6737,7 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasOne("Entity.Model.Store", "Store")
                         .WithMany()
-                        .HasForeignKey("StoreId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("StoreId");
 
                     b.HasOne("Entity.Model.Transaction", "Transaction")
                         .WithMany()
@@ -6783,9 +6778,7 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasOne("Entity.Model.Store", "Store")
                         .WithMany()
-                        .HasForeignKey("StoreId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("StoreId");
 
                     b.HasOne("Entity.Model.Unit", "Unit")
                         .WithMany()
@@ -6897,21 +6890,15 @@ namespace Repository.Migrations.OrgMigrations
                 {
                     b.HasOne("Entity.Model.Product", "Product")
                         .WithMany("ProductPropertyElements")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProductId");
 
                     b.HasOne("Entity.Model.PropertyElement", "PropertyElement")
                         .WithMany()
-                        .HasForeignKey("PropertyElementId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PropertyElementId");
 
                     b.HasOne("Entity.Model.Property", "Property")
                         .WithMany()
-                        .HasForeignKey("PropertyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PropertyId");
 
                     b.Navigation("Product");
 
@@ -7019,9 +7006,7 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasOne("Entity.Model.Store", "Store")
                         .WithMany()
-                        .HasForeignKey("StoreId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("StoreId");
 
                     b.HasOne("Entity.Model.Store", "ToStore")
                         .WithMany()
@@ -7054,9 +7039,7 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasOne("Entity.Model.Store", "Store")
                         .WithMany()
-                        .HasForeignKey("StoreId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("StoreId");
 
                     b.HasOne("Entity.Model.Transaction", "Transaction")
                         .WithMany("TransactionProducts")

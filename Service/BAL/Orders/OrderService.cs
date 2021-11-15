@@ -10,10 +10,12 @@ namespace Service
     public class OrderService : BaseService<OrderModelView>
     {
         string Includes = "Dealer,Table,Invoice,OrderProducts,OrderProducts.Product,OrderProducts.Product.ProductUnits,,OrderProducts.Product.ProductUnits.Unit";
-        UnitOfWork repo;
-        public OrderService()
+        UnitOfWorkOrg repo;
+        private string _Schema;
+        public void SetSchema(string Schema)
         {
-            repo = new UnitOfWork();
+            this._Schema = Schema;
+            repo = new UnitOfWorkOrg(Schema);
         }
 
         #region Save / Delete
@@ -46,9 +48,9 @@ namespace Service
                 Nwob.OrderProducts = repo.orderProductRepo.GetList(e => e.OrderId == Nwob.Id, e => e.OrderBy(e => e.Id), "", Utility.Status.All).ToList();
             }
 
-            if (long.Parse("0" + new PreferenceService().GetByKey("AutoCreateInvoice", "Order", ob.TypeId, 0)?.Value) == 1 || ob.InvoiceId > 0)
+            if (long.Parse("0" + new PreferenceService(_Schema).GetByKey("AutoCreateInvoice", "Order", ob.TypeId, 0)?.Value) == 1 || ob.InvoiceId > 0)
             {
-                new IntegrationServics().CreateInvoiceByOrder(Nwob);
+                new IntegrationServics(_Schema).CreateInvoiceByOrder(Nwob);
             }
 
             return new OrderModelView(Nwob);
@@ -60,7 +62,7 @@ namespace Service
             if (ob != null)
             {
                 repo.orderRepo.Delete(id);
-                new InvoiceService().Delete(ob.InvoiceId ?? 0);
+                new InvoiceService(_Schema).Delete(ob.InvoiceId ?? 0);
                 return true;
             }
             return false;
@@ -72,7 +74,7 @@ namespace Service
             if (oblist != null && oblist.Count() > 0)
             {
                 repo.orderRepo.Delete(ids);
-                new InvoiceService().Delete(oblist.Select(e => e.InvoiceId ?? 0).ToList());
+                new InvoiceService(_Schema).Delete(oblist.Select(e => e.InvoiceId ?? 0).ToList());
                 return true;
             }
             return false;

@@ -7,11 +7,11 @@ namespace Service
 {
     public class ReportService 
     {
-        UnitOfWork repo;
-        public ReportService()
+        UnitOfWorkOrg repo;
+        public ReportService(string Schema)
         {
             if (repo == null)
-                repo = new UnitOfWork();
+                repo = new UnitOfWorkOrg(Schema);
         }
      
         public IPagedList<InvoiceDetail> InvoiceDetail(long typeId, DateTime fromDate, DateTime toDate, long dealerId, long shiftId, long branchId, long userId , int page = 1 , int pageSize = 100)

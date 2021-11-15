@@ -11,12 +11,13 @@ namespace Service
     public class TypeActivityService : BaseService<TypeActivityModelView>
     {
         string Includes = "";
-        UnitOfWork repo;
+        UnitOfWorkAdmin repo;
+
         public TypeActivityService()
         {
-            repo = new UnitOfWork();
-        }
-      
+            repo = new UnitOfWorkAdmin();
+        } 
+
         #region Save / Delete
         public TypeActivityModelView Save(TypeActivityModelView ob)
         {

@@ -12,10 +12,10 @@ namespace Repository
     {
         public OrgContext db;
 
-        public ReportRepo()
+        public ReportRepo(string Schema)
         {
             if (this.db == null)
-                this.db = new OrgContext(new DbContextOptions<OrgContext>());
+                this.db = new OrgContext(new MyDbContextOptions<OrgContext> { Schema = Schema });
         }
 
         public IQueryable<InvoiceDetail> InvoiceDetails(long typeId, DateTime fromDate, DateTime toDate, long dealerId, long shiftId, long branchId, long userId)

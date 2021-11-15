@@ -9,10 +9,11 @@ namespace Service
     public class RecipeService : BaseService<ProductRecipeModelView>
     {
         string Includes = "";
-        UnitOfWork repo;
-        public RecipeService()
+        UnitOfWorkOrg repo;
+        public RecipeService(string Schema)
         {
-            repo = new UnitOfWork();
+            if (repo == null)
+                repo = new UnitOfWorkOrg(Schema);
         }
 
         #region Save / Delete

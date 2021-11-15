@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entity.Model
 {
-    [Table("FinancialType", Schema = "org")]
+    [Table("FinancialType")]
     public class FinancialType : BaseModel
     {
         [StringLength(50, MinimumLength = 3)]

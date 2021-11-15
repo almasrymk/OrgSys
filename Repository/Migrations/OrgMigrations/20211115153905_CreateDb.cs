@@ -580,7 +580,7 @@ namespace Repository.Migrations.OrgMigrations
                         principalSchema: "org",
                         principalTable: "Dealer",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -681,7 +681,7 @@ namespace Repository.Migrations.OrgMigrations
                         principalSchema: "org",
                         principalTable: "Branch",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_User_Role_RoleId",
                         column: x => x.RoleId,
@@ -769,9 +769,9 @@ namespace Repository.Migrations.OrgMigrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ProductId = table.Column<long>(type: "bigint", nullable: false),
-                    PropertyId = table.Column<long>(type: "bigint", nullable: false),
-                    PropertyElementId = table.Column<long>(type: "bigint", nullable: false),
+                    ProductId = table.Column<long>(type: "bigint", nullable: true),
+                    PropertyId = table.Column<long>(type: "bigint", nullable: true),
+                    PropertyElementId = table.Column<long>(type: "bigint", nullable: true),
                     IsChecked = table.Column<bool>(type: "bit", nullable: false),
                     CodeNumber = table.Column<long>(type: "bigint", nullable: false),
                     Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -849,7 +849,7 @@ namespace Repository.Migrations.OrgMigrations
                         principalSchema: "org",
                         principalTable: "Branch",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Financial_Currency_CurrencyId",
                         column: x => x.CurrencyId,
@@ -863,14 +863,14 @@ namespace Repository.Migrations.OrgMigrations
                         principalSchema: "org",
                         principalTable: "Dealer",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Financial_Outlay_OutlayId",
                         column: x => x.OutlayId,
                         principalSchema: "org",
                         principalTable: "Outlay",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Financial_PaymentType_PaymentTypeId",
                         column: x => x.PaymentTypeId,
@@ -891,7 +891,7 @@ namespace Repository.Migrations.OrgMigrations
                         principalSchema: "org",
                         principalTable: "Shift",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Financial_User_CreateUserId",
                         column: x => x.CreateUserId,
@@ -905,7 +905,7 @@ namespace Repository.Migrations.OrgMigrations
                         principalSchema: "org",
                         principalTable: "User",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -916,7 +916,7 @@ namespace Repository.Migrations.OrgMigrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<long>(type: "bigint", nullable: true),
-                    StoreId = table.Column<long>(type: "bigint", nullable: false),
+                    StoreId = table.Column<long>(type: "bigint", nullable: true),
                     Notes = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
                     Review = table.Column<bool>(type: "bit", nullable: false),
                     Closed = table.Column<bool>(type: "bit", nullable: false),
@@ -945,14 +945,14 @@ namespace Repository.Migrations.OrgMigrations
                         principalSchema: "org",
                         principalTable: "Branch",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Inventory_Shift_ShiftId",
                         column: x => x.ShiftId,
                         principalSchema: "org",
                         principalTable: "Shift",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Inventory_Store_StoreId",
                         column: x => x.StoreId,
@@ -973,14 +973,14 @@ namespace Repository.Migrations.OrgMigrations
                         principalSchema: "org",
                         principalTable: "User",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Inventory_User_UserId",
                         column: x => x.UserId,
                         principalSchema: "org",
                         principalTable: "User",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -1042,7 +1042,7 @@ namespace Repository.Migrations.OrgMigrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DealerId = table.Column<long>(type: "bigint", nullable: false),
                     PaymentTypeId = table.Column<long>(type: "bigint", nullable: false),
-                    StoreId = table.Column<long>(type: "bigint", nullable: false),
+                    StoreId = table.Column<long>(type: "bigint", nullable: true),
                     TransactionId = table.Column<long>(type: "bigint", nullable: true),
                     Total = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Discount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
@@ -1085,7 +1085,7 @@ namespace Repository.Migrations.OrgMigrations
                         principalSchema: "org",
                         principalTable: "Branch",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Invoice_Currency_CurrencyId",
                         column: x => x.CurrencyId,
@@ -1113,7 +1113,7 @@ namespace Repository.Migrations.OrgMigrations
                         principalSchema: "org",
                         principalTable: "Shift",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Invoice_Store_StoreId",
                         column: x => x.StoreId,
@@ -1134,7 +1134,7 @@ namespace Repository.Migrations.OrgMigrations
                         principalSchema: "org",
                         principalTable: "User",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -1146,7 +1146,7 @@ namespace Repository.Migrations.OrgMigrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     RowNumber = table.Column<long>(type: "bigint", nullable: false),
                     FinancialId = table.Column<long>(type: "bigint", nullable: false),
-                    InvoiceId = table.Column<long>(type: "bigint", nullable: false),
+                    InvoiceId = table.Column<long>(type: "bigint", nullable: true),
                     Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     CodeNumber = table.Column<long>(type: "bigint", nullable: false),
                     Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -1187,7 +1187,7 @@ namespace Repository.Migrations.OrgMigrations
                     InvoiceId = table.Column<long>(type: "bigint", nullable: false),
                     ProductId = table.Column<long>(type: "bigint", nullable: false),
                     UnitId = table.Column<long>(type: "bigint", nullable: false),
-                    StoreId = table.Column<long>(type: "bigint", nullable: false),
+                    StoreId = table.Column<long>(type: "bigint", nullable: true),
                     Quantity = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Total = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
@@ -1283,35 +1283,35 @@ namespace Repository.Migrations.OrgMigrations
                         principalSchema: "org",
                         principalTable: "Branch",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Order_Dealer_DealerId",
                         column: x => x.DealerId,
                         principalSchema: "org",
                         principalTable: "Dealer",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Order_Invoice_InvoiceId",
                         column: x => x.InvoiceId,
                         principalSchema: "org",
                         principalTable: "Invoice",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Order_Shift_ShiftId",
                         column: x => x.ShiftId,
                         principalSchema: "org",
                         principalTable: "Shift",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Order_Table_TableId",
                         column: x => x.TableId,
                         principalSchema: "org",
                         principalTable: "Table",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Order_User_CreateUserId",
                         column: x => x.CreateUserId,
@@ -1325,7 +1325,7 @@ namespace Repository.Migrations.OrgMigrations
                         principalSchema: "org",
                         principalTable: "User",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -1390,7 +1390,7 @@ namespace Repository.Migrations.OrgMigrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DealerId = table.Column<long>(type: "bigint", nullable: true),
-                    StoreId = table.Column<long>(type: "bigint", nullable: false),
+                    StoreId = table.Column<long>(type: "bigint", nullable: true),
                     ToStoreId = table.Column<long>(type: "bigint", nullable: true),
                     OrderId = table.Column<long>(type: "bigint", nullable: true),
                     Total = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
@@ -1420,28 +1420,28 @@ namespace Repository.Migrations.OrgMigrations
                         principalSchema: "org",
                         principalTable: "Branch",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Transaction_Dealer_DealerId",
                         column: x => x.DealerId,
                         principalSchema: "org",
                         principalTable: "Dealer",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Transaction_Order_OrderId",
                         column: x => x.OrderId,
                         principalSchema: "org",
                         principalTable: "Order",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Transaction_Shift_ShiftId",
                         column: x => x.ShiftId,
                         principalSchema: "org",
                         principalTable: "Shift",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Transaction_Store_StoreId",
                         column: x => x.StoreId,
@@ -1455,7 +1455,7 @@ namespace Repository.Migrations.OrgMigrations
                         principalSchema: "org",
                         principalTable: "Store",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Transaction_User_CreateUserId",
                         column: x => x.CreateUserId,
@@ -1469,7 +1469,7 @@ namespace Repository.Migrations.OrgMigrations
                         principalSchema: "org",
                         principalTable: "User",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -1483,7 +1483,7 @@ namespace Repository.Migrations.OrgMigrations
                     TransactionId = table.Column<long>(type: "bigint", nullable: false),
                     ProductId = table.Column<long>(type: "bigint", nullable: false),
                     UnitId = table.Column<long>(type: "bigint", nullable: false),
-                    StoreId = table.Column<long>(type: "bigint", nullable: false),
+                    StoreId = table.Column<long>(type: "bigint", nullable: true),
                     Quantity = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Cost = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Total = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
@@ -2067,7 +2067,7 @@ namespace Repository.Migrations.OrgMigrations
                 {
                     { 1L, null, null, 0L, true, null, 1L, null, "Owner", 0L, "iebLM3YfOZ4fcXYL1jInxA==", 1L, 0, 0L, "Owner" },
                     { 2L, null, null, 0L, false, null, 2L, null, "Admin", 0L, "mGs8bPJNLmeH75qTfY9f9Q==", 2L, 0, 0L, "Admin" },
-                    { 3L, null, null, 0L, false, null, 0L, null, "Emp", 0L, null, 2L, 0, 0L, "Admin" }
+                    { 3L, null, null, 0L, false, null, 0L, null, "Emp", 0L, null, 2L, 0, 0L, "Admin2" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -2492,7 +2492,7 @@ namespace Repository.Migrations.OrgMigrations
                 principalSchema: "org",
                 principalTable: "Transaction",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
+                onDelete: ReferentialAction.NoAction);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

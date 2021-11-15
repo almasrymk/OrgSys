@@ -11,12 +11,13 @@ namespace Service
     public class ClientService : BaseService<ClientModelView>
     {
         string Includes = "TypeActivity,Nationality";
-        UnitOfWork repo;
+        UnitOfWorkAdmin repo;
+
         public ClientService()
         {
-            repo = new UnitOfWork();
+            repo = new UnitOfWorkAdmin();
         }
-      
+
         #region Save / Delete
         public ClientModelView Save(ClientModelView ob)
         {

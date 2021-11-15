@@ -4,30 +4,32 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entity.Model
 {
-    [Table("Financial", Schema = "org")]
+    [Table("Financial")]
     public class Financial : MovementModel
-    {       
+    {
+        [ForeignKey("Dealer")]
         public long? DealerId { get; set; }
 
-        public virtual Dealer Dealer { get; set; }
+        public Dealer Dealer { get; set; }
 
-        [Required]
+        [ForeignKey("PaymentType")]
         public long PaymentTypeId { get; set; }
 
-        public virtual PaymentType PaymentType { get; set; }
+        public PaymentType PaymentType { get; set; }
 
+        [ForeignKey("Outlay")]
         public long? OutlayId { get; set; }
 
         public Outlay Outlay { get; set; }
 
-        [Required]
+        [ForeignKey("CurrencyId")]
         public long CurrencyId { get; set; }
 
-        public virtual Currency Currency { get; set; }
+        public Currency Currency { get; set; }
 
         public decimal Rate { get; set; }
 
-        [Required]
+        [ForeignKey("Safe")]
         public long SafeId { get; set; }
 
         public virtual Safe Safe { get; set; }
@@ -38,7 +40,7 @@ namespace Entity.Model
 
         [StringLength(500)]
         public string Notes { get; set; }
-
-        public virtual List<FinancialInvoice> FinancialInvoices { get; set; }
+        
+        public ICollection<FinancialInvoice> FinancialInvoices { get; set; }
     }
 }

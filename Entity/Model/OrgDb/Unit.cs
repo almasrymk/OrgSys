@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entity.Model
 {
-    [Table("Unit", Schema = "org")]
+    [Table("Unit")]
     public class Unit : BaseModel
     {
         [StringLength(50, MinimumLength = 2)]

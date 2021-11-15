@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entity.Model
 {
-    [Table("PaymentType", Schema = "org")]
+    [Table("PaymentType")]
     public class PaymentType : BaseModel
     {
         [StringLength(50, MinimumLength = 3)]

@@ -2,7 +2,7 @@
 
 namespace Entity.Model
 {
-    [Table("Preference", Schema = "org")]
+    [Table("Preference")]
     public class Preference : BaseModel
     {
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
