@@ -44,5 +44,18 @@ namespace Service
             }
             return obList;
         }
+
+        public IPagedList<DealerInvoice> TotainvoiceCustomers(long typeId, DateTime fromDate, DateTime toDate, long dealerId, int page = 1, int pageSize = 100)
+        {
+            var obList = repo.reportRepo.TotalInvoicCustomer(typeId,
+                                                             fromDate,
+                                                             toDate,
+                                                             dealerId).ToPagedList(page, pageSize);
+            foreach (var ob in obList)
+            {
+
+            }
+            return obList;
+        }
     }
 }

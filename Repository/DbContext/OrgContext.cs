@@ -13,8 +13,8 @@ namespace Repository
 
         public OrgContext(DbContextOptions<OrgContext> options) : base(options)
         {
-            if (Utility.General.GetSchema() != "")
-                schema = Utility.General.GetSchema();
+            //if (Utility.General.GetSchema() != "")
+            //    schema = Utility.General.GetSchema();
             //if (Utility.General.GetConfiguration() != null)
             //    Configuration = Utility.General.GetConfiguration();
         }
