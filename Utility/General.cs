@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Configuration;
+using System;
 using System.IO;
 using System.Linq;
 using System.Net.Mail;
@@ -93,7 +94,7 @@ namespace Utility
             client.Credentials = new System.Net.NetworkCredential("info@organizersys.com", "Testg@83");
             client.EnableSsl = false;
             client.Timeout = 50000;
-          
+
             MailMessage mailMessage = null;           
             mailMessage = new MailMessage();
             mailMessage.From = new MailAddress("info@organizersys.com", Sender);
@@ -102,9 +103,13 @@ namespace Utility
             //oAttachment.ContentId = "MyImage";
             //mailMessage.Attachments.Add(oAttachment);
 
-            AlternateView view = AlternateView.CreateAlternateViewFromString(Body , null, MediaTypeNames.Text.Html);
-            LinkedResource resource = new LinkedResource(Path.GetFullPath("wwwroot/logos/Logo.png"));
-            resource.ContentId = "Image1";
+            AlternateView view = AlternateView.CreateAlternateViewFromString(Body, Encoding.UTF8, MediaTypeNames.Text.Html);
+            LinkedResource resource = new LinkedResource(Path.GetFullPath("wwwroot/logos/Logo.png") , "image/png");
+            resource.ContentId = "MyLogo";
+            resource.ContentType.MediaType = MediaTypeNames.Image.Jpeg;
+            resource.TransferEncoding = TransferEncoding.QuotedPrintable;
+            resource.ContentType.Name = "Logo";
+            resource.ContentLink = new Uri("cid:MyLogo");            
             view.LinkedResources.Add(resource);
             mailMessage.AlternateViews.Add(view);
             //mailMessage.Body = Body;
