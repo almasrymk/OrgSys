@@ -312,6 +312,6 @@ namespace Repository
         public virtual DbSet<Request> Requests { get; set; }
         public virtual DbSet<LoginUser> LoginUsers { get; set; }
         public virtual DbSet<Nationality> Nationalities { get; set; }
-        public virtual DbSet<TypeActivity> TypeActivities { get; set; }
+        public virtual DbSet<TypeActivity> TypeActivities { get; set; }        
     }
 }

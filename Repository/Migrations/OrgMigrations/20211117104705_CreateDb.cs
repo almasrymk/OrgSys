@@ -5,14 +5,18 @@ namespace Repository.Migrations.OrgMigrations
 {
     public partial class CreateDb : Migration
     {
+        public string _Schema { get; set; } = "org";
+        public CreateDb() { }
+        public CreateDb(string Schema) { this._Schema = Schema; }
+
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.EnsureSchema(
-                name: "org");
+                name: _Schema);
 
             migrationBuilder.CreateTable(
                 name: "Branch",
-                schema: "org",
+                schema: _Schema,
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -34,7 +38,7 @@ namespace Repository.Migrations.OrgMigrations
 
             migrationBuilder.CreateTable(
                 name: "Classification",
-                schema: "org",
+                schema: _Schema,
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -59,7 +63,7 @@ namespace Repository.Migrations.OrgMigrations
 
             migrationBuilder.CreateTable(
                 name: "CompanyProfile",
-                schema: "org",
+                schema: _Schema,
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -101,7 +105,7 @@ namespace Repository.Migrations.OrgMigrations
 
             migrationBuilder.CreateTable(
                 name: "Currency",
-                schema: "org",
+                schema: _Schema,
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -125,7 +129,7 @@ namespace Repository.Migrations.OrgMigrations
 
             migrationBuilder.CreateTable(
                 name: "Dealer",
-                schema: "org",
+                schema: _Schema,
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -150,7 +154,7 @@ namespace Repository.Migrations.OrgMigrations
 
             migrationBuilder.CreateTable(
                 name: "FinancialType",
-                schema: "org",
+                schema: _Schema,
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -174,7 +178,7 @@ namespace Repository.Migrations.OrgMigrations
 
             migrationBuilder.CreateTable(
                 name: "InvoiceType",
-                schema: "org",
+                schema: _Schema,
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -199,7 +203,7 @@ namespace Repository.Migrations.OrgMigrations
 
             migrationBuilder.CreateTable(
                 name: "LogSys",
-                schema: "org",
+                schema: _Schema,
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -236,8 +240,36 @@ namespace Repository.Migrations.OrgMigrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Notification",
+                schema: _Schema,
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Subject = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Message = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DisappearanceAfter = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    FromUserId = table.Column<long>(type: "bigint", nullable: false),
+                    ToUserId = table.Column<long>(type: "bigint", nullable: false),
+                    Read = table.Column<bool>(type: "bit", nullable: false),
+                    CodeNumber = table.Column<long>(type: "bigint", nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MaskText = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ParentId = table.Column<long>(type: "bigint", nullable: false),
+                    TypeId = table.Column<long>(type: "bigint", nullable: false),
+                    Hide = table.Column<bool>(type: "bit", nullable: false),
+                    ImgPath = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Notification", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "OrderType",
-                schema: "org",
+                schema: _Schema,
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -260,7 +292,7 @@ namespace Repository.Migrations.OrgMigrations
 
             migrationBuilder.CreateTable(
                 name: "Outlay",
-                schema: "org",
+                schema: _Schema,
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -282,7 +314,7 @@ namespace Repository.Migrations.OrgMigrations
 
             migrationBuilder.CreateTable(
                 name: "PaymentType",
-                schema: "org",
+                schema: _Schema,
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -304,7 +336,7 @@ namespace Repository.Migrations.OrgMigrations
 
             migrationBuilder.CreateTable(
                 name: "Permission",
-                schema: "org",
+                schema: _Schema,
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -327,7 +359,7 @@ namespace Repository.Migrations.OrgMigrations
 
             migrationBuilder.CreateTable(
                 name: "Preference",
-                schema: "org",
+                schema: _Schema,
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false),
@@ -351,7 +383,7 @@ namespace Repository.Migrations.OrgMigrations
 
             migrationBuilder.CreateTable(
                 name: "Property",
-                schema: "org",
+                schema: _Schema,
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -373,7 +405,7 @@ namespace Repository.Migrations.OrgMigrations
 
             migrationBuilder.CreateTable(
                 name: "Role",
-                schema: "org",
+                schema: _Schema,
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -395,7 +427,7 @@ namespace Repository.Migrations.OrgMigrations
 
             migrationBuilder.CreateTable(
                 name: "Safe",
-                schema: "org",
+                schema: _Schema,
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -417,7 +449,7 @@ namespace Repository.Migrations.OrgMigrations
 
             migrationBuilder.CreateTable(
                 name: "Shift",
-                schema: "org",
+                schema: _Schema,
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -441,7 +473,7 @@ namespace Repository.Migrations.OrgMigrations
 
             migrationBuilder.CreateTable(
                 name: "Table",
-                schema: "org",
+                schema: _Schema,
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -465,7 +497,7 @@ namespace Repository.Migrations.OrgMigrations
 
             migrationBuilder.CreateTable(
                 name: "TransactionType",
-                schema: "org",
+                schema: _Schema,
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -489,7 +521,7 @@ namespace Repository.Migrations.OrgMigrations
 
             migrationBuilder.CreateTable(
                 name: "Unit",
-                schema: "org",
+                schema: _Schema,
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -511,7 +543,7 @@ namespace Repository.Migrations.OrgMigrations
 
             migrationBuilder.CreateTable(
                 name: "Store",
-                schema: "org",
+                schema: _Schema,
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -533,15 +565,15 @@ namespace Repository.Migrations.OrgMigrations
                     table.ForeignKey(
                         name: "FK_Store_Branch_BranchId",
                         column: x => x.BranchId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "Branch",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Product",
-                schema: "org",
+                schema: _Schema,
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -570,22 +602,22 @@ namespace Repository.Migrations.OrgMigrations
                     table.ForeignKey(
                         name: "FK_Product_Classification_ClassificationId",
                         column: x => x.ClassificationId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "Classification",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Product_Dealer_DealerId",
                         column: x => x.DealerId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "Dealer",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
                 name: "PropertyElement",
-                schema: "org",
+                schema: _Schema,
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -607,15 +639,15 @@ namespace Repository.Migrations.OrgMigrations
                     table.ForeignKey(
                         name: "FK_PropertyElement_Property_PropertyId",
                         column: x => x.PropertyId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "Property",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "RolePermission",
-                schema: "org",
+                schema: _Schema,
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -637,22 +669,22 @@ namespace Repository.Migrations.OrgMigrations
                     table.ForeignKey(
                         name: "FK_RolePermission_Permission_PermissionId",
                         column: x => x.PermissionId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "Permission",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_RolePermission_Role_RoleId",
                         column: x => x.RoleId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "Role",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "User",
-                schema: "org",
+                schema: _Schema,
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -678,22 +710,22 @@ namespace Repository.Migrations.OrgMigrations
                     table.ForeignKey(
                         name: "FK_User_Branch_BranchId",
                         column: x => x.BranchId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "Branch",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_User_Role_RoleId",
                         column: x => x.RoleId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "Role",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "ProductRecipe",
-                schema: "org",
+                schema: _Schema,
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -717,15 +749,15 @@ namespace Repository.Migrations.OrgMigrations
                     table.ForeignKey(
                         name: "FK_ProductRecipe_Product_ProductId",
                         column: x => x.ProductId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "Product",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "ProductUnit",
-                schema: "org",
+                schema: _Schema,
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -749,22 +781,22 @@ namespace Repository.Migrations.OrgMigrations
                     table.ForeignKey(
                         name: "FK_ProductUnit_Product_ProductId",
                         column: x => x.ProductId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "Product",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ProductUnit_Unit_UnitId",
                         column: x => x.UnitId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "Unit",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "ProductPropertyElement",
-                schema: "org",
+                schema: _Schema,
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -788,29 +820,29 @@ namespace Repository.Migrations.OrgMigrations
                     table.ForeignKey(
                         name: "FK_ProductPropertyElement_Product_ProductId",
                         column: x => x.ProductId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "Product",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_ProductPropertyElement_Property_PropertyId",
                         column: x => x.PropertyId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "Property",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_ProductPropertyElement_PropertyElement_PropertyElementId",
                         column: x => x.PropertyElementId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "PropertyElement",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Financial",
-                schema: "org",
+                schema: _Schema,
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -846,71 +878,71 @@ namespace Repository.Migrations.OrgMigrations
                     table.ForeignKey(
                         name: "FK_Financial_Branch_BranchId",
                         column: x => x.BranchId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "Branch",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Financial_Currency_CurrencyId",
                         column: x => x.CurrencyId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "Currency",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Financial_Dealer_DealerId",
                         column: x => x.DealerId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "Dealer",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Financial_Outlay_OutlayId",
                         column: x => x.OutlayId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "Outlay",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Financial_PaymentType_PaymentTypeId",
                         column: x => x.PaymentTypeId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "PaymentType",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Financial_Safe_SafeId",
                         column: x => x.SafeId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "Safe",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Financial_Shift_ShiftId",
                         column: x => x.ShiftId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "Shift",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Financial_User_CreateUserId",
                         column: x => x.CreateUserId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "User",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Financial_User_ModifyUserId",
                         column: x => x.ModifyUserId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "User",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Inventory",
-                schema: "org",
+                schema: _Schema,
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -942,50 +974,50 @@ namespace Repository.Migrations.OrgMigrations
                     table.ForeignKey(
                         name: "FK_Inventory_Branch_BranchId",
                         column: x => x.BranchId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "Branch",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Inventory_Shift_ShiftId",
                         column: x => x.ShiftId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "Shift",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Inventory_Store_StoreId",
                         column: x => x.StoreId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "Store",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Inventory_User_CreateUserId",
                         column: x => x.CreateUserId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "User",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Inventory_User_ModifyUserId",
                         column: x => x.ModifyUserId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "User",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Inventory_User_UserId",
                         column: x => x.UserId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "User",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
                 name: "InventoryProduct",
-                schema: "org",
+                schema: _Schema,
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -1013,29 +1045,29 @@ namespace Repository.Migrations.OrgMigrations
                     table.ForeignKey(
                         name: "FK_InventoryProduct_Inventory_InventoryId",
                         column: x => x.InventoryId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "Inventory",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_InventoryProduct_Product_ProductId",
                         column: x => x.ProductId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "Product",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_InventoryProduct_Unit_UnitId",
                         column: x => x.UnitId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "Unit",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Invoice",
-                schema: "org",
+                schema: _Schema,
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -1082,64 +1114,64 @@ namespace Repository.Migrations.OrgMigrations
                     table.ForeignKey(
                         name: "FK_Invoice_Branch_BranchId",
                         column: x => x.BranchId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "Branch",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Invoice_Currency_CurrencyId",
                         column: x => x.CurrencyId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "Currency",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Invoice_Dealer_DealerId",
                         column: x => x.DealerId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "Dealer",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Invoice_PaymentType_PaymentTypeId",
                         column: x => x.PaymentTypeId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "PaymentType",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Invoice_Shift_ShiftId",
                         column: x => x.ShiftId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "Shift",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Invoice_Store_StoreId",
                         column: x => x.StoreId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "Store",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Invoice_User_CreateUserId",
                         column: x => x.CreateUserId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "User",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Invoice_User_ModifyUserId",
                         column: x => x.ModifyUserId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "User",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
                 name: "FinancialInvoice",
-                schema: "org",
+                schema: _Schema,
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -1163,22 +1195,22 @@ namespace Repository.Migrations.OrgMigrations
                     table.ForeignKey(
                         name: "FK_FinancialInvoice_Financial_FinancialId",
                         column: x => x.FinancialId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "Financial",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_FinancialInvoice_Invoice_InvoiceId",
                         column: x => x.InvoiceId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "Invoice",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
                 name: "InvoiceProduct",
-                schema: "org",
+                schema: _Schema,
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -1211,36 +1243,36 @@ namespace Repository.Migrations.OrgMigrations
                     table.ForeignKey(
                         name: "FK_InvoiceProduct_Invoice_InvoiceId",
                         column: x => x.InvoiceId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "Invoice",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_InvoiceProduct_Product_ProductId",
                         column: x => x.ProductId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "Product",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_InvoiceProduct_Store_StoreId",
                         column: x => x.StoreId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "Store",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_InvoiceProduct_Unit_UnitId",
                         column: x => x.UnitId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "Unit",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Order",
-                schema: "org",
+                schema: _Schema,
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -1280,57 +1312,57 @@ namespace Repository.Migrations.OrgMigrations
                     table.ForeignKey(
                         name: "FK_Order_Branch_BranchId",
                         column: x => x.BranchId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "Branch",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Order_Dealer_DealerId",
                         column: x => x.DealerId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "Dealer",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Order_Invoice_InvoiceId",
                         column: x => x.InvoiceId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "Invoice",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Order_Shift_ShiftId",
                         column: x => x.ShiftId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "Shift",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Order_Table_TableId",
                         column: x => x.TableId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "Table",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Order_User_CreateUserId",
                         column: x => x.CreateUserId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "User",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Order_User_ModifyUserId",
                         column: x => x.ModifyUserId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "User",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
                 name: "OrderProduct",
-                schema: "org",
+                schema: _Schema,
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -1362,29 +1394,29 @@ namespace Repository.Migrations.OrgMigrations
                     table.ForeignKey(
                         name: "FK_OrderProduct_Order_OrderId",
                         column: x => x.OrderId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "Order",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_OrderProduct_Product_ProductId",
                         column: x => x.ProductId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "Product",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_OrderProduct_Unit_UnitId",
                         column: x => x.UnitId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "Unit",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Transaction",
-                schema: "org",
+                schema: _Schema,
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -1417,64 +1449,64 @@ namespace Repository.Migrations.OrgMigrations
                     table.ForeignKey(
                         name: "FK_Transaction_Branch_BranchId",
                         column: x => x.BranchId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "Branch",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Transaction_Dealer_DealerId",
                         column: x => x.DealerId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "Dealer",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Transaction_Order_OrderId",
                         column: x => x.OrderId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "Order",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Transaction_Shift_ShiftId",
                         column: x => x.ShiftId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "Shift",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Transaction_Store_StoreId",
                         column: x => x.StoreId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "Store",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Transaction_Store_ToStoreId",
                         column: x => x.ToStoreId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "Store",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Transaction_User_CreateUserId",
                         column: x => x.CreateUserId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "User",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Transaction_User_ModifyUserId",
                         column: x => x.ModifyUserId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "User",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
                 name: "TransactionProduct",
-                schema: "org",
+                schema: _Schema,
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -1503,59 +1535,59 @@ namespace Repository.Migrations.OrgMigrations
                     table.ForeignKey(
                         name: "FK_TransactionProduct_Product_ProductId",
                         column: x => x.ProductId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "Product",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_TransactionProduct_Store_StoreId",
                         column: x => x.StoreId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "Store",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_TransactionProduct_Transaction_TransactionId",
                         column: x => x.TransactionId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "Transaction",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_TransactionProduct_Unit_UnitId",
                         column: x => x.UnitId,
-                        principalSchema: "org",
+                        principalSchema: _Schema,
                         principalTable: "Unit",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
-                schema: "org",
+                schema: _Schema,
                 table: "Branch",
                 columns: new[] { "Id", "Code", "CodeNumber", "Hide", "ImgPath", "MaskText", "Name", "ParentId", "Status", "TypeId" },
                 values: new object[] { 1L, null, 0L, false, null, null, "Main Branch", 0L, 0, 0L });
 
             migrationBuilder.InsertData(
-                schema: "org",
+                schema: _Schema,
                 table: "CompanyProfile",
                 columns: new[] { "Id", "Address1", "Address2", "ClientId", "Code", "CodeNumber", "CommercialRegister", "DateCreated", "Description", "Email1", "Email2", "Fax1", "Fax2", "Hide", "ImgPath", "MaskText", "Mobile1", "Mobile2", "Name", "NationalityId", "ParentId", "Phone1", "Phone2", "SizeOfCompany", "Status", "TaxCard", "TypeActivity", "TypeId", "Watsapp", "Website" },
                 values: new object[] { 1L, null, null, 1L, "1", 1L, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "info@org.com", null, null, null, true, null, null, "0201111105784", null, "Owner", 68L, 0L, "0201111105784", null, 1L, 0, null, 0L, 0L, null, null });
 
             migrationBuilder.InsertData(
-                schema: "org",
+                schema: _Schema,
                 table: "Currency",
                 columns: new[] { "Id", "Code", "CodeNumber", "Hide", "ImgPath", "IsDefault", "MaskText", "Name", "ParentId", "Rate", "Status", "TypeId" },
                 values: new object[] { 1L, null, 0L, false, null, false, null, "Epg", 0L, 0m, 0, 0L });
 
             migrationBuilder.InsertData(
-                schema: "org",
+                schema: _Schema,
                 table: "Dealer",
                 columns: new[] { "Id", "Address", "Code", "CodeNumber", "Email", "Hide", "ImgPath", "MaskText", "Name", "ParentId", "Phone", "Status", "TypeId" },
                 values: new object[] { 1L, null, "1", 1L, null, false, null, null, "...", 0L, null, 0, 0L });
 
             migrationBuilder.InsertData(
-                schema: "org",
+                schema: _Schema,
                 table: "FinancialType",
                 columns: new[] { "Id", "Code", "CodeNumber", "Hide", "Icon", "ImgPath", "InOut", "MaskText", "Name", "ParentId", "Status", "TypeId" },
                 values: new object[,]
@@ -1566,7 +1598,7 @@ namespace Repository.Migrations.OrgMigrations
                 });
 
             migrationBuilder.InsertData(
-                schema: "org",
+                schema: _Schema,
                 table: "InvoiceType",
                 columns: new[] { "Id", "Code", "CodeNumber", "Group", "Hide", "Icon", "ImgPath", "InOut", "MaskText", "Name", "ParentId", "Status", "TypeId" },
                 values: new object[,]
@@ -1578,7 +1610,7 @@ namespace Repository.Migrations.OrgMigrations
                 });
 
             migrationBuilder.InsertData(
-                schema: "org",
+                schema: _Schema,
                 table: "OrderType",
                 columns: new[] { "Id", "Code", "CodeNumber", "Hide", "Icon", "ImgPath", "MaskText", "Name", "ParentId", "Status", "TypeId" },
                 values: new object[,]
@@ -1588,7 +1620,7 @@ namespace Repository.Migrations.OrgMigrations
                 });
 
             migrationBuilder.InsertData(
-                schema: "org",
+                schema: _Schema,
                 table: "PaymentType",
                 columns: new[] { "Id", "Code", "CodeNumber", "Hide", "ImgPath", "MaskText", "Name", "ParentId", "Status", "TypeId" },
                 values: new object[,]
@@ -1598,7 +1630,7 @@ namespace Repository.Migrations.OrgMigrations
                 });
 
             migrationBuilder.InsertData(
-                schema: "org",
+                schema: _Schema,
                 table: "Permission",
                 columns: new[] { "Id", "Code", "CodeNumber", "Hide", "ImgPath", "Key", "MaskText", "Name", "ParentId", "Status", "TypeId" },
                 values: new object[,]
@@ -1633,7 +1665,7 @@ namespace Repository.Migrations.OrgMigrations
                 });
 
             migrationBuilder.InsertData(
-                schema: "org",
+                schema: _Schema,
                 table: "Permission",
                 columns: new[] { "Id", "Code", "CodeNumber", "Hide", "ImgPath", "Key", "MaskText", "Name", "ParentId", "Status", "TypeId" },
                 values: new object[,]
@@ -1683,7 +1715,7 @@ namespace Repository.Migrations.OrgMigrations
                 });
 
             migrationBuilder.InsertData(
-                schema: "org",
+                schema: _Schema,
                 table: "Permission",
                 columns: new[] { "Id", "Code", "CodeNumber", "Hide", "ImgPath", "Key", "MaskText", "Name", "ParentId", "Status", "TypeId" },
                 values: new object[,]
@@ -1733,7 +1765,7 @@ namespace Repository.Migrations.OrgMigrations
                 });
 
             migrationBuilder.InsertData(
-                schema: "org",
+                schema: _Schema,
                 table: "Permission",
                 columns: new[] { "Id", "Code", "CodeNumber", "Hide", "ImgPath", "Key", "MaskText", "Name", "ParentId", "Status", "TypeId" },
                 values: new object[,]
@@ -1783,7 +1815,7 @@ namespace Repository.Migrations.OrgMigrations
                 });
 
             migrationBuilder.InsertData(
-                schema: "org",
+                schema: _Schema,
                 table: "Permission",
                 columns: new[] { "Id", "Code", "CodeNumber", "Hide", "ImgPath", "Key", "MaskText", "Name", "ParentId", "Status", "TypeId" },
                 values: new object[,]
@@ -1814,7 +1846,7 @@ namespace Repository.Migrations.OrgMigrations
                 });
 
             migrationBuilder.InsertData(
-                schema: "org",
+                schema: _Schema,
                 table: "Preference",
                 columns: new[] { "Id", "Code", "CodeNumber", "Hide", "ImgPath", "Key", "MaskText", "ParentId", "Reference", "Status", "TypeId", "UserId", "Value" },
                 values: new object[,]
@@ -1841,7 +1873,7 @@ namespace Repository.Migrations.OrgMigrations
                 });
 
             migrationBuilder.InsertData(
-                schema: "org",
+                schema: _Schema,
                 table: "Preference",
                 columns: new[] { "Id", "Code", "CodeNumber", "Hide", "ImgPath", "Key", "MaskText", "ParentId", "Reference", "Status", "TypeId", "UserId", "Value" },
                 values: new object[,]
@@ -1891,7 +1923,7 @@ namespace Repository.Migrations.OrgMigrations
                 });
 
             migrationBuilder.InsertData(
-                schema: "org",
+                schema: _Schema,
                 table: "Preference",
                 columns: new[] { "Id", "Code", "CodeNumber", "Hide", "ImgPath", "Key", "MaskText", "ParentId", "Reference", "Status", "TypeId", "UserId", "Value" },
                 values: new object[,]
@@ -1941,7 +1973,7 @@ namespace Repository.Migrations.OrgMigrations
                 });
 
             migrationBuilder.InsertData(
-                schema: "org",
+                schema: _Schema,
                 table: "Preference",
                 columns: new[] { "Id", "Code", "CodeNumber", "Hide", "ImgPath", "Key", "MaskText", "ParentId", "Reference", "Status", "TypeId", "UserId", "Value" },
                 values: new object[,]
@@ -1991,7 +2023,7 @@ namespace Repository.Migrations.OrgMigrations
                 });
 
             migrationBuilder.InsertData(
-                schema: "org",
+                schema: _Schema,
                 table: "Preference",
                 columns: new[] { "Id", "Code", "CodeNumber", "Hide", "ImgPath", "Key", "MaskText", "ParentId", "Reference", "Status", "TypeId", "UserId", "Value" },
                 values: new object[,]
@@ -2005,7 +2037,7 @@ namespace Repository.Migrations.OrgMigrations
                 });
 
             migrationBuilder.InsertData(
-                schema: "org",
+                schema: _Schema,
                 table: "Role",
                 columns: new[] { "Id", "Code", "CodeNumber", "Hide", "ImgPath", "MaskText", "Name", "ParentId", "Status", "TypeId" },
                 values: new object[,]
@@ -2015,13 +2047,13 @@ namespace Repository.Migrations.OrgMigrations
                 });
 
             migrationBuilder.InsertData(
-                schema: "org",
+                schema: _Schema,
                 table: "Safe",
                 columns: new[] { "Id", "Code", "CodeNumber", "Hide", "ImgPath", "MaskText", "Name", "ParentId", "Status", "TypeId" },
                 values: new object[] { 1L, null, 0L, false, null, null, "Main Safe", 0L, 0, 0L });
 
             migrationBuilder.InsertData(
-                schema: "org",
+                schema: _Schema,
                 table: "TransactionType",
                 columns: new[] { "Id", "Code", "CodeNumber", "Hide", "Icon", "ImgPath", "InOut", "MaskText", "Name", "ParentId", "Status", "TypeId" },
                 values: new object[,]
@@ -2035,7 +2067,7 @@ namespace Repository.Migrations.OrgMigrations
                 });
 
             migrationBuilder.InsertData(
-                schema: "org",
+                schema: _Schema,
                 table: "RolePermission",
                 columns: new[] { "Id", "Code", "CodeNumber", "Hide", "ImgPath", "MaskText", "ParentId", "PermissionId", "RoleId", "Status", "TypeId" },
                 values: new object[,]
@@ -2054,13 +2086,13 @@ namespace Repository.Migrations.OrgMigrations
                 });
 
             migrationBuilder.InsertData(
-                schema: "org",
+                schema: _Schema,
                 table: "Store",
                 columns: new[] { "Id", "BranchId", "Code", "CodeNumber", "Hide", "ImgPath", "MaskText", "Name", "ParentId", "Status", "TypeId" },
                 values: new object[] { 1L, 1L, null, 0L, false, null, null, "Main Store", 0L, 0, 0L });
 
             migrationBuilder.InsertData(
-                schema: "org",
+                schema: _Schema,
                 table: "User",
                 columns: new[] { "Id", "BranchId", "Code", "CodeNumber", "Hide", "ImgPath", "LoginUserId", "MaskText", "Name", "ParentId", "Password", "RoleId", "Status", "TypeId", "UserName" },
                 values: new object[,]
@@ -2072,682 +2104,686 @@ namespace Repository.Migrations.OrgMigrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_Financial_BranchId",
-                schema: "org",
+                schema: _Schema,
                 table: "Financial",
                 column: "BranchId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Financial_CreateUserId",
-                schema: "org",
+                schema: _Schema,
                 table: "Financial",
                 column: "CreateUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Financial_CurrencyId",
-                schema: "org",
+                schema: _Schema,
                 table: "Financial",
                 column: "CurrencyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Financial_DealerId",
-                schema: "org",
+                schema: _Schema,
                 table: "Financial",
                 column: "DealerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Financial_ModifyUserId",
-                schema: "org",
+                schema: _Schema,
                 table: "Financial",
                 column: "ModifyUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Financial_OutlayId",
-                schema: "org",
+                schema: _Schema,
                 table: "Financial",
                 column: "OutlayId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Financial_PaymentTypeId",
-                schema: "org",
+                schema: _Schema,
                 table: "Financial",
                 column: "PaymentTypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Financial_SafeId",
-                schema: "org",
+                schema: _Schema,
                 table: "Financial",
                 column: "SafeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Financial_ShiftId",
-                schema: "org",
+                schema: _Schema,
                 table: "Financial",
                 column: "ShiftId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_FinancialInvoice_FinancialId",
-                schema: "org",
+                schema: _Schema,
                 table: "FinancialInvoice",
                 column: "FinancialId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_FinancialInvoice_InvoiceId",
-                schema: "org",
+                schema: _Schema,
                 table: "FinancialInvoice",
                 column: "InvoiceId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Inventory_BranchId",
-                schema: "org",
+                schema: _Schema,
                 table: "Inventory",
                 column: "BranchId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Inventory_CreateUserId",
-                schema: "org",
+                schema: _Schema,
                 table: "Inventory",
                 column: "CreateUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Inventory_ModifyUserId",
-                schema: "org",
+                schema: _Schema,
                 table: "Inventory",
                 column: "ModifyUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Inventory_ShiftId",
-                schema: "org",
+                schema: _Schema,
                 table: "Inventory",
                 column: "ShiftId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Inventory_StoreId",
-                schema: "org",
+                schema: _Schema,
                 table: "Inventory",
                 column: "StoreId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Inventory_UserId",
-                schema: "org",
+                schema: _Schema,
                 table: "Inventory",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_InventoryProduct_InventoryId",
-                schema: "org",
+                schema: _Schema,
                 table: "InventoryProduct",
                 column: "InventoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_InventoryProduct_ProductId",
-                schema: "org",
+                schema: _Schema,
                 table: "InventoryProduct",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_InventoryProduct_UnitId",
-                schema: "org",
+                schema: _Schema,
                 table: "InventoryProduct",
                 column: "UnitId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Invoice_BranchId",
-                schema: "org",
+                schema: _Schema,
                 table: "Invoice",
                 column: "BranchId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Invoice_CreateUserId",
-                schema: "org",
+                schema: _Schema,
                 table: "Invoice",
                 column: "CreateUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Invoice_CurrencyId",
-                schema: "org",
+                schema: _Schema,
                 table: "Invoice",
                 column: "CurrencyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Invoice_DealerId",
-                schema: "org",
+                schema: _Schema,
                 table: "Invoice",
                 column: "DealerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Invoice_ModifyUserId",
-                schema: "org",
+                schema: _Schema,
                 table: "Invoice",
                 column: "ModifyUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Invoice_PaymentTypeId",
-                schema: "org",
+                schema: _Schema,
                 table: "Invoice",
                 column: "PaymentTypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Invoice_ShiftId",
-                schema: "org",
+                schema: _Schema,
                 table: "Invoice",
                 column: "ShiftId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Invoice_StoreId",
-                schema: "org",
+                schema: _Schema,
                 table: "Invoice",
                 column: "StoreId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Invoice_TransactionId",
-                schema: "org",
+                schema: _Schema,
                 table: "Invoice",
                 column: "TransactionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_InvoiceProduct_InvoiceId",
-                schema: "org",
+                schema: _Schema,
                 table: "InvoiceProduct",
                 column: "InvoiceId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_InvoiceProduct_ProductId",
-                schema: "org",
+                schema: _Schema,
                 table: "InvoiceProduct",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_InvoiceProduct_StoreId",
-                schema: "org",
+                schema: _Schema,
                 table: "InvoiceProduct",
                 column: "StoreId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_InvoiceProduct_UnitId",
-                schema: "org",
+                schema: _Schema,
                 table: "InvoiceProduct",
                 column: "UnitId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Order_BranchId",
-                schema: "org",
+                schema: _Schema,
                 table: "Order",
                 column: "BranchId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Order_CreateUserId",
-                schema: "org",
+                schema: _Schema,
                 table: "Order",
                 column: "CreateUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Order_DealerId",
-                schema: "org",
+                schema: _Schema,
                 table: "Order",
                 column: "DealerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Order_InvoiceId",
-                schema: "org",
+                schema: _Schema,
                 table: "Order",
                 column: "InvoiceId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Order_ModifyUserId",
-                schema: "org",
+                schema: _Schema,
                 table: "Order",
                 column: "ModifyUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Order_ShiftId",
-                schema: "org",
+                schema: _Schema,
                 table: "Order",
                 column: "ShiftId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Order_TableId",
-                schema: "org",
+                schema: _Schema,
                 table: "Order",
                 column: "TableId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderProduct_OrderId",
-                schema: "org",
+                schema: _Schema,
                 table: "OrderProduct",
                 column: "OrderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderProduct_ProductId",
-                schema: "org",
+                schema: _Schema,
                 table: "OrderProduct",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderProduct_UnitId",
-                schema: "org",
+                schema: _Schema,
                 table: "OrderProduct",
                 column: "UnitId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Product_ClassificationId",
-                schema: "org",
+                schema: _Schema,
                 table: "Product",
                 column: "ClassificationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Product_DealerId",
-                schema: "org",
+                schema: _Schema,
                 table: "Product",
                 column: "DealerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProductPropertyElement_ProductId",
-                schema: "org",
+                schema: _Schema,
                 table: "ProductPropertyElement",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProductPropertyElement_PropertyElementId",
-                schema: "org",
+                schema: _Schema,
                 table: "ProductPropertyElement",
                 column: "PropertyElementId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProductPropertyElement_PropertyId",
-                schema: "org",
+                schema: _Schema,
                 table: "ProductPropertyElement",
                 column: "PropertyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProductRecipe_ProductId",
-                schema: "org",
+                schema: _Schema,
                 table: "ProductRecipe",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProductUnit_ProductId",
-                schema: "org",
+                schema: _Schema,
                 table: "ProductUnit",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProductUnit_UnitId",
-                schema: "org",
+                schema: _Schema,
                 table: "ProductUnit",
                 column: "UnitId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PropertyElement_PropertyId",
-                schema: "org",
+                schema: _Schema,
                 table: "PropertyElement",
                 column: "PropertyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RolePermission_PermissionId",
-                schema: "org",
+                schema: _Schema,
                 table: "RolePermission",
                 column: "PermissionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RolePermission_RoleId",
-                schema: "org",
+                schema: _Schema,
                 table: "RolePermission",
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Store_BranchId",
-                schema: "org",
+                schema: _Schema,
                 table: "Store",
                 column: "BranchId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Transaction_BranchId",
-                schema: "org",
+                schema: _Schema,
                 table: "Transaction",
                 column: "BranchId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Transaction_CreateUserId",
-                schema: "org",
+                schema: _Schema,
                 table: "Transaction",
                 column: "CreateUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Transaction_DealerId",
-                schema: "org",
+                schema: _Schema,
                 table: "Transaction",
                 column: "DealerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Transaction_ModifyUserId",
-                schema: "org",
+                schema: _Schema,
                 table: "Transaction",
                 column: "ModifyUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Transaction_OrderId",
-                schema: "org",
+                schema: _Schema,
                 table: "Transaction",
                 column: "OrderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Transaction_ShiftId",
-                schema: "org",
+                schema: _Schema,
                 table: "Transaction",
                 column: "ShiftId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Transaction_StoreId",
-                schema: "org",
+                schema: _Schema,
                 table: "Transaction",
                 column: "StoreId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Transaction_ToStoreId",
-                schema: "org",
+                schema: _Schema,
                 table: "Transaction",
                 column: "ToStoreId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TransactionProduct_ProductId",
-                schema: "org",
+                schema: _Schema,
                 table: "TransactionProduct",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TransactionProduct_StoreId",
-                schema: "org",
+                schema: _Schema,
                 table: "TransactionProduct",
                 column: "StoreId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TransactionProduct_TransactionId",
-                schema: "org",
+                schema: _Schema,
                 table: "TransactionProduct",
                 column: "TransactionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TransactionProduct_UnitId",
-                schema: "org",
+                schema: _Schema,
                 table: "TransactionProduct",
                 column: "UnitId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_User_BranchId",
-                schema: "org",
+                schema: _Schema,
                 table: "User",
                 column: "BranchId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_User_RoleId",
-                schema: "org",
+                schema: _Schema,
                 table: "User",
                 column: "RoleId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Invoice_Transaction_TransactionId",
-                schema: "org",
+                schema: _Schema,
                 table: "Invoice",
                 column: "TransactionId",
-                principalSchema: "org",
+                principalSchema: _Schema,
                 principalTable: "Transaction",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.NoAction);
+                onDelete: ReferentialAction.Restrict);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
                 name: "FK_Invoice_Branch_BranchId",
-                schema: "org",
+                schema: _Schema,
                 table: "Invoice");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Order_Branch_BranchId",
-                schema: "org",
+                schema: _Schema,
                 table: "Order");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Store_Branch_BranchId",
-                schema: "org",
+                schema: _Schema,
                 table: "Store");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Transaction_Branch_BranchId",
-                schema: "org",
+                schema: _Schema,
                 table: "Transaction");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_User_Branch_BranchId",
-                schema: "org",
+                schema: _Schema,
                 table: "User");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Invoice_Currency_CurrencyId",
-                schema: "org",
+                schema: _Schema,
                 table: "Invoice");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Invoice_Dealer_DealerId",
-                schema: "org",
+                schema: _Schema,
                 table: "Invoice");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Order_Dealer_DealerId",
-                schema: "org",
+                schema: _Schema,
                 table: "Order");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Transaction_Dealer_DealerId",
-                schema: "org",
+                schema: _Schema,
                 table: "Transaction");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Invoice_PaymentType_PaymentTypeId",
-                schema: "org",
+                schema: _Schema,
                 table: "Invoice");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Invoice_Shift_ShiftId",
-                schema: "org",
+                schema: _Schema,
                 table: "Invoice");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Order_Shift_ShiftId",
-                schema: "org",
+                schema: _Schema,
                 table: "Order");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Transaction_Shift_ShiftId",
-                schema: "org",
+                schema: _Schema,
                 table: "Transaction");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Invoice_User_CreateUserId",
-                schema: "org",
+                schema: _Schema,
                 table: "Invoice");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Invoice_User_ModifyUserId",
-                schema: "org",
+                schema: _Schema,
                 table: "Invoice");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Order_User_CreateUserId",
-                schema: "org",
+                schema: _Schema,
                 table: "Order");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Order_User_ModifyUserId",
-                schema: "org",
+                schema: _Schema,
                 table: "Order");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Transaction_User_CreateUserId",
-                schema: "org",
+                schema: _Schema,
                 table: "Transaction");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Transaction_User_ModifyUserId",
-                schema: "org",
+                schema: _Schema,
                 table: "Transaction");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Order_Invoice_InvoiceId",
-                schema: "org",
+                schema: _Schema,
                 table: "Order");
 
             migrationBuilder.DropTable(
                 name: "CompanyProfile",
-                schema: "org");
+                schema: _Schema);
 
             migrationBuilder.DropTable(
                 name: "FinancialInvoice",
-                schema: "org");
+                schema: _Schema);
 
             migrationBuilder.DropTable(
                 name: "FinancialType",
-                schema: "org");
+                schema: _Schema);
 
             migrationBuilder.DropTable(
                 name: "InventoryProduct",
-                schema: "org");
+                schema: _Schema);
 
             migrationBuilder.DropTable(
                 name: "InvoiceProduct",
-                schema: "org");
+                schema: _Schema);
 
             migrationBuilder.DropTable(
                 name: "InvoiceType",
-                schema: "org");
+                schema: _Schema);
 
             migrationBuilder.DropTable(
                 name: "LogSys",
-                schema: "org");
+                schema: _Schema);
+
+            migrationBuilder.DropTable(
+                name: "Notification",
+                schema: _Schema);
 
             migrationBuilder.DropTable(
                 name: "OrderProduct",
-                schema: "org");
+                schema: _Schema);
 
             migrationBuilder.DropTable(
                 name: "OrderType",
-                schema: "org");
+                schema: _Schema);
 
             migrationBuilder.DropTable(
                 name: "Preference",
-                schema: "org");
+                schema: _Schema);
 
             migrationBuilder.DropTable(
                 name: "ProductPropertyElement",
-                schema: "org");
+                schema: _Schema);
 
             migrationBuilder.DropTable(
                 name: "ProductRecipe",
-                schema: "org");
+                schema: _Schema);
 
             migrationBuilder.DropTable(
                 name: "ProductUnit",
-                schema: "org");
+                schema: _Schema);
 
             migrationBuilder.DropTable(
                 name: "RolePermission",
-                schema: "org");
+                schema: _Schema);
 
             migrationBuilder.DropTable(
                 name: "TransactionProduct",
-                schema: "org");
+                schema: _Schema);
 
             migrationBuilder.DropTable(
                 name: "TransactionType",
-                schema: "org");
+                schema: _Schema);
 
             migrationBuilder.DropTable(
                 name: "Financial",
-                schema: "org");
+                schema: _Schema);
 
             migrationBuilder.DropTable(
                 name: "Inventory",
-                schema: "org");
+                schema: _Schema);
 
             migrationBuilder.DropTable(
                 name: "PropertyElement",
-                schema: "org");
+                schema: _Schema);
 
             migrationBuilder.DropTable(
                 name: "Permission",
-                schema: "org");
+                schema: _Schema);
 
             migrationBuilder.DropTable(
                 name: "Product",
-                schema: "org");
+                schema: _Schema);
 
             migrationBuilder.DropTable(
                 name: "Unit",
-                schema: "org");
+                schema: _Schema);
 
             migrationBuilder.DropTable(
                 name: "Outlay",
-                schema: "org");
+                schema: _Schema);
 
             migrationBuilder.DropTable(
                 name: "Safe",
-                schema: "org");
+                schema: _Schema);
 
             migrationBuilder.DropTable(
                 name: "Property",
-                schema: "org");
+                schema: _Schema);
 
             migrationBuilder.DropTable(
                 name: "Classification",
-                schema: "org");
+                schema: _Schema);
 
             migrationBuilder.DropTable(
                 name: "Branch",
-                schema: "org");
+                schema: _Schema);
 
             migrationBuilder.DropTable(
                 name: "Currency",
-                schema: "org");
+                schema: _Schema);
 
             migrationBuilder.DropTable(
                 name: "Dealer",
-                schema: "org");
+                schema: _Schema);
 
             migrationBuilder.DropTable(
                 name: "PaymentType",
-                schema: "org");
+                schema: _Schema);
 
             migrationBuilder.DropTable(
                 name: "Shift",
-                schema: "org");
+                schema: _Schema);
 
             migrationBuilder.DropTable(
                 name: "User",
-                schema: "org");
+                schema: _Schema);
 
             migrationBuilder.DropTable(
                 name: "Role",
-                schema: "org");
+                schema: _Schema);
 
             migrationBuilder.DropTable(
                 name: "Invoice",
-                schema: "org");
+                schema: _Schema);
 
             migrationBuilder.DropTable(
                 name: "Transaction",
-                schema: "org");
+                schema: _Schema);
 
             migrationBuilder.DropTable(
                 name: "Order",
-                schema: "org");
+                schema: _Schema);
 
             migrationBuilder.DropTable(
                 name: "Store",
-                schema: "org");
+                schema: _Schema);
 
             migrationBuilder.DropTable(
                 name: "Table",
-                schema: "org");
+                schema: _Schema);
         }
     }
 }

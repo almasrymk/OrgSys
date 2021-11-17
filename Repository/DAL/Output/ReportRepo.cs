@@ -15,7 +15,7 @@ namespace Repository
         public ReportRepo(string Schema)
         {
             if (this.db == null)
-                this.db = new OrgContext(new MyDbContextOptions<OrgContext> { Schema = Schema });
+                this.db = new OrgContext(new DbContextOptions<OrgContext>(), Schema);
         }
 
         public IQueryable<InvoiceDetail> InvoiceDetails(long typeId, DateTime fromDate, DateTime toDate, long dealerId, long shiftId, long branchId, long userId)

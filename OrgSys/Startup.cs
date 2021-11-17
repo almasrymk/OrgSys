@@ -21,6 +21,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace OrgSys
 {
@@ -45,7 +46,6 @@ namespace OrgSys
 
             services.AddOptions();
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
-            services.AddSingleton<DbContextOptions<OrgContext>, MyDbContextOptions<OrgContext>>();
             services.AddMvc(options => options.EnableEndpointRouting = false);            
             
             services.AddLocalization(options => options.ResourcesPath = "Resource");
@@ -60,8 +60,10 @@ namespace OrgSys
             services.AddRazorPages().AddRazorRuntimeCompilation();
             services.AddRazorPages().AddViewLocalization();
 
+            string assemblyName = typeof(OrgContext).Namespace;
             services.AddDbContext<AdminContext>(options => options.UseSqlServer(Configuration.GetConnectionString("OrgConnection"), x => x.MigrationsHistoryTable("__AdminMigrationsHistory", "admin")));
-            services.AddDbContext<OrgContext>(options => options.UseSqlServer(Configuration.GetConnectionString("OrgConnection"), x => x.MigrationsHistoryTable("__orgMigrationsHistory", "org")).ReplaceService<IModelCacheKeyFactory, DbSchemaAwareModelCacheKeyFactory>()) ;
+            services.AddDbContext<OrgContext>(options => options.UseSqlServer(Configuration.GetConnectionString("OrgConnection"), x => x.MigrationsHistoryTable("__MigrationsHistory", "org")).ReplaceService<IModelCacheKeyFactory, DbSchemaAwareModelCacheKeyFactory>().ReplaceService<IMigrationsAssembly, DbSchemaAwareMigrationAssembly>());
+            //services.AddDbContext<OrgContext>(options => options.UseSqlServer(Configuration.GetConnectionString("OrgConnection"), x => x.MigrationsAssembly(assemblyName)).ReplaceService<IModelCacheKeyFactory, DbSchemaAwareModelCacheKeyFactory>().ReplaceService<IMigrationsAssembly, DbSchemaAwareMigrationAssembly>());
 
             services.ConfigureApplicationCookie(options =>
             {

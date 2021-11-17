@@ -1,11 +1,17 @@
 ﻿using Entity.Model;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Migrations.Internal;
 using Microsoft.EntityFrameworkCore.SqlServer.Migrations.Internal;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Configuration;
+using System;
+using System.IO;
+using System.Reflection;
 using System.Text;
 using Utility;
 
@@ -13,17 +19,17 @@ namespace Repository
 {
     public class OrgContext : DbContext
     {
-        public string schema { get; set; } = "org";
+        public string Schema { get; set; } = "org";
 
         public OrgContext(DbContextOptions<OrgContext> options) : base(options)
         {
 
         }
 
-        public OrgContext(DbContextOptions<OrgContext> MyOptions , string Schema) : base(MyOptions)
+        public OrgContext(DbContextOptions<OrgContext> MyOptions, string schema) : base(MyOptions)
         {
-            if ("" + Schema != "")
-                schema = Schema;
+            if ("" + schema != "")
+                Schema = schema;
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -31,12 +37,14 @@ namespace Repository
             base.OnConfiguring(optionsBuilder);
             var builder = new ConfigurationBuilder().AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
             IConfigurationRoot config = builder.Build();
-            optionsBuilder.UseSqlServer(config.GetConnectionString("OrgConnection"), e => e.MigrationsHistoryTable($"__{schema}MigrationsHistory", schema)).ReplaceService<IModelCacheKeyFactory, DbSchemaAwareModelCacheKeyFactory>();
+            string assemblyName = typeof(OrgContext).Namespace;
+            optionsBuilder.UseSqlServer(config.GetConnectionString("OrgConnection"), e => e.MigrationsHistoryTable($"__MigrationsHistory", Schema)).ReplaceService<IModelCacheKeyFactory, DbSchemaAwareModelCacheKeyFactory>().ReplaceService<IMigrationsAssembly, DbSchemaAwareMigrationAssembly>();
         }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasDefaultSchema(schema);
+            modelBuilder.HasDefaultSchema(Schema);
 
             modelBuilder.Entity<Permission>().HasData(
                 new Permission { Id = 1, Name = "Organizer", Key = "Organizer", ParentId = 0 },
@@ -529,6 +537,7 @@ namespace Repository
         public virtual DbSet<Outlay> Outlays { get; set; }
         public virtual DbSet<Currency> Currencys { get; set; }
         public virtual DbSet<RolePermission> RolePermissions { get; set; }
+        public virtual DbSet<Notification> Notifications { get; set; }
     }
 
     public class DbSchemaAwareModelCacheKeyFactory : IModelCacheKeyFactory
@@ -539,7 +548,7 @@ namespace Repository
             var dataContext = context as OrgContext;
             if (dataContext != null)
             {
-                _schemaName = dataContext.schema;
+                _schemaName = dataContext.Schema;
             }
             return new MultiTenantModelCacheKey(_schemaName, context);
         }
@@ -558,9 +567,40 @@ namespace Repository
             return _schemaName.GetHashCode();
         }
     }
-  
-    public class MyDbContextOptions<t> : DbContextOptions<t> where t : DbContext
-    {        
-        public string Schema { get; set; }
+
+    public class DbSchemaAwareMigrationAssembly : MigrationsAssembly
+    {
+        private readonly DbContext _context;
+
+        public DbSchemaAwareMigrationAssembly(ICurrentDbContext currentContext,
+              IDbContextOptions options, IMigrationsIdGenerator idGenerator,
+              IDiagnosticsLogger<DbLoggerCategory.Migrations> logger)
+          : base(currentContext, options, idGenerator, logger)
+        {
+            _context = currentContext.Context;
+        }
+        public override string FindMigrationId(string nameOrId)
+        {
+            return base.FindMigrationId(nameOrId);
+        }
+
+        public override Migration CreateMigration(TypeInfo migrationClass,
+              string activeProvider)
+        {
+            if (activeProvider == null)
+                throw new ArgumentNullException(nameof(activeProvider));
+
+            PropertyInfo pinfo = typeof(OrgContext).GetProperty("Schema");
+            var Schema = "" + pinfo.GetValue(_context);
+
+            var hasCtorWithSchema = migrationClass.GetConstructor(new[] { typeof(string) }) != null;
+            if (hasCtorWithSchema)
+            {
+                var instance = (Migration)Activator.CreateInstance(migrationClass.AsType(), Schema);
+                instance.ActiveProvider = activeProvider;
+                return instance;
+            }
+            return base.CreateMigration(migrationClass, activeProvider);
+        }
     }
 }
