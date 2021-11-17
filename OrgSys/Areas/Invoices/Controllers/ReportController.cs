@@ -91,7 +91,7 @@ namespace OrgSys.Areas.Invoices.Controllers
             ViewBag.FromDate = fromDate;
             ViewBag.ToDate = toDate;
             ViewBag.DealerId = dealerId;
-            ViewBag.DealerName = dealerId == 0 ? "..." : new DealerService().Get(dealerId).Name;
+            ViewBag.DealerName = dealerId == 0 ? "..." : new DealerService(User.GetSchema()).Get(dealerId).Name;
             var obList = reportService.TotainvoiceCustomers(1,fromDate.Value, toDate.Value, dealerId,  page, pageSize);
             return Request.Headers["X-Requested-With"] == "XMLHttpRequest" ? (ActionResult)PartialView("TotalInvoiceCustomer", obList) : View(obList);
         }

@@ -181,6 +181,7 @@ namespace OrgSys.Controllers
                 new RequestService().Delete(old.Id);
 
             new RequestService().Save(_request);
+
             Utility.General.SendEmail(_request.Email, "Organizer", "Wellcom", _request.URL);
             return RedirectToAction("RegDone");
         }
