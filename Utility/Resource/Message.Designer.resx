@@ -264,11 +264,17 @@
   <data name="SupplierRequired" xml:space="preserve">
     <value>Supplier Required</value>
   </data>
+  <data name="ThankYou" xml:space="preserve">
+    <value>Thank you for your interest in our service. To start with us in Orignizer, you must complete the registration process first according to the conditions described during the creation of the request, and then start with the trial version or the instant subscription.</value>
+  </data>
   <data name="TheProductWasSelected" xml:space="preserve">
     <value>The Product Was Selected</value>
   </data>
   <data name="ThisUnitWasSelected" xml:space="preserve">
     <value>This unit has already been selected</value>
+  </data>
+  <data name="ToContactTechnicalSupport" xml:space="preserve">
+    <value>You can contact technical support if there is a problem during the registration process from this link.</value>
   </data>
   <data name="UnitRequired" xml:space="preserve">
     <value>Unit Required</value>
@@ -278,5 +284,8 @@
   </data>
   <data name="UsernameRequired" xml:space="preserve">
     <value>Username / Email is Required</value>
+  </data>
+  <data name="YoHaveAccount" xml:space="preserve">
+    <value>If you already have an account,</value>
   </data>
 </root>

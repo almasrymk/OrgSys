@@ -1,11 +1,17 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.ViewEngines;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Configuration;
 using System.IO;
 using System.Linq;
 using System.Net.Mail;
+using System.Net.Mime;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace Utility
 {
@@ -78,7 +84,7 @@ namespace Utility
         //    return (IConfiguration)obj;
         //}
 
-        public static void SendEmail(string Email , string Sender, string Subject, string Body)
+        public static void SendEmail(string Email , string Sender, string Subject, string Body )
         {
             SmtpClient client = new SmtpClient();
             client.Host = "mail.organizersys.com";
@@ -87,18 +93,58 @@ namespace Utility
             client.Credentials = new System.Net.NetworkCredential("info@organizersys.com", "Testg@83");
             client.EnableSsl = false;
             client.Timeout = 50000;
-
+          
             MailMessage mailMessage = null;           
             mailMessage = new MailMessage();
             mailMessage.From = new MailAddress("info@organizersys.com", Sender);
-            mailMessage.To.Add(Email);
-            Attachment oAttachment = new Attachment(@"wwwroot/logos/Logo.png");
-            oAttachment.ContentId = "imgId";
-            mailMessage.Attachments.Add(oAttachment);
-            mailMessage.Body = Body;
+            mailMessage.To.Add(new MailAddress(Email, Sender));
+            //Attachment oAttachment = new Attachment(@"wwwroot/logos/Logo.png");
+            //oAttachment.ContentId = "MyImage";
+            //mailMessage.Attachments.Add(oAttachment);
+
+            AlternateView view = AlternateView.CreateAlternateViewFromString(Body , null, MediaTypeNames.Text.Html);
+            LinkedResource resource = new LinkedResource(Path.GetFullPath("wwwroot/logos/Logo.png"));
+            resource.ContentId = "Image1";
+            view.LinkedResources.Add(resource);
+            mailMessage.AlternateViews.Add(view);
+            //mailMessage.Body = Body;
             mailMessage.Subject = Subject;
-            mailMessage.IsBodyHtml = true;
+            mailMessage.IsBodyHtml = true;            
             client.Send(mailMessage);
+        }
+
+        public static async Task<string> RenderViewAsync<TModel>(Controller controller, string viewName, TModel model, bool partial = false)
+        {
+            if (string.IsNullOrEmpty(viewName))
+            {
+                viewName = controller.ControllerContext.ActionDescriptor.ActionName;
+            }
+
+            controller.ViewData.Model = model;
+
+            using (var writer = new StringWriter())
+            {
+                IViewEngine viewEngine = controller.HttpContext.RequestServices.GetService(typeof(ICompositeViewEngine)) as ICompositeViewEngine;
+                ViewEngineResult viewResult = viewEngine.FindView(controller.ControllerContext, viewName, !partial);
+
+                if (viewResult.Success == false)
+                {
+                    return $"A view with the name {viewName} could not be found";
+                }
+
+                ViewContext viewContext = new ViewContext(
+                    controller.ControllerContext,
+                    viewResult.View,
+                    controller.ViewData,
+                    controller.TempData,
+                    writer,
+                    new HtmlHelperOptions()
+                );
+
+                await viewResult.View.RenderAsync(viewContext);
+
+                return writer.GetStringBuilder().ToString();
+            }
         }
     }
 }

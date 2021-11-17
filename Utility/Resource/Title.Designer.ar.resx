@@ -351,6 +351,9 @@
   <data name="FromStore" xml:space="preserve">
     <value>من متجر</value>
   </data>
+  <data name="GetStarted" xml:space="preserve">
+    <value>البدء</value>
+  </data>
   <data name="History" xml:space="preserve">
     <value>السجل</value>
   </data>
@@ -656,6 +659,9 @@
   </data>
   <data name="Start" xml:space="preserve">
     <value>يبدأ من</value>
+  </data>
+  <data name="STARTNOW" xml:space="preserve">
+    <value>ابدأ الآن</value>
   </data>
   <data name="Store" xml:space="preserve">
     <value>المخزن</value>

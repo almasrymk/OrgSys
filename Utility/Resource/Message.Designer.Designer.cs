@@ -502,6 +502,15 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Thank you for your interest in our service. To start with us in Orignizer, you must complete the registration process first according to the conditions described during the creation of the request, and then start with the trial version or the instant subscription..
+        /// </summary>
+        public static string ThankYou {
+            get {
+                return ResourceManager.GetString("ThankYou", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The Product Was Selected.
         /// </summary>
         public static string TheProductWasSelected {
@@ -516,6 +525,15 @@ namespace Utility.Resource {
         public static string ThisUnitWasSelected {
             get {
                 return ResourceManager.GetString("ThisUnitWasSelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can contact technical support if there is a problem during the registration process from this link..
+        /// </summary>
+        public static string ToContactTechnicalSupport {
+            get {
+                return ResourceManager.GetString("ToContactTechnicalSupport", resourceCulture);
             }
         }
         
@@ -543,6 +561,15 @@ namespace Utility.Resource {
         public static string UsernameRequired {
             get {
                 return ResourceManager.GetString("UsernameRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If you already have an account,.
+        /// </summary>
+        public static string YoHaveAccount {
+            get {
+                return ResourceManager.GetString("YoHaveAccount", resourceCulture);
             }
         }
     }

@@ -258,11 +258,17 @@
   <data name="SupplierRequired" xml:space="preserve">
     <value>يجب ادخال المورد</value>
   </data>
+  <data name="ThankYou" xml:space="preserve">
+    <value>شكرا لاهتمامك بخدمتنا ، للبدء معنا فى اورجنيزر يجب اتمام عملية الستجيل اولا طبقا للشورط الموضحة اثناء انشاء الطلب ثم البدأ بالنسخة التجربية او الاشتراك فوار</value>
+  </data>
   <data name="TheProductWasSelected" xml:space="preserve">
     <value>هذا المنتج بالفعل تم اختياره</value>
   </data>
   <data name="ThisUnitWasSelected" xml:space="preserve">
     <value>هذة الوحدة بالفعل تم اختيارها</value>
+  </data>
+  <data name="ToContactTechnicalSupport" xml:space="preserve">
+    <value>You can contact technical support if there is a problem during the registration process from this link.</value>
   </data>
   <data name="UnitRequired" xml:space="preserve">
     <value>يجب ادخال الوحدة</value>
@@ -272,5 +278,8 @@
   </data>
   <data name="UsernameRequired" xml:space="preserve">
     <value>يجب ادخال اسم المستخدم / البريد الالكتروني</value>
+  </data>
+  <data name="YoHaveAccount" xml:space="preserve">
+    <value>إذا كان لديك حساب بالفعل ،</value>
   </data>
 </root>

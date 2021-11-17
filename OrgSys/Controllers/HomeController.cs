@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Net.Mail;
+using System.Net.Mime;
 using Entity.Model;
 using Entity.ModelView;
 using Microsoft.AspNetCore.Authorization;
@@ -72,6 +74,12 @@ namespace OrgSys.Controllers
         public IActionResult Notfound()
         {
             return View();
+        }
+
+        [AllowAnonymous]
+        public IActionResult MailTemplate()
+        {
+            return View(new MailViewModel { Sender = "Orgnizer", Receiver = "Ahmed Ali", Date = DateTime.Now.ToString("dd/MMM/yyyy") });
         }
 
         [AllowAnonymous]
@@ -174,6 +182,9 @@ namespace OrgSys.Controllers
             var Key = string.Format("{0:000000000}", new Random().Next(0, 999999999));
             _request.Key = Key;
             _request.URL = $"{Request.Scheme}://{Request.Host}{Request.PathBase}/Home/Register?Key=" + Utility.Security.Encrypt(Key);
+            var LoginURL = $"{Request.Scheme}://{Request.Host}{Request.PathBase}/Home/Login";
+            var BaseUrl = $"{Request.Scheme}://{Request.Host}{Request.PathBase}";
+            var SupploerURL = $"{Request.Scheme}://{Request.Host}{Request.PathBase}/Home/Login";
             _request.ExpireDate = DateTime.Now.AddDays(2);
 
             var old = new RequestService().GetEmail(_request.Email);
@@ -181,9 +192,17 @@ namespace OrgSys.Controllers
                 new RequestService().Delete(old.Id);
 
             new RequestService().Save(_request);
-
-            Utility.General.SendEmail(_request.Email, "Organizer", "Wellcom", _request.URL);
+           
+            var Body = General.RenderViewAsync<MailViewModel>(this, "MailTemplate", new MailViewModel { Date = DateTime.Now.ToString("dd MMM yyyy"), Sender = "Organizer", Receiver = _request.Name, LoginUrl = LoginURL, TechnicalSupportUrl = SupploerURL, Url = _request.URL , BaseUrl = BaseUrl }).Result;
+            Utility.General.SendEmail(_request.Email, "Organizer", "Wellcom", Body);
             return RedirectToAction("RegDone");
+        }
+
+        public static string FixBase64ForImage(string Image)
+        {
+            System.Text.StringBuilder sbText = new System.Text.StringBuilder(Image, Image.Length);
+            sbText.Replace("\r\n", string.Empty); sbText.Replace(" ", string.Empty);
+            return sbText.ToString();
         }
 
         [HttpGet]
@@ -304,7 +323,7 @@ namespace OrgSys.Controllers
                 ViewBag.message = MsgError;
             ViewBag.status = Status.ToString();
 
-            var IdUser = _userService.Get(id);
+            var IdUser = new UserService(User.GetSchema()).Get(id);
             return View("Profile", IdUser);
         }
 

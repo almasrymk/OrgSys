@@ -351,6 +351,9 @@
   <data name="FromStore" xml:space="preserve">
     <value>From Store</value>
   </data>
+  <data name="GetStarted" xml:space="preserve">
+    <value>Get Started</value>
+  </data>
   <data name="History" xml:space="preserve">
     <value>History</value>
   </data>
@@ -656,6 +659,9 @@
   </data>
   <data name="Start" xml:space="preserve">
     <value>Start</value>
+  </data>
+  <data name="STARTNOW" xml:space="preserve">
+    <value>START NOW</value>
   </data>
   <data name="Store" xml:space="preserve">
     <value>Store</value>

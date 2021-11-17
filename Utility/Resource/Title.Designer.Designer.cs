@@ -763,6 +763,15 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Get Started.
+        /// </summary>
+        public static string GetStarted {
+            get {
+                return ResourceManager.GetString("GetStarted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to History.
         /// </summary>
         public static string History {
@@ -1677,6 +1686,15 @@ namespace Utility.Resource {
         public static string Start {
             get {
                 return ResourceManager.GetString("Start", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to START NOW.
+        /// </summary>
+        public static string STARTNOW {
+            get {
+                return ResourceManager.GetString("STARTNOW", resourceCulture);
             }
         }
         
