@@ -5,6 +5,8 @@ using System.Linq;
 using Utility;
 using Entity.ModelReport;
 using Microsoft.Extensions.Configuration;
+using Entity.ModelView;
+using Entity.Model;
 
 namespace Repository
 {
@@ -39,7 +41,20 @@ namespace Repository
         }
         public IQueryable<Customer> Customer(long typeId, long dealerId)
         {
-            return db.Dealers.Where(r => (r.Id == dealerId || dealerId==0) && r.TypeId == typeId).Select(e => new Customer(e));
+            return db.Dealers.Where(r => (r.Id == dealerId || dealerId == 0) && r.TypeId == typeId).Select(e => new Customer(e));
+        }
+
+
+        public List<DealerInvoice> TotalInvoicCustomer(long typeId, DateTime fromDate, DateTime toDate, long dealerId)
+        {
+            return db.Invoices.Where(e =>
+            e.TypeId == typeId &&
+            e.Date >= fromDate && e.Date <= toDate &&
+            (dealerId == 0 || e.DealerId == dealerId))
+            .GroupBy(a => new { a.Dealer.Name, a.Dealer.Code, a.Dealer.Id })
+            .Select(a => new DealerInvoice { Total = a.Sum(b => b.Net), Name = a.Key.Name, Code = a.Key.Code, Id = a.Key.Id })
+            .OrderByDescending(a => a.Code)
+            .ToList();
         }
     }
 }
