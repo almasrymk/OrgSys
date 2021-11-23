@@ -35,6 +35,7 @@ namespace OrgSys.Controllers
         LoginUserService _loginUserService;
         UserService _userService;
         DbContextOptions<OrgContext> _option;
+        ClientService _clientService;
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
@@ -42,6 +43,9 @@ namespace OrgSys.Controllers
 
             if (_loginUserService == null)
                 _loginUserService = new LoginUserService();
+
+            if (_clientService == null)
+                _clientService = new ClientService();
 
             if (User != null && User.Identity != null && User.Identity.IsAuthenticated)
                 if (_userService == null)
@@ -294,8 +298,21 @@ namespace OrgSys.Controllers
             return View(_client);
 
         }
+        //--------------- Check For Client -------------------
+        [AllowAnonymous]
+        public ActionResult CheckEmailToClient(string Email)
+        {
+            return Json(_clientService.CheckEmailToClient(Email));
+        }
+
+        [AllowAnonymous]
+        public ActionResult CheckPhoneToClient(string Phone)
+        {
+            return Json(_clientService.CheckPhoneToClient(Phone));
+        }
 
 
+        //--------------- Check For User -------------------
         [AllowAnonymous]
         public ActionResult CheckEmail(string Email)
         {
