@@ -23,7 +23,7 @@ namespace OrgSys.Areas.Inventory.Controllers
 
             if (ob.Id == 0)
             {
-                ob.CodeNumber = new InventoryService().GetMaxCode(ob.TypeId);
+                ob.CodeNumber = new InventoryService(User.GetSchema()).GetMaxCode(ob.TypeId);
                 ob.Code = "" + ob.CodeNumber;
                 ob.StoreId = StoreId;
                 ob.Date = DateTime.Now;

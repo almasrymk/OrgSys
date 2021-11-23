@@ -10,13 +10,12 @@ namespace Service
     public class InvoiceService : BaseService<InvoiceModelView>
     {
         string Includes = "Dealer,Transaction,InvoiceProducts,InvoiceProducts.Product,InvoiceProducts.Product.ProductUnits,,InvoiceProducts.Product.ProductUnits.Unit";
-        UnitOfWorkOrg repo; 
+        UnitOfWorkOrg repo;
         private string _Schema;
         public InvoiceService(string Schema)
         {
             this._Schema = Schema;
-            if (repo == null)
-                repo = new UnitOfWorkOrg(Schema);
+            repo = new UnitOfWorkOrg(Schema);
         }
 
         #region Save / Delete
@@ -57,7 +56,7 @@ namespace Service
                 new IntegrationServics(_Schema).CreateFinancialByInvoice(new InvoiceModelView(Nwob));
 
             return new InvoiceModelView(Nwob);
-        }    
+        }
 
         public bool Delete(long id)
         {
@@ -66,9 +65,9 @@ namespace Service
             {
                 repo.invoiceRepo.Delete(id);
                 new IntegrationServics(_Schema).DeleteInvoice(id);
-                new TransactionService().Delete(ob.TransactionId ?? 0);
-                var fi = new FinancialService().GetByParent(id);
-                new FinancialService().Delete(fi.Id);
+                new TransactionService(_Schema).Delete(ob.TransactionId ?? 0);
+                var fi = new FinancialService(_Schema).GetByParent(id);
+                new FinancialService(_Schema).Delete(fi.Id);
                 return true;
             }
             return false;
@@ -79,13 +78,13 @@ namespace Service
             var oblist = repo.invoiceRepo.GetList(e => ids.Contains(e.Id), null, "", Utility.Status.New);
             if (oblist != null && oblist.Count() > 0)
             {
-                repo.invoiceRepo.Delete(ids);               
-                new TransactionService().Delete(oblist.Select(e => e.TransactionId ?? 0).ToList());
+                repo.invoiceRepo.Delete(ids);
+                new TransactionService(_Schema).Delete(oblist.Select(e => e.TransactionId ?? 0).ToList());
                 foreach (var id in ids)
                 {
                     new IntegrationServics(_Schema).DeleteInvoice(id);
-                    var fi = new FinancialService().GetByParent(id);
-                    new FinancialService().Delete(fi.Id);
+                    var fi = new FinancialService(_Schema).GetByParent(id);
+                    new FinancialService(_Schema).Delete(fi.Id);
                 }
 
                 return true;
@@ -96,14 +95,14 @@ namespace Service
         public void Cancel(long Id)
         {
             var ob = repo.invoiceRepo.Get(e => e.Id == Id);
-            ob.Status = Utility.Status.Cancel;           
+            ob.Status = Utility.Status.Cancel;
             ob = repo.invoiceRepo.AddOrUpdate(ob);
         }
 
         public void Redo(long Id)
         {
             var ob = repo.invoiceRepo.Get(e => e.Id == Id);
-            ob.Status = Utility.Status.All;           
+            ob.Status = Utility.Status.All;
             ob = repo.invoiceRepo.AddOrUpdate(ob);
         }
         #endregion
@@ -151,7 +150,7 @@ namespace Service
         public List<InvoiceModelView> GetAll(List<long> ids, long TypeId = 0)
         {
             return repo.invoiceRepo.GetList(e => e.TypeId == TypeId && ids.Contains(e.Id), e => e.OrderBy(e => e.Id), Includes, Utility.Status.New).Select(e => new InvoiceModelView(e)).ToList();
-        }                
+        }
 
         public List<InvoiceModelView> GetInvoicesNotReturn(string txtSearch = "", long TypeId = 0, long InvId = 0, int page = 1, int pageSize = 20)
         {

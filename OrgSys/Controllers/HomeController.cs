@@ -77,6 +77,12 @@ namespace OrgSys.Controllers
         }
 
         [AllowAnonymous]
+        public IActionResult InvoicePrint()
+        {
+            return View();
+        }
+        
+        [AllowAnonymous]
         public IActionResult MailTemplate()
         {
             return View(new MailViewModel { Sender = "Orgnizer", Receiver = "Ahmed Ali", Date = DateTime.Now.ToString("dd/MMM/yyyy") });

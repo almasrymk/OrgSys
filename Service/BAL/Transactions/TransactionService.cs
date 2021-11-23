@@ -12,7 +12,7 @@ namespace Service
         string Includes = "Dealer,Store,ToStore,TransactionProducts,TransactionProducts.Product,TransactionProducts.Product.ProductUnits,,TransactionProducts.Product.ProductUnits.Unit";
         UnitOfWorkOrg repo;
         private string _Schema;
-        public void SetSchema(string Schema)
+        public TransactionService(string Schema)
         {
             this._Schema = Schema;
             repo = new UnitOfWorkOrg(Schema);

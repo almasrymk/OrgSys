@@ -183,40 +183,42 @@
                             </td>
                             @if (AllowEdit || AllowCancel || AllowDelete)
                             {
-                                <td class="w-15 @TextAlign2 align-middle">
-                                    @if (Model[i].Status == Utility.Status.Cancel)
+                        <td class="w-15 @TextAlign2 align-middle">
+                            @if (Model[i].Status == Utility.Status.Cancel)
+                            {
+                                <a href="/@ViewBag.area/@ViewBag.PageTitle/Redo?id=@Model[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.PageNumber"> <i class="simple-icon-action-redo"></i> </a>
+                                if (AllowDelete)
+                                {
+                                    <span>&nbsp; | &nbsp;</span>
+                                    <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
+                                }
+                            }
+                            else
+                            {
+                                if (AllowEdit)
+                                {
+                                    <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit" style="color:green"></i> </a>
+                                    if (AllowCancel || AllowDelete)
                                     {
-                                        <a href="/@ViewBag.area/@ViewBag.PageTitle/Redo?id=@Model[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.PageNumber"> <i class="simple-icon-action-redo"></i> </a>
-                                        if (AllowDelete)
-                                        {
-                                            <span>&nbsp; | &nbsp;</span>
-                                            <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
-                                        }
+                                        <span>&nbsp; | &nbsp;</span>
                                     }
-                                    else
+                                }
+                                if (AllowCancel)
+                                {
+                                    <a href="/@ViewBag.area/@ViewBag.PageTitle/Cancel?id=@Model[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.PageNumber"> <i>X</i> </a>
+                                    @if (AllowDelete)
                                     {
-                                        if (AllowEdit)
-                                        {
-                                            <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit" style="color:green"></i> </a>
-                                            if (AllowCancel || AllowDelete)
-                                            {
-                                                <span>&nbsp; | &nbsp;</span>
-                                            }
-                                        }
-                                        if (AllowCancel)
-                                        {
-                                            <a href="/@ViewBag.area/@ViewBag.PageTitle/Cancel?id=@Model[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.PageNumber"> <i>X</i> </a>
-                                            @if (AllowDelete)
-                                            {
-                                                <span>&nbsp; | &nbsp;</span>
-                                            }
-                                        }
-                                        if (AllowDelete)
-                                        {
-                                            <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
-                                        }
+                                        <span>&nbsp; | &nbsp;</span>
                                     }
-                                </td>
+                                }
+                                if (AllowDelete)
+                                {
+                                    <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
+                                }
+                                @*<span>&nbsp; | &nbsp;</span>
+                                <a href="/@ViewBag.area/@ViewBag.PageTitle/Print?id=@Model[i].Id"> <i class="fa fa-print"></i> </a>*@
+                            }
+                        </td>
                             }
                             @if (AllowDelete)
                             {

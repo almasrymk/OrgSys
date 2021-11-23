@@ -13,10 +13,11 @@ namespace Service
     {
         string Includes = "Store,InventoryProducts,InventoryProducts.Product,InventoryProducts.Unit";
         UnitOfWorkOrg repo;
-        public void SetSchema(string Schema)
+        private string _Schema;
+        public InventoryService(string Schema)
         {
-            if (repo == null)
-                repo = new UnitOfWorkOrg(Schema);
+            this._Schema = Schema;
+            repo = new UnitOfWorkOrg(Schema);
         }
 
         #region Save / Delete
@@ -122,8 +123,8 @@ namespace Service
                     trns.StoreId = ob.StoreId;
                     trns.TypeId = typeId;
                     trns.ParentId = ob.Id;
-                    trns.CodeNumber = new TransactionService().GetMaxCode(typeId);
-                    trns.Code = "" + new TransactionService().GetMaxCode(typeId);
+                    trns.CodeNumber = new TransactionService(_Schema).GetMaxCode(typeId);
+                    trns.Code = "" + new TransactionService(_Schema).GetMaxCode(typeId);
                 }
                 //var obInv = new TransactionService().Save(new TransactionModelView(trns).UpdateData(ob, typeId));
             }
