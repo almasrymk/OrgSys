@@ -102,7 +102,12 @@ namespace Service
         public long GetMaxCode(long type = 0)
         {
             return repo.clientRepo.GetMaXCode();
-        }       
+        }
+
+        public bool CheckEmailToClient(string Email) => repo.clientRepo.Any(e => e.Email.ToLower().Trim() == Email.ToLower().Trim());
+
+        public bool CheckPhoneToClient(string Mobile) => repo.clientRepo.Any(e => e.Mobile.Trim() == Mobile.Trim());
+
         #endregion
     }
 }
