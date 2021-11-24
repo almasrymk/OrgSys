@@ -1,0 +1,18 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Entity.ModelReport
+{
+    public class SupplierSheetReport
+    {
+        public int Id { get; set; }
+        public int DealarId { get; set; }
+        public string DealarName { get; set; }
+        public DateTime GetDateTime { get; set; }
+        public decimal Debit { get; set; }
+        public decimal Credit { get; set; }
+        public decimal OpenBalnce { get; set; }
+        public decimal Balnce { get; set; }
+    }
+}

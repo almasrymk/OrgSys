@@ -56,5 +56,25 @@ namespace Repository
             .OrderByDescending(a => a.Code)
             .ToList();
         }
+
+
+        public List<SupplierSheetReport> SuplierSheetReport(long typeId, DateTime fromDate, DateTime toDate, long dealerId)
+        {
+
+            db.Invoices.Where(e =>
+            e.TypeId == 4 &&
+            e.Date >= fromDate && e.Date <= toDate &&
+            (dealerId == 0 || e.DealerId == dealerId))
+            .GroupBy(a => new { a.Dealer.Name, a.Dealer.Code, a.Dealer.Id })
+            .Select(a => new DealerInvoice { Total = a.Sum(b => b.Net), Name = a.Key.Name, Code = a.Key.Code, Id = a.Key.Id }).Union(db.Invoices.Where(e =>
+            e.TypeId == 4 && 
+            e.Date >= fromDate && e.Date <= toDate &&
+            (dealerId == 0 || e.DealerId == dealerId))
+            .GroupBy(a => new { a.Dealer.Name, a.Dealer.Code, a.Dealer.Id })
+            .Select(a => new DealerInvoice { Total = a.Sum(b => b.Net), Name = a.Key.Name, Code = a.Key.Code, Id = a.Key.Id }))
+            .OrderByDescending(a => a.Code)
+            .ToList();
+            return null;
+        }
     }
 }
