@@ -64,6 +64,9 @@
                         <div id="EmailError" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
                             <span>your Email is Error</span>
                         </div>
+                        <div id="EmailErrorExist" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
+                            <span>your Email is Exist</span>
+                        </div>
                     </div>
                     <div class="col-md-6" style="padding:0px !important">
                         <input type="text" id="Mobile" class="fadeIn second" name="Mobile" placeholder="Mobile" value="@Model.Mobile">
@@ -72,6 +75,9 @@
                         </div>
                         <div id="MobileError" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
                             <span>your Mobile is Error</span>
+                        </div>
+                        <div id="MobileErrorExist" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
+                            <span>your Mobile is Exsit</span>
                         </div>
                     </div>
 
@@ -150,9 +156,11 @@
         $("#CompanyName").on("keyup", function () { $("#CompanyNameRequired").hide(); });
         $("#Mobile").on("keyup", function () { $("#MobileRequired").hide(); });
         $("#Mobile").on("keyup", function () { $("#MobileError").hide(); });
+        $("#Mobile").on("keyup", function () { $("#MobileErrorExist").hide(); });
         $("#Fax").on("keyup", function () { $("#FaxRequired").hide(); });
         $("#Email").on("keyup", function () { $("#EmailRequired").hide(); });
         $("#Email").on("keyup", function () { $("#EmailError").hide(); });
+        $("#Email").on("keyup", function () { $("#EmailErrorExist").hide(); });
         $("#TypeActivityId").on("keyup", function () { $("#TypeActivityRequired").hide(); });
         $("#NationalityId").on("keyup", function () { $("#NationalityRequired").hide(); });
         $("#SizeOfCompany").on("keyup", function () { $("#SizeOfCompanyRequired").hide(); });
@@ -197,6 +205,21 @@
                     $("#EmailError").show();
                     valid = false;
                 }
+                else {
+
+                    $.ajax({
+                        async: false,
+                        type: 'POST',
+                        url: "/Home/CheckEmailToClient?Email=" + $("#Email").val(),
+                        success: function (res) {
+                            if (res){
+                                $("#EmailErrorExist").show();
+                                isValid = false;
+                            }
+                        }
+                    });
+
+                }
             }
 
 
@@ -210,6 +233,21 @@
                 if (!validmobile) {
                     $("#MobileError").show();
                     valid = false;
+                }
+                else {
+
+                    $.ajax({
+                        async: false,
+                        type: 'POST',
+                        url: "/Home/CheckPhoneToClient?Phone=" + $("#Mobile").val(),
+                        success: function (res) {
+                            if (res) {
+                                $("#MobileErrorExist").show();
+                                isValid = false;
+                            }
+                        }
+                    });
+
                 }
             }
 

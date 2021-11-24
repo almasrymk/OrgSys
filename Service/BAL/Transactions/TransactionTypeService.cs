@@ -10,10 +10,11 @@ namespace Service
     {
         string Includes = "";
         UnitOfWorkOrg repo;
-        public void SetSchema(string Schema)
+        private string _Schema;
+        public TransactionTypeService(string Schema)
         {
-            if (repo == null)
-                repo = new UnitOfWorkOrg(Schema);
+            this._Schema = Schema;
+            repo = new UnitOfWorkOrg(Schema);
         }
 
         #region Save / Delete

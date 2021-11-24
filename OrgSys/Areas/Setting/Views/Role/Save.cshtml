@@ -18,7 +18,9 @@
                         <li class="breadcrumb-item">
                             @Utility.Resource.Title_Designer.Setting
                         </li>
-                        <li class="breadcrumb-item active" aria-current="page">  <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId">@Utility.Resource.Title_Designer.Role</a></li>
+                        <li class="breadcrumb-item">
+                            @Utility.Resource.Title_Designer.Security
+                        </li>
                     </ol>
                 </nav>
             </div>
@@ -46,7 +48,7 @@
                         </div>
                     </div>
                     <hr />
-                    <div class="card-body p-0">
+                    <div class="card-body p-2">
                         <form action="Save" method="post" enctype="multipart/form-data" class="tooltip-label-right" novalidate>
                             <div class="row">
                                 @Html.HiddenFor(model => model.Id)
@@ -58,7 +60,7 @@
                                     @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.NameRequired!</small>*@
                                     @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger mt-3 m-1" })
                                 </div>
-                                <div class="form-group col-md-4 col-sm-4 col-lg-3">
+                                <div class="form-group col-md-4 col-sm-4 col-lg-4">
                                     <label>@Utility.Resource.Title_Designer.Role</label>
                                     <div id="TrPermission"  style="border:solid 1px #dbd4d4;padding:4px;border-radius:10px;">
                                         @Html.Partial("~/Views/Shared/TreeView.cshtml", Model.PermissionsTree)

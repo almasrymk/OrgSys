@@ -17,7 +17,9 @@
                         <li class="breadcrumb-item">
                             @Utility.Resource.Title_Designer.Setting
                         </li>
-                        <li class="breadcrumb-item active" aria-current="page">  <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId">@Utility.Resource.Title_Designer.Shift</a></li>
+                        <li class="breadcrumb-item">
+                            @Utility.Resource.Title_Designer.Security
+                        </li>
                     </ol>
                 </nav>
             </div>
@@ -31,7 +33,7 @@
                 <div class="card p-4">
                     <div class="d-md-block" id="displayOptions">
                         <h3 class="mr-4 mb-2 ml-4 d-inline-block float-md-left">
-                            @if (Model != null || Model.Id == 0)
+                            @if (Model == null || Model.Id == 0)
                             {
                                 <span class="mb-4"> @Utility.Resource.Title_Designer.New ...</span>
                             }

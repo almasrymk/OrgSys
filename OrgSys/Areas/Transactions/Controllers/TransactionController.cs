@@ -12,7 +12,7 @@ namespace OrgSys.Areas.Transaction.Controllers
     {
         public override void LoadViewBagIndex(long ParentId = 0, long TypeId = 0)
         {
-            var type = new TransactionTypeService().Get(TypeId);
+            var type = new TransactionTypeService(User.GetSchema()).Get(TypeId);
             ViewBag.TransactionsType = type.Name;
             ViewBag.TransactionsIcon = type.Icon;
             base.LoadViewBagIndex();
@@ -20,7 +20,7 @@ namespace OrgSys.Areas.Transaction.Controllers
 
         public override void LoadViewBag(TransactionModelView model)
         {
-            var type = new TransactionTypeService().Get(model.TypeId);
+            var type = new TransactionTypeService(User.GetSchema()).Get(model.TypeId);
             ViewBag.TransactionsType = type.Name;
             ViewBag.TransactionsType = type.Icon;
         }
@@ -48,7 +48,7 @@ namespace OrgSys.Areas.Transaction.Controllers
 
             if (ob.Id == 0)
             {
-                ob.CodeNumber = new TransactionService().GetMaxCode(ob.TypeId);
+                ob.CodeNumber = new TransactionService(User.GetSchema()).GetMaxCode(ob.TypeId);
                 ob.Code = "" + ob.CodeNumber;
                 ob.StoreId = StoreId;
                 ob.DealerId = DealerId;

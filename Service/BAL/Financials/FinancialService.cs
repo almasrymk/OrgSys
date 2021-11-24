@@ -11,10 +11,10 @@ namespace Service
         string Includes = "Dealer,Outlay,Safe,FinancialInvoices,FinancialInvoices.Invoice";
         UnitOfWorkOrg repo;
         private string _Schema;
-        public void SetSchema(string Schema)
+        public FinancialService(string Schema)
         {
             this._Schema = Schema;
-                repo = new UnitOfWorkOrg(Schema);
+            repo = new UnitOfWorkOrg(Schema);
         }
 
         #region Save / Delete
