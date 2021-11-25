@@ -29,6 +29,8 @@
     <Content Remove="Areas\Transactions\Models\**" />
     <Content Remove="Views\Account\**" />
     <Content Remove="wwwroot\Assets\Revolutions\**" />
+    <Content Remove="bundleconfig.json" />
+    <Content Remove="Views\Home\InvoicePrint.cshtml" />
     <EmbeddedResource Remove="Areas\Financials\Data\**" />
     <EmbeddedResource Remove="Areas\Financials\Models\**" />
     <EmbeddedResource Remove="Areas\Invoices\Data\**" />
@@ -52,10 +54,11 @@
     <None Remove="Areas\Transactions\Data\**" />
     <None Remove="Areas\Transactions\Models\**" />
     <None Remove="Views\Account\**" />
-    <None Remove="wwwroot\Assets\Revolutions\**" />
+    <None Remove="wwwroot\Assets\Revolutions\**" />    
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="BuildBundlerMinifier" Version="3.2.449" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.1">
@@ -73,10 +76,13 @@
 
   <ItemGroup>
     <Folder Include="PrintOut\" />
-    <Folder Include="wwwroot\Files\" />
+    <Folder Include="wwwroot\bundle\css\" />
+    <Folder Include="wwwroot\bundle\js\" />
+    <Folder Include="wwwroot\Files\" />    
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="bundleconfig.json" />
     <None Include="wwwroot\jquery-ui-1.13.0.custom\external\jquery\jquery.js" />
     <None Include="wwwroot\jquery-ui-1.13.0.custom\jquery-ui.js" />
     <None Include="wwwroot\jquery-ui-1.13.0.custom\jquery-ui.min.js" />
@@ -88,5 +94,11 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
   </ItemGroup>
+
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties bundleconfig_1json__JsonSchema="https://www.graphql-code-generator.com/config.schema.json" />
+    </VisualStudio>
+  </ProjectExtensions>
 
 </Project>

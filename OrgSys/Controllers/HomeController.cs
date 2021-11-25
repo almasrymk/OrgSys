@@ -414,29 +414,29 @@ namespace OrgSys.Controllers
 
         public async Task<IActionResult> Print()
         {
-            List<string> Css = new List<string>();
-            Css.Add("/css/main.css");
-            Css.Add("/font/iconsmind-s/css/iconsminds.css");
-            Css.Add("/font/simple-line-icons/css/simple-line-icons.css");
-            Css.Add("/css/vendor/bootstrap.min.css");
-            Css.Add("/css/vendor/bootstrap.rtl.only.min.css");
-            Css.Add("/css/vendor/dataTables.bootstrap4.min.css");
-            Css.Add("/css/vendor/datatables.responsive.bootstrap4.min.css");
-            Css.Add("/css/vendor/select2.min.css");
-            Css.Add("/css/vendor/select2-bootstrap.min.css");
-            Css.Add("/css/vendor/perfect-scrollbar.css");
-            Css.Add("/css/vendor/glide.core.min.css");
-            Css.Add("/css/vendor/bootstrap-stars.css");
-            Css.Add("/css/vendor/nouislider.min.css");
-            Css.Add("/css/vendor/bootstrap-datepicker3.min.css");
-            Css.Add("/css/vendor/component-custom-switch.min.css");
-            Css.Add("/css/vendor/bootstrap-float-label.min.css");
-            Css.Add("/css/vendor/smart_wizard.min.css");
-            Css.Add("/css/vendor/bootstrap-tagsinput.css");
-            Css.Add("/font-awesome/css/all.css");
-            Css.Add("/lib/main.css");
-            Css.Add("/alertify.js/alertify.core.css");
-            Css.Add("/alertify.js/alertify.default.css");
+            //List<string> Css = new List<string>();
+            //Css.Add("/css/main.css");
+            //Css.Add("/font/iconsmind-s/css/iconsminds.css");
+            //Css.Add("/font/simple-line-icons/css/simple-line-icons.css");
+            //Css.Add("/css/vendor/bootstrap.min.css");
+            //Css.Add("/css/vendor/bootstrap.rtl.only.min.css");
+            //Css.Add("/css/vendor/dataTables.bootstrap4.min.css");
+            //Css.Add("/css/vendor/datatables.responsive.bootstrap4.min.css");
+            //Css.Add("/css/vendor/select2.min.css");
+            //Css.Add("/css/vendor/select2-bootstrap.min.css");
+            //Css.Add("/css/vendor/perfect-scrollbar.css");
+            //Css.Add("/css/vendor/glide.core.min.css");
+            //Css.Add("/css/vendor/bootstrap-stars.css");
+            //Css.Add("/css/vendor/nouislider.min.css");
+            //Css.Add("/css/vendor/bootstrap-datepicker3.min.css");
+            //Css.Add("/css/vendor/component-custom-switch.min.css");
+            //Css.Add("/css/vendor/bootstrap-float-label.min.css");
+            //Css.Add("/css/vendor/smart_wizard.min.css");
+            //Css.Add("/css/vendor/bootstrap-tagsinput.css");
+            //Css.Add("/font-awesome/css/all.css");
+            //Css.Add("/lib/main.css");
+            //Css.Add("/alertify.js/alertify.core.css");
+            //Css.Add("/alertify.js/alertify.default.css");
             //Css = Css.Select(c => {
             //    string output = System.IO.File.ReadAllText("wwwroot" + c, Encoding.Default);
             //    return output;
@@ -456,17 +456,16 @@ namespace OrgSys.Controllers
             //reviewer.Lookups = await GetLookups(reviewer);
 
 
-            //var viewHtml = await RenderViewAsync(this, "InvoicePrint", reviewer);
-            //await Main(viewHtml, reviewer.Id ?? 0);
-            //var cd = new System.Net.Mime.ContentDisposition
-            //{
-            //    //Open In New Tap Or Download
-            //    Inline = true
-            //};
-            //Response.Headers.Add(Microsoft.Net.Http.Headers.HeaderNames.ContentDisposition, cd.ToString());
-            //var stream = new FileStream("PDF/Reviewers/" + reviewer.Id.ToString() + ".pdf", FileMode.Open);
-            //return new FileStreamResult(stream, "application/pdf");
-            return View("PrintTest");
+            var viewHtml = await RenderViewAsync<InvoiceModelView>(this, "InvoicePrint", null);
+            await Main(viewHtml, 0);
+            var cd = new System.Net.Mime.ContentDisposition
+            {
+                //Open In New Tap Or Download
+                Inline = true
+            };
+            Response.Headers.Add(Microsoft.Net.Http.Headers.HeaderNames.ContentDisposition, cd.ToString());
+            var stream = new FileStream("PrintOut/0.pdf", FileMode.Open);
+            return new FileStreamResult(stream, "application/pdf");            
 
         }
 
@@ -477,7 +476,7 @@ namespace OrgSys.Controllers
             await using var browser = await PuppeteerSharp.Puppeteer.LaunchAsync(new PuppeteerSharp.LaunchOptions { Headless = true });
             await using var page = await browser.NewPageAsync();
             await page.SetContentAsync(body);
-            string path = @"PDF/Reviewers/";
+            string path = @"PrintOut/";
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
@@ -485,7 +484,7 @@ namespace OrgSys.Controllers
             if (System.IO.File.Exists(path + id + ".pdf"))
             { System.IO.File.Delete(path + id + ".pdf"); }
             var baseURL = Request.Scheme + "://" + Request.Host;
-            var ImagePath = System.IO.File.ReadAllText("wwwroot/logos/black2.svg");
+            var ImagePath = System.IO.File.ReadAllText("wwwroot/logos/logos22.svg");
             await page.PdfAsync(path + id + ".pdf", new PuppeteerSharp.PdfOptions
             {
                 Format = PuppeteerSharp.Media.PaperFormat.A4,

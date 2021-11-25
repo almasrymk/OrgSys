@@ -1,0 +1,67 @@
+[
+  {
+    "outputFileName": "wwwroot/bundle/css/bundle.min.css",
+    "inputFiles": [
+      "wwwroot/css/vendor/bootstrap.min.css",
+      "wwwroot/css/vendor/bootstrap.rtl.only.min.css",
+      "wwwroot/css/vendor/fullcalendar.min.css",
+      "wwwroot/css/vendor/dataTables.bootstrap4.min.css",
+      "wwwroot/css/vendor/datatables.responsive.bootstrap4.min.css",
+      "wwwroot/css/vendor/select2.min.css",
+      "wwwroot/css/vendor/select2-bootstrap.min.css",
+      "wwwroot/css/vendor/perfect-scrollbar.css",
+      "wwwroot/css/vendor/glide.core.min.css",
+      "wwwroot/css/vendor/bootstrap-stars.css",
+      "wwwroot/css/vendor/nouislider.min.css",
+      "wwwroot/css/vendor/smart_wizard.min.css",
+      "wwwroot/css/vendor/component-custom-switch.min.css",
+      "wwwroot/css/jquery.bonsai.css",
+      "wwwroot/fontawesome-free-5.15.3-web/css/all.css",
+      "wwwroot/fontawesome-free-5.15.3-web/css/fontawesome.css"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true,
+      "commentMode": "none"
+    }
+  },
+
+  {
+    "outputFileName": "wwwroot/bundle/js/bundle.min.js",
+    "inputFiles": [
+      "wwwroot/fontawesome-free-5.15.3-web/js/all.js",
+      "wwwroot/fontawesome-free-5.15.3-web/js/fontawesome.js",
+      "wwwroot/js/vendor/jquery-3.3.1.min.js",
+      "wwwroot/js/vendor/bootstrap.bundle.min.js",
+      "wwwroot/js/vendor/Chart.bundle.min.js",
+      "wwwroot/js/vendor/chartjs-plugin-datalabels.js",
+      "wwwroot/js/vendor/moment.min.js",
+      "wwwroot/js/vendor/fullcalendar.min.js",
+      "wwwroot/js/vendor/datatables.min.js",
+      "wwwroot/js/vendor/perfect-scrollbar.min.js",
+      "wwwroot/js/vendor/progressbar.min.js",
+      "wwwroot/js/vendor/jquery.barrating.min.js",
+      "wwwroot/js/vendor/select2.full.js",
+      "wwwroot/js/vendor/nouislider.min.js",
+      "wwwroot/js/vendor/jquery.smartWizard.min.js",
+      "wwwroot/js/vendor/jquery.validate/jquery.validate.min.js",
+      "wwwroot/js/vendor/Sortable.js",
+      "wwwroot/js/vendor/bootstrap-notify.min.js",
+      "wwwroot/js/vendor/mousetrap.min.js",
+      "wwwroot/js/vendor/glide.min.js",
+      "wwwroot/js/dore.script.js"
+      //"wwwroot/js/vendor/bootstrap3-typeahead.js",
+      //"wwwroot/js/PopupScript.js"
+      //"wwwroot/js/scripts.js",
+      //"wwwroot/js/custom.js",
+      ////"wwwroot/js/vendor/ckeditor5-build-classic/ckeditor.js",
+
+
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true,
+      "commentMode": "none"
+    }
+  }
+]
