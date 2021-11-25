@@ -85,7 +85,7 @@ namespace Service
                 transaction.Code = "" + transactionOld.Code;
             }            
            
-            transaction = new TransactionService().Save(transaction);
+            transaction = new TransactionService(_Schema).Save(transaction);
             inv.TransactionId = transaction.Id;
             repo.invoiceRepo.AddOrUpdate(inv.Model());
             return true;
@@ -117,7 +117,7 @@ namespace Service
                 financial.SafeId = long.Parse("0" + new PreferenceService(_Schema).GetByKey("DefaultSafe", "Financial", (inv.TypeId == 1 || inv.TypeId == 4 ? 1 : 2), 0)?.Value);
                 inv.CodeNumber = repo.financialRepo.GetMaXCode(e => e.TypeId == (inv.TypeId == 1 || inv.TypeId == 4 ? 1 : 2));
                 inv.Code = "" + inv.CodeNumber;
-                new FinancialService().Save(financial);
+                new FinancialService(_Schema).Save(financial);
             }
             return true;
         }
@@ -130,7 +130,7 @@ namespace Service
                 financial.SafeId = long.Parse("0" + new PreferenceService(_Schema).GetByKey("DefaultSafe", "Financial", (inv.TypeId == 1 || inv.TypeId == 4 ? 1 : 2), 0)?.Value);
                 inv.CodeNumber = repo.financialRepo.GetMaXCode(e => e.TypeId == (inv.TypeId == 1 || inv.TypeId == 4 ? 1 : 2));
                 inv.Code = "" + inv.CodeNumber;
-                new FinancialService().Save(financial);
+                new FinancialService(_Schema).Save(financial);
             }
             return true;
         }

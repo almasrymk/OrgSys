@@ -14,7 +14,7 @@ namespace OrgSys.Areas.Financial.Controllers
     {
         public override void LoadViewBagIndex(long ParentId = 0, long TypeId = 0)
         {
-            var type = new FinancialTypeService().Get(TypeId);
+            var type = new FinancialTypeService(User.GetSchema()).Get(TypeId);
             ViewBag.FinancialsType = type.Name;
             ViewBag.FinancialsIcon = type.Icon;
             base.LoadViewBagIndex();
@@ -26,7 +26,7 @@ namespace OrgSys.Areas.Financial.Controllers
             ViewBag.CurrencyId = new SelectList(new CurrencyService(User.GetSchema()).GetAll(model.ParentId, 0, 1, 20), "Id", "Name", model.CurrencyId);
             ViewBag.PaymentTypeId = new SelectList(new PaymentTypeService(User.GetSchema()).GetAll(model.ParentId, 0, 1, 20), "Id", "Name", model.PaymentTypeId);
             ViewBag.SafeId = new SelectList(new SafeService(User.GetSchema()).GetAll(model.ParentId, 0, 1, 20), "Id", "Name", model.SafeId);
-            var type = new TransactionTypeService().Get(model.TypeId);
+            var type = new TransactionTypeService(User.GetSchema()).Get(model.TypeId);
             ViewBag.TransactionsType = type.Name;
             ViewBag.TransactionsType = type.Icon;
         }
@@ -54,7 +54,7 @@ namespace OrgSys.Areas.Financial.Controllers
 
             if (ob.Id == 0)
             {
-                ob.CodeNumber = new FinancialService().GetMaxCode(ob.TypeId);
+                ob.CodeNumber = new FinancialService(User.GetSchema()).GetMaxCode(ob.TypeId);
                 ob.Code = "" + ob.CodeNumber;
                 ob.SafeId = SafeId;
                 ob.DealerId = DealerId;
@@ -73,13 +73,13 @@ namespace OrgSys.Areas.Financial.Controllers
 
         public ActionResult Cancel(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1)
         {
-            new FinancialService().Cancel(id);
+            new FinancialService(User.GetSchema()).Cancel(id);
             return Redirect("/Financials/Financial/Index?ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" + ResultStatus.success + "&MsgError=Success");
         }
 
         public ActionResult Redo(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1)
         {
-            new FinancialService().Redo(id);
+            new FinancialService(User.GetSchema()).Redo(id);
             return Redirect("/Financials/Financial/Index?ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" + ResultStatus.success + "&MsgError=Success");
         }
     }

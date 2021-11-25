@@ -56,6 +56,9 @@ namespace Entity.ModelView
 
             this.Status = ob.Status;
 
+            if (ob.ProductUnits == null)
+                ob.ProductUnits = new List<ProductUnit>();
+
             this.ProductUnits = ob.ProductUnits.Select(e => new ProductUnitModelView(e)).ToList();
         }
 
