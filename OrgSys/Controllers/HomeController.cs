@@ -36,6 +36,7 @@ namespace OrgSys.Controllers
         UserService _userService;
         DbContextOptions<OrgContext> _option;
         ClientService _clientService;
+
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
@@ -362,10 +363,11 @@ namespace OrgSys.Controllers
                 _profile.ImgPath = SaveFile(_profile.ImgPath);
 
                 if (_profile.NewPassword != null)
-                    _profile.Password = _profile.NewPassword;
-                else
-                    //_profile.Password 
-                    _userService.Save(_profile);
+                      _profile.Password = _profile.NewPassword;
+                  else
+                
+                _userService.Save(_profile);
+
                 return Json(data: new { status = "success", id = _profile.Id, url = "/Home/Profile?id=" + _profile.Id + "&status=" + ResultStatus.success + "&MsgError=Success" });
             }
             catch (Exception ex)

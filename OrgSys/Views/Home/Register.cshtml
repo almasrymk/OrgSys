@@ -182,7 +182,7 @@
             var sizeOfCompany = $('#SizeOfCompany').val();
             var password = $('#Password').val();
             var confirmPassword = $('#ConfirmPassword').val();
-            $(".error").remove();
+            
 
             if (name.length < 1) {
                 $("#NameRequired").show();
@@ -251,12 +251,6 @@
                 }
             }
 
-
-            //var validfax = regEx.test(fax);
-            //if (!validfax) {
-            //    $("#FaxError").show();
-            //    valid = false;
-            //}
 
             if (typeActivityId.length < 1 || typeActivityId == 0) {
                 $("#TypeActivityRequired").show();
