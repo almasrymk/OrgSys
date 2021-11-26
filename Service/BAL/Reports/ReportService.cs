@@ -2,6 +2,7 @@
 using Repository;
 using System;
 using Entity.ModelReport;
+using System.Collections.Generic;
 
 namespace Service
 {
@@ -57,6 +58,43 @@ namespace Service
 
             }
             return obList;
+        }
+
+        public IPagedList<SupplierSheetReport> SuplierSheetReportList(long typeId, DateTime fromDate, DateTime toDate, long dealerId, int page = 1, int pageSize = 100)
+        {
+            IPagedList<SupplierSheetReport> obList = repo.reportRepo.SuplierSheetReport(typeId,
+                                                             fromDate,
+                                                             toDate,
+                                                             dealerId).ToPagedList(page, pageSize);
+            List<SupplierSheetReport> list = new List<SupplierSheetReport>();
+            SupplierSheetReport data = null;
+            int LastDealerID = 0;
+            decimal balens = 0;
+            foreach (var ob in obList)
+            {
+                if (ob.InvoiceCode == -1) {
+
+                    ob.BeginBalance = (decimal)(ob.Credit - ob.Debit);
+                }
+
+                if (LastDealerID != ob.DealarId)
+                {
+                    LastDealerID = ob.DealarId;
+
+                    balens = 0;
+                }
+                balens = (decimal)(ob.BeginBalance + ob.Debit - ob.Credit + balens);
+                data = new SupplierSheetReport() { DealarCode = ob.DealarCode, DealarName=ob.DealarName
+                    , GetDateTime= ob.GetDateTime
+                    , TypeInvoice =ob.TypeInvoice
+                    , InvoiceCode = ob.InvoiceCode
+                    ,Credit = ob.Credit 
+                    ,Debit = ob.Debit
+                    ,Balnce = balens
+                };
+                list.Add(data);
+            }
+            return list.ToPagedList(page, pageSize);
         }
     }
 }
