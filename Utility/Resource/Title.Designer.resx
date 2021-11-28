@@ -234,6 +234,9 @@
   <data name="Customers" xml:space="preserve">
     <value>Customers</value>
   </data>
+  <data name="CustomerSheetReport" xml:space="preserve">
+    <value>Customer Sheet Report</value>
+  </data>
   <data name="Dashboard" xml:space="preserve">
     <value>Dashboard</value>
   </data>
@@ -683,6 +686,9 @@
   </data>
   <data name="Stores" xml:space="preserve">
     <value>Stores</value>
+  </data>
+  <data name="SuplierSheetReport" xml:space="preserve">
+    <value>Suplier Sheet Report</value>
   </data>
   <data name="Supplier" xml:space="preserve">
     <value>Supplier</value>

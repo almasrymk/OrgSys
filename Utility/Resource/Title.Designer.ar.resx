@@ -234,6 +234,9 @@
   <data name="Customers" xml:space="preserve">
     <value>العملاء</value>
   </data>
+  <data name="CustomerSheetReport" xml:space="preserve">
+    <value>كشف حساب عميل</value>
+  </data>
   <data name="Dashboard" xml:space="preserve">
     <value>لوحة القيادة</value>
   </data>
@@ -683,6 +686,9 @@
   </data>
   <data name="Stores" xml:space="preserve">
     <value>المخازن</value>
+  </data>
+  <data name="SuplierSheetReport" xml:space="preserve">
+    <value>كشف حساب مورد</value>
   </data>
   <data name="Supplier" xml:space="preserve">
     <value>المورد</value>

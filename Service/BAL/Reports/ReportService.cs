@@ -60,12 +60,12 @@ namespace Service
             return obList;
         }
 
-        public IPagedList<SupplierSheetReport> SuplierSheetReportList(long typeId, DateTime fromDate, DateTime toDate, long dealerId, int page = 1, int pageSize = 100)
+        public IPagedList<SupplierSheetReport> SuplierSheetReportList(long typeId, DateTime fromDate, DateTime toDate, long dealerId,int typeinvoiceorpinvoice,int typeReturninvoiceorpinvoice, int page = 1, int pageSize = 100)
         {
             IPagedList<SupplierSheetReport> obList = repo.reportRepo.SuplierSheetReport(typeId,
                                                              fromDate,
                                                              toDate,
-                                                             dealerId).ToPagedList(page, pageSize);
+                                                             dealerId,typeinvoiceorpinvoice,typeReturninvoiceorpinvoice).ToPagedList(page, pageSize);
             List<SupplierSheetReport> list = new List<SupplierSheetReport>();
             SupplierSheetReport data = null;
             int LastDealerID = 0;
@@ -75,6 +75,11 @@ namespace Service
                 if (ob.InvoiceCode == -1) {
 
                     ob.BeginBalance = (decimal)(ob.Credit - ob.Debit);
+
+
+                    ob.Credit = ob.BeginBalance < 0 ? ob.Credit : 0;
+
+                    ob.Debit = ob.BeginBalance > 0 ? ob.Debit : 0;
                 }
 
                 if (LastDealerID != ob.DealarId)

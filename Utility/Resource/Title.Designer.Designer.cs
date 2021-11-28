@@ -412,6 +412,15 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Customer Sheet Report.
+        /// </summary>
+        public static string CustomerSheetReport {
+            get {
+                return ResourceManager.GetString("CustomerSheetReport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dashboard.
         /// </summary>
         public static string Dashboard {
@@ -1758,6 +1767,15 @@ namespace Utility.Resource {
         public static string Stores {
             get {
                 return ResourceManager.GetString("Stores", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Suplier Sheet Report.
+        /// </summary>
+        public static string SuplierSheetReport {
+            get {
+                return ResourceManager.GetString("SuplierSheetReport", resourceCulture);
             }
         }
         
