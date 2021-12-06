@@ -1232,9 +1232,6 @@ namespace Repository.Migrations.OrgMigrations
                     b.Property<long>("TypeId")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("URL")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.ToTable("Notification");

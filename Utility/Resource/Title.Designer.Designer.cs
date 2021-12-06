@@ -187,6 +187,15 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Begin Balance.
+        /// </summary>
+        public static string BeginBalance {
+            get {
+                return ResourceManager.GetString("BeginBalance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Be Manufactured.
         /// </summary>
         public static string BeManufactured {
@@ -403,6 +412,15 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Customer Sheet Report.
+        /// </summary>
+        public static string CustomerSheetReport {
+            get {
+                return ResourceManager.GetString("CustomerSheetReport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dashboard.
         /// </summary>
         public static string Dashboard {
@@ -444,6 +462,15 @@ namespace Utility.Resource {
         public static string Dealers {
             get {
                 return ResourceManager.GetString("Dealers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Debit.
+        /// </summary>
+        public static string Debit {
+            get {
+                return ResourceManager.GetString("Debit", resourceCulture);
             }
         }
         
@@ -862,6 +889,15 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invoice Number.
+        /// </summary>
+        public static string InvoiceNumber {
+            get {
+                return ResourceManager.GetString("InvoiceNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invoice products.
         /// </summary>
         public static string InvoiceProducts {
@@ -1164,6 +1200,24 @@ namespace Utility.Resource {
         public static string Phone {
             get {
                 return ResourceManager.GetString("Phone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pinvoice.
+        /// </summary>
+        public static string Pinvoice {
+            get {
+                return ResourceManager.GetString("Pinvoice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pinvoice Return.
+        /// </summary>
+        public static string PinvoiceReturn {
+            get {
+                return ResourceManager.GetString("PinvoiceReturn", resourceCulture);
             }
         }
         
@@ -1717,6 +1771,15 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Suplier Sheet Report.
+        /// </summary>
+        public static string SuplierSheetReport {
+            get {
+                return ResourceManager.GetString("SuplierSheetReport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Supplier.
         /// </summary>
         public static string Supplier {
@@ -1893,6 +1956,15 @@ namespace Utility.Resource {
         public static string Transfer {
             get {
                 return ResourceManager.GetString("Transfer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type.
+        /// </summary>
+        public static string Type {
+            get {
+                return ResourceManager.GetString("Type", resourceCulture);
             }
         }
         

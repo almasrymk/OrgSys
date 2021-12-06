@@ -95,6 +95,37 @@ namespace OrgSys.Areas.Invoices.Controllers
             var obList = reportService.TotainvoiceCustomers(1,fromDate.Value, toDate.Value, dealerId,  page, pageSize);
             return Request.Headers["X-Requested-With"] == "XMLHttpRequest" ? (ActionResult)PartialView("TotalInvoiceCustomer", obList) : View(obList);
         }
+
+
+        public ActionResult SuplierSheetReport(DateTime? fromDate, DateTime? toDate, long dealerId = 0, int page = 1, int pageSize = 100)
+        {
+
+            if (fromDate == null)
+                fromDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+            if (toDate == null)
+                toDate = fromDate.Value.AddMonths(1).AddDays(-1);
+            ViewBag.FromDate = fromDate;
+            ViewBag.ToDate = toDate;
+            ViewBag.DealerId = dealerId;
+            ViewBag.DealerName = dealerId == 0 ? "..." : new DealerService(User.GetSchema()).Get(dealerId).Name;
+            var obList = reportService.SuplierSheetReportList(2, fromDate.Value, toDate.Value, dealerId,2,4, page, pageSize);
+            return Request.Headers["X-Requested-With"] == "XMLHttpRequest" ? (ActionResult)PartialView("SuplierSheetReport", obList) : View(obList);
+        }
+
+         public ActionResult CustomerSheetReport(DateTime? fromDate, DateTime? toDate, long dealerId = 0, int page = 1, int pageSize = 100)
+        {
+
+            if (fromDate == null)
+                fromDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+            if (toDate == null)
+                toDate = fromDate.Value.AddMonths(1).AddDays(-1);
+            ViewBag.FromDate = fromDate;
+            ViewBag.ToDate = toDate;
+            ViewBag.DealerId = dealerId;
+            ViewBag.DealerName = dealerId == 0 ? "..." : new DealerService(User.GetSchema()).Get(dealerId).Name;
+            var obList = reportService.SuplierSheetReportList(1, fromDate.Value, toDate.Value, dealerId,1,3, page, pageSize);
+            return Request.Headers["X-Requested-With"] == "XMLHttpRequest" ? (ActionResult)PartialView("CustomerSheetReport", obList) : View(obList);
+        }
         public ActionResult TotalSales()
         {
             return View();

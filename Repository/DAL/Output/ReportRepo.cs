@@ -56,5 +56,64 @@ namespace Repository
             .OrderByDescending(a => a.Code)
             .ToList();
         }
+
+
+        public List<SupplierSheetReport> SuplierSheetReport(long typeId, DateTime fromDate, DateTime toDate, long dealerId, int typeinvoiceorpinvoice, int typeReturninvoiceorpinvoice)
+        {
+
+            var kgt = db.Invoices.Where(e =>
+              e.TypeId == typeinvoiceorpinvoice &&
+              e.Date >= fromDate && e.Date <= toDate &&
+              (dealerId == 0 || e.DealerId == dealerId))
+               .GroupBy(a => new { a.Dealer.Name, a.Dealer.Code, a.DealerId, a.Date, a.CodeNumber })
+               .Select(a => new SupplierSheetReport
+               {
+                   Debit  = a.Sum(b => b.Net)
+                   ,
+                   Credit = 0
+                   ,DealarName = a.Key.Name
+                   ,DealarCode = a.Key.Code
+                   , DealarId = (int)a.Key.DealerId
+                   ,GetDateTime = a.Key.Date.Date
+                   ,InvoiceCode = (int?)a.Key.CodeNumber
+                   ,TypeInvoice = Utility.Resource.Title_Designer.Invoice
+               })
+               .Union(db.Invoices.Where(e =>
+               e.TypeId == typeReturninvoiceorpinvoice &&
+               e.Date >= fromDate && e.Date <= toDate &&
+               (dealerId == 0 || e.DealerId == dealerId))
+               .GroupBy(a => new { a.Dealer.Name, a.Dealer.Code, a.DealerId, a.Date, a.CodeNumber })
+               .Select(a => new SupplierSheetReport { Debit=0
+               , Credit = a.Sum(c => c.Net)
+               , DealarName = a.Key.Name
+               , DealarCode = a.Key.Code
+               ,  DealarId = (int)a.Key.DealerId
+               , GetDateTime = a.Key.Date.Date
+               , InvoiceCode = (int?)a.Key.CodeNumber
+               , TypeInvoice = Utility.Resource.Title_Designer.ReturnInvoices 
+               }))
+               .Union(db.Dealers.Where(e=>(dealerId == 0 || e.Id == dealerId) && e.TypeId == typeId).GroupBy(a=>new { a.Name,a.Code,a.Id}).Select(a => new SupplierSheetReport
+               {
+                   Debit = db.Invoices.Where(e => (e.DealerId == dealerId || dealerId == 0) && e.Date < fromDate && e.TypeId == typeinvoiceorpinvoice).Select(a => a.Net).Sum()
+               ,
+                   Credit = db.Invoices.Where(e => (e.DealerId == dealerId || dealerId == 0) && e.Date < fromDate && e.TypeId == typeReturninvoiceorpinvoice).Select(a => a.Net).Sum(),
+                   DealarName = a.Key.Name
+               ,
+                   DealarCode = a.Key.Code
+               ,
+                    DealarId = (int)a.Key.Id
+               ,
+                   GetDateTime = fromDate.AddDays(-1)
+               ,
+                   InvoiceCode = -1
+               ,
+                   TypeInvoice = Utility.Resource.Title_Designer.BeginBalance
+               }))
+
+
+               .OrderBy(a => a.InvoiceCode).ThenBy(c=>c.DealarCode)
+               .ToList();
+            return kgt;
+        }
     }
 }

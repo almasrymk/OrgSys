@@ -159,6 +159,9 @@
   <data name="Barcode" xml:space="preserve">
     <value>الباركود</value>
   </data>
+  <data name="BeginBalance" xml:space="preserve">
+    <value>رصيد اول المدة</value>
+  </data>
   <data name="BeManufactured" xml:space="preserve">
     <value>يتم تصنيعها</value>
   </data>
@@ -231,6 +234,9 @@
   <data name="Customers" xml:space="preserve">
     <value>العملاء</value>
   </data>
+  <data name="CustomerSheetReport" xml:space="preserve">
+    <value>كشف حساب عميل</value>
+  </data>
   <data name="Dashboard" xml:space="preserve">
     <value>لوحة القيادة</value>
   </data>
@@ -245,6 +251,9 @@
   </data>
   <data name="Dealers" xml:space="preserve">
     <value>المتعاملين</value>
+  </data>
+  <data name="Debit" xml:space="preserve">
+    <value>مدين</value>
   </data>
   <data name="Default" xml:space="preserve">
     <value>افتراضي</value>
@@ -384,6 +393,9 @@
   <data name="InvoiceDetails" xml:space="preserve">
     <value>بيانات الفاتورة</value>
   </data>
+  <data name="InvoiceNumber" xml:space="preserve">
+    <value>رقم الفاتورة</value>
+  </data>
   <data name="InvoiceProducts" xml:space="preserve">
     <value>منتجات الفاتورة</value>
   </data>
@@ -485,6 +497,12 @@
   </data>
   <data name="Phone" xml:space="preserve">
     <value>التليفون</value>
+  </data>
+  <data name="Pinvoice" xml:space="preserve">
+    <value>فاتورة شراء</value>
+  </data>
+  <data name="PinvoiceReturn" xml:space="preserve">
+    <value>مرتجع شراء</value>
   </data>
   <data name="Preference" xml:space="preserve">
     <value>التفصيلات</value>
@@ -669,6 +687,9 @@
   <data name="Stores" xml:space="preserve">
     <value>المخازن</value>
   </data>
+  <data name="SuplierSheetReport" xml:space="preserve">
+    <value>كشف حساب مورد</value>
+  </data>
   <data name="Supplier" xml:space="preserve">
     <value>المورد</value>
   </data>
@@ -728,6 +749,9 @@
   </data>
   <data name="Transfer" xml:space="preserve">
     <value>التحويل</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>النوع</value>
   </data>
   <data name="TypeSerial" xml:space="preserve">
     <value>تغير الكود</value>
