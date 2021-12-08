@@ -22,6 +22,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using OrgSys.Models;
 using Repository;
+using Repository.Seed;
 using Service;
 using Service.BAL.Data.Security;
 using Utility;
@@ -47,10 +48,13 @@ namespace OrgSys.Controllers
 
             if (_clientService == null)
                 _clientService = new ClientService();
-
+            
             if (User != null && User.Identity != null && User.Identity.IsAuthenticated)
+            {
+                new InitialData(User.GetSchema()).Run().Wait();
                 if (_userService == null)
                     _userService = new UserService(User.GetSchema());
+            }            
         }
 
         public IActionResult Dashboard()
@@ -62,11 +66,13 @@ namespace OrgSys.Controllers
         {
             return View();
         }
+
         [AllowAnonymous]
         public IActionResult ForgetPassword()
         {
             return View();
         }
+
         [AllowAnonymous]
         public IActionResult Pricing()
         {
@@ -158,9 +164,8 @@ namespace OrgSys.Controllers
                     _loginUserService.Save(us);
                 }
 
-                OrgContext _orgContext = new OrgContext(_option, us.Schema);
-                _orgContext.Database.EnsureCreated();
-                _orgContext.Database.Migrate();
+                OrgContext _orgContext = new OrgContext(_option, us.Schema);               
+                new InitialData(us.Schema).Run().Wait();
 
                 _userService = new UserService(us.Schema);
                 var usSys = _userService.GetByLoginUserId(us.Id);
@@ -291,7 +296,7 @@ namespace OrgSys.Controllers
                         ";
                     _orgContext.Database.ExecuteSqlRaw(createEFMigrationsHistoryCommand);
                     _orgContext.Database.ExecuteSqlRaw($"INSERT INTO [{client.DbSchema}].[__MigrationsHistory](MigrationId,ProductVersion) SELECT MigrationId,ProductVersion FROM org.__MigrationsHistory");
-
+                    new InitialData(client.DbSchema).Run().Wait();
                     var usSys = new UserModelView { BranchId = 1, RoleId = 1, Code = "1", CodeNumber = 1, UserName = loginUser.UserName, LoginUserId = loginUser.Id, Name = client.Name };
                     _userService = new UserService(client.DbSchema);
                     usSys = _userService.Save(usSys);

@@ -91,6 +91,9 @@ namespace Repository.Migrations.AdminMigrations
                     b.Property<long>("TypeId")
                         .HasColumnType("bigint");
 
+                    b.Property<long>("VersionDb")
+                        .HasColumnType("bigint");
+
                     b.HasKey("Id");
 
                     b.HasIndex("NationalityId");
@@ -117,7 +120,8 @@ namespace Repository.Migrations.AdminMigrations
                             SizeOfCompany = 1L,
                             Status = 0,
                             TypeActivityId = 1L,
-                            TypeId = 0L
+                            TypeId = 0L,
+                            VersionDb = 1L
                         });
                 });
 
@@ -187,6 +191,540 @@ namespace Repository.Migrations.AdminMigrations
                             Status = 0,
                             TypeId = 0L
                         });
+                });
+
+            modelBuilder.Entity("Entity.Model.GeneralCity", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("GeneralCountryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GeneralCountryId");
+
+                    b.ToTable("GeneralCity", "admin");
+                });
+
+            modelBuilder.Entity("Entity.Model.GeneralClassification", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .UseIdentityColumn();
+
+                    b.Property<bool>("BeManufactured")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("BePurchased")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("BeSold")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GeneralClassification", "admin");
+                });
+
+            modelBuilder.Entity("Entity.Model.GeneralCountry", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GeneralCountry", "admin");
+                });
+
+            modelBuilder.Entity("Entity.Model.GeneralDistrict", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("GeneralCityId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("GeneralCountryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GeneralCityId");
+
+                    b.HasIndex("GeneralCountryId");
+
+                    b.ToTable("GeneralDistrict", "admin");
+                });
+
+            modelBuilder.Entity("Entity.Model.GeneralProduct", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Barcode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("Cost")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("GeneralClassificationId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Nickname")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Recipe")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GeneralClassificationId");
+
+                    b.ToTable("GeneralProduct", "admin");
+                });
+
+            modelBuilder.Entity("Entity.Model.GeneralProductPropertyElement", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("GeneralProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("GeneralPropertyElementId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("GeneralPropertyId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsChecked")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GeneralProductId");
+
+                    b.HasIndex("GeneralPropertyElementId");
+
+                    b.HasIndex("GeneralPropertyId");
+
+                    b.ToTable("GeneralProductPropertyElement", "admin");
+                });
+
+            modelBuilder.Entity("Entity.Model.GeneralProductRecipe", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("GeneralProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("Quantity")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long>("RecipeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("UnitId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GeneralProductId");
+
+                    b.ToTable("GeneralProductRecipe", "admin");
+                });
+
+            modelBuilder.Entity("Entity.Model.GeneralProductUnit", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("DefaultUnit")
+                        .HasColumnType("bit");
+
+                    b.Property<long>("GeneralProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("GeneralUnitId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("Rate")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GeneralProductId");
+
+                    b.HasIndex("GeneralUnitId");
+
+                    b.ToTable("GeneralProductUnit", "admin");
+                });
+
+            modelBuilder.Entity("Entity.Model.GeneralProperty", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GeneralProperty", "admin");
+                });
+
+            modelBuilder.Entity("Entity.Model.GeneralPropertyElement", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("GeneralPropertyId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GeneralPropertyId");
+
+                    b.ToTable("GeneralPropertyElement", "admin");
+                });
+
+            modelBuilder.Entity("Entity.Model.GeneralUnit", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GeneralUnit", "admin");
                 });
 
             modelBuilder.Entity("Entity.Model.LoginUser", b =>
@@ -3299,6 +3837,105 @@ namespace Repository.Migrations.AdminMigrations
                     b.Navigation("Plan");
                 });
 
+            modelBuilder.Entity("Entity.Model.GeneralCity", b =>
+                {
+                    b.HasOne("Entity.Model.GeneralCountry", "GeneralCountry")
+                        .WithMany()
+                        .HasForeignKey("GeneralCountryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("GeneralCountry");
+                });
+
+            modelBuilder.Entity("Entity.Model.GeneralDistrict", b =>
+                {
+                    b.HasOne("Entity.Model.GeneralCity", "GeneralCity")
+                        .WithMany()
+                        .HasForeignKey("GeneralCityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Entity.Model.GeneralCountry", "GeneralCountry")
+                        .WithMany()
+                        .HasForeignKey("GeneralCountryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("GeneralCity");
+
+                    b.Navigation("GeneralCountry");
+                });
+
+            modelBuilder.Entity("Entity.Model.GeneralProduct", b =>
+                {
+                    b.HasOne("Entity.Model.GeneralClassification", "GeneralClassification")
+                        .WithMany()
+                        .HasForeignKey("GeneralClassificationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("GeneralClassification");
+                });
+
+            modelBuilder.Entity("Entity.Model.GeneralProductPropertyElement", b =>
+                {
+                    b.HasOne("Entity.Model.GeneralProduct", "GeneralProduct")
+                        .WithMany("GeneralProductPropertyElements")
+                        .HasForeignKey("GeneralProductId");
+
+                    b.HasOne("Entity.Model.GeneralPropertyElement", "GeneralPropertyElement")
+                        .WithMany()
+                        .HasForeignKey("GeneralPropertyElementId");
+
+                    b.HasOne("Entity.Model.GeneralProperty", "GeneralProperty")
+                        .WithMany()
+                        .HasForeignKey("GeneralPropertyId");
+
+                    b.Navigation("GeneralProduct");
+
+                    b.Navigation("GeneralProperty");
+
+                    b.Navigation("GeneralPropertyElement");
+                });
+
+            modelBuilder.Entity("Entity.Model.GeneralProductRecipe", b =>
+                {
+                    b.HasOne("Entity.Model.GeneralProduct", null)
+                        .WithMany("GeneralProductRecipes")
+                        .HasForeignKey("GeneralProductId");
+                });
+
+            modelBuilder.Entity("Entity.Model.GeneralProductUnit", b =>
+                {
+                    b.HasOne("Entity.Model.GeneralProduct", "GeneralProduct")
+                        .WithMany("GeneralProductUnits")
+                        .HasForeignKey("GeneralProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Entity.Model.GeneralUnit", "GeneralUnit")
+                        .WithMany()
+                        .HasForeignKey("GeneralUnitId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("GeneralProduct");
+
+                    b.Navigation("GeneralUnit");
+                });
+
+            modelBuilder.Entity("Entity.Model.GeneralPropertyElement", b =>
+                {
+                    b.HasOne("Entity.Model.GeneralProperty", "GeneralProperty")
+                        .WithMany("GeneralPropertyElements")
+                        .HasForeignKey("GeneralPropertyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("GeneralProperty");
+                });
+
             modelBuilder.Entity("Entity.Model.LoginUser", b =>
                 {
                     b.HasOne("Entity.Model.Client", "Client")
@@ -3330,6 +3967,20 @@ namespace Repository.Migrations.AdminMigrations
                         .IsRequired();
 
                     b.Navigation("Plan");
+                });
+
+            modelBuilder.Entity("Entity.Model.GeneralProduct", b =>
+                {
+                    b.Navigation("GeneralProductPropertyElements");
+
+                    b.Navigation("GeneralProductRecipes");
+
+                    b.Navigation("GeneralProductUnits");
+                });
+
+            modelBuilder.Entity("Entity.Model.GeneralProperty", b =>
+                {
+                    b.Navigation("GeneralPropertyElements");
                 });
 
             modelBuilder.Entity("Entity.Model.Plan", b =>

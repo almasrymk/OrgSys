@@ -6,6 +6,8 @@ namespace Entity.Model
     [Table("FinancialType")]
     public class FinancialType : BaseModel
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public override long Id { get ; set; }
         [StringLength(50, MinimumLength = 3)]
         public string Name { get; set; }
 

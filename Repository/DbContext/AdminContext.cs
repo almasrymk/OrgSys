@@ -295,7 +295,7 @@ namespace Repository
 
             modelBuilder.Entity<Request>().HasData(new Request { Id = 1, CodeNumber = 1, Code = "1", CompanyName = "org", Email = "info@org.com", Phone = "0201111105784", Name = "Mohammed Khaled", ExpireDate = new System.DateTime(2021, 1, 1), URL = "" });
 
-            modelBuilder.Entity<Client>().HasData(new Client { Id = 1, Name = "Org" , Code = "1" , CodeNumber = 1 , DbSchema = "org" , Email = "info@org.com" , NationalityId = 68 , TypeActivityId = 1 , SizeOfCompany = 1 , Phone = "0201111105784" , Mobile = "0201111105784" });
+            modelBuilder.Entity<Client>().HasData(new Client { Id = 1, Name = "Org" , Code = "1" , CodeNumber = 1 , DbSchema = "org" , Email = "info@org.com" , NationalityId = 68 , TypeActivityId = 1 , SizeOfCompany = 1 , Phone = "0201111105784" , Mobile = "0201111105784" , VersionDb = 1 });
 
             modelBuilder.Entity<ClientPlan>().HasData(new ClientPlan { Id = 1, ClientId = 1 , PlanId = 1 , StartDate = new System.DateTime(2021 , 1, 1) , EndDate = new System.DateTime(2022, 1, 1) , Code = "1" , CodeNumber = 1 });
 
@@ -312,6 +312,17 @@ namespace Repository
         public virtual DbSet<Request> Requests { get; set; }
         public virtual DbSet<LoginUser> LoginUsers { get; set; }
         public virtual DbSet<Nationality> Nationalities { get; set; }
-        public virtual DbSet<TypeActivity> TypeActivities { get; set; }        
+        public virtual DbSet<TypeActivity> TypeActivities { get; set; }
+        public virtual DbSet<GeneralCity> GeneralCities { get; set; }
+        public virtual DbSet<GeneralClassification> GeneralClassifications { get; set; }
+        public virtual DbSet<GeneralCountry> GeneralCountries { get; set; }
+        public virtual DbSet<GeneralDistrict> GeneralDistricts { get; set; }
+        public virtual DbSet<GeneralProduct> GeneralProducts { get; set; }
+        public virtual DbSet<GeneralProductPropertyElement> GeneralProductPropertyElements { get; set; }
+        public virtual DbSet<GeneralProductRecipe> GeneralProductRecipes { get; set; }
+        public virtual DbSet<GeneralProductUnit> GeneralProductUnits { get; set; }
+        public virtual DbSet<GeneralProperty> GeneralProperties { get; set; }
+        public virtual DbSet<GeneralPropertyElement> GeneralPropertyElements { get; set; }
+        public virtual DbSet<GeneralUnit> GeneralUnits { get; set; }
     }
 }

@@ -3,10 +3,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entity.Model
 {
-    [Table("Role")]
-    public class Role : BaseModel
-    {        
-        [StringLength(50, MinimumLength = 3)]
+    [Table("GeneralUnit", Schema = "admin")]
+    public class GeneralUnit : BaseModel
+    {
+        [StringLength(50, MinimumLength = 2)]
         public string Name { get; set; }
     }
 }

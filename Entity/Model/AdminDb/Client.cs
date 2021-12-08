@@ -35,6 +35,7 @@ namespace Entity.Model
         public long SizeOfCompany { get; set; }
 
         public long RequestId { get; set; }
+        public long VersionDb { get; set; }
         public virtual TypeActivity TypeActivity { get; set; }
         public virtual Nationality Nationality { get; set; }
     }

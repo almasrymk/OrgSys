@@ -3,13 +3,15 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entity.Model
 {
-    [Table("PaymentType")]
-    public class PaymentType : BaseModel
+    [Table("City")]
+    public class City : BaseModel
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public override long Id { get; set; }
-
         [StringLength(50, MinimumLength = 3)]
         public string Name { get; set; }
+
+        [ForeignKey("Country")]
+        public long? CountryId { get; set; }
+       
+        public virtual Country Country { get; set; }
     }
 }

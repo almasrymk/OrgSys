@@ -61,7 +61,7 @@ namespace Entity.Model
 
         public decimal Credit { get; set; }
 
-        public decimal CreditByDefaultCurrency { get; set; }
+        public decimal CreditByDefaultCurrency { get; set; }          
 
         public ICollection<InvoiceProduct> InvoiceProducts { get; set; }
     }

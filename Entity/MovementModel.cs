@@ -32,5 +32,11 @@ namespace Entity
         public long? BranchId { get; set; }
 
         public virtual Branch Branch { get; set; }
+
+        public bool HasJournal { get; set; }
+
+        public bool Review { get; set; }
+
+        public bool  Posted { get; set; }
     }
 }

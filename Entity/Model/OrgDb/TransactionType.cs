@@ -6,6 +6,9 @@ namespace Entity.Model
     [Table("TransactionType")]
     public class TransactionType : BaseModel
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public override long Id { get; set; }
+
         [StringLength(50, MinimumLength = 3)]
         public string Name { get; set; }
 

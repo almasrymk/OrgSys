@@ -11,6 +11,97 @@ namespace Repository.Migrations.AdminMigrations
                 name: "admin");
 
             migrationBuilder.CreateTable(
+                name: "GeneralClassification",
+                schema: "admin",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    BePurchased = table.Column<bool>(type: "bit", nullable: false),
+                    BeSold = table.Column<bool>(type: "bit", nullable: false),
+                    BeManufactured = table.Column<bool>(type: "bit", nullable: false),
+                    CodeNumber = table.Column<long>(type: "bigint", nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MaskText = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ParentId = table.Column<long>(type: "bigint", nullable: false),
+                    TypeId = table.Column<long>(type: "bigint", nullable: false),
+                    Hide = table.Column<bool>(type: "bit", nullable: false),
+                    ImgPath = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GeneralClassification", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GeneralCountry",
+                schema: "admin",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    CodeNumber = table.Column<long>(type: "bigint", nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MaskText = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ParentId = table.Column<long>(type: "bigint", nullable: false),
+                    TypeId = table.Column<long>(type: "bigint", nullable: false),
+                    Hide = table.Column<bool>(type: "bit", nullable: false),
+                    ImgPath = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GeneralCountry", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GeneralProperty",
+                schema: "admin",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    CodeNumber = table.Column<long>(type: "bigint", nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MaskText = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ParentId = table.Column<long>(type: "bigint", nullable: false),
+                    TypeId = table.Column<long>(type: "bigint", nullable: false),
+                    Hide = table.Column<bool>(type: "bit", nullable: false),
+                    ImgPath = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GeneralProperty", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GeneralUnit",
+                schema: "admin",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    CodeNumber = table.Column<long>(type: "bigint", nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MaskText = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ParentId = table.Column<long>(type: "bigint", nullable: false),
+                    TypeId = table.Column<long>(type: "bigint", nullable: false),
+                    Hide = table.Column<bool>(type: "bit", nullable: false),
+                    ImgPath = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GeneralUnit", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Nationality",
                 schema: "admin",
                 columns: table => new
@@ -105,6 +196,102 @@ namespace Repository.Migrations.AdminMigrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "GeneralProduct",
+                schema: "admin",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Nickname = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Barcode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Cost = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    GeneralClassificationId = table.Column<long>(type: "bigint", nullable: false),
+                    Recipe = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CodeNumber = table.Column<long>(type: "bigint", nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MaskText = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ParentId = table.Column<long>(type: "bigint", nullable: false),
+                    TypeId = table.Column<long>(type: "bigint", nullable: false),
+                    Hide = table.Column<bool>(type: "bit", nullable: false),
+                    ImgPath = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GeneralProduct", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_GeneralProduct_GeneralClassification_GeneralClassificationId",
+                        column: x => x.GeneralClassificationId,
+                        principalSchema: "admin",
+                        principalTable: "GeneralClassification",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GeneralCity",
+                schema: "admin",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    GeneralCountryId = table.Column<long>(type: "bigint", nullable: false),
+                    CodeNumber = table.Column<long>(type: "bigint", nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MaskText = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ParentId = table.Column<long>(type: "bigint", nullable: false),
+                    TypeId = table.Column<long>(type: "bigint", nullable: false),
+                    Hide = table.Column<bool>(type: "bit", nullable: false),
+                    ImgPath = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GeneralCity", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_GeneralCity_GeneralCountry_GeneralCountryId",
+                        column: x => x.GeneralCountryId,
+                        principalSchema: "admin",
+                        principalTable: "GeneralCountry",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GeneralPropertyElement",
+                schema: "admin",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    GeneralPropertyId = table.Column<long>(type: "bigint", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    CodeNumber = table.Column<long>(type: "bigint", nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MaskText = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ParentId = table.Column<long>(type: "bigint", nullable: false),
+                    TypeId = table.Column<long>(type: "bigint", nullable: false),
+                    Hide = table.Column<bool>(type: "bit", nullable: false),
+                    ImgPath = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GeneralPropertyElement", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_GeneralPropertyElement_GeneralProperty_GeneralPropertyId",
+                        column: x => x.GeneralPropertyId,
+                        principalSchema: "admin",
+                        principalTable: "GeneralProperty",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Plan",
                 schema: "admin",
                 columns: table => new
@@ -159,6 +346,7 @@ namespace Repository.Migrations.AdminMigrations
                     NationalityId = table.Column<long>(type: "bigint", nullable: false),
                     SizeOfCompany = table.Column<long>(type: "bigint", nullable: false),
                     RequestId = table.Column<long>(type: "bigint", nullable: false),
+                    VersionDb = table.Column<long>(type: "bigint", nullable: false),
                     CodeNumber = table.Column<long>(type: "bigint", nullable: false),
                     Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     MaskText = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -183,6 +371,162 @@ namespace Repository.Migrations.AdminMigrations
                         column: x => x.TypeActivityId,
                         principalSchema: "admin",
                         principalTable: "TypeActivity",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GeneralProductRecipe",
+                schema: "admin",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ProductId = table.Column<long>(type: "bigint", nullable: false),
+                    RecipeId = table.Column<long>(type: "bigint", nullable: false),
+                    UnitId = table.Column<long>(type: "bigint", nullable: false),
+                    Quantity = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    GeneralProductId = table.Column<long>(type: "bigint", nullable: true),
+                    CodeNumber = table.Column<long>(type: "bigint", nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MaskText = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ParentId = table.Column<long>(type: "bigint", nullable: false),
+                    TypeId = table.Column<long>(type: "bigint", nullable: false),
+                    Hide = table.Column<bool>(type: "bit", nullable: false),
+                    ImgPath = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GeneralProductRecipe", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_GeneralProductRecipe_GeneralProduct_GeneralProductId",
+                        column: x => x.GeneralProductId,
+                        principalSchema: "admin",
+                        principalTable: "GeneralProduct",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GeneralProductUnit",
+                schema: "admin",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    GeneralProductId = table.Column<long>(type: "bigint", nullable: false),
+                    GeneralUnitId = table.Column<long>(type: "bigint", nullable: false),
+                    Rate = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    DefaultUnit = table.Column<bool>(type: "bit", nullable: false),
+                    CodeNumber = table.Column<long>(type: "bigint", nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MaskText = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ParentId = table.Column<long>(type: "bigint", nullable: false),
+                    TypeId = table.Column<long>(type: "bigint", nullable: false),
+                    Hide = table.Column<bool>(type: "bit", nullable: false),
+                    ImgPath = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GeneralProductUnit", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_GeneralProductUnit_GeneralProduct_GeneralProductId",
+                        column: x => x.GeneralProductId,
+                        principalSchema: "admin",
+                        principalTable: "GeneralProduct",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_GeneralProductUnit_GeneralUnit_GeneralUnitId",
+                        column: x => x.GeneralUnitId,
+                        principalSchema: "admin",
+                        principalTable: "GeneralUnit",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GeneralDistrict",
+                schema: "admin",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    GeneralCountryId = table.Column<long>(type: "bigint", nullable: false),
+                    GeneralCityId = table.Column<long>(type: "bigint", nullable: false),
+                    CodeNumber = table.Column<long>(type: "bigint", nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MaskText = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ParentId = table.Column<long>(type: "bigint", nullable: false),
+                    TypeId = table.Column<long>(type: "bigint", nullable: false),
+                    Hide = table.Column<bool>(type: "bit", nullable: false),
+                    ImgPath = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GeneralDistrict", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_GeneralDistrict_GeneralCity_GeneralCityId",
+                        column: x => x.GeneralCityId,
+                        principalSchema: "admin",
+                        principalTable: "GeneralCity",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_GeneralDistrict_GeneralCountry_GeneralCountryId",
+                        column: x => x.GeneralCountryId,
+                        principalSchema: "admin",
+                        principalTable: "GeneralCountry",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GeneralProductPropertyElement",
+                schema: "admin",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    GeneralProductId = table.Column<long>(type: "bigint", nullable: true),
+                    GeneralPropertyId = table.Column<long>(type: "bigint", nullable: true),
+                    GeneralPropertyElementId = table.Column<long>(type: "bigint", nullable: true),
+                    IsChecked = table.Column<bool>(type: "bit", nullable: false),
+                    CodeNumber = table.Column<long>(type: "bigint", nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MaskText = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ParentId = table.Column<long>(type: "bigint", nullable: false),
+                    TypeId = table.Column<long>(type: "bigint", nullable: false),
+                    Hide = table.Column<bool>(type: "bit", nullable: false),
+                    ImgPath = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GeneralProductPropertyElement", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_GeneralProductPropertyElement_GeneralProduct_GeneralProductId",
+                        column: x => x.GeneralProductId,
+                        principalSchema: "admin",
+                        principalTable: "GeneralProduct",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_GeneralProductPropertyElement_GeneralProperty_GeneralPropertyId",
+                        column: x => x.GeneralPropertyId,
+                        principalSchema: "admin",
+                        principalTable: "GeneralProperty",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_GeneralProductPropertyElement_GeneralPropertyElement_GeneralPropertyElementId",
+                        column: x => x.GeneralPropertyElementId,
+                        principalSchema: "admin",
+                        principalTable: "GeneralPropertyElement",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.NoAction);
                 });
@@ -631,8 +975,8 @@ namespace Repository.Migrations.AdminMigrations
             migrationBuilder.InsertData(
                 schema: "admin",
                 table: "Client",
-                columns: new[] { "Id", "Code", "CodeNumber", "CompanyName", "DbSchema", "Description", "Email", "Fax", "Hide", "ImgPath", "MaskText", "Mobile", "Name", "NationalityId", "ParentId", "Phone", "RequestId", "SizeOfCompany", "Status", "TypeActivityId", "TypeId" },
-                values: new object[] { 1L, "1", 1L, null, "org", null, "info@org.com", null, false, null, null, "0201111105784", "Org", 68L, 0L, "0201111105784", 0L, 1L, 0, 1L, 0L });
+                columns: new[] { "Id", "Code", "CodeNumber", "CompanyName", "DbSchema", "Description", "Email", "Fax", "Hide", "ImgPath", "MaskText", "Mobile", "Name", "NationalityId", "ParentId", "Phone", "RequestId", "SizeOfCompany", "Status", "TypeActivityId", "TypeId", "VersionDb" },
+                values: new object[] { 1L, "1", 1L, null, "org", null, "info@org.com", null, false, null, null, "0201111105784", "Org", 68L, 0L, "0201111105784", 0L, 1L, 0, 1L, 0L, 1L });
 
             migrationBuilder.InsertData(
                 schema: "admin",
@@ -689,6 +1033,72 @@ namespace Repository.Migrations.AdminMigrations
                 column: "PlanId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_GeneralCity_GeneralCountryId",
+                schema: "admin",
+                table: "GeneralCity",
+                column: "GeneralCountryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GeneralDistrict_GeneralCityId",
+                schema: "admin",
+                table: "GeneralDistrict",
+                column: "GeneralCityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GeneralDistrict_GeneralCountryId",
+                schema: "admin",
+                table: "GeneralDistrict",
+                column: "GeneralCountryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GeneralProduct_GeneralClassificationId",
+                schema: "admin",
+                table: "GeneralProduct",
+                column: "GeneralClassificationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GeneralProductPropertyElement_GeneralProductId",
+                schema: "admin",
+                table: "GeneralProductPropertyElement",
+                column: "GeneralProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GeneralProductPropertyElement_GeneralPropertyElementId",
+                schema: "admin",
+                table: "GeneralProductPropertyElement",
+                column: "GeneralPropertyElementId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GeneralProductPropertyElement_GeneralPropertyId",
+                schema: "admin",
+                table: "GeneralProductPropertyElement",
+                column: "GeneralPropertyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GeneralProductRecipe_GeneralProductId",
+                schema: "admin",
+                table: "GeneralProductRecipe",
+                column: "GeneralProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GeneralProductUnit_GeneralProductId",
+                schema: "admin",
+                table: "GeneralProductUnit",
+                column: "GeneralProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GeneralProductUnit_GeneralUnitId",
+                schema: "admin",
+                table: "GeneralProductUnit",
+                column: "GeneralUnitId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GeneralPropertyElement_GeneralPropertyId",
+                schema: "admin",
+                table: "GeneralPropertyElement",
+                column: "GeneralPropertyId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_LoginUser_ClientId",
                 schema: "admin",
                 table: "LoginUser",
@@ -714,6 +1124,22 @@ namespace Repository.Migrations.AdminMigrations
                 schema: "admin");
 
             migrationBuilder.DropTable(
+                name: "GeneralDistrict",
+                schema: "admin");
+
+            migrationBuilder.DropTable(
+                name: "GeneralProductPropertyElement",
+                schema: "admin");
+
+            migrationBuilder.DropTable(
+                name: "GeneralProductRecipe",
+                schema: "admin");
+
+            migrationBuilder.DropTable(
+                name: "GeneralProductUnit",
+                schema: "admin");
+
+            migrationBuilder.DropTable(
                 name: "LoginUser",
                 schema: "admin");
 
@@ -726,11 +1152,39 @@ namespace Repository.Migrations.AdminMigrations
                 schema: "admin");
 
             migrationBuilder.DropTable(
+                name: "GeneralCity",
+                schema: "admin");
+
+            migrationBuilder.DropTable(
+                name: "GeneralPropertyElement",
+                schema: "admin");
+
+            migrationBuilder.DropTable(
+                name: "GeneralProduct",
+                schema: "admin");
+
+            migrationBuilder.DropTable(
+                name: "GeneralUnit",
+                schema: "admin");
+
+            migrationBuilder.DropTable(
                 name: "Client",
                 schema: "admin");
 
             migrationBuilder.DropTable(
                 name: "Plan",
+                schema: "admin");
+
+            migrationBuilder.DropTable(
+                name: "GeneralCountry",
+                schema: "admin");
+
+            migrationBuilder.DropTable(
+                name: "GeneralProperty",
+                schema: "admin");
+
+            migrationBuilder.DropTable(
+                name: "GeneralClassification",
                 schema: "admin");
 
             migrationBuilder.DropTable(
