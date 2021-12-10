@@ -9,7 +9,7 @@
 }
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="@System.Threading.Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -38,7 +38,7 @@
     <link rel="stylesheet" href="~/css/jquery.bonsai.css" />
     <link rel="stylesheet" href="~/fontawesome-free-5.15.3-web/css/all.css" />
     <link rel="stylesheet" href="~/css/main.css" />
-
+    <link rel="stylesheet" href="~/css/vendor/bootstrap-datepicker3.min.css" />
 
     <style>
         body {
@@ -111,7 +111,7 @@
     }
 </head>
 
-<body id="app-container" class="menu-default show-spinner">
+<body id="app-container" class="menu-default show-spinner" dir="@dirCss">
     <nav class="navbar fixed-top">
         <div class="d-flex align-items-center navbar-left">
             @*<a href="#" class="menu-button d-none d-md-block">
@@ -356,12 +356,12 @@
     <script src="~/fontawesome-free-5.15.3-web/js/fontawesome.js"></script>
     <script src="~/js/vendor/bootstrap3-typeahead.js"></script>
     <script src="~/js/PopupScript.js"></script>
-
+    <script src="~/js/vendor/bootstrap-datepicker.js"></script>
 
     <script>
         jQuery(function ($) {
             //$(".datepicker").datepicker();
-            //$(".datepicker").datepicker("option", "dateFormat", "yy/mm/dd");
+            //$(".datepicker").datepicker("option", "dateFormat", "YY/MM/DD");
 
             //$('input[type=datetime]').datepicker({
             //    dateFormate: 'dd M yy',

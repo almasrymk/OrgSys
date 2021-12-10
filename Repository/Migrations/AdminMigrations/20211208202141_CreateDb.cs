@@ -976,7 +976,7 @@ namespace Repository.Migrations.AdminMigrations
                 schema: "admin",
                 table: "Client",
                 columns: new[] { "Id", "Code", "CodeNumber", "CompanyName", "DbSchema", "Description", "Email", "Fax", "Hide", "ImgPath", "MaskText", "Mobile", "Name", "NationalityId", "ParentId", "Phone", "RequestId", "SizeOfCompany", "Status", "TypeActivityId", "TypeId", "VersionDb" },
-                values: new object[] { 1L, "1", 1L, null, "org", null, "info@org.com", null, false, null, null, "0201111105784", "Org", 68L, 0L, "0201111105784", 0L, 1L, 0, 1L, 0L, 1L });
+                values: new object[] { 1L, "1", 1L, null, "org", null, "info@org.com", null, false, null, null, "0201111105784", "Org", 68L, 0L, "0201111105784", 0L, 1L, 0, 1L, 0L, 0L });
 
             migrationBuilder.InsertData(
                 schema: "admin",

@@ -67,7 +67,7 @@
     <div class="card">
 
         <div class="card pl-1 pr-1">
-            <form action="Save" method="post" enctype="multipart/form-data" class="tooltip-label-right" novalidate>
+            <form action="Save" method="post" enctype="multipart/form-data" class="tooltip-label-right" novalidate autocomplete="off">
                 <div class="d-md-block">
 
                     <div id="smartWizardClickable">
@@ -403,7 +403,7 @@
                                             <div class="input-group">
                                                 <div class="input-group-prepend ">
                                                     <span class="input-group-text "><i class="simple-icon-calendar"></i></span>
-                                                </div>
+                                                </div> 
                                                 @Html.TextBoxFor(model => model.Date, new { @class = "form-control datepicker" })
                                             </div>
                                         </div>
@@ -597,7 +597,7 @@
 <script src="~/js/jquery-ui.js"></script>
 <script src="~/js/PopupScript.js"></script>
 
-<script>
+<script charset="utf-8">
     var AddNewRow;
     var AddNewProduct;
     var AddProduct;
@@ -609,6 +609,8 @@
     var Repeated;
 
     jQuery(function ($) {
+        //$(".datepicker1").datepicker();
+        //$(".datepicker1").datepicker("option", "dateFormat", "dd/mm/yy");
 
         setTimeout(function () {
             $("html, body").scrollTop($("#query").offset().top - 300);
@@ -1286,11 +1288,11 @@
 
             if (Valid == true) {
                 var data = CollectData();
-
+                alert(data.Date);
                 $.ajax({
                     type: 'POST',
                     url: "/Invoices/Invoice/Save",
-                    async: false,
+                    async: false,                  
                     data: { model: data },
                     success: function (res) {
                         window.location.replace(res.url);
@@ -1331,11 +1333,11 @@
                     setTimeout(function () {
 
                         var data = CollectData();
-
+                       
                         $.ajax({
                             type: 'POST',
                             url: "/Invoices/Invoice/Save",
-                            async: false,
+                            async: false,                          
                             data: { model: data },
                             success: function (res) {
                                 if (res != "Error") {
@@ -1393,7 +1395,7 @@
                     }
                 }
             });
-
+            
             var data = {
                 Id: $('#Id').val(),
                 TypeId: $('#TypeId').val(),
@@ -1402,7 +1404,7 @@
                 Code: $('#Code').val(),
                 CodeNumber: $('#CodeNumber').val(),
                 MaskText: $('#MaskText').val(),
-                Date: $('#Date').val(),
+                Date: "1/1/2021",
                 DealerId: $('#DealerId').val(),
                 CurrencyId: $('#CurrencyId').val(),
                 Rate: $('#Rate').val(),
@@ -1433,7 +1435,7 @@
                 Cash: $('#Cash').val(),
                 Credit: $('#Credit').val(),
                 InvoiceProducts: list
-            }
+            };
             return data;
         }
 

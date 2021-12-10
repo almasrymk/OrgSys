@@ -6,9 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Entity
 {
     public class MovementModel : BaseModel
-    {
-        [Required]
-        //[DisplayFormat(ApplyFormatInEditMode =true,DataFormatString ="{0:dd MMM yyyy}")]
+    {       
         public DateTime Date { get; set; }
 
         [ForeignKey("CreateUser")]
