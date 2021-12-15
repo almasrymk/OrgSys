@@ -22,6 +22,8 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Entity;
+using AutoMapper;
 
 namespace OrgSys
 {
@@ -29,10 +31,12 @@ namespace OrgSys
     {
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            Configuration = configuration;            
         }
 
         public IConfiguration Configuration { get; }
+
+        public IMapper mapper { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -80,7 +84,9 @@ namespace OrgSys
              options.LogoutPath = "/Home/logout";
             });
 
+            services.AddAutoMapper(typeof(MapperConfig));
             services.AddControllersWithViews();
+
             services.AddSession();
             services.AddMvc();
         }

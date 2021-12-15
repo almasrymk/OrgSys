@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using AutoMapper.Configuration;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
@@ -9,6 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Mail;
 using System.Net.Mime;
+using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Text.Json;
@@ -18,7 +21,22 @@ namespace Utility
 {
     public static class Extensions
     {
+        //public static t Map<t>(this BaseModel ob) where t : BaseModel
+        //{
+        //    Assembly assembly = Assembly.Load("Entity");
+        //    var type = assembly.GetType("Entity.MapperConfig");
+        //    var profile = (Profile) Activator.CreateInstance(type);
+        //    var config = type.GetProperty("config");
+        //    MapperConfiguration mapperConfiguration = (MapperConfiguration) config.GetValue(profile);          
+        //    var mapper = mapperConfiguration.CreateMapper();
+        //    //var mapper = new MapperConfiguration(cfg => cfg.AddProfile(profile)).CreateMapper();           
+        //    return mapper.Map<t>(ob);
 
+        //    //Assembly assembly = Assembly.Load("AutoMapper");                                      
+        //    //var type = assembly.GetType(typeof(Mapper).FullName);            
+        //    //var mapper = Activator.CreateInstance<Mapper>();
+        //    //return mapper.Map<t>(ob);
+        //}
     }
 
     public static class General

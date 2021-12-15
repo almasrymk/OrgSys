@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Utility;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entity.Model

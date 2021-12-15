@@ -1,10 +1,29 @@
-﻿using Repository.DAL.Input;
+﻿using Entity;
+using Entity.Model;
+using Repository.DAL.Input;
+using System;
+using System.Collections.Generic;
 
 namespace Repository
 {
+    public class UnitOfWorkAdmin2<Entity> where Entity : BaseModel
+    {
+        private CurdAdmin<Entity> _db;
+        public CurdAdmin<Entity> Db
+        {
+            get
+            {
+
+                if (this._db == null)
+                    this._db = new CurdAdmin<Entity>();
+
+                return _db;
+            }
+        }
+    }
     public class UnitOfWorkAdmin
-    {        
-        #region Admin
+    {             
+        #region Admin       
         private RequestRepo _requestRepo;
         public RequestRepo requestRepo
         {

@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entity.Model
@@ -8,35 +7,38 @@ namespace Entity.Model
     public class Client : BaseModel
     {
         [Required]
-        public string Name { get; set; }
+        public virtual string Name { get; set; }
 
-        public string CompanyName { get; set; }
+        public virtual string CompanyName { get; set; }
 
-        public string Description { get; set; }
+        public virtual string Description { get; set; }
 
         [StringLength(25, MinimumLength = 8)]        
-        public string Phone { get; set; }
+        public virtual string Phone { get; set; }
       
         [StringLength(25, MinimumLength = 8)]
-        public string Mobile { get; set; }       
+        public virtual string Mobile { get; set; }       
 
         [StringLength(25, MinimumLength = 8)]
-        public string Fax { get; set; }
+        public virtual string Fax { get; set; }
       
         [StringLength(30, MinimumLength = 3)]        
-        public string Email { get; set; }
+        public virtual string Email { get; set; }
 
-        public string DbSchema { get; set; }
+        public virtual string DbSchema { get; set; }
 
-        public long TypeActivityId { get; set; }
+        public virtual long TypeActivityId { get; set; }
 
-        public long NationalityId { get; set; }
+        public virtual long NationalityId { get; set; }
 
-        public long SizeOfCompany { get; set; }
+        public virtual long SizeOfCompany { get; set; }
 
-        public long RequestId { get; set; }
-        public long VersionDb { get; set; }
+        public virtual long RequestId { get; set; }
+
+        public virtual long VersionDb { get; set; }
+
         public virtual TypeActivity TypeActivity { get; set; }
+
         public virtual Nationality Nationality { get; set; }
     }
 }

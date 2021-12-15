@@ -8,7 +8,7 @@ using Microsoft.Extensions.Localization;
 
 namespace Service
 {
-    public class UserService : BaseService<UserModelView>
+    public class UserService : IBaseService<UserModelView>
     {
         string Includes = "Role";
         UnitOfWorkOrg repo;

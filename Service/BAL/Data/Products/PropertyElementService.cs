@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Service
 {
-    public class PropertyElementService :BaseService<PropertyElementModelView>
+    public class PropertyElementService : IBaseService<PropertyElementModelView>
     {
         string Includes = "";
         UnitOfWorkOrg repo;

@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Service
 {
-    public class StoreService : BaseService<StoreModelView>
+    public class StoreService : IBaseService<StoreModelView>
     {
         string Includes = "Branch";
         UnitOfWorkOrg repo;

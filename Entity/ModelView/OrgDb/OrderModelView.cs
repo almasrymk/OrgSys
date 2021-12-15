@@ -1,6 +1,7 @@
-﻿using Entity.Model;
-using System.Collections.Generic;
+﻿using Utility;
 using System.Linq;
+using Entity.Model;
+using System.Collections.Generic;
 
 namespace Entity.ModelView
 {

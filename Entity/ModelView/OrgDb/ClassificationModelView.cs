@@ -1,4 +1,5 @@
-﻿using Entity.Model;
+﻿using Utility;
+using Entity.Model;
 
 namespace Entity.ModelView
 {

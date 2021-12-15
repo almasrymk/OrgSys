@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Service
 {
-    public class CurrencyService : BaseService<CurrencyModelView>
+    public class CurrencyService : IBaseService<CurrencyModelView>
     {
         string Includes = "";
         UnitOfWorkOrg repo;

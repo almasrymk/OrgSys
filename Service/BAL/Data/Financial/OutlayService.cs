@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Service
 {
-    public class OutlayService : BaseService<OutlayModelView>
+    public class OutlayService : IBaseService<OutlayModelView>
     {
         string Includes = "";
         UnitOfWorkOrg repo;

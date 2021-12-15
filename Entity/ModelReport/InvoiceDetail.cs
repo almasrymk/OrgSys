@@ -1,10 +1,7 @@
-﻿using Utility;
+﻿using System;
+using Utility;
 using Entity.Model;
-using Utility.Resource;
-using System.ComponentModel.DataAnnotations;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+
 
 namespace Entity.ModelReport
 {
@@ -41,6 +38,5 @@ namespace Entity.ModelReport
         public decimal Paid { get; set; }
         public decimal Credit { get; set; }
         public decimal Net { get; set; }
-
     }
 }

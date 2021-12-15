@@ -8,30 +8,30 @@ namespace Entity.Model
     public class GeneralProduct : BaseModel
     {       
         [Required]
-        public string Name { get; set; }
+        public virtual string Name { get; set; }
 
-        public string Nickname { get; set; }
+        public virtual string Nickname { get; set; }
 
         [Required]
-        public string Barcode { get; set; }
+        public virtual string Barcode { get; set; }
 
-        public string Description { get; set; }
+        public virtual string Description { get; set; }
 
-        public decimal Price { get; set; }
+        public virtual decimal Price { get; set; }
 
-        public decimal Cost { get; set; }
+        public virtual decimal Cost { get; set; }
 
         [ForeignKey("GeneralClassification")]
-        public long GeneralClassificationId { get; set; }
+        public virtual long GeneralClassificationId { get; set; }
 
-        public GeneralClassification GeneralClassification { get; set; }      
+        public virtual GeneralClassification GeneralClassification { get; set; }      
 
-        public string Recipe { get; set; }
+        public virtual string Recipe { get; set; }
 
-        public ICollection<GeneralProductUnit> GeneralProductUnits { get; set; }
+        public virtual ICollection<GeneralProductUnit> GeneralProductUnits { get; set; }
 
-        public ICollection<GeneralProductRecipe> GeneralProductRecipes { get; set; }
+        public virtual ICollection<GeneralProductRecipe> GeneralProductRecipes { get; set; }
 
-        public ICollection<GeneralProductPropertyElement> GeneralProductPropertyElements { get; set; }
+        public virtual ICollection<GeneralProductPropertyElement> GeneralProductPropertyElements { get; set; }
     }
 }

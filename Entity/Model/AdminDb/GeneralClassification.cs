@@ -8,12 +8,12 @@ namespace Entity.Model
     {
         [Required]
         [StringLength(50, MinimumLength = 3)]
-        public string Name { get; set; }
+        public virtual string Name { get; set; }
 
-        public bool BePurchased { get; set; }
+        public virtual bool BePurchased { get; set; }
 
-        public bool BeSold { get; set; }
+        public virtual bool BeSold { get; set; }
 
-        public bool BeManufactured { get; set; }
+        public virtual bool BeManufactured { get; set; }
     }
 }

@@ -7,11 +7,11 @@ namespace Entity.Model
     public class LoginUser : BaseModel
     {     
         [Required]
-        public string UserName { get; set; }
+        public virtual string UserName { get; set; }
        
-        public string Password { get; set; }
+        public virtual string Password { get; set; }
        
-        public long ClientId { get; set; }
+        public virtual long ClientId { get; set; }
 
         public virtual Client Client { get; set; }
     }

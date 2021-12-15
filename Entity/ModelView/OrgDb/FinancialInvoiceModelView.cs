@@ -1,5 +1,5 @@
-﻿using Entity.Model;
-using System;
+﻿using Utility;
+using Entity.Model;
 
 namespace Entity.ModelView
 {

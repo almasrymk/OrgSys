@@ -9,7 +9,7 @@ using System.Text;
 
 namespace Service
 {
-    public class InventoryService : BaseService<InventoryModelView>
+    public class InventoryService : IBaseService<InventoryModelView>
     {
         string Includes = "Store,InventoryProducts,InventoryProducts.Product,InventoryProducts.Unit";
         UnitOfWorkOrg repo;

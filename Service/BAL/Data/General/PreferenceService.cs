@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Service
 {
-    public class PreferenceService : BaseService<PreferenceModelView>
+    public class PreferenceService : IBaseService<PreferenceModelView>
     {
         string Includes = "";
         UnitOfWorkOrg repo;

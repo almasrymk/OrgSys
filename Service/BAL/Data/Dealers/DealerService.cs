@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Service
 {
-    public class DealerService : BaseService<DealerModelView>
+    public class DealerService : IBaseService<DealerModelView>
     {
         string Includes = "";
         UnitOfWorkOrg repo;

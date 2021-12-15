@@ -7,18 +7,18 @@ namespace Entity.Model
     public class GeneralProductUnit : BaseModel
     {
         [ForeignKey("GeneralProduct")]
-        public long GeneralProductId { get; set; }
+        public virtual long GeneralProductId { get; set; }
 
-        public GeneralProduct GeneralProduct { get; set; }
+        public virtual GeneralProduct GeneralProduct { get; set; }
 
         [ForeignKey("GeneralUnit")]
-        public long GeneralUnitId { get; set; }
+        public virtual long GeneralUnitId { get; set; }
 
-        public GeneralUnit GeneralUnit { get; set; }
+        public virtual GeneralUnit GeneralUnit { get; set; }
 
         [Required]
-        public decimal Rate { get; set; }
+        public virtual decimal Rate { get; set; }
 
-        public bool DefaultUnit { get; set; }
+        public virtual bool DefaultUnit { get; set; }
     }
 }

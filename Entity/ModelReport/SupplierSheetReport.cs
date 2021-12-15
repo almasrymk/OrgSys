@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Entity.ModelReport
 {
@@ -18,6 +16,5 @@ namespace Entity.ModelReport
         public decimal? Balnce { get; set; }
         public string TypeInvoice { get; set; }
         public decimal BeginBalance { get; set; }
-
     }
 }

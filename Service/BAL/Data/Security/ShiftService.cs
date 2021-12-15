@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Service
 {
-    public class ShiftService : BaseService<ShiftModelView>
+    public class ShiftService : IBaseService<ShiftModelView>
     {
         string Includes = "";
         UnitOfWorkOrg repo;

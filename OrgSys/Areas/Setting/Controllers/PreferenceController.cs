@@ -12,17 +12,16 @@ namespace OrgSys.Areas.Setting.Controllers
     [Area("Setting")]
     public class PreferenceController : Controller
     {
-        PreferenceService service;
         public PreferenceController()
         {
-            service = new PreferenceService(User.GetSchema());
+
         }
 
         public ActionResult Show(string Resource = "", int type = 0)
         {
             ViewBag.Resource = Resource;
             ViewBag.type = type;
-
+            var service = new PreferenceService(User.GetSchema());
             var Service = service.GetAll(Resource, 0, type);
             if (Resource == "Invoice")
             {
@@ -189,6 +188,7 @@ namespace OrgSys.Areas.Setting.Controllers
         {
             try
             {
+                var service = new PreferenceService(User.GetSchema());
                 var obList = JsonSerializer.Deserialize<List<PreferenceModelView>>(list);
                 foreach (var ob in obList)
                 {

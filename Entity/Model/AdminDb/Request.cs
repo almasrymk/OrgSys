@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entity.Model
@@ -7,12 +6,12 @@ namespace Entity.Model
     [Table("Request", Schema = "admin")]
    public class Request : BaseModel
     {        
-        public string Name { get; set; }
-        public string Email { get; set; }
-        public string Phone { get; set; }
-        public string CompanyName { get; set; }
-        public string URL { get; set; }
-        public string Key { get; set; }
-        public DateTime ExpireDate { get; set; }
+        public virtual string Name { get; set; }
+        public virtual string Email { get; set; }
+        public virtual string Phone { get; set; }
+        public virtual string CompanyName { get; set; }
+        public virtual string URL { get; set; }
+        public virtual string Key { get; set; }
+        public virtual DateTime ExpireDate { get; set; }
     }
 }

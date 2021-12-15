@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Service
 {
-    public class OrderService : BaseService<OrderModelView>
+    public class OrderService : IBaseService<OrderModelView>
     {
         string Includes = "Dealer,Table,Invoice,OrderProducts,OrderProducts.Product,OrderProducts.Product.ProductUnits,,OrderProducts.Product.ProductUnits.Unit";
         UnitOfWorkOrg repo;

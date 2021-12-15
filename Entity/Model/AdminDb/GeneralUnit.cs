@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Utility;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entity.Model
@@ -7,6 +8,6 @@ namespace Entity.Model
     public class GeneralUnit : BaseModel
     {
         [StringLength(50, MinimumLength = 2)]
-        public string Name { get; set; }
+        public virtual string Name { get; set; }
     }
 }

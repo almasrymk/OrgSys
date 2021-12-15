@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Service
 {
-    public class TransactionService : BaseService<TransactionModelView>
+    public class TransactionService : IBaseService<TransactionModelView>
     {
         string Includes = "Dealer,Store,ToStore,TransactionProducts,TransactionProducts.Product,TransactionProducts.Product.ProductUnits,,TransactionProducts.Product.ProductUnits.Unit";
         UnitOfWorkOrg repo;

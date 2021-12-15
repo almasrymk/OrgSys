@@ -11,7 +11,7 @@ using Utility;
 
 namespace Service
 {
-    public class RoleService : BaseService<RoleModelView>
+    public class RoleService : IBaseService<RoleModelView>
     {
         string Includes = "";
         UnitOfWorkOrg repo;

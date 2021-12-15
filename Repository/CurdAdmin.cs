@@ -1,11 +1,10 @@
-﻿using Entity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
+﻿using System;
+using Entity;
+using Utility;
 using System.Linq;
 using System.Linq.Expressions;
-using Utility;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace Repository
 {
@@ -34,7 +33,7 @@ namespace Repository
             }
             return 1;
         }
-
+       
         public virtual entity Get(Func<entity, bool> filter = null, string includeProperties = "")
         {
             IQueryable<entity> query = db.Set<entity>();
@@ -43,7 +42,10 @@ namespace Repository
             {
                 query = query.Include(includeProperty);
             }
-            return query.FirstOrDefault(filter);
+            var ob = query.FirstOrDefault(filter);
+            if (ob == null)
+                ob = Activator.CreateInstance<entity>();
+            return ob;
         }
 
         public virtual IQueryable<entity> GetList(Func<IQueryable<entity>, IOrderedQueryable<entity>> orderBy, string includeProperties = "", Status status = Status.All)
@@ -57,7 +59,7 @@ namespace Repository
 
             if (orderBy != null)
             {
-                return orderBy(query.Where(e => (e.Status != Status.Deleted || status == Status.All) && e.Hide != true));
+                return orderBy(query.Where(e => (e.Status != Status.Deleted || status == Status.All) && e.Hide != true));               
             }
             else
             {
@@ -112,7 +114,7 @@ namespace Repository
                 db.Set<entity>().Add(ob);
             else
                 db.Entry<entity>(db.Set<entity>().Find(ob.Id)).CurrentValues.SetValues(ob);
-            db.SaveChanges();
+            db.SaveChanges();           
             return ob;
         }
 
@@ -182,6 +184,5 @@ namespace Repository
 
             return query.Any(filter);
         }
-
     }
 }
