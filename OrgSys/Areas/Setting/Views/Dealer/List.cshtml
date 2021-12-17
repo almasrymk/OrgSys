@@ -64,10 +64,10 @@
                         if (Model[i].TypeId > 0)
                         {
                             <tr style="@(Model[i].Status == Utility.Status.Cancel ? "color:#a8a7a7;background:repeating-linear-gradient(60deg, transparent, transparent 5px, gainsboro 5px, gainsboro 6px);" : "")">
-                                <td class="text-center align-middle" style="width:50px;">
+                                <td class="text-center align-middle">
                                     <p class="list-item-heading">@x</p>
                                 </td>
-                                <td class="text-center align-middle" style="width:50px;">
+                                <td class="text-center align-middle">
                                     @if ("" + Model[i].ImgPath != "")
                                     {
                                         <img alt="Thumbnail" src="@Model[i].ImgPath"
@@ -121,7 +121,7 @@
                                 }
                                 @if (AllowDelete)
                                 {
-                                    <td class="align-middle @TextAlign2" style="width:30px">
+                                    <td class="align-middle @TextAlign2">
                                         @if (Model[i].Status != Utility.Status.Cancel)
                                         {
                                             <label class="custom-control custom-checkbox pt-2">
