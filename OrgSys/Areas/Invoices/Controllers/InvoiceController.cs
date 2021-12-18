@@ -88,7 +88,7 @@ namespace OrgSys.Areas.Invoices.Controllers
                 ob.Discount = DiscountValue;
                 ob.Service = ServiceValue;
                 ob.Tax = TaxValue;
-                ob.InvoiceProducts = new List<InvoiceProductModelView>();
+                ob.InvoiceProductList = new List<InvoiceProductModelView>();
             }
 
             ob.StoreName = new StoreService(User.GetSchema()).Get(ob.StoreId??0).Name;

@@ -86,5 +86,10 @@ namespace Service
             if (ob.FinancialInvoices != null && ob.FinancialInvoices.Count > 0)
                 new IntegrationServics(_Schema).UpdateCredit(ob.FinancialInvoices.Select(e => e.InvoiceId ?? 0).ToList());
         }
+
+        public FinancialModelView GetByParent(long Id)
+        {
+            return repo.GetRepo<Financial>().Get(e => e.ParentId == Id && e.Status != Utility.Status.Deleted, Includes).Map<FinancialModelView>();
+        }
     }
 }

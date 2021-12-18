@@ -10,7 +10,7 @@ namespace Service
 
         public PreferenceModelView GetByKey(string textSearch, string reference, long type, int userId)
         {
-            return repo.Db.Get(e => e.Key == "" + textSearch && (e.TypeId == type || type == 0) && (userId == 0 || e.UserId == userId) && (e.Reference == reference || "" + reference == "")).Map<PreferenceModelView>();
+            return repo.GetRepo<Preference>().Get(e => e.Key == "" + textSearch && (e.TypeId == type || type == 0) && (userId == 0 || e.UserId == userId) && (e.Reference == reference || "" + reference == "")).Map<PreferenceModelView>();
         }
     }
 }
