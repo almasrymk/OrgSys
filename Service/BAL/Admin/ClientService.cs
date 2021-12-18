@@ -1,5 +1,4 @@
-﻿
-using Entity;
+﻿using Entity;
 using Entity.Model;
 using Entity.ModelView;
 

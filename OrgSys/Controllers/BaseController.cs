@@ -1,15 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
+using Entity;
+using Service;
+using Utility;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using Entity;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Service;
-using Utility;
+using Microsoft.AspNetCore.Authorization;
 
 namespace OrgSys.Controllers
 {

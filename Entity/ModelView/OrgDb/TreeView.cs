@@ -1,6 +1,4 @@
-﻿using Utility;
-
-namespace Entity.ModelView
+﻿namespace Entity.ModelView
 {
     public class TreeView : BaseModel
     {

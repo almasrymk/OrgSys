@@ -1,5 +1,4 @@
-﻿using Utility;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entity.Model
@@ -8,12 +7,12 @@ namespace Entity.Model
     public class PropertyElement : BaseModel
     {
         [ForeignKey("Property")]
-        public long PropertyId { get; set; }
+        public virtual long PropertyId { get; set; }
 
-        public Property Property { get; set; }
+        public virtual Property Property { get; set; }
 
         [Required]
         [StringLength(50, MinimumLength = 3)]
-        public string Name { get; set; }
+        public virtual string Name { get; set; }
     }
 }

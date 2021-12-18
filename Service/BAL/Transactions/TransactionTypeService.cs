@@ -1,79 +1,10 @@
-﻿using Entity.ModelView;
-using X.PagedList;
-using Repository;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Entity.Model;
+using Entity.ModelView;
 
 namespace Service
 {
-    public class TransactionTypeService : IBaseService<TransactionTypeModelView>
+    public class TransactionTypeService : BaseOrgService<TransactionTypeModelView, TransactionType>
     {
-        string Includes = "";
-        UnitOfWorkOrg repo;
-        private string _Schema;
-        public TransactionTypeService(string Schema)
-        {
-            this._Schema = Schema;
-            repo = new UnitOfWorkOrg(Schema);
-        }
-
-        #region Save / Delete
-        public TransactionTypeModelView Save(TransactionTypeModelView ob)
-        {
-            return new TransactionTypeModelView(repo.transactionTypeRepo.AddOrUpdate(ob.Model()));
-        }
-         
-        public bool Delete(long id)
-        {
-            return repo.transactionTypeRepo.Delete(id);
-        }
-
-        public bool Delete(List<long> ids)
-        {
-            return repo.transactionTypeRepo.Delete(ids);
-        }
-        #endregion
-
-        #region Gets
-        public TransactionTypeModelView Get(long Id)
-        {
-            return new TransactionTypeModelView(repo.transactionTypeRepo.Get(e => e.Id == Id , Includes));
-        }
-
-        public TransactionTypeModelView Get(string textSearch)
-        {
-            return new TransactionTypeModelView(repo.transactionTypeRepo.Get(e => e.Name.Contains("" + textSearch) , Includes));
-        }
-
-        public List<TransactionTypeModelView> GetAll(long parentId = 0, long TypeId = 0)
-        {
-            return repo.transactionTypeRepo.GetList(e => e.OrderBy(e => e.Id), Includes, Utility.Status.New).Select(e => new TransactionTypeModelView(e)).ToList();
-        }
-         
-        public List<TransactionTypeModelView> GetAll(string textSearch , long parentId = 0, long TypeId = 0)
-        {
-            return repo.transactionTypeRepo.GetList(e => e.Name.Contains("" + textSearch), e => e.OrderBy(e => e.Id), Includes, Utility.Status.New).Select(e => new TransactionTypeModelView(e)).ToList();
-        }
-         
-        public IPagedList<TransactionTypeModelView> GetAll(long parentId = 0, long TypeId = 0 ,int page = 1, int pageSize = 20)
-        {
-            return repo.transactionTypeRepo.GetList(e => e.OrderBy(e => e.Id), Includes, Utility.Status.New).Select(e => new TransactionTypeModelView(e)).ToPagedList(page, pageSize);
-        }
-         
-        public IPagedList<TransactionTypeModelView> GetAll(string textSearch , long parentId = 0, long TypeId = 0, int page = 1, int pageSize = 20)
-        {
-            return repo.transactionTypeRepo.GetList(e => "" + textSearch == "" || e.Name.Contains("" + textSearch), e => e.OrderBy(e => e.Id), Includes, Utility.Status.New).Select(e => new TransactionTypeModelView(e)).ToPagedList(page, pageSize);
-        }
-                
-        public List<TransactionTypeModelView> GetAll(List<long> ids, long TypeId = 0)
-        {
-            return repo.transactionTypeRepo.GetList(e => ids.Contains(e.Id), e => e.OrderBy(e => e.Id), Includes, Utility.Status.New).Select(e => new TransactionTypeModelView(e)).ToList();
-        }
-
-        public long GetMaxCode(long type = 0)
-        {
-            return repo.transactionTypeRepo.GetMaXCode();
-        }
-        #endregion
+        public TransactionTypeService(string Schema) : base(Schema) { }
     }
 }

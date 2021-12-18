@@ -1,5 +1,4 @@
-﻿using Utility;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entity.Model
 {
@@ -9,8 +8,8 @@ namespace Entity.Model
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public override long Id { get ; set ; }
 
-        public string Key { get; set; }
+        public virtual string Key { get; set; }
 
-        public string Name { get; set; }
+        public virtual string Name { get; set; }
     }
 }

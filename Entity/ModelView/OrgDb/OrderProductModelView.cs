@@ -1,130 +1,14 @@
-﻿using Utility;
-using System.Linq;
-using Entity.Model;
+﻿using Entity.Model;
 using System.Collections.Generic;
 
 namespace Entity.ModelView
 {
-    public class OrderProductModelView : BaseModel
+    public class OrderProductModelView : OrderProduct
     {
-        public OrderProductModelView()
-        {
-
-        }
-
-        public OrderProductModelView(OrderProduct ob)
-        {
-            if (ob == null)
-                ob = new OrderProduct();
-
-            this.OrderId = ob.OrderId;
-
-            this.RowNumber = ob.RowNumber;
-
-            this.ProductId = ob.ProductId;
-
-            this.ProductName = ob.Product?.Name;
-
-            this.UnitId = ob.UnitId;
-
-            this.UnitName = ob.Unit?.Name;
-
-            this.Quantity = ob.Quantity;
-
-            this.Price = ob.Price;
-
-            this.Discount = ob.Discount;
-
-            this.Service = ob.Service;
-
-            this.Net = ob.Net;
-
-            this.Notes = ob.Notes;
-
-            this.Tax = ob.Tax;
-
-            this.Total = ob.Total;
-
-            this.Id = ob.Id;
-
-            this.CodeNumber = ob.CodeNumber;
-
-            this.Code = ob.Code;
-
-            this.MaskText = ob.MaskText;
-
-            this.ParentId = ob.ParentId;
-
-            this.TypeId = ob.TypeId;
-
-            this.Hide = ob.Hide;
-
-            this.ImgPath = ob.ImgPath;
-
-            this.Status = ob.Status;
-
-            this.Units = new List<UnitModelView>();
-
-            if (ob.Product != null && ob.Product.ProductUnits != null)
-                this.Units = ob.Product.ProductUnits.Select(e => new UnitModelView(e.Unit)).ToList();
-        }
-
-        public OrderProduct Model()
-        {
-            return new OrderProduct
-            {
-                OrderId = this.OrderId,
-                ProductId = this.ProductId,
-                UnitId = this.UnitId,
-                Quantity = this.Quantity,
-                Price = this.Price,
-                RowNumber = this.RowNumber,
-                Discount = this.Discount,
-                Total = this.Total,
-                Tax = this.Tax,
-                Service = this.Service,
-                Net = this.Net,
-                Notes = this.Notes,
-                Id = this.Id,
-                CodeNumber = this.CodeNumber,
-                Code = this.Code,
-                MaskText = this.MaskText,
-                ParentId = this.ParentId,
-                TypeId = this.TypeId,
-                Hide = this.Hide,
-                Status = this.Status,
-                ImgPath = this.ImgPath
-            };
-        }
-
-        public long RowNumber { get; set; }
-
-        public long OrderId { get; set; }
-
-        public long ProductId { get; set; }
-
         public string ProductName { get; set; }
-
-        public long UnitId { get; set; }
 
         public string UnitName { get; set; }
 
-        public decimal Quantity { get; set; }
-
-        public decimal Price { get; set; }
-
-        public decimal Total { get; set; }
-
-        public decimal Discount { get; set; }
-
-        public decimal Tax { get; set; }
-
-        public decimal Service { get; set; }
-
-        public decimal Net { get; set; }
-
-        public string Notes { get; set; }
-
-        public List<UnitModelView> Units { get; set; }
+        public List<UnitModelView> UnitList { get; set; }
     }
 }

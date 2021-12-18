@@ -1,5 +1,4 @@
-﻿using Utility;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entity.Model
 {
@@ -7,13 +6,13 @@ namespace Entity.Model
     public class RolePermission : BaseModel
     {
         [ForeignKey("Role")]
-        public long RoleId { get; set; }
+        public virtual long RoleId { get; set; }
 
         [ForeignKey("Permission")]
-        public long PermissionId { get; set; }
+        public virtual long PermissionId { get; set; }
 
-        public Role Role { get; set; }
+        public virtual Role Role { get; set; }
 
-        public Permission Permission { get; set; }
+        public virtual Permission Permission { get; set; }
     }
 }

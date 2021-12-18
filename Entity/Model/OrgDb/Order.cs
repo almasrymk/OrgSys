@@ -8,41 +8,41 @@ namespace Entity.Model
     public class Order : MovementModel
     {
         [ForeignKey("Table")]
-        public long? TableId { get; set; }
+        public virtual long? TableId { get; set; }
 
-        public  Table Table { get; set; }
+        public virtual Table Table { get; set; }
 
-        public bool CloseTable { get; set; }
+        public virtual bool CloseTable { get; set; }
 
         [ForeignKey("Dealer")]
-        public long? DealerId { get; set; }
+        public virtual long? DealerId { get; set; }
 
-        public  Dealer Dealer { get; set; }
+        public virtual Dealer Dealer { get; set; }
 
         [ForeignKey("Invoice")]
-        public long? InvoiceId { get; set; }
+        public virtual long? InvoiceId { get; set; }
 
-        public  Invoice Invoice { get; set; }
+        public virtual Invoice Invoice { get; set; }
 
-        public decimal Total { get; set; }
+        public virtual decimal Total { get; set; }
 
-        public decimal Discount { get; set; }
+        public virtual decimal Discount { get; set; }
 
-        public int DiscountType { get; set; }
+        public virtual int DiscountType { get; set; }
 
-        public decimal Tax { get; set; }
+        public virtual decimal Tax { get; set; }
 
-        public int TaxType { get; set; }
+        public virtual int TaxType { get; set; }
 
-        public decimal Service { get; set; }
+        public virtual decimal Service { get; set; }
 
-        public int ServiceType { get; set; }
+        public virtual int ServiceType { get; set; }
 
-        public decimal Net { get; set; }
+        public virtual decimal Net { get; set; }
 
         [StringLength(500)]
-        public string Notes { get; set; }
+        public virtual string Notes { get; set; }
 
-        public  ICollection<OrderProduct> OrderProducts { get; set; }
+        public virtual ICollection<OrderProduct> OrderProducts { get; set; }
     }
 }

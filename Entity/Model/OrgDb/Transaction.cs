@@ -8,30 +8,30 @@ namespace Entity.Model
     public class Transaction : MovementModel
     {
         [ForeignKey("Dealer")]
-        public long? DealerId { get; set; }
+        public virtual long? DealerId { get; set; }
 
-        public Dealer Dealer { get; set; }
+        public virtual Dealer Dealer { get; set; }
 
         [ForeignKey("Store")]
-        public long? StoreId { get; set; }
+        public virtual long? StoreId { get; set; }
 
-        public Store Store { get; set; }
+        public virtual Store Store { get; set; }
 
         [ForeignKey("ToStore")]
-        public long? ToStoreId { get; set; }
+        public virtual long? ToStoreId { get; set; }
 
-        public Store ToStore { get; set; }
+        public virtual Store ToStore { get; set; }
 
         [ForeignKey("Order")]
-        public long? OrderId { get; set; }
+        public virtual long? OrderId { get; set; }
 
-        public Order Order { get; set; }
+        public virtual Order Order { get; set; }
 
-        public decimal Total { get; set; }
+        public virtual decimal Total { get; set; }
 
         [StringLength(500)]
-        public string Notes { get; set; }
+        public virtual string Notes { get; set; }
 
-        public ICollection<TransactionProduct> TransactionProducts { get; set; }
+        public virtual ICollection<TransactionProduct> TransactionProducts { get; set; }
     }
 }

@@ -1,5 +1,5 @@
-﻿using Entity.ModelView;
-using Entity.Model;
+﻿using Entity.Model;
+using Entity.ModelView;
 
 namespace Service
 {

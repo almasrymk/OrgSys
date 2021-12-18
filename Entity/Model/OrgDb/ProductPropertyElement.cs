@@ -1,5 +1,4 @@
-﻿using Utility;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entity.Model
 {
@@ -7,19 +6,20 @@ namespace Entity.Model
    public class ProductPropertyElement :BaseModel
     {
         [ForeignKey("Product")]
-        public long? ProductId { get; set; }
+        public virtual long? ProductId { get; set; }
 
-        public Product Product { get; set; }
+        public virtual Product Product { get; set; }
 
         [ForeignKey("Property")]
-        public long? PropertyId { get; set; }
+        public virtual long? PropertyId { get; set; }
 
-        public Property Property { get; set; }
+        public virtual Property Property { get; set; }
 
         [ForeignKey("PropertyElement")]
-        public long? PropertyElementId { get; set; }
+        public virtual long? PropertyElementId { get; set; }
 
-        public PropertyElement PropertyElement { get; set; }
-        public bool IsChecked { get; set; }
+        public virtual PropertyElement PropertyElement { get; set; }
+
+        public virtual bool IsChecked { get; set; }
     }
 }

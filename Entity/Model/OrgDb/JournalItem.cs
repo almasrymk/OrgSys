@@ -1,6 +1,4 @@
-﻿using Utility;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entity.Model
 {
@@ -8,19 +6,19 @@ namespace Entity.Model
     public class JournalItem : BaseModel
     {        
         [ForeignKey("Journal")]
-        public long JournalId { get; set; }
+        public virtual long JournalId { get; set; }
 
-        public Journal Journal { get; set; }
+        public virtual Journal Journal { get; set; }
 
         [ForeignKey("Account")]
-        public long AccountId { get; set; }
+        public virtual long AccountId { get; set; }
 
         public virtual Account Account { get; set; }
 
-        public decimal Debit { get; set; }
+        public virtual decimal Debit { get; set; }
 
-        public decimal Credit { get; set; }
+        public virtual decimal Credit { get; set; }
 
-        public string Note { get; set; }
+        public virtual string Note { get; set; }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entity.Model
 {
@@ -7,16 +6,16 @@ namespace Entity.Model
     public class Journal : MovementModel
     {       
         [ForeignKey("Currency")]
-        public long CurrencyId { get; set; }
+        public virtual long CurrencyId { get; set; }
 
-        public Currency Currency { get; set; }
+        public virtual Currency Currency { get; set; }
 
-        public long RefranceId { get; set; }
+        public virtual long RefranceId { get; set; }
 
-        public long RefranceTypeId { get; set; }
+        public virtual long RefranceTypeId { get; set; }
 
-        public string RefranceTable { get; set; }
+        public virtual string RefranceTable { get; set; }
 
-        public string Note { get; set; }
+        public virtual string Note { get; set; }
     }
 }

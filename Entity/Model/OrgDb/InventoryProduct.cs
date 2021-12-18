@@ -1,5 +1,4 @@
-﻿using Utility;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entity.Model
@@ -8,29 +7,29 @@ namespace Entity.Model
     public class InventoryProduct : BaseModel
     {
         [Required]
-        public long RowNumber { get; set; }
+        public virtual long RowNumber { get; set; }
 
         [ForeignKey("Inventory")]
-        public long InventoryId { get; set; }
+        public virtual long InventoryId { get; set; }
 
-        public Inventory Inventory { get; set; }
+        public virtual Inventory Inventory { get; set; }
 
         [ForeignKey("Product")]
-        public long ProductId { get; set; }
+        public virtual long ProductId { get; set; }
 
-        public Product Product { get; set; }
+        public virtual Product Product { get; set; }
 
         [ForeignKey("Unit")]
-        public long UnitId { get; set; }
+        public virtual long UnitId { get; set; }
 
-        public Unit Unit { get; set; }               
+        public virtual Unit Unit { get; set; }               
 
-        public decimal CalcBalance { get; set; }
+        public virtual decimal CalcBalance { get; set; }
 
-        public decimal ActualBalance { get; set; }
+        public virtual decimal ActualBalance { get; set; }
 
-        public decimal DiffQuantity { get; set; }
+        public virtual decimal DiffQuantity { get; set; }
 
-        public string Notes { get; set; }                       
+        public virtual string Notes { get; set; }                       
     }
 }

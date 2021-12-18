@@ -1,5 +1,4 @@
-﻿using Utility;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entity.Model
@@ -8,37 +7,37 @@ namespace Entity.Model
     public class OrderProduct : BaseModel
     {
         [Required]
-        public long RowNumber { get; set; }
+        public virtual long RowNumber { get; set; }
 
         [ForeignKey("Order")]
-        public long OrderId { get; set; }
+        public virtual long OrderId { get; set; }
 
-        public Order Order { get; set; }
+        public virtual Order Order { get; set; }
 
         [ForeignKey("Product")]
-        public long ProductId { get; set; }
+        public virtual long ProductId { get; set; }
 
-        public Product Product { get; set; }
+        public virtual Product Product { get; set; }
 
         [ForeignKey("Unit")]
-        public long UnitId { get; set; }
+        public virtual long UnitId { get; set; }
 
-        public Unit Unit { get; set; }               
+        public virtual Unit Unit { get; set; }               
 
-        public decimal Quantity { get; set; }
+        public virtual decimal Quantity { get; set; }
         
-        public decimal Price { get; set; }
+        public virtual decimal Price { get; set; }
 
-        public decimal Total { get; set; }
+        public virtual decimal Total { get; set; }
 
-        public decimal Discount { get; set; }
+        public virtual decimal Discount { get; set; }
 
-        public decimal Service { get; set; }
+        public virtual decimal Service { get; set; }
 
-        public decimal Tax { get; set; }
+        public virtual decimal Tax { get; set; }
 
-        public decimal Net { get; set; }
+        public virtual decimal Net { get; set; }
 
-        public string Notes { get; set; }                       
+        public virtual string Notes { get; set; }                       
     }
 }

@@ -1,5 +1,4 @@
-﻿using Utility;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -9,19 +8,19 @@ namespace Entity.Model
     public class Financial : MovementModel
     {
         [ForeignKey("Dealer")]
-        public long? DealerId { get; set; }
+        public virtual long? DealerId { get; set; }
 
-        public Dealer Dealer { get; set; }
+        public virtual Dealer Dealer { get; set; }
 
         [ForeignKey("PaymentType")]
-        public long PaymentTypeId { get; set; }
+        public virtual long PaymentTypeId { get; set; }
 
-        public PaymentType PaymentType { get; set; }
+        public virtual PaymentType PaymentType { get; set; }
 
         [ForeignKey("Outlay")]
-        public long? OutlayId { get; set; }
+        public virtual long? OutlayId { get; set; }
 
-        public Outlay Outlay { get; set; }
+        public virtual Outlay Outlay { get; set; }
 
         [ForeignKey("CurrencyId")]
         public long CurrencyId { get; set; }

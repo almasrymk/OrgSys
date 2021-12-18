@@ -7,38 +7,38 @@ namespace Entity.Model
     [Table("LogSys")]
     public class LogSys : BaseModel
     {
-        public long UserId { get; set; }
+        public virtual long UserId { get; set; }
 
-        public string ResourceId { get; set; }
+        public virtual string ResourceId { get; set; }
 
-        public string ResourceType { get; set; }
+        public virtual string ResourceType { get; set; }
 
-        public string TableName { get; set; }
+        public virtual string TableName { get; set; }
 
-        public string ScreenName { get; set; }
+        public virtual string ScreenName { get; set; }
 
-        public DateTime Date { get; set; }
+        public virtual DateTime Date { get; set; }
 
-        public TimeSpan Time { get; set; }
+        public virtual TimeSpan Time { get; set; }
 
-        public long EstimateBySecond { get; set; }
+        public virtual long EstimateBySecond { get; set; }
 
-        public string Title { get; set; }
+        public virtual string Title { get; set; }
 
-        public string Message { get; set; }
+        public virtual string Message { get; set; }
 
-        public string Path { get; set; }
+        public virtual string Path { get; set; }
 
-        public string Line { get; set; }
+        public virtual string Line { get; set; }
 
-        public string Icon { get; set; }
+        public virtual string Icon { get; set; }
 
-        public LogType LogType { get; set; }
+        public virtual LogType LogType { get; set; }
 
-        public LogStatus LogStatus { get; set; }
+        public virtual LogStatus LogStatus { get; set; }
 
-        public LogAccessLevel LogAccessLevel { get; set; }
+        public virtual LogAccessLevel LogAccessLevel { get; set; }
 
-        public bool Sent { get; set; }
+        public virtual bool Sent { get; set; }
     }
 }

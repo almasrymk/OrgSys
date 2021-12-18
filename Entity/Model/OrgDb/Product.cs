@@ -1,5 +1,4 @@
-﻿using Utility;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -9,35 +8,35 @@ namespace Entity.Model
     public class Product : BaseModel
     {       
         [Required]
-        public string Name { get; set; }
+        public virtual string Name { get; set; }
 
-        public string Nickname { get; set; }
+        public virtual string Nickname { get; set; }
 
         [Required]
-        public string Barcode { get; set; }
+        public virtual string Barcode { get; set; }
 
-        public string Description { get; set; }
+        public virtual string Description { get; set; }
 
-        public decimal Price { get; set; }
+        public virtual decimal Price { get; set; }
 
-        public decimal Cost { get; set; }
+        public virtual decimal Cost { get; set; }
 
         [ForeignKey("Classification")]
-        public long ClassificationId { get; set; }
+        public virtual long ClassificationId { get; set; }
 
-        public Classification Classification { get; set; }
+        public virtual Classification Classification { get; set; }
 
         [ForeignKey("Dealer")]
-        public long? DealerId { get; set; }
+        public virtual long? DealerId { get; set; }
 
-        public Dealer Dealer { get; set; }
+        public virtual Dealer Dealer { get; set; }
 
-        public string Recipe { get; set; }
+        public virtual string Recipe { get; set; }
 
-        public ICollection<ProductUnit> ProductUnits { get; set; }
+        public virtual ICollection<ProductUnit> ProductUnits { get; set; }
 
-        public ICollection<ProductRecipe> ProductRecipes { get; set; }
+        public virtual ICollection<ProductRecipe> ProductRecipes { get; set; }
 
-        public ICollection<ProductPropertyElement> ProductPropertyElements { get; set; }
+        public virtual ICollection<ProductPropertyElement> ProductPropertyElements { get; set; }
     }
 }

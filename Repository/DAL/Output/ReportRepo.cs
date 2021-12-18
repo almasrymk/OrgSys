@@ -1,12 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using Utility;
+using System.Linq;
 using Entity.ModelReport;
-using Microsoft.Extensions.Configuration;
-using Entity.ModelView;
-using Entity.Model;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace Repository
 {

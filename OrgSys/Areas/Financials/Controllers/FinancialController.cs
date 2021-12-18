@@ -63,7 +63,7 @@ namespace OrgSys.Areas.Financial.Controllers
                 ob.PaymentTypeId = PaymentTypeId;
                 ob.OutlayId = OutlayId;
                 ob.Date = DateTime.Now;
-                ob.FinancialInvoices = new List<FinancialInvoiceModelView>();
+                ob.FinancialInvoiceList = new List<FinancialInvoiceModelView>();
             }
 
             ob.SafeName = new SafeService(User.GetSchema()).Get(ob.SafeId).Name;

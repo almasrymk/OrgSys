@@ -1,5 +1,4 @@
-﻿using Utility;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entity.Model
@@ -8,34 +7,34 @@ namespace Entity.Model
     public class Dealer : BaseModel
     {
         [Required]
-        public string Name { get; set; }
+        public virtual string Name { get; set; }
 
         [StringLength(25, MinimumLength = 8)]
-        public string Phone { get; set; }
+        public virtual string Phone { get; set; }
 
         [StringLength(30, MinimumLength = 3)]
-        public string Email { get; set; }
+        public virtual string Email { get; set; }
 
         [StringLength(500, MinimumLength = 3)]
-        public string Address { get; set; }
+        public virtual string Address { get; set; }
 
         [ForeignKey("DealerGroup")]
-        public long? DealerGroupId { get; set; }
+        public virtual long? DealerGroupId { get; set; }
 
         public virtual DealerGroup DealerGroup { get; set; }
 
         [ForeignKey("Country")]
-        public long? CountryId { get; set; }
+        public virtual long? CountryId { get; set; }
 
         public virtual Country Country { get; set; }
 
         [ForeignKey("City")]
-        public long? CityId { get; set; }
+        public virtual long? CityId { get; set; }
 
         public virtual City City { get; set; }
 
         [ForeignKey("District")]
-        public long? DistrictId { get; set; }
+        public virtual long? DistrictId { get; set; }
 
         public virtual District District { get; set; }
     }

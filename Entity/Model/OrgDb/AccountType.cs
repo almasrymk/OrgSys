@@ -1,5 +1,4 @@
-﻿using Utility;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entity.Model
@@ -8,8 +7,8 @@ namespace Entity.Model
     public class AccountType : BaseModel
     {
         [StringLength(50, MinimumLength = 3)]
-        public string Name { get; set; }
+        public virtual string Name { get; set; }
 
-        public int DebitOrCredit { get; set; }
+        public virtual int DebitOrCredit { get; set; }
     }
 }

@@ -1,5 +1,4 @@
-﻿using Utility;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entity.Model
@@ -8,10 +7,10 @@ namespace Entity.Model
     public class Currency : BaseModel
     {
         [StringLength(50, MinimumLength = 3)]
-        public string Name { get; set; }
+        public virtual string Name { get; set; }
 
-        public decimal Rate { get; set; }
+        public virtual decimal Rate { get; set; }
 
-        public bool IsDefault { get; set; }
+        public virtual bool IsDefault { get; set; }
     }
 }
