@@ -42,5 +42,6 @@ namespace Entity.ModelReport
         public decimal Credit { get; set; }
         public decimal Net { get; set; }
 
+        public string Typeinvoice { get; set; }
     }
 }
