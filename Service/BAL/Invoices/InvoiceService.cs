@@ -1,8 +1,10 @@
 ﻿using Entity;
 using Entity.Model;
 using Entity.ModelView;
+using Repository;
 using System.Collections.Generic;
 using System.Linq;
+using X.PagedList;
 
 namespace Service
 {
@@ -64,7 +66,7 @@ namespace Service
             return false;
         }
 
-        public bool Delete(List<long> ids)
+        public override bool Delete(List<long> ids)
         {
             var oblist = repo.GetRepo<Invoice>().GetList(e => ids.Contains(e.Id), null, "", Utility.Status.New);
             if (oblist != null && oblist.Count() > 0)
@@ -85,16 +87,34 @@ namespace Service
 
         public void Cancel(long Id)
         {
-            var ob = repo.GetRepo<Invoice>().Get(e => e.Id == Id);
+            var ob = repo.GetRepo<InvoiceRepo, Invoice>().Get(e => e.Id == Id);
             ob.Status = Utility.Status.Cancel;
-            ob = repo.GetRepo<Invoice>().AddOrUpdate(ob);
+            ob = repo.GetRepo<InvoiceRepo, Invoice>().AddOrUpdate(ob);
         }
 
         public void Redo(long Id)
         {
-            var ob = repo.GetRepo<Invoice>().Get(e => e.Id == Id);
+            var ob = repo.GetRepo<InvoiceRepo, Invoice>().Get(e => e.Id == Id);
             ob.Status = Utility.Status.All;
-            ob = repo.GetRepo<Invoice>().AddOrUpdate(ob);
+            ob = repo.GetRepo<InvoiceRepo, Invoice>().AddOrUpdate(ob);
+        }
+
+        public List<InvoiceModelView> GetInvoicesNotReturn(string txtSearch = "", long TypeId = 0, long InvId = 0, int page = 1, int pageSize = 20)
+        {
+            var obList = repo.GetRepo<InvoiceRepo , Invoice>().GetInvoicesNotReturn(txtSearch, TypeId, InvId, page, pageSize);
+            if (obList == null)
+                obList = new List<Invoice>();
+            return obList.Select(e => e.Map<InvoiceModelView>()).ToList();
+        }
+
+        public IPagedList<InvoiceModelView> GetCreditAllByDealerId(string textSearch, long dealerId, long currencyId, string ids, long parentId = 0, long TypeId = 0, int page = 1, int pageSize = 20)
+        {
+            if (ids == null)
+                ids = "";
+            var idsList = ids.Split(",").Where(e => e != "").ToList();
+            if (idsList == null)
+                idsList = new List<string>();
+            return repo.GetRepo<InvoiceRepo, Invoice>().GetList(e => !ids.Contains(e.Id.ToString()) && e.TypeId == TypeId && e.DealerId == dealerId && e.CurrencyId == currencyId && e.Credit > 0 && ("" + textSearch == "" || e.Code.Contains("" + textSearch) || e.Dealer.Name.Contains("" + textSearch)), e => e.OrderByDescending(e => e.Id), Includes, Utility.Status.New).Select(e => e.Map<InvoiceModelView>()).ToPagedList(page, pageSize);
         }
     }
 }

@@ -22,12 +22,26 @@ namespace Repository
 
             var repo = Repositories.GetValueOrDefault(Key);
             if (repo == null)
+            {
+                var Repository = CreateRepository(typeof(Entity).Name);
+                Repositories.Add(Key, Repository);
+            }
+
+            return (CurdOrg<Entity>)repo;
+        }
+
+        public RepoT GetRepo<RepoT,Entity>() where Entity : BaseModel where RepoT : CurdOrg<Entity>
+        {
+            string Key = typeof(Entity).Name + Schema;
+
+            var repo = Repositories.GetValueOrDefault(Key);
+            if (repo == null)
             {              
                 var Repository = CreateRepository(typeof(Entity).Name);
                 Repositories.Add(Key, Repository);
             }
 
-            return (CurdOrg<Entity>) repo;
+            return (RepoT) repo;
         }
 
         private object CreateRepository(string TypeName)
