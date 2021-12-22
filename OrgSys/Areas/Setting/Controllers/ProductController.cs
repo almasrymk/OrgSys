@@ -20,7 +20,7 @@ namespace OrgSys.Areas.Setting.Controllers
         public override ProductModelView InitializeData(ProductModelView ob)
         {
             if (ob.ProductUnits == null)
-                 ob.ProductUnits = new List<ProductUnitModelView>();
+                 ob.ProductUnitList = new List<ProductUnitModelView>();
             if (ob.Id == 0)
             {
                 ob.CodeNumber = new ProductService(User.GetSchema()).GetMaxCode(ob.TypeId);
@@ -124,7 +124,7 @@ namespace OrgSys.Areas.Setting.Controllers
                 price = product.Price,
                 cost = product.Cost,
                 selectunitid = product.ProductUnits.FirstOrDefault(e => e.DefaultUnit).UnitId,
-                selectunitName = product.ProductUnits.FirstOrDefault(e => e.DefaultUnit).UnitName,
+                selectunitName = product.ProductUnitList.FirstOrDefault(e => e.DefaultUnit).UnitName,
                 unitlist = new UnitService(User.GetSchema()).GetAllByProductId(id)
             };
             return Json(data);
@@ -138,8 +138,8 @@ namespace OrgSys.Areas.Setting.Controllers
                 id = e.Id,
                 name = e.Name,
                 price = e.Price,
-                selectunitid = e.ProductUnits.FirstOrDefault(e => e.DefaultUnit).UnitId,
-                selectunitName = e.ProductUnits.FirstOrDefault(e => e.DefaultUnit).UnitName,
+                selectunitid = e.ProductUnitList.FirstOrDefault(e => e.DefaultUnit).UnitId,
+                selectunitName = e.ProductUnitList.FirstOrDefault(e => e.DefaultUnit).UnitName,
                 balance = e.Balance
             }).ToList();
             return Json(data);

@@ -11,12 +11,12 @@ namespace Service.BAL.Data.Security
         #region Gets       
         public RequestModelView GetEmail(string Email)
         {
-            return repo.Db.Get(e => e.Email.Contains("" + Email), Includes).Map<RequestModelView>();
+            return repo.Get(e => e.Email.Contains("" + Email), Includes).Map<RequestModelView>();
 
         }
         public RequestModelView GetByKey(string Key)
         {
-            return repo.Db.Get(e => e.Key == Key, Includes).Map<RequestModelView>();
+            return repo.Get(e => e.Key == Key, Includes).Map<RequestModelView>();
         }
         #endregion
     }

@@ -128,7 +128,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach (var OrderProduct in Model.OrderProducts)
+                                            @foreach (var OrderProduct in Model.OrderProductList)
                                             {
                                                 <tr class="product-empty ProductRow">
                                                     <td class="text-center align-middle" style="width:35px;padding:0px;">
@@ -155,7 +155,7 @@
                                                         </div>
                                                     </td>
                                                     <td style="width:150px;padding:0px;">
-                                                        @Html.DropDownList("UnitId", new SelectList(OrderProduct.Units, "Id", "Name", OrderProduct.UnitId), null, new { @class = "form-control UnitId", @style = BorderAlign })
+                                                        @Html.DropDownList("UnitId", new SelectList(OrderProduct.UnitList, "Id", "Name", OrderProduct.UnitId), null, new { @class = "form-control UnitId", @style = BorderAlign })
                                                     </td>
                                                     <td style="width:100px;padding:0px;">
                                                         <input type="text" id="Price" name="Price" class="form-control Price" value="@OrderProduct.Price" style="@BorderAlign" placeholder="0.0" autocomplete="off" />

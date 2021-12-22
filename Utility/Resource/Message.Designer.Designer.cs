@@ -556,7 +556,16 @@ namespace Utility.Resource {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Username / Email is Required.
+        ///   Looks up a localized string similar to Username / Email invalid.
+        /// </summary>
+        public static string UsernameEmailNotValid {
+            get {
+                return ResourceManager.GetString("UsernameEmailNotValid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Username / Email is required.
         /// </summary>
         public static string UsernameRequired {
             get {

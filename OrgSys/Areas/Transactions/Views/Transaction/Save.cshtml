@@ -117,7 +117,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach (var TransactionProduct in Model.TransactionProducts)
+                                        @foreach (var TransactionProduct in Model.TransactionProductList)
                                         {
                                             <tr class="product-empty ProductRow">
                                                 <td class="text-center align-middle" style="width:35px;padding:0px;">
@@ -144,7 +144,7 @@
                                                     </div>
                                                 </td>
                                                 <td style="width:150px;padding:0px;">
-                                                    @Html.DropDownList("UnitId", new SelectList(TransactionProduct.Units, "Id", "Name", TransactionProduct.UnitId), null, new { @class = "form-control UnitId", @style = BorderAlign })
+                                                    @Html.DropDownList("UnitId", new SelectList(TransactionProduct.UnitList, "Id", "Name", TransactionProduct.UnitId), null, new { @class = "form-control UnitId", @style = BorderAlign })
                                                 </td>
                                                 <td style="width:100px;padding:0px;">
                                                     <input type="text" id="Cost" name="Cost" class="form-control Cost" value="@TransactionProduct.Cost" style="border-top:none;border-bottom:none;border-right:none;" placeholder="0.0" autocomplete="off" />
@@ -160,7 +160,7 @@
                                                 </td>
                                             </tr>
                                         }
-                                        @if (Model.TransactionProducts == null || (Model.TransactionProducts.Count < int.Parse("0" + ViewBag.NumberLine) && int.Parse("0" + ViewBag.NumberLine) > 0))
+                                        @if (Model.TransactionProductList == null || (Model.TransactionProductList.Count < int.Parse("0" + ViewBag.NumberLine) && int.Parse("0" + ViewBag.NumberLine) > 0))
                                         {
 
                                             @for (int i = 0, index = 1; i < int.Parse("0" + ViewBag.NumberLine) - Model.TransactionProducts.Count; i++, index++)

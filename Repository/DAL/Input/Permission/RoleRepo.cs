@@ -2,8 +2,8 @@
 
 namespace Repository
 {
-    public class RolechRepo : CurdOrg<Role>
+    public class RoleRepo : CurdOrg<Role>
     {
-        public RolechRepo(string Schema) : base(Schema) { }
+        public RoleRepo(string Schema) : base(Schema) { }
     }
 }

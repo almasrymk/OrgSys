@@ -62,16 +62,16 @@ namespace Service
             //    foreach (var rp in rps)
             //    {
             //        rp.InvoiceId = null;
-            //        repo.orderRepo.AddOrUpdateTemp(rp);                    
+            //        repo.orderRepo.AddOrUpdateTemp(rp);
             //    }
             //    return repo.orderRepo.SaveChanges();
             //}
             return false;
         }
-      
+
         public bool CreateTransactionByInvoice(InvoiceModelView inv)
         {
-            //var transaction  = new TransactionModelView(inv.Model());
+            //var transaction = new TransactionModelView(inv.Model());
             //var transactionOld = repo.transactionRepo.Get(e => e.Id == inv.TransactionId);
             //if (transactionOld == null || transactionOld.Id == 0)
             //{
@@ -83,8 +83,8 @@ namespace Service
             //    transaction.Id = transactionOld.Id;
             //    transaction.CodeNumber = transactionOld.CodeNumber;
             //    transaction.Code = "" + transactionOld.Code;
-            //}            
-           
+            //}
+
             //transaction = new TransactionService(_Schema).Save(transaction);
             //inv.TransactionId = transaction.Id;
             //repo.invoiceRepo.AddOrUpdate(inv.Model());
@@ -99,7 +99,7 @@ namespace Service
             //    received.TypeId = 4;
             //    foreach (var item in received.TransactionProducts)
             //        item.TypeId = 4;
-            //   // received.CodeNumber = GetMaxCode(4);
+            //    // received.CodeNumber = GetMaxCode(4);
             //    received.Code = "" + received.CodeNumber;
             //    //Save(received);
             //    return true;
@@ -109,8 +109,8 @@ namespace Service
 
         public bool CreateFinancialByInvoice(InvoiceModelView inv)
         {
-            //var TotalCredit = repo.financialInvoiceRepo.GetList(e => e.InvoiceId == inv.Id && e.Financial.Status !=  Utility.Status.Deleted && e.Financial.Status != Utility.Status.Cancel, null , "Financial", Utility.Status.All)?.Sum(e=>e.Amount)??0;
-            //if(inv.Paid > TotalCredit)
+            //var TotalCredit = repo.financialInvoiceRepo.GetList(e => e.InvoiceId == inv.Id && e.Financial.Status != Utility.Status.Deleted && e.Financial.Status != Utility.Status.Cancel, null, "Financial", Utility.Status.All)?.Sum(e => e.Amount) ?? 0;
+            //if (inv.Paid > TotalCredit)
             //{
             //    var amount = inv.Paid - inv.Remaining - TotalCredit;
             //    var financial = new FinancialModelView(inv.Model(), amount);
@@ -137,21 +137,21 @@ namespace Service
 
         public void UpdateCredit(List<long> ids)
         {
-            //var invs = repo.invoiceRepo.GetList(e => ids.Contains(e.Id) , null, "", Utility.Status.New).ToList();
-            //if (invs == null)
-            //    invs = new List<Invoice>();
+            var invs = repo.invoiceRepo.GetList(e => ids.Contains(e.Id), null, "", Utility.Status.New).ToList();
+            if (invs == null)
+                invs = new List<Invoice>();
 
-            //var financialsInvs = repo.financialInvoiceRepo.GetList(e => ids.Contains(e.InvoiceId??0) && e.Financial.Status ==  Utility.Status.All , null, "Financial", Utility.Status.New).ToList();
-            //if (financialsInvs == null)
-            //    financialsInvs = new List<FinancialInvoice>();
+            var financialsInvs = repo.financialInvoiceRepo.GetList(e => ids.Contains(e.InvoiceId ?? 0) && e.Financial.Status == Utility.Status.All, null, "Financial", Utility.Status.New).ToList();
+            if (financialsInvs == null)
+                financialsInvs = new List<FinancialInvoice>();
 
-            //foreach (var inv in invs)
-            //{
-            //    var amount = financialsInvs.Where(e => e.InvoiceId == inv.Id)?.Sum(e => e.Amount) ?? 0;
-            //    inv.Credit = inv.Net - amount;
-            //    inv.Paid = inv.Net - inv.Credit;
-            //    var Nwob = repo.invoiceRepo.AddOrUpdate(inv);
-            //}
+            foreach (var inv in invs)
+            {
+                var amount = financialsInvs.Where(e => e.InvoiceId == inv.Id)?.Sum(e => e.Amount) ?? 0;
+                inv.Credit = inv.Net - amount;
+                inv.Paid = inv.Net - inv.Credit;
+                var Nwob = repo.invoiceRepo.AddOrUpdate(inv);
+            }
         }
     }
 }

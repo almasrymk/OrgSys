@@ -9,7 +9,7 @@ using Utility;
 
 namespace Repository
 {
-    public class CurdOrg<entity> where entity : BaseModel
+    public class CurdOrg<entity> : ICurd<entity> where entity : BaseModel
     {
         public OrgContext db;
         public CurdOrg(string Schema)

@@ -11,7 +11,7 @@ namespace Service
         #region Gets 
         public LoginUserModelView GetLoginUserName(string textSearch)
         {
-            var ob = repo.Db.Get(e => e.UserName.ToLower().Trim().Equals("" + textSearch.ToLower().Trim()), Includes).Map<LoginUserModelView>();
+            var ob = repo.Get(e => e.UserName.ToLower().Trim().Equals("" + textSearch.ToLower().Trim()), Includes).Map<LoginUserModelView>();
             if (ob == null)
                 ob = new LoginUserModelView();
             return ob;
@@ -19,28 +19,28 @@ namespace Service
 
         public bool CheckDoublicat(string LoginUserName, long id)
         {
-            var ob = repo.Db.Get(e => e.UserName.Equals("" + LoginUserName) && (id == 0 || e.Id != id)).Map<LoginUserModelView>();
+            var ob = repo.Get(e => e.UserName.Equals("" + LoginUserName) && (id == 0 || e.Id != id)).Map<LoginUserModelView>();
             return ob != null && ob.Id > 0;
         }
 
         public bool CheckEmail(string Email)
         {
-            return repo.Db.Any(e => e.UserName.ToLower().Trim() == Email.ToLower().Trim());
+            return repo.Any(e => e.UserName.ToLower().Trim() == Email.ToLower().Trim());
         }
 
         public bool CheckCurrentPassword(long Id, string CurrentPassword)
         {
-            return repo.Db.Any(e => e.Id == Id && e.Password == CurrentPassword);
+            return repo.Any(e => e.Id == Id && e.Password == CurrentPassword);
         }
 
         public bool HavePassword(string Email)
         {
-            return "" + repo.Db.Get(e => e.UserName.ToLower().Trim() == Email.ToLower().Trim())?.Password != "";
+            return "" + repo.Get(e => e.UserName.ToLower().Trim() == Email.ToLower().Trim())?.Password != "";
         }
 
         public bool CheckEmailAndPassword(string Email, string Passord)
         {
-            return repo.Db.Any(e => e.UserName.ToLower().Trim() == Email.ToLower().Trim() && e.Password == Passord);
+            return repo.Any(e => e.UserName.ToLower().Trim() == Email.ToLower().Trim() && e.Password == Passord);
         }
         #endregion
     }

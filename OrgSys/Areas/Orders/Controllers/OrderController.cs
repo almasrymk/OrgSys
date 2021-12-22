@@ -1,4 +1,5 @@
-﻿using Entity.ModelView;
+﻿using Entity;
+using Entity.ModelView;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using OrgSys.Controllers;
@@ -76,7 +77,7 @@ namespace OrgSys.Areas.Orders.Controllers
                 ob.Discount = DiscountValue;
                 ob.Service = ServiceValue;
                 ob.Tax = TaxValue;
-                ob.OrderProducts = new List<OrderProductModelView>();
+                ob.OrderProductList = new List<OrderProductModelView>();
             }
 
             ob.DealerName = new DealerService(User.GetSchema()).Get(ob.DealerId ?? 0).Name;
@@ -88,7 +89,7 @@ namespace OrgSys.Areas.Orders.Controllers
             var order = new OrderService(User.GetSchema()).Get(id);
             if (order != null)
             {
-                new IntegrationServics(User.GetSchema()).CreateInvoiceByOrder(order.Model());
+                new IntegrationServics(User.GetSchema()).CreateInvoiceByOrder(order.Map<OrderModelView>());
                 return Redirect("/Orders/Order/Index?ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" + ResultStatus.success + "&MsgError=Success");
             }
             return Redirect("/Orders/Order/Index?ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" + ResultStatus.error + "&MsgError=Not find order");

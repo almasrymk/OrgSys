@@ -1,6 +1,6 @@
 ﻿using Entity.Model;
 
-namespace Repository.DAL.Input
+namespace Repository
 {
     public class RequestRepo: CurdAdmin<Request>
     {

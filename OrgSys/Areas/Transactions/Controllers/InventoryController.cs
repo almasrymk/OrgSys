@@ -27,7 +27,7 @@ namespace OrgSys.Areas.Inventory.Controllers
                 ob.Code = "" + ob.CodeNumber;
                 ob.StoreId = StoreId;
                 ob.Date = DateTime.Now;
-                ob.InventoryProducts = new List<InventoryProductModelView>();
+                ob.InventoryProductList = new List<InventoryProductModelView>();
               }
             ob.StoreName = new StoreService(User.GetSchema()).Get(ob.StoreId??0).Name;
             return ob;

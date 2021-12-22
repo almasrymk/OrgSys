@@ -20,7 +20,7 @@ namespace Service
             }
 
             // Save
-            var Nwob = repo.GetRepo<Invoice>().AddOrUpdate(ob.Map<Invoice>());
+            var Nwob = repo .AddOrUpdate(ob.Map<Invoice>());
 
             if (ob.Id > 0)
             {
@@ -28,18 +28,18 @@ namespace Service
                 if (ids == null) ids = new List<long>();
 
                 // Delete row from database
-                var deleted = repo.GetRepo<InvoiceProduct>().GetList(e => e.InvoiceId == ob.Id && !ids.Contains(e.Id), e => e.OrderBy(e => e.Id), "", Utility.Status.All).ToList();
+                var deleted = repoAll.invoiceProductRepo.GetList(e => e.InvoiceId == ob.Id && !ids.Contains(e.Id), e => e.OrderBy(e => e.Id), "", Utility.Status.All).ToList();
                 if (deleted != null && deleted.Count > 0)
-                    repo.GetRepo<InvoiceProduct>().ShiftDelete(deleted.Select(e => e.Id).ToList());
+                    repoAll.invoiceProductRepo.ShiftDelete(deleted.Select(e => e.Id).ToList());
 
                 foreach (var productUnit in ob.InvoiceProductList)
                 {
                     var model = productUnit.Map<InvoiceProduct>();
                     model.InvoiceId = Nwob.Id;
                     model.StoreId = Nwob.StoreId;
-                    repo.GetRepo<InvoiceProduct>().AddOrUpdate(model);
+                    repoAll.invoiceProductRepo.AddOrUpdate(model);
                 }
-                Nwob.InvoiceProducts = repo.GetRepo<InvoiceProduct>().GetList(e => e.InvoiceId == Nwob.Id, e => e.OrderBy(e => e.Id), "", Utility.Status.All).ToList();
+                Nwob.InvoiceProducts = repoAll.invoiceProductRepo.GetList(e => e.InvoiceId == Nwob.Id, e => e.OrderBy(e => e.Id), "", Utility.Status.All).ToList();
             }
 
             if (long.Parse("0" + new PreferenceService(_Schema).GetByKey("AutoCreateTransaction", "Invoice", ob.TypeId, 0)?.Value) == 1 || ob.TransactionId > 0)
@@ -53,10 +53,10 @@ namespace Service
 
         public override bool Delete(long id)
         {
-            var ob = repo.GetRepo<Invoice>().Get(e => e.Id == id);
+            var ob = repo .Get(e => e.Id == id);
             if (ob != null)
             {
-                repo.GetRepo<Invoice>().Delete(id);
+                repo .Delete(id);
                 new IntegrationServics(_Schema).DeleteInvoice(id);
                 new TransactionService(_Schema).Delete(ob.TransactionId ?? 0);
                 var fi = new FinancialService(_Schema).GetByParent(id);
@@ -68,10 +68,10 @@ namespace Service
 
         public override bool Delete(List<long> ids)
         {
-            var oblist = repo.GetRepo<Invoice>().GetList(e => ids.Contains(e.Id), null, "", Utility.Status.New);
+            var oblist = repo .GetList(e => ids.Contains(e.Id), null, "", Utility.Status.New);
             if (oblist != null && oblist.Count() > 0)
             {
-                repo.GetRepo<Invoice>().Delete(ids);
+                repo .Delete(ids);
                 new TransactionService(_Schema).Delete(oblist.Select(e => e.TransactionId ?? 0).ToList());
                 foreach (var id in ids)
                 {
@@ -87,21 +87,21 @@ namespace Service
 
         public void Cancel(long Id)
         {
-            var ob = repo.GetRepo<InvoiceRepo, Invoice>().Get(e => e.Id == Id);
+            var ob = repo.Get(e => e.Id == Id);
             ob.Status = Utility.Status.Cancel;
-            ob = repo.GetRepo<InvoiceRepo, Invoice>().AddOrUpdate(ob);
+            ob = repo.AddOrUpdate(ob);
         }
 
         public void Redo(long Id)
         {
-            var ob = repo.GetRepo<InvoiceRepo, Invoice>().Get(e => e.Id == Id);
+            var ob = repo.Get(e => e.Id == Id);
             ob.Status = Utility.Status.All;
-            ob = repo.GetRepo<InvoiceRepo, Invoice>().AddOrUpdate(ob);
+            ob = repo.AddOrUpdate(ob);
         }
 
         public List<InvoiceModelView> GetInvoicesNotReturn(string txtSearch = "", long TypeId = 0, long InvId = 0, int page = 1, int pageSize = 20)
         {
-            var obList = repo.GetRepo<InvoiceRepo , Invoice>().GetInvoicesNotReturn(txtSearch, TypeId, InvId, page, pageSize);
+            var obList = repoAll.invoiceRepo.GetInvoicesNotReturn(txtSearch, TypeId, InvId, page, pageSize);
             if (obList == null)
                 obList = new List<Invoice>();
             return obList.Select(e => e.Map<InvoiceModelView>()).ToList();
@@ -114,7 +114,7 @@ namespace Service
             var idsList = ids.Split(",").Where(e => e != "").ToList();
             if (idsList == null)
                 idsList = new List<string>();
-            return repo.GetRepo<InvoiceRepo, Invoice>().GetList(e => !ids.Contains(e.Id.ToString()) && e.TypeId == TypeId && e.DealerId == dealerId && e.CurrencyId == currencyId && e.Credit > 0 && ("" + textSearch == "" || e.Code.Contains("" + textSearch) || e.Dealer.Name.Contains("" + textSearch)), e => e.OrderByDescending(e => e.Id), Includes, Utility.Status.New).Select(e => e.Map<InvoiceModelView>()).ToPagedList(page, pageSize);
+            return repo.GetList(e => !ids.Contains(e.Id.ToString()) && e.TypeId == TypeId && e.DealerId == dealerId && e.CurrencyId == currencyId && e.Credit > 0 && ("" + textSearch == "" || e.Code.Contains("" + textSearch) || e.Dealer.Name.Contains("" + textSearch)), e => e.OrderByDescending(e => e.Id), Includes, Utility.Status.New).Select(e => e.Map<InvoiceModelView>()).ToPagedList(page, pageSize);
         }
     }
 }

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Repository
 {
-    public class CurdAdmin<entity> where entity : BaseModel
+    public class CurdAdmin<entity> : ICurd<entity> where entity : BaseModel
     {
         public AdminContext db;
 

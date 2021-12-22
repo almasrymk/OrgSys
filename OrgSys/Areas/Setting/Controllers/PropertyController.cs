@@ -10,8 +10,8 @@ namespace OrgSys.Areas.Setting.Controllers
     {
         public override PropertyModelView InitializeData(PropertyModelView ob)
         {
-            if (ob.PropertyElements == null)
-                ob.PropertyElements = new List<PropertyElementModelView>();
+            if (ob.PropertyElementList == null)
+                ob.PropertyElementList = new List<PropertyElementModelView>();
             return ob;
         }
     }

@@ -276,6 +276,9 @@
   <data name="UnitsWhichProductMeasured" xml:space="preserve">
     <value>الوحدات التى يقاس بها المنتج</value>
   </data>
+  <data name="UsernameEmailNotValid" xml:space="preserve">
+    <value>اسم المستخدم / البريد الالكتروني غير مسجل</value>
+  </data>
   <data name="UsernameRequired" xml:space="preserve">
     <value>يجب ادخال اسم المستخدم / البريد الالكتروني</value>
   </data>
