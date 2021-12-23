@@ -14,16 +14,18 @@
             <div class="fadeIn first">
                 <img src="~/logos/Logo.png" style="width:150px !important" id="icon" alt="User Icon" />
             </div>
-            <hr/>
             <h2 class="active"> @Utility.Resource.Title_Designer.Login </h2>
             <form action="/Home/LogIn" method="post">
-                <input type="hidden" name="UserName" id="UserName" />
+                <input type="hidden" name="Email" id="Email" />
                 <input type="hidden" name="KeepLoggedIn" id="KeepLoggedIn" />
 
-                <div id="dvEmail">
-                    <input type="text" name="MyEmail" id="MyEmail" placeholder="@Utility.Resource.Title_Designer.UsernameOrEmail" autocomplete="off">
-                    <div id="UserNameError" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                        <span>@Utility.Resource.Message_Designer.UsernameEmailNotValid</span>
+                <div id="dvEmail" style="padding-left: 40px; padding-right: 40px;">
+                    <input type="text" name="MyEmail" id="MyEmail" placeholder="@Utility.Resource.Title_Designer.Email" autocomplete="off">
+                    <div id="EmailRequired" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
+                        <span>@Utility.Resource.Message_Designer.EmailRequired</span>
+                    </div>
+                    <div id="EmailError" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
+                        <span>@Utility.Resource.Message_Designer.EmailNotValid</span>
                     </div>
                     <div class="">
                         <div style="padding-top: 15px;">
@@ -32,65 +34,76 @@
                     </div>
                 </div>
 
-                <div id="dvPassword" style="display:none">
-                    <input type="text" name="TheEmail" id="TheEmail" placeholder="@Utility.Resource.Title_Designer.UsernameOrEmail" readonly="readonly">
-                    <input type="Password" name="Password" id="Password" placeholder="Password" class="fadeIn" autocomplete="off">
+                <div id="dvPassword" style="display: none; padding-left: 40px; padding-right: 40px;">
+                    <input type="text" name="TheEmail" id="TheEmail" placeholder="@Utility.Resource.Title_Designer.Email" readonly="readonly">
+                    <input type="Password" name="Password" id="Password" placeholder="@Utility.Resource.Title_Designer.Password" class="fadeIn" autocomplete="off">
+                    <div id="PasswordRequired" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
+                        <span>@Utility.Resource.Message_Designer.PasswordRequired</span>
+                    </div>
                     <div id="PasswordError" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                        <span>your password is Error</span>
+                        <span>@Utility.Resource.Message_Designer.PasswordNotValid</span>
                     </div>
                     <div class="">
                         <div>
                             <small>
-                                <input type="checkbox" class="fadeIn" onclick="Check(this)" />&nbsp;Keep me logged in
+                                <input type="checkbox" class="fadeIn" onclick="Check(this)" />&nbsp;@Utility.Resource.Title_Designer.KeepMeLoggedIn
                             </small>
                             <span> &nbsp; | &nbsp;</span>
                             <small>
-                                <a class="underlineHover" href="javascript::" onclick="Back()"> <i class="fa fa-undo"></i> Another user</a>
+                                <a class="underlineHover" href="javascript::" onclick="Back()"> <i class="fa fa-undo"></i> @Utility.Resource.Title_Designer.AnotherUser</a>
                             </small>
                         </div>
                         <small>
-                            <a class="underlineHover" href="#">Forgot Password?</a>
+                            <a class="underlineHover" href="#">@Utility.Resource.Title_Designer.ForgotPassword?</a>
                         </small>
                         <div style="padding-top:10px;padding-bottom:5px;">
-                            <input id="btPassword" type="button" value="LogIn" onclick="Login()" class="fadeIn" />
+                            <input id="btPassword" type="button" value="@Utility.Resource.Title_Designer.Login" onclick="Login()" class="fadeIn" />
                         </div>
                     </div>
                 </div>
 
-                <div id="dvNewPassword" style="display:none">
+                <div id="dvNewPassword" style="display: none; padding-left: 40px; padding-right: 40px; ">
                     <br />
-                    <input type="text" name="TheEmail" id="TheEmail" placeholder="@Utility.Resource.Title_Designer.UsernameOrEmail" readonly="readonly">
+                    <input type="text" name="TheEmail" id="TheEmail" placeholder="@Utility.Resource.Title_Designer.Email" readonly="readonly">
 
-                    <input type="Password" name="NewPassword" id="NewPassword" placeholder="New Password" />
+                    <input type="Password" name="NewPassword" id="NewPassword" placeholder="@Utility.Resource.Title_Designer.NewPassword" />
+                    <div id="NewPasswordRequired" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
+                        <span>@Utility.Resource.Message_Designer.PasswordRequired</span>
+                    </div>
                     <div id="NewPasswordError" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                        <span>your password is Error</span>
+                        <span>@Utility.Resource.Message_Designer.PasswordNotValid</span>
                     </div>
 
-                    <input type="Password" name="ConfirmPassword" id="ConfirmPassword" placeholder="Confirm New Password">
+                    <input type="Password" name="ConfirmPassword" id="ConfirmPassword" placeholder="@Utility.Resource.Title_Designer.ConfirmPassword">
+                    <div id="ConfirmPasswordRequired" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
+                        <span>@Utility.Resource.Message_Designer.ConfirmPasswordRequired</span>
+                    </div>
                     <div id="ConfirmPasswordError" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                        <span>your Confirm Password is Error</span>
+                        <span>@Utility.Resource.Message_Designer.ConfirmPasswordNotValid</span>
+                    </div>
+                    <div id="ConfirmPasswordNotMatch" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
+                        <span>@Utility.Resource.Message_Designer.NotMatch</span>
                     </div>
 
                     <div>
                         <div>
                             <small>
-                                <input type="checkbox" class="fadeIn" onclick="Check(this)" />&nbsp;Keep me logged in
+                                <input type="checkbox" class="fadeIn" onclick="Check(this)" />&nbsp;@Utility.Resource.Title_Designer.KeepMeLoggedIn
                             </small>
                             <span> &nbsp; | &nbsp;</span>
                             <small>
-                                <a class="underlineHover" href="javascript::" onclick="Back()"> <i class="fa fa-undo"></i> Another user</a>
+                                <a class="underlineHover" href="javascript::" onclick="Back()"> <i class="fa fa-undo"></i> @Utility.Resource.Title_Designer.AnotherUser</a>
                             </small>
                         </div>
                         <div style="padding-top:10px;padding-bottom:5px;">
-                            <input id="btNewPassword" type="button" value="LogIn" onclick="LoginByNewPassword()" class="fadeIn" />
+                            <input id="btNewPassword" type="button" value="@Utility.Resource.Title_Designer.Login" onclick="LoginByNewPassword()" class="fadeIn" />
                         </div>
                     </div>
                 </div>
 
             </form>
             <div id="formFooter" style="padding:10px;">
-                <a class="underlineHover" href="/Home/RequestReg">SignUp</a>
-
+                <a class="underlineHover" href="/Home/RequestReg">@Utility.Resource.Title_Designer.SignUp</a>
             </div>
         </div>
     </div>
@@ -101,10 +114,10 @@
 
 
     <script>
-        $("#MyEmail").on("keyup", function () { $("#UserNameError").hide(); });
-        $("#Password").on("keyup", function () { $("#PasswordError").hide(); });
-        $("#NewPassword").on("keyup", function () { $("#NewPasswordError").hide(); });
-        $("#ConfirmPassword").on("keyup", function () { $("#ConfirmPasswordError").hide(); });
+        $("#MyEmail").on("keyup", function () { $("#EmailRequired").hide(); $("#EmailError").hide(); });
+        $("#Password").on("keyup", function () { $("#PasswordRequired").hide(); $("#PasswordError").hide(); });
+        $("#NewPassword").on("keyup", function () { $("#NewPasswordRequired").hide(); $("#NewPasswordError").hide(); });
+        $("#ConfirmPassword").on("keyup", function () { $("#ConfirmPasswordError").hide(); $("#ConfirmPasswordError").hide(); $("#ConfirmPasswordNotMatch").hide(); });
 
         $("#MyEmail").focus();
         $("#MyEmail").select();
@@ -128,28 +141,35 @@
         });
 
         function Next() {
-            $("#UserNameError").hide();
-            $.ajax({
-                type: 'Get',
-                url: "/Home/CheckEmail?Email=" + $("#MyEmail").val(),
-                success: function (res) {
-                    if (res) {
-                        $("#UserName").val($("#MyEmail").val())
-                        HavePassword();
+            $("#EmailRequired").hide();
+            $("#EmailError").hide();
+
+            if ($("#MyEmail").val() == "") {
+                $("#EmailRequired").show();
+            }
+            else {
+                $.ajax({
+                    type: 'Get',
+                    url: "/Home/CheckEmail?Email=" + $("#MyEmail").val(),
+                    success: function (res) {
+                        if (res) {
+                            $("#Email").val($("#MyEmail").val())
+                            HavePassword();
+                        }
+                        else {
+                            $("#Email").val("")
+                            $("#EmailError").show();
+                            $("#TheEmail").val($("#MyEmail").val())
+                        }
                     }
-                    else {
-                        $("#UserName").val("")
-                        $("#UserNameError").show();
-                        $("#TheEmail").val($("#MyEmail").val())
-                    }
-                }
-            });
+                });
+            }
         }
 
         function HavePassword() {
             $.ajax({
                 type: 'Get',
-                url: "/Home/HavePassword?Email=" + $("#UserName").val(),
+                url: "/Home/HavePassword?Email=" + $("#Email").val(),
                 success: function (res) {
                     $("#dvEmail").hide();
                     $("#dvPassword").hide();
@@ -170,36 +190,70 @@
         }
 
         function Login() {
-            $.ajax({
-                type: 'Get',
-                url: "/Home/CheckPassword?Email=" + $("#UserName").val() + "&Password=" + $("#Password").val(),
-                success: function (res) {
-                    if (res == true) {
-                        $("form").submit();
+            var valid = true;
+            var passw = /^[A-Za-z]\w{7,14}$/;
+
+            if ($("#Password").val().match(passw)) {
+                $("#PasswordError").show();
+                valid = false;
+            }
+
+            if ($("#Password").val() == "") {
+                $("#PasswordRequired").show();
+                valid = false;
+            }
+
+            if (valid == true) {
+                $.ajax({
+                    type: 'Get',
+                    url: "/Home/CheckPassword?Email=" + $("#Email").val() + "&Password=" + $("#Password").val(),
+                    success: function (res) {
+                        if (res == true) {
+                            $("form").submit();
+                        }
+                        else {
+                            $("#PasswordError").show();
+                        }
                     }
-                    else {
-                        $("#PasswordError").show();
-                    }
-                }
-            });
+                });
+            }
         }
 
         function LoginByNewPassword() {
+            var valid = true;
+            var passw = /^[A-Za-z]\w{7,14}$/;
+
             if ($("#NewPassword").val() == "") {
-                $("#NewPasswordError").show();
+                $("#NewPasswordRequired").show();
+                valid = false;
             }
-            else if ($("#NewPassword").val() == $("#ConfirmPassword").val()) {
+
+            if ($("#Password").val().match(passw)) {
+                $("#PasswordError").show();
+                valid = false;
+            }
+
+            if ($("#ConfirmPassword").val() == "") {
+                $("#ConfirmPasswordRequired").show();
+                valid = false;
+            }
+
+            if ($("#ConfirmPassword").val().match(passw)) {
+                $("#ConfirmPasswordError").show();
+                valid = false;
+            }
+
+            if ($("#NewPassword").val() != $("#ConfirmPassword").val()) {
+                $("#ConfirmPasswordNotMatch").show();
+                valid = false;
+            }
+
+            if (valid == true) {
                 $("form").submit();
             }
-
-            else {
-                $("#ConfirmPasswordError").show();
-            }
-
-
         }
 
-        function Back() {           
+        function Back() {
             $("#dvPassword").hide();
             $("#dvNewPassword").hide();
             $("#dvEmail").show();

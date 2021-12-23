@@ -135,6 +135,9 @@
   <data name="Amount" xml:space="preserve">
     <value>المبلغ</value>
   </data>
+  <data name="AnotherUser" xml:space="preserve">
+    <value>مستخدم آخر</value>
+  </data>
   <data name="Arabic" xml:space="preserve">
     <value>العربية</value>
   </data>
@@ -212,6 +215,9 @@
   </data>
   <data name="Components" xml:space="preserve">
     <value>العناصر</value>
+  </data>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>تأكيد كلمة المرور</value>
   </data>
   <data name="Cost" xml:space="preserve">
     <value>التكلفة</value>
@@ -354,6 +360,9 @@
   <data name="ForgetPassword" xml:space="preserve">
     <value>نسيت كلمة المرور</value>
   </data>
+  <data name="ForgotPassword" xml:space="preserve">
+    <value>هل نسيت كلمة السر</value>
+  </data>
   <data name="FromDate" xml:space="preserve">
     <value>من تاريخ</value>
   </data>
@@ -408,6 +417,9 @@
   <data name="Issue" xml:space="preserve">
     <value>الصرف</value>
   </data>
+  <data name="KeepMeLoggedIn" xml:space="preserve">
+    <value>أبق تسجيل دخولي</value>
+  </data>
   <data name="LengthElectronicScale" xml:space="preserve">
     <value>طول كود الميزان الالكترونى</value>
   </data>
@@ -434,6 +446,9 @@
   </data>
   <data name="NewComments" xml:space="preserve">
     <value>التعليقات الجديدة</value>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>كلمة المرور الجديدة</value>
   </data>
   <data name="NewProduct" xml:space="preserve">
     <value>منتج جديد</value>
@@ -773,12 +788,6 @@
   </data>
   <data name="User" xml:space="preserve">
     <value>مستخدم</value>
-  </data>
-  <data name="UserName" xml:space="preserve">
-    <value>اسم المستخدم / البريد الالكتروني</value>
-  </data>
-  <data name="UsernameOrEmail" xml:space="preserve">
-    <value>أسم المستخدم او البريد الالكتروني</value>
   </data>
   <data name="Users" xml:space="preserve">
     <value>المستخدمين</value>

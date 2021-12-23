@@ -160,6 +160,24 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Confirm password invalid.
+        /// </summary>
+        public static string ConfirmPasswordNotValid {
+            get {
+                return ResourceManager.GetString("ConfirmPasswordNotValid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm password required.
+        /// </summary>
+        public static string ConfirmPasswordRequired {
+            get {
+                return ResourceManager.GetString("ConfirmPasswordRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cost Required.
         /// </summary>
         public static string CostRequired {
@@ -246,6 +264,15 @@ namespace Utility.Resource {
         public static string EmailFromate {
             get {
                 return ResourceManager.GetString("EmailFromate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email invalid.
+        /// </summary>
+        public static string EmailNotValid {
+            get {
+                return ResourceManager.GetString("EmailNotValid", resourceCulture);
             }
         }
         
@@ -354,6 +381,24 @@ namespace Utility.Resource {
         public static string NicknameRequired {
             get {
                 return ResourceManager.GetString("NicknameRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Passwords do not match.
+        /// </summary>
+        public static string NotMatch {
+            get {
+                return ResourceManager.GetString("NotMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password invalid.
+        /// </summary>
+        public static string PasswordNotValid {
+            get {
+                return ResourceManager.GetString("PasswordNotValid", resourceCulture);
             }
         }
         
@@ -552,24 +597,6 @@ namespace Utility.Resource {
         public static string UnitsWhichProductMeasured {
             get {
                 return ResourceManager.GetString("UnitsWhichProductMeasured", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Username / Email invalid.
-        /// </summary>
-        public static string UsernameEmailNotValid {
-            get {
-                return ResourceManager.GetString("UsernameEmailNotValid", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Username / Email is required.
-        /// </summary>
-        public static string UsernameRequired {
-            get {
-                return ResourceManager.GetString("UsernameRequired", resourceCulture);
             }
         }
         

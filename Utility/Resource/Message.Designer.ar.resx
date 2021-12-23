@@ -150,6 +150,12 @@
   <data name="CodeRequired" xml:space="preserve">
     <value>يجب ادخال الكود</value>
   </data>
+  <data name="ConfirmPasswordNotValid" xml:space="preserve">
+    <value>تأكيد كلمة المرور غير صحيحة</value>
+  </data>
+  <data name="ConfirmPasswordRequired" xml:space="preserve">
+    <value>يجب ادخال تأكيد كلمة المرور</value>
+  </data>
   <data name="CostRequired" xml:space="preserve">
     <value>يجب ادخال التكلفة</value>
   </data>
@@ -179,6 +185,9 @@
   </data>
   <data name="EmailFromate" xml:space="preserve">
     <value>يجب ادخال تنسيق الايميل</value>
+  </data>
+  <data name="EmailNotValid" xml:space="preserve">
+    <value>البريد الالكتروني غير مسجل</value>
   </data>
   <data name="EmailRange" xml:space="preserve">
     <value>الايميل عدد حرف بين 3  الى 20</value>
@@ -215,6 +224,12 @@
   </data>
   <data name="NicknameRequired" xml:space="preserve">
     <value>يجب ادخال الاسم المستعار</value>
+  </data>
+  <data name="NotMatch" xml:space="preserve">
+    <value>كلمة المرور غير مطابقة</value>
+  </data>
+  <data name="PasswordNotValid" xml:space="preserve">
+    <value>كلمة المرور غير صحيحة</value>
   </data>
   <data name="PasswordRequired" xml:space="preserve">
     <value>يجب ادخال كلمة المرور</value>
@@ -276,11 +291,8 @@
   <data name="UnitsWhichProductMeasured" xml:space="preserve">
     <value>الوحدات التى يقاس بها المنتج</value>
   </data>
-  <data name="UsernameEmailNotValid" xml:space="preserve">
-    <value>اسم المستخدم / البريد الالكتروني غير مسجل</value>
-  </data>
   <data name="UsernameRequired" xml:space="preserve">
-    <value>يجب ادخال اسم المستخدم / البريد الالكتروني</value>
+    <value>يجب ادخال البريد الالكتروني</value>
   </data>
   <data name="YoHaveAccount" xml:space="preserve">
     <value>إذا كان لديك حساب بالفعل ،</value>

@@ -2,48 +2,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link href="~/css/login.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/fontawesome-free-5.15.3-web/css/all.css" />
+    <link rel="stylesheet" href="~/fontawesome-free-5.15.3-web/css/fontawesome.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
+    <link href="~/css/vendor/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/login.css" rel="stylesheet" />
 </head>
-<body>
-    <div class="wrapper fadeInDown">
-        <div id="formContent">
-            <!-- Tabs Titles -->
-            <h2 class="active"> Request </h2>
-            <!-- Icon -->
+<body style="background-color:#7190ca !important">
+    <div class="wrapper fadeInDown" >
+        <div id="formContent" style="max-width: 50% !important">
+            <br />
             <div class="fadeIn first">
                 <img src="~/logos/Logo.png" style="width:150px !important" id="icon" alt="User Icon" />
             </div>
-            <!-- Login Form -->
-            <form action="/Home/RequestReg" id="RequestForm" method="post">
-
-                <input type="text" name="Name" id="Name" placeholder="Name" class="fadeIn second">
-                <div id="NameRequerd" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                    <span>your name is Requerd</span>
+            <h2 class="active"> Request </h2>
+            <form action="/Home/RequestReg" id="RequestForm" method="post" style="margin:10px;">
+                <div class="row ml-3 mr-3">
+                    <div class="col-md-6" style="padding:0px !important;">
+                        <input type="text" name="Name" id="Name" placeholder="Name" class="fadeIn second">
+                        <div id="NameRequerd" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
+                            <span>your name is Requerd</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6" style="padding:0px !important;">
+                        <input type="text" name="CompanyName" id="CompanyName" placeholder="Company Name" class="fadeIn second">
+                        <div id="CompanyNameRequerd" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
+                            <span>your company name is Requerd</span>
+                        </div>
+                    </div>
                 </div>
-
-                <input type="text" name="CompanyName" id="CompanyName" placeholder="Company Name" class="fadeIn second">
-                <div id="CompanyNameRequerd" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                    <span>your company name is Requerd</span>
+                <div class="row ml-3 mr-3">
+                    <div class="col-md-6" style="padding:0px !important;">
+                        <input type="email" name="Email" id="Email" placeholder="E-mail" class="fadeIn second">
+                        <div id="EmailRequerd" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
+                            <span>your email is Requerd</span>
+                        </div>
+                        <div id="EmailError" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
+                            <span>your email is Error</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6" style="padding:0px !important;">
+                        <input type="text" name="Phone" id="Phone" placeholder="Phone" class="fadeIn second">
+                        <div id="PhoneRequerd" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
+                            <span>your phone is Requerd</span>
+                        </div>
+                        <div id="PhoneError" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
+                            <span>your phone is Error</span>
+                        </div>
+                    </div>
                 </div>
-
-                <input type="email" name="Email" id="Email" placeholder="E-mail" class="fadeIn second">
-                <div id="EmailRequerd" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                    <span>your email is Requerd</span>
-                </div>
-                <div id="EmailError" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                    <span>your email is Error</span>
-                </div>
-
-                <input type="text" name="Phone" id="Phone" placeholder="Phone" class="fadeIn second">
-                <div id="PhoneRequerd" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                    <span>your phone is Requerd</span>
-                </div>
-                <div id="PhoneError" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                    <span>your phone is Error</span>
-                </div>
-
+                <br />
                 <div class="">
                     <div>
                         <small>
@@ -114,7 +122,7 @@
                 valid = false;
             }
             else {
-                var regEx =/^[0][0-9]{10}$/;
+                var regEx = /^[0][0-9]{10}$/;
                 var validPhone = regEx.test(phone);
                 if (!validPhone) {
                     $("#PhoneError").show();

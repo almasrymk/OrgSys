@@ -115,6 +115,15 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Another user.
+        /// </summary>
+        public static string AnotherUser {
+            get {
+                return ResourceManager.GetString("AnotherUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Arabic.
         /// </summary>
         public static string Arabic {
@@ -345,6 +354,15 @@ namespace Utility.Resource {
         public static string Components {
             get {
                 return ResourceManager.GetString("Components", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm password.
+        /// </summary>
+        public static string ConfirmPassword {
+            get {
+                return ResourceManager.GetString("ConfirmPassword", resourceCulture);
             }
         }
         
@@ -772,6 +790,15 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Forgot password.
+        /// </summary>
+        public static string ForgotPassword {
+            get {
+                return ResourceManager.GetString("ForgotPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to From Date.
         /// </summary>
         public static string FromDate {
@@ -934,6 +961,15 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Keep me logged in.
+        /// </summary>
+        public static string KeepMeLoggedIn {
+            get {
+                return ResourceManager.GetString("KeepMeLoggedIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Length Electronic Scale.
         /// </summary>
         public static string LengthElectronicScale {
@@ -1011,6 +1047,15 @@ namespace Utility.Resource {
         public static string NewComments {
             get {
                 return ResourceManager.GetString("NewComments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New password.
+        /// </summary>
+        public static string NewPassword {
+            get {
+                return ResourceManager.GetString("NewPassword", resourceCulture);
             }
         }
         
@@ -2028,24 +2073,6 @@ namespace Utility.Resource {
         public static string User {
             get {
                 return ResourceManager.GetString("User", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Username / Email.
-        /// </summary>
-        public static string UserName {
-            get {
-                return ResourceManager.GetString("UserName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Username or email.
-        /// </summary>
-        public static string UsernameOrEmail {
-            get {
-                return ResourceManager.GetString("UsernameOrEmail", resourceCulture);
             }
         }
         
