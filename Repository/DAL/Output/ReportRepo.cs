@@ -35,6 +35,11 @@ namespace Repository
             (branchId == 0 || e.Store.BranchId == branchId) &&
             (e.Status != Status.Deleted && e.Hide != true)
             ).OrderByDescending(e => e.Date).Select(e => new InvoiceDetail(e));
+
+
+
+
+
         }
         public IQueryable<Customer> Customer(long typeId, long dealerId)
         {

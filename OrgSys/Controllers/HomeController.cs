@@ -61,7 +61,10 @@ namespace OrgSys.Controllers
         {
             return View();
         }
-
+        public IActionResult Tables()
+        {
+            return View();
+        }
         public IActionResult PaymentMethod()
         {
             return View();
