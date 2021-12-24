@@ -3,28 +3,32 @@
 @model MailViewModel
 @{
     Layout = null;
+    var culture = CultureInfo.CurrentUICulture.Name;
+    var dirCss = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "rtl" : "ltr";
+    var dirL = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "Right" : "Left";
+    var dirR = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "Left" : "Right";
 }
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="@System.Threading.Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName">
 
 <head>
     <meta charset="UTF-8">
     <title>@Model.Sender</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="shortcut icon" type="image/x-icon"  href="http://organizersys.com/assets/img/LogoIcon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="http://organizersys.com/assets/img/LogoIcon.ico">
 </head>
 
-<body style="margin:0; padding:0; background-color:#f8f8f8; padding-top: 10px;">
+<body style="margin:0; padding:0; background-color:#f8f8f8; padding-top: 10px;"  dir="@dirCss">
     <div leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0" style="height:auto !important;width:100% !important; font-family: Helvetica,Arial,sans-serif !important; margin-bottom: 40px;">
         <center>
             <table bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0" style="max-width:600px; background-color:#ffffff;border:1px solid #e4e2e2;border-collapse:separate !important; border-radius:4px;border-spacing:0;color:#242128; margin:0;padding:40px;" heigth="auto">
                 <tbody>
                     <tr>
-                        <td align="left" valign="center" style="padding-bottom:40px;border-top:0;height:100% !important;width:100% !important;">
+                        <td align="@dirL" valign="center" style="padding-bottom:40px;border-top:0;height:100% !important;width:100% !important;">
                             <img name="Logo" id="Logo" style="width:100px !important" src="cid:MyLogo" />
                         </td>
-                        <td align="right" valign="center" style="padding-bottom:40px;border-top:0;height:100% !important;width:100% !important;">
+                        <td align="@dirR" valign="center" style="padding-bottom:40px;border-top:0;height:100% !important;width:100% !important;">
                             <span style="color:#8f8f8f; font-weight: normal; line-height: 2; font-size: 14px;">@Model.Date</span>
                         </td>
                     </tr>
@@ -38,33 +42,11 @@
                             </p>
 
                             <p style="color:#8f8f8f; font-size: 14px; padding-bottom: 20px; line-height: 1.4;">
-                                @Utility.Resource.Message_Designer.ToContactTechnicalSupport
-                                <br />
-                                @Model.TechnicalSupportUrl
+                                @Utility.Resource.Message_Designer.ToContactTechnicalSupport  <a href="mailto:support@organizersys.com">support@organizersys.com</a>
                             </p>
                             <p>
                                 @Utility.Resource.Message_Designer.YoHaveAccount <a href="@Model.LoginUrl"> @Utility.Resource.Title_Designer.Login</a>
                             </p>
-                            @*<h3 style="color:#303030; font-size:18px; line-height: 1.6; font-weight:500;">
-                                    Verification
-                                    Code
-                                </h3>
-                                <p style="background-color:#f1f1f1; padding: 8px 15px; border-radius: 50px; display: inline-block; margin-bottom:20px; font-size: 14px;  line-height: 1.4; font-family: Courier New, Courier, monospace; margin-top:0">
-                                    148
-                                    544 174
-                                </p>*@
-
-                            @*<h3 style="color:#303030; font-size:18px; line-height: 1.6; font-weight:500;">
-                                    Steps
-                                    to
-                                    Follow
-                                </h3>
-                                <ol style="color:#8f8f8f; font-size: 14px; padding-bottom: 20px; padding-left:20px; line-height: 1.6">
-                                    <li>Preliminary thinking systems</li>
-                                    <li>Bandwidth efficient</li>
-                                    <li>Green space</li>
-                                    <li>Social impact</li>
-                                </ol>*@
                         </td>
                     </tr>
                     <tr>
@@ -93,14 +75,14 @@
                     <tr>
                         <td>
                             <p>
-                                Organizer
+                                @Utility.Resource.Title_Designer.Organizer
                             </p>
                             <p style="color:#8f8f8f; font-size: 14px; line-height: 0.4;">
-                               Cell +2 011 11105784
+                                @Utility.Resource.Title_Designer.Email <a href="mailto:info@organizersys.com">info@organizersys.com</a>
                             </p>
                             @*<p style="color:#8f8f8f; font-size: 14px; padding-bottom: 20px; line-height: 0.4;">
-                               9809809899
-                            </p>*@
+                                   9809809899
+                                </p>*@
                         </td>
                     </tr>
                 </tbody>

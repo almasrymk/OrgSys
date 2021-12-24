@@ -504,6 +504,9 @@
   <data name="Organization" xml:space="preserve">
     <value>Organization</value>
   </data>
+  <data name="Organizer" xml:space="preserve">
+    <value>Organizer</value>
+  </data>
   <data name="OrgSys" xml:space="preserve">
     <value>Organizer System</value>
   </data>

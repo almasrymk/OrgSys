@@ -504,6 +504,9 @@
   <data name="Organization" xml:space="preserve">
     <value>هيكل المنشأة</value>
   </data>
+  <data name="Organizer" xml:space="preserve">
+    <value>Organizer</value>
+  </data>
   <data name="OrgSys" xml:space="preserve">
     <value>برنامج اورجنايزر</value>
   </data>
