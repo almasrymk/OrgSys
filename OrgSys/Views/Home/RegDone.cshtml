@@ -50,7 +50,7 @@
                             <p style="text-align:right !important">
                                 ستتلقى رسالة بريد إلكتروني الآن على <a href="#">@ViewBag.Email</a> لإكمال تفعيل حسابك ، <br />
                                 لذا يرجى تأكيد أنه إذا لم تعثر على البريد الإلكتروني الوارد في صندوق الوارد ، فقد تستلمه في مجلد البريد غير الهام. <br />
-                                إذا لم تتم إعادة توجيهك إلى صفحة تسجيل الدخول خلال 15 ثانية <a href="/Home/Login"> انقر هنا ... </a>
+                                إذا لم تتم إعادة توجيهك إلى صفحة تسجيل الدخول خلال <span id="countdown"></span> ثانية <a href="/Home/Login"> انقر هنا ... </a>
                             </p>
                         }
                         else
@@ -58,7 +58,7 @@
                             <p style="text-align:left !important">
                                 You will receive an email now on<a href="#">@ViewBag.Email</a>to complete the activation your account,<br />
                                 so please confirm that if you do not find the email in inbox, you may receive it in junk folder.<br />
-                                if you are not redirected to the login page within 15 seconds <a href="/Home/Login"> click here...</a>
+                                if you are not redirected to the login page within <span id="countdown"></span> seconds <a href="/Home/Login"> click here...</a>
                             </p>
                         }
 
@@ -72,19 +72,17 @@
 </body>
 </html>
 
-@*<section>
-        <div class="container">
-            <div class="card">
-                <div class="card-header text-center bg-info">
-                    <h3>Your Welcome Check Your E-Mail </h3>
-                    <h3>
-                        This customizable thank for registering to an event email template will help you thank your potential candidates and improve the candidate experience.
 
-                        Customize it to reflect your company’s culture and your company's event style.
-                    </h3>
+<script>
+    var timeleft = 15;
+    var downloadTimer = setInterval(function () {
+        if (timeleft <= 0) {
+            clearInterval(downloadTimer);
+            document.getElementById("countdown").innerHTML = "";
+        } else {
+            document.getElementById("countdown").innerHTML = timeleft + "";
+        }
+        timeleft -= 1;
+    }, 1000);
 
-                </div>
-
-            </div>
-        </div>
-    </section>*@
+</script>
