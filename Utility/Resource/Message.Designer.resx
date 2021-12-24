@@ -141,6 +141,9 @@
   <data name="ClassificationWhichProductBelongs" xml:space="preserve">
     <value>The classification to which the product belongs</value>
   </data>
+  <data name="ClickHere" xml:space="preserve">
+    <value>click here</value>
+  </data>
   <data name="CodeIncreasedAutomaticallyCanBechanged" xml:space="preserve">
     <value>The code is increased automatically and can be changed</value>
   </data>
@@ -149,6 +152,9 @@
   </data>
   <data name="CodeRequired" xml:space="preserve">
     <value>Code Required</value>
+  </data>
+  <data name="CompanyNameRequired" xml:space="preserve">
+    <value>Company Name Required</value>
   </data>
   <data name="ConfirmPasswordNotValid" xml:space="preserve">
     <value>Confirm password invalid</value>
@@ -186,6 +192,9 @@
   <data name="EmailFromate" xml:space="preserve">
     <value>Email format must be entered</value>
   </data>
+  <data name="EmailIsExist" xml:space="preserve">
+    <value>The email exist</value>
+  </data>
   <data name="EmailNotValid" xml:space="preserve">
     <value>Email invalid</value>
   </data>
@@ -207,6 +216,15 @@
   <data name="EnterRate" xml:space="preserve">
     <value>Enter the rate please</value>
   </data>
+  <data name="FaxNotValid" xml:space="preserve">
+    <value>Fax invalid</value>
+  </data>
+  <data name="FaxRequired" xml:space="preserve">
+    <value>Fax Required</value>
+  </data>
+  <data name="IfYouAreNotRedirectedToTheLoginPageWithin15Seconds" xml:space="preserve">
+    <value>if you are not redirected to the login page within 15 seconds</value>
+  </data>
   <data name="IngredientsThatProductMadeOf" xml:space="preserve">
     <value>The ingredients that the product is made of</value>
   </data>
@@ -218,6 +236,9 @@
   </data>
   <data name="NameRequired" xml:space="preserve">
     <value>Name Required</value>
+  </data>
+  <data name="NationalityRequired" xml:space="preserve">
+    <value>Nationality Required</value>
   </data>
   <data name="NicknameRange" xml:space="preserve">
     <value>The nickname is a letter number between 3 to 15</value>
@@ -236,6 +257,12 @@
   </data>
   <data name="PaymentTypeRequired" xml:space="preserve">
     <value>Payment Type Required</value>
+  </data>
+  <data name="PhoneExist" xml:space="preserve">
+    <value>The phone exist</value>
+  </data>
+  <data name="PhoneNotValid" xml:space="preserve">
+    <value>Phone Not Valid</value>
   </data>
   <data name="PhoneRange" xml:space="preserve">
     <value>The phone is a letter number between 8 to 25</value>
@@ -267,6 +294,12 @@
   <data name="SellingPriceProduct" xml:space="preserve">
     <value>The selling price of the product</value>
   </data>
+  <data name="SizeOfCompanyRequired" xml:space="preserve">
+    <value>Size of Company Required</value>
+  </data>
+  <data name="SoPleaseConfirm" xml:space="preserve">
+    <value>so please confirm that if you do not find the email in inbox, you may receive it in junk folder</value>
+  </data>
   <data name="StartSearch" xml:space="preserve">
     <value>Start typing product to search...</value>
   </data>
@@ -288,8 +321,14 @@
   <data name="ThisUnitWasSelected" xml:space="preserve">
     <value>This unit has already been selected</value>
   </data>
+  <data name="ToCompleteTheActivationYourAccount" xml:space="preserve">
+    <value>to complete the activation your account</value>
+  </data>
   <data name="ToContactTechnicalSupport" xml:space="preserve">
     <value>You can contact technical support if there is a problem during the registration process from this link.</value>
+  </data>
+  <data name="TypeActivityRequired" xml:space="preserve">
+    <value>Type of Activity Required</value>
   </data>
   <data name="UnitRequired" xml:space="preserve">
     <value>Unit Required</value>
@@ -299,5 +338,8 @@
   </data>
   <data name="YoHaveAccount" xml:space="preserve">
     <value>If you already have an account,</value>
+  </data>
+  <data name="YouWillReceiveAnEmailNowOn" xml:space="preserve">
+    <value>You will receive an email now on</value>
   </data>
 </root>

@@ -1,53 +1,139 @@
-﻿@{Layout = null;}
+﻿@{
+    Layout = null;
+    var culture = CultureInfo.CurrentUICulture.Name;
+    var dirCss = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "rtl" : "ltr";
+}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="@System.Threading.Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName">
 <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="~/font/AllFonts.css" />
     <link rel="stylesheet" href="~/fontawesome-free-5.15.3-web/css/all.css" />
     <link rel="stylesheet" href="~/fontawesome-free-5.15.3-web/css/fontawesome.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link href="~/css/vendor/bootstrap.min.css" rel="stylesheet" />
     <link href="~/css/login.css" rel="stylesheet" />
+    <style>
+        body {
+            font-family: Roboto,-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif !important;
+            font-size:18px !important;
+        }
+
+        .page-link {
+            font-size: 16px !important;
+        }
+
+        .page-item {
+            padding: 5px;
+        }
+
+        .card, .navbar, .menu .sub-menu {
+            box-shadow: 0 1px 10px rgb(0 0 0 / 2%), 0 1px 3px rgb(0 0 0 / 2%) !important;
+        }
+
+        .menu .main-menu ul li a {
+            height: 80px !important;
+        }
+
+        .DropAutoComplete > .Dropbtn2 > .DropIcon {
+            border: none;
+            font-weight: 400;
+            font-size: 15px;
+            font-weight: 100;
+            padding: 4px;
+        }
+    </style>
+    @if (dirCss == "ltr")
+    {
+        <style>
+
+            .DropAutoComplete > .Droptxt {
+                border-right: none;
+            }
+
+            .DropAutoComplete > .Dropbtn > .DropIcon {
+                border-left: none;
+                font-weight: 400;
+                font-size: 15px;
+                font-weight: 100;
+                padding: 5px;
+            }
+        </style>
+    }
+    else
+    {
+        <style>
+
+            h1, h2, h3, h4, p, .page-header h1, body h1, body h2, body h3, .btn, .btn-icon .badge, body {
+                font-family: Roboto,-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif !important;
+            }
+
+            .DropAutoComplete > .Droptxt {
+                border-left: none;
+            }
+
+            .DropAutoComplete > .Dropbtn > .DropIcon {
+                border-right: none;
+                font-weight: 400;
+                font-size: medium;
+                font-size: 15px;
+                font-weight: 100;
+                padding: 4px;
+            }
+        </style>
+    }
+    <style>
+        .centerDiv {
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+        }
+    </style>
 </head>
-<body style="background-color:#7190ca !important">
-    <div class="wrapper fadeInDown" >
+<body style="background-color:#7190ca !important"  dir="@dirCss">
+    <div class="wrapper fadeInDown">
         <div id="formContent" style="max-width: 50% !important">
             <br />
             <div class="fadeIn first">
                 <img src="~/logos/Logo.png" style="width:150px !important" id="icon" alt="User Icon" />
             </div>
-            <h2 class="active"> Request </h2>
+            <h2 class="active"> @Utility.Resource.Title_Designer.Request </h2>
             <form action="/Home/RequestReg" id="RequestForm" method="post" style="margin:10px;">
                 <div class="row ml-3 mr-3">
                     <div class="col-md-6" style="padding:0px !important;">
-                        <input type="text" name="Name" id="Name" placeholder="Name" class="fadeIn second">
+                        <input type="text" name="Name" id="Name" placeholder="@Utility.Resource.Title_Designer.Name" class="fadeIn second">
                         <div id="NameRequerd" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                            <span>your name is Requerd</span>
+                            <span>@Utility.Resource.Message_Designer.NameRequired</span>
                         </div>
                     </div>
                     <div class="col-md-6" style="padding:0px !important;">
-                        <input type="text" name="CompanyName" id="CompanyName" placeholder="Company Name" class="fadeIn second">
+                        <input type="text" name="CompanyName" id="CompanyName" placeholder="@Utility.Resource.Title_Designer.Company" class="fadeIn second">
                         <div id="CompanyNameRequerd" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                            <span>your company name is Requerd</span>
+                            <span>@Utility.Resource.Message_Designer.CompanyNameRequired</span>
                         </div>
                     </div>
                 </div>
                 <div class="row ml-3 mr-3">
                     <div class="col-md-6" style="padding:0px !important;">
-                        <input type="email" name="Email" id="Email" placeholder="E-mail" class="fadeIn second">
+                        <input type="email" name="Email" id="Email" placeholder="@Utility.Resource.Title_Designer.Email" class="fadeIn second">
                         <div id="EmailRequerd" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                            <span>your email is Requerd</span>
+                            <span>@Utility.Resource.Message_Designer.EmailRequired</span>
                         </div>
                         <div id="EmailError" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                            <span>your email is Error</span>
+                            <span>@Utility.Resource.Message_Designer.EmailNotValid</span>
                         </div>
                     </div>
                     <div class="col-md-6" style="padding:0px !important;">
-                        <input type="text" name="Phone" id="Phone" placeholder="Phone" class="fadeIn second">
+                        <input type="text" name="Phone" id="Phone" placeholder="@Utility.Resource.Title_Designer.Phone" class="fadeIn second">
                         <div id="PhoneRequerd" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                            <span>your phone is Requerd</span>
+                            <span>@Utility.Resource.Message_Designer.PhoneRequired</span>
                         </div>
                         <div id="PhoneError" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                            <span>your phone is Error</span>
+                            <span>@Utility.Resource.Message_Designer.PhoneNotValid</span>
                         </div>
                     </div>
                 </div>
@@ -55,16 +141,16 @@
                 <div class="">
                     <div>
                         <small>
-                            <input id="chkAgree" type="checkbox" class="fadeIn" name="KeepLoggedIn" onchange="Agree()" />&nbsp; I agree to the <a class="underlineHover" href="javascript::" onclick="Back()"> terms & conditions</a>
+                            <input id="chkAgree" type="checkbox" class="fadeIn" name="KeepLoggedIn" onchange="Agree()" /> &nbsp;  @Utility.Resource.Title_Designer.IAgreeToThe   <a class="underlineHover" href="javascript::" onclick="Back()"> @Utility.Resource.Title_Designer.TermsConditions</a>
                         </small>
                     </div>
                     <div style="padding-top:10px;">
-                        <input id="btnSave" type="button" class="fadeIn fourth" onclick="Save()" style="color:gray;" value="Send Request" disabled>
+                        <input id="btnSave" type="button" class="fadeIn fourth" onclick="Save()" style="color:gray;" value="@Utility.Resource.Title_Designer.SendRequest" disabled>
                     </div>
                 </div>
             </form>
             <div id="formFooter" style="padding:10px;">
-                <a class="underlineHover" href="/Home/Login">Login</a>
+                <a class="underlineHover" href="/Home/Login">@Utility.Resource.Title_Designer.Login</a>
             </div>
         </div>
     </div>

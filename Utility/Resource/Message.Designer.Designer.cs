@@ -133,6 +133,15 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to click here.
+        /// </summary>
+        public static string ClickHere {
+            get {
+                return ResourceManager.GetString("ClickHere", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The code is increased automatically and can be changed.
         /// </summary>
         public static string CodeIncreasedAutomaticallyCanBechanged {
@@ -156,6 +165,15 @@ namespace Utility.Resource {
         public static string CodeRequired {
             get {
                 return ResourceManager.GetString("CodeRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Company Name Required.
+        /// </summary>
+        public static string CompanyNameRequired {
+            get {
+                return ResourceManager.GetString("CompanyNameRequired", resourceCulture);
             }
         }
         
@@ -268,6 +286,15 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The email exist.
+        /// </summary>
+        public static string EmailIsExist {
+            get {
+                return ResourceManager.GetString("EmailIsExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Email invalid.
         /// </summary>
         public static string EmailNotValid {
@@ -331,6 +358,33 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fax invalid.
+        /// </summary>
+        public static string FaxNotValid {
+            get {
+                return ResourceManager.GetString("FaxNotValid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fax Required.
+        /// </summary>
+        public static string FaxRequired {
+            get {
+                return ResourceManager.GetString("FaxRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if you are not redirected to the login page within 15 seconds.
+        /// </summary>
+        public static string IfYouAreNotRedirectedToTheLoginPageWithin15Seconds {
+            get {
+                return ResourceManager.GetString("IfYouAreNotRedirectedToTheLoginPageWithin15Seconds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The ingredients that the product is made of.
         /// </summary>
         public static string IngredientsThatProductMadeOf {
@@ -363,6 +417,15 @@ namespace Utility.Resource {
         public static string NameRequired {
             get {
                 return ResourceManager.GetString("NameRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nationality Required.
+        /// </summary>
+        public static string NationalityRequired {
+            get {
+                return ResourceManager.GetString("NationalityRequired", resourceCulture);
             }
         }
         
@@ -417,6 +480,24 @@ namespace Utility.Resource {
         public static string PaymentTypeRequired {
             get {
                 return ResourceManager.GetString("PaymentTypeRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The phone exist.
+        /// </summary>
+        public static string PhoneExist {
+            get {
+                return ResourceManager.GetString("PhoneExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Phone Not Valid.
+        /// </summary>
+        public static string PhoneNotValid {
+            get {
+                return ResourceManager.GetString("PhoneNotValid", resourceCulture);
             }
         }
         
@@ -511,6 +592,24 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Size of Company Required.
+        /// </summary>
+        public static string SizeOfCompanyRequired {
+            get {
+                return ResourceManager.GetString("SizeOfCompanyRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to so please confirm that if you do not find the email in inbox, you may receive it in junk folder.
+        /// </summary>
+        public static string SoPleaseConfirm {
+            get {
+                return ResourceManager.GetString("SoPleaseConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Start typing product to search....
         /// </summary>
         public static string StartSearch {
@@ -574,11 +673,29 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to to complete the activation your account.
+        /// </summary>
+        public static string ToCompleteTheActivationYourAccount {
+            get {
+                return ResourceManager.GetString("ToCompleteTheActivationYourAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You can contact technical support if there is a problem during the registration process from this link..
         /// </summary>
         public static string ToContactTechnicalSupport {
             get {
                 return ResourceManager.GetString("ToContactTechnicalSupport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type of Activity Required.
+        /// </summary>
+        public static string TypeActivityRequired {
+            get {
+                return ResourceManager.GetString("TypeActivityRequired", resourceCulture);
             }
         }
         
@@ -606,6 +723,15 @@ namespace Utility.Resource {
         public static string YoHaveAccount {
             get {
                 return ResourceManager.GetString("YoHaveAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You will receive an email now on.
+        /// </summary>
+        public static string YouWillReceiveAnEmailNowOn {
+            get {
+                return ResourceManager.GetString("YouWillReceiveAnEmailNowOn", resourceCulture);
             }
         }
     }

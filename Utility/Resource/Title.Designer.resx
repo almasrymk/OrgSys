@@ -210,6 +210,9 @@
   <data name="Collection" xml:space="preserve">
     <value>Collection</value>
   </data>
+  <data name="Company" xml:space="preserve">
+    <value>Company name</value>
+  </data>
   <data name="CompletedOrders" xml:space="preserve">
     <value>Completed Orders</value>
   </data>
@@ -318,6 +321,9 @@
   <data name="Email" xml:space="preserve">
     <value>Email</value>
   </data>
+  <data name="Employees" xml:space="preserve">
+    <value>Employees</value>
+  </data>
   <data name="EmptyLineCount" xml:space="preserve">
     <value>Empty Line Count</value>
   </data>
@@ -345,6 +351,9 @@
   <data name="ExternalOrders" xml:space="preserve">
     <value>External orders</value>
   </data>
+  <data name="Fax" xml:space="preserve">
+    <value>Fax</value>
+  </data>
   <data name="Features" xml:space="preserve">
     <value>Features</value>
   </data>
@@ -363,6 +372,9 @@
   <data name="ForgotPassword" xml:space="preserve">
     <value>Forgot password</value>
   </data>
+  <data name="From" xml:space="preserve">
+    <value>From</value>
+  </data>
   <data name="FromDate" xml:space="preserve">
     <value>From Date</value>
   </data>
@@ -377,6 +389,9 @@
   </data>
   <data name="Home" xml:space="preserve">
     <value>Home</value>
+  </data>
+  <data name="IAgreeToThe" xml:space="preserve">
+    <value>I agree to the</value>
   </data>
   <data name="Image" xml:space="preserve">
     <value>Image</value>
@@ -432,8 +447,14 @@
   <data name="Logs" xml:space="preserve">
     <value>Logs</value>
   </data>
+  <data name="MoreThen" xml:space="preserve">
+    <value>More then</value>
+  </data>
   <data name="Name" xml:space="preserve">
     <value>Name</value>
+  </data>
+  <data name="Nationality" xml:space="preserve">
+    <value>Nationality</value>
   </data>
   <data name="Net" xml:space="preserve">
     <value>Net</value>
@@ -588,6 +609,9 @@
   <data name="Refunds" xml:space="preserve">
     <value>Refunds</value>
   </data>
+  <data name="Register" xml:space="preserve">
+    <value>Register</value>
+  </data>
   <data name="RegisterNewAccount" xml:space="preserve">
     <value>Register New Account</value>
   </data>
@@ -602,6 +626,9 @@
   </data>
   <data name="Report" xml:space="preserve">
     <value>Report</value>
+  </data>
+  <data name="Request" xml:space="preserve">
+    <value>Request</value>
   </data>
   <data name="Return" xml:space="preserve">
     <value>Return</value>
@@ -669,6 +696,9 @@
   <data name="SelectUnit" xml:space="preserve">
     <value>Select Unit</value>
   </data>
+  <data name="SendRequest" xml:space="preserve">
+    <value>Send request</value>
+  </data>
   <data name="Service" xml:space="preserve">
     <value>Service</value>
   </data>
@@ -689,6 +719,9 @@
   </data>
   <data name="SignUp" xml:space="preserve">
     <value>Sign Up</value>
+  </data>
+  <data name="SizeOfCompany" xml:space="preserve">
+    <value>Size of company</value>
   </data>
   <data name="Start" xml:space="preserve">
     <value>Start</value>
@@ -729,11 +762,17 @@
   <data name="Tax" xml:space="preserve">
     <value>Tax</value>
   </data>
+  <data name="TermsConditions" xml:space="preserve">
+    <value>Terms &amp; conditions</value>
+  </data>
   <data name="TextSearch" xml:space="preserve">
     <value>Search</value>
   </data>
   <data name="Time" xml:space="preserve">
     <value>Time</value>
+  </data>
+  <data name="To" xml:space="preserve">
+    <value>To</value>
   </data>
   <data name="ToDate" xml:space="preserve">
     <value>To Date</value>
@@ -767,6 +806,9 @@
   </data>
   <data name="Type" xml:space="preserve">
     <value>Type</value>
+  </data>
+  <data name="TypeActivity" xml:space="preserve">
+    <value>Type of activity</value>
   </data>
   <data name="TypeSerial" xml:space="preserve">
     <value>Type Serial</value>

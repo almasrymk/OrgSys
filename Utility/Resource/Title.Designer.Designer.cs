@@ -340,6 +340,15 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Company name.
+        /// </summary>
+        public static string Company {
+            get {
+                return ResourceManager.GetString("Company", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Completed Orders.
         /// </summary>
         public static string CompletedOrders {
@@ -664,6 +673,15 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Employees.
+        /// </summary>
+        public static string Employees {
+            get {
+                return ResourceManager.GetString("Employees", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Empty Line Count.
         /// </summary>
         public static string EmptyLineCount {
@@ -745,6 +763,15 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fax.
+        /// </summary>
+        public static string Fax {
+            get {
+                return ResourceManager.GetString("Fax", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Features.
         /// </summary>
         public static string Features {
@@ -799,6 +826,15 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to From.
+        /// </summary>
+        public static string From {
+            get {
+                return ResourceManager.GetString("From", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to From Date.
         /// </summary>
         public static string FromDate {
@@ -840,6 +876,15 @@ namespace Utility.Resource {
         public static string Home {
             get {
                 return ResourceManager.GetString("Home", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to I agree to the.
+        /// </summary>
+        public static string IAgreeToThe {
+            get {
+                return ResourceManager.GetString("IAgreeToThe", resourceCulture);
             }
         }
         
@@ -1006,11 +1051,29 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to More then.
+        /// </summary>
+        public static string MoreThen {
+            get {
+                return ResourceManager.GetString("MoreThen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Name.
         /// </summary>
         public static string Name {
             get {
                 return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nationality.
+        /// </summary>
+        public static string Nationality {
+            get {
+                return ResourceManager.GetString("Nationality", resourceCulture);
             }
         }
         
@@ -1474,6 +1537,15 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Register.
+        /// </summary>
+        public static string Register {
+            get {
+                return ResourceManager.GetString("Register", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Register New Account.
         /// </summary>
         public static string RegisterNewAccount {
@@ -1515,6 +1587,15 @@ namespace Utility.Resource {
         public static string Report {
             get {
                 return ResourceManager.GetString("Report", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Request.
+        /// </summary>
+        public static string Request {
+            get {
+                return ResourceManager.GetString("Request", resourceCulture);
             }
         }
         
@@ -1717,6 +1798,15 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Send request.
+        /// </summary>
+        public static string SendRequest {
+            get {
+                return ResourceManager.GetString("SendRequest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Service.
         /// </summary>
         public static string Service {
@@ -1776,6 +1866,15 @@ namespace Utility.Resource {
         public static string SignUp {
             get {
                 return ResourceManager.GetString("SignUp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Size of company.
+        /// </summary>
+        public static string SizeOfCompany {
+            get {
+                return ResourceManager.GetString("SizeOfCompany", resourceCulture);
             }
         }
         
@@ -1897,6 +1996,15 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Terms &amp; conditions.
+        /// </summary>
+        public static string TermsConditions {
+            get {
+                return ResourceManager.GetString("TermsConditions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search.
         /// </summary>
         public static string TextSearch {
@@ -1911,6 +2019,15 @@ namespace Utility.Resource {
         public static string Time {
             get {
                 return ResourceManager.GetString("Time", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To.
+        /// </summary>
+        public static string To {
+            get {
+                return ResourceManager.GetString("To", resourceCulture);
             }
         }
         
@@ -2010,6 +2127,15 @@ namespace Utility.Resource {
         public static string Type {
             get {
                 return ResourceManager.GetString("Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type of activity.
+        /// </summary>
+        public static string TypeActivity {
+            get {
+                return ResourceManager.GetString("TypeActivity", resourceCulture);
             }
         }
         

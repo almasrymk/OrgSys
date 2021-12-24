@@ -141,6 +141,9 @@
   <data name="ClassificationWhichProductBelongs" xml:space="preserve">
     <value>التصنيف الذى ينتمى الية المنتج</value>
   </data>
+  <data name="ClickHere" xml:space="preserve">
+    <value>انقر هنا</value>
+  </data>
   <data name="CodeIncreasedAutomaticallyCanBechanged" xml:space="preserve">
     <value>يتم زيادة الكود تلقائي و يمكن تغييره</value>
   </data>
@@ -149,6 +152,9 @@
   </data>
   <data name="CodeRequired" xml:space="preserve">
     <value>يجب ادخال الكود</value>
+  </data>
+  <data name="CompanyNameRequired" xml:space="preserve">
+    <value>يجب ادخال إسم الشركة</value>
   </data>
   <data name="ConfirmPasswordNotValid" xml:space="preserve">
     <value>تأكيد كلمة المرور غير صحيحة</value>
@@ -186,6 +192,9 @@
   <data name="EmailFromate" xml:space="preserve">
     <value>يجب ادخال تنسيق الايميل</value>
   </data>
+  <data name="EmailIsExist" xml:space="preserve">
+    <value>البريد الإلكتروني موجود</value>
+  </data>
   <data name="EmailNotValid" xml:space="preserve">
     <value>البريد الالكتروني غير مسجل</value>
   </data>
@@ -207,6 +216,15 @@
   <data name="EnterRate" xml:space="preserve">
     <value>ادخال المعدل من فضلك</value>
   </data>
+  <data name="FaxNotValid" xml:space="preserve">
+    <value>الفاكس غير صحيحة</value>
+  </data>
+  <data name="FaxRequired" xml:space="preserve">
+    <value>يجب ادخال الفاكس</value>
+  </data>
+  <data name="IfYouAreNotRedirectedToTheLoginPageWithin15Seconds" xml:space="preserve">
+    <value>إذا لم تتم إعادة توجيهك إلى صفحة تسجيل الدخول في غضون 15 ثانية</value>
+  </data>
   <data name="IngredientsThatProductMadeOf" xml:space="preserve">
     <value>المقادير التى يصنع منها المنتج</value>
   </data>
@@ -218,6 +236,9 @@
   </data>
   <data name="NameRequired" xml:space="preserve">
     <value>يجب ادخال الاسم</value>
+  </data>
+  <data name="NationalityRequired" xml:space="preserve">
+    <value>يجب اختيار الجنسية</value>
   </data>
   <data name="NicknameRange" xml:space="preserve">
     <value>الاسم المستعار عدد حرف بين 3   الى 15</value>
@@ -233,6 +254,12 @@
   </data>
   <data name="PasswordRequired" xml:space="preserve">
     <value>يجب ادخال كلمة المرور</value>
+  </data>
+  <data name="PhoneExist" xml:space="preserve">
+    <value>الهاتف موجود</value>
+  </data>
+  <data name="PhoneNotValid" xml:space="preserve">
+    <value>الهاتف غير صحيحة</value>
   </data>
   <data name="PhoneRange" xml:space="preserve">
     <value>التليفون عدد حرف بين 8   الى 25</value>
@@ -264,6 +291,12 @@
   <data name="SellingPriceProduct" xml:space="preserve">
     <value>سعر بيع المنتج</value>
   </data>
+  <data name="SizeOfCompanyRequired" xml:space="preserve">
+    <value>يجب اختيار حجم الشركة</value>
+  </data>
+  <data name="SoPleaseConfirm" xml:space="preserve">
+    <value>لذا يرجى تأكيد أنه إذا لم تعثر على البريد الإلكتروني الوارد في صندوق الوارد ، فقد تستلمه في مجلد البريد غير الهام</value>
+  </data>
   <data name="StartSearch" xml:space="preserve">
     <value>ابدأ في كتابة المنتج للبحث ...</value>
   </data>
@@ -282,8 +315,14 @@
   <data name="ThisUnitWasSelected" xml:space="preserve">
     <value>هذة الوحدة بالفعل تم اختيارها</value>
   </data>
+  <data name="ToCompleteTheActivationYourAccount" xml:space="preserve">
+    <value>لإكمال تفعيل حسابك</value>
+  </data>
   <data name="ToContactTechnicalSupport" xml:space="preserve">
-    <value>You can contact technical support if there is a problem during the registration process from this link.</value>
+    <value>يمكنك الاتصال بالدعم الفني في حالة وجود مشكلة أثناء عملية التسجيل من هذا الرابط.</value>
+  </data>
+  <data name="TypeActivityRequired" xml:space="preserve">
+    <value>يجب ادخال نوع النشاط</value>
   </data>
   <data name="UnitRequired" xml:space="preserve">
     <value>يجب ادخال الوحدة</value>
@@ -296,5 +335,8 @@
   </data>
   <data name="YoHaveAccount" xml:space="preserve">
     <value>إذا كان لديك حساب بالفعل ،</value>
+  </data>
+  <data name="YouWillReceiveAnEmailNowOn" xml:space="preserve">
+    <value>سوف تتلقى رسالة بريد إلكتروني الآن على</value>
   </data>
 </root>

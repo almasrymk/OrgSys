@@ -48,13 +48,13 @@ namespace OrgSys.Controllers
 
             if (_clientService == null)
                 _clientService = new ClientService();
-            
+
             if (User != null && User.Identity != null && User.Identity.IsAuthenticated)
             {
                 new InitialData(User.GetSchema()).Run().Wait();
                 if (_userService == null)
                     _userService = new UserService(User.GetSchema());
-            }            
+            }
         }
 
         public IActionResult Dashboard()
@@ -98,7 +98,7 @@ namespace OrgSys.Controllers
         {
             return View();
         }
-        
+
         [AllowAnonymous]
         public IActionResult MailTemplate()
         {
@@ -167,7 +167,7 @@ namespace OrgSys.Controllers
                     _loginUserService.Save(us);
                 }
 
-                OrgContext _orgContext = new OrgContext(_option, us.Schema);               
+                OrgContext _orgContext = new OrgContext(_option, us.Schema);
                 new InitialData(us.Schema).Run().Wait();
 
                 _userService = new UserService(us.Schema);
@@ -214,9 +214,11 @@ namespace OrgSys.Controllers
                 new RequestService().Delete(old.Id);
 
             new RequestService().Save(_request);
-           
-            var Body = General.RenderViewAsync<MailViewModel>(this, "MailTemplate", new MailViewModel { Date = DateTime.Now.ToString("dd MMM yyyy"), Sender = "Organizer", Receiver = _request.Name, LoginUrl = LoginURL, TechnicalSupportUrl = SupploerURL, Url = _request.URL , BaseUrl = BaseUrl }).Result;
+
+            var Body = General.RenderViewAsync<MailViewModel>(this, "MailTemplate", new MailViewModel { Date = DateTime.Now.ToString("dd MMM yyyy"), Sender = "Organizer", Receiver = _request.Name, LoginUrl = LoginURL, TechnicalSupportUrl = SupploerURL, Url = _request.URL, BaseUrl = BaseUrl }).Result;
             Utility.General.SendEmail(_request.Email, "Organizer", "Wellcom", Body);
+            ViewBag.Name = _request.Name;
+            ViewBag.Email = _request.Email;
             return RedirectToAction("RegDone");
         }
 
@@ -253,11 +255,11 @@ namespace OrgSys.Controllers
             ViewBag.TypeActivityId = new SelectList(new TypeActivityService().GetAll(0, 0, 1, 10000), "Id", "Name");
             ViewBag.NationalityId = new SelectList(new NationalityService().GetAll(0, 0, 1, 10000), "Id", "Name");
             List<SelectListItem> items = new List<SelectListItem>();
-            items.Add(new SelectListItem { Value = "1", Text = "1 to 5" });
-            items.Add(new SelectListItem { Value = "1", Text = "5 to 50" });
-            items.Add(new SelectListItem { Value = "1", Text = "50 to 150" });
-            items.Add(new SelectListItem { Value = "1", Text = "150 to 1500" });
-            items.Add(new SelectListItem { Value = "1", Text = "More then 1500" });
+            items.Add(new SelectListItem { Value = "1", Text = Utility.Resource.Title_Designer.From + " 1 " + Utility.Resource.Title_Designer.To + " 5 " + Utility.Resource.Title_Designer.Employees });
+            items.Add(new SelectListItem { Value = "2", Text = Utility.Resource.Title_Designer.From + " 5 " + Utility.Resource.Title_Designer.To + " 50 " + Utility.Resource.Title_Designer.Employees });
+            items.Add(new SelectListItem { Value = "3", Text = Utility.Resource.Title_Designer.From + " 50 " + Utility.Resource.Title_Designer.To + " 150 " + Utility.Resource.Title_Designer.Employees });
+            items.Add(new SelectListItem { Value = "4", Text = Utility.Resource.Title_Designer.From + " 150 " + Utility.Resource.Title_Designer.To + " 1500 " + Utility.Resource.Title_Designer.Employees });
+            items.Add(new SelectListItem { Value = "5", Text = Utility.Resource.Title_Designer.MoreThen + " 1500 " + Utility.Resource.Title_Designer.Employees });
             ViewBag.SizeOfCompany = new SelectList(items, "Value", "Text");
             return View(client);
         }
@@ -371,10 +373,10 @@ namespace OrgSys.Controllers
                 _profile.ImgPath = SaveFile(_profile.ImgPath);
 
                 if (_profile.NewPassword != null)
-                      _profile.Password = _profile.NewPassword;
-                  else
-                
-                _userService.Save(_profile);
+                    _profile.Password = _profile.NewPassword;
+                else
+
+                    _userService.Save(_profile);
 
                 return Json(data: new { status = "success", id = _profile.Id, url = "/Home/Profile?id=" + _profile.Id + "&status=" + ResultStatus.success + "&MsgError=Success" });
             }
@@ -475,7 +477,7 @@ namespace OrgSys.Controllers
             };
             Response.Headers.Add(Microsoft.Net.Http.Headers.HeaderNames.ContentDisposition, cd.ToString());
             var stream = new FileStream("PrintOut/0.pdf", FileMode.Open);
-            return new FileStreamResult(stream, "application/pdf");            
+            return new FileStreamResult(stream, "application/pdf");
 
         }
 

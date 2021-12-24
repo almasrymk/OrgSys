@@ -1,42 +1,109 @@
 ﻿@model Entity.ModelView.ClientModelView
-@{Layout = null;}
+@{
+    Layout = null;
+    var culture = CultureInfo.CurrentUICulture.Name;
+    var dirCss = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "rtl" : "ltr";
+}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="@System.Threading.Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName">
 <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="~/font/AllFonts.css" />
+    <link rel="stylesheet" href="~/fontawesome-free-5.15.3-web/css/all.css" />
+    <link rel="stylesheet" href="~/fontawesome-free-5.15.3-web/css/fontawesome.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link href="~/css/vendor/bootstrap.min.css" rel="stylesheet" />
     <link href="~/css/login.css" rel="stylesheet" />
     <style>
-        .vl {
-            border-left: 2px solid #5fbae9;
-            height: 280px;
-            position: absolute;
-            left: 50%;
-            margin-left: -3px;
+        body {
+            font-family: Roboto,-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif !important;
+            font-size: 18px !important;
+        }
+
+        .page-link {
+            font-size: 16px !important;
+        }
+
+        .page-item {
+            padding: 5px;
+        }
+
+        .card, .navbar, .menu .sub-menu {
+            box-shadow: 0 1px 10px rgb(0 0 0 / 2%), 0 1px 3px rgb(0 0 0 / 2%) !important;
+        }
+
+        .menu .main-menu ul li a {
+            height: 80px !important;
+        }
+
+        .DropAutoComplete > .Dropbtn2 > .DropIcon {
+            border: none;
+            font-weight: 400;
+            font-size: 15px;
+            font-weight: 100;
+            padding: 4px;
+        }
+    </style>
+    @if (dirCss == "ltr")
+    {
+        <style>
+
+            .DropAutoComplete > .Droptxt {
+                border-right: none;
+            }
+
+            .DropAutoComplete > .Dropbtn > .DropIcon {
+                border-left: none;
+                font-weight: 400;
+                font-size: 15px;
+                font-weight: 100;
+                padding: 5px;
+            }
+        </style>
+    }
+    else
+    {
+        <style>
+
+            h1, h2, h3, h4, p, .page-header h1, body h1, body h2, body h3, .btn, .btn-icon .badge, body {
+                font-family: Roboto,-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif !important;
+            }
+
+            .DropAutoComplete > .Droptxt {
+                border-left: none;
+            }
+
+            .DropAutoComplete > .Dropbtn > .DropIcon {
+                border-right: none;
+                font-weight: 400;
+                font-size: medium;
+                font-size: 15px;
+                font-weight: 100;
+                padding: 4px;
+            }
+        </style>
+    }
+    <style>
+        .centerDiv {
             margin: 0;
             position: absolute;
             top: 50%;
+            left: 50%;
             -ms-transform: translate(-50%, -50%);
             transform: translate(-50%, -50%);
-            border-radius: 10px 10px 10px 10px;
         }
     </style>
 </head>
-<body style="background-color: #7190ca !important;">
+<body style="background-color:#7190ca !important" dir="@dirCss">
     <div class="container wrapper fadeInDown">
-        <div id="formContent" style="max-width: 100% !important">
-            <!-- Tabs Titles -->
-            <!-- Icon -->
-            <div class="container" style="padding-top:15px !important">
-                <div class="fadeIn first" style="text-align: left !important">
-                    <img src="~/logos/Logo.png" style="width:150px !important" id="icon" alt="User Icon" />
-                </div>
+        <div id="formContent" style="max-width:80% !important">
+            <br />
+            <div class="fadeIn first">
+                <img src="~/logos/Logo.png" style="width:150px !important" id="icon" alt="User Icon" />
             </div>
-
-            <h2 class="active"> Register </h2>
-
-            <!-- Login Form -->
-            <form id="RegisterForm" method="post" action="/Home/Register">
+            <h2 class="active"> @Utility.Resource.Title_Designer.Register </h2>
+            <form id="RegisterForm" method="post" action="/Home/Register" style="margin:20px 60px 0px 60px;">
                 @Html.HiddenFor(model => model.Id)
                 @Html.HiddenFor(model => model.TypeId)
                 @Html.HiddenFor(model => model.ParentId)
@@ -45,100 +112,96 @@
                 @Html.HiddenFor(model => model.RequestId)
                 <div class="row">
                     <div class="col-md-6" style="padding:0px !important">
-                        <input type="text" id="Name" class="fadeIn second" name="Name" placeholder="Name" value="@Model.Name">
+                        <input type="text" id="Name" class="fadeIn second" name="Name" placeholder="@Utility.Resource.Title_Designer.Name" value="@Model.Name">
                         <div id="NameRequired" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                            <span>your Name is Required</span>
+                            <span>@Utility.Resource.Message_Designer.NameRequired</span>
                         </div>
                     </div>
                     <div class="col-md-6" style="padding:0px !important">
-                        <input type="text" id="CompanyName" class="fadeIn second" name="CompanyName" placeholder="Company Name" value="@Model.CompanyName">
+                        <input type="text" id="CompanyName" class="fadeIn second" name="CompanyName" placeholder="@Utility.Resource.Title_Designer.Company" value="@Model.CompanyName">
                         <div id="CompanyNameRequired" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                            <span>your company name is Required</span>
+                            <span>@Utility.Resource.Message_Designer.CompanyNameRequired</span>
                         </div>
                     </div>
                     <div class="col-md-6" style="padding:0px !important">
-                        <input type="text" id="Email" class="fadeIn second" name="Email" placeholder="Email" value="@Model.Email">
+                        <input type="text" id="Email" class="fadeIn second" name="Email" placeholder="@Utility.Resource.Title_Designer.Email" value="@Model.Email">
                         <div id="EmailRequired" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                            <span>your Email is Required</span>
+                            <span>@Utility.Resource.Message_Designer.EmailRequired</span>
                         </div>
                         <div id="EmailError" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                            <span>your Email is Error</span>
+                            <span>@Utility.Resource.Message_Designer.EmailNotValid</span>
                         </div>
                         <div id="EmailErrorExist" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                            <span>your Email is Exist</span>
+                            <span>@Utility.Resource.Message_Designer.EmailIsExist</span>
                         </div>
                     </div>
                     <div class="col-md-6" style="padding:0px !important">
-                        <input type="text" id="Mobile" class="fadeIn second" name="Mobile" placeholder="Mobile" value="@Model.Mobile">
+                        <input type="text" id="Mobile" class="fadeIn second" name="Mobile" placeholder="@Utility.Resource.Title_Designer.Phone" value="@Model.Mobile">
                         <div id="MobileRequired" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                            <span>your Mobile is Required</span>
+                            <span>@Utility.Resource.Message_Designer.PhoneRequired</span>
                         </div>
                         <div id="MobileError" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                            <span>your Mobile is Error</span>
+                            <span>@Utility.Resource.Message_Designer.PhoneNotValid</span>
                         </div>
                         <div id="MobileErrorExist" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                            <span>your Mobile is Exsit</span>
+                            <span>@Utility.Resource.Message_Designer.PhoneExist</span>
                         </div>
                     </div>
-
-
                     <div class="col-md-6" style="padding:0px !important">
-                        <input type="text" class="fadeIn second" name="Fax" placeholder="Fax Number">
+                        <input type="text" class="fadeIn second" name="Fax" placeholder="@Utility.Resource.Title_Designer.Fax">
                         <div id="FaxRequired" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                            <span>your Fax is Required</span>
+                            <span>@Utility.Resource.Message_Designer.FaxRequired</span>
                         </div>
                         <div id="FaxError" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                            <span>your Fax is Error</span>
+                            <span>@Utility.Resource.Message_Designer.PhoneNotValid</span>
                         </div>
                     </div>
-
-
                     <div class="col-md-6" style="padding:0px !important">
-                        @Html.DropDownListFor(model => model.TypeActivityId, null, null, new { @placeholder = "Field Type", @class = "fadeIn second" })
+                        @Html.DropDownListFor(model => model.TypeActivityId, null, @Utility.Resource.Title_Designer.TypeActivity , new {@class = "fadeIn second" })
                         <div id="TypeActivityRequired" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                            <span>your Type Activity is Required</span>
+                            <span>@Utility.Resource.Message_Designer.TypeActivityRequired</span>
                         </div>
                     </div>
                     <div class="col-md-6" style="padding:0px !important">
-                        @Html.DropDownListFor(model => model.NationalityId, null, null, new { @placeholder = "Field Type", @class = "fadeIn second" })
+                        @Html.DropDownListFor(model => model.NationalityId, null, @Utility.Resource.Title_Designer.Nationality, new { @class = "fadeIn second" })
                         <div id="NationalityRequired" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                            <span>your Nationality is Required</span>
+                            <span>@Utility.Resource.Message_Designer.NationalityRequired</span>
                         </div>
                     </div>
                     <div class="col-md-6" style="padding:0px !important">
-                        @Html.DropDownListFor(model => model.SizeOfCompany, null, null, new { @placeholder = "Field Type", @class = "fadeIn second" })
+                        @Html.DropDownListFor(model => model.SizeOfCompany, null, @Utility.Resource.Title_Designer.SizeOfCompany, new { @placeholder = "Field Type", @class = "fadeIn second" })
                         <div id="SizeOfCompanyRequired" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                            <span>your Size Of Company is Required</span>
+                            <span>@Utility.Resource.Message_Designer.SizeOfCompanyRequired</span>
                         </div>
                     </div>
                     <div class="col-md-6" style="padding:0px !important">
-                        <input type="password" class="fadeIn second" id="Password" name="Password" placeholder="Password">
+                        <input type="password" class="fadeIn second" id="Password" name="Password" placeholder="@Utility.Resource.Title_Designer.Password">
                         <div id="PasswordRequired" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                            <span>your Password is Required</span>
+                            <span>@Utility.Resource.Message_Designer.PasswordRequired</span>
                         </div>
                         <div id="PasswordError" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                            <span>your Password At Least 8 Char</span>
+                            <span>@Utility.Resource.Message_Designer.PasswordNotValid</span>
                         </div>
                     </div>
                     <div class="col-md-6" style="padding:0px !important">
-                        <input type="password" class="fadeIn second" name="ConfirmPassword" id="ConfirmPassword" placeholder="Confirm Password">
+                        <input type="password" class="fadeIn second" name="ConfirmPassword" id="ConfirmPassword" placeholder="@Utility.Resource.Title_Designer.ConfirmPassword">
                         <div id="ConfirmPasswordRequired" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                            <span>your Confirm Password is Required</span>
+                            <span>@Utility.Resource.Message_Designer.ConfirmPasswordRequired</span>
                         </div>
                         <div id="ConfirmPasswordError" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                            <span>your Confirm Password Not Equal Password </span>
+                            <span>@Utility.Resource.Message_Designer.ConfirmPasswordNotValid </span>
                         </div>
                     </div>
                 </div>
                 <div class="">
                     <div style="padding-top:10px;">
-                        <input id="btnSave" type="button" class="fadeIn fourth" onclick="Save()" value="Done">
+                        <input id="btnSave" type="button" class="fadeIn fourth" onclick="Save()" value="@Utility.Resource.Title_Designer.DONE">
                     </div>
                 </div>
             </form>
             <!-- Remind Passowrd -->
             <div id="formFooter" style="padding:10px;">
-                <a class="underlineHover" href="/Home/Login">Login</a>
+                <a class="underlineHover" href="/Home/Login">@Utility.Resource.Title_Designer.Login</a>
             </div>
         </div>
     </div>
@@ -182,7 +245,7 @@
             var sizeOfCompany = $('#SizeOfCompany').val();
             var password = $('#Password').val();
             var confirmPassword = $('#ConfirmPassword').val();
-            
+
 
             if (name.length < 1) {
                 $("#NameRequired").show();
@@ -212,7 +275,7 @@
                         type: 'POST',
                         url: "/Home/CheckEmailToClient?Email=" + $("#Email").val(),
                         success: function (res) {
-                            if (res){
+                            if (res) {
                                 $("#EmailErrorExist").show();
                                 isValid = false;
                             }
