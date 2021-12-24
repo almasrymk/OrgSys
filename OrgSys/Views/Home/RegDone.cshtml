@@ -1,17 +1,70 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "RegDone";
-    Layout = "~/Views/Shared/_Layout_Website.cshtml";
+    Layout = null;
 }
-
-
-<section>
-    <div class="container">
-        <div class="card">
-            <div class="card-header text-center bg-info">
-                <h3>Your Welcome Check Your E-Mail </h3>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="~/css/vendor/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/login.css" rel="stylesheet" />
+    <style>
+        .vl {
+            border-left: 2px solid #5fbae9;
+            height: 280px;
+            position: absolute;
+            left: 50%;
+            margin-left: -3px;
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            border-radius: 10px 10px 10px 10px;
+        }
+    </style>
+    <meta http-equiv='refresh' content='15; URL=/Home/Login'>
+</head>
+<body style="background-color: #7190ca !important;">
+    <div class="container wrapper fadeInDown">
+        <div id="formContent" style="max-width: 100% !important">
+            <!-- Login Form -->
+            <div class="container" style="padding:40px !important">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="fadeIn first" style="text-align: center !important">
+                            <img src="~/logos/Logo.png" style="width:150px !important" id="icon" alt="User Icon" />
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <p style="text-align:left !important">
+                            You will receive an email now on <a href="#">mail@mail.com</a> to complete the activation your account,<br />
+                            so please confirm that if you do not find the email in inbox, you may receive it in junk folder.<br />
+                            if you are not redirected to the login page within 15 seconds <a href="/Home/Login">click here...</a>
+                        </p>
+                    </div>
+                </div>
             </div>
-
+          
+            
         </div>
     </div>
-</section>
+</body>
+</html>
+
+@*<section>
+        <div class="container">
+            <div class="card">
+                <div class="card-header text-center bg-info">
+                    <h3>Your Welcome Check Your E-Mail </h3>
+                    <h3>
+                        This customizable thank for registering to an event email template will help you thank your potential candidates and improve the candidate experience.
+
+                        Customize it to reflect your company’s culture and your company's event style.
+                    </h3>
+
+                </div>
+
+            </div>
+        </div>
+    </section>*@
