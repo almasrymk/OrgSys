@@ -1222,6 +1222,15 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Organizer.
+        /// </summary>
+        public static string Organizer {
+            get {
+                return ResourceManager.GetString("Organizer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Organizer System.
         /// </summary>
         public static string OrgSys {

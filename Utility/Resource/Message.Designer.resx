@@ -325,7 +325,7 @@
     <value>to complete the activation your account</value>
   </data>
   <data name="ToContactTechnicalSupport" xml:space="preserve">
-    <value>You can contact technical support if there is a problem during the registration process from this link.</value>
+    <value>You can contact technical support if there is a problem during the registration process from this email. </value>
   </data>
   <data name="TypeActivityRequired" xml:space="preserve">
     <value>Type of Activity Required</value>

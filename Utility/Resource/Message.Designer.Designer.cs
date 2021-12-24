@@ -682,7 +682,7 @@ namespace Utility.Resource {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You can contact technical support if there is a problem during the registration process from this link..
+        ///   Looks up a localized string similar to You can contact technical support if there is a problem during the registration process from this email. .
         /// </summary>
         public static string ToContactTechnicalSupport {
             get {

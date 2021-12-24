@@ -319,7 +319,7 @@
     <value>لإكمال تفعيل حسابك</value>
   </data>
   <data name="ToContactTechnicalSupport" xml:space="preserve">
-    <value>يمكنك الاتصال بالدعم الفني في حالة وجود مشكلة أثناء عملية التسجيل من هذا الرابط.</value>
+    <value>يمكنك الاتصال بالدعم الفني في حالة وجود مشكلة أثناء عملية التسجيل من هذا البريد الالكتروني. </value>
   </data>
   <data name="TypeActivityRequired" xml:space="preserve">
     <value>يجب ادخال نوع النشاط</value>
