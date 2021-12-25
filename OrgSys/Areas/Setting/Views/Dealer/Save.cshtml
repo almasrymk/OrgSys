@@ -13,7 +13,7 @@
                 {
                     <h1>@Utility.Resource.Title_Designer.Client</h1>
                 }
-                else if (ViewBag.TypeId == 2)
+                else if (Model.TypeId == 2)
                 {
                     <h1>@Utility.Resource.Title_Designer.Supplier</h1>
                 }
@@ -25,15 +25,9 @@
                         <li class="breadcrumb-item">
                             @Utility.Resource.Title_Designer.Setting
                         </li>
-                        @if (ViewBag.TypeId == 1)
-                        {
-                            <li class="breadcrumb-item active" aria-current="page"><a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId">@Utility.Resource.Title_Designer.Client</a></li>
-                        }
-                        else if (ViewBag.TypeId == 2)
-                        {
-                            <li class="breadcrumb-item active" aria-current="page"><a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId">@Utility.Resource.Title_Designer.Supplier</a></li>
-                        }
-
+                        <li class="breadcrumb-item">
+                            @Utility.Resource.Title_Designer.Dealer
+                        </li>
                     </ol>
                 </nav>
             </div>

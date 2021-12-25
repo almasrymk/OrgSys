@@ -26,8 +26,8 @@ namespace OrgSys.Areas.Setting.Controllers
                 ob.CodeNumber = new ProductService(User.GetSchema()).GetMaxCode(ob.TypeId);
                 ob.Code = "" + new ProductService(User.GetSchema()).GetMaxCode(ob.TypeId);
             }
-            ob.ClassificationName = new ClassificationService(User.GetSchema()).Get(ob.ClassificationId).Name;
-            ob.DealerName = new DealerService(User.GetSchema()).Get(ob.DealerId??1).Name;
+            ob.ClassificationName = new ClassificationService(User.GetSchema()).Get(ob.ClassificationId)?.Name;
+            ob.DealerName = new DealerService(User.GetSchema()).Get(ob.DealerId??1)?.Name;
             return ob;
         }
 

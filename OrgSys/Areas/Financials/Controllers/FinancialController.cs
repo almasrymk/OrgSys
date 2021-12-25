@@ -66,8 +66,8 @@ namespace OrgSys.Areas.Financial.Controllers
                 ob.FinancialInvoiceList = new List<FinancialInvoiceModelView>();
             }
 
-            ob.SafeName = new SafeService(User.GetSchema()).Get(ob.SafeId).Name;
-            ob.DealerName = new DealerService(User.GetSchema()).Get(ob.DealerId??0).Name;
+            ob.SafeName = new SafeService(User.GetSchema()).Get(ob.SafeId)?.Name;
+            ob.DealerName = new DealerService(User.GetSchema()).Get(ob.DealerId??0)?.Name;
             return ob;
         }
 

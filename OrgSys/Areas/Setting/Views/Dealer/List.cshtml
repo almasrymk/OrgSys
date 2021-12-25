@@ -36,82 +36,6 @@
 
 @if (Model != null && Model.Count > 0)
 {
-
-    <div class="row">
-        <div class="col-12 list" data-check-all="checkAll">
-            @for (int i = 0, x = ((Model.PageNumber - 1) * Model.PageSize) + 1; i < Model.Count; i++, x++)
-            {
-                if (Model[i].TypeId > 0)
-                {
-                    <div class="card d-flex flex-row mb-3">
-                        <a class="d-flex" href="Pages.Product.Detail.html">
-                            <img src="/img/products/fat-rascal-thumb.jpg" alt="Fat Rascal" class="list-thumbnail responsive border-0 card-img-left" />
-                        </a>
-                        <div class="pl-2 d-flex flex-grow-1 min-width-zero">
-                            <div class="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
-                                <a href="Pages.Product.Detail.html" class="w-40 w-sm-100">
-                                    <p class="list-item-heading mb-0 truncate">@Model[i].Name</p>
-                                </a>
-                                <div class="col-md-12">
-                                    <div class="btn-group" role="group" aria-label="Basic example">
-                                        <button type="button" class="btn  btn-primary"><div class="glyph-icon iconsminds-file-edit"></div></button>
-                                        <button type="button" class="btn  btn-primary"><div class="glyph-icon iconsminds-delete-file"></div></button>
-                                        <button type="button" class="btn  btn-primary"><div class="glyph-icon simple-icon-trash"></div></button>
-                                        <a class="btn  btn-primary">
-                                            <span class="custom-control custom-checkbox mb-1 pr-1">
-                                                <input type="checkbox" class="custom-control-input" hidden>
-                                                <span class="custom-control-label">&nbsp;</span>
-                                            </span>
-                                        </a>
-                                    </div>
-                                </div>
-                               
-                            </div>
-                        </div>
-                    </div>
-                }
-            }
-            <nav class="mt-4 mb-3">
-                <ul class="pagination justify-content-center mb-0">
-                    <li class="page-item ">
-                        <a class="page-link first" href="#">
-                            <i class="simple-icon-control-start"></i>
-                        </a>
-                    </li>
-                    <li class="page-item ">
-                        <a class="page-link prev" href="#">
-                            <i class="simple-icon-arrow-left"></i>
-                        </a>
-                    </li>
-                    <li class="page-item active">
-                        <a class="page-link" href="#">1</a>
-                    </li>
-                    <li class="page-item ">
-                        <a class="page-link" href="#">2</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">3</a>
-                    </li>
-                    <li class="page-item ">
-                        <a class="page-link next" href="#" aria-label="Next">
-                            <i class="simple-icon-arrow-right"></i>
-                        </a>
-                    </li>
-                    <li class="page-item ">
-                        <a class="page-link last" href="#">
-                            <i class="simple-icon-control-end"></i>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-
-        </div>
-    </div>
-
-
-
-
-
     <div id="tbList" class="card" style="display:none;">
         <div class="card-body pl-0 pr-0 pb-2 pt-0">
             <table class="table table-hover responsive nowrap m-0" data-order="[[ 1, &quot;desc&quot; ]]">
@@ -120,7 +44,7 @@
                         <th class="text-center">#</th>
                         <th style="text-align:center"></th>
                         <th class="@TextAlign align-middle">@Utility.Resource.Title_Designer.Name</th>
-                        @if (AllowEdit || AllowCancel || AllowDelete)
+                        @if (AllowEdit || AllowDelete)
                         {
                             <th>
 
@@ -134,22 +58,16 @@
                         }
                     </tr>
                 </thead>
-
-
-
-
-
-
                 <tbody>
                     @for (int i = 0, x = ((Model.PageNumber - 1) * Model.PageSize) + 1; i < Model.Count; i++, x++)
                     {
                         if (Model[i].TypeId > 0)
                         {
                             <tr style="@(Model[i].Status == Utility.Status.Cancel ? "color:#a8a7a7;background:repeating-linear-gradient(60deg, transparent, transparent 5px, gainsboro 5px, gainsboro 6px);" : "")">
-                                <td class="text-center align-middle">
+                                <td class="text-center align-middle" style="width:50px;">
                                     <p class="list-item-heading">@x</p>
                                 </td>
-                                <td class="text-center align-middle">
+                                <td class="text-center align-middle" style="width:50px;">
                                     @if ("" + Model[i].ImgPath != "")
                                     {
                                         <img alt="Thumbnail" src="@Model[i].ImgPath"
@@ -164,7 +82,7 @@
                                 <td class="@TextAlign align-middle">
                                     @Model[i].Name
                                 </td>
-                                @if (AllowEdit || AllowCancel || AllowDelete)
+                                @if (AllowEdit || AllowDelete)
                                 {
                                     <td class="w-15 @TextAlign2 align-middle">
                                         @if (Model[i].Status == Utility.Status.Cancel)
@@ -181,19 +99,11 @@
                                             if (AllowEdit)
                                             {
                                                 <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit" style="color:green"></i> </a>
-                                                if (AllowCancel || AllowDelete)
+                                                if (AllowDelete)
                                                 {
                                                     <span>&nbsp; | &nbsp;</span>
                                                 }
-                                            }
-                                            if (AllowCancel)
-                                            {
-                                                <a href="/@ViewBag.area/@ViewBag.PageTitle/Cancel?id=@Model[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.PageNumber"> <i>X</i> </a>
-                                                @if (AllowDelete)
-                                                {
-                                                    <span>&nbsp; | &nbsp;</span>
-                                                }
-                                            }
+                                            }                                           
                                             if (AllowDelete)
                                             {
                                                 <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
@@ -203,7 +113,7 @@
                                 }
                                 @if (AllowDelete)
                                 {
-                                    <td class="align-middle @TextAlign2">
+                                    <td class="align-middle @TextAlign2" style="width:30px">
                                         @if (Model[i].Status != Utility.Status.Cancel)
                                         {
                                             <label class="custom-control custom-checkbox pt-2">
@@ -258,19 +168,11 @@
                                         if (AllowEdit)
                                         {
                                             <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit" style="color:green"></i> </a>
-                                            if (AllowCancel || AllowDelete)
+                                            if (AllowDelete)
                                             {
                                                 <span>&nbsp; | &nbsp;</span>
                                             }
-                                        }
-                                        if (AllowCancel)
-                                        {
-                                            <a href="/@ViewBag.area/@ViewBag.PageTitle/Cancel?id=@Model[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.PageNumber"> <i>X</i> </a>
-                                            @if (AllowDelete)
-                                            {
-                                                <span>&nbsp; | &nbsp;</span>
-                                            }
-                                        }
+                                        }                                       
                                         if (AllowDelete)
                                         {
                                             <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>

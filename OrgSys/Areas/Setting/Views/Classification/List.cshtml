@@ -32,7 +32,7 @@
                         <th class="text-center">#</th>
                         <th style="text-align:center"></th>
                         <th class="@TextAlign align-middle">@Utility.Resource.Title_Designer.Name</th>
-                        @if (AllowEdit || AllowCancel || AllowDelete)
+                        @if (AllowEdit || AllowDelete)
                         {
                             <th>
 
@@ -69,7 +69,7 @@
                             <td class="@TextAlign align-middle">
                                 @Model[i].Name
                             </td>
-                            @if (AllowEdit || AllowCancel || AllowDelete)
+                            @if (AllowEdit || AllowDelete)
                             {
                                 <td class="w-15 @TextAlign2 align-middle">
                                     @if (Model[i].Status == Utility.Status.Cancel)
@@ -86,19 +86,11 @@
                                         if (AllowEdit)
                                         {
                                             <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit" style="color:green"></i> </a>
-                                            if (AllowCancel || AllowDelete)
+                                            if (AllowDelete)
                                             {
                                                 <span>&nbsp; | &nbsp;</span>
                                             }
-                                        }
-                                        if (AllowCancel)
-                                        {
-                                            <a href="/@ViewBag.area/@ViewBag.PageTitle/Cancel?id=@Model[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.PageNumber"> <i>X</i> </a>
-                                            @if (AllowDelete)
-                                            {
-                                                <span>&nbsp; | &nbsp;</span>
-                                            }
-                                        }
+                                        }                                       
                                         if (AllowDelete)
                                         {
                                             <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
@@ -162,19 +154,11 @@
                                     if (AllowEdit)
                                     {
                                         <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit" style="color:green"></i> </a>
-                                        if (AllowCancel || AllowDelete)
+                                        if (AllowDelete)
                                         {
                                             <span>&nbsp; | &nbsp;</span>
                                         }
-                                    }
-                                    if (AllowCancel)
-                                    {
-                                        <a href="/@ViewBag.area/@ViewBag.PageTitle/Cancel?id=@Model[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.PageNumber"> <i>X</i> </a>
-                                        @if (AllowDelete)
-                                        {
-                                            <span>&nbsp; | &nbsp;</span>
-                                        }
-                                    }
+                                    }                                   
                                     if (AllowDelete)
                                     {
                                         <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>

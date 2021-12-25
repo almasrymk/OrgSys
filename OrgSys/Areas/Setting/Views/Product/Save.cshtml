@@ -15,7 +15,9 @@
                         <li class="breadcrumb-item">
                             @Utility.Resource.Title_Designer.Setting
                         </li>
-                        <li class="breadcrumb-item active" aria-current="page">  <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId">@Utility.Resource.Title_Designer.Product</a></li>
+                        <li class="breadcrumb-item">
+                            @Utility.Resource.Title_Designer.Product
+                        </li>
                     </ol>
                 </nav>
             </div>
@@ -612,8 +614,8 @@
         if (CheckRage("Description", "divDescription", 5, 500, '@Utility.Resource.Message_Designer.DescriptionRange'))
             Valid = false;
 
-        if (CheckRequired("Barcode", "divBarcode", '@Utility.Resource.Message_Designer.BarcodeRequired'))
-            Valid = false;
+        @*if (CheckRequired("Barcode", "divBarcode", '@Utility.Resource.Message_Designer.BarcodeRequired'))
+            Valid = false;*@
 
        else if (CheckRage("Barcode", "divBarcode", 5, 15, '@Utility.Resource.Message_Designer.BarcodeRange'))
             Valid = false;

@@ -33,7 +33,7 @@
                         <th style="text-align:center"></th>
                         <th class="@TextAlign align-middle">@Utility.Resource.Title_Designer.Name</th>
                         <th class="@TextAlign align-middle">@Utility.Resource.Title_Designer.Classification</th>
-                        @if (AllowEdit || AllowCancel || AllowDelete)
+                        @if (AllowEdit || AllowDelete)
                         {
                             <th>
 
@@ -75,7 +75,7 @@
                                     @Model[i].ClassificationName
                                 </a>
                             </td>
-                            @if (AllowEdit || AllowCancel || AllowDelete)
+                            @if (AllowEdit || AllowDelete)
                             {
                                 <td class="w-15 @TextAlign2 align-middle">
                                     @if (Model[i].Status == Utility.Status.Cancel)
@@ -92,19 +92,11 @@
                                         if (AllowEdit)
                                         {
                                             <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit" style="color:green"></i> </a>
-                                            if (AllowCancel || AllowDelete)
+                                            if (AllowDelete)
                                             {
                                                 <span>&nbsp; | &nbsp;</span>
                                             }
-                                        }
-                                        if (AllowCancel)
-                                        {
-                                            <a href="/@ViewBag.area/@ViewBag.PageTitle/Cancel?id=@Model[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.PageNumber"> <i>X</i> </a>
-                                            @if (AllowDelete)
-                                            {
-                                                <span>&nbsp; | &nbsp;</span>
-                                            }
-                                        }
+                                        }                                       
                                         if (AllowDelete)
                                         {
                                             <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
@@ -114,7 +106,7 @@
                             }
                             @if (AllowDelete)
                             {
-                                <td class="align-middle @TextAlign2">
+                                <td class="align-middle @TextAlign2" style="width:30px">
                                     @if (Model[i].Status != Utility.Status.Cancel)
                                     {
                                         <label class="custom-control custom-checkbox pt-2">
@@ -173,19 +165,11 @@
                                     if (AllowEdit)
                                     {
                                         <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit" style="color:green"></i> </a>
-                                        if (AllowCancel || AllowDelete)
+                                        if (AllowDelete)
                                         {
                                             <span>&nbsp; | &nbsp;</span>
                                         }
-                                    }
-                                    if (AllowCancel)
-                                    {
-                                        <a href="/@ViewBag.area/@ViewBag.PageTitle/Cancel?id=@Model[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.PageNumber"> <i>X</i> </a>
-                                        @if (AllowDelete)
-                                        {
-                                            <span>&nbsp; | &nbsp;</span>
-                                        }
-                                    }
+                                    }                                   
                                     if (AllowDelete)
                                     {
                                         <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
@@ -249,7 +233,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="card-footer align-bottom m-0 p-2">
+                <div class="card-footer  text-center m-0 p-2">
                     <div class="m-0  p-0" style="font-size:12px;">
                         <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit"></i> @Utility.Resource.Title_Designer.Edit</a>
                         <span> &nbsp; | &nbsp; </span>

@@ -172,7 +172,7 @@ function ChangeMode(modeChange) {
     $("#obList").hide();
 }
 
-function Delete(icon , title , Msg , Ok , Id) {
+function Delete(icon, title, Msg, Ok, Id) {   
     ShowConfirmMsgById(icon, title, Msg, Ok, Id);
 }
 
