@@ -11,8 +11,7 @@ namespace Entity.Model
         public virtual string Name { get; set; }
 
         public virtual string Nickname { get; set; }
-
-        [Required]
+       
         public virtual string Barcode { get; set; }
 
         public virtual string Description { get; set; }

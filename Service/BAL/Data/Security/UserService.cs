@@ -1,6 +1,7 @@
 ﻿using Entity;
 using Entity.Model;
 using Entity.ModelView;
+using Repository;
 using System.Collections.Generic;
 using System.Linq;
 using X.PagedList;
@@ -9,7 +10,10 @@ namespace Service
 {
     public class UserService : BaseOrgService<UserModelView, User>
     {
-        public UserService(string Schema) : base(Schema) { }
+        public UnitOfWorkAdmin repoAdminAll;
+        public UserService(string Schema) : base(Schema) {
+            repoAdminAll = new UnitOfWorkAdmin();
+        }
 
         //string Includes = "Role";
         //UnitOfWorkOrg repo;
@@ -22,7 +26,17 @@ namespace Service
         #region Save / Delete
         public override UserModelView Save(UserModelView ob)
         {
-            return repo.AddOrUpdate(ob.Map<User>()).Map<UserModelView>();
+            var comp = repoAll.companyProfileRepo.GetMyCompanyProfile();
+            var usLogin = repoAdminAll.loginUserRepo.Get(e => e.Id == ob.LoginUserId);
+            if (usLogin == null)
+                usLogin = new LoginUser();
+            usLogin.UserName = ob.UserName;
+            usLogin.ClientId = comp.ClientId;           
+            usLogin = repoAdminAll.loginUserRepo.AddOrUpdate(usLogin);
+            ob.LoginUserId = usLogin.Id;
+            var us = repo.AddOrUpdate(ob.Map<User>()).Map<UserModelView>();
+            ob.Id = us.Id;
+            return ob;
         }
 
         public override bool Delete(long id)

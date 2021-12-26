@@ -332,6 +332,18 @@ namespace Repository
                 return _currencyRepo;
             }
         }
+
+        private CompanyProfileRepo _companyProfileRepo;
+        public CompanyProfileRepo companyProfileRepo
+        {
+            get
+            {
+                if (this._companyProfileRepo == null)
+                    this._companyProfileRepo = new CompanyProfileRepo(Schema);
+
+                return _companyProfileRepo;
+            }
+        }
         #endregion
 
         #region Processing

@@ -160,7 +160,7 @@ namespace OrgSys.Controllers
         {
             try
             {
-                var us = _loginUserService.Get(_user.UserName);
+                var us = _loginUserService.GetLoginUserName(_user.UserName);
                 if (!string.IsNullOrEmpty(_user.NewPassword))
                 {
                     us.Password = Utility.Security.Encrypt(_user.NewPassword);

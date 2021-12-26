@@ -42,6 +42,11 @@ namespace Service
         {
             return repo.Any(e => e.UserName.ToLower().Trim() == Email.ToLower().Trim() && e.Password == Passord);
         }
+
+        public LoginUserModelView GetUserByUserName(string Email)
+        {
+            return  repo.Get(e => e.UserName.ToLower().Trim() == Email.ToLower().Trim()).Map<LoginUserModelView>();
+        }
         #endregion
     }
 }

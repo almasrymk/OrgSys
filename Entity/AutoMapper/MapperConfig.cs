@@ -107,11 +107,11 @@ namespace Entity
 
             // Login User
             cfg.CreateMap<LoginUserModelView, LoginUser>()
-            .ForMember(d => d.Password, o => o.MapFrom(s => Utility.Security.Encrypt(s.Password)));
+            .ForMember(d => d.Password, o => o.MapFrom(s => s.Password));
             cfg.CreateMap<LoginUser, LoginUserModelView>()
             .ForMember(d => d.ClientName, o => o.MapFrom(s => s.Client.Name))
             .ForMember(d => d.Schema, o => o.MapFrom(s => s.Client.DbSchema))
-             .ForMember(d => d.Password, o => o.MapFrom(s => Utility.Security.Decrypt(s.Password)));
+             .ForMember(d => d.Password, o => o.MapFrom(s => s.Password));
             //
 
             // Nationality
