@@ -60,21 +60,21 @@
                                     <div class="form-group position-relative">
                                         <label>@Utility.Resource.Title_Designer.Check</label>
                                         <div class="custom-control custom-checkbox">
-                                            @Html.CheckBoxFor(model => model.BePurchased, new { @class = "custom-control-input" })                                            
+                                            @Html.CheckBoxFor(model => model.BePurchased, new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="BePurchased">
                                                 @Utility.Resource.Title_Designer.BePurchased
-                                            </label>
-                                        </div>
-                                        <div class="custom-control custom-checkbox">
-                                            @Html.CheckBoxFor(model => model.BeSold, new { @class = "custom-control-input" })
-                                            <label class="custom-control-label" for="BeSold">
-                                                @Utility.Resource.Title_Designer.BeSold
                                             </label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
                                             @Html.CheckBoxFor(model => model.BeManufactured, new { @class = "custom-control-input" })
                                             <label class="custom-control-label" for="BeManufactured">
                                                 @Utility.Resource.Title_Designer.BeManufactured
+                                            </label>
+                                        </div>
+                                        <div class="custom-control custom-checkbox">
+                                            @Html.CheckBoxFor(model => model.BeSold, new { @class = "custom-control-input" })
+                                            <label class="custom-control-label" for="BeSold">
+                                                @Utility.Resource.Title_Designer.BeSold
                                             </label>
                                         </div>
                                     </div>

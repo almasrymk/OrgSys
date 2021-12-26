@@ -24,94 +24,128 @@
 
 @if (Model != null && Model.Count > 0)
 {
-<div id="tbList" class="card" style="display:none;">
-    <div class="card-body pl-0 pr-0 pb-2 pt-0">
-        <table class="table table-hover responsive nowrap m-0" data-order="[[ 1, &quot;desc&quot; ]]">
-            <thead>
-                <tr>
-                    <th class="text-center">#</th>
-                    <th style="text-align:center"></th>
-                    <th class="@TextAlign align-middle">@Utility.Resource.Title_Designer.Name</th>
-                    @if (AllowEdit || AllowDelete)
-                    {
-                        <th>
+    <div id="tbList" class="card" style="display:none;">
+        <div class="card-body pl-0 pr-0 pb-2 pt-0">
+            <table class="table table-hover responsive nowrap m-0" data-order="[[ 1, &quot;desc&quot; ]]">
+                <thead>
+                    <tr>
+                        <th class="text-center">#</th>
+                        <th style="text-align:center"></th>
+                        <th class="@TextAlign align-middle">@Utility.Resource.Title_Designer.Name</th>
+                        <th class="align-middle  text-center">@Utility.Resource.Title_Designer.IsDefault</th>
+                        @if (AllowEdit || AllowDelete)
+                        {
+                            <th>
 
-                        </th>
-                    }
-                    @if (AllowDelete)
-                    {
-                        <th>
+                            </th>
+                        }
+                        @if (AllowDelete)
+                        {
+                            <th>
 
-                        </th>
-                    }
-                </tr>
-            </thead>
-            <tbody>
-                @for (int i = 0, x = ((Model.PageNumber - 1) * Model.PageSize) + 1; i < Model.Count; i++, x++)
-                {
-                <tr style="@(Model[i].Status == Utility.Status.Cancel ? "color:#a8a7a7;background:repeating-linear-gradient(60deg, transparent, transparent 5px, gainsboro 5px, gainsboro 6px);" : "")">
-                    <td class="text-center align-middle" style="width:50px;">
-                        <p class="list-item-heading">@x</p>
-                    </td>
-                    <td class="text-center align-middle" style="width:50px;">
-                        <div class="list-thumbnail  border-0 rounded-circle badge-theme-1 m-0" style="height:40px;width:40px;font-size:17px;text-align:center;padding:9px;">
-                            <i class="iconsminds-dollar-sign-2"></i>
-                        </div>
-                    </td>
-                    <td class="@TextAlign align-middle">
-                        @Model[i].Name
-                    </td>
-                    @if (AllowEdit || AllowDelete)
+                            </th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0, x = ((Model.PageNumber - 1) * Model.PageSize) + 1; i < Model.Count; i++, x++)
                     {
-                        <td class="w-15 @TextAlign2 align-middle">
-                            @if (Model[i].Status == Utility.Status.Cancel)
-                            {
-                                <a href="/@ViewBag.area/@ViewBag.PageTitle/Redo?id=@Model[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.PageNumber"> <i class="simple-icon-action-redo"></i> </a>
-                                if (AllowDelete)
+                        <tr style="@(Model[i].Status == Utility.Status.Cancel ? "color:#a8a7a7;background:repeating-linear-gradient(60deg, transparent, transparent 5px, gainsboro 5px, gainsboro 6px);" : "")">
+                            <td class="text-center align-middle" style="width:50px;">
+                                <p class="list-item-heading">@x</p>
+                            </td>
+                            <td class="text-center align-middle" style="width:50px;">
+                                <div class="list-thumbnail  border-0 rounded-circle badge-theme-1 m-0" style="height:40px;width:40px;font-size:17px;text-align:center;padding:9px;">
+                                    <i class="iconsminds-dollar-sign-2"></i>
+                                </div>
+                            </td>
+                            <td class="@TextAlign align-middle">
+                                @Model[i].Name
+                            </td>
+                            <td class="col-lg-2 text-center">
+                                @if (Model[i].IsDefault)
                                 {
-                                    <span>&nbsp; | &nbsp;</span>
-                                    <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
+                                    <small><i class="fa fa-check"></i></small> 
                                 }
-                            }
-                            else
-                            {
-                                if (AllowEdit)
+                                else
                                 {
-                                    <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit" style="color:green"></i> </a>
-                                    if (AllowDelete)
+                                    <span>-</span>
+                                }
+                            </td>
+                            @if (AllowEdit || AllowDelete)
+                            {
+                                <td class="w-15 @TextAlign2 align-middle">
+                                    @if (Model[i].Status == Utility.Status.Cancel)
                                     {
-                                        <span>&nbsp; | &nbsp;</span>
+                                        <a href="/@ViewBag.area/@ViewBag.PageTitle/Redo?id=@Model[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.PageNumber"> <i class="simple-icon-action-redo"></i> </a>
+                                        if (AllowDelete)
+                                        {
+                                            <span>&nbsp; | &nbsp;</span>
+                                            <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
+                                        }
                                     }
-                                }                               
-                                if (AllowDelete)
-                                {
-                                    <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
-                                }
+                                    else
+                                    {
+                                        if (AllowEdit)
+                                        {
+                                            <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit" style="color:green"></i> </a>
+                                            if (AllowDelete)
+                                            {
+                                                <span>&nbsp; | &nbsp;</span>
+                                            }
+                                        }
+                                        if (AllowDelete)
+                                        {
+                                            <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
+                                        }
+                                    }
+                                </td>
                             }
-                        </td>
-                    }
-                    @if (AllowDelete)
-                    {
-                        <td class="align-middle @TextAlign2" style="width:30px">
-                            @if (Model[i].Status != Utility.Status.Cancel)
+                            @if (AllowDelete)
                             {
-                                <label class="custom-control custom-checkbox pt-2">
-                                    <input id="chk_@Model[i].Id" type="checkbox" class="custom-control-input chk">
-                                    <input type="hidden" value="@Model[i].Id" />
-                                    <span class="custom-control-label">&nbsp;</span>
-                                </label>
+                                <td class="align-middle @TextAlign2" style="width:30px">
+                                    @if (Model[i].Status != Utility.Status.Cancel)
+                                    {
+                                        <label class="custom-control custom-checkbox pt-2">
+                                            <input id="chk_@Model[i].Id" type="checkbox" class="custom-control-input chk">
+                                            <input type="hidden" value="@Model[i].Id" />
+                                            <span class="custom-control-label">&nbsp;</span>
+                                        </label>
+                                    }
+                                </td>
                             }
-                        </td>
-                    }
-                </tr>
+                        </tr>
 
-                }
-            </tbody>
-        </table>
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
     <div id="rowList" style="display:none;">
         <div class="col-12 list m-0 p-0 pt-2" data-check-all="checkAll">
+            <div class=" d-flex flex-row mb-2" style="background-color:transparent !important;height:50px;padding:0px;margin:0px;">
+                <div class="d-flex flex-grow-1 min-width-zero" style="border-radius:15px; height:60px;">
+                    <div class="list-thumbnail  border-0" style="height:60px; width:60px; font-size:x-large; text-align:center; padding:14px;">
+                        <small>#</small>
+                    </div>
+                    <div class="card-body align-self-center d-flex flex-column flex-md-row  align-items-md-center">
+                        <div class="list-item-heading mb-0 w-90">
+                            <small>@Utility.Resource.Title_Designer.Name</small>
+                        </div>
+                        <div class="list-item-heading mb-0 w-20 text-center">
+                            <small>@Utility.Resource.Title_Designer.IsDefault</small>
+                        </div>                       
+                        <div class="w-15 @TextAlign2">
+
+                        </div>
+                    </div>
+
+                    <div style="width:30px;">
+
+                    </div>
+
+                </div>
+            </div>
             @for (int i = 0, x = ((Model.PageNumber - 1) * Model.PageSize) + 1; i < Model.Count; i++, x++)
             {
                 <div class="card d-flex flex-row mb-2">
@@ -123,6 +157,16 @@
                         <div class="card-body align-self-center d-flex flex-column flex-md-row  align-items-md-center">
                             <div class="list-item-heading mb-0 w-90">
                                 @Model[i].Name
+                            </div>
+                            <div class="list-item-heading mb-0 w-20 text-center">
+                                @if (Model[i].IsDefault)
+                                {
+                                    <small><i class="fa fa-check"></i></small>
+                                }
+                                else
+                                {
+                                    <span>-</span>
+                                }
                             </div>
                             <div class="w-15 @TextAlign2">
                                 @if (Model[i].Status == Utility.Status.Cancel)
@@ -143,7 +187,7 @@
                                         {
                                             <span>&nbsp; | &nbsp;</span>
                                         }
-                                    }                                   
+                                    }
                                     if (AllowDelete)
                                     {
                                         <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>

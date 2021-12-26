@@ -11,7 +11,7 @@ namespace Service
     public class UserService : BaseOrgService<UserModelView, User>
     {
         public UnitOfWorkAdmin repoAdminAll;
-        public UserService(string Schema) : base(Schema) {
+        public UserService(string Schema) : base(Schema , "Role") {
             repoAdminAll = new UnitOfWorkAdmin();
         }
 

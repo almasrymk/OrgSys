@@ -32,6 +32,9 @@
                         <th class="text-center">#</th>
                         <th style="text-align:center"></th>
                         <th class="@TextAlign align-middle">@Utility.Resource.Title_Designer.Name</th>
+                        <th class="center align-middle">@Utility.Resource.Title_Designer.BePurchased</th>
+                        <th class="center align-middle">@Utility.Resource.Title_Designer.BeManufactured</th>
+                        <th class="center align-middle">@Utility.Resource.Title_Designer.BeSold</th>
                         @if (AllowEdit || AllowDelete)
                         {
                             <th>
@@ -66,8 +69,38 @@
                                     </div>
                                 }
                             </td>
-                            <td class="@TextAlign align-middle">
+                            <td class="@TextAlign align-middle col-lg-4">
                                 @Model[i].Name
+                            </td>
+                            <td class="@TextAlign align-middle">
+                                @if (Model[i].BePurchased)
+                                {
+                                    <small><i class="fa fa-check"></i></small>
+                                }
+                                else
+                                {
+                                    <span>-</span>
+                                }
+                            </td>
+                            <td class="@TextAlign align-middle">
+                                @if (Model[i].BeManufactured)
+                                {
+                                    <small><i class="fa fa-check"></i></small>
+                                }
+                                else
+                                {
+                                    <span>-</span>
+                                }
+                            </td>
+                            <td class="@TextAlign align-middle">
+                                @if (Model[i].BeSold)
+                                {
+                                    <small><i class="fa fa-check"></i></small>
+                                }
+                                else
+                                {
+                                    <span>-</span>
+                                }
                             </td>
                             @if (AllowEdit || AllowDelete)
                             {
@@ -90,7 +123,7 @@
                                             {
                                                 <span>&nbsp; | &nbsp;</span>
                                             }
-                                        }                                       
+                                        }
                                         if (AllowDelete)
                                         {
                                             <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
@@ -119,6 +152,35 @@
     </div>
     <div id="rowList" style="display:none;">
         <div class="col-12 list m-0 p-0 pt-2" data-check-all="checkAll">
+            <div class=" d-flex flex-row mb-2" style="background-color:transparent !important;height:50px;padding:0px;margin:0px;">
+                <div class="d-flex flex-grow-1 min-width-zero" style="border-radius:15px; height:60px;">
+                    <div class="list-thumbnail  border-0" style="height:60px; width:60px; font-size:x-large; text-align:center; padding:14px;">
+                        <small>#</small>
+                    </div>
+                    <div class="card-body align-self-center d-flex flex-column flex-md-row  align-items-md-center">
+                        <div class="list-item-heading mb-0 w-90">
+                            <small>@Utility.Resource.Title_Designer.Name</small>
+                        </div>
+                        <div class="list-item-heading mb-0 w-20 text-center">
+                            <small>@Utility.Resource.Title_Designer.BePurchased</small>
+                        </div>
+                        <div class="list-item-heading mb-0 w-20 text-center">
+                            <small>@Utility.Resource.Title_Designer.BeManufactured</small>
+                        </div>
+                        <div class="list-item-heading mb-0 w-20 text-center">
+                            <small>@Utility.Resource.Title_Designer.BeSold</small>
+                        </div>
+                        <div class="w-15 @TextAlign2">
+
+                        </div>
+                    </div>
+
+                    <div style="width:30px;">
+
+                    </div>
+
+                </div>
+            </div>
             @for (int i = 0, x = ((Model.PageNumber - 1) * Model.PageSize) + 1; i < Model.Count; i++, x++)
             {
                 <div class="card d-flex flex-row mb-2">
@@ -139,6 +201,36 @@
                             <div class="list-item-heading mb-0 w-90">
                                 @Model[i].Name
                             </div>
+                            <div class="list-item-heading mb-0 w-20 text-center">
+                                @if (Model[i].BePurchased)
+                                {
+                                    <small><i class="fa fa-check"></i></small>
+                                }
+                                else
+                                {
+                                    <span>-</span>
+                                }
+                            </div>
+                            <div class="list-item-heading mb-0 w-20 text-center">
+                                @if (Model[i].BeManufactured)
+                                {
+                                    <small><i class="fa fa-check"></i></small>
+                                }
+                                else
+                                {
+                                    <span>-</span>
+                                }
+                            </div>
+                            <div class="list-item-heading mb-0 w-20 text-center">
+                                @if (Model[i].BeSold)
+                                {
+                                    <small><i class="fa fa-check"></i></small>
+                                }
+                                else
+                                {
+                                    <span>-</span>
+                                }
+                            </div>
                             <div class="w-15 @TextAlign2">
                                 @if (Model[i].Status == Utility.Status.Cancel)
                                 {
@@ -158,7 +250,7 @@
                                         {
                                             <span>&nbsp; | &nbsp;</span>
                                         }
-                                    }                                   
+                                    }
                                     if (AllowDelete)
                                     {
                                         <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
@@ -217,7 +309,6 @@
                     </div>
                     <div style="font-size: 13px; text-align: center; padding: 10px;">
                         <h6>@Model[i].Name</h6>
-
                     </div>
                 </div>
                 <div class="card-footer text-center m-0 p-2">
