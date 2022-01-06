@@ -28,7 +28,7 @@ namespace OrgSys.Areas.Invoices.Controllers
         public override void LoadViewBag(InvoiceModelView model)
         {
             ViewBag.CurrencyId = new SelectList(new CurrencyService(User.GetSchema()).GetAll(model.ParentId, 0, 1, 20), "Id", "Name", model.CurrencyId);
-            ViewBag.PaymentTypeId = new SelectList(new PaymentTypeService(User.GetSchema()).GetAll(model.ParentId, model.PaymentTypeId, 1, 20), "Id", "Name", model.PaymentTypeId);
+            ViewBag.PaymentTypeId = new SelectList(new PaymentTypeService(User.GetSchema()).GetAll(model.ParentId, 0, 1, 20), "Id", "Name", model.PaymentTypeId);
 
             List<SelectListItem> selectListItems = new List<SelectListItem>();
             selectListItems.Add(new SelectListItem { Value = "1", Text = Translate.GetTranslate("Amount") });
@@ -91,10 +91,10 @@ namespace OrgSys.Areas.Invoices.Controllers
                 ob.InvoiceProductList = new List<InvoiceProductModelView>();
             }
 
-            ob.StoreName = new StoreService(User.GetSchema()).Get(ob.StoreId??0).Name;
-            ob.DealerName = new DealerService(User.GetSchema()).Get(ob.DealerId).Name;
-            ob.ParentCode = new InvoiceService(User.GetSchema()).Get(ob.ParentId).Code;
-            ob.Rate = new CurrencyService(User.GetSchema()).Get(ob.CurrencyId).Rate;
+            ob.StoreName = new StoreService(User.GetSchema()).Get(ob.StoreId??0)?.Name;
+            ob.DealerName = new DealerService(User.GetSchema()).Get(ob.DealerId)?.Name;
+            ob.ParentCode = new InvoiceService(User.GetSchema()).Get(ob.ParentId)?.Code;
+            ob.Rate = new CurrencyService(User.GetSchema()).Get(ob.CurrencyId)?.Rate??0;
             return ob;
         }
 

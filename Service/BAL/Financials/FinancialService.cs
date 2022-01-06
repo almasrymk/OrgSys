@@ -27,7 +27,7 @@ namespace Service
                 if (deleted != null && deleted.Count > 0)
                     repoAll.financialInvoiceRepo.ShiftDelete(deleted.Select(e => e.Id).ToList());
 
-                foreach (var productUnit in ob.FinancialInvoices)
+                foreach (var productUnit in ob.FinancialInvoiceList)
                 {
                     var model = productUnit.Map<FinancialInvoice>();
                     model.FinancialId = Nwob.Id;

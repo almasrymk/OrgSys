@@ -1,12 +1,20 @@
 ﻿using Entity;
+using System.Linq;
+using X.PagedList;
 using Entity.Model;
 using Entity.ModelView;
+using System.Collections.Generic;
 
 namespace Service
 {
     public class PreferenceService : BaseOrgService<PreferenceModelView, Preference>
     {
         public PreferenceService(string Schema) : base(Schema) { }
+
+        public override List<PreferenceModelView> GetAll(string textSearch, long parentId = 0, long TypeId = 0)
+        {
+            return repo.GetList(e => (e.Reference == "" + textSearch && e.TypeId == TypeId), e => e.OrderBy(e => e.Id), Includes, Utility.Status.All).Select(e => e.Map<PreferenceModelView>()).ToList();
+        }
 
         public PreferenceModelView GetByKey(string textSearch, string reference, long type, int userId)
         {

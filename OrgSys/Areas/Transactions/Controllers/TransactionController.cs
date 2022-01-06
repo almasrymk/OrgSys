@@ -56,8 +56,8 @@ namespace OrgSys.Areas.Transaction.Controllers
                 ob.TransactionProductList = new List<TransactionProductModelView>();
             }
             ob.StoreName = new StoreService(User.GetSchema()).Get(ob.StoreId??0).Name;
-            ob.ToStoreName = new StoreService(User.GetSchema()).Get(ob.ToStoreId??0).Name;
-            ob.DealerName = new DealerService(User.GetSchema()).Get(ob.DealerId??0).Name;
+            ob.ToStoreName = new StoreService(User.GetSchema()).Get(ob.ToStoreId??0)?.Name;
+            ob.DealerName = new DealerService(User.GetSchema()).Get(ob.DealerId??0)?.Name;
             return ob;
         }
     }

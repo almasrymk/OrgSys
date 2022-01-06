@@ -2,6 +2,7 @@
 using Entity.Model;
 using Entity.ModelView;
 using AutoMapper.Configuration;
+using System.Linq;
 
 namespace Entity
 {
@@ -236,14 +237,16 @@ namespace Entity
             //
 
             // Financial
-            cfg.CreateMap<FinancialModelView, Financial>();
+            cfg.CreateMap<FinancialModelView, Financial>()
+            .ForMember(d => d.FinancialInvoices, o => o.MapFrom(s => s.FinancialInvoiceList));
             cfg.CreateMap<Financial, FinancialModelView>()
             .ForMember(d => d.DealerName, o => o.MapFrom(s => s.Dealer.Name))
             .ForMember(d => d.PaymentTypeName, o => o.MapFrom(s => s.PaymentType.Name))
             .ForMember(d => d.OutlayName, o => o.MapFrom(s => s.Outlay.Name))
             .ForMember(d => d.SafeName, o => o.MapFrom(s => s.Safe.Name))
             .ForMember(d => d.CurrencyName, o => o.MapFrom(s => s.Currency.Name))
-            .ForMember(d => d.FinancialInvoiceList, o => o.MapFrom(s => s.FinancialInvoices));
+            .ForMember(d => d.FinancialInvoiceList, o => o.MapFrom(s => s.FinancialInvoices))
+            .ForMember(d => d.FinancialInvoices, o => o.MapFrom(s => s.FinancialInvoices));
             //
 
             // Financial Type
@@ -271,7 +274,8 @@ namespace Entity
             //
 
             // Invoice
-            cfg.CreateMap<InvoiceModelView, Invoice>();
+            cfg.CreateMap<InvoiceModelView, Invoice>()
+            .ForMember(d => d.InvoiceProducts, o => o.MapFrom(s => s.InvoiceProductList));
             cfg.CreateMap<Invoice, InvoiceModelView>()
             .ForMember(d => d.DealerName, o => o.MapFrom(s => s.Dealer.Name))
             .ForMember(d => d.PaymentTypeName, o => o.MapFrom(s => s.PaymentType.Name))
@@ -283,12 +287,38 @@ namespace Entity
             .ForMember(d => d.InvoiceProductList, o => o.MapFrom(s => s.InvoiceProducts));
             //
 
+
             // Invoice Product
             cfg.CreateMap<InvoiceProductModelView, InvoiceProduct>();
             cfg.CreateMap<InvoiceProduct, InvoiceProductModelView>()
             .ForMember(d => d.ProductName, o => o.MapFrom(s => s.Product.Name))
             .ForMember(d => d.UnitName, o => o.MapFrom(s => s.Unit.Name))
             .ForMember(d => d.StoreName, o => o.MapFrom(s => s.Store.Name));
+            //
+
+            // Transaction Integration
+            cfg.CreateMap<TransactionModelView,InvoiceModelView >()
+            .ForMember(d => d.InvoiceProductList, o => o.MapFrom(s => s.TransactionProductList));
+            cfg.CreateMap<InvoiceModelView, TransactionModelView>()
+            .ForMember(d => d.TransactionProductList, o => o.MapFrom(s => s.InvoiceProductList));
+            cfg.CreateMap<TransactionProductModelView, InvoiceProductModelView>()
+            .ForMember(d => d.Price, o => o.MapFrom(s => s.Cost));
+            cfg.CreateMap<InvoiceProductModelView, TransactionProductModelView>()
+            .ForMember(d => d.Cost, o => o.MapFrom(s => s.Price));
+            //
+
+            // Financial Integration
+            cfg.CreateMap<FinancialModelView, InvoiceModelView>();
+            cfg.CreateMap<InvoiceModelView, FinancialModelView>();           
+            cfg.CreateMap<FinancialInvoiceModelView, InvoiceModelView>();            
+            cfg.CreateMap<InvoiceModelView, FinancialInvoiceModelView>()
+             .ForMember(d => d.InvoiceId, o => o.MapFrom(s => s.Id));
+            //
+
+            // Order Integration           
+            cfg.CreateMap<Order, Invoice>()
+            .ForMember(d => d.Id, o => o.MapFrom(s => s.InvoiceId))
+            .ForMember(d => d.InvoiceProducts, o => o.MapFrom(s => s.OrderProducts));
             //
 
             // Invoice Type
@@ -435,7 +465,8 @@ namespace Entity
             //
 
             // Transaction
-            cfg.CreateMap<TransactionModelView, Transaction>();
+            cfg.CreateMap<TransactionModelView, Transaction>()
+            .ForMember(d => d.TransactionProducts, o => o.MapFrom(s => s.TransactionProductList));
             cfg.CreateMap<Transaction, TransactionModelView>()
             .ForMember(d => d.DealerName, o => o.MapFrom(s => s.Dealer.Name))
             .ForMember(d => d.StoreName, o => o.MapFrom(s => s.Store.Name))
@@ -443,7 +474,8 @@ namespace Entity
             .ForMember(d => d.BranchName, o => o.MapFrom(s => s.Branch.Name))
             .ForMember(d => d.CreateUserName, o => o.MapFrom(s => s.CreateUser.Name))
             .ForMember(d => d.ModifyUserName, o => o.MapFrom(s => s.ModifyUser.Name))
-            .ForMember(d => d.TransactionProductList, o => o.MapFrom(s => s.TransactionProducts));
+            .ForMember(d => d.TransactionProductList, o => o.MapFrom(s => s.TransactionProducts))
+            .ForMember(d => d.TransactionProducts, o => o.MapFrom(s => s.TransactionProducts));
             //
 
             // Transaction Product

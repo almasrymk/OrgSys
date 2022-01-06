@@ -21,8 +21,7 @@ namespace OrgSys.Areas.Setting.Controllers
         {
             ViewBag.Resource = Resource;
             ViewBag.type = type;
-            var service = new PreferenceService(User.GetSchema());
-            var Service = service.GetAll(Resource, 0, type);
+            var Service = new PreferenceService(User.GetSchema()).GetAll(Resource, 0, type);
             if (Resource == "Invoice")
             {
                 List<SelectListItem> selectListItems = new List<SelectListItem>();

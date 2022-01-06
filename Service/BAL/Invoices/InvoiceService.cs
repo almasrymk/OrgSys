@@ -1,10 +1,9 @@
 ﻿using Entity;
-using Entity.Model;
-using Entity.ModelView;
-using Repository;
-using System.Collections.Generic;
 using System.Linq;
 using X.PagedList;
+using Entity.Model;
+using Entity.ModelView;
+using System.Collections.Generic;
 
 namespace Service
 {
@@ -24,7 +23,7 @@ namespace Service
 
             if (ob.Id > 0)
             {
-                var ids = ob.InvoiceProducts.Select(e => e.Id).ToList();
+                var ids = ob.InvoiceProductList.Select(e => e.Id).ToList();
                 if (ids == null) ids = new List<long>();
 
                 // Delete row from database
@@ -60,7 +59,8 @@ namespace Service
                 new IntegrationServics(_Schema).DeleteInvoice(id);
                 new TransactionService(_Schema).Delete(ob.TransactionId ?? 0);
                 var fi = new FinancialService(_Schema).GetByParent(id);
-                new FinancialService(_Schema).Delete(fi.Id);
+                if (fi != null)
+                    new FinancialService(_Schema).Delete(fi.Id);
                 return true;
             }
             return false;
@@ -77,7 +77,8 @@ namespace Service
                 {
                     new IntegrationServics(_Schema).DeleteInvoice(id);
                     var fi = new FinancialService(_Schema).GetByParent(id);
-                    new FinancialService(_Schema).Delete(fi.Id);
+                    if (fi != null)
+                        new FinancialService(_Schema).Delete(fi.Id);
                 }
 
                 return true;
@@ -90,6 +91,13 @@ namespace Service
             var ob = repo.Get(e => e.Id == Id);
             ob.Status = Utility.Status.Cancel;
             ob = repo.AddOrUpdate(ob);
+
+            if (ob.TransactionId > 0)
+            {
+                var ob1 = repoAll.transactionRepo.Get(e => e.Id == ob.TransactionId);
+                ob1.Status = Utility.Status.Cancel;
+                repoAll.transactionRepo.AddOrUpdate(ob1);
+            }
         }
 
         public void Redo(long Id)
@@ -97,6 +105,13 @@ namespace Service
             var ob = repo.Get(e => e.Id == Id);
             ob.Status = Utility.Status.All;
             ob = repo.AddOrUpdate(ob);
+
+            if (ob.TransactionId > 0)
+            {
+                var ob1 = repoAll.transactionRepo.Get(e => e.Id == ob.TransactionId);
+                ob1.Status = Utility.Status.All;
+                repoAll.transactionRepo.AddOrUpdate(ob1);
+            }
         }
 
         public List<InvoiceModelView> GetInvoicesNotReturn(string txtSearch = "", long TypeId = 0, long InvId = 0, int page = 1, int pageSize = 20)
@@ -115,6 +130,18 @@ namespace Service
             if (idsList == null)
                 idsList = new List<string>();
             return repo.GetList(e => !ids.Contains(e.Id.ToString()) && e.TypeId == TypeId && e.DealerId == dealerId && e.CurrencyId == currencyId && e.Credit > 0 && ("" + textSearch == "" || e.Code.Contains("" + textSearch) || e.Dealer.Name.Contains("" + textSearch)), e => e.OrderByDescending(e => e.Id), Includes, Utility.Status.New).Select(e => e.Map<InvoiceModelView>()).ToPagedList(page, pageSize);
+        }
+
+        public override InvoiceModelView Get(long Id)
+        {
+            var ob =  base.Get(Id);
+            if (ob == null)
+                ob = new InvoiceModelView() { InvoiceProductList = new List<InvoiceProductModelView>() };
+            foreach (var products in ob.InvoiceProductList)
+            {
+                products.UnitList = products.Product.ProductUnits.Select(e => e.Unit.Map<UnitModelView>()).ToList();
+            }
+            return ob;
         }
     }
 }

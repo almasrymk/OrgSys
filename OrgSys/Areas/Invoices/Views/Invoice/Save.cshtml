@@ -1281,14 +1281,12 @@
 
                 if (!Valid) {
                     $("#tbHeader").trigger("Click", SkipCallingAction = true)
-                    //alert("Sd");
                     window.location.replace("#checkStep2");
                 }
             }
 
             if (Valid == true) {
-                var data = CollectData();
-                alert(data.Date);
+                var data = CollectData();              
                 $.ajax({
                     type: 'POST',
                     url: "/Invoices/Invoice/Save",
@@ -1434,7 +1432,7 @@
                 BranchId: $('#BranchId').val(),
                 Cash: $('#Cash').val(),
                 Credit: $('#Credit').val(),
-                InvoiceProducts: list
+                InvoiceProductList: list
             };
             return data;
         }
