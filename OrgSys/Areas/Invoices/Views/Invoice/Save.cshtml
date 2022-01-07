@@ -34,11 +34,11 @@
             <div class="mb-3">
                 @if (Model.TypeId == 1 || Model.TypeId == 2)
                 {
-                    <h1>@Utility.Resource.Title_Designer.Invoice</h1>
+                    <h1><i class="@ViewBag.InvoicesIcon"></i> @Utility.Resource.Title_Designer.Invoice</h1>
                 }
                 else if (Model.TypeId == 3 || Model.TypeId == 4)
                 {
-                    <h1>@Utility.Resource.Title_Designer.Return</h1>
+                    <h1><i class="@ViewBag.InvoicesIcon"></i> @Utility.Resource.Title_Designer.Return</h1>
                 }
                 <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
                     <ol class="breadcrumb pt-0">
@@ -503,6 +503,11 @@
                                                     <div class="input-group-prepend Dropbtn">
                                                         <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
                                                     </div>
+                                                    <div class="input-group-append " style="border-top:none;border-bottom:none;border-right:none;border-left:none;">
+                                                        <button type="button" onclick="LoadProducts()" class="btn btn-primary SearchProduct" style="padding-left:20px;padding-right:20px;color:white;">
+                                                            <i class="iconsminds-repeat-2"> </i>Load Products
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                             @Html.ValidationMessageFor(model => model.ParentId, "", new { @class = "text-danger " })
@@ -611,6 +616,11 @@
     jQuery(function ($) {
         //$(".datepicker1").datepicker();
         //$(".datepicker1").datepicker("option", "dateFormat", "dd/mm/yy");
+
+        //$(".datepicker").datepicker({
+        //    inline: true
+        //});
+        //$(".datepicker").datepicker("option", "dateFormat", "dd/mm/yy");
 
         setTimeout(function () {
             $("html, body").scrollTop($("#query").offset().top - 300);
@@ -800,6 +810,15 @@
                     }
                     $("#ParentId").val(ui.item.id);
                     $("#errorParentId").remove();
+
+                    $('.btnDelete').each(function () {
+                        $(this).parent().parent().remove();
+                        if ($("#tbl").find('.ProductRow').length < 7) {
+                            AddNewRow();
+                        }
+                        ReIndex();
+                        ReCalc();                       
+                    });
                 },
                 focus: function (event, ui) {
                     if (ui.item.label === 'NoResultsFound') {
@@ -924,17 +943,7 @@
                     $(this).autocomplete("search", "");
                 return;
             });
-
-            $('.btnDelete').click(function () {
-                $(this).parent().parent().remove();
-                if ($("#tbl").find('.ProductRow').length < 7) {
-                    AddNewRow();
-                }
-                ReIndex();
-                ReCalc();
-                AutoSave();
-            });
-
+           
             $("#Discount").keyup(function () {
                 ReCalc();
                 AutoSave();
@@ -1402,7 +1411,7 @@
                 Code: $('#Code').val(),
                 CodeNumber: $('#CodeNumber').val(),
                 MaskText: $('#MaskText').val(),
-                Date: "1/1/2021",
+                Date: $('#Date').val(),
                 DealerId: $('#DealerId').val(),
                 CurrencyId: $('#CurrencyId').val(),
                 Rate: $('#Rate').val(),

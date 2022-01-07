@@ -307,15 +307,15 @@
 			{
 				<ul class="list-unstyled" data-link="Invoices" id="Invoices">
 					<li>
-						<a href="#" data-toggle="collapse" data-target="#collapseSales" aria-expanded="true"
-										   aria-controls="collapseSales" class="rotate-arrow-icon opacity-50">
+						<a href="#" data-toggle="collapse" data-target="#collapseSales" aria-expanded="false"
+										   aria-controls="collapseSales" class="rotate-arrow-icon opacity-50 @("Invoice".Contains(ViewContext.RouteData.Values["controller"].ToString()) && ("" + ViewBag.TypeId  == "1" || "" + ViewBag.TypeId  == "3") ? "collapsed" : "")">
 							<i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Sales</span>
 						</a>
-						<div id="collapseSales" class="collapse show">
+						<div id="collapseSales" class="collapse @("Invoice".Contains(ViewContext.RouteData.Values["controller"].ToString()) && ("" + ViewBag.TypeId  == "1" || "" + ViewBag.TypeId  == "3") ? "show" : "")">
 							<ul class="list-unstyled inner-level-menu">
 								@if (User.IsAllowed("SalesInvoices.All"))
 								{
-									<li>
+									<li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Invoice" && "" + ViewBag.TypeId  == "1" ? "active" : "")">
 										<a href="/Invoices/Invoice?TypeId=1">
 											<i class="simple-icon-basket-loaded"></i> <span class="d-inline-block">
 												@Utility.Resource.Title_Designer.Invoices
@@ -325,7 +325,7 @@
 								}
 								@if (User.IsAllowed("SalesReturns.All"))
 								{
-									<li>
+									<li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Invoice" && "" + ViewBag.TypeId  == "3" ? "active" : "")">
 										<a href="/Invoices/Invoice?TypeId=3">
 											<i class="simple-icon-action-undo"></i> <span class="d-inline-block">
 												@Utility.Resource.Title_Designer.Returns
@@ -374,14 +374,14 @@
 					</li>
 					<li>
 						<a href="#" data-toggle="collapse" data-target="#collapsePurchases" aria-expanded="false"
-					   aria-controls="collapsePurchases" class="rotate-arrow-icon opacity-50 collapsed">
+					   aria-controls="collapsePurchases" class="rotate-arrow-icon opacity-50 @("Invoice".Contains(ViewContext.RouteData.Values["controller"].ToString()) && ("" + ViewBag.TypeId  == "2" || "" + ViewBag.TypeId  == "4") ? "collapsed" : "")">
 							<i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Purchases</span>
 						</a>
-						<div id="collapsePurchases" class="collapse">
+						<div id="collapsePurchases" class="collapse @("Invoice".Contains(ViewContext.RouteData.Values["controller"].ToString()) && ("" + ViewBag.TypeId  == "2" || "" + ViewBag.TypeId  == "4") ? "show" : "")">
 							<ul class="list-unstyled inner-level-menu">
 								@if (User.IsAllowed("PurchasesInvoices.All"))
 								{
-									<li>
+									<li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Invoice" && "" + ViewBag.TypeId  == "2" ? "active" : "")">
 										<a href="/Invoices/Invoice?TypeId=2">
 											<i class="simple-icon-basket-loaded"></i> <span class="d-inline-block">
 												@Utility.Resource.Title_Designer.Invoices
@@ -391,7 +391,7 @@
 								}
 								@if (User.IsAllowed("PurchasesReturns.All"))
 								{
-									<li>
+									<li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Invoice" && "" + ViewBag.TypeId  == "4" ? "active" : "")">
 										<a href="/Invoices/Invoice?TypeId=4">
 											<i class="simple-icon-action-undo"></i> <span class="d-inline-block">
 												@Utility.Resource.Title_Designer.Returns
