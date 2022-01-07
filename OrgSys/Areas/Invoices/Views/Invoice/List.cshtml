@@ -183,7 +183,7 @@
                             </td>
                             @if (AllowEdit || AllowCancel || AllowDelete)
                             {
-                        <td class="w-15 @TextAlign2 align-middle">
+                        <td class="w-20 @TextAlign2 align-middle">
                             @if (Model[i].Status == Utility.Status.Cancel)
                             {
                                 <a href="/@ViewBag.area/@ViewBag.PageTitle/Redo?id=@Model[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.PageNumber"> <i class="simple-icon-action-redo"></i> </a>
@@ -214,7 +214,9 @@
                                 if (AllowDelete)
                                 {
                                     <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
-                                }                               
+                                }
+                                <span>&nbsp; | &nbsp;</span>
+                                <a href="/@ViewBag.area/@ViewBag.PageTitle/Print?id=@Model[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.PageNumber" target="_blank"> <i class="fa fa-print text-info"></i> </a>
                             }
                         </td>
                             }
@@ -311,7 +313,7 @@
                                     }
                                 }
                             </div>
-                            <div class="w-15 @TextAlign2">
+                            <div class="w-20 @TextAlign2">
                                 @if (Model[i].Status == Utility.Status.Cancel)
                                 {
                                     <a href="/@ViewBag.area/@ViewBag.PageTitle/Redo?id=@Model[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.PageNumber"> <i class="simple-icon-action-redo"></i> </a>
@@ -343,6 +345,9 @@
                                     {
                                         <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
                                     }
+
+                                    <span>&nbsp; | &nbsp;</span>
+                                    <a href="/@ViewBag.area/@ViewBag.PageTitle/Print?id=@Model[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.PageNumber" target="_blank"> <i class="fa fa-print text-info"></i> </a>
                                 }
                             </div>
                         </div>

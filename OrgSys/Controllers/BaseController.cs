@@ -268,7 +268,7 @@ namespace OrgSys.Controllers
             return model;
         }
 
-        public async Task<IActionResult> Print(long Id)
+        public async Task<IActionResult> Print(long Id , string ViewName)
         {
             //List<string> Css = new List<string>();
             //Css.Add("/css/main.css");
@@ -312,7 +312,7 @@ namespace OrgSys.Controllers
             //reviewer.Lookups = await GetLookups(reviewer);
 
             var ob = service.Get(Id);
-            var viewHtml = await Utility.General.RenderViewAsync<entity>(this, "InvoicePrint", ob);
+            var viewHtml = await Utility.General.RenderViewAsync<entity>(this, ViewName, ob);
             await Main(viewHtml, 0);
             var cd = new System.Net.Mime.ContentDisposition
             {
