@@ -5,11 +5,12 @@
 @using OrgSys
 @using Utility
 @{
+    var culture = CultureInfo.CurrentUICulture.Name;
     ViewData["Title_Designer"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var BorderAlign = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "border-top:none;border-bottom:none;border-left:none;" : "border-top:none;border-bottom:none;border-right:none;";
     var AllowPreference = false;
-
+    var formateDate = CultureInfo.CurrentUICulture.Name == "ar" ? "{0:yyyy/MM/dd}" : "{0:dd/MM/yyyy}";
     if (Model.TypeId == 1)
     {
         AllowPreference = User.IsAllowed("SalesInvoices.Preference");
@@ -400,10 +401,10 @@
                                     <div class="form-group col-md-4">
                                         <label>@Utility.Resource.Title_Designer.Date</label>
                                         <div id="divDate">
-                                            <div class="input-group">
+                                            <div class="input-group ">
                                                 <div class="input-group-prepend ">
                                                     <span class="input-group-text "><i class="simple-icon-calendar"></i></span>
-                                                </div> 
+                                                </div>
                                                 @Html.TextBoxFor(model => model.Date, new { @class = "form-control datepicker" })
                                             </div>
                                         </div>
@@ -580,7 +581,7 @@
 
 <div class="modal fade bd-example-modal-lg ProductBody" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg" id="SearchProductBody">
-       
+
     </div>
 </div>
 
@@ -613,19 +614,12 @@
     var AutoSave;
     var Repeated;
 
-    jQuery(function ($) {
-        //$(".datepicker1").datepicker();
-        //$(".datepicker1").datepicker("option", "dateFormat", "dd/mm/yy");
-
-        //$(".datepicker").datepicker({
-        //    inline: true
-        //});
-        //$(".datepicker").datepicker("option", "dateFormat", "dd/mm/yy");
-
+    jQuery(function ($) {        
         setTimeout(function () {
             $("html, body").scrollTop($("#query").offset().top - 300);
             $("#query").focus();
-            $(".sw-toolbar-bottom").css("display", "none");
+            $(".sw-toolbar-bottom").css("display", "none");           
+            $(".datepicker").val('@string.Format(formateDate, Model.Date)');
         }, 600);
 
         $('#btn').click(function () {
@@ -817,7 +811,7 @@
                             AddNewRow();
                         }
                         ReIndex();
-                        ReCalc();                       
+                        ReCalc();
                     });
                 },
                 focus: function (event, ui) {
@@ -943,7 +937,7 @@
                     $(this).autocomplete("search", "");
                 return;
             });
-           
+
             $("#Discount").keyup(function () {
                 ReCalc();
                 AutoSave();
@@ -1295,11 +1289,11 @@
             }
 
             if (Valid == true) {
-                var data = CollectData();              
+                var data = CollectData();
                 $.ajax({
                     type: 'POST',
                     url: "/Invoices/Invoice/Save",
-                    async: false,                  
+                    async: false,
                     data: { model: data },
                     success: function (res) {
                         window.location.replace(res.url);
@@ -1340,11 +1334,11 @@
                     setTimeout(function () {
 
                         var data = CollectData();
-                       
+
                         $.ajax({
                             type: 'POST',
                             url: "/Invoices/Invoice/Save",
-                            async: false,                          
+                            async: false,
                             data: { model: data },
                             success: function (res) {
                                 if (res != "Error") {
@@ -1402,7 +1396,7 @@
                     }
                 }
             });
-            
+
             var data = {
                 Id: $('#Id').val(),
                 TypeId: $('#TypeId').val(),

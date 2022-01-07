@@ -133,6 +133,7 @@ function loadStyle(href, callback) {
         }
 
         var lng = direction == "ltr" ? "en" : "ar";
+        window.localStorage.setItem('lang', lng);
         $.get("/Home/SetLanguage?culture=" + lng, function (data) { });  
     }
 

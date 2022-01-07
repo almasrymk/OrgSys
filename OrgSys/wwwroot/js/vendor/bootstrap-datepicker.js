@@ -1,4 +1,4 @@
-/*!
+﻿/*!
  * Datepicker for Bootstrap v1.8.0 (https://github.com/uxsolutions/bootstrap-datepicker)
  *
  * Licensed under the Apache License v2.0 (http://www.apache.org/licenses/LICENSE-2.0)
@@ -123,8 +123,8 @@
 		else {
 			this.picker.addClass('datepicker-dropdown dropdown-menu');
 		}
-
-		if (this.o.rtl){
+		
+		if (this.o.rtl) {			
 			this.picker.addClass('datepicker-rtl');
 		}
 
@@ -666,7 +666,7 @@
 				var itemZIndex = $(this).css('z-index');
 				if (itemZIndex !== 'auto' && Number(itemZIndex) !== 0) parentsZindex.push(Number(itemZIndex));
 			});
-			var zIndex = Math.max.apply(Math, parentsZindex) + this.o.zIndexOffset;
+			var zIndex = 1000000;//Math.max.apply(Math, parentsZindex) + this.o.zIndexOffset;
 			var offset = this.component ? this.component.parent().offset() : this.element.offset();
 			var height = this.component ? this.component.outerHeight(true) : this.element.outerHeight(false);
 			var width = this.component ? this.component.outerWidth(true) : this.element.outerWidth(false);
@@ -1671,13 +1671,13 @@
 
 	var defaults = $.fn.datepicker.defaults = {
 		assumeNearbyYear: false,
-		autoclose: false,
+		autoclose: true,
 		beforeShowDay: $.noop,
 		beforeShowMonth: $.noop,
 		beforeShowYear: $.noop,
 		beforeShowDecade: $.noop,
 		beforeShowCentury: $.noop,
-		calendarWeeks: false,
+		calendarWeeks: true,
 		clearBtn: false,
 		toggleActive: false,
 		daysOfWeekDisabled: [],
@@ -1685,20 +1685,20 @@
 		datesDisabled: [],
 		endDate: Infinity,
 		forceParse: true,
-		format: 'mm/dd/yyyy',
+		format: window.localStorage.getItem('lang') == "ar" ? 'yyyy/mm/dd' : 'dd/mm/yyyy',
 		keepEmptyValues: false,
 		keyboardNavigation: true,
-		language: 'en',
+		language: window.localStorage.getItem('lang'),
 		minViewMode: 0,
 		maxViewMode: 4,
 		multidate: false,
 		multidateSeparator: ',',
 		orientation: "auto",
-		rtl: false,
+		rtl: window.localStorage.getItem('lang') == 'ar',
 		startDate: -Infinity,
 		startView: 0,
-		todayBtn: false,
-		todayHighlight: false,
+		todayBtn: true,
+		todayHighlight: true,
 		updateViewDate: true,
 		weekStart: 0,
 		disableTouchKeyboard: false,
@@ -1730,7 +1730,16 @@
 			today: "Today",
 			clear: "Clear",
 			titleFormat: "MM yyyy"
-		}
+		}, ar: {
+			days: ["الأحد", "الإثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"],
+			daysShort: ["ح", "ن", "ث", "ر", "خ", "ج", "س"],
+			daysMin: ["ح", "ن", "ث", "ر", "خ", "ج", "س"],
+			months: ["يناير", "فبراير", "مارس", "ابريل", "مايو", "يونيو", "يوليو", "اغسطس", "سبتمبر", "اكتوبر", "نوفمبر", "ديسمبر"],
+			monthsShort: ["يناير", "فبراير", "مارس", "ابريل", "مايو", "يونيو", "يوليو", "اغسطس", "سبتمبر", "اكتوبر", "نوفمبر", "ديسمبر"],
+			today: "Today",
+			clear: "Clear",
+			titleFormat: "yyyy MM"
+		},
 	};
 
 	var DPGlobal = {

@@ -37,6 +37,7 @@ namespace OrgSys.Controllers
         [HttpGet]
         public virtual ActionResult Save(long id = 0, long ParentId = 0, long TypeId = 0, ResultStatus status = ResultStatus.nothing, string MsgError = "")
         {
+            ViewBag.TypeId = TypeId;
             var ob = service.Get(id);
             if (ob == null || ob.Id == 0)
             {
