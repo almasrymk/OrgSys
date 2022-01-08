@@ -1,4 +1,6 @@
 ﻿using Utility;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entity
 {
@@ -20,6 +22,9 @@ namespace Entity
 
         public string ImgPath { get; set; }      
 
-        public Status Status { get; set; }        
+        public Status Status { get; set; }  
+        
+        [NotMapped]
+        public List<string> CssFiles { get; set; } 
     }
 }

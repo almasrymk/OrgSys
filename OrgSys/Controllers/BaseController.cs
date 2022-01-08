@@ -10,6 +10,9 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Authorization;
+using System.Text;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting.Internal;
 
 namespace OrgSys.Controllers
 {
@@ -268,52 +271,48 @@ namespace OrgSys.Controllers
             return model;
         }
 
-        public async Task<IActionResult> Print(long Id , string ViewName)
+        public virtual async Task<IActionResult> Print(long Id , string ViewName)
         {
-            //List<string> Css = new List<string>();
-            //Css.Add("/css/main.css");
-            //Css.Add("/font/iconsmind-s/css/iconsminds.css");
-            //Css.Add("/font/simple-line-icons/css/simple-line-icons.css");
-            //Css.Add("/css/vendor/bootstrap.min.css");
-            //Css.Add("/css/vendor/bootstrap.rtl.only.min.css");
-            //Css.Add("/css/vendor/dataTables.bootstrap4.min.css");
-            //Css.Add("/css/vendor/datatables.responsive.bootstrap4.min.css");
-            //Css.Add("/css/vendor/select2.min.css");
-            //Css.Add("/css/vendor/select2-bootstrap.min.css");
-            //Css.Add("/css/vendor/perfect-scrollbar.css");
-            //Css.Add("/css/vendor/glide.core.min.css");
-            //Css.Add("/css/vendor/bootstrap-stars.css");
-            //Css.Add("/css/vendor/nouislider.min.css");
-            //Css.Add("/css/vendor/bootstrap-datepicker3.min.css");
-            //Css.Add("/css/vendor/component-custom-switch.min.css");
-            //Css.Add("/css/vendor/bootstrap-float-label.min.css");
-            //Css.Add("/css/vendor/smart_wizard.min.css");
-            //Css.Add("/css/vendor/bootstrap-tagsinput.css");
-            //Css.Add("/font-awesome/css/all.css");
-            //Css.Add("/lib/main.css");
-            //Css.Add("/alertify.js/alertify.core.css");
-            //Css.Add("/alertify.js/alertify.default.css");
-            //Css = Css.Select(c => {
-            //    string output = System.IO.File.ReadAllText("wwwroot" + c, Encoding.Default);
-            //    return output;
-            //}).ToList();
-            //reviewer.CssFiles = Css;
 
-            //if ("" + reviewer.ImageBase64String == "")
+            List<string> Css = new List<string>();
+            Css.Add("/css/vendor/bootstrap.min.css");
+            Css.Add("/css/vendor/bootstrap.rtl.only.min.css");
+            Css.Add("/css/vendor/fullcalendar.min.css");
+            Css.Add("/css/vendor/dataTables.bootstrap4.min.css");
+            Css.Add("/css/vendor/datatables.responsive.bootstrap4.min.css");
+            Css.Add("/css/vendor/select2.min.css");
+            Css.Add("/css/vendor/select2-bootstrap.min.css");
+            Css.Add("/css/vendor/perfect-scrollbar.css");
+            Css.Add("/css/vendor/glide.core.min.css");
+            Css.Add("/css/vendor/bootstrap-stars.css");
+            Css.Add("/css/vendor/nouislider.min.css");
+            Css.Add("/css/vendor/smart_wizard.min.css");
+            Css.Add("/css/vendor/component-custom-switch.min.css");
+            Css.Add("/css/main.css");
+            Css.Add("/css/jquery.bonsai.css");
+            Css.Add("/fontawesome-free-5.15.3-web/css/all.css");
+            Css.Add("/css/vendor/bootstrap-datepicker3.min.css");
+
+            Css = Css.Select(c =>
+            {
+                string output = System.IO.File.ReadAllText("wwwroot" + c, Encoding.Default);
+                return output;
+            }).ToList();
+
+            var ob = service.Get(Id);
+            ob.CssFiles = Css;
+            //if ("" + ob.ImageBase64String == "")
             //{
-            //    if (System.IO.File.Exists(_hostingEnvironment.ContentRootPath + "/wwwroot/img/ClientCard.png"))
+            //    if (System.IO.File.Exists(IHostingEnvironment.ContentRootPath + "/wwwroot/img/ClientCard.png"))
             //    {
-            //        var res = Convert.ToBase64String(System.IO.File.ReadAllBytes(_hostingEnvironment.ContentRootPath + "/wwwroot/img/ClientCard.png"));
+            //        var res = Convert.ToBase64String(System.IO.File.ReadAllBytes(HostingEnvironment.ContentRootPath + "/wwwroot/img/ClientCard.png"));
             //        if (res != "")
-            //            reviewer.ImageBase64String = "data:image/png;base64," + res;
+            //            ob.ImageBase64String = "data:image/png;base64," + res;
             //    }
             //}
 
-            //reviewer.Lookups = await GetLookups(reviewer);
-
-            var ob = service.Get(Id);
             var viewHtml = await Utility.General.RenderViewAsync<entity>(this, ViewName, ob);
-            await Main(viewHtml, 0);
+            await Main(viewHtml, 0 , 10);
             var cd = new System.Net.Mime.ContentDisposition
             {
                 //Open In New Tap Or Download
@@ -325,7 +324,7 @@ namespace OrgSys.Controllers
 
         }
 
-        async Task Main(string body, int id)
+        async Task Main(string body, int id , int count)
         {
             var browserFetcher = new PuppeteerSharp.BrowserFetcher();
             await browserFetcher.DownloadAsync();
@@ -340,15 +339,15 @@ namespace OrgSys.Controllers
             if (System.IO.File.Exists(path + id + ".pdf"))
             { System.IO.File.Delete(path + id + ".pdf"); }
             var baseURL = Request.Scheme + "://" + Request.Host;
-            var ImagePath = System.IO.File.ReadAllText("wwwroot/logos/logos22.svg");
+            //var ImagePath = System.IO.File.ReadAllText("wwwroot/logos/logos22.svg");
             await page.PdfAsync(path + id + ".pdf", new PuppeteerSharp.PdfOptions
             {
-                Format = PuppeteerSharp.Media.PaperFormat.A4,
+                Format = new PuppeteerSharp.Media.PaperFormat(decimal.Parse("2.24409"),  1 + (count/4)),// PuppeteerSharp.Media.PaperFormat.A4,
                 PrintBackground = false,
                 OmitBackground = true,
                 DisplayHeaderFooter = true,
-                FooterTemplate = "<div style=\"font-size: 8px; padding-top: 8px; text-align: center; width: 100%; \"><span class=\"pageNumber\"></span></div>",
-                HeaderTemplate = "<div style=\"text-align:center!important; margin-top:-25px; margin-left:50%; transform: translateX(-50%);\">" + ImagePath + "</div>",
+                //FooterTemplate = "<div style=\"font-size: 8px; padding-top: 8px; text-align: center; width: 100%; \"><span class=\"pageNumber\"></span></div>",
+               // HeaderTemplate = "<div style=\"text-align:center!important; margin-top:-25px; margin-left:50%; transform: translateX(-50%);\">" + ImagePath + "</div>",
                 MarginOptions = new PuppeteerSharp.Media.MarginOptions
                 {
                     Bottom = "90px",

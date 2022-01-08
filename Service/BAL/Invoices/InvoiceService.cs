@@ -143,5 +143,21 @@ namespace Service
             }
             return ob;
         }
+
+        public List<InvoiceProductModelView> GetProductInvoicesNotReturn(long Id)
+        {
+            var Invlist = repoAll.invoiceRepo.GetList(e => e.ParentId == Id, "InvoiceProducts").ToList();
+            List<InvoiceProduct> proList = new List<InvoiceProduct>();
+            foreach (var item in Invlist)
+                proList.AddRange(item.InvoiceProducts);
+            
+            var ob = repoAll.invoiceRepo.Get(e=>e.Id == Id  , "InvoiceProducts");
+            if (ob == null)
+                ob = new Invoice() { InvoiceProducts = new List<InvoiceProduct>() };
+            foreach (var item in ob.InvoiceProducts)
+                item.Quantity -= proList.Where(e => e.ProductId == item.ProductId)?.Sum(e => e.Quantity)??0;
+            
+            return ob.InvoiceProducts.Select(e=>e.Map<InvoiceProductModelView>()).ToList();
+        }
     }
 }

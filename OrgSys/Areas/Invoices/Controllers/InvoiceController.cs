@@ -27,8 +27,8 @@ namespace OrgSys.Areas.Invoices.Controllers
 
         public override void LoadViewBag(InvoiceModelView model)
         {
-            ViewBag.CurrencyId = new SelectList(new CurrencyService(User.GetSchema()).GetAll(model.ParentId, 0, 1, 20), "Id", "Name", model.CurrencyId);
-            ViewBag.PaymentTypeId = new SelectList(new PaymentTypeService(User.GetSchema()).GetAll(model.ParentId, 0, 1, 20), "Id", "Name", model.PaymentTypeId);
+            ViewBag.CurrencyId = new SelectList(new CurrencyService(User.GetSchema()).GetAll(0, 0, 1, 20), "Id", "Name", model.CurrencyId);
+            ViewBag.PaymentTypeId = new SelectList(new PaymentTypeService(User.GetSchema()).GetAll(0, 0, 1, 20), "Id", "Name", model.PaymentTypeId);
 
             List<SelectListItem> selectListItems = new List<SelectListItem>();
             selectListItems.Add(new SelectListItem { Value = "1", Text = Translate.GetTranslate("Amount") });
@@ -170,6 +170,25 @@ namespace OrgSys.Areas.Invoices.Controllers
         {
             new InvoiceService(User.GetSchema()).Redo(id);
             return Redirect("/Invoices/Invoice/Index?ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" + ResultStatus.success + "&MsgError=Success");
-        }        
+        }
+
+        public override Task<IActionResult> Print(long Id, string ViewName = "InvoicePrint")
+        {
+            return base.Print(Id, ViewName);
+        }
+
+        public JsonResult GetProductInvoice(int Id)
+        {
+           
+            var item = new InvoiceService(User.GetSchema()).GetProductInvoicesNotReturn(Id);
+            if (item == null)
+                item = new List<InvoiceProductModelView>();
+            var data = item.Select(e => new
+            {
+                productId = e.ProductId,
+                quantity = e.Quantity
+            }).ToList();
+            return Json(data);
+        }
     }
 }

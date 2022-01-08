@@ -505,7 +505,7 @@
                                                         <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
                                                     </div>
                                                     <div class="input-group-append " style="border-top:none;border-bottom:none;border-right:none;border-left:none;">
-                                                        <button type="button" onclick="LoadProducts()" class="btn btn-primary SearchProduct" style="padding-left:20px;padding-right:20px;color:white;">
+                                                        <button type="button" onclick="LoadProductInvoice()" class="btn btn-primary SearchProduct" style="padding-left:20px;padding-right:20px;color:white;">
                                                             <i class="iconsminds-repeat-2"> </i>Load Products
                                                         </button>
                                                     </div>
@@ -613,12 +613,13 @@
     var Save;
     var AutoSave;
     var Repeated;
+    var LoadProductInvoice;
 
-    jQuery(function ($) {        
+    jQuery(function ($) {
         setTimeout(function () {
             $("html, body").scrollTop($("#query").offset().top - 300);
             $("#query").focus();
-            $(".sw-toolbar-bottom").css("display", "none");           
+            $(".sw-toolbar-bottom").css("display", "none");
             $(".datepicker").val('@string.Format(formateDate, Model.Date)');
         }, 600);
 
@@ -805,14 +806,16 @@
                     $("#ParentId").val(ui.item.id);
                     $("#errorParentId").remove();
 
-                    $('.btnDelete').each(function () {
+                    $('.btnDelete').each(function () {                        
                         $(this).parent().parent().remove();
-                        if ($("#tbl").find('.ProductRow').length < 7) {
+                        if ($("#tbl").find('.ProductRow').length <= '@ViewBag.NumberLine') {
                             AddNewRow();
-                        }
-                        ReIndex();
-                        ReCalc();
+                        }                                                                
                     });
+
+                    ReIndex();
+                    ReCalc();
+                    AutoSave();
                 },
                 focus: function (event, ui) {
                     if (ui.item.label === 'NoResultsFound') {
@@ -937,6 +940,16 @@
                     $(this).autocomplete("search", "");
                 return;
             });
+            $('.btnDelete').click(function () {
+                $(this).parent().parent().remove();
+                if ($("#tbl").find('.ProductRow').length <= '@ViewBag.NumberLine') {
+                    AddNewRow();
+                }
+                ReIndex();
+                ReCalc();
+                AutoSave();
+            });
+
 
             $("#Discount").keyup(function () {
                 ReCalc();
@@ -1098,7 +1111,7 @@
             }
         }
 
-        AddNewProduct = function (itemId) {
+        AddNewProduct = function (itemId , quantity = 1) {
             var AllowRepeated = '@ViewBag.AllowRepeated';
             var RowRepeated = Repeated(itemId);
             if (AllowRepeated == 2 && RowRepeated != "") {
@@ -1152,7 +1165,7 @@
                         $UnitID.val(data.selectunitid).trigger("change", SkipCallingAction = true);
 
                         $row.find("#Price").val(price);
-                        $row.find("#Quantity").val(1);
+                        $row.find("#Quantity").val(quantity);
                         $row.find("#Total").val(price);
                         $row.find("#btnDelete").css("display", "block");
                         if ($row.hasClass("trNew") == true) {
@@ -1175,11 +1188,11 @@
             }
         }
 
-        ReIndex = function () {
-            $("#tbl").find('.ProductRow').not(".trNew").each(function (index) {
+        ReIndex = function () {            
+            $("#tbl").find('.ProductRow').not(".trNew").each(function (index) {                
                 $(this).find("#Index").empty();
                 $(this).find("#Index").append(index + 1);
-            });
+            });            
         }
 
         ReCalc = function () {
@@ -1450,6 +1463,34 @@
                 }
             });
             return Product;
+        }
+
+        LoadProductInvoice = function () {
+            $.ajax({
+                url: "/Invoices/Invoice/GetProductInvoice",
+                type: "Get",
+                data: { Id: $("#ParentId").val() },
+                success: function (list) {
+                    var trlist = [];
+                    $("#tbl > tbody > .ProductRow").each(function () {
+                        var currentRow = $(this);
+                        if (!currentRow.hasClass('trNew')) {
+                            trlist.push(currentRow);
+                        }
+                    });
+
+                    $(list).each(function (index, pro) {
+                        if (index < trlist.length)
+                            AddProduct(trlist[index], pro.productId, pro.puantity);
+                        else
+                            AddNewProduct(pro.productId, pro.puantity);
+                    });
+                    
+                    ReIndex();
+                    ReCalc();
+                    AutoSave();
+                }
+            });
         }
 
         RefreshSomeEventListener();

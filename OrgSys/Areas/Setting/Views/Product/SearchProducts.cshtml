@@ -47,9 +47,9 @@
 </div>
 
 <script>
-    ReIndex(1);
+    ReIndexPro(1);
 
-    function ReIndex(page) {
+    function ReIndexPro(page) {
         $("#tblSearch").find('tr').each(function (index) {
             $(this).find("#Index").empty();
             $(this).find("#Index").append(((page -1) * 7) + index);
@@ -71,7 +71,7 @@
                 success: function (result) {
                     $('#ProductList').empty();
                     $('#ProductList').html(result);
-                    ReIndex(_page);
+                    ReIndexPro(_page);
                 }
             });
         }, 300);

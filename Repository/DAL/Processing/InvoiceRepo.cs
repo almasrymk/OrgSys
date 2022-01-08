@@ -25,7 +25,7 @@ namespace Repository
             idInvs = invsProReurn.Select(e => e.Invoice.ParentId).ToList();
 
             // Get invoices is reurn
-            invs = db.Invoices.Where(e => idInvs.Contains(e.Id)).ToList();
+            invs = db.Invoices.Include("InvoiceProducts").Where(e => idInvs.Contains(e.Id)).ToList();
 
             // Compare quantity return
             foreach (var inv in invs)

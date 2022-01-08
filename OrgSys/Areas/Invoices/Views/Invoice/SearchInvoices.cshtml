@@ -44,9 +44,9 @@
 </div>
 
 <script>
-    ReIndex(1);
+    ReIndexInv(1);
 
-    function ReIndex(page) {
+    function ReIndexInv(page) {
         $("#tblSearch").find('tr').each(function (index) {
             $(this).find("#Index").empty();
             $(this).find("#Index").append(((page -1) * 7) + index);
@@ -68,7 +68,7 @@
                 success: function (result) {
                     $('#InvoiceList').empty();
                     $('#InvoiceList').html(result);
-                    ReIndex(_page);
+                    ReIndexInv(_page);
                 }
             });
         }, 300);
