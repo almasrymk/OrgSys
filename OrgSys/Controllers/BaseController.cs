@@ -13,6 +13,8 @@ using Microsoft.AspNetCore.Authorization;
 using System.Text;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting.Internal;
+using System.Net;
+using Newtonsoft.Json;
 
 namespace OrgSys.Controllers
 {
@@ -65,17 +67,17 @@ namespace OrgSys.Controllers
 
 
                 if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
-                    return Json(data: new { status = "success" , id = model.Id , url = "/" + AreaName + "/" + ControllerName + "?ParentId=" + model.ParentId + "&TypeId=" + model.TypeId + "&status=" + ResultStatus.success + "&MsgError=Success" });
+                    return Ok(new { status = "success" , id = model.Id , url = "/" + AreaName + "/" + ControllerName + "?ParentId=" + model.ParentId + "&TypeId=" + model.TypeId + "&status=" + ResultStatus.success + "&MsgError=Success" });
                 return Redirect("/" + AreaName + "/" + ControllerName + "?ParentId=" + model.ParentId + "&TypeId=" + model.TypeId + "&status=" + ResultStatus.success + "&MsgError=Success");
             }
             LoadViewBag(model);
             if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
-                return Json("Error");
+                return BadRequest("Error");
             return View(model);
         }
-
+       
         [HttpGet]
-        public virtual JsonResult Delete(long id)
+        public virtual Result Delete(long id)
         {
             var ob = service.Get(id);
             try
@@ -84,18 +86,18 @@ namespace OrgSys.Controllers
                 {
                     DeleteFile(ob.ImgPath);
                     service.Delete(id);
-                    return Json("Ok");
+                    return new Result();
                 }
             }
             catch (Exception ex)
             {
-                return Json(ex.Message);
+                return new Result(HttpStatusCode.InternalServerError, ex.Message);
             }
-            return Json("Error");
+            return new Result(HttpStatusCode.BadRequest, "Error");
         }
 
         [HttpPost]
-        public virtual JsonResult DeleteList(long[] ids , long ParentId = 0 , long TypeId = 0)
+        public virtual Result DeleteList(long[] ids , long ParentId = 0 , long TypeId = 0)
         {
             try
             {
@@ -105,14 +107,14 @@ namespace OrgSys.Controllers
                     var res = service.Delete(ids.ToList());
                     if (res)
                         DeleteFile(list.Select(e => e.ImgPath).ToList());
-                    return Json("Ok");
+                    return new Result();
                 }
             }
             catch (Exception ex)
             {
-                return Json(ex.Message);
+                return new Result(HttpStatusCode.InternalServerError, ex.Message);
             }
-            return Json("Error");
+            return new Result(HttpStatusCode.BadRequest, "Error");
         }
 
         public override void OnActionExecuting(ActionExecutingContext context)
@@ -146,13 +148,13 @@ namespace OrgSys.Controllers
         }
 
         [HttpPost]
-        public virtual JsonResult SaveFile(int id)
+        public virtual Result SaveFile(int id)
         {
             try
             {
                 var ob = service.Get(id);
                 if (ob == null || ob.Id == 0)
-                    return Json("error");
+                    return new Result(HttpStatusCode.BadRequest, "Error");
                 var LastPath = ob.ImgPath;
                 string NewPath = null;
                 string path = Path.GetFullPath("~/wwwroot").Replace("~\\", "");
@@ -184,11 +186,11 @@ namespace OrgSys.Controllers
 
                 ob.ImgPath = NewPath;
                 service.Save(ob);
-                return Json("Ok");
+                return new Result();
             }
             catch (Exception ex)
             {
-                return Json(ex.Message);
+                return new Result(HttpStatusCode.InternalServerError, ex.Message);
             }
         }
 

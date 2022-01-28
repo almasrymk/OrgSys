@@ -133,7 +133,7 @@ namespace OrgSys.Controllers
         {
             Response.Cookies.Append(
                 CookieRequestCultureProvider.DefaultCookieName,
-                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture("en", culture)),
+                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture("en-gb", culture)),
                 new Microsoft.AspNetCore.Http.CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) }
             );
 

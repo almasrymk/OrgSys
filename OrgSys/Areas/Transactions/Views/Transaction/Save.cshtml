@@ -1,9 +1,11 @@
 ﻿@model Entity.ModelView.TransactionModelView
 @using System.Globalization
 @{
+    var culture = CultureInfo.CurrentUICulture.Name;
     ViewData["Title_Designer"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var BorderAlign = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "border-top:none;border-bottom:none;border-left:none;" : "border-top:none;border-bottom:none;border-right:none;";
+    var formateDate = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "{0:yyyy/MM/dd}" : "{0:dd/MM/yyyy}";
 }
 
 <div id="HPage" class="container-fluid">
@@ -36,15 +38,13 @@
                         </li>
                         <li class="breadcrumb-item">
                             @Utility.Resource.Title_Designer.TransactionNotices
-                        </li>                       
+                        </li>
                     </ol>
                 </nav>
             </div>
         </div>
     </div>
-
     <div class="card">
-
         <div class="card pl-1 pr-1">
             <form action="Save" method="post" enctype="multipart/form-data" class="tooltip-label-right" novalidate>
                 <div class="d-md-block">
@@ -88,38 +88,127 @@
                                 </li>
                             </ul>
                         }
-                    <div class="card-body pt-4">
-                        @Html.HiddenFor(model => model.Id)
-                        @Html.HiddenFor(model => model.TypeId)
-                        @Html.HiddenFor(model => model.ParentId)
-                        @Html.HiddenFor(model => model.CreateUserId)
-                        @Html.HiddenFor(model => model.CreateDate)
-                        @Html.HiddenFor(model => model.ModifyUserId)
-                        @Html.HiddenFor(model => model.ModifyDate)
-                        @Html.HiddenFor(model => model.MaskText)
-                        @Html.HiddenFor(model => model.Hide)
-                        @Html.HiddenFor(model => model.ImgPath)
-                        @Html.HiddenFor(model => model.Status)
-                        @Html.HiddenFor(model => model.ShiftId)
-                        @Html.HiddenFor(model => model.BranchId)
-                        <div id="checkStep1">
-                            <div class="card">
-                                <table id="tbl" class="table table-hover ">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">#</th>
-                                            <th scope="col">@Utility.Resource.Title_Designer.Product</th>
-                                            <th scope="col">@Utility.Resource.Title_Designer.Unit</th>
-                                            <th scope="col">@Utility.Resource.Title_Designer.Cost</th>
-                                            <th scope="col">@Utility.Resource.Title_Designer.Quantity</th>
-                                            <th scope="col">@Utility.Resource.Title_Designer.Amount</th>
-                                            <th scope="col"></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach (var TransactionProduct in Model.TransactionProductList)
-                                        {
-                                            <tr class="product-empty ProductRow">
+                        <div class="card-body pt-4">
+                            @Html.HiddenFor(model => model.Id)
+                            @Html.HiddenFor(model => model.TypeId)
+                            @Html.HiddenFor(model => model.ParentId)
+                            @Html.HiddenFor(model => model.CreateUserId)
+                            @Html.HiddenFor(model => model.CreateDate)
+                            @Html.HiddenFor(model => model.ModifyUserId)
+                            @Html.HiddenFor(model => model.ModifyDate)
+                            @Html.HiddenFor(model => model.MaskText)
+                            @Html.HiddenFor(model => model.Hide)
+                            @Html.HiddenFor(model => model.ImgPath)
+                            @Html.HiddenFor(model => model.Status)
+                            @Html.HiddenFor(model => model.ShiftId)
+                            @Html.HiddenFor(model => model.BranchId)
+                            <div id="checkStep1">
+                                <div class="card">
+                                    <table id="tbl" class="table table-hover ">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">@Utility.Resource.Title_Designer.Product</th>
+                                                <th scope="col">@Utility.Resource.Title_Designer.Unit</th>
+                                                <th scope="col">@Utility.Resource.Title_Designer.Cost</th>
+                                                <th scope="col">@Utility.Resource.Title_Designer.Quantity</th>
+                                                <th scope="col">@Utility.Resource.Title_Designer.Amount</th>
+                                                <th scope="col"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var TransactionProduct in Model.TransactionProductList)
+                                            {
+                                                <tr class="product-empty ProductRow">
+                                                    <td class="text-center align-middle" style="width:35px;padding:0px;">
+                                                        <span id="Index">  </span>
+                                                    </td>
+                                                    <td class="input-group typeahead-container" style="min-width:120px;padding:0px;">
+                                                        <div class="input-group typeahead-container DropAutoComplete">
+                                                            <div class="input-group-append " style="border:none;">
+                                                                <button id="SearchProduct" type="button" class="btn btn-primary SearchProduct text-center align-middle" data-toggle="modal" data-target=".bd-example-modal-lg" style="width:30px;padding:0px;color:white;">
+                                                                    <i class="simple-icon-magnifier"></i>
+                                                                </button>
+                                                            </div>
+                                                            <input type="text" class="form-control search-box Droptxt" name="query" id="query"
+                                                                   autocomplete="off" style="@BorderAlign" value="@TransactionProduct.ProductName">
+                                                            <input type="hidden" id="ProductId" name="ProductId" class="ProductId" value="@TransactionProduct.ProductId" />
+                                                            <div class="text-center align-middle">
+                                                                <i id="RepeatedDanger" class="badge badge-danger mb-1 text-center align-middle" style="width: 60px;  height: 25px; display: none; margin: 6px;">@Utility.Resource.Title_Designer.Repeated</i>
+                                                                <i id="RepeatedWarning" class="badge badge-warning mb-1 text-center align-middle" style="width: 60px;  height: 25px; display: none; margin: 6px; ">@Utility.Resource.Title_Designer.Repeated</i>
+                                                                <i id="RepeatedPrimary" class="badge badge-primary mb-1 text-center align-middle" style="width: 60px; height: 25px; display: none; margin: 6px; ">@Utility.Resource.Title_Designer.Repeated</i>
+                                                            </div>
+                                                            <div class="input-group-prepend Dropbtn2  ">
+                                                                <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td style="width:150px;padding:0px;">
+                                                        @Html.DropDownList("UnitId", new SelectList(TransactionProduct.UnitList, "Id", "Name", TransactionProduct.UnitId), null, new { @class = "form-control UnitId", @style = BorderAlign })
+                                                    </td>
+                                                    <td style="width:100px;padding:0px;">
+                                                        <input type="text" id="Cost" name="Cost" class="form-control Cost" value="@TransactionProduct.Cost" style="border-top:none;border-bottom:none;border-right:none;" placeholder="0.0" autocomplete="off" />
+                                                    </td>
+                                                    <td style="width:100px;padding:0px;">
+                                                        <input type="text" id="Quantity" name="Quantity" class="form-control Quantity" value="@TransactionProduct.Quantity" style="@BorderAlign" placeholder="0.0" autocomplete="off" />
+                                                    </td>
+                                                    <td style="width:100px;padding:0px;">
+                                                        <input type="text" id="Amount" name="Amount" class="form-control Amount" value="@TransactionProduct.Total" readonly style="border-top:none;border-bottom:none;background-color:transparent;" placeholder="0.0" />
+                                                    </td>
+                                                    <td style="width:100px;padding:0px;text-align:center;vertical-align:middle;">
+                                                        <a id="btnDelete" class="btnDelete" href="javascript:;" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete</a>
+                                                    </td>
+                                                </tr>
+                                            }
+                                            @if (Model.TransactionProductList == null || (Model.TransactionProductList.Count < int.Parse("0" + ViewBag.NumberLine) && int.Parse("0" + ViewBag.NumberLine) > 0))
+                                            {
+
+                                                @for (int i = 0, index = 1; i < int.Parse("0" + ViewBag.NumberLine) - Model.TransactionProductList.Count; i++, index++)
+                                                {
+                                                    <tr class="product-empty ProductRow">
+                                                        <td style="width:35px;padding:0px;text-align:center;vertical-align:middle;">
+                                                            <span id="Index">  </span>
+                                                        </td>
+                                                        <td class="input-group typeahead-container" style="min-width:120px;padding:0px;">
+                                                            <div class="input-group typeahead-container DropAutoComplete">
+                                                                <div class="input-group-append " style="border:none;">
+                                                                    <button id="SearchProduct" type="button" class="btn btn-primary SearchProduct text-center align-middle" data-toggle="modal" data-target=".bd-example-modal-lg" style="width:30px;padding:0px;color:white;">
+                                                                        <i class="simple-icon-magnifier"></i>
+                                                                    </button>
+                                                                </div>
+                                                                <input type="text" class="form-control search-box Droptxt" name="query" id="query"
+                                                                       autocomplete="off" style="@BorderAlign">
+                                                                <input type="hidden" id="ProductId" name="ProductId" class="ProductId" />
+                                                                <div class="text-center align-middle">
+                                                                    <i id="RepeatedDanger" class="badge badge-danger mb-1 text-center align-middle" style="width: 60px;  height: 25px; display: none; margin: 6px;">@Utility.Resource.Title_Designer.Repeated</i>
+                                                                    <i id="RepeatedWarning" class="badge badge-warning mb-1 text-center align-middle" style="width: 60px;  height: 25px; display: none; margin: 6px; ">@Utility.Resource.Title_Designer.Repeated</i>
+                                                                    <i id="RepeatedPrimary" class="badge badge-primary mb-1 text-center align-middle" style="width: 60px; height: 25px; display: none; margin: 6px; ">@Utility.Resource.Title_Designer.Repeated</i>
+                                                                </div>
+                                                                <div class="input-group-prepend Dropbtn2  ">
+                                                                    <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td style="width:150px;padding:0px;">
+                                                            <select type="text" id="UnitId" name="UnitId" class="form-control UnitId" style="@BorderAlign"></select>
+                                                        </td>
+                                                        <td style="width:100px;padding:0px;">
+                                                            <input type="text" id="Cost" name="Cost" class="form-control Cost" style="@BorderAlign" placeholder="0.0" autocomplete="off" />
+                                                        </td>
+                                                        <td style="width:100px;padding:0px;">
+                                                            <input type="text" id="Quantity" name="Quantity" class="form-control Quantity" style="@BorderAlign" placeholder="0.0" autocomplete="off" />
+                                                        </td>
+                                                        <td style="width:100px;padding:0px;">
+                                                            <input type="text" id="Amount" name="Amount" class="form-control Amount" readonly style="border-top:none;border-bottom:none;background-color:transparent;" placeholder="0.0" />
+                                                        </td>
+                                                        <td class="text-center align-middle" style="width:100px;padding:0px;">
+                                                            <a id="btnDelete" class="btnDelete" href="javascript:;" data-toggle="modal" data-target="#MsgModelId" style="display:none"><i class="simple-icon-trash"></i> </a>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            }
+
+                                            <tr class="product-empty ProductRow trNew">
                                                 <td class="text-center align-middle" style="width:35px;padding:0px;">
                                                     <span id="Index">  </span>
                                                 </td>
@@ -131,245 +220,155 @@
                                                             </button>
                                                         </div>
                                                         <input type="text" class="form-control search-box Droptxt" name="query" id="query"
-                                                               autocomplete="off" style="@BorderAlign" value="@TransactionProduct.ProductName">
-                                                        <input type="hidden" id="ProductId" name="ProductId" class="ProductId" value="@TransactionProduct.ProductId" />
+                                                               autocomplete="off" style="@BorderAlign">
+                                                        <input type="hidden" id="ProductId" name="ProductId" class="ProductId" />
                                                         <div class="text-center align-middle">
-                                                            <i id="RepeatedDanger" class="badge badge-danger mb-1 text-center align-middle" style="width: 60px;  height: 25px; display: none; margin: 6px;">@Utility.Resource.Title_Designer.Repeated</i>
-                                                            <i id="RepeatedWarning" class="badge badge-warning mb-1 text-center align-middle" style="width: 60px;  height: 25px; display: none; margin: 6px; ">@Utility.Resource.Title_Designer.Repeated</i>
-                                                            <i id="RepeatedPrimary" class="badge badge-primary mb-1 text-center align-middle" style="width: 60px; height: 25px; display: none; margin: 6px; ">@Utility.Resource.Title_Designer.Repeated</i>
+                                                            <i id="RepeatedDanger" class="badge badge-danger mb-1 text-center align-middle" style="width: 60px; height: 25px; display: none; margin: 6px;">@Utility.Resource.Title_Designer.Repeated</i>
+                                                            <i id="RepeatedWarning" class="badge badge-warning mb-1 text-center align-middle" style="width: 60px; height: 25px; display: none; margin: 6px; ">@Utility.Resource.Title_Designer.Repeated</i>
+                                                            <i id="RepeatedPrimary" class="badge badge-primary mb-1 text-center align-middle" style="width: 60px;  height: 25px; display: none; margin: 6px; ">@Utility.Resource.Title_Designer.Repeated</i>
                                                         </div>
                                                         <div class="input-group-prepend Dropbtn2  ">
                                                             <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td style="width:150px;padding:0px;">
-                                                    @Html.DropDownList("UnitId", new SelectList(TransactionProduct.UnitList, "Id", "Name", TransactionProduct.UnitId), null, new { @class = "form-control UnitId", @style = BorderAlign })
+                                                <td class="text-center align-middle" style="width:150px;padding:0px;">
+                                                    <select type="text" id="UnitId" name="UnitId" class="form-control UnitId" style="@BorderAlign"></select>
                                                 </td>
-                                                <td style="width:100px;padding:0px;">
-                                                    <input type="text" id="Cost" name="Cost" class="form-control Cost" value="@TransactionProduct.Cost" style="border-top:none;border-bottom:none;border-right:none;" placeholder="0.0" autocomplete="off" />
+                                                <td class="text-center align-middle" style="width:100px;padding:0px;">
+                                                    <input type="text" id="Cost" name="Cost" class="form-control Cost" style="@BorderAlign" placeholder="0.0" autocomplete="off" />
                                                 </td>
-                                                <td style="width:100px;padding:0px;">
-                                                    <input type="text" id="Quantity" name="Quantity" class="form-control Quantity" value="@TransactionProduct.Quantity" style="@BorderAlign" placeholder="0.0" autocomplete="off" />
+                                                <td class="text-center align-middle" style="width:100px;padding:0px;">
+                                                    <input type="text" id="Quantity" name="Quantity" class="form-control Quantity" style="@BorderAlign" placeholder="0.0" autocomplete="off" />
                                                 </td>
-                                                <td style="width:100px;padding:0px;">
-                                                    <input type="text" id="Amount" name="Amount" class="form-control Amount" value="@TransactionProduct.Total" readonly style="border-top:none;border-bottom:none;background-color:transparent;" placeholder="0.0" />
+                                                <td class="text-center align-middle" style="width:100px;padding:0px;">
+                                                    <input type="text" id="Amount" name="Amount" readonly class="form-control Amount" style="border-top:none;border-bottom:none;background-color:transparent;" placeholder="0.0" />
                                                 </td>
-                                                <td style="width:100px;padding:0px;text-align:center;vertical-align:middle;">
-                                                    <a id="btnDelete" class="btnDelete" href="javascript:;" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete</a>
+                                                <td class="text-center align-middle" style="width:100px;padding:0px;">
+                                                    <a id="btnDelete" class="btnDelete" href="javascript:;" data-toggle="modal" data-target="#MsgModelId" style="display:none"><i class="simple-icon-trash"></i> </a>
                                                 </td>
                                             </tr>
-                                        }
-                                        @if (Model.TransactionProductList == null || (Model.TransactionProductList.Count < int.Parse("0" + ViewBag.NumberLine) && int.Parse("0" + ViewBag.NumberLine) > 0))
-                                        {
 
-                                            @for (int i = 0, index = 1; i < int.Parse("0" + ViewBag.NumberLine) - Model.TransactionProducts.Count; i++, index++)
+                                            <tr class="tblFooter" style="margin-top:5px !important;">
+                                                <td style="min-width:100px;padding:0px;" colspan="4">
+                                                </td>
+                                                <td style="width:100px;padding:0px;text-align:center;vertical-align:middle;">
+                                                    @Utility.Resource.Title_Designer.Total
+                                                </td>
+                                                <td style="width:100px;padding:0px;text-align:center;vertical-align:middle;">
+                                                    @Html.TextBoxFor(model => model.Total, new { @id = "AllTotal", @class = "form-control", @style = @BorderAlign, @placeholder = "0.0", @readonly = "true" })
+                                                </td>
+                                                <td style="width:100px;padding:0px;">
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div id="checkStep2">
+                                <div class="form-row">
+                                    @Html.HiddenFor(model => model.CodeNumber)
+                                    <div class="form-group col-md-4">
+                                        <label>@Utility.Resource.Title_Designer.Code</label>
+                                        <div id="divCode">
+                                            @if (ViewBag.TypeSerial == 1)
                                             {
-                                                <tr class="product-empty ProductRow">
-                                                    <td style="width:35px;padding:0px;text-align:center;vertical-align:middle;">
-                                                        <span id="Index">  </span>
-                                                    </td>
-                                                    <td class="input-group typeahead-container" style="min-width:100px;padding:0px;">
-                                                        <div class="input-group typeahead-container DropAutoComplete">
-                                                            <div class="input-group-append " style="border-top:none;border-bottom:none;border-right:none;border-left:none;">
-                                                                <button id="SearchProduct" type="button" class="btn btn-primary SearchProduct" data-toggle="modal" data-target=".bd-example-modal-lg" style="width:30px;padding:0px;color:white;">
-                                                                    <i class="simple-icon-magnifier"></i>
-                                                                </button>
-                                                            </div>
-                                                            <input type="text" class="form-control search-box Droptxt" name="query" id="query"
-                                                                   placeholder="@Utility.Resource.Message_Designer.StartSearch"
-                                                                   autocomplete="off" style="@BorderAlign">
-                                                            <input type="hidden" id="ProductId" name="ProductId" class="ProductId" />
-                                                            <div style="text-align: center; vertical-align: middle;">
-                                                                <i id="RepeatedDanger" class="badge badge-danger mb-1" style="width: 60px; text-align: center; vertical-align: middle; height: 25px; display: none; margin: 6px;">Repeated</i>
-                                                                <i id="RepeatedWarning" class="badge badge-warning mb-1" style="width: 60px; text-align: center; vertical-align: middle; height: 25px; display: none; margin: 6px; ">Repeated</i>
-                                                                <i id="RepeatedPrimary" class="badge badge-primary mb-1" style="width: 60px; text-align: center; vertical-align: middle; height: 25px; display: none; margin: 6px; ">Repeated</i>
-                                                            </div>
-                                                            <div class="input-group-prepend Dropbtn2  ">
-                                                                <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td style="width:150px;padding:0px;">
-                                                        <select type="text" id="UnitId" name="UnitId" class="form-control UnitId" style="@BorderAlign"></select>
-                                                    </td>
-                                                    <td style="width:100px;padding:0px;">
-                                                        <input type="text" id="Cost" name="Cost" class="form-control Cost" style="@BorderAlign" placeholder="0.0" autocomplete="off" />
-                                                    </td>
-                                                    <td style="width:100px;padding:0px;">
-                                                        <input type="text" id="Quantity" name="Quantity" class="form-control Quantity" style="@BorderAlign" placeholder="0.0" autocomplete="off" />
-                                                    </td>
-                                                    <td style="width:100px;padding:0px;">
-                                                        <input type="text" id="Amount" name="Amount" class="form-control Amount" readonly style="border-top:none;border-bottom:none;background-color:transparent;" placeholder="0.0" />
-                                                    </td>
-                                                    <td class="text-center align-middle" style="width:100px;padding:0px;">
-                                                        <a id="btnDelete" class="btnDelete" href="javascript:;" data-toggle="modal" data-target="#MsgModelId" style="display:none"><i class="simple-icon-trash"></i> </a>
-                                                    </td>
-                                                </tr>
+                                                @Html.TextBoxFor(model => model.Code, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Code })
                                             }
-                                        }
-
-                                        <tr class="product-empty ProductRow trNew">
-                                            <td class="text-center align-middle" style="width:35px;padding:0px;">
-                                                <span id="Index">  </span>
-                                            </td>
-                                            <td class="input-group typeahead-container" style="min-width:120px;padding:0px;">
-                                                <div class="input-group typeahead-container DropAutoComplete">
-                                                    <div class="input-group-append " style="border:none;">
-                                                        <button id="SearchProduct" type="button" class="btn btn-primary SearchProduct text-center align-middle" data-toggle="modal" data-target=".bd-example-modal-lg" style="width:30px;padding:0px;color:white;">
-                                                            <i class="simple-icon-magnifier"></i>
-                                                        </button>
-                                                    </div>
-                                                    <input type="text" class="form-control search-box Droptxt" name="query" id="query"
-                                                           autocomplete="off" style="@BorderAlign">
-                                                    <input type="hidden" id="ProductId" name="ProductId" class="ProductId" />
-                                                    <div class="text-center align-middle">
-                                                        <i id="RepeatedDanger" class="badge badge-danger mb-1 text-center align-middle" style="width: 60px; height: 25px; display: none; margin: 6px;">@Utility.Resource.Title_Designer.Repeated</i>
-                                                        <i id="RepeatedWarning" class="badge badge-warning mb-1 text-center align-middle" style="width: 60px; height: 25px; display: none; margin: 6px; ">@Utility.Resource.Title_Designer.Repeated</i>
-                                                        <i id="RepeatedPrimary" class="badge badge-primary mb-1 text-center align-middle" style="width: 60px;  height: 25px; display: none; margin: 6px; ">@Utility.Resource.Title_Designer.Repeated</i>
-                                                    </div>
-                                                    <div class="input-group-prepend Dropbtn2  ">
-                                                        <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="text-center align-middle" style="width:150px;padding:0px;">
-                                                <select type="text" id="UnitId" name="UnitId" class="form-control UnitId" style="@BorderAlign"></select>
-                                            </td>
-                                            <td class="text-center align-middle" style="width:100px;padding:0px;">
-                                                <input type="text" id="Cost" name="Cost" class="form-control Cost" style="@BorderAlign" placeholder="0.0" autocomplete="off" />
-                                            </td>
-                                            <td class="text-center align-middle" style="width:100px;padding:0px;">
-                                                <input type="text" id="Quantity" name="Quantity" class="form-control Quantity" style="@BorderAlign" placeholder="0.0" autocomplete="off" />
-                                            </td>
-                                            <td class="text-center align-middle" style="width:100px;padding:0px;">
-                                                <input type="text" id="Amount" name="Amount" readonly class="form-control Amount" style="border-top:none;border-bottom:none;background-color:transparent;" placeholder="0.0" />
-                                            </td>
-                                            <td class="text-center align-middle" style="width:100px;padding:0px;">
-                                                <a id="btnDelete" class="btnDelete" href="javascript:;" data-toggle="modal" data-target="#MsgModelId" style="display:none"><i class="simple-icon-trash"></i> </a>
-                                            </td>
-                                        </tr>
-
-                                        <tr class="tblFooter" style="margin-top:5px !important;">
-                                            <td style="min-width:100px;padding:0px;" colspan="4">
-                                            </td>
-                                            <td style="width:100px;padding:0px;text-align:center;vertical-align:middle;">
-                                                @Utility.Resource.Title_Designer.Total
-                                            </td>
-                                            <td style="width:100px;padding:0px;text-align:center;vertical-align:middle;">
-                                                @Html.TextBoxFor(model => model.Total, new { @id = "AllTotal", @class = "form-control", @style = @BorderAlign, @placeholder = "0.0", @readonly = "true" })
-                                            </td>
-                                            <td style="width:100px;padding:0px;">
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div id="checkStep2">
-                            <div class="form-row">
-                                @Html.HiddenFor(model => model.CodeNumber)
-                                <div class="form-group col-md-4">
-                                    <label>@Utility.Resource.Title_Designer.Code</label>
-                                    <div id="divCode">
-                                        @if (ViewBag.TypeSerial == 1)
-                                        {
-                                            @Html.TextBoxFor(model => model.Code, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Code })
-                                        }
-                                        else
-                                        {
-                                            @Html.TextBoxFor(model => model.Code, new { @class = "form-control", @readonly = "true", @style = @BorderAlign + "background-color:transparent", @placeholder = @Utility.Resource.Title_Designer.Code })
-                                        }
-                                    </div>
-                                    @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger " })
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <label>@Utility.Resource.Title_Designer.Date</label>
-                                    <div id="divDate">
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><i class="simple-icon-calendar"></i></span>
-                                            </div>
-                                            @Html.TextBoxFor(model => model.Date, new { @class = "form-control datepicker" })
+                                            else
+                                            {
+                                                @Html.TextBoxFor(model => model.Code, new { @class = "form-control", @readonly = "true", @style = @BorderAlign + "background-color:transparent", @placeholder = @Utility.Resource.Title_Designer.Code })
+                                            }
                                         </div>
+                                        @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger " })
                                     </div>
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <label>@Utility.Resource.Title_Designer.Store</label>
-                                    <div id="divStoreId">
-                                        <div class="input-group DropAutoComplete">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><i class="iconsminds-financial"></i></span>
-                                            </div>
-                                            <input type="text" class="form-control Droptxt" id="txtStoreId" value="@Model.StoreName" autocomplete="off" />
-                                            @Html.HiddenFor(model => model.StoreId)
-                                            <div class="input-group-prepend Dropbtn">
-                                                <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    @Html.ValidationMessageFor(model => model.StoreId, "", new { @class = "text-danger " })
-                                </div>
-                            </div>
-
-                            <div class="form-row">
-
-                                @if (Model.TypeId == 1 || Model.TypeId == 2)
-                                {
                                     <div class="form-group col-md-4">
-                                        <label>@Utility.Resource.Title_Designer.Dealer</label>
-                                        <div id="divDealerId">
-                                            <div class="input-group DropAutoComplete">
+                                        <label>@Utility.Resource.Title_Designer.Date</label>
+                                        <div id="divDate">
+                                            <div class="input-group">
                                                 <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="simple-icon-people"></i></span>
+                                                    <span class="input-group-text"><i class="simple-icon-calendar"></i></span>
                                                 </div>
-                                                <input type="text" class="form-control Droptxt" id="txtDealerId" value="@Model.DealerName" autocomplete="off" />
-                                                @Html.HiddenFor(model => model.DealerId)
-                                                <div class="input-group-prepend Dropbtn">
-                                                    <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
-                                                </div>
+                                                @Html.TextBoxFor(model => model.Date, new { @class = "form-control datepicker" })
                                             </div>
                                         </div>
-                                        @Html.ValidationMessageFor(model => model.DealerId, "", new { @class = "text-danger " })
                                     </div>
-                                }
-                                @if (Model.TypeId == 3)
-                                {
                                     <div class="form-group col-md-4">
-                                        @Utility.Resource.Title_Designer.ToStore
-                                        <div id="divToStoreId">
+                                        <label>@Utility.Resource.Title_Designer.Store</label>
+                                        <div id="divStoreId">
                                             <div class="input-group DropAutoComplete">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="iconsminds-financial"></i></span>
                                                 </div>
-                                                <input type="text" class="form-control Droptxt" id="txtToStoreId" value="@Model.ToStoreName" autocomplete="off" />
-                                                @Html.HiddenFor(model => model.ToStoreId)
+                                                <input type="text" class="form-control Droptxt" id="txtStoreId" value="@Model.StoreName" autocomplete="off" />
+                                                @Html.HiddenFor(model => model.StoreId)
                                                 <div class="input-group-prepend Dropbtn">
                                                     <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
                                                 </div>
                                             </div>
                                         </div>
-                                        @Html.ValidationMessageFor(model => model.ToStoreId, "", new { @class = "text-danger " })
+                                        @Html.ValidationMessageFor(model => model.StoreId, "", new { @class = "text-danger " })
                                     </div>
-                                }
-                            </div>
+                                </div>
 
-                            <div class="form-row">
-                                <div class="form-group col-md-12">
-                                    <label>@Utility.Resource.Title_Designer.Notes</label>
-                                    <div id="divNotes">
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><i class="simple-icon-notebook"></i></span>
+                                <div class="form-row">
+
+                                    @if (Model.TypeId == 1 || Model.TypeId == 2)
+                                    {
+                                        <div class="form-group col-md-4">
+                                            <label>@Utility.Resource.Title_Designer.Dealer</label>
+                                            <div id="divDealerId">
+                                                <div class="input-group DropAutoComplete">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i class="simple-icon-people"></i></span>
+                                                    </div>
+                                                    <input type="text" class="form-control Droptxt" id="txtDealerId" value="@Model.DealerName" autocomplete="off" />
+                                                    @Html.HiddenFor(model => model.DealerId)
+                                                    <div class="input-group-prepend Dropbtn">
+                                                        <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            @Html.TextBoxFor(model => model.Notes, new { @class = "form-control", @placeholder = Utility.Resource.Title_Designer.Notes })
+                                            @Html.ValidationMessageFor(model => model.DealerId, "", new { @class = "text-danger " })
                                         </div>
+                                    }
+                                    @if (Model.TypeId == 3)
+                                    {
+                                        <div class="form-group col-md-4">
+                                            @Utility.Resource.Title_Designer.ToStore
+                                            <div id="divToStoreId">
+                                                <div class="input-group DropAutoComplete">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i class="iconsminds-financial"></i></span>
+                                                    </div>
+                                                    <input type="text" class="form-control Droptxt" id="txtToStoreId" value="@Model.ToStoreName" autocomplete="off" />
+                                                    @Html.HiddenFor(model => model.ToStoreId)
+                                                    <div class="input-group-prepend Dropbtn">
+                                                        <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @Html.ValidationMessageFor(model => model.ToStoreId, "", new { @class = "text-danger " })
+                                        </div>
+                                    }
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        <label>@Utility.Resource.Title_Designer.Notes</label>
+                                        <div id="divNotes">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="simple-icon-notebook"></i></span>
+                                                </div>
+                                                @Html.TextBoxFor(model => model.Notes, new { @class = "form-control", @placeholder = Utility.Resource.Title_Designer.Notes })
+                                            </div>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.Notes, "", new { @class = "text-danger " })
                                     </div>
-                                    @Html.ValidationMessageFor(model => model.Notes, "", new { @class = "text-danger " })
                                 </div>
                             </div>
                         </div>
-                    </div>
 
                     </div>
 
@@ -442,6 +441,7 @@
             $("html, body").scrollTop($("#query").offset().top - 300);
             $("#query").focus();
             $(".sw-toolbar-bottom").css("display", "none");
+             $(".datepicker").val('@string.Format(formateDate, Model.Date)');
         }, 600);
 
         $('#btn').click(function () {
@@ -846,7 +846,7 @@
                     success: function (data) {
                         $row.find("#ProductId").val(itemId);
                         $row.find("#query").val(data.name);
-                        var cost = Number(data.cost);                       
+                        var cost = Number(data.cost);
                         var $UnitID = $row.find('#UnitId');
                         $UnitID.find('option').remove();
                         $(data.unitlist).each(function (index, unit) {
@@ -979,7 +979,7 @@
                 }
             });
 
-            $("#AllTotal").val(total);                       
+            $("#AllTotal").val(total);
         }
 
         Save = function () {
@@ -1100,6 +1100,11 @@
                 }
             });
 
+            var TxtDate = $("#Date").val();
+            if ('@CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft') {
+                var arr = TxtDate.split("/");
+                TxtDate = arr[2] + "/" + arr[1] + "/" + arr[0]
+            }
             var data = {
                 Id: $('#Id').val(),
                 TypeId: $('#TypeId').val(),
@@ -1108,12 +1113,12 @@
                 Code: $('#Code').val(),
                 CodeNumber: $('#CodeNumber').val(),
                 MaskText: $('#MaskText').val(),
-                Date: $('#Date').val(),
-                DealerId: $('#DealerId').val(),               
+                Date: TxtDate,
+                DealerId: $('#DealerId').val(),
                 StoreId: $('#StoreId').val(),
                 ToStoreId: $('#ToStoreId').val(),
-                Total: $('#AllTotal').val(),               
-                Notes: $('#Notes').val(),                
+                Total: $('#AllTotal').val(),
+                Notes: $('#Notes').val(),
                 CreateUserId: $('#CreateUserId').val(),
                 CreateDate: $('#CreateDate').val(),
                 ModifyUserId: $('#ModifyUserId').val(),
@@ -1122,8 +1127,8 @@
                 ImgPath: $('#ImgPath').val(),
                 Status: $('#Status').val(),
                 ShiftId: $('#ShiftId').val(),
-                BranchId: $('#BranchId').val(),               
-                TransactionProducts: list
+                BranchId: $('#BranchId').val(),
+                TransactionProductList: list
             }
 
            return data;

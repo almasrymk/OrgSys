@@ -35,17 +35,12 @@ namespace Repository
             (branchId == 0 || e.Store.BranchId == branchId) &&
             (e.Status != Status.Deleted && e.Hide != true)
             ).OrderByDescending(e => e.Date).Select(e => new InvoiceDetail(e));
-
-
-
-
-
         }
+
         public IQueryable<Customer> Customer(long typeId, long dealerId)
         {
             return db.Dealers.Where(r => (r.Id == dealerId || dealerId == 0) && r.TypeId == typeId).Select(e => new Customer(e));
         }
-
 
         public List<DealerInvoice> TotalInvoicCustomer(long typeId, DateTime fromDate, DateTime toDate, long dealerId)
         {
@@ -58,7 +53,6 @@ namespace Repository
             .OrderByDescending(a => a.Code)
             .ToList();
         }
-
 
         public List<SupplierSheetReport> SuplierSheetReport(long typeId, DateTime fromDate, DateTime toDate, long dealerId, int typeinvoiceorpinvoice, int typeReturninvoiceorpinvoice)
         {

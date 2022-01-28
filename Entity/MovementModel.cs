@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Entity
 {
     public class MovementModel : BaseModel
-    {       
+    {        
         public DateTime Date { get; set; }
 
         [ForeignKey("CreateUser")]

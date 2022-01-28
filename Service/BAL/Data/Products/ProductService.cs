@@ -15,11 +15,10 @@ namespace Service
         public override ProductModelView Get(long Id)
         {
             var ob = repo.Get(e => e.Id == Id, Includes);
-            if (ob != null)
-            {
-                ob.ProductUnits = repoAll.productUnitRepo.GetList(e => e.ProductId == Id, e => e.OrderBy(e => e.Id), "Unit", Utility.Status.All).ToList();
-                ob.ProductRecipes = repoAll.recipeRepo.GetList(e => e.ProductId == Id, e => e.OrderBy(e => e.Id), "", Utility.Status.All).ToList();
-            }
+            if (ob == null)
+                ob = new Product();
+            ob.ProductUnits = repoAll.productUnitRepo.GetList(e => e.ProductId == Id, e => e.OrderBy(e => e.Id), "Unit", Utility.Status.All).ToList();
+            ob.ProductRecipes = repoAll.recipeRepo.GetList(e => e.ProductId == Id, e => e.OrderBy(e => e.Id), "", Utility.Status.All).ToList();
             var obMw = ob.Map<ProductModelView>();
             obMw.ProductPropertyTree = GetProperties(obMw.Id);
             return obMw;
@@ -28,11 +27,10 @@ namespace Service
         public override ProductModelView Get(string textSearch)
         {
             var ob = repo.Get(e => e.Name.Contains(textSearch) || e.Code == textSearch || e.Barcode == textSearch || "" + textSearch == "", Includes);
-            if (ob != null)
-            {
+            if (ob == null)
+                ob = new Product();
                 ob.ProductUnits = repoAll.productUnitRepo.GetList(e => e.ProductId == ob.Id, e => e.OrderBy(e => e.Id), "", Utility.Status.All).ToList();
                 ob.ProductRecipes = repoAll.recipeRepo.GetList(e => e.ProductId == ob.Id, e => e.OrderBy(e => e.Id), "", Utility.Status.All).ToList();
-            }
             var obMw = ob.Map<ProductModelView>();
             obMw.ProductPropertyTree = GetProperties(obMw.Id);
             return obMw;

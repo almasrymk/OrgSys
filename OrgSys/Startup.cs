@@ -58,7 +58,7 @@ namespace OrgSys
 
             services.Configure<RequestLocalizationOptions>(options =>
             {
-                options.AddSupportedUICultures("en", "ar");
+                options.AddSupportedUICultures("en-gb", "ar-eg");
                 options.FallBackToParentUICultures = true;                
             });
             services.AddRazorPages().AddRazorRuntimeCompilation();
@@ -105,7 +105,7 @@ namespace OrgSys
                 app.UseHsts();
             }
             
-            var supportedCultures = new[] { "en", "ar" };
+            var supportedCultures = new[] { "en-gb", "ar-eg" };
             var localizationOptions = new RequestLocalizationOptions().SetDefaultCulture(supportedCultures[0])
                 .AddSupportedCultures(supportedCultures)
                 .AddSupportedUICultures(supportedCultures);

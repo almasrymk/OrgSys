@@ -132,7 +132,7 @@ function loadStyle(href, callback) {
             localStorage.setItem("dore-radius", radius);
         }
 
-        var lng = direction == "ltr" ? "en" : "ar";
+        var lng = direction == "ltr" ? "en-gb" : "ar-eg";
         window.localStorage.setItem('lang', lng);
         $.get("/Home/SetLanguage?culture=" + lng, function (data) { });  
     }
@@ -165,7 +165,7 @@ function loadStyle(href, callback) {
 
     $("input[name='directionRadio']").on("change", function (event) {
         var direction = $(event.currentTarget).data("direction");
-        var lng = direction == "ltr" ? "en" : "ar";
+        var lng = direction == "ltr" ? "en-gb" : "ar-eg";
         if (typeof Storage !== "undefined") {
             $.get("/Home/SetLanguage?culture=" + lng, function (data) {
                 localStorage.setItem("dore-direction", direction);

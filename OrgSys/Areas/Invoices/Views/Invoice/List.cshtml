@@ -82,7 +82,7 @@
                             }
                         </th>
                         <th class="text-center">@Utility.Resource.Title_Designer.Date</th>
-                        <th class="text-center">@Utility.Resource.Title_Designer.Total</th>
+                        <th class="text-center">@Utility.Resource.Title_Designer.Amount</th>
                         <th class="text-center">
                             @if (ViewBag.TypeId == 1 || ViewBag.TypeId == 4)
                             {
@@ -183,42 +183,42 @@
                             </td>
                             @if (AllowEdit || AllowCancel || AllowDelete)
                             {
-                        <td class="w-20 @TextAlign2 align-middle">
-                            @if (Model[i].Status == Utility.Status.Cancel)
-                            {
-                                <a href="/@ViewBag.area/@ViewBag.PageTitle/Redo?id=@Model[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.PageNumber"> <i class="simple-icon-action-redo"></i> </a>
-                                if (AllowDelete)
-                                {
-                                    <span>&nbsp; | &nbsp;</span>
-                                    <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
-                                }
-                            }
-                            else
-                            {
-                                if (AllowEdit)
-                                {
-                                    <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit" style="color:green"></i> </a>
-                                    if (AllowCancel || AllowDelete)
+                                <td class="w-20 @TextAlign2 align-middle">
+                                    @if (Model[i].Status == Utility.Status.Cancel)
                                     {
-                                        <span>&nbsp; | &nbsp;</span>
+                                        <a href="/@ViewBag.area/@ViewBag.PageTitle/Redo?id=@Model[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.PageNumber"> <i class="simple-icon-action-redo"></i> </a>
+                                        if (AllowDelete)
+                                        {
+                                            <span>&nbsp; | &nbsp;</span>
+                                            <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
+                                        }
                                     }
-                                }
-                                if (AllowCancel)
-                                {
-                                    <a href="/@ViewBag.area/@ViewBag.PageTitle/Cancel?id=@Model[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.PageNumber"> <i>X</i> </a>
-                                    @if (AllowDelete)
+                                    else
                                     {
+                                        if (AllowEdit)
+                                        {
+                                            <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit" style="color:green"></i> </a>
+                                            if (AllowCancel || AllowDelete)
+                                            {
+                                                <span>&nbsp; | &nbsp;</span>
+                                            }
+                                        }
+                                        if (AllowCancel)
+                                        {
+                                            <a href="/@ViewBag.area/@ViewBag.PageTitle/Cancel?id=@Model[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.PageNumber"> <i>X</i> </a>
+                                            @if (AllowDelete)
+                                            {
+                                                <span>&nbsp; | &nbsp;</span>
+                                            }
+                                        }
+                                        if (AllowDelete)
+                                        {
+                                            <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
+                                        }
                                         <span>&nbsp; | &nbsp;</span>
+                                        <a href="/@ViewBag.area/@ViewBag.PageTitle/Print?id=@Model[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.PageNumber" target="_blank"> <i class="fa fa-print text-info"></i> </a>
                                     }
-                                }
-                                if (AllowDelete)
-                                {
-                                    <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
-                                }
-                                <span>&nbsp; | &nbsp;</span>
-                                <a href="/@ViewBag.area/@ViewBag.PageTitle/Print?id=@Model[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.PageNumber" target="_blank"> <i class="fa fa-print text-info"></i> </a>
-                            }
-                        </td>
+                                </td>
                             }
                             @if (AllowDelete)
                             {
@@ -242,6 +242,55 @@
     </div>
     <div id="rowList" style="display:none;">
         <div class="col-12 list  m-0 p-0 pt-2" data-check-all="checkAll">
+            <div class=" d-flex flex-row mb-2" style="background-color:transparent !important;height:50px;padding:0px;margin:0px;">
+                <div class="d-flex flex-grow-1 min-width-zero" style="border-radius:15px; height:60px;">
+                    <div class="list-thumbnail  border-0" style="height:60px; width:60px; font-size:x-large; text-align:center; padding:14px;">
+                        <small>#</small>
+                    </div>
+                    <div class="card-body align-self-center d-flex flex-column flex-md-row  align-items-md-center">
+                        <div class="list-item-heading mb-0  w-10  ">
+                            <small>@Utility.Resource.Title_Designer.Code</small>
+                        </div>
+                        <div class="list-item-heading mb-0  w-40">
+                            @if (ViewBag.TypeId == 1 || ViewBag.TypeId == 3)
+                            {
+                                <small> @Utility.Resource.Title_Designer.Client </small>
+                            }
+                            else
+                            {
+                                <small> @Utility.Resource.Title_Designer.Supplier </small>
+                            }
+                        </div>
+                        <div class="list-item-heading mb-0 truncate w-15 ">
+                            <small>@Utility.Resource.Title_Designer.Date</small>
+                        </div>
+                        <div class="w-10">
+                            <small>@Utility.Resource.Title_Designer.Amount</small>
+                        </div>
+                        <div class="w-10">
+                            @if (ViewBag.TypeId == 1 || ViewBag.TypeId == 4)
+                            {
+                                <small>@Utility.Resource.Title_Designer.Collect</small>
+                            }
+                            else
+                            {
+                                <small>@Utility.Resource.Title_Designer.Paid</small>
+                            }
+                        </div>
+                        <div class="w-10">
+                            <small>@Utility.Resource.Title_Designer.Transactions</small>
+                        </div>
+                        <div class="w-20 @TextAlign2">
+                           
+                        </div>
+                    </div>
+
+                    <div style="width:30px;">
+
+                    </div>
+
+                </div>
+            </div>
             @for (int i = 0, x = ((Model.PageNumber - 1) * Model.PageSize) + 1; i < Model.Count; i++, x++)
             {
                 <div class="card d-flex flex-row mb-2">

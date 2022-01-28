@@ -1,0 +1,114 @@
+﻿@model X.PagedList.IPagedList<Entity.Model.Invoice>
+@{
+    ViewData["Title_Designer"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid disable-text-selection">
+    <h1> @Utility.Resource.Title_Designer.SalesDetails</h1>
+    <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
+        <ol class="breadcrumb pt-0">
+            <li class="breadcrumb-item">
+                <a href="/Home/Dashboard">@Utility.Resource.Title_Designer.Home</a>
+            </li>
+            <li class="breadcrumb-item">
+                @Utility.Resource.Title_Designer.Invoices
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">@Utility.Resource.Title_Designer.Report</li>
+        </ol>
+    </nav>
+</div>
+
+<div class="card">
+    <div class="form-row m-4">
+        <div class="form-group col-md-3">
+            <label>@Utility.Resource.Title_Designer.Type</label>
+            <div id="divCurrencyId">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="simple-icon-basket-loaded"></i></span>
+                    </div>
+                    @Html.DropDownList("TypeId", (SelectList)ViewBag.TypeId, null, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group col-md-3">
+            <label>@Utility.Resource.Title_Designer.Client</label>
+            <div id="divCurrencyId">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="simple-icon-people"></i></span>
+                    </div>
+                    @Html.DropDownList("DealerId", (SelectList)ViewBag.DealerId, "...", new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group col-md-3">
+            <label>@Utility.Resource.Title_Designer.Branch</label>
+            <div id="divCurrencyId">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="simple-icon-share"></i></span>
+                    </div>
+                    @Html.DropDownList("BranchId", (SelectList)ViewBag.BranchId, "...", new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group col-md-3">
+            <label>@Utility.Resource.Title_Designer.Shift</label>
+            <div id="divCurrencyId">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="iconsminds-clock-back"></i></span>
+                    </div>
+                    @Html.DropDownList("ShiftId", (SelectList)ViewBag.ShiftId, "...", new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group col-md-3">
+            <label>@Utility.Resource.Title_Designer.User</label>
+            <div id="divCurrencyId">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="iconsminds-add-user"></i></span>
+                    </div>
+                    @Html.DropDownList("UserId", (SelectList)ViewBag.UserId, "...", new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group col-md-3">
+            <label>PaidStatus</label>
+            <div id="divCurrencyId">
+                @Html.DropDownList("PaidStatus", (SelectList)ViewBag.PaidStatus, null, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group col-4">
+            <button id="btn" type="button" class="btn btn-primary ml-4 mr-4 mb-4">@Utility.Resource.Title_Designer.Search</button>
+        </div>
+    </div>
+
+    @if (Model != null && Model.Count > 0)
+    {     
+        <div class="row m-1">
+            <div id="List" class="col-12" data-check-all="checkAll">
+                @Html.Partial("SalesInvoicesReportList", Model)
+            </div>
+        </div>
+    }
+</div>
+
+<script src="~/js/vendor/jquery-3.3.1.min.js"></script>
+<script src="~/js/vendor/bootstrap3-typeahead.js"></script>
+<link href="~/css/jquery-ui.css" rel="stylesheet" />
+<script src="~/js/jquery-ui.js"></script>
+<script src="~/js/PopupScript.js"></script>
+
+<script>
+   
+</script>

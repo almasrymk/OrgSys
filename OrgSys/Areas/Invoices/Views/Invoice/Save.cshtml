@@ -10,7 +10,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var BorderAlign = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "border-top:none;border-bottom:none;border-left:none;" : "border-top:none;border-bottom:none;border-right:none;";
     var AllowPreference = false;
-    var formateDate = CultureInfo.CurrentUICulture.Name == "ar" ? "{0:yyyy/MM/dd}" : "{0:dd/MM/yyyy}";
+    var formateDate = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "{0:yyyy/MM/dd}" : "{0:dd/MM/yyyy}";
     if (Model.TypeId == 1)
     {
         AllowPreference = User.IsAllowed("SalesInvoices.Preference");
@@ -66,7 +66,6 @@
     </div>
 
     <div class="card">
-
         <div class="card pl-1 pr-1">
             <form action="Save" method="post" enctype="multipart/form-data" class="tooltip-label-right" novalidate autocomplete="off">
                 <div class="d-md-block">
@@ -806,11 +805,11 @@
                     $("#ParentId").val(ui.item.id);
                     $("#errorParentId").remove();
 
-                    $('.btnDelete').each(function () {                        
+                    $('.btnDelete').each(function () {
                         $(this).parent().parent().remove();
                         if ($("#tbl").find('.ProductRow').length <= '@ViewBag.NumberLine') {
                             AddNewRow();
-                        }                                                                
+                        }
                     });
 
                     ReIndex();
@@ -940,6 +939,7 @@
                     $(this).autocomplete("search", "");
                 return;
             });
+
             $('.btnDelete').click(function () {
                 $(this).parent().parent().remove();
                 if ($("#tbl").find('.ProductRow').length <= '@ViewBag.NumberLine') {
@@ -950,40 +950,47 @@
                 AutoSave();
             });
 
-
             $("#Discount").keyup(function () {
                 ReCalc();
                 AutoSave();
             });
+
             $("#Tax").keyup(function () {
                 ReCalc();
                 AutoSave();
             });
+
             $("#Service").keyup(function () {
                 ReCalc();
                 AutoSave();
             });
+
             $("#Paid").change(function () {
                 $("#Cash").val(true);
                 ReCalc();
                 AutoSave();
             });
+
             $(".Price").keyup(function () {
                 ReCalc();
                 AutoSave();
             });
+
             $(".Quantity").keyup(function () {
                 ReCalc();
                 AutoSave();
             });
+
             $("#DiscountType").change(function () {
                 ReCalc();
                 AutoSave();
             });
+
             $("#TaxType").change(function () {
                 ReCalc();
                 AutoSave();
             });
+
             $("#ServiceType").change(function () {
                 ReCalc();
                 AutoSave();
@@ -1188,11 +1195,11 @@
             }
         }
 
-        ReIndex = function () {            
-            $("#tbl").find('.ProductRow').not(".trNew").each(function (index) {                
+        ReIndex = function () {
+            $("#tbl").find('.ProductRow').not(".trNew").each(function (index) {
                 $(this).find("#Index").empty();
                 $(this).find("#Index").append(index + 1);
-            });            
+            });
         }
 
         ReCalc = function () {
@@ -1310,7 +1317,9 @@
                     data: { model: data },
                     success: function (res) {
                         window.location.replace(res.url);
-
+                    },
+                    error: function (request, status, error) {
+                        alert("Error");
                     }
                 });
             }
@@ -1409,6 +1418,11 @@
                     }
                 }
             });
+            var TxtDate = $("#Date").val();
+            if ('@CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft') {
+                var arr = TxtDate.split("/");
+                TxtDate = arr[2] + "/" + arr[1] + "/" + arr[0]
+            }
 
             var data = {
                 Id: $('#Id').val(),
@@ -1418,7 +1432,7 @@
                 Code: $('#Code').val(),
                 CodeNumber: $('#CodeNumber').val(),
                 MaskText: $('#MaskText').val(),
-                Date: $('#Date').val(),
+                Date:TxtDate ,
                 DealerId: $('#DealerId').val(),
                 CurrencyId: $('#CurrencyId').val(),
                 Rate: $('#Rate').val(),
@@ -1485,7 +1499,7 @@
                         else
                             AddNewProduct(pro.productId, pro.puantity);
                     });
-                    
+
                     ReIndex();
                     ReCalc();
                     AutoSave();
@@ -1498,5 +1512,12 @@
         ReIndex();
 
         ReCalc();
+
+        function ToJavaScriptDate(value) {
+            var pattern = /Date\(([^)]+)\)/;
+            var results = pattern.exec(value);
+            var dt = new Date(parseFloat(results));
+            return dt.getFullYear() + "/" + (dt.getMonth() + 1) + "/" + dt.getDate();
+        }
     });
 </script>
