@@ -13,7 +13,7 @@ namespace OrgSys.Areas.Transaction.Controllers
         public override void LoadViewBagIndex(long ParentId = 0, long TypeId = 0)
         {
             var type = new TransactionTypeService(User.GetSchema()).Get(TypeId);
-            ViewBag.TransactionsType = type.Name;
+            ViewBag.TransactionsType = type.Name;            
             ViewBag.TransactionsIcon = type.Icon;
             base.LoadViewBagIndex();
         }

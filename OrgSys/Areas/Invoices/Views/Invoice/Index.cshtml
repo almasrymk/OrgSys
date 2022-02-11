@@ -10,11 +10,11 @@
             <div class="mb-3">
                 @if (ViewBag.TypeId == 1 || ViewBag.TypeId == 2)
                 {
-                <h1> <i class="@ViewBag.InvoicesIcon"></i> @Utility.Resource.Title_Designer.Invoice</h1>
+                <h1> <i class="@ViewBag.InvoicesIcon rounded-circle badge-theme-1  p-1"></i> @Utility.Resource.Title_Designer.Invoice</h1>
                 }
                 else if (ViewBag.TypeId == 3 || ViewBag.TypeId == 4)
                 {
-            <h1><i class="@ViewBag.InvoicesIcon"></i> @Utility.Resource.Title_Designer.Return</h1>
+            <h1><i class="@ViewBag.InvoicesIcon rounded-circle badge-theme-1  p-1"></i> @Utility.Resource.Title_Designer.Return</h1>
                 }
 
                 <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">

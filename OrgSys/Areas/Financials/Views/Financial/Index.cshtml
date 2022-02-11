@@ -10,15 +10,15 @@
             <div class="mb-3">
                 @if (ViewBag.TypeId == 1)
                 {
-                    <h1> @Utility.Resource.Title_Designer.Collection </h1>
+                    <h1> <i class="@ViewBag.FinancialsIcon rounded-circle badge-theme-1  p-1"></i> @Utility.Resource.Title_Designer.Collection </h1>
                 }
                 else if (ViewBag.TypeId == 2)
                 {
-                    <h1> @Utility.Resource.Title_Designer.Payment</h1>
+                    <h1> <i class="@ViewBag.FinancialsIcon rounded-circle badge-theme-1  p-1"></i> @Utility.Resource.Title_Designer.Payment</h1>
                 }
                 else if (ViewBag.TypeId == 3)
                 {
-                    <h1> @Utility.Resource.Title_Designer.Outlay</h1>
+                    <h1> <i class="@ViewBag.FinancialsIcon rounded-circle badge-theme-1  p-1"></i> @Utility.Resource.Title_Designer.Outlay</h1>
                 }
                 <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
                     <ol class="breadcrumb pt-0">

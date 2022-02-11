@@ -81,7 +81,7 @@
                             <th class="@TextAlign align-middle">@Utility.Resource.Title_Designer.Store</th>
                         }
                         <th class="text-center">@Utility.Resource.Title_Designer.Date</th>
-                        <th class="text-center">@Utility.Resource.Title_Designer.Total</th>
+                        <th class="text-center">@Utility.Resource.Title_Designer.Amount</th>
                         @if (ViewBag.TypeId == 3)
                         {
                             <th class="text-center"> @Utility.Resource.Title_Designer.Received </th>
@@ -168,7 +168,7 @@
                             }
                             @if (AllowEdit || AllowCancel || AllowDelete)
                             {
-                                <td class="w-15 @TextAlign2 align-middle">
+                                <td class="w-20 @TextAlign2 align-middle">
                                     @if (Model[i].Status == Utility.Status.Cancel)
                                     {
                                         <a href="/@ViewBag.area/@ViewBag.PageTitle/Redo?id=@Model[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.PageNumber"> <i class="simple-icon-action-redo"></i> </a>
@@ -200,6 +200,8 @@
                                         {
                                             <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
                                         }
+                                        <span>&nbsp; | &nbsp;</span>
+                                        <a href="/@ViewBag.area/@ViewBag.PageTitle/Print?id=@Model[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.PageNumber" target="_blank"> <i class="fa fa-print text-info"></i> </a>
                                     }
                                 </td>
                             }
@@ -225,6 +227,58 @@
     </div>
     <div id="rowList" style="display:none;">
         <div class="col-12 list m-0 p-0 pt-2" data-check-all="checkAll">
+            <div class=" d-flex flex-row mb-2" style="background-color:transparent !important;height:50px;padding:0px;margin:0px;">
+                <div class="d-flex flex-grow-1 min-width-zero" style="border-radius:15px; height:60px;">
+                    <div class="list-thumbnail  border-0" style="height:60px; width:60px; font-size:x-large; text-align:center; padding:14px;">
+                        <small>#</small>
+                    </div>
+                    <div class="card-body align-self-center d-flex flex-column flex-md-row  align-items-md-center">
+                        <div class="list-item-heading mb-0  w-10">
+                            <small>@Utility.Resource.Title_Designer.Code</small>
+                        </div>
+                        @if (ViewBag.TypeId == 3)
+                        {
+                            <div class="list-item-heading mb-0  w-30">
+                                <small>@Utility.Resource.Title_Designer.Store</small>
+                            </div>
+                            <div class="list-item-heading mb-0  w-30">
+                                <small>@Utility.Resource.Title_Designer.ToStore</small>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="list-item-heading mb-0  w-60">
+                                <small>@Utility.Resource.Title_Designer.Store</small>
+                            </div>
+                        }
+                        <div class="list-item-heading mb-0 truncate w-10 ">
+                            <small>@Utility.Resource.Title_Designer.Date</small>
+                        </div>
+                        <div class="w-10">
+                            <small>@Utility.Resource.Title_Designer.Amount</small>
+                        </div>
+                        @if (ViewBag.TypeId == 3)
+                        {
+                            <div class="w-10">
+                                @Utility.Resource.Title_Designer.Received
+                            </div>
+                        }
+                        @if (ViewBag.TypeId == 4)
+                        {
+                            <div class="w-10">
+                                @Utility.Resource.Title_Designer.Transfer
+                            </div>
+                        }
+                        <div class="w-20 @TextAlign2">
+
+                        </div>
+                    </div>
+
+                    <div style="width:30px;">
+
+                    </div>
+                </div>
+            </div>
             @for (int i = 0, x = ((Model.PageNumber - 1) * Model.PageSize) + 1; i < Model.Count; i++, x++)
             {
 
@@ -240,28 +294,28 @@
                             </div>
                             @if (ViewBag.TypeId == 3)
                             {
-                                <div class="list-item-heading mb-0  w-40">
+                                <div class="list-item-heading mb-0  w-30">
                                     @Model[i].StoreName
                                 </div>
-                                <div class="list-item-heading mb-0  w-40">
+                                <div class="list-item-heading mb-0  w-30">
                                     @Model[i].ToStoreName
                                 </div>
                             }
                             else
                             {
-                                <div class="list-item-heading mb-0  w-80">
+                                <div class="list-item-heading mb-0  w-60">
                                     @Model[i].StoreName
                                 </div>
                             }
-                            <div class="list-item-heading mb-0 truncate w-20 ">
+                            <div class="list-item-heading mb-0 truncate w-15 ">
                                 @Model[i].Date.ToString(DateFromate, new CultureInfo("en-US"))
                             </div>
-                            <div class="w-15">
+                            <div class="w-10">
                                 @Model[i].Total
                             </div>
                             @if (ViewBag.TypeId == 3)
                             {
-                                <div class="w-15">
+                                <div class="w-10">
                                     @if ("" + Model[i].ParentCode != "")
                                     {
                                         <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].ParentId&ParentId=@ViewBag.ParentId&TypeId=4">
@@ -273,7 +327,7 @@
                             }
                             @if (ViewBag.TypeId == 4)
                             {
-                                <div class="w-15">
+                                <div class="w-10">
                                     @if ("" + Model[i].ParentCode != "")
                                     {
                                         <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].ParentId&ParentId=@ViewBag.ParentId&TypeId=3">
@@ -284,7 +338,7 @@
 
                                 </div>
                             }
-                            <div class="w-15 @TextAlign2">
+                            <div class="w-20 @TextAlign2">
                                 @if (Model[i].Status == Utility.Status.Cancel)
                                 {
                                     <a href="/@ViewBag.area/@ViewBag.PageTitle/Redo?id=@Model[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.PageNumber"> <i class="simple-icon-action-redo"></i> </a>
@@ -316,6 +370,9 @@
                                     {
                                         <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
                                     }
+
+                                    <span>&nbsp; | &nbsp;</span>
+                                    <a href="/@ViewBag.area/@ViewBag.PageTitle/Print?id=@Model[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.PageNumber" target="_blank"> <i class="fa fa-print text-info"></i> </a>
                                 }
                             </div>
                         </div>
