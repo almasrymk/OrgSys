@@ -770,5 +770,17 @@ namespace Repository.Seed
                 orgContext.Set<Currency>().AddRange(list);
             orgContext.SaveChanges();
         }
+
+        public void InitialShift(OrgContext orgContext)
+        {
+            List<Shift> list = new List<Shift> {
+                 new Shift { Code = "1" , CodeNumber = 1 , Name = "Full Time" , Start = new TimeSpan(9,0,0) , End = new TimeSpan(17,0,0), Hide = false },
+                 new Shift { Code = "2" , CodeNumber = 2 , Name = "Over Time" , Start = new TimeSpan(18,0,0) , End = new TimeSpan(8,0,0), Hide = false }
+            };
+
+            if (!orgContext.Shifts.Any())
+                orgContext.Set<Shift>().AddRange(list);
+            orgContext.SaveChanges();
+        }
     }
 }

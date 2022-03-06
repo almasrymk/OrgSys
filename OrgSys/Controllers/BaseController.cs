@@ -275,7 +275,6 @@ namespace OrgSys.Controllers
 
         public virtual async Task<IActionResult> Print(long Id , string ViewName)
         {
-
             List<string> Css = new List<string>();
             Css.Add("/css/vendor/bootstrap.min.css");
             Css.Add("/css/vendor/bootstrap.rtl.only.min.css");

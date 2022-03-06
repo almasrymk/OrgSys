@@ -1,11 +1,11 @@
-﻿using Entity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
+﻿using System;
+using Entity;
 using Utility;
+using System.Linq;
+using Entity.Model;
+using System.Linq.Expressions;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace Repository
 {
@@ -103,9 +103,9 @@ namespace Repository
 
             return query.Where(e => (e.Status != Status.Deleted || status == Status.All) && e.Hide != true);
         }
-
+     
         public virtual entity AddOrUpdate(entity ob)
-        {
+        {            
             if (ob.Id == 0)
                 db.Set<entity>().Add(ob);
             else
@@ -181,5 +181,46 @@ namespace Repository
             return query.Any(filter);
         }
 
+        //public virtual void AddLog(entity ob , LogType logType , LogAccessLevel logAccessLevel , long EstimateBySecond)
+        //{
+        //    var user = db.Users.FirstOrDefault(e => e.Id == _UserId);
+        //    LogSys logSys = new LogSys();
+        //    logSys.CodeNumber = db.LogSys.Max(e => e.CodeNumber) + 1;
+        //    logSys.Code = "" + logSys.CodeNumber;
+        //    logSys.ResourceId = "" + ob.Id;
+        //    logSys.ResourceType = nameof(ob);
+        //    logSys.TableName = nameof(ob);
+        //    logSys.ScreenName = nameof(ob);
+        //    logSys.Date = DateTime.Now;
+        //    logSys.LogAccessLevel = logAccessLevel;
+        //    logSys.LogType = logType;
+        //    logSys.Time = new TimeSpan(DateTime.Now.Hour , DateTime.Now.Minute , DateTime.Now.Second);
+        //    logSys.EstimateBySecond = EstimateBySecond;
+        //    logSys.UserId = _UserId;
+
+        //    switch (logType)
+        //    {
+        //        case LogType.Index:
+        //            break;
+        //        case LogType.View:
+        //            break;
+        //        case LogType.Add:
+        //            logSys.Title = "Add New";
+        //            logSys.Message = "Add a new " + nameof(ob) + " by " + user.Name + " on " + DateTime.Now.ToString("dd-MM-yyyy") + " at " + DateTime.Now.Hour;
+        //            break;
+        //        case LogType.Update:
+        //            logSys.Title = "Update";
+        //            logSys.Message = "Update " + nameof(ob) + " by " + user.Name + " on " + DateTime.Now.ToString("dd-MM-yyyy") + " at " + DateTime.Now.Hour;
+        //            break;
+        //        case LogType.Delete:
+        //            logSys.Title = "Delete";
+        //            logSys.Message = "Delete a " + nameof(ob) + " by " + user.Name + " on " + DateTime.Now.ToString("dd-MM-yyyy") + " at " + DateTime.Now.Hour;
+        //            break;
+        //        default:
+        //            break;
+        //    }
+
+        //    db.LogSys.Add(logSys);
+        //}
     }
 }

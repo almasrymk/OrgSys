@@ -343,7 +343,7 @@
                 <div class="user d-inline-block">
                     <button class="btn btn-empty p-0" type="button" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false">
-                        <span class="name" style="font-size:15px;">@User.GetName()</span>
+
                         @if (User.GetImage() == "")
                         {
                             <span class="rounded-circle badge-theme-1  m-2" style="font-size:x-large;padding-top:5px;padding-bottom:5px;padding-right:3px;padding-left:3px">
@@ -356,6 +356,7 @@
                                 <img alt="Profile Picture" src="@User.GetImage()" />
                             </span>
                         }
+                        <span class="name" style="font-size:15px;">@User.GetName()</span>
                     </button>
                     <div class="dropdown-menu dropdown-menu-right mt-3">
                         <div class="dropdown-item">@Html.ActionLink(Utility.Resource.Title_Designer.Account, "Profile", "Home", new { id = User.GetUserId() }) </div>
