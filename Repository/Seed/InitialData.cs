@@ -549,9 +549,9 @@ namespace Repository.Seed
         public void InitialInvoiceType(OrgContext orgContext)
         {
             List<InvoiceType> list = new List<InvoiceType> {
-                    new InvoiceType { Id = 1, Group = "Sales", Name = "Invoice", Hide = false, InOut = -1, Icon = "simple-icon-basket-loaded" },
+                    new InvoiceType { Id = 1, Group = "Sales", Name = "Invoice", Hide = false, InOut = 1, Icon = "simple-icon-basket-loaded" },
                     new InvoiceType { Id = 2, Group = "Purchases", Name = "Invoice", Hide = false, InOut = 1, Icon = "simple-icon-basket-loaded" },
-                    new InvoiceType { Id = 3, Group = "Sales", Name = "Return", Hide = false, InOut = 1, Icon = "simple-icon-action-undo" },
+                    new InvoiceType { Id = 3, Group = "Sales", Name = "Return", Hide = false, InOut = -1, Icon = "simple-icon-action-undo" },
                     new InvoiceType { Id = 4, Group = "Purchases", Name = "Return", Hide = false, InOut = -1, Icon = "simple-icon-action-undo" }
             };
 
