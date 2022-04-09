@@ -295,11 +295,47 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Client balance.
+        /// </summary>
+        public static string ClientBalance {
+            get {
+                return ResourceManager.GetString("ClientBalance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Clients.
         /// </summary>
         public static string Clients {
             get {
                 return ResourceManager.GetString("Clients", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clients balances.
+        /// </summary>
+        public static string ClientsBalances {
+            get {
+                return ResourceManager.GetString("ClientsBalances", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clients statement.
+        /// </summary>
+        public static string ClientsStatement {
+            get {
+                return ResourceManager.GetString("ClientsStatement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Client statement.
+        /// </summary>
+        public static string ClientStatement {
+            get {
+                return ResourceManager.GetString("ClientStatement", resourceCulture);
             }
         }
         
@@ -1011,6 +1047,15 @@ namespace Utility.Resource {
         public static string KeepMeLoggedIn {
             get {
                 return ResourceManager.GetString("KeepMeLoggedIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Key Search.
+        /// </summary>
+        public static string KeySearch {
+            get {
+                return ResourceManager.GetString("KeySearch", resourceCulture);
             }
         }
         
@@ -1780,6 +1825,15 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Search results.
+        /// </summary>
+        public static string SearchResults {
+            get {
+                return ResourceManager.GetString("SearchResults", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Security.
         /// </summary>
         public static string Security {
@@ -1942,11 +1996,47 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Supplier balance.
+        /// </summary>
+        public static string SupplierBalance {
+            get {
+                return ResourceManager.GetString("SupplierBalance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Suppliers.
         /// </summary>
         public static string Suppliers {
             get {
                 return ResourceManager.GetString("Suppliers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Suppliers balances.
+        /// </summary>
+        public static string SuppliersBalances {
+            get {
+                return ResourceManager.GetString("SuppliersBalances", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Suppliers statement.
+        /// </summary>
+        public static string SuppliersStatement {
+            get {
+                return ResourceManager.GetString("SuppliersStatement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Supplier statement.
+        /// </summary>
+        public static string SupplierStatement {
+            get {
+                return ResourceManager.GetString("SupplierStatement", resourceCulture);
             }
         }
         

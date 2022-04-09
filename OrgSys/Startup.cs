@@ -160,6 +160,11 @@ namespace OrgSys
                  name: "Financials",
                  areaName: "Financials",
                  pattern: "Financials/{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapAreaControllerRoute(
+                name: "Reports",
+                areaName: "Reports",
+                pattern: "Reports/{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

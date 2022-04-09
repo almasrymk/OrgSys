@@ -1,4 +1,5 @@
 ﻿using Entity.Model;
+using Entity.ModelReport;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -10,6 +11,7 @@ using Microsoft.EntityFrameworkCore.SqlServer.Migrations.Internal;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Configuration;
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
 using System.Reflection;
 using System.Text;
@@ -97,6 +99,9 @@ namespace Repository
         public virtual DbSet<Journal> Journals { get; set; }
         public virtual DbSet<JournalItem> JournalItems { get; set; }
         public virtual DbSet<CompanyProfile> CompanyProfiles { get; set; }
+
+        [NotMapped]
+        public virtual DbSet<DealerListReport> DealerListReport { get; set; }
     }
 
     public class DbSchemaAwareModelCacheKeyFactory : IModelCacheKeyFactory

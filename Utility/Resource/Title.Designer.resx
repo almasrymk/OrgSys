@@ -195,8 +195,20 @@
   <data name="Client" xml:space="preserve">
     <value>Client</value>
   </data>
+  <data name="ClientBalance" xml:space="preserve">
+    <value>Client balance</value>
+  </data>
   <data name="Clients" xml:space="preserve">
     <value>Clients</value>
+  </data>
+  <data name="ClientsBalances" xml:space="preserve">
+    <value>Clients balances</value>
+  </data>
+  <data name="ClientsStatement" xml:space="preserve">
+    <value>Clients statement</value>
+  </data>
+  <data name="ClientStatement" xml:space="preserve">
+    <value>Client statement</value>
   </data>
   <data name="Code" xml:space="preserve">
     <value>Code</value>
@@ -434,6 +446,9 @@
   </data>
   <data name="KeepMeLoggedIn" xml:space="preserve">
     <value>Keep me logged in</value>
+  </data>
+  <data name="KeySearch" xml:space="preserve">
+    <value>Key Search</value>
   </data>
   <data name="LengthElectronicScale" xml:space="preserve">
     <value>Length Electronic Scale</value>
@@ -690,6 +705,9 @@
   <data name="SearchProduct" xml:space="preserve">
     <value>Search Product</value>
   </data>
+  <data name="SearchResults" xml:space="preserve">
+    <value>Search results</value>
+  </data>
   <data name="Security" xml:space="preserve">
     <value>Security</value>
   </data>
@@ -744,8 +762,20 @@
   <data name="Supplier" xml:space="preserve">
     <value>Supplier</value>
   </data>
+  <data name="SupplierBalance" xml:space="preserve">
+    <value>Supplier balance</value>
+  </data>
   <data name="Suppliers" xml:space="preserve">
     <value>Suppliers</value>
+  </data>
+  <data name="SuppliersBalances" xml:space="preserve">
+    <value>Suppliers balances</value>
+  </data>
+  <data name="SuppliersStatement" xml:space="preserve">
+    <value>Suppliers statement</value>
+  </data>
+  <data name="SupplierStatement" xml:space="preserve">
+    <value>Supplier statement</value>
   </data>
   <data name="Support" xml:space="preserve">
     <value>Support</value>

@@ -195,8 +195,20 @@
   <data name="Client" xml:space="preserve">
     <value>العميل</value>
   </data>
+  <data name="ClientBalance" xml:space="preserve">
+    <value>رصيد عميل</value>
+  </data>
   <data name="Clients" xml:space="preserve">
     <value>العملاء</value>
+  </data>
+  <data name="ClientsBalances" xml:space="preserve">
+    <value>ارصدة العملاء</value>
+  </data>
+  <data name="ClientsStatement" xml:space="preserve">
+    <value>كشف حساب العملاء</value>
+  </data>
+  <data name="ClientStatement" xml:space="preserve">
+    <value>كشف حساب عميل</value>
   </data>
   <data name="Code" xml:space="preserve">
     <value>الكود</value>
@@ -434,6 +446,9 @@
   </data>
   <data name="KeepMeLoggedIn" xml:space="preserve">
     <value>أبق تسجيل دخولي</value>
+  </data>
+  <data name="KeySearch" xml:space="preserve">
+    <value>خيارات البحث</value>
   </data>
   <data name="LengthElectronicScale" xml:space="preserve">
     <value>طول كود الميزان الالكترونى</value>
@@ -690,6 +705,9 @@
   <data name="SearchProduct" xml:space="preserve">
     <value>بحث المنتج</value>
   </data>
+  <data name="SearchResults" xml:space="preserve">
+    <value>نتائج البحث</value>
+  </data>
   <data name="Security" xml:space="preserve">
     <value>الحماية</value>
   </data>
@@ -744,8 +762,20 @@
   <data name="Supplier" xml:space="preserve">
     <value>المورد</value>
   </data>
+  <data name="SupplierBalance" xml:space="preserve">
+    <value>رصيد مورد</value>
+  </data>
   <data name="Suppliers" xml:space="preserve">
     <value>الموردين</value>
+  </data>
+  <data name="SuppliersBalances" xml:space="preserve">
+    <value>ارصدة الموردين</value>
+  </data>
+  <data name="SuppliersStatement" xml:space="preserve">
+    <value>كشف حساب الموردين</value>
+  </data>
+  <data name="SupplierStatement" xml:space="preserve">
+    <value>كشف حساب مورد</value>
   </data>
   <data name="Support" xml:space="preserve">
     <value>الدعم</value>

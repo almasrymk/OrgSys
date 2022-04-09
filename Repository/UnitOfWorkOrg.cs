@@ -2,6 +2,7 @@
 using System;
 using System.Reflection;
 using System.Collections.Generic;
+using Repository.DAL.Output;
 
 namespace Repository
 {
@@ -478,6 +479,18 @@ namespace Repository
                     this._reportRepo = new ReportRepo(Schema);
 
                 return _reportRepo;
+            }
+        }
+
+        private LookupsRepo _lookupsRepo;
+        public LookupsRepo lookupsRepo
+        {
+            get
+            {
+                if (this._lookupsRepo == null)
+                    this._lookupsRepo = new LookupsRepo(Schema);
+
+                return _lookupsRepo;
             }
         }
         #endregion

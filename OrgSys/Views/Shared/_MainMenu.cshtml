@@ -1,57 +1,65 @@
 ﻿<div class="menu">
 	<div class="main-menu">
 		<div class="scroll">
-			<ul class="list-unstyled">
-				<li class="@("Home".Contains(ViewContext.RouteData.Values["controller"].ToString()) ? "active" : "")">
-					<a href="/Home/Dashboard">
-						<i class="iconsminds-home-3"></i>
-						<span>@Utility.Resource.Title_Designer.Home</span>
-					</a>
-				</li>
-				@if (User.IsAllowed("Branchs.All,Stores.All,Tables.All,Roles.All,Users.All,Shifts.All,Products.All,Classifications.All,UnitsMeasure.All,Clients.All,Suppliers.All,Safes.All,OutlayTerms.All,Currencies.All"))
-				{
-					<li class="@("Branch,Store,Table,Role,User,Shift,Product,Classification,Unit,Dealer,Safe,OutlayTerm,Currency".Contains(ViewContext.RouteData.Values["controller"].ToString()) ? "active" : "")">
-						<a href="#setting">
-							<i class="iconsminds-big-data"></i>
-							<span>@Utility.Resource.Title_Designer.Data</span>
-						</a>
-					</li>
-				}
-				@if (User.IsAllowed("Internal.All,External.All"))
-				{
-					<li>
-						<a href="#Orders">
-							<i class="simple-icon-bag"></i>
-							<span>@Utility.Resource.Title_Designer.Orders</span>
-						</a>
-					</li>
-				}
-				@if (User.IsAllowed("SalesInvoices.All,SalesReturns.All,PurchasesInvoices.All,PurchasesReturns.All"))
-				{
-					<li>
-						<a href="#Invoices">
-							<i class="simple-icon-basket-loaded"></i>
-							<span>@Utility.Resource.Title_Designer.Invoices</span>
-						</a>
-					</li>
-				}
-				@if (User.IsAllowed("Addition.All,Issue.All,Transafer.All,Received.All,Inventory.All"))
-				{
-					<li>
-						<a href="#Transaction">
-							<i class="iconsminds-synchronize-2"></i> @Utility.Resource.Title_Designer.Transactions
-						</a>
-					</li>
-				}
-				@if (User.IsAllowed("Collection.All,Payment.All,Outlay.All"))
-				{
-					<li>
-						<a href="#Financial">
-							<i class="iconsminds-coins"></i> @Utility.Resource.Title_Designer.Financial
-						</a>
-					</li>
-				}
-			</ul>
+            <ul class="list-unstyled">
+                <li class="@("Home".Contains(ViewContext.RouteData.Values["controller"].ToString()) ? "active" : "")">
+                    <a href="/Home/Dashboard">
+                        <i class="iconsminds-home-3"></i>
+                        <span>@Utility.Resource.Title_Designer.Home</span>
+                    </a>
+                </li>
+                @if (User.IsAllowed("Branchs.All,Stores.All,Tables.All,Roles.All,Users.All,Shifts.All,Products.All,Classifications.All,UnitsMeasure.All,Clients.All,Suppliers.All,Safes.All,OutlayTerms.All,Currencies.All"))
+                {
+                    <li class="@("Branch,Store,Table,Role,User,Shift,Product,Classification,Unit,Dealer,Safe,OutlayTerm,Currency".Contains(ViewContext.RouteData.Values["controller"].ToString()) ? "active" : "")">
+                        <a href="#setting">
+                            <i class="iconsminds-big-data"></i>
+                            <span>@Utility.Resource.Title_Designer.Data</span>
+                        </a>
+                    </li>
+                }
+                @*@if (User.IsAllowed("Internal.All,External.All"))
+        {
+            <li>
+                <a href="#Orders">
+                    <i class="simple-icon-bag"></i>
+                    <span>@Utility.Resource.Title_Designer.Orders</span>
+                </a>
+            </li>
+        }*@
+                @if (User.IsAllowed("SalesInvoices.All,SalesReturns.All,PurchasesInvoices.All,PurchasesReturns.All"))
+                {
+                    <li>
+                        <a href="#Invoices">
+                            <i class="simple-icon-basket-loaded"></i>
+                            <span>@Utility.Resource.Title_Designer.Invoices</span>
+                        </a>
+                    </li>
+                }
+                @if (User.IsAllowed("Addition.All,Issue.All,Transafer.All,Received.All,Inventory.All"))
+                {
+                    <li>
+                        <a href="#Transaction">
+                            <i class="iconsminds-synchronize-2"></i> @Utility.Resource.Title_Designer.Transactions
+                        </a>
+                    </li>
+                }
+                @if (User.IsAllowed("Collection.All,Payment.All,Outlay.All"))
+                {
+                    <li>
+                        <a href="#Financial">
+                            <i class="iconsminds-coins"></i> @Utility.Resource.Title_Designer.Financial
+                        </a>
+                    </li>
+                }
+                @if (User.IsAllowed("Collection.All,Payment.All,Outlay.All"))
+                {
+                    <li>
+                        <a href="#Financial">
+                            <i class="iconsminds-coins"></i> @Utility.Resource.Title_Designer.Report
+                        </a>
+                    </li>
+                }
+            </ul>
 		</div>
 	</div>
 	<div class="sub-menu">
@@ -85,7 +93,7 @@
 											</a>
 										</li>
 									}
-									@if (User.IsAllowed("Tables.All"))
+									@*@if (User.IsAllowed("Tables.All"))
 									{
 										<li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Table" ? "active" : "")">
 											<a href="/Setting/Table">
@@ -93,7 +101,7 @@
 												<span class="d-inline-block">@Utility.Resource.Title_Designer.Tables</span>
 											</a>
 										</li>
-									}
+									}*@
 								</ul>
 							</div>
 						</li>
@@ -335,43 +343,7 @@
 								}
 							</ul>
 						</div>
-					</li>
-					<li>
-						<a href="#" data-toggle="collapse" data-target="#collapseSalesReports" aria-expanded="false"
-					   aria-controls="collapseSalesReports" class="rotate-arrow-icon opacity-50 collapsed">
-							<i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.SalesReports</span>
-						</a>
-						<div id="collapseSalesReports" class="collapse">
-							<ul class="list-unstyled inner-level-menu">
-								<li>
-									<a href="/Invoices/Report/Customer">
-										<i class="simple-icon-people"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Clients</span>
-									</a>
-								</li>
-								<li>
-									<a href="/Invoices/Report/SalesInvoicesReport">
-										<i class="iconsminds-line-chart-3"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.SalesDetail</span>
-									</a>
-								</li>
-								<li>
-									<a href="/Invoices/Report/TotalInvoiceCustomer">
-										<i class="iconsminds-bar-chart-4"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.TotalSales</span>
-									</a>
-								</li>
-
-								<li>
-									<a href="/Invoices/Report/CustomerSheetReport">
-										<i class="iconsminds-bar-chart-4"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.CustomerSheetReport</span>
-									</a>
-								</li>
-								<li>
-									<a href="Pages.Profile.Portfolio.html">
-										<i class="iconsminds-pie-chart-3"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.UnpaidInvoice</span>
-									</a>
-								</li>
-							</ul>
-						</div>
-					</li>
+					</li>					
 					<li>
 						<a href="#" data-toggle="collapse" data-target="#collapsePurchases" aria-expanded="false"
 					   aria-controls="collapsePurchases" class="rotate-arrow-icon opacity-50 @("Invoice".Contains(ViewContext.RouteData.Values["controller"].ToString()) && ("" + ViewBag.TypeId  == "2" || "" + ViewBag.TypeId  == "4") ? "collapsed" : "")">
@@ -405,34 +377,42 @@
 					<li>
 						<a href="#" data-toggle="collapse" data-target="#collapsePurchasesReports" aria-expanded="false"
 					   aria-controls="collapsePurchasesReports" class="rotate-arrow-icon opacity-50 collapsed">
-							<i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.PurchasesReports</span>
+							<i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Report</span>
 						</a>
 						<div id="collapsePurchasesReports" class="collapse">
-							<ul class="list-unstyled inner-level-menu">
-								<li>
-									<a href="Pages.Profile.Social.html">
-										<i class="iconsminds-line-chart-1"></i>
-										<span class="d-inline-block">
-											@Utility.Resource.Title_Designer.TotalSales
-										</span>
-									</a>
-								</li>
-								<li>
-									<a href="/Invoices/Report/PurchasDetail">
-										<i class="iconsminds-line-chart-3"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.PurchasesReports</span>
-									</a>
-								</li>
-								<li>
-									<a href="/Invoices/Report/SuplierSheetReport">
-										<i class="iconsminds-bar-chart-4"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.SuplierSheetReport</span>
-									</a>
-								</li>
-								<li>
-									<a href="Pages.Profile.Portfolio.html">
-										<i class="iconsminds-pie-chart-3"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.ProdectSalesDetails</span>
-									</a>
-								</li>
-							</ul>
+                            <ul class="list-unstyled inner-level-menu">
+                                <li>
+                                    <a href="/Reports/Lookups/Clients">
+                                        <i class="glyph-icon iconsminds-business-man-woman"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Clients</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/Reports/Lookups/Suppliers">
+                                        <i class="glyph-icon iconsminds-business-mens"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Suppliers</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/Reports/Sales/ClientsStatment">
+                                        <i class="glyph-icon iconsminds-letter-open"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.ClientsStatement</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/Reports/Sales/ClientsStatment">
+                                        <i class="glyph-icon iconsminds-files"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.SuppliersStatement</span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="/Invoices/Report/CustomerSheetReport">
+                                        <i class="glyph-icon iconsminds-profile"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.ClientsBalances</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="Pages.Profile.Portfolio.html">
+                                        <i class="glyph-icon iconsminds-notepad"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.SuppliersBalances</span>
+                                    </a>
+                                </li>                               
+                            </ul>
 						</div>
 					</li>
 				</ul>

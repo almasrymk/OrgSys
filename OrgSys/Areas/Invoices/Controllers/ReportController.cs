@@ -21,7 +21,7 @@ namespace OrgSys.Areas.Invoices.Controllers
             return View();
         }
 
-        public ActionResult SalesDetail(DateTime? fromDate, DateTime? toDate, long dealerId = 0, long shiftId = 0, long branchId = 0, long userId = 0, int page = 1, int pageSize = 100)
+        public ActionResult SalesDetail(DateTime? fromDate = null, DateTime? toDate = null, long dealerId = 0, long shiftId = 0, long branchId = 0, long userId = 0, int page = 1, int pageSize = 100)
         {
             if (fromDate == null)
                 fromDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);

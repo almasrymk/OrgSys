@@ -134,14 +134,14 @@ function ChangeUrl() {
     }
 }
 
-function change(event, _page) {
+function change(event, _page) {    
     if ($('#txtSearch').val() == "" || event.keyCode == '13') {
         search(_page);
     }
 }
 
 function search(_page) {
-    page = _page;
+    page = _page; 
     var Search2 = "";
     //if ($("#HTypeId").length) {
     //    Search2 = "&TypeId=" + $("#HTypeId").val();

@@ -58,6 +58,20 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="SQLFiles\DealerListSql.sql" />
+    <None Remove="SQLFiles\DealersStatmentSql.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="SQLFiles\DealersStatmentSql.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SQLFiles\DealerListSql.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="BuildBundlerMinifier" Version="3.2.449" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.10" />
