@@ -1,28 +1,29 @@
-﻿using Entity.ModelReport;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.IO;
 using System.Linq;
-using System.Text;
+using Entity.ModelReport;
+using Microsoft.EntityFrameworkCore;
 
 namespace Repository.DAL.Output
 {
-    public class LookupsRepo
+    public class DealersStatmentRepo
     {
         public OrgContext db;
         string _Schema;
-        public LookupsRepo(string Schema)
+        public DealersStatmentRepo(string Schema)
         {
             _Schema = Schema;
             if (this.db == null)
                 this.db = new OrgContext(new DbContextOptions<OrgContext>(), Schema);
         }
 
-        public IQueryable<DealerListReport> GetDealers(long DealerTypeId, string txtSearch)
+        public IQueryable<DealerStatmentReport> GetDealersStatment(
+            long DealerTypeId, DateTime FromDate, DateTime ToDate,
+            long DealerId, long ShiftId, long BranchId, long UserId
+            )
         {
-            string SQLStatment = string.Format( File.ReadAllText(Path.GetFullPath(@"SQLFiles/DealerListSql.sql")).Replace("Org" , _Schema) , txtSearch , DealerTypeId);
-            return db.DealerListReport.FromSqlRaw<DealerListReport>(SQLStatment);
+            string SQLStatment = string.Format(File.ReadAllText(Path.GetFullPath(@"SQLFiles/DealersStatmentSql.sql")).Replace("Org", _Schema), DealerTypeId, string.Format("{0:yyyy/MM/dd}", FromDate), string.Format("{0:yyyy/MM/dd}", ToDate), DealerId, ShiftId, BranchId, UserId);
+            return db.DealerStatmentReport.FromSqlRaw<DealerStatmentReport>(SQLStatment);
         }
     }
 }

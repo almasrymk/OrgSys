@@ -493,6 +493,18 @@ namespace Repository
                 return _lookupsRepo;
             }
         }
+
+        private DealersStatmentRepo _dealersStatmentRepo;
+        public DealersStatmentRepo dealersStatmentRepo
+        {
+            get
+            {
+                if (this._dealersStatmentRepo == null)
+                    this._dealersStatmentRepo = new DealersStatmentRepo(Schema);
+
+                return _dealersStatmentRepo;
+            }
+        }
         #endregion
     }
 }

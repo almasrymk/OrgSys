@@ -102,6 +102,8 @@ namespace Repository
 
         [NotMapped]
         public virtual DbSet<DealerListReport> DealerListReport { get; set; }
+        [NotMapped]
+        public virtual DbSet<DealerStatmentReport> DealerStatmentReport { get; set; }        
     }
 
     public class DbSchemaAwareModelCacheKeyFactory : IModelCacheKeyFactory

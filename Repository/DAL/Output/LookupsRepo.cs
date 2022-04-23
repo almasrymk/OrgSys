@@ -8,18 +8,18 @@ using System.Text;
 
 namespace Repository.DAL.Output
 {
-    public class DealersStatmentRepo
+    public class LookupsRepo
     {
         public OrgContext db;
         string _Schema;
-        public DealersStatmentRepo(string Schema)
+        public LookupsRepo(string Schema)
         {
             _Schema = Schema;
             if (this.db == null)
                 this.db = new OrgContext(new DbContextOptions<OrgContext>(), Schema);
         }
 
-        public IQueryable<DealerListReport> GetDealersStatment(long DealerTypeId, string txtSearch)
+        public IQueryable<DealerListReport> GetDealers(long DealerTypeId, string txtSearch)
         {
             string SQLStatment = string.Format( File.ReadAllText(Path.GetFullPath(@"SQLFiles/DealerListSql.sql")).Replace("Org" , _Schema) , txtSearch , DealerTypeId);
             return db.DealerListReport.FromSqlRaw<DealerListReport>(SQLStatment);

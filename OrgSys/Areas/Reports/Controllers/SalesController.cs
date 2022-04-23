@@ -1,22 +1,28 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System;
+using Service;
+using OrgSys.Controllers;
+using Microsoft.AspNetCore.Mvc;
 
 namespace OrgSys.Areas.Reports.Controllers
 {
     [Area("Reports")]
-    public class SalesController : Controller
+    public class SalesController : BaseReportController
     {
-        public SalesController ()
+        public IActionResult ClientsStatment(DateTime? FromDate = null, DateTime? ToDate = null,
+            long DealerId = 0, long ShiftId = 0, long BranchId = 0, long UserId = 0,
+            int page = 1, int pageSize = 100)
         {
+            ViewBag.pageNumber = page;
+            ViewBag.ParentId = 0;
+            ViewBag.TypeId = 1;
 
-        }
+            if (FromDate == null)
+                FromDate = new DateTime(DateTime.Now.Year, 1, 1);
+            if (ToDate == null)
+                ToDate = new DateTime(DateTime.Now.Year, 12, 31);
 
-        public IActionResult ClientsStatment()
-        {
-            return View();
+            var obList = new SalesReportService(User.GetSchema()).GetDealersStatment(1, FromDate.Value , ToDate.Value , DealerId , ShiftId , BranchId , UserId, page, pageSize);
+            return Request.Headers["X-Requested-With"] == "XMLHttpRequest" ? (ActionResult)PartialView("ClientsStatment", obList) : View(obList);
         }
     }
 }

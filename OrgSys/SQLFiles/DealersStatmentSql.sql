@@ -29,6 +29,14 @@ FROM (
 		INNER JOIN Org.InvoiceType invt ON invt.Id = inv.TypeId
 		INNER JOIN Org.Dealer dr ON dr.Id = inv.DealerId
 
+		WHERE 
+		dr.TypeId = Convert(bigint, N'{0}') AND 
+		CONVERT(datetime , CONVERT(VARCHAR(20),inv.Date,111)) < CONVERT(datetime , CONVERT(VARCHAR(20),N'{1}',111)) AND 
+		(Convert(bigint, N'{3}') = 0 OR dr.Id = Convert(bigint, N'{3}')) AND 
+		(Convert(bigint, N'{4}') = 0 OR inv.ShiftId = Convert(bigint, N'{4}')) AND
+		(Convert(bigint, N'{5}') = 0 OR inv.BranchId = Convert(bigint, N'{5}')) AND
+		(Convert(bigint, N'{6}') = 0 OR inv.CreateUserId = N'{6}')
+
 		UNION ALL
 
 		SELECT 
@@ -39,8 +47,17 @@ FROM (
 		FROM Org.Financial inv
 		INNER JOIN Org.FinancialType invt ON invt.Id = inv.TypeId
 		INNER JOIN Org.Dealer dr ON dr.Id = inv.DealerId
-	) OpenningBalance 
 
+		WHERE 
+		dr.TypeId = Convert(bigint, N'{0}') AND 
+		CONVERT(datetime , CONVERT(VARCHAR(20),inv.Date,111)) < CONVERT(datetime , CONVERT(VARCHAR(20),N'{1}',111)) AND 
+		(Convert(bigint, N'{3}') = 0 OR dr.Id = Convert(bigint, N'{3}')) AND 
+		(Convert(bigint, N'{4}') = 0 OR inv.ShiftId = Convert(bigint, N'{4}')) AND
+		(Convert(bigint, N'{5}') = 0 OR inv.BranchId = Convert(bigint, N'{5}')) AND
+		(Convert(bigint, N'{6}') = 0 OR inv.CreateUserId = N'{6}')
+
+	) OpenningBalance 
+	
 	GROUP BY 
 	DealerId , 
 	DealerName
@@ -64,13 +81,14 @@ FROM (
 	INNER JOIN Org.InvoiceType invt ON invt.Id = inv.TypeId
 	INNER JOIN Org.Dealer dr ON dr.Id = inv.DealerId
 
-	--WHERE 
-	--invt.Id IN (Convert(bigint, '{0}') , Convert(bigint, '{1}')) AND 
-	--inv.Date >= '' AND inv.Date <= '' AND
-	--(Convert(bigint, '{2}') = 0 OR dr.Id = Convert(bigint, '{2}')) AND 
-	--(Convert(bigint, '{2}') = 0 OR inv.ShiftId = Convert(bigint, '{2}')) AND
-	--(Convert(bigint, '{2}') = 0 OR inv.BranchId = Convert(bigint, '{2}')) AND
-	--(Convert(bigint, '{2}') = 0 OR inv.CreateUserId = '')
+	WHERE 
+	dr.TypeId = Convert(bigint, N'{0}') AND 
+	CONVERT(datetime , CONVERT(VARCHAR(20),inv.Date,111)) >= CONVERT(datetime , CONVERT(VARCHAR(20),N'{1}',111)) AND 
+	CONVERT(datetime , CONVERT(VARCHAR(20),inv.Date,111)) <= CONVERT(datetime , CONVERT(VARCHAR(20),N'{2}',111)) AND 
+	(Convert(bigint, N'{3}') = 0 OR dr.Id = Convert(bigint, N'{3}')) AND 
+	(Convert(bigint, N'{4}') = 0 OR inv.ShiftId = Convert(bigint, N'{4}')) AND
+	(Convert(bigint, N'{5}') = 0 OR inv.BranchId = Convert(bigint, N'{5}')) AND
+	(Convert(bigint, N'{6}') = 0 OR inv.CreateUserId = N'{6}')
 
 	UNION ALL
 
@@ -92,6 +110,16 @@ FROM (
 
 	INNER JOIN Org.FinancialType invt ON invt.Id = inv.TypeId
 	INNER JOIN Org.Dealer dr ON dr.Id = inv.DealerId
+
+	WHERE 
+	dr.TypeId = Convert(bigint, N'{0}') AND 
+	CONVERT(datetime , CONVERT(VARCHAR(20),inv.Date,111)) >= CONVERT(datetime , CONVERT(VARCHAR(20),N'{1}',111)) AND 
+	CONVERT(datetime , CONVERT(VARCHAR(20),inv.Date,111)) <= CONVERT(datetime , CONVERT(VARCHAR(20),N'{2}',111)) AND 
+	(Convert(bigint, N'{3}') = 0 OR dr.Id = Convert(bigint, N'{3}')) AND 
+	(Convert(bigint, N'{4}') = 0 OR inv.ShiftId = Convert(bigint, N'{4}')) AND
+	(Convert(bigint, N'{5}') = 0 OR inv.BranchId = Convert(bigint, N'{5}')) AND
+	(Convert(bigint, N'{6}') = 0 OR inv.CreateUserId = N'{6}')
+
 ) AS TB 
 
 ORDER BY 

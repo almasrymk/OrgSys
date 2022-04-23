@@ -60,9 +60,13 @@
   <ItemGroup>
     <None Remove="SQLFiles\DealerListSql.sql" />
     <None Remove="SQLFiles\DealersStatmentSql.sql" />
+    <None Remove="SQLFiles\Test.sql" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="SQLFiles\Test.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="SQLFiles\DealersStatmentSql.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

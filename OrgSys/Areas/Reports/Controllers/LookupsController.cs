@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Service;
 using OrgSys.Controllers;
-using Service;
+using Microsoft.AspNetCore.Mvc;
 
 namespace OrgSys.Areas.Reports.Controllers
 {
