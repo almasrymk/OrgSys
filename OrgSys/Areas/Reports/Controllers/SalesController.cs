@@ -2,6 +2,7 @@
 using Service;
 using OrgSys.Controllers;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace OrgSys.Areas.Reports.Controllers
 {
@@ -12,6 +13,7 @@ namespace OrgSys.Areas.Reports.Controllers
             long DealerId = 0, long ShiftId = 0, long BranchId = 0, long UserId = 0,
             int page = 1, int pageSize = 100)
         {
+            ViewBag.DealerList = new SelectList(new DealerService(User.GetSchema()).GetAll(0,1), "Id", "Name");
             ViewBag.pageNumber = page;
             ViewBag.ParentId = 0;
             ViewBag.TypeId = 1;

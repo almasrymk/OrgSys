@@ -121,8 +121,3 @@ FROM (
 	(Convert(bigint, N'{6}') = 0 OR inv.CreateUserId = N'{6}')
 
 ) AS TB 
-
-ORDER BY 
-tb.DealerId , 
-tb.Type  , 
-tb.Date desc

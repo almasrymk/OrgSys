@@ -21,7 +21,7 @@ namespace Service
             long DealerId, long ShiftId, long BranchId, long UserId,
             int page = 1, int pageSize = 100)
         {
-            return repo.dealersStatmentRepo.GetDealersStatment(DealerTypeId, FromDate, ToDate, DealerId, ShiftId, BranchId, UserId).AsEnumerable().ToPagedList(page, pageSize);
+            return repo.dealersStatmentRepo.GetDealersStatment(DealerTypeId, FromDate, ToDate, DealerId, ShiftId, BranchId, UserId).OrderBy(e=>e.DealerId).ThenBy(e=>e.Type).ThenByDescending(e=>e.Date).AsEnumerable().ToPagedList(page, pageSize);
         }
     }
 }
