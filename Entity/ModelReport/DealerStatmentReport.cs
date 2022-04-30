@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entity.ModelReport
 {
@@ -6,10 +7,12 @@ namespace Entity.ModelReport
     {
         public virtual long Id { get; set; }
 
-        public virtual string Code { get; set; }
+        public long? ReferenceId { get; set; }
+        
+        public string Code { get; set; }
 
-        public long TypeId { get; set; }
-
+        public long? TypeId { get; set; }
+        public int OpenningBalance { get; set; }
         public int Type { get; set; }
         public string TypeName { get; set; }
         public DateTime Date { get; set; }

@@ -16,7 +16,7 @@ namespace Repository.DAL.Output
         {
             _Schema = Schema;
             if (this.db == null)
-                this.db = new OrgContext(new DbContextOptions<OrgContext>(), Schema);
+                this.db = new OrgContext(new DbContextOptions<OrgContext>() , _Schema);
         }
 
         public IQueryable<DealerListReport> GetDealers(long DealerTypeId, string txtSearch)

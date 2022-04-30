@@ -14,7 +14,7 @@ namespace Repository.DAL.Output
         {
             _Schema = Schema;
             if (this.db == null)
-                this.db = new OrgContext(new DbContextOptions<OrgContext>(), Schema);
+                this.db = new OrgContext(new DbContextOptions<OrgContext>() , _Schema);
         }
 
         public IQueryable<DealerStatmentReport> GetDealersStatment(
@@ -23,7 +23,7 @@ namespace Repository.DAL.Output
             )
         {
             string SQLStatment = string.Format(File.ReadAllText(Path.GetFullPath(@"SQLFiles/DealersStatmentSql.sql")).Replace("Org", _Schema), DealerTypeId, string.Format("{0:yyyy/MM/dd}", FromDate), string.Format("{0:yyyy/MM/dd}", ToDate), DealerId, ShiftId, BranchId, UserId);
-            return db.DealerStatmentReport.FromSqlRaw<DealerStatmentReport>(SQLStatment);
+            return db.DealerStatmentReport.FromSqlRaw(SQLStatment);
         }
     }
 }

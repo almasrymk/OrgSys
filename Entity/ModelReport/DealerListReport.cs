@@ -1,4 +1,6 @@
-﻿namespace Entity.ModelReport
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Entity.ModelReport
 {
     public class DealerListReport : BaseModel
     {

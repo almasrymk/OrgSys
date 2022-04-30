@@ -143,10 +143,13 @@ function change(event, _page) {
 function search(_page) {
     page = _page; 
     var Search2 = "";
-    //if ($("#HTypeId").length) {
-    //    Search2 = "&TypeId=" + $("#HTypeId").val();
-    //}
-    //alert(Search2);
+    if ($("#FromDate").length) {
+        Search2 = "&FromDate=" + $("#FromDate").val();
+    }
+    if ($("#ToDate").length) {
+        Search2 += "&ToDate=" + $("#ToDate").val();
+    }
+    alert(Search2);
     setTimeout(() => {
         $.ajax({
             url: url + "?search=" + $('#txtSearch').val() + Search2 + "&page=" + page + "&ParentId=" + $("#ParentId").val() + "&TypeId=" + $("#TypeId").val(),
@@ -157,6 +160,35 @@ function search(_page) {
                 $(".btn-add").show();
                 LiskChk();
                 DefulatMode();               
+            }
+        });
+    }, 300);
+}
+
+function searchReport(_page) {
+    page = _page;
+    var Search = "";
+    if ($("#FromDate").length) {
+        var parts = $("#FromDate").val().split('-');
+        if (parts.length == 3) {
+            Search = "FromDate=" + new Date(parts[0], parts[1] - 1, parts[2]);
+        }
+    }
+    if ($("#ToDate").length) {
+        var parts = $("#ToDate").val().split('-');
+        Search += "&ToDate=" + new Date(parts[0], parts[1] - 1, parts[2]);
+    }
+    alert(Search);
+    setTimeout(() => {
+        $.ajax({
+            url: url + "?" + Search + "&page=" + page,
+            success: function (result) {
+                $('#List').empty();
+                $('#List').html(result);
+                $(".group-add").hide();
+                $(".btn-add").show();
+                LiskChk();
+                DefulatMode();
             }
         });
     }, 300);

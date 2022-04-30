@@ -9,7 +9,7 @@ namespace OrgSys.Areas.Reports.Controllers
     [Area("Reports")]
     public class SalesController : BaseReportController
     {
-        public IActionResult ClientsStatment(DateTime? FromDate = null, DateTime? ToDate = null,
+        public IActionResult ClientsStatment(string FromDate = null, string ToDate = null,
             long DealerId = 0, long ShiftId = 0, long BranchId = 0, long UserId = 0,
             int page = 1, int pageSize = 100)
         {
@@ -18,13 +18,15 @@ namespace OrgSys.Areas.Reports.Controllers
             ViewBag.ParentId = 0;
             ViewBag.TypeId = 1;
 
-            if (FromDate == null)
-                FromDate = new DateTime(DateTime.Now.Year, 1, 1);
-            if (ToDate == null)
-                ToDate = new DateTime(DateTime.Now.Year, 12, 31);
+            DateTime fDate = new DateTime(DateTime.Now.Year, 1, 1);
+            DateTime tDate = new DateTime(DateTime.Now.Year, 12, 31);
+            if (FromDate != null)
+                fDate = DateTime.Parse(FromDate);
+            if (ToDate != null)
+                tDate = DateTime.Parse(ToDate);
 
-            var obList = new SalesReportService(User.GetSchema()).GetDealersStatment(1, FromDate.Value , ToDate.Value , DealerId , ShiftId , BranchId , UserId, page, pageSize);
-            return Request.Headers["X-Requested-With"] == "XMLHttpRequest" ? (ActionResult)PartialView("ClientsStatment", obList) : View(obList);
+            var obList = new SalesReportService(User.GetSchema()).GetDealersStatment(1, fDate, tDate , DealerId , ShiftId , BranchId , UserId, page, pageSize);
+            return Request.Headers["X-Requested-With"] == "XMLHttpRequest" ? (ActionResult)PartialView("ClientsStatmentList", obList) : View(obList);
         }
     }
 }

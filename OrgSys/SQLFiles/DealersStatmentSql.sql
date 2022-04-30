@@ -1,19 +1,21 @@
 SELECT 
 
+ROW_NUMBER() OVER(ORDER BY   DealerId , [type] , ReferenceId ,  OpenningBalance ASC) AS Id,
 *,
-SUM(Amount) OVER(PARTITION BY tb.DealerId ORDER BY tb.DealerId , tb.Type  , tb.Date desc ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS Balance
+SUM(Amount * InOut) OVER(PARTITION BY tb.DealerId ORDER BY tb.DealerId , tb.OpenningBalance  DESC, tb.Date ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS Balance
 
 FROM (
 
     ---------- Get Openning Balance ----------
 
 	SELECT 
+	1 OpenningBalance,
 	0 Type,
-	NULL Id , 
+	NULL ReferenceId, 
 	NULL Code ,
 	NULL TypeId , 
 	N'Openning Balance' TypeName , 
-	NULL [Date] ,
+	CONVERT(datetime , CONVERT(VARCHAR(20),N'1-1-2012',111)) [Date] ,
 	DealerId , 
 	DealerName ,
 	SUM(Amount) Amount ,
@@ -42,7 +44,7 @@ FROM (
 		SELECT 
 		inv.DealerId , 
 		dr.[Name] DealerName , 
-		inv.Amount * invt.InOut Amount
+		inv.Amount * invt.InOut * -1 Amount
 
 		FROM Org.Financial inv
 		INNER JOIN Org.FinancialType invt ON invt.Id = inv.TypeId
@@ -67,8 +69,9 @@ FROM (
 	---------- Get All Invoices ----------
 
 	SELECT 
+	0 OpenningBalance,
 	1 Type ,
-	inv.Id , 
+	inv.Id ReferenceId, 
 	Inv.Code ,
 	inv.TypeId , 
 	invt.[Group] + ' ' + invt.[Name] TypeName , 
@@ -95,8 +98,9 @@ FROM (
 	---------- Get All Financial ----------
 
 	SELECT 
-	1 Type ,
-	inv.Id , 
+	0 OpenningBalance,
+	2 Type ,
+	inv.Id ReferenceId, 
 	Inv.Code ,
 	inv.TypeId , 
 	invt.[Name] TypeName , 
@@ -104,7 +108,7 @@ FROM (
 	inv.DealerId , 
 	dr.[Name] DealerName , 
 	inv.Amount Amount ,
-	invt.InOut
+	invt.InOut * -1 InOut
 
 	FROM Org.Financial inv
 
@@ -112,7 +116,7 @@ FROM (
 	INNER JOIN Org.Dealer dr ON dr.Id = inv.DealerId
 
 	WHERE 
-	dr.TypeId = Convert(bigint, N'{0}') AND 
+	dr.TypeId in (1,2) AND 
 	CONVERT(datetime , CONVERT(VARCHAR(20),inv.Date,111)) >= CONVERT(datetime , CONVERT(VARCHAR(20),N'{1}',111)) AND 
 	CONVERT(datetime , CONVERT(VARCHAR(20),inv.Date,111)) <= CONVERT(datetime , CONVERT(VARCHAR(20),N'{2}',111)) AND 
 	(Convert(bigint, N'{3}') = 0 OR dr.Id = Convert(bigint, N'{3}')) AND 
@@ -121,3 +125,4 @@ FROM (
 	(Convert(bigint, N'{6}') = 0 OR inv.CreateUserId = N'{6}')
 
 ) AS TB 
+--ORDER BY DealerId , OpenningBalance , [Date]

@@ -16,16 +16,7 @@
                             <span>@Utility.Resource.Title_Designer.Data</span>
                         </a>
                     </li>
-                }
-                @*@if (User.IsAllowed("Internal.All,External.All"))
-        {
-            <li>
-                <a href="#Orders">
-                    <i class="simple-icon-bag"></i>
-                    <span>@Utility.Resource.Title_Designer.Orders</span>
-                </a>
-            </li>
-        }*@
+                }              
                 @if (User.IsAllowed("SalesInvoices.All,SalesReturns.All,PurchasesInvoices.All,PurchasesReturns.All"))
                 {
                     <li>
@@ -420,7 +411,6 @@
 			@if (User.IsAllowed("Addition.All,Issue.All,Transafer.All,Received.All,Inventory.All"))
 			{
 				<ul class="list-unstyled" data-link="Transaction" id="Transaction">
-
 					<li>
 						<a href="#" data-toggle="collapse" data-target="#collapseTransaction" aria-expanded="true"
 					   aria-controls="collapseTransaction" class="rotate-arrow-icon opacity-50">
@@ -501,7 +491,6 @@
 			@if (User.IsAllowed("Collection.All,Payment.All,Outlay.All"))
 			{
 				<ul class="list-unstyled" data-link="Financial" id="Financial">
-
 					<li>
 						<a href="#" data-toggle="collapse" data-target="#collapseFinancial" aria-expanded="true"
 					   aria-controls="collapseFinancial" class="rotate-arrow-icon opacity-50">
