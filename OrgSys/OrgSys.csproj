@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>  
+    <TargetFramework>net5.0</TargetFramework>  
   </PropertyGroup>
 
   <ItemGroup>
@@ -29,8 +29,128 @@
     <Content Remove="Areas\Transactions\Models\**" />
     <Content Remove="Views\Account\**" />
     <Content Remove="wwwroot\Assets\Revolutions\**" />
+    <Content Remove="Areas\Financials\Views\Financial\Index.cshtml" />
+    <Content Remove="Areas\Financials\Views\Financial\Invoices.cshtml" />
+    <Content Remove="Areas\Financials\Views\Financial\List.cshtml" />
+    <Content Remove="Areas\Financials\Views\Financial\Save.cshtml" />
+    <Content Remove="Areas\Invoices\Views\Invoice\Index.cshtml" />
+    <Content Remove="Areas\Invoices\Views\Invoice\InvoicePrint.cshtml" />
+    <Content Remove="Areas\Invoices\Views\Invoice\List.cshtml" />
+    <Content Remove="Areas\Invoices\Views\Invoice\Products.cshtml" />
+    <Content Remove="Areas\Invoices\Views\Invoice\Save.cshtml" />
+    <Content Remove="Areas\Invoices\Views\Invoice\SearchInvoices.cshtml" />
+    <Content Remove="Areas\Invoices\Views\Invoice\SearchInvoicesList.cshtml" />
+    <Content Remove="Areas\Invoices\Views\Report\Customer.cshtml" />
+    <Content Remove="Areas\Invoices\Views\Report\CustomerList.cshtml" />
+    <Content Remove="Areas\Invoices\Views\Report\CustomerSheetReport.cshtml" />
+    <Content Remove="Areas\Invoices\Views\Report\CustomerSheetReportList.cshtml" />
+    <Content Remove="Areas\Invoices\Views\Report\PurchasDetail.cshtml" />
+    <Content Remove="Areas\Invoices\Views\Report\PurchasDetailList.cshtml" />
+    <Content Remove="Areas\Invoices\Views\Report\SalesDetail.cshtml" />
+    <Content Remove="Areas\Invoices\Views\Report\SalesDetailList.cshtml" />
+    <Content Remove="Areas\Invoices\Views\Report\SalesInvoicesReport.cshtml" />
+    <Content Remove="Areas\Invoices\Views\Report\SalesInvoicesReportList.cshtml" />
+    <Content Remove="Areas\Invoices\Views\Report\SuplierSheetReport.cshtml" />
+    <Content Remove="Areas\Invoices\Views\Report\SuplierSheetReportList.cshtml" />
+    <Content Remove="Areas\Invoices\Views\Report\TotalInvoiceCustomer.cshtml" />
+    <Content Remove="Areas\Invoices\Views\Report\TotalInvoiceCustomerList.cshtml" />
+    <Content Remove="Areas\Orders\Views\Order\Index.cshtml" />
+    <Content Remove="Areas\Orders\Views\Order\List.cshtml" />
+    <Content Remove="Areas\Orders\Views\Order\Products.cshtml" />
+    <Content Remove="Areas\Orders\Views\Order\Save.cshtml" />
+    <Content Remove="Areas\Reports\Views\Lookups\Clients.cshtml" />
+    <Content Remove="Areas\Reports\Views\Lookups\ClientsList.cshtml" />
+    <Content Remove="Areas\Reports\Views\Lookups\Suppliers.cshtml" />
+    <Content Remove="Areas\Reports\Views\Lookups\SuppliersList.cshtml" />
+    <Content Remove="Areas\Reports\Views\Sales\ClientsStatment.cshtml" />
+    <Content Remove="Areas\Reports\Views\Sales\ClientsStatmentList.cshtml" />
+    <Content Remove="Areas\Setting\Views\Branch\Index.cshtml" />
+    <Content Remove="Areas\Setting\Views\Branch\List.cshtml" />
+    <Content Remove="Areas\Setting\Views\Branch\Save.cshtml" />
+    <Content Remove="Areas\Setting\Views\Classification\Index.cshtml" />
+    <Content Remove="Areas\Setting\Views\Classification\List.cshtml" />
+    <Content Remove="Areas\Setting\Views\Classification\Save.cshtml" />
+    <Content Remove="Areas\Setting\Views\Currency\Index.cshtml" />
+    <Content Remove="Areas\Setting\Views\Currency\List.cshtml" />
+    <Content Remove="Areas\Setting\Views\Currency\Save.cshtml" />
+    <Content Remove="Areas\Setting\Views\Dealer\Index.cshtml" />
+    <Content Remove="Areas\Setting\Views\Dealer\List.cshtml" />
+    <Content Remove="Areas\Setting\Views\Dealer\Save.cshtml" />
+    <Content Remove="Areas\Setting\Views\Outlay\Index.cshtml" />
+    <Content Remove="Areas\Setting\Views\Outlay\List.cshtml" />
+    <Content Remove="Areas\Setting\Views\Outlay\Save.cshtml" />
+    <Content Remove="Areas\Setting\Views\Preference\Show.cshtml" />
+    <Content Remove="Areas\Setting\Views\Product\Index.cshtml" />
+    <Content Remove="Areas\Setting\Views\Product\List.cshtml" />
+    <Content Remove="Areas\Setting\Views\Product\Save.cshtml" />
+    <Content Remove="Areas\Setting\Views\Product\SearchProducts.cshtml" />
+    <Content Remove="Areas\Setting\Views\Product\SearchProductsList.cshtml" />
+    <Content Remove="Areas\Setting\Views\Product\TreeView.cshtml" />
+    <Content Remove="Areas\Setting\Views\Product\Units.cshtml" />
+    <Content Remove="Areas\Setting\Views\Property\Index.cshtml" />
+    <Content Remove="Areas\Setting\Views\Property\List.cshtml" />
+    <Content Remove="Areas\Setting\Views\Property\Save.cshtml" />
+    <Content Remove="Areas\Setting\Views\Role\Index.cshtml" />
+    <Content Remove="Areas\Setting\Views\Role\List.cshtml" />
+    <Content Remove="Areas\Setting\Views\Role\Save.cshtml" />
+    <Content Remove="Areas\Setting\Views\Safe\Index.cshtml" />
+    <Content Remove="Areas\Setting\Views\Safe\List.cshtml" />
+    <Content Remove="Areas\Setting\Views\Safe\Save.cshtml" />
+    <Content Remove="Areas\Setting\Views\Shift\Index.cshtml" />
+    <Content Remove="Areas\Setting\Views\Shift\List.cshtml" />
+    <Content Remove="Areas\Setting\Views\Shift\Save.cshtml" />
+    <Content Remove="Areas\Setting\Views\Store\Index.cshtml" />
+    <Content Remove="Areas\Setting\Views\Store\List.cshtml" />
+    <Content Remove="Areas\Setting\Views\Store\Save.cshtml" />
+    <Content Remove="Areas\Setting\Views\Table\Index.cshtml" />
+    <Content Remove="Areas\Setting\Views\Table\List.cshtml" />
+    <Content Remove="Areas\Setting\Views\Table\Save.cshtml" />
+    <Content Remove="Areas\Setting\Views\Unit\Index.cshtml" />
+    <Content Remove="Areas\Setting\Views\Unit\List.cshtml" />
+    <Content Remove="Areas\Setting\Views\Unit\Save.cshtml" />
+    <Content Remove="Areas\Setting\Views\User\Index.cshtml" />
+    <Content Remove="Areas\Setting\Views\User\List.cshtml" />
+    <Content Remove="Areas\Setting\Views\User\Save.cshtml" />
+    <Content Remove="Areas\Transactions\Views\Inventory\Index.cshtml" />
+    <Content Remove="Areas\Transactions\Views\Inventory\List.cshtml" />
+    <Content Remove="Areas\Transactions\Views\Inventory\Save.cshtml" />
+    <Content Remove="Areas\Transactions\Views\Transaction\Index.cshtml" />
+    <Content Remove="Areas\Transactions\Views\Transaction\List.cshtml" />
+    <Content Remove="Areas\Transactions\Views\Transaction\Products.cshtml" />
+    <Content Remove="Areas\Transactions\Views\Transaction\Save.cshtml" />
     <Content Remove="bundleconfig.json" />
+    <Content Remove="Views\Home\Dashboard.cshtml" />
+    <Content Remove="Views\Home\ForgetPassword.cshtml" />
+    <Content Remove="Views\Home\Index.cshtml" />
+    <Content Remove="Views\Home\Invoice.cshtml" />
     <Content Remove="Views\Home\InvoicePrint.cshtml" />
+    <Content Remove="Views\Home\LogIn.cshtml" />
+    <Content Remove="Views\Home\LogInToPass.cshtml" />
+    <Content Remove="Views\Home\MailTemplate.cshtml" />
+    <Content Remove="Views\Home\Maintenance.cshtml" />
+    <Content Remove="Views\Home\NotFound.cshtml" />
+    <Content Remove="Views\Home\PaymentMethod.cshtml" />
+    <Content Remove="Views\Home\Pricing.cshtml" />
+    <Content Remove="Views\Home\Privacy.cshtml" />
+    <Content Remove="Views\Home\Profile.cshtml" />
+    <Content Remove="Views\Home\RegDone.cshtml" />
+    <Content Remove="Views\Home\Register.cshtml" />
+    <Content Remove="Views\Home\Register2.cshtml" />
+    <Content Remove="Views\Home\RequestReg.cshtml" />
+    <Content Remove="Views\Home\RestPassword.cshtml" />
+    <Content Remove="Views\Home\ServerError.cshtml" />
+    <Content Remove="Views\Home\Tables.cshtml" />
+    <Content Remove="Views\Home\TermsAndConditions.cshtml" />
+    <Content Remove="Views\Shared\Error.cshtml" />
+    <Content Remove="Views\Shared\PagedList.cshtml" />
+    <Content Remove="Views\Shared\PagedListReport.cshtml" />
+    <Content Remove="Views\Shared\TreeView.cshtml" />
+    <Content Remove="Views\Shared\_Layout.cshtml" />
+    <Content Remove="Views\Shared\_Layout_Website.cshtml" />
+    <Content Remove="Views\Shared\_MainMenu.cshtml" />
+    <Content Remove="Views\Shared\_ValidationScriptsPartial.cshtml" />
+    <Content Remove="Views\_ViewImports.cshtml" />
+    <Content Remove="Views\_ViewStart.cshtml" />
     <EmbeddedResource Remove="Areas\Financials\Data\**" />
     <EmbeddedResource Remove="Areas\Financials\Models\**" />
     <EmbeddedResource Remove="Areas\Invoices\Data\**" />
@@ -76,9 +196,136 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Areas\Financials\Views\Financial\Index.cshtml" />
+    <EmbeddedResource Include="Areas\Financials\Views\Financial\Invoices.cshtml" />
+    <EmbeddedResource Include="Areas\Financials\Views\Financial\List.cshtml" />
+    <EmbeddedResource Include="Areas\Financials\Views\Financial\Save.cshtml" />
+    <EmbeddedResource Include="Areas\Invoices\Views\Invoice\Index.cshtml" />
+    <EmbeddedResource Include="Areas\Invoices\Views\Invoice\InvoicePrint.cshtml" />
+    <EmbeddedResource Include="Areas\Invoices\Views\Invoice\List.cshtml" />
+    <EmbeddedResource Include="Areas\Invoices\Views\Invoice\Products.cshtml" />
+    <EmbeddedResource Include="Areas\Invoices\Views\Invoice\Save.cshtml" />
+    <EmbeddedResource Include="Areas\Invoices\Views\Invoice\SearchInvoices.cshtml" />
+    <EmbeddedResource Include="Areas\Invoices\Views\Invoice\SearchInvoicesList.cshtml" />
+    <EmbeddedResource Include="Areas\Invoices\Views\Report\Customer.cshtml" />
+    <EmbeddedResource Include="Areas\Invoices\Views\Report\CustomerList.cshtml" />
+    <EmbeddedResource Include="Areas\Invoices\Views\Report\CustomerSheetReport.cshtml" />
+    <EmbeddedResource Include="Areas\Invoices\Views\Report\CustomerSheetReportList.cshtml" />
+    <EmbeddedResource Include="Areas\Invoices\Views\Report\PurchasDetail.cshtml" />
+    <EmbeddedResource Include="Areas\Invoices\Views\Report\PurchasDetailList.cshtml" />
+    <EmbeddedResource Include="Areas\Invoices\Views\Report\SalesDetail.cshtml" />
+    <EmbeddedResource Include="Areas\Invoices\Views\Report\SalesDetailList.cshtml" />
+    <EmbeddedResource Include="Areas\Invoices\Views\Report\SalesInvoicesReport.cshtml" />
+    <EmbeddedResource Include="Areas\Invoices\Views\Report\SalesInvoicesReportList.cshtml" />
+    <EmbeddedResource Include="Areas\Invoices\Views\Report\SuplierSheetReport.cshtml" />
+    <EmbeddedResource Include="Areas\Invoices\Views\Report\SuplierSheetReportList.cshtml" />
+    <EmbeddedResource Include="Areas\Invoices\Views\Report\TotalInvoiceCustomer.cshtml" />
+    <EmbeddedResource Include="Areas\Invoices\Views\Report\TotalInvoiceCustomerList.cshtml" />
+    <EmbeddedResource Include="Areas\Orders\Views\Order\Index.cshtml" />
+    <EmbeddedResource Include="Areas\Orders\Views\Order\List.cshtml" />
+    <EmbeddedResource Include="Areas\Orders\Views\Order\Products.cshtml" />
+    <EmbeddedResource Include="Areas\Orders\Views\Order\Save.cshtml" />
+    <EmbeddedResource Include="Areas\Reports\Views\Lookups\Clients.cshtml" />
+    <EmbeddedResource Include="Areas\Reports\Views\Lookups\ClientsList.cshtml" />
+    <EmbeddedResource Include="Areas\Reports\Views\Lookups\Suppliers.cshtml" />
+    <EmbeddedResource Include="Areas\Reports\Views\Lookups\SuppliersList.cshtml" />
+    <EmbeddedResource Include="Areas\Reports\Views\Sales\ClientsStatment.cshtml" />
+    <EmbeddedResource Include="Areas\Reports\Views\Sales\ClientsStatmentList.cshtml" />
+    <EmbeddedResource Include="Areas\Setting\Views\Branch\Index.cshtml" />
+    <EmbeddedResource Include="Areas\Setting\Views\Branch\List.cshtml" />
+    <EmbeddedResource Include="Areas\Setting\Views\Branch\Save.cshtml" />
+    <EmbeddedResource Include="Areas\Setting\Views\Classification\Index.cshtml" />
+    <EmbeddedResource Include="Areas\Setting\Views\Classification\List.cshtml" />
+    <EmbeddedResource Include="Areas\Setting\Views\Classification\Save.cshtml" />
+    <EmbeddedResource Include="Areas\Setting\Views\Currency\Index.cshtml" />
+    <EmbeddedResource Include="Areas\Setting\Views\Currency\List.cshtml" />
+    <EmbeddedResource Include="Areas\Setting\Views\Currency\Save.cshtml" />
+    <EmbeddedResource Include="Areas\Setting\Views\Dealer\Index.cshtml" />
+    <EmbeddedResource Include="Areas\Setting\Views\Dealer\List.cshtml" />
+    <EmbeddedResource Include="Areas\Setting\Views\Dealer\Save.cshtml" />
+    <EmbeddedResource Include="Areas\Setting\Views\Outlay\Index.cshtml" />
+    <EmbeddedResource Include="Areas\Setting\Views\Outlay\List.cshtml" />
+    <EmbeddedResource Include="Areas\Setting\Views\Outlay\Save.cshtml" />
+    <EmbeddedResource Include="Areas\Setting\Views\Preference\Show.cshtml" />
+    <EmbeddedResource Include="Areas\Setting\Views\Product\Index.cshtml" />
+    <EmbeddedResource Include="Areas\Setting\Views\Product\List.cshtml" />
+    <EmbeddedResource Include="Areas\Setting\Views\Product\Save.cshtml" />
+    <EmbeddedResource Include="Areas\Setting\Views\Product\SearchProducts.cshtml" />
+    <EmbeddedResource Include="Areas\Setting\Views\Product\SearchProductsList.cshtml" />
+    <EmbeddedResource Include="Areas\Setting\Views\Product\TreeView.cshtml" />
+    <EmbeddedResource Include="Areas\Setting\Views\Product\Units.cshtml" />
+    <EmbeddedResource Include="Areas\Setting\Views\Property\Index.cshtml" />
+    <EmbeddedResource Include="Areas\Setting\Views\Property\List.cshtml" />
+    <EmbeddedResource Include="Areas\Setting\Views\Property\Save.cshtml" />
+    <EmbeddedResource Include="Areas\Setting\Views\Role\Index.cshtml" />
+    <EmbeddedResource Include="Areas\Setting\Views\Role\List.cshtml" />
+    <EmbeddedResource Include="Areas\Setting\Views\Role\Save.cshtml" />
+    <EmbeddedResource Include="Areas\Setting\Views\Safe\Index.cshtml" />
+    <EmbeddedResource Include="Areas\Setting\Views\Safe\List.cshtml" />
+    <EmbeddedResource Include="Areas\Setting\Views\Safe\Save.cshtml" />
+    <EmbeddedResource Include="Areas\Setting\Views\Shift\Index.cshtml" />
+    <EmbeddedResource Include="Areas\Setting\Views\Shift\List.cshtml" />
+    <EmbeddedResource Include="Areas\Setting\Views\Shift\Save.cshtml" />
+    <EmbeddedResource Include="Areas\Setting\Views\Store\Index.cshtml" />
+    <EmbeddedResource Include="Areas\Setting\Views\Store\List.cshtml" />
+    <EmbeddedResource Include="Areas\Setting\Views\Store\Save.cshtml" />
+    <EmbeddedResource Include="Areas\Setting\Views\Table\Index.cshtml" />
+    <EmbeddedResource Include="Areas\Setting\Views\Table\List.cshtml" />
+    <EmbeddedResource Include="Areas\Setting\Views\Table\Save.cshtml" />
+    <EmbeddedResource Include="Areas\Setting\Views\Unit\Index.cshtml" />
+    <EmbeddedResource Include="Areas\Setting\Views\Unit\List.cshtml" />
+    <EmbeddedResource Include="Areas\Setting\Views\Unit\Save.cshtml" />
+    <EmbeddedResource Include="Areas\Setting\Views\User\Index.cshtml" />
+    <EmbeddedResource Include="Areas\Setting\Views\User\List.cshtml" />
+    <EmbeddedResource Include="Areas\Setting\Views\User\Save.cshtml" />
+    <EmbeddedResource Include="Areas\Transactions\Views\Inventory\Index.cshtml" />
+    <EmbeddedResource Include="Areas\Transactions\Views\Inventory\List.cshtml" />
+    <EmbeddedResource Include="Areas\Transactions\Views\Inventory\Save.cshtml" />
+    <EmbeddedResource Include="Areas\Transactions\Views\Transaction\Index.cshtml" />
+    <EmbeddedResource Include="Areas\Transactions\Views\Transaction\List.cshtml" />
+    <EmbeddedResource Include="Areas\Transactions\Views\Transaction\Products.cshtml" />
+    <EmbeddedResource Include="Areas\Transactions\Views\Transaction\Save.cshtml" />
+    <EmbeddedResource Include="Views\Home\Dashboard.cshtml" />
+    <EmbeddedResource Include="Views\Home\ForgetPassword.cshtml" />
+    <EmbeddedResource Include="Views\Home\Index.cshtml" />
+    <EmbeddedResource Include="Views\Home\Invoice.cshtml" />
+    <EmbeddedResource Include="Views\Home\LogIn.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Home\LogInToPass.cshtml" />
+    <EmbeddedResource Include="Views\Home\MailTemplate.cshtml" />
+    <EmbeddedResource Include="Views\Home\Maintenance.cshtml" />
+    <EmbeddedResource Include="Views\Home\NotFound.cshtml" />
+    <EmbeddedResource Include="Views\Home\PaymentMethod.cshtml" />
+    <EmbeddedResource Include="Views\Home\Pricing.cshtml" />
+    <EmbeddedResource Include="Views\Home\Privacy.cshtml" />
+    <EmbeddedResource Include="Views\Home\Profile.cshtml" />
+    <EmbeddedResource Include="Views\Home\RegDone.cshtml" />
+    <EmbeddedResource Include="Views\Home\Register.cshtml" />
+    <EmbeddedResource Include="Views\Home\Register2.cshtml" />
+    <EmbeddedResource Include="Views\Home\RequestReg.cshtml" />
+    <EmbeddedResource Include="Views\Home\RestPassword.cshtml" />
+    <EmbeddedResource Include="Views\Home\ServerError.cshtml" />
+    <EmbeddedResource Include="Views\Home\Tables.cshtml" />
+    <EmbeddedResource Include="Views\Home\TermsAndConditions.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Error.cshtml" />
+    <EmbeddedResource Include="Views\Shared\PagedList.cshtml" />
+    <EmbeddedResource Include="Views\Shared\PagedListReport.cshtml" />
+    <EmbeddedResource Include="Views\Shared\TreeView.cshtml" />
+    <EmbeddedResource Include="Views\Shared\_Layout.cshtml" />
+    <EmbeddedResource Include="Views\Shared\_Layout_Website.cshtml" />
+    <EmbeddedResource Include="Views\Shared\_MainMenu.cshtml" />
+    <EmbeddedResource Include="Views\Shared\_ValidationScriptsPartial.cshtml" />
+    <EmbeddedResource Include="Views\_ViewImports.cshtml" />
+    <EmbeddedResource Include="Views\_ViewStart.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="BuildBundlerMinifier" Version="3.2.449" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.8" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.25" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -104,13 +351,6 @@
     <None Include="wwwroot\jquery-ui-1.13.0.custom\external\jquery\jquery.js" />
     <None Include="wwwroot\jquery-ui-1.13.0.custom\jquery-ui.js" />
     <None Include="wwwroot\jquery-ui-1.13.0.custom\jquery-ui.min.js" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Update="Views\Home\Login.cshtml">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
   </ItemGroup>
 
   <ProjectExtensions>
