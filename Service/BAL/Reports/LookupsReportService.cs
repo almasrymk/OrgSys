@@ -14,7 +14,7 @@ namespace Service
             repo = new UnitOfWorkOrg(Schema);
         }
 
-        public IPagedList<DealerListReport> GetDealers(long typeId, string txtSearch, int page = 1, int pageSize = 100)
+        public IPagedList<DealerList> GetDealers(long typeId, string txtSearch, int page = 1, int pageSize = 100)
         {
             return repo.lookupsRepo.GetDealers(typeId, txtSearch).ToPagedList(page, pageSize);
         }

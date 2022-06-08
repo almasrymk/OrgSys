@@ -146,17 +146,17 @@ namespace OrgSys.Controllers
         {
             return View();
         }
-
-        [AllowAnonymous]
+        
         [HttpGet]
-        public IActionResult LogIn()
+        [AllowAnonymous]
+        public IActionResult LogIn(string ReturnUrl)
         {
             return View();
         }
-
-        [AllowAnonymous]
+       
         [HttpPost]
-        public IActionResult LogIn(LoginUserModelView _user)
+        [AllowAnonymous]
+        public IActionResult LogIn(LoginUserModelView _user , string ReturnUrl)
         {
             try
             {

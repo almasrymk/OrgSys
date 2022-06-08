@@ -16,12 +16,20 @@ namespace Service
             repo = new UnitOfWorkOrg(Schema);
         }
 
-        public IPagedList<DealerStatmentReport> GetDealersStatment(
-            long DealerTypeId, DateTime FromDate, DateTime ToDate,
+        public IPagedList<DealerStatment> GetDealersStatment(
+          long DealerTypeId, DateTime FromDate, DateTime ToDate,
+          long DealerId, long ShiftId, long BranchId, long UserId,
+          int page = 1, int pageSize = 100)
+        {
+            return repo.dealersStatmentRepo.GetDealersStatment(DealerTypeId, FromDate, ToDate, DealerId, ShiftId, BranchId, UserId).OrderBy(e => e.DealerId).ThenByDescending(e => e.OpenningBalance).ThenBy(e => e.Date).AsEnumerable().ToPagedList(page, pageSize);
+        }
+
+        public IPagedList<DealerBalance> GetDealersBalance(
+            DateTime ToDate,
             long DealerId, long ShiftId, long BranchId, long UserId,
             int page = 1, int pageSize = 100)
         {
-            return repo.dealersStatmentRepo.GetDealersStatment(DealerTypeId, FromDate, ToDate, DealerId, ShiftId, BranchId, UserId).OrderBy(e=>e.DealerId).ThenByDescending(e=>e.OpenningBalance).ThenBy(e=>e.Date).AsEnumerable().ToPagedList(page, pageSize);
+            return repo.dealersBalanceRepo.GetDealersBalance(ToDate, DealerId, ShiftId, BranchId, UserId).OrderBy(e=>e.DealerId).AsEnumerable().ToPagedList(page, pageSize);
         }
     }
 }

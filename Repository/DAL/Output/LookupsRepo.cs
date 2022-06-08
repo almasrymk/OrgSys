@@ -19,10 +19,10 @@ namespace Repository.DAL.Output
                 this.db = new OrgContext(new DbContextOptions<OrgContext>() , _Schema);
         }
 
-        public IQueryable<DealerListReport> GetDealers(long DealerTypeId, string txtSearch)
+        public IQueryable<DealerList> GetDealers(long DealerTypeId, string txtSearch)
         {
             string SQLStatment = string.Format( File.ReadAllText(Path.GetFullPath(@"SQLFiles/DealerListSql.sql")).Replace("Org" , _Schema) , txtSearch , DealerTypeId);
-            return db.DealerListReport.FromSqlRaw<DealerListReport>(SQLStatment);
+            return db.DealerListReport.FromSqlRaw<DealerList>(SQLStatment);
         }
     }
 }

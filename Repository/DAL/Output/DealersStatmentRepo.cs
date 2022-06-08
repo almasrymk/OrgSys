@@ -17,7 +17,7 @@ namespace Repository.DAL.Output
                 this.db = new OrgContext(new DbContextOptions<OrgContext>() , _Schema);
         }
 
-        public IQueryable<DealerStatmentReport> GetDealersStatment(
+        public IQueryable<DealerStatment> GetDealersStatment(
             long DealerTypeId, DateTime FromDate, DateTime ToDate,
             long DealerId, long ShiftId, long BranchId, long UserId
             )

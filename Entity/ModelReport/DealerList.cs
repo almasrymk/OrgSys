@@ -2,7 +2,7 @@
 
 namespace Entity.ModelReport
 {
-    public class DealerListReport : BaseModel
+    public class DealerList : BaseModel
     {
         public string Name { get; set; }
 

@@ -75,14 +75,19 @@ namespace OrgSys
                 //options.ExpireTimeSpan = TimeSpan.FromDays(30);
                 options.LoginPath = "/Home/Login";
                 options.AccessDeniedPath = "/Identity/Account/AccessDenied";
-                options.SlidingExpiration = true;                
+                options.SlidingExpiration = true;
             });
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
             {
-             options.LoginPath = "/Home/login";
-             options.LogoutPath = "/Home/logout";
+                options.LoginPath = "/Home/login";
+                options.LogoutPath = "/Home/logout";
             });
+
+            services.AddMvc(options => { 
+                var p = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+                options.Filters.Add(new AuthorizeFilter(p));
+            }).AddXmlSerializerFormatters();
 
             services.AddAutoMapper(typeof(MapperConfig));
             services.AddControllersWithViews();

@@ -1,9 +1,8 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entity.ModelReport
 {
-    public class DealerStatmentReport 
+    public class DealerStatment 
     {
         public virtual long Id { get; set; }
 

@@ -469,19 +469,7 @@ namespace Repository
         }
         #endregion
 
-        #region Output
-        private ReportRepo _reportRepo;
-        public ReportRepo reportRepo
-        {
-            get
-            {
-                if (this._reportRepo == null)
-                    this._reportRepo = new ReportRepo(Schema);
-
-                return _reportRepo;
-            }
-        }
-
+        #region Output       
         private LookupsRepo _lookupsRepo;
         public LookupsRepo lookupsRepo
         {
@@ -505,6 +493,19 @@ namespace Repository
                 return _dealersStatmentRepo;
             }
         }
+
+        private DealersBalanceRepo _dealersBalanceRepo;
+        public DealersBalanceRepo dealersBalanceRepo
+        {
+            get
+            {
+                if (this._dealersBalanceRepo == null)
+                    this._dealersBalanceRepo = new DealersBalanceRepo(Schema);
+
+                return _dealersBalanceRepo;
+            }
+        }
+        
         #endregion
     }
 }

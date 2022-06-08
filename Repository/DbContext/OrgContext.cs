@@ -1,21 +1,14 @@
 ﻿using Entity.Model;
 using Entity.ModelReport;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Migrations.Internal;
-using Microsoft.EntityFrameworkCore.SqlServer.Migrations.Internal;
-using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.IO;
 using System.Reflection;
-using System.Text;
-using Utility;
 
 namespace Repository
 {
@@ -101,9 +94,11 @@ namespace Repository
         public virtual DbSet<CompanyProfile> CompanyProfiles { get; set; }
 
         [NotMapped]
-        public virtual DbSet<DealerListReport> DealerListReport { get; set; }
+        public virtual DbSet<DealerList> DealerListReport { get; set; }
         [NotMapped]
-        public virtual DbSet<DealerStatmentReport> DealerStatmentReport { get; set; }        
+        public virtual DbSet<DealerStatment> DealerStatmentReport { get; set; }
+        [NotMapped]
+        public virtual DbSet<DealerBalance> DealerBalanceReport { get; set; }        
     }
 
     public class DbSchemaAwareModelCacheKeyFactory : IModelCacheKeyFactory
