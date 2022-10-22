@@ -3,6 +3,7 @@ using Repository;
 using X.PagedList;
 using System.Linq;
 using Entity.ModelReport;
+using Utility;
 
 namespace Service
 {
@@ -24,12 +25,12 @@ namespace Service
             return repo.dealersStatmentRepo.GetDealersStatment(DealerTypeId, FromDate, ToDate, DealerId, ShiftId, BranchId, UserId).OrderBy(e => e.DealerId).ThenByDescending(e => e.OpenningBalance).ThenBy(e => e.Date).AsEnumerable().ToPagedList(page, pageSize);
         }
 
-        public IPagedList<DealerBalance> GetDealersBalance(
+        public IPagedList<DealerBalance> GetDealersBalance(int DealerTypeId,
             DateTime ToDate,
             long DealerId, long ShiftId, long BranchId, long UserId,
             int page = 1, int pageSize = 100)
         {
-            return repo.dealersBalanceRepo.GetDealersBalance(ToDate, DealerId, ShiftId, BranchId, UserId).OrderBy(e=>e.DealerId).AsEnumerable().ToPagedList(page, pageSize);
+            return repo.dealersBalanceRepo.GetDealersBalance(DealerTypeId , ToDate, DealerId, ShiftId, BranchId, UserId).OrderBy(e=>e.DealerId).AsEnumerable().ToPagedList(page, pageSize);
         }
     }
 }

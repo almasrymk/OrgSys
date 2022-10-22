@@ -17,11 +17,11 @@ namespace Repository.DAL.Output
                 this.db = new OrgContext(new DbContextOptions<OrgContext>() , _Schema);
         }
 
-        public IQueryable<DealerBalance> GetDealersBalance(DateTime ToDate,
+        public IQueryable<DealerBalance> GetDealersBalance(int DealerTypeId , DateTime ToDate,
             long DealerId, long ShiftId, long BranchId, long UserId
             )
         {
-            string SQLStatment = string.Format(File.ReadAllText(Path.GetFullPath(@"SQLFiles/DealersBalanceSql.sql")).Replace("Org", _Schema), string.Format("{0:yyyy/MM/dd}", ToDate), DealerId, ShiftId, BranchId, UserId);
+            string SQLStatment = string.Format(File.ReadAllText(Path.GetFullPath(@"SQLFiles/DealersBalanceSql.sql")).Replace("Org", _Schema), DealerTypeId, string.Format("{0:yyyy/MM/dd}", ToDate), DealerId, ShiftId, BranchId, UserId);
             return db.DealerBalanceReport.FromSqlRaw(SQLStatment);
         }
     }

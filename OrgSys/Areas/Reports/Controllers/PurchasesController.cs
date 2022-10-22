@@ -16,7 +16,7 @@ namespace OrgSys.Areas.Reports.Controllers
             ViewBag.DealerList = new SelectList(new DealerService(User.GetSchema()).GetAll(0, 2), "Id", "Name");
             ViewBag.pageNumber = page;
             ViewBag.ParentId = 0;
-            ViewBag.TypeId = 1;
+            ViewBag.TypeId = 2;
 
             if (FromDate == null)
                 FromDate = new DateTime(DateTime.Now.Year, 1, 1);
@@ -33,7 +33,7 @@ namespace OrgSys.Areas.Reports.Controllers
             ViewBag.DealerList = new SelectList(new DealerService(User.GetSchema()).GetAll(0, 1), "Id", "Name");
             ViewBag.pageNumber = page;
             ViewBag.ParentId = 0;
-            ViewBag.TypeId = 1;
+            ViewBag.TypeId = 2;
 
             DateTime fDate = new DateTime(DateTime.Now.Year, 1, 1);
             DateTime tDate = DateTime.Now;
@@ -41,7 +41,7 @@ namespace OrgSys.Areas.Reports.Controllers
             if (ToDate != null)
                 tDate = DateTime.Parse(ToDate);
 
-            var obList = new SalesReportService(User.GetSchema()).GetDealersBalance(tDate, DealerId, ShiftId, BranchId, UserId, page, pageSize);
+            var obList = new SalesReportService(User.GetSchema()).GetDealersBalance(2, tDate, DealerId, ShiftId, BranchId, UserId, page, pageSize);
             return Request.Headers["X-Requested-With"] == "XMLHttpRequest" ? (ActionResult)PartialView("SuppliersBalanceList", obList) : View(obList);
         }
     }

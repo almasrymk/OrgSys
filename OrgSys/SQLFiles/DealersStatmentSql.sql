@@ -13,7 +13,7 @@ FROM (
 	0 Type,
 	NULL ReferenceId, 
 	NULL Code ,
-	NULL TypeId , 
+	1 TypeId , 
 	N'Openning Balance' TypeName , 
 	CONVERT(datetime , CONVERT(VARCHAR(20),N'1-1-2012',111)) [Date] ,
 	DealerId , 
@@ -79,7 +79,7 @@ FROM (
 	inv.DealerId , 
 	dr.[Name] DealerName , 
 	inv.Net Amount ,
-	invt.InOut
+	1
 	FROM Org.Invoice inv
 	INNER JOIN Org.InvoiceType invt ON invt.Id = inv.TypeId
 	INNER JOIN Org.Dealer dr ON dr.Id = inv.DealerId
@@ -108,7 +108,7 @@ FROM (
 	inv.DealerId , 
 	dr.[Name] DealerName , 
 	inv.Amount Amount ,
-	invt.InOut * -1 InOut
+	-1 InOut
 
 	FROM Org.Financial inv
 
@@ -116,7 +116,7 @@ FROM (
 	INNER JOIN Org.Dealer dr ON dr.Id = inv.DealerId
 
 	WHERE 
-	dr.TypeId in (1,2) AND 
+	dr.TypeId = Convert(bigint, N'{0}') AND 
 	CONVERT(datetime , CONVERT(VARCHAR(20),inv.Date,111)) >= CONVERT(datetime , CONVERT(VARCHAR(20),N'{1}',111)) AND 
 	CONVERT(datetime , CONVERT(VARCHAR(20),inv.Date,111)) <= CONVERT(datetime , CONVERT(VARCHAR(20),N'{2}',111)) AND 
 	(Convert(bigint, N'{3}') = 0 OR dr.Id = Convert(bigint, N'{3}')) AND 
