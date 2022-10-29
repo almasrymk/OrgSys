@@ -189,11 +189,19 @@
     <None Remove="SQLFiles\DealersBalanceSql.sql" />
     <None Remove="SQLFiles\DealersStatmentSql.sql" />
     <None Remove="SQLFiles\ProductPrices.sql" />
+    <None Remove="SQLFiles\StoresBalanceSql.sql" />
+    <None Remove="SQLFiles\StoreStatmentSql.sql" />
     <None Remove="SQLFiles\Test.sql" />
     <None Remove="SQLFiles\TotalByPeriodSql.sql" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="SQLFiles\StoresBalanceSql.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SQLFiles\StoreStatmentSql.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="SQLFiles\ProductPrices.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
