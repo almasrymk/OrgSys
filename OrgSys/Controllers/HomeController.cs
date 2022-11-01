@@ -168,6 +168,7 @@ namespace OrgSys.Controllers
                 }
 
                 OrgContext _orgContext = new OrgContext(_option, us.Schema);
+                _orgContext.Database.Migrate();
                 new InitialData(us.Schema).Run().Wait();
 
                 _userService = new UserService(us.Schema);
@@ -278,29 +279,31 @@ namespace OrgSys.Controllers
                     var loginUser = new LoginUserModelView();
                     loginUser.ClientId = client.Id;
                     loginUser.UserName = client.Email;
-                    loginUser.Password = Password;
+                    loginUser.Password = Utility.Security.Encrypt(Password) ;
                     if (loginUser != null)
                         loginUser = new LoginUserService().Save(loginUser);
 
                     OrgContext _orgContext = new OrgContext(_option, client.DbSchema);
                     _orgContext.Database.EnsureCreated();
-                    RelationalDatabaseCreator creator = (RelationalDatabaseCreator)_orgContext.Database.GetService<IRelationalDatabaseCreator>();
-                    creator.CreateTables();
-                    string createEFMigrationsHistoryCommand = $@"
-                        USE [{_orgContext.Database.GetDbConnection().Database}];
-                        SET ANSI_NULLS ON;
-                        SET QUOTED_IDENTIFIER ON;
-                        CREATE TABLE [{client.DbSchema}].[__MigrationsHistory](
-                        [MigrationId] [nvarchar](150) NOT NULL,
-                        [ProductVersion] [nvarchar](32) NOT NULL,
-                        CONSTRAINT [PK__MigrationsHistory] PRIMARY KEY CLUSTERED 
-                        (
-                        [MigrationId] ASC
-                        )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-                        ) ON [PRIMARY];
-                        ";
-                    _orgContext.Database.ExecuteSqlRaw(createEFMigrationsHistoryCommand);
-                    _orgContext.Database.ExecuteSqlRaw($"INSERT INTO [{client.DbSchema}].[__MigrationsHistory](MigrationId,ProductVersion) SELECT MigrationId,ProductVersion FROM org.__MigrationsHistory");
+                    _orgContext.Database.Migrate();
+                   //RelationalDatabaseCreator creator = (RelationalDatabaseCreator)_orgContext.Database.GetService<IRelationalDatabaseCreator>();
+                    
+                    //creator.CreateTables();
+                    //string createEFMigrationsHistoryCommand = $@"
+                    //    USE [{_orgContext.Database.GetDbConnection().Database}];
+                    //    SET ANSI_NULLS ON;
+                    //    SET QUOTED_IDENTIFIER ON;
+                    //    CREATE TABLE [{client.DbSchema}].[__MigrationsHistory](
+                    //    [MigrationId] [nvarchar](150) NOT NULL,
+                    //    [ProductVersion] [nvarchar](32) NOT NULL,
+                    //    CONSTRAINT [PK__MigrationsHistory] PRIMARY KEY CLUSTERED 
+                    //    (
+                    //    [MigrationId] ASC
+                    //    )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+                    //    ) ON [PRIMARY];
+                    //    ";
+                    //_orgContext.Database.ExecuteSqlRaw(createEFMigrationsHistoryCommand);
+                    //_orgContext.Database.ExecuteSqlRaw($"INSERT INTO [{client.DbSchema}].[__MigrationsHistory](MigrationId,ProductVersion) SELECT MigrationId,ProductVersion FROM org.__MigrationsHistory");
                     new InitialData(client.DbSchema).Run().Wait();
                     var usSys = new UserModelView { BranchId = 1, RoleId = 1, Code = "1", CodeNumber = 1, UserName = loginUser.UserName, LoginUserId = loginUser.Id, Name = client.Name };
                     _userService = new UserService(client.DbSchema);

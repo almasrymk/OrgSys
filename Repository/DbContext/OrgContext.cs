@@ -33,7 +33,7 @@ namespace Repository
             var builder = new ConfigurationBuilder().AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
             IConfigurationRoot config = builder.Build();
             string assemblyName = typeof(OrgContext).Namespace;
-            optionsBuilder.UseSqlServer(config.GetConnectionString("OrgConnection"), e => e.MigrationsHistoryTable($"__MigrationsHistory", Schema)).ReplaceService<IModelCacheKeyFactory, DbSchemaAwareModelCacheKeyFactory>().ReplaceService<IMigrationsAssembly, DbSchemaAwareMigrationAssembly>();
+            optionsBuilder.UseSqlServer(config.GetConnectionString("OrgConnection"), e => e.MigrationsHistoryTable($"__MigrationsHistory", Schema)).ReplaceService<IModelCacheKeyFactory, DbSchemaAwareModelCacheKeyFactory>().ReplaceService<IMigrationsAssembly, DbSchemaAwareMigrationAssembly>();            
         }
 
 
@@ -104,7 +104,8 @@ namespace Repository
     public class DbSchemaAwareModelCacheKeyFactory : IModelCacheKeyFactory
     {
         private string _schemaName;
-        public object Create(DbContext context)
+       
+        public object Create(DbContext context, bool designTime)
         {
             var dataContext = context as OrgContext;
             if (dataContext != null)
@@ -113,7 +114,6 @@ namespace Repository
             }
             return new MultiTenantModelCacheKey(_schemaName, context);
         }
-
     }
 
     public class MultiTenantModelCacheKey : ModelCacheKey
