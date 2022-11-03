@@ -1,3 +1,14 @@
+-----------------------------------
+-- (Parameters)
+-- 1- {0} TypeId
+-- 2- {1} FromDate
+-- 3- {2} ToDate
+-- 4- {3} DealerId
+-- 5- {4} ShiftId
+-- 6- {5} BranchId
+-- 7- {6} CreateUserId
+-----------------------------------
+
 SELECT 
 
 ROW_NUMBER() OVER(ORDER BY   DealerId , [type] , ReferenceId ,  OpenningBalance ASC) AS Id,

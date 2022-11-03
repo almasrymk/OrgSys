@@ -189,6 +189,8 @@
     <None Remove="SQLFiles\DealersBalanceSql.sql" />
     <None Remove="SQLFiles\DealersStatmentSql.sql" />
     <None Remove="SQLFiles\ProductPrices.sql" />
+    <None Remove="SQLFiles\ProductsBalanceSql.sql" />
+    <None Remove="SQLFiles\ProductsStatmentSql.sql" />
     <None Remove="SQLFiles\StoresBalanceSql.sql" />
     <None Remove="SQLFiles\StoreStatmentSql.sql" />
     <None Remove="SQLFiles\Test.sql" />
@@ -196,6 +198,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="SQLFiles\ProductsBalanceSql.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SQLFiles\ProductsStatmentSql.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="SQLFiles\StoresBalanceSql.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

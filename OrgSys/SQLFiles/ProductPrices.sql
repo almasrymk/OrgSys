@@ -1,3 +1,14 @@
+-----------------------------------
+-- (Parameters)
+-- 1- {0} TypeId
+-- 2- {1} FromDate
+-- 3- {2} DealerId
+-- 4- {3} ShiftId
+-- 5- {4} BranchId
+-- 6- {5} ProductId
+-- 7- {6} CreateUserId
+-----------------------------------
+
 SELECT 
 
 invp.ProductId ,

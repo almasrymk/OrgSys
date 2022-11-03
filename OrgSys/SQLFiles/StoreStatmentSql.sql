@@ -1,3 +1,13 @@
+-----------------------------------
+-- (Parameters)
+-- 1- {0} FromDate
+-- 2- {1} ToDate
+-- 3- {2} StoreId
+-- 4- {3} ShiftId
+-- 5- {4} BranchId
+-- 6- {5} CreateUserId
+-----------------------------------
+
 	---------- Get Openning Balance ----------
 
 	SELECT 
@@ -29,14 +39,12 @@
 		INNER JOIN Org.Store st ON st.Id = trn.StoreId
 		INNER JOIN Org.Product pr ON pr.Id = trnp.ProductId
 
-		--WHERE 
-		--dr.TypeId = Convert(bigint, N'{0}') AND 
-		--CONVERT(datetime , CONVERT(VARCHAR(20),inv.Date,111)) < CONVERT(datetime , CONVERT(VARCHAR(20),N'{1}',111)) AND 
-		--(Convert(bigint, N'{3}') = 0 OR dr.Id = Convert(bigint, N'{3}')) AND 
-		--(Convert(bigint, N'{4}') = 0 OR inv.ShiftId = Convert(bigint, N'{4}')) AND
-		--(Convert(bigint, N'{5}') = 0 OR inv.BranchId = Convert(bigint, N'{5}')) AND
-		--(Convert(bigint, N'{6}') = 0 OR inv.CreateUserId = N'{6}')
-
+		WHERE 		
+		CONVERT(datetime , CONVERT(VARCHAR(20),trn.Date,111)) < CONVERT(datetime , CONVERT(VARCHAR(20),N'{0}',111)) AND 
+		(Convert(bigint, N'{2}') = 0 OR trn.StoreId = Convert(bigint, N'{2}')) AND
+		(Convert(bigint, N'{3}') = 0 OR trn.ShiftId = Convert(bigint, N'{3}')) AND
+		(Convert(bigint, N'{4}') = 0 OR trn.BranchId = Convert(bigint, N'{4}')) AND
+		(Convert(bigint, N'{5}') = 0 OR trn.CreateUserId = N'{5}')
 		
 	) OpenningBalance 
 	
@@ -71,11 +79,10 @@
 	INNER JOIN Org.Store st ON st.Id = trn.StoreId
 	INNER JOIN Org.Product pr ON pr.Id = trnp.ProductId
 
-	--WHERE 
-	--dr.TypeId = Convert(bigint, N'{0}') AND 
-	--CONVERT(datetime , CONVERT(VARCHAR(20),inv.Date,111)) >= CONVERT(datetime , CONVERT(VARCHAR(20),N'{1}',111)) AND 
-	--CONVERT(datetime , CONVERT(VARCHAR(20),inv.Date,111)) <= CONVERT(datetime , CONVERT(VARCHAR(20),N'{2}',111)) AND 
-	--(Convert(bigint, N'{3}') = 0 OR dr.Id = Convert(bigint, N'{3}')) AND 
-	--(Convert(bigint, N'{4}') = 0 OR inv.ShiftId = Convert(bigint, N'{4}')) AND
-	--(Convert(bigint, N'{5}') = 0 OR inv.BranchId = Convert(bigint, N'{5}')) AND
-	--(Convert(bigint, N'{6}') = 0 OR inv.CreateUserId = N'{6}')
+	WHERE 
+	CONVERT(datetime , CONVERT(VARCHAR(20),trn.Date,111)) >= CONVERT(datetime , CONVERT(VARCHAR(20),N'{0}',111)) AND 
+	CONVERT(datetime , CONVERT(VARCHAR(20),trn.Date,111)) <= CONVERT(datetime , CONVERT(VARCHAR(20),N'{1}',111)) AND 
+	(Convert(bigint, N'{2}') = 0 OR trn.StoreId = Convert(bigint, N'{2}')) AND
+	(Convert(bigint, N'{3}') = 0 OR trn.ShiftId = Convert(bigint, N'{3}')) AND
+	(Convert(bigint, N'{4}') = 0 OR trn.BranchId = Convert(bigint, N'{4}')) AND
+	(Convert(bigint, N'{5}') = 0 OR trn.CreateUserId = N'{5}')

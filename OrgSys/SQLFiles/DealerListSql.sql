@@ -1,3 +1,9 @@
+-----------------------------------
+-- (Parameters)
+-- 1- {0} Text Search
+-- 2- {1} TypeId
+-----------------------------------
+
 SELECT 
 dr.* , 
 drg.[Name] DealerGroupName ,  
