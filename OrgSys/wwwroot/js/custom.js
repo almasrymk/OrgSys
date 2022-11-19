@@ -148,8 +148,7 @@ function search(_page) {
     }
     if ($("#ToDate").length) {
         Search2 += "&ToDate=" + $("#ToDate").val();
-    }
-    alert(Search2);
+    }    
     setTimeout(() => {
         $.ajax({
             url: url + "?search=" + $('#txtSearch').val() + Search2 + "&page=" + page + "&ParentId=" + $("#ParentId").val() + "&TypeId=" + $("#TypeId").val(),
@@ -177,8 +176,7 @@ function searchReport(_page) {
     if ($("#ToDate").length) {
         var parts = $("#ToDate").val().split('-');
         Search += "&ToDate=" + new Date(parts[0], parts[1] - 1, parts[2]);
-    }
-    alert(Search);
+    }   
     setTimeout(() => {
         $.ajax({
             url: url + "?" + Search + "&page=" + page,
