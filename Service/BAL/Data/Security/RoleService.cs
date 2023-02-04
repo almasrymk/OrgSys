@@ -1,8 +1,10 @@
 ﻿using Entity;
 using Entity.Model;
 using Entity.ModelView;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using Utility;
 
 namespace Service
@@ -10,6 +12,12 @@ namespace Service
     public class RoleService : BaseOrgService<RoleModelView, Role>
     {
         public RoleService(string Schema) : base(Schema) { }
+
+        public override Expression<Func<Role, bool>> CreateFilter(string textSearch, long ParentId = 0, long TypeId = 0)
+        {
+            return e => "" + textSearch == "" || e.Name.ToLower().Contains(textSearch.ToLower()) || e.Code.ToLower().Contains(textSearch.ToLower());
+        }
+
 
         #region Save / Delete
         public override RoleModelView Save(RoleModelView ob)

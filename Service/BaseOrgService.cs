@@ -5,6 +5,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Reflection;
 using System;
+using System.Linq.Expressions;
 
 namespace Service
 {
@@ -53,37 +54,52 @@ namespace Service
 
         public virtual entityModelView Get(string textSearch)
         {
-            return repo.Get(e => textSearch == textSearch, Includes).Map<entityModelView>();
+            return repo.Get(CreateFilter(textSearch), Includes).Map<entityModelView>();
         }
 
         public virtual List<entityModelView> GetAll(long parentId = 0, long TypeId = 0)
         {
-            return repo.GetList(e => (e.ParentId == parentId || parentId == 0) && (e.TypeId == TypeId || TypeId == 0), e => e.OrderBy(e => e.Id), Includes, Utility.Status.New).Select(e => e.Map<entityModelView>()).ToList();
+            return repo.GetList(CreateFilter("" , parentId , TypeId), e => e.OrderBy(e => e.Id), Includes, Utility.Status.New).Select(e => e.Map<entityModelView>()).ToList();
         }
 
         public virtual List<entityModelView> GetAll(List<long> ids, long TypeId = 0)
         {
-            return repo.GetList(e => ids.Contains(e.Id) && (e.TypeId == TypeId || TypeId == 0), e => e.OrderBy(e => e.Id), Includes, Utility.Status.New).Select(e => e.Map<entityModelView>()).ToList();
+            return repo.GetList(CreateFilter(ids, 0, TypeId), e => e.OrderBy(e => e.Id), Includes, Utility.Status.New).Select(e => e.Map<entityModelView>()).ToList();
         }
 
         public virtual List<entityModelView> GetAll(string textSearch, long parentId = 0, long TypeId = 0)
         {
-            return repo.GetList(e => ("" + textSearch == "" || e.Code.Contains("" + textSearch)) && (e.ParentId == parentId || parentId == 0) && (e.TypeId == TypeId || TypeId == 0), e => e.OrderBy(e => e.Id), Includes, Utility.Status.New).Select(e => e.Map<entityModelView>()).ToList();
+            return repo.GetList(CreateFilter(textSearch, parentId, TypeId), e => e.OrderBy(e => e.Id), Includes, Utility.Status.New).Select(e => e.Map<entityModelView>()).ToList();
         }
 
         public virtual IPagedList<entityModelView> GetAll(long parentId = 0, long TypeId = 0, int page = 1, int pageSize = 20)
         {
-            return repo.GetList(e => (e.ParentId == parentId || parentId == 0) && (e.TypeId == TypeId || TypeId == 0), e => e.OrderBy(e => e.Id), Includes, Utility.Status.New).Select(e => e.Map<entityModelView>()).ToPagedList(page, pageSize);
+            return repo.GetList(CreateFilter("", parentId, TypeId), e => e.OrderBy(e => e.Id), Includes, Utility.Status.New).Select(e => e.Map<entityModelView>()).ToPagedList(page, pageSize);
         }
 
         public virtual IPagedList<entityModelView> GetAll(string textSearch, long parentId = 0, long TypeId = 0, int page = 1, int pageSize = 20)
         {
-            return repo.GetList(e => ("" + textSearch == "" || e.Code.Contains("" + textSearch)) && (e.ParentId == parentId || parentId == 0) && (e.TypeId == TypeId || TypeId == 0), e => e.OrderBy(e => e.Id), Includes, Utility.Status.New).Select(e => e.Map<entityModelView>()).ToPagedList(page, pageSize);
+            return repo.GetList(CreateFilter(textSearch, parentId, TypeId), e => e.OrderBy(e => e.Id), Includes, Utility.Status.New).Select(e => e.Map<entityModelView>()).ToPagedList(page, pageSize);
         }
 
         public virtual long GetMaxCode(long type = 0)
         {
             return repo.GetMaXCode(e => e.TypeId == type || type == 0);
+        }
+
+        public virtual Func<entity, bool> CreateFilter(string textSearch)
+        {
+            return e => "" + textSearch == "" || e.Code.Contains("" + textSearch);
+        }
+
+        public virtual Expression<Func<entity, bool>> CreateFilter(string textSearch, long ParentId = 0, long TypeId = 0)
+        {
+            return e => ("" + textSearch == "" || e.Code.Contains("" + textSearch)) && (e.ParentId == ParentId || ParentId == 0) && (e.TypeId == TypeId || TypeId == 0);
+        }
+
+        public virtual Expression<Func<entity, bool>> CreateFilter(List<long> ids, long ParentId = 0, long TypeId = 0)
+        {
+            return e => ids.Contains(e.Id) && (e.ParentId == ParentId || ParentId == 0) && (e.TypeId == TypeId || TypeId == 0);
         }
         #endregion
     }

@@ -2,8 +2,10 @@
 using Entity.Model;
 using Entity.ModelView;
 using Repository;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using X.PagedList;
 
 namespace Service
@@ -13,6 +15,11 @@ namespace Service
         public UnitOfWorkAdmin repoAdminAll;
         public UserService(string Schema) : base(Schema , "Role") {
             repoAdminAll = new UnitOfWorkAdmin();
+        }
+
+        public override Expression<Func<User, bool>> CreateFilter(string textSearch, long ParentId = 0, long TypeId = 0)
+        {
+            return e => "" + textSearch == "" || e.Name.ToLower().Contains(textSearch.ToLower()) || e.Code.ToLower().Contains(textSearch.ToLower());
         }
 
         //string Includes = "Role";

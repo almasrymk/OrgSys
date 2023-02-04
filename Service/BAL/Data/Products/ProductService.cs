@@ -5,12 +5,18 @@ using Entity.Model;
 using Entity.ModelView;
 using System.Collections.Generic;
 using System;
+using System.Linq.Expressions;
 
 namespace Service
 {
     public class ProductService : BaseOrgService<ProductModelView, Product>
     {
         public ProductService(string Schema) : base(Schema , "Classification,Dealer,ProductUnits,ProductRecipes,ProductPropertyElements") { }
+
+        public override Expression<Func<Product, bool>> CreateFilter(string textSearch, long ParentId = 0, long TypeId = 0)
+        {
+            return e => "" + textSearch == "" || e.Name.ToLower().Contains(textSearch.ToLower()) || e.Code.ToLower().Contains(textSearch.ToLower());
+        }
 
         public override ProductModelView Get(long Id)
         {
