@@ -1,5 +1,5 @@
 ﻿@using System.Globalization
-@model X.PagedList.IPagedList<Entity.ModelReport.DealerStatment>
+@model ReportResult<Entity.ModelReport.DealerStatment>
 @using OrgSys
 
 @{
@@ -24,7 +24,7 @@
                 </li>
             </ol>
         </nav>
-    </div>
+    </div>    
     <div class="card mb-4">
         <div class="card-body">
             <h5 class="mb-4">Key Search</h5>
@@ -32,11 +32,11 @@
                 <div class="form-group col-md-3">
                     <label>@Utility.Resource.Title_Designer.FromDate</label>
                     <div id="divDate">
-                        <div class="input-group ">
+                        <div class="input-group " >
                             <div class="input-group-prepend ">
                                 <span class="input-group-text "><i class="simple-icon-calendar"></i></span>
                             </div>
-                            @Html.TextBox("FromDate", null, new { @class = "form-control datepicker" })
+                            @Html.TextBox("FromDate", null, new { @class = "form-control datepicker" , @autocomplete="off" })
                         </div>
                     </div>
                 </div>
@@ -47,7 +47,7 @@
                             <div class="input-group-prepend ">
                                 <span class="input-group-text "><i class="simple-icon-calendar"></i></span>
                             </div>
-                            @Html.TextBox("ToDate", null, new { @class = "form-control datepicker" })
+                            @Html.TextBox("ToDate", null, new { @class = "form-control datepicker", @autocomplete="off" })
                         </div>
                     </div>
                 </div>
@@ -58,7 +58,7 @@
                             <div class="input-group-prepend ">
                                 <span class="input-group-text "><i class="glyph-icon iconsminds-business-man-woman"></i></span>
                             </div>
-                            @Html.DropDownList("DealerId", (SelectList)@ViewBag.DealerList, "...", new { @class = "form-control" })
+                            @Html.DropDownList("DealerId", (SelectList)@ViewBag.DealerList,null, new { @class = "form-control" })
                         </div>
                     </div>
                 </div>
@@ -157,7 +157,7 @@
 
     <div class="card mb-4">
         <div id="List" class="card-body  m-0 p-3">
-            @if (Model != null && Model.Count > 0)
+            @if (Model != null &&  Model.Result != null && Model.Result.Count > 0)
             {
                 @Html.Partial("ClientsStatmentList", Model)
             }

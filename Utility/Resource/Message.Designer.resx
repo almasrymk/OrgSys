@@ -246,6 +246,9 @@
   <data name="NicknameRequired" xml:space="preserve">
     <value>Nickname Required</value>
   </data>
+  <data name="NoResults" xml:space="preserve">
+    <value>No results</value>
+  </data>
   <data name="NotMatch" xml:space="preserve">
     <value>Passwords do not match</value>
   </data>

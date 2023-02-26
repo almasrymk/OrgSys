@@ -149,6 +149,10 @@ function search(_page) {
     if ($("#ToDate").length) {
         Search2 += "&ToDate=" + $("#ToDate").val();
     }    
+    if ($("#DealerId").length) {
+        Search2 += "&DealerId=" + $("#DealerId").val();
+    }    
+    
     setTimeout(() => {
         $.ajax({
             url: url + "?search=" + $('#txtSearch').val() + Search2 + "&page=" + page + "&ParentId=" + $("#ParentId").val() + "&TypeId=" + $("#TypeId").val(),

@@ -246,6 +246,9 @@
   <data name="NicknameRequired" xml:space="preserve">
     <value>يجب ادخال الاسم المستعار</value>
   </data>
+  <data name="NoResults" xml:space="preserve">
+    <value>لا توجد نتائج</value>
+  </data>
   <data name="NotMatch" xml:space="preserve">
     <value>كلمة المرور غير مطابقة</value>
   </data>

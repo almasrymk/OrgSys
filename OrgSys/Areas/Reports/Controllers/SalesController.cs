@@ -3,6 +3,7 @@ using Service;
 using OrgSys.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Entity.ModelReport;
 
 namespace OrgSys.Areas.Reports.Controllers
 {
@@ -17,6 +18,7 @@ namespace OrgSys.Areas.Reports.Controllers
             ViewBag.pageNumber = page;
             ViewBag.ParentId = 0;
             ViewBag.TypeId = 1;
+            ViewBag.DealerId = DealerId;
 
             DateTime fDate = new DateTime(DateTime.Now.Year, 1, 1);
             DateTime tDate = new DateTime(DateTime.Now.Year, 12, 31);
@@ -25,7 +27,10 @@ namespace OrgSys.Areas.Reports.Controllers
             if (ToDate != null)
                 tDate = DateTime.Parse(ToDate);
 
-            var obList = new SalesReportService(User.GetSchema()).GetDealersStatment(1, fDate, tDate, DealerId, ShiftId, BranchId, UserId, page, pageSize);
+            if (DealerId == 1)
+                DealerId = 0;
+
+            var obList = new ReportResult<DealerStatment> { PrintMode = false , Result = new SalesReportService(User.GetSchema()).GetDealersStatment(1, fDate, tDate, DealerId, ShiftId, BranchId, UserId, page, pageSize) };
             return Request.Headers["X-Requested-With"] == "XMLHttpRequest" ? (ActionResult)PartialView("ClientsStatmentList", obList) : View(obList);
         }
 

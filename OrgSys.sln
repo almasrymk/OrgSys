@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Service", "Service\Service.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrgSysApp", "OrgSysApp\OrgSysApp.csproj", "{19407A29-618F-40F6-9A6A-BB51FCB6F2C8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrgSysTest", "OrgSysTest\OrgSysTest.csproj", "{D6C6604B-35F8-4CAD-8102-212DA3E05148}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrgSysTest", "OrgSysTest\OrgSysTest.csproj", "{D6C6604B-35F8-4CAD-8102-212DA3E05148}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{8F5398EB-A8DC-495E-B56C-7A34C7905F21}"
 EndProject
