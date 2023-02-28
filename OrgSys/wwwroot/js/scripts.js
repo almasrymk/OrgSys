@@ -106,7 +106,7 @@ function loadStyle(href, callback) {
 `;
 
     $("body").append(LanguageDom);
-    //$("body").append(themeColorsDom);
+    $("body").append(themeColorsDom);
    
     /* Default Theme Color, Border Radius and  Direction */
     var theme = "dore.light.bluenavy.min.css";

@@ -22,7 +22,7 @@ namespace Service
           long DealerId, long ShiftId, long BranchId, long UserId,
           int page = 1, int pageSize = 100)
         {
-            return repo.dealersStatmentRepo.GetDealersStatment(DealerTypeId, FromDate, ToDate, DealerId, ShiftId, BranchId, UserId).OrderBy(e => e.DealerId).ThenByDescending(e => e.OpenningBalance).ThenBy(e => e.Date).AsEnumerable().ToPagedList(page, pageSize);
+            return repo.dealersStatmentRepo.GetDealersStatment(DealerTypeId, FromDate, ToDate, DealerId, ShiftId, BranchId, UserId).OrderBy(e => e.DealerId).ThenByDescending(e => e.ReferenceId).AsEnumerable().ToPagedList(page, pageSize);
         }
 
         public IPagedList<DealerBalance> GetDealersBalance(int DealerTypeId,

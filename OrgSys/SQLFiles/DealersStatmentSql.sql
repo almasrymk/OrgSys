@@ -45,6 +45,7 @@ FROM (
 		INNER JOIN Org.Dealer dr ON dr.Id = inv.DealerId
 
 		WHERE 
+		1 = 2 AND
 		(inv.TypeId =  CASE WHEN Convert(bigint, N'{0}') = 1 THEN 1 ELSE 2 END OR inv.TypeId =  CASE WHEN Convert(bigint, N'{0}') = 1 THEN 3 ELSE 4 END)AND
 		--dr.TypeId = Convert(bigint, N'{0}') AND 
 		CONVERT(datetime , CONVERT(VARCHAR(20),inv.Date,111)) < CONVERT(datetime , CONVERT(VARCHAR(20),N'{1}',111)) AND 
@@ -66,6 +67,7 @@ FROM (
 		INNER JOIN Org.Dealer dr ON dr.Id = inv.DealerId
 
 		WHERE 
+		1 = 2 AND
 		(inv.TypeId =  CASE WHEN Convert(bigint, N'{0}') = 1 THEN 1 ELSE 2 END OR inv.TypeId =  CASE WHEN Convert(bigint, N'{0}') = 1 THEN 3 ELSE 4 END)AND
 		--dr.TypeId = Convert(bigint, N'{0}') AND 
 		CONVERT(datetime , CONVERT(VARCHAR(20),inv.Date,111)) < CONVERT(datetime , CONVERT(VARCHAR(20),N'{1}',111)) AND 

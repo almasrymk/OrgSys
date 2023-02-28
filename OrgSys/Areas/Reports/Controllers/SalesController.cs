@@ -4,6 +4,7 @@ using OrgSys.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Entity.ModelReport;
+using Entity.ModelView;
 
 namespace OrgSys.Areas.Reports.Controllers
 {
@@ -30,7 +31,15 @@ namespace OrgSys.Areas.Reports.Controllers
             if (DealerId == 1)
                 DealerId = 0;
 
-            var obList = new ReportResult<DealerStatment> { PrintMode = false , Result = new SalesReportService(User.GetSchema()).GetDealersStatment(1, fDate, tDate, DealerId, ShiftId, BranchId, UserId, page, pageSize) };
+            var d = new DealerService(User.GetSchema()).Get(DealerId);
+            if (d == null)
+                d = new DealerModelView();
+
+            var obList = new ReportResult<DealerStatmentData,DealerStatment> { 
+                PrintMode = false , 
+                Data = new DealerStatmentData { DealerName = d.Name , DealerImgPath = d.ImgPath , DealerId = d.Id , Code = d.Code , FromDate = fDate , ToDate = tDate },
+                Result = new SalesReportService(User.GetSchema()).GetDealersStatment(1, fDate, tDate, DealerId, ShiftId, BranchId, UserId, page, pageSize) 
+            };
             return Request.Headers["X-Requested-With"] == "XMLHttpRequest" ? (ActionResult)PartialView("ClientsStatmentList", obList) : View(obList);
         }
 
