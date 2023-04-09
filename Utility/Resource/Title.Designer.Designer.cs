@@ -19,7 +19,7 @@ namespace Utility.Resource {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Title_Designer {
@@ -1222,6 +1222,15 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Openning Balance.
+        /// </summary>
+        public static string OpenningBalance {
+            get {
+                return ResourceManager.GetString("OpenningBalance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Order Details.
         /// </summary>
         public static string OrderDetails {
@@ -2154,6 +2163,42 @@ namespace Utility.Resource {
         public static string Total {
             get {
                 return ResourceManager.GetString("Total", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total Credit Invoices.
+        /// </summary>
+        public static string TotalCreditInvoice {
+            get {
+                return ResourceManager.GetString("TotalCreditInvoice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total Invoices.
+        /// </summary>
+        public static string TotalInvoice {
+            get {
+                return ResourceManager.GetString("TotalInvoice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total Paid Invoices.
+        /// </summary>
+        public static string TotalPaidInvoice {
+            get {
+                return ResourceManager.GetString("TotalPaidInvoice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total Return Invoices.
+        /// </summary>
+        public static string TotalReturnInvoice {
+            get {
+                return ResourceManager.GetString("TotalReturnInvoice", resourceCulture);
             }
         }
         

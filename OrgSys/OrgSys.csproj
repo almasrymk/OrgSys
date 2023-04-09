@@ -186,8 +186,8 @@
 
   <ItemGroup>
     <None Remove="SQLFiles\DealerListSql.sql" />
+    <None Remove="SQLFiles\DealersBalance1Sql.sql" />
     <None Remove="SQLFiles\DealersBalanceSql.sql" />
-    <None Remove="SQLFiles\DealersInfoSql.sql" />
     <None Remove="SQLFiles\DealersStatmentSql.sql" />
     <None Remove="SQLFiles\ProductPrices.sql" />
     <None Remove="SQLFiles\ProductsBalanceSql.sql" />
@@ -199,7 +199,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="SQLFiles\DealersInfoSql.sql">
+    <Content Include="SQLFiles\DealersBalanceSql.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="SQLFiles\ProductsBalanceSql.sql">
@@ -220,7 +220,7 @@
     <Content Include="SQLFiles\TotalByPeriodSql.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="SQLFiles\DealersBalanceSql.sql">
+    <Content Include="SQLFiles\DealersBalance1Sql.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="SQLFiles\Test.sql">
@@ -370,12 +370,13 @@
     <PackageReference Include="BuildBundlerMinifier" Version="3.2.449" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.5" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.0-rc.2.22472.11">
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.0-preview.2.23128.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.5" />
-    <PackageReference Include="PuppeteerSharp" Version="6.2.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.0-preview.2.23158.7" />
+    <PackageReference Include="PuppeteerSharp" Version="9.0.2" />
     <PackageReference Include="SixLabors.ImageSharp" Version="2.1.2" />
   </ItemGroup>
 

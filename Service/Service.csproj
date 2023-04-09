@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="X.PagedList.Mvc.Core" Version="8.4.3" />
+    <PackageReference Include="X.PagedList.Mvc.Core" Version="9.0.0-prerelease" />
   </ItemGroup>
 
   <ItemGroup>

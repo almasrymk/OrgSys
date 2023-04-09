@@ -504,6 +504,9 @@
   <data name="Ok" xml:space="preserve">
     <value>Ok</value>
   </data>
+  <data name="OpenningBalance" xml:space="preserve">
+    <value>Openning Balance</value>
+  </data>
   <data name="OrderDetails" xml:space="preserve">
     <value>Order Details</value>
   </data>
@@ -815,6 +818,18 @@
   </data>
   <data name="Total" xml:space="preserve">
     <value>Total</value>
+  </data>
+  <data name="TotalCreditInvoice" xml:space="preserve">
+    <value>Total Credit Invoices</value>
+  </data>
+  <data name="TotalInvoice" xml:space="preserve">
+    <value>Total Invoices</value>
+  </data>
+  <data name="TotalPaidInvoice" xml:space="preserve">
+    <value>Total Paid Invoices</value>
+  </data>
+  <data name="TotalReturnInvoice" xml:space="preserve">
+    <value>Total Return Invoices</value>
   </data>
   <data name="TotalSales" xml:space="preserve">
     <value>Total sales</value>

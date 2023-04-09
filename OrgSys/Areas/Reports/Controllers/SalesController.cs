@@ -37,7 +37,7 @@ namespace OrgSys.Areas.Reports.Controllers
 
             var obList = new ReportResult<DealerStatmentData,DealerStatment> { 
                 PrintMode = false , 
-                Data = new DealerStatmentData { DealerName = d.Name , DealerImgPath = d.ImgPath , DealerId = d.Id , Code = d.Code , FromDate = fDate , ToDate = tDate },
+                Data = new DealerStatmentData {  DealerBalance = new DealerBalance { DealerName = d.Name, DealerImgPath = d.ImgPath, DealerId = d.Id }, FromDate = fDate , ToDate = tDate },
                 Result = new SalesReportService(User.GetSchema()).GetDealersStatment(1, fDate, tDate, DealerId, ShiftId, BranchId, UserId, page, pageSize) 
             };
             return Request.Headers["X-Requested-With"] == "XMLHttpRequest" ? (ActionResult)PartialView("ClientsStatmentList", obList) : View(obList);

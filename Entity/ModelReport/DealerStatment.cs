@@ -25,14 +25,8 @@ namespace Entity.ModelReport
 
     public class DealerStatmentData
     {
-        public virtual long Id { get; set; }
-        public string Code { get; set; }
-        public int OpenningBalance { get; set; }
         public DateTime FromDate { get; set; }
         public DateTime ToDate { get; set; }
-        public long DealerId { get; set; }
-        public string DealerName { get; set; }
-        public string DealerImgPath { get; set; }
-        public decimal Balance { get; set; }
+        public DealerBalance DealerBalance { get; set; }
     }
 }

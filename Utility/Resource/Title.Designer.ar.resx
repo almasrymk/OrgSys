@@ -504,6 +504,9 @@
   <data name="Ok" xml:space="preserve">
     <value>موافق</value>
   </data>
+  <data name="OpenningBalance" xml:space="preserve">
+    <value>الرصيد الافتتاحي</value>
+  </data>
   <data name="OrderDetails" xml:space="preserve">
     <value>طلب تفاصيل</value>
   </data>
@@ -815,6 +818,18 @@
   </data>
   <data name="Total" xml:space="preserve">
     <value>الاجمالي</value>
+  </data>
+  <data name="TotalCreditInvoice" xml:space="preserve">
+    <value>إجمالي مديونية فاتورة</value>
+  </data>
+  <data name="TotalInvoice" xml:space="preserve">
+    <value>إجمالي الفواتير</value>
+  </data>
+  <data name="TotalPaidInvoice" xml:space="preserve">
+    <value>إجمالي الفاتورة المدفوعة</value>
+  </data>
+  <data name="TotalReturnInvoice" xml:space="preserve">
+    <value>إجمالي الفواتير المرتجعة</value>
   </data>
   <data name="TotalSales" xml:space="preserve">
     <value>اجمالى البيع</value>

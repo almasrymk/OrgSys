@@ -136,9 +136,9 @@
         {
             <div class="card d-flex flex-row mb-2">
                 <a class="d-flex" href="#">
-                    @if ("" + Model.Data.DealerImgPath != "")
+                    @if ("" + Model.Data.DealerBalance.DealerImgPath != "")
                     {
-                        <img alt="Profile" src="@Model.Data.DealerImgPath" class="img-thumbnail border-0 rounded-circle m-4 list-thumbnail align-self-center" style="width:85px;height:85px;">
+                        <img alt="Profile" src="@Model.Data.DealerBalance.DealerImgPath" class="img-thumbnail border-0 rounded-circle m-4 list-thumbnail align-self-center" style="width:85px;height:85px;">
                     }
                     else
                     {
@@ -152,7 +152,7 @@
                     <div class="card-body pl-0 align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero">
                         <div class="min-width-zero">
                             <a href="#">
-                                <p class="list-item-heading mb-1 truncate">@Model.Data.DealerName</p>
+                                <p class="list-item-heading mb-1 truncate">@Model.Data.DealerBalance.DealerName</p>
                             </a>
                             <p class="mb-2 text-muted text-small">Executive Director</p>
                             <button type="button" class="btn btn-xs btn-outline-primary ">Edit</button>
