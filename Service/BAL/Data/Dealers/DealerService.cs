@@ -2,6 +2,7 @@
 using Entity.ModelView;
 using System.Linq.Expressions;
 using System;
+using System.Net.Http.Headers;
 
 namespace Service
 {
@@ -11,7 +12,7 @@ namespace Service
 
         public override Expression<Func<Dealer, bool>> CreateFilter(string textSearch, long ParentId = 0, long TypeId = 0)
         {
-            return e => "" + textSearch == "" || e.Name.ToLower().Contains(textSearch.ToLower()) || e.Code.ToLower().Contains(textSearch.ToLower());
+            return e => ("" + textSearch == "" || e.Name.ToLower().Contains(textSearch.ToLower()) || e.Code.ToLower().Contains(textSearch.ToLower())) && (TypeId == 0 || e.TypeId == TypeId) && (ParentId == 0 || e.ParentId == ParentId);
         }
     }
 }
