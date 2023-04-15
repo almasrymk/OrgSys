@@ -36,7 +36,7 @@
                     <th class="text-center">#</th>
                     <th style="text-align: center; width:10px"></th>
                     <th class="text-center">@Utility.Resource.Title_Designer.Code</th>
-                    <th class="text-center">@Utility.Resource.Title_Designer.Store</th>
+                    <th class="text-center">@Utility.Resource.Title_Designer.Stock</th>
                     <th class="text-center">@Utility.Resource.Title_Designer.Date</th>
                     <th colspan="3"></th>
                 </tr>
@@ -57,7 +57,7 @@
                             <p class="text-muted">@Model[i].Code</p>
                         </td>
                         <td class="w-4 text-center align-middle">
-                            <p class="text-muted">@Model[i].StoreName</p>
+                            <p class="text-muted">@Model[i].StockName</p>
                         </td>
                         <td class="w-4 text-center align-middle">
                             @Model[i].Date.ToString("dd-MM-yyyy")
@@ -132,7 +132,7 @@
                             <small>@Utility.Resource.Title_Designer.Code</small>
                         </div>
                         <div class="list-item-heading mb-0 truncate w-20 w-xs-100 d-inline-block" href="Pages.Product.Detail.html">
-                            <small>@Utility.Resource.Title_Designer.Store</small>
+                            <small>@Utility.Resource.Title_Designer.Stock</small>
                         </div>
                         <div class="list-item-heading mb-0 truncate w-15 w-xs-100 d-inline-block" href="Pages.Product.Detail.html">
                             <small>@Utility.Resource.Title_Designer.Date</small>
@@ -158,7 +158,7 @@
                                 @Model[i].Code
                             </div>
                             <div class="list-item-heading mb-0 truncate w-20 w-xs-100 d-inline-block" href="Pages.Product.Detail.html">
-                                @Model[i].StoreName
+                                @Model[i].StockName
                             </div>
                             <div class="list-item-heading mb-0 truncate w-15 w-xs-100 d-inline-block" href="Pages.Product.Detail.html">
                                 @Model[i].Date.ToString("dd-MM-yyyy")

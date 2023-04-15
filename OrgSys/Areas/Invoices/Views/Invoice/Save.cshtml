@@ -460,20 +460,20 @@
                                         @Html.ValidationMessageFor(model => model.Rate, "", new { @class = "text-danger " })
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <label>@Utility.Resource.Title_Designer.Store</label>
-                                        <div id="divStoreId">
+                                        <label>@Utility.Resource.Title_Designer.Stock</label>
+                                        <div id="divStockId">
                                             <div class="input-group DropAutoComplete">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="iconsminds-financial"></i></span>
                                                 </div>
-                                                <input type="text" class="form-control Droptxt" id="txtStoreId" value="@Model.StoreName" autocomplete="off" />
-                                                @Html.HiddenFor(model => model.StoreId)
+                                                <input type="text" class="form-control Droptxt" id="txtStockId" value="@Model.StockName" autocomplete="off" />
+                                                @Html.HiddenFor(model => model.StockId)
                                                 <div class="input-group-prepend Dropbtn">
                                                     <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
                                                 </div>
                                             </div>
                                         </div>
-                                        @Html.ValidationMessageFor(model => model.StoreId, "", new { @class = "text-danger " })
+                                        @Html.ValidationMessageFor(model => model.StockId, "", new { @class = "text-danger " })
                                     </div>
                                 </div>
 
@@ -823,13 +823,13 @@
                 }
             });
 
-            $("#txtStoreId").autocomplete({
+            $("#txtStockId").autocomplete({
                 minLength: 0,
                 source: function (request, response) {
-                    var searchPhrase = $("#txtStoreId").val();//request.term.trim().toLowerCase();
+                    var searchPhrase = $("#txtStockId").val();//request.term.trim().toLowerCase();
                     var noResultsLabel = 'NoResultsFound';
                     $.ajax({
-                        url: "/Setting/Store/GetList",
+                        url: "/Setting/Stock/GetList",
                         type: "Get",
                         dataType: "json",
                         data: { txtSearch: searchPhrase, page: 1, pageSize: 7 },
@@ -839,8 +839,8 @@
                                     data = [{ name: noResultsLabel }];
                                 }
 
-                                if ("" + $("#txtStoreId").val() == "") {
-                                    $("#StoreId").val("");
+                                if ("" + $("#txtStockId").val() == "") {
+                                    $("#StockId").val("");
                                 }
 
                                 response($.map(data, function (item) {
@@ -857,8 +857,8 @@
                         event.preventDefault();
                         return;
                     }
-                    $("#StoreId").val(ui.item.id);
-                    $("#errorStoreId").remove();
+                    $("#StockId").val(ui.item.id);
+                    $("#errorStockId").remove();
                 },
                 focus: function (event, ui) {
                     if (ui.item.label === 'NoResultsFound') {
@@ -1004,7 +1004,7 @@
                 AutoSave();
             });
 
-            $("#StoreId").change(function () {
+            $("#StockId").change(function () {
                 AutoSave();
             });
 
@@ -1296,7 +1296,7 @@
                 if (CheckRequired("CurrencyId", "divCurrencyId", '@Utility.Resource.Message_Designer.CustomerRequired'))
                     Valid = false;
 
-                if (CheckRequired("StoreId", "divStoreId", '@Utility.Resource.Message_Designer.StoreRequired'))
+                if (CheckRequired("StockId", "divStockId", '@Utility.Resource.Message_Designer.StockRequired'))
                     Valid = false;
 
                 if (CheckRequired("PaymentTypeId", "divPaymentTypeId", '@Utility.Resource.Message_Designer.PaymentTypeRequired'))
@@ -1344,7 +1344,7 @@
                     Valid = false;
 
 
-                if (CheckRequiredNoMessage("StoreId"))
+                if (CheckRequiredNoMessage("StockId"))
                     Valid = false;
 
                 if (CheckRequiredNoMessage("PaymentTypeId"))
@@ -1405,7 +1405,7 @@
                         list.push({
                             InvoiceId: $('#Id').val(),
                             ProductId: currentRow.find('#ProductId').val(),
-                            StoreId: $('#StoreId').val(),
+                            StockId: $('#StockId').val(),
                             UnitId: currentRow.find('#UnitId').val(),
                             Quantity: currentRow.find('#Quantity').val(),
                             Price: currentRow.find('#Price').val(),
@@ -1439,7 +1439,7 @@
                 TableId: $('#TableId').val(),
                 CloseTable: $('#CloseTable').val(),
                 PaymentTypeId: $('#PaymentTypeId').val(),
-                StoreId: $('#StoreId').val(),
+                StockId: $('#StockId').val(),
                 Total: $('#AllTotal').val(),
                 Discount: $('#Discount').val(),
                 DiscountType: $('#DiscountType').val(),

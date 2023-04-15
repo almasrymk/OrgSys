@@ -30,7 +30,7 @@ namespace OrgSys.Areas.Setting.Controllers
 
                 ViewBag.Customers = new SelectList(new DealerService(User.GetSchema()).GetAll(0, 1), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultCustomer")?.Value);
                 ViewBag.Suppliers = new SelectList(new DealerService(User.GetSchema()).GetAll(0, 2), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultSupplier")?.Value);
-                ViewBag.Stores = new SelectList(new StoreService(User.GetSchema()).GetAll(0, 0), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultStore")?.Value);
+                ViewBag.Stocks = new SelectList(new StockService(User.GetSchema()).GetAll(0, 0), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultStock")?.Value);
                 ViewBag.PaymentTypes = new SelectList(new PaymentTypeService(User.GetSchema()).GetAll(0, 0), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultPaymentType")?.Value);
                 ViewBag.DiscountType = new SelectList(selectListItems, "Value", "Text", Service.FirstOrDefault(e => e.Key == "DefaultDiscountType")?.Value);
                 ViewBag.ServiceType = new SelectList(selectListItems, "Value", "Text", Service.FirstOrDefault(e => e.Key == "DefaultServiceType")?.Value);
@@ -74,7 +74,7 @@ namespace OrgSys.Areas.Setting.Controllers
             {
                 ViewBag.Customers = new SelectList(new DealerService(User.GetSchema()).GetAll(0, 1), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultCustomer")?.Value);
                 ViewBag.Suppliers = new SelectList(new DealerService(User.GetSchema()).GetAll(0, 2), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultSupplier")?.Value);
-                ViewBag.Stores = new SelectList(new StoreService(User.GetSchema()).GetAll(0, 0), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultStore")?.Value);
+                ViewBag.Stocks = new SelectList(new StockService(User.GetSchema()).GetAll(0, 0), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultStock")?.Value);
 
                 List<SelectListItem> selectListItems = new List<SelectListItem>();
                 selectListItems.Add(new SelectListItem { Value = "1", Text = "Data after product" });
@@ -170,7 +170,7 @@ namespace OrgSys.Areas.Setting.Controllers
 
             if (Resource == "Inventory")
             {
-                ViewBag.Stores = new SelectList(new StoreService(User.GetSchema()).GetAll(0, 1), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultStore")?.Value);
+                ViewBag.Stocks = new SelectList(new StockService(User.GetSchema()).GetAll(0, 1), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultStock")?.Value);
 
                 var selectListItems = new List<SelectListItem>();
                 selectListItems.Add(new SelectListItem { Value = "1", Text = "Allow" });

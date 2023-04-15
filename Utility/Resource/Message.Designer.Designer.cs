@@ -628,11 +628,11 @@ namespace Utility.Resource {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Store Required.
+        ///   Looks up a localized string similar to Stock Required.
         /// </summary>
-        public static string StoreRequired {
+        public static string StockRequired {
             get {
-                return ResourceManager.GetString("StoreRequired", resourceCulture);
+                return ResourceManager.GetString("StockRequired", resourceCulture);
             }
         }
         

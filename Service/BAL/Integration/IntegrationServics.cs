@@ -23,16 +23,16 @@ namespace Service
         {
             if (order != null && order.Id > 0)
             {
-                var StoreId = long.Parse("0" + new PreferenceService(_Schema).GetByKey("DefaultStore", "Invoice", 1, 0)?.Value);
+                var StockId = long.Parse("0" + new PreferenceService(_Schema).GetByKey("DefaultStock", "Invoice", 1, 0)?.Value);
                 var inv = order.Map<InvoiceModelView>();
-                inv.StoreId = StoreId;
-                inv.StoreId = long.Parse("0" + new PreferenceService(_Schema).GetByKey("DefaultStore", "Invoice", 1, 0)?.Value);
+                inv.StockId = StockId;
+                inv.StockId = long.Parse("0" + new PreferenceService(_Schema).GetByKey("DefaultStock", "Invoice", 1, 0)?.Value);
                 if (order.DealerId == null || order.DealerId == 0)
                     inv.DealerId = long.Parse("0" + new PreferenceService(_Schema).GetByKey("DefaultCustomer", "Invoice", 1, 0)?.Value);
                 else
                     inv.DealerId = order.DealerId.Value;
                 inv.PaymentTypeId = long.Parse("0" + new PreferenceService(_Schema).GetByKey("DefaultPaymentType", "Invoice", 1, 0)?.Value);
-                inv.StoreId = StoreId;
+                inv.StockId = StockId;
                 inv.CurrencyId = long.Parse("0" + new PreferenceService(_Schema).GetByKey("DefaultCurrency", "Invoice", 1, 0)?.Value);
 
                 var InvLod = repo.invoiceRepo.Get(e => e.Id == long.Parse("0" + order.InvoiceId));
@@ -111,8 +111,8 @@ namespace Service
                 received.Id = 0;
                 received.TypeId = 4;
                 received.ParentId = transaction.Id;
-                received.StoreId = transaction.ToStoreId;
-                received.ToStoreId = null;
+                received.StockId = transaction.ToStockId;
+                received.ToStockId = null;
 
                 foreach (var item in received.TransactionProducts)
                 {

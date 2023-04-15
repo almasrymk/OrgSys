@@ -29,15 +29,15 @@ namespace Repository
             }
         }
 
-        private StoreRepo _storeRepo;
-        public StoreRepo storeRepo
+        private StockRepo _StockRepo;
+        public StockRepo StockRepo
         {
             get
             {
-                if (this._storeRepo == null)
-                    this._storeRepo = new StoreRepo(Schema);
+                if (this._StockRepo == null)
+                    this._StockRepo = new StockRepo(Schema);
 
-                return _storeRepo;
+                return _StockRepo;
             }
         }
 
@@ -505,7 +505,30 @@ namespace Repository
                 return _dealersBalanceRepo;
             }
         }
+
+        private WarehousesStatmentRepo _warehousesStatmentRepo;
+        public WarehousesStatmentRepo warehousesStatmentRepo
+        {
+            get
+            {
+                if (this._warehousesStatmentRepo == null)
+                    this._warehousesStatmentRepo = new WarehousesStatmentRepo(Schema);
+
+                return _warehousesStatmentRepo;
+            }
+        }           
         
+        private WarehousesBalanceRepo _warehousesBalanceRepo;
+        public WarehousesBalanceRepo warehousesBalanceRepo
+        {
+            get
+            {
+                if (this._warehousesBalanceRepo == null)
+                    this._warehousesBalanceRepo = new WarehousesBalanceRepo(Schema);
+
+                return _warehousesBalanceRepo;
+            }
+        }                  
         #endregion
     }
 }

@@ -9,7 +9,7 @@ namespace Entity.ModelView
 
         public string PaymentTypeName { get; set; }
 
-        public string StoreName { get; set; }
+        public string StockName { get; set; }
 
         public string ParentCode { get; set; }
 

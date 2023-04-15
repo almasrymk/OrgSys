@@ -33,7 +33,7 @@
     Each data row contains a name, and value. The row also contains a 
     type or mimetype. Type corresponds to a .NET class that support 
     text/value conversion through the TypeConverter architecture. 
-    Classes that don't support this are serialized and stored with the 
+    Classes that don't support this are serialized and Stockd with the 
     mimetype set.
     
     The mimetype is used for serialized objects, and tells the 
@@ -131,6 +131,9 @@
   </data>
   <data name="Address" xml:space="preserve">
     <value>العنوان</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>الكل</value>
   </data>
   <data name="Amount" xml:space="preserve">
     <value>المبلغ</value>
@@ -294,7 +297,7 @@
   <data name="DefaultSafe" xml:space="preserve">
     <value>الخزينة الافتراضية</value>
   </data>
-  <data name="DefaultStore" xml:space="preserve">
+  <data name="DefaultStock" xml:space="preserve">
     <value>المخزن الافتراضي</value>
   </data>
   <data name="DefaultSupplier" xml:space="preserve">
@@ -390,7 +393,7 @@
   <data name="FromDate" xml:space="preserve">
     <value>من تاريخ</value>
   </data>
-  <data name="FromStore" xml:space="preserve">
+  <data name="FromStock" xml:space="preserve">
     <value>من متجر</value>
   </data>
   <data name="GetStarted" xml:space="preserve">
@@ -579,8 +582,17 @@
   <data name="Product" xml:space="preserve">
     <value>المنتج</value>
   </data>
+  <data name="ProductBalance" xml:space="preserve">
+    <value>رصيد المنتج</value>
+  </data>
   <data name="ProductCategories" xml:space="preserve">
     <value>فئات المنتجات</value>
+  </data>
+  <data name="ProductList" xml:space="preserve">
+    <value>قائمة المنتجات</value>
+  </data>
+  <data name="ProductMovement" xml:space="preserve">
+    <value>حركة المنتج</value>
   </data>
   <data name="ProductRecipe" xml:space="preserve">
     <value>وصفة المنتج</value>
@@ -753,10 +765,16 @@
   <data name="STARTNOW" xml:space="preserve">
     <value>ابدأ الآن</value>
   </data>
-  <data name="Store" xml:space="preserve">
+  <data name="StockBalance" xml:space="preserve">
+    <value>رصيد المخزن</value>
+  </data>
+  <data name="StockMovement" xml:space="preserve">
+    <value>حركة المخزن</value>
+  </data>
+  <data name="Stock" xml:space="preserve">
     <value>المخزن</value>
   </data>
-  <data name="Stores" xml:space="preserve">
+  <data name="Stocks" xml:space="preserve">
     <value>المخازن</value>
   </data>
   <data name="SuplierSheetReport" xml:space="preserve">
@@ -813,7 +831,7 @@
   <data name="ToDate" xml:space="preserve">
     <value>الى تاريخ</value>
   </data>
-  <data name="ToStore" xml:space="preserve">
+  <data name="ToStock" xml:space="preserve">
     <value>الي متجر</value>
   </data>
   <data name="Total" xml:space="preserve">

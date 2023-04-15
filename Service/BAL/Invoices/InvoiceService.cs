@@ -35,7 +35,7 @@ namespace Service
                 {
                     var model = productUnit.Map<InvoiceProduct>();
                     model.InvoiceId = Nwob.Id;
-                    model.StoreId = Nwob.StoreId;
+                    model.StockId = Nwob.StockId;
                     repoAll.invoiceProductRepo.AddOrUpdate(model);
                 }
                 Nwob.InvoiceProducts = repoAll.invoiceProductRepo.GetList(e => e.InvoiceId == Nwob.Id, e => e.OrderBy(e => e.Id), "", Utility.Status.All).ToList();

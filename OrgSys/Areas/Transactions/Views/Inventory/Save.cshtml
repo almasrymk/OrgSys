@@ -78,15 +78,15 @@
                                         </div>
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label>@Utility.Resource.Title_Designer.Store</label>
-                                        <div id="divStoreId">
+                                        <label>@Utility.Resource.Title_Designer.Stock</label>
+                                        <div id="divStockId">
                                             <div class="input-group">
                                                 <div class="input-group DropAutoComplete">
                                                     <div class="input-group-prepend">
-                                                        <span class="input-group-text"><i class="iconsminds-clothing-store"></i></span>
+                                                        <span class="input-group-text"><i class="iconsminds-clothing-Stock"></i></span>
                                                     </div>
-                                                    <input type="text" class="form-control Droptxt" id="txtStoreId" value="@Model.StoreName" autocomplete="off" />
-                                                    @Html.HiddenFor(model => model.StoreId)
+                                                    <input type="text" class="form-control Droptxt" id="txtStockId" value="@Model.StockName" autocomplete="off" />
+                                                    @Html.HiddenFor(model => model.StockId)
                                                     <div class="input-group-prepend Dropbtn">
                                                         <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
                                                     </div>
@@ -99,7 +99,7 @@
                                             </div>
                                             @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                                         </div>
-                                        @Html.ValidationMessageFor(model => model.StoreId, "", new { @class = "text-danger " })
+                                        @Html.ValidationMessageFor(model => model.StockId, "", new { @class = "text-danger " })
                                     </div>
                                 </div>
 
@@ -291,22 +291,22 @@
 
         });
 
-        $(".txtStoreId").change(
+        $(".txtStockId").change(
             function () {
                 alert("sds");
-                if ("" + $(".txtStoreId").val() == "") {
-                    $("#StoreId").val(0);
+                if ("" + $(".txtStockId").val() == "") {
+                    $("#StockId").val(0);
                     $(".ProductRow").not(".trNew").remove();
                 }
             });
 
-        $("#txtStoreId").autocomplete({
+        $("#txtStockId").autocomplete({
             minLength: 0,
             source: function (request, response) {
-                var searchPhrase = $("#txtStoreId").val();//request.term.trim().toLowerCase();
+                var searchPhrase = $("#txtStockId").val();//request.term.trim().toLowerCase();
                 var noResultsLabel = 'NoResultsFound';
                 $.ajax({
-                    url: "/Setting/Store/GetList",
+                    url: "/Setting/Stock/GetList",
                     type: "Get",
                     dataType: "json",
                     data: { txtSearch: searchPhrase, page: 1, pageSize: 7 },
@@ -316,8 +316,8 @@
                                 data = [{ name: noResultsLabel }];
                             }
 
-                            if ("" + $("#txtStoreId").val() == "") {
-                                $("#StoreId").val("");
+                            if ("" + $("#txtStockId").val() == "") {
+                                $("#StockId").val("");
                                 $(".ProductRow").not(".trNew").remove();
                             }
 
@@ -335,8 +335,8 @@
                     event.preventDefault();
                     return;
                 }
-                $("#StoreId").val(ui.item.id);
-                $("#errorStoreId").remove();
+                $("#StockId").val(ui.item.id);
+                $("#errorStockId").remove();
             },
             focus: function (event, ui) {
                 if (ui.item.label === 'NoResultsFound') {
@@ -405,7 +405,7 @@
                 AutoSave();
             });
 
-            $("#StoreId").change(function () {
+            $("#StockId").change(function () {
                 AutoSave();
             });
 
@@ -527,12 +527,12 @@
 
         LoadProducts = function () {
             $(".ProductRow").not(".trNew").remove();
-            var storeId = $("#StoreId").val();
+            var StockId = $("#StockId").val();
             $.ajax({
                 dataType: 'json',
-                url: "/Setting/Product/LoadProductsByStore",
+                url: "/Setting/Product/LoadProductsByStock",
                 type: "Get",
-                data: { storeId: storeId, date : $("#Date").val()},
+                data: { StockId: StockId, date : $("#Date").val()},
                 success: function (data) {
                     for (var i = 0; i < data.length; i++) {
                         var $row = $('.trNew');
@@ -580,7 +580,7 @@
             if (CheckRequired("Date", "divDate", '@Utility.Resource.Message_Designer.DateRequired'))
                 Valid = false;
 
-            if (CheckRequired("StoreId", "divStoreId", '@Utility.Resource.Message_Designer.StoreRequired'))
+            if (CheckRequired("StockId", "divStockId", '@Utility.Resource.Message_Designer.StockRequired'))
                 Valid = false;
 
             if (!Valid) {
@@ -609,7 +609,7 @@
             if (CheckRequiredNoMessage("Date"))
                 Valid = false;
 
-            if (CheckRequiredNoMessage("StoreId"))
+            if (CheckRequiredNoMessage("StockId"))
                 Valid = false;
 
             if (Valid == true) {
@@ -657,7 +657,7 @@
                 Code: $('#Code').val(),
                 CodeNumber: $('#CodeNumber').val(),
                 Date: $('#Date').val(),
-                StoreId: $('#StoreId').val(),
+                StockId: $('#StockId').val(),
                 Notes: $('#Notes').val(),
                 CreateUserId: $('#CreateUserId').val(),
                 CreateDate: $('#CreateDate').val(),

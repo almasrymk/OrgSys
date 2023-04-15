@@ -13,7 +13,7 @@ namespace OrgSys.Areas.Inventory.Controllers
         public override InventoryModelView InitializeData(InventoryModelView ob)
         {
             var setting = new PreferenceService(User.GetSchema());
-            var StoreId = long.Parse("0" + setting.GetByKey("DefaultStore", "Inventory", ob.TypeId, 0)?.Value);           
+            var StockId = long.Parse("0" + setting.GetByKey("DefaultStock", "Inventory", ob.TypeId, 0)?.Value);           
             ViewBag.AutoSave = int.Parse("0" + setting.GetByKey("AutoSave", "Inventory", ob.TypeId, 0)?.Value);
             var TypeCode = int.Parse("0" + setting.GetByKey("TypeSerial", "Inventory", ob.TypeId, 0)?.Value);
             ViewBag.TypeSerial = TypeCode;
@@ -25,11 +25,11 @@ namespace OrgSys.Areas.Inventory.Controllers
             {
                 ob.CodeNumber = new InventoryService(User.GetSchema()).GetMaxCode(ob.TypeId);
                 ob.Code = "" + ob.CodeNumber;
-                ob.StoreId = StoreId;
+                ob.StockId = StockId;
                 ob.Date = DateTime.Now;
                 ob.InventoryProductList = new List<InventoryProductModelView>();
               }
-            ob.StoreName = new StoreService(User.GetSchema()).Get(ob.StoreId??0).Name;
+            ob.StockName = new StockService(User.GetSchema()).Get(ob.StockId??0).Name;
             return ob;
         }       
     }

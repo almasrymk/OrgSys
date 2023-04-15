@@ -7,7 +7,7 @@ namespace Entity.ModelView
 {
     public class InventoryModelView : Inventory
     {
-        public string StoreName { get; set; }
+        public string StockName { get; set; }
 
         public string UserName { get; set; }
 

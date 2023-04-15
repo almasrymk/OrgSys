@@ -3989,7 +3989,7 @@ namespace Repository.Migrations.AdminMigrations
                 {
                     b.Navigation("PlanElements");
                 });
-#pragma warning restore 612, 618
+#pragma warning reStock 612, 618
         }
     }
 }

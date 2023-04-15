@@ -1,5 +1,5 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@model Entity.ModelView.StoreModelView
+@model Entity.ModelView.StockModelView
 @{
     ViewData["Title_Designer"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -9,7 +9,7 @@
     <div class="row">
         <div class="col-12">
             <div class="mb-3">
-                <h1>@Utility.Resource.Title_Designer.Store</h1>
+                <h1>@Utility.Resource.Title_Designer.Stock</h1>
                 <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
                     <ol class="breadcrumb pt-0">
                         <li class="breadcrumb-item">
@@ -113,7 +113,7 @@
 
             $.ajax({
                 type: 'POST',
-                url: "/Setting/Store/Save",
+                url: "/Setting/Stock/Save",
                 data: { model: data},
                 success: function (res) {
                     if (res.status == "success") {

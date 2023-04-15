@@ -9,9 +9,9 @@ using Service;
 namespace OrgSys.Areas.Setting.Controllers
 {
     [Area("Setting")]
-    public class StoreController : BaseController<StoreModelView>
+    public class StockController : BaseController<StockModelView>
     {
-        public override void LoadViewBag(StoreModelView model)
+        public override void LoadViewBag(StockModelView model)
         {
             ViewBag.BranchList = new SelectList(new BranchService(User.GetSchema()).GetAll(model.ParentId, model.TypeId), "Id", "Name", model.BranchId);
         }
@@ -21,7 +21,7 @@ namespace OrgSys.Areas.Setting.Controllers
             if (txtSearch != null)
                 txtSearch = txtSearch.Trim().ToLower();
 
-            var itemsList = new StoreService(User.GetSchema()).GetAll(txtSearch, 0,0, page, pageSize);
+            var itemsList = new StockService(User.GetSchema()).GetAll(txtSearch, 0,0, page, pageSize);
             var list = itemsList.Distinct().OrderBy(_ => _.Name)
                 .Select(_ => new
                 {

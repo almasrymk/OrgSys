@@ -11,10 +11,10 @@ namespace Entity.Model
 
         public virtual User User { get; set; }
 
-        [ForeignKey("Store")]
-        public virtual long? StoreId { get; set; }
+        [ForeignKey("Stock")]
+        public virtual long? StockId { get; set; }
 
-        public virtual Store Store { get; set; }
+        public virtual Stock Stock { get; set; }
 
         [StringLength(500)]
         public virtual string Notes { get; set; }

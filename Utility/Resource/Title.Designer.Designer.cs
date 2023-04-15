@@ -106,6 +106,15 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All.
+        /// </summary>
+        public static string All {
+            get {
+                return ResourceManager.GetString("All", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Amount.
         /// </summary>
         public static string Amount {
@@ -592,11 +601,11 @@ namespace Utility.Resource {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Default Store.
+        ///   Looks up a localized string similar to Default Stock.
         /// </summary>
-        public static string DefaultStore {
+        public static string DefaultStock {
             get {
-                return ResourceManager.GetString("DefaultStore", resourceCulture);
+                return ResourceManager.GetString("DefaultStock", resourceCulture);
             }
         }
         
@@ -880,11 +889,11 @@ namespace Utility.Resource {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to From Store.
+        ///   Looks up a localized string similar to From Stock.
         /// </summary>
-        public static string FromStore {
+        public static string FromStock {
             get {
-                return ResourceManager.GetString("FromStore", resourceCulture);
+                return ResourceManager.GetString("FromStock", resourceCulture);
             }
         }
         
@@ -1447,11 +1456,38 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Product Balance.
+        /// </summary>
+        public static string ProductBalance {
+            get {
+                return ResourceManager.GetString("ProductBalance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Product Categories.
         /// </summary>
         public static string ProductCategories {
             get {
                 return ResourceManager.GetString("ProductCategories", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product List.
+        /// </summary>
+        public static string ProductList {
+            get {
+                return ResourceManager.GetString("ProductList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product Movement.
+        /// </summary>
+        public static string ProductMovement {
+            get {
+                return ResourceManager.GetString("ProductMovement", resourceCulture);
             }
         }
         
@@ -1969,20 +2005,38 @@ namespace Utility.Resource {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Store.
+        ///   Looks up a localized string similar to Stock Balance.
         /// </summary>
-        public static string Store {
+        public static string StockBalance {
             get {
-                return ResourceManager.GetString("Store", resourceCulture);
+                return ResourceManager.GetString("StockBalance", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stores.
+        ///   Looks up a localized string similar to Stock Movement.
         /// </summary>
-        public static string Stores {
+        public static string StockMovement {
             get {
-                return ResourceManager.GetString("Stores", resourceCulture);
+                return ResourceManager.GetString("StockMovement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stock.
+        /// </summary>
+        public static string Stock {
+            get {
+                return ResourceManager.GetString("Stock", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stocks.
+        /// </summary>
+        public static string Stocks {
+            get {
+                return ResourceManager.GetString("Stocks", resourceCulture);
             }
         }
         
@@ -2149,11 +2203,11 @@ namespace Utility.Resource {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to To Store.
+        ///   Looks up a localized string similar to To Stock.
         /// </summary>
-        public static string ToStore {
+        public static string ToStock {
             get {
-                return ResourceManager.GetString("ToStore", resourceCulture);
+                return ResourceManager.GetString("ToStock", resourceCulture);
             }
         }
         

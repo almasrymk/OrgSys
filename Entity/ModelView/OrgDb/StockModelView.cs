@@ -2,7 +2,7 @@
 
 namespace Entity.ModelView
 {
-    public class StoreModelView : Store
+    public class StockModelView : Stock
     {
         public string BranchName { get; set; }
     }

@@ -31,6 +31,9 @@ namespace OrgSys.Areas.Reports.Controllers
             if (DealerId == 1)
                 DealerId = 0;
 
+            ViewBag.FromDate = fDate;
+            ViewBag.ToDate = tDate;
+
             var d = new DealerService(User.GetSchema()).Get(DealerId);
             if (d == null)
                 d = new DealerModelView();
@@ -57,6 +60,8 @@ namespace OrgSys.Areas.Reports.Controllers
 
             if (ToDate != null)
                 tDate = DateTime.Parse(ToDate);
+
+            ViewBag.ToDate = tDate;
 
             var obList = new SalesReportService(User.GetSchema()).GetDealersBalance(1 , tDate, DealerId, ShiftId, BranchId, UserId, page, pageSize);
             return Request.Headers["X-Requested-With"] == "XMLHttpRequest" ? (ActionResult)PartialView("ClientsBalanceList", obList) : View(obList);

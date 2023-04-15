@@ -8,8 +8,8 @@
 	1 TypeId , 
 	N'Openning Balance' TypeName , 
 	CONVERT(datetime , CONVERT(VARCHAR(20),N'1-1-2012',111)) [Date] ,
-	StoreId , 
-	StoreName ,
+	StockId , 
+	StockName ,
 	ProductId , 
 	ProductName ,
 	SUM(Quantity) Quantity ,
@@ -17,8 +17,8 @@
 
 	FROM (
 		SELECT 
-		trn.StoreId , 
-		st.[Name] StoreName , 
+		trn.StockId , 
+		st.[Name] StockName , 
 		trnp.ProductId , 
 		pr.[Name] ProductName , 
 		trnp.Quantity * trnt.InOut Quantity 
@@ -26,7 +26,7 @@
 		FROM Org.[Transaction] trn
 		INNER JOIN Org.TransactionProduct trnp ON trnp.TransactionId = trn.Id
 		INNER JOIN Org.TransactionType trnt ON trnt.Id = trn.TypeId
-		INNER JOIN Org.Store st ON st.Id = trn.StoreId
+		INNER JOIN Org.Stock st ON st.Id = trn.StockId
 		INNER JOIN Org.Product pr ON pr.Id = trnp.ProductId
 
 		--WHERE 
@@ -41,8 +41,8 @@
 	) OpenningBalance 
 	
 	GROUP BY 
-	StoreId , 
-	StoreName,
+	StockId , 
+	StockName,
 	ProductId,
 	ProductName
 
@@ -58,8 +58,8 @@
 	trnt.TypeId , 
 	trnt.[Name] TypeName , 
 	trn.[Date] ,
-	trn.StoreId , 
-	st.[Name] StoreName , 
+	trn.StockId , 
+	st.[Name] StockName , 
     trnp.ProductId , 
 	pr.[Name] ProductName , 
 	trnp.Quantity * trnt.InOut Quantity ,
@@ -68,7 +68,7 @@
 	FROM Org.[Transaction] trn
 	INNER JOIN Org.TransactionProduct trnp ON trnp.TransactionId = trn.Id
 	INNER JOIN Org.TransactionType trnt ON trnt.Id = trn.TypeId
-	INNER JOIN Org.Store st ON st.Id = trn.StoreId
+	INNER JOIN Org.Stock st ON st.Id = trn.StockId
 	INNER JOIN Org.Product pr ON pr.Id = trnp.ProductId
 
 	--WHERE 

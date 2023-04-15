@@ -3,8 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entity.Model
 {
-    [Table("Store")]
-    public class Store : BaseModel
+    [Table("Stock")]
+    public class Stock : BaseModel
     {
         [StringLength(50, MinimumLength = 3)]
         public virtual string Name { get; set; }

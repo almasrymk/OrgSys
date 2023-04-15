@@ -73,12 +73,12 @@
                         </th>
                         @if (ViewBag.TypeId == 3)
                         {
-                            <th class="@TextAlign align-middle">@Utility.Resource.Title_Designer.FromStore</th>
-                            <th class="@TextAlign align-middle">@Utility.Resource.Title_Designer.ToStore</th>
+                            <th class="@TextAlign align-middle">@Utility.Resource.Title_Designer.FromStock</th>
+                            <th class="@TextAlign align-middle">@Utility.Resource.Title_Designer.ToStock</th>
                         }
                         else
                         {
-                            <th class="@TextAlign align-middle">@Utility.Resource.Title_Designer.Store</th>
+                            <th class="@TextAlign align-middle">@Utility.Resource.Title_Designer.Stock</th>
                         }
                         <th class="text-center">@Utility.Resource.Title_Designer.Date</th>
                         <th class="text-center">@Utility.Resource.Title_Designer.Amount</th>
@@ -123,16 +123,16 @@
                             @if (ViewBag.TypeId == 3)
                             {
                                 <td class="@TextAlign align-middle">
-                                    @Model[i].StoreName
+                                    @Model[i].StockName
                                 </td>
                                 <td class="@TextAlign align-middle">
-                                    @Model[i].ToStoreName
+                                    @Model[i].ToStockName
                                 </td>
                             }
                             else
                             {
                                 <td class="@TextAlign align-middle">
-                                    @Model[i].StoreName
+                                    @Model[i].StockName
                                 </td>
                             }
                             <td class="w-12 text-center align-middle">
@@ -239,16 +239,16 @@
                         @if (ViewBag.TypeId == 3)
                         {
                             <div class="list-item-heading mb-0  w-30">
-                                <small>@Utility.Resource.Title_Designer.Store</small>
+                                <small>@Utility.Resource.Title_Designer.Stock</small>
                             </div>
                             <div class="list-item-heading mb-0  w-30">
-                                <small>@Utility.Resource.Title_Designer.ToStore</small>
+                                <small>@Utility.Resource.Title_Designer.ToStock</small>
                             </div>
                         }
                         else
                         {
                             <div class="list-item-heading mb-0  w-60">
-                                <small>@Utility.Resource.Title_Designer.Store</small>
+                                <small>@Utility.Resource.Title_Designer.Stock</small>
                             </div>
                         }
                         <div class="list-item-heading mb-0 truncate w-10 ">
@@ -295,16 +295,16 @@
                             @if (ViewBag.TypeId == 3)
                             {
                                 <div class="list-item-heading mb-0  w-30">
-                                    @Model[i].StoreName
+                                    @Model[i].StockName
                                 </div>
                                 <div class="list-item-heading mb-0  w-30">
-                                    @Model[i].ToStoreName
+                                    @Model[i].ToStockName
                                 </div>
                             }
                             else
                             {
                                 <div class="list-item-heading mb-0  w-60">
-                                    @Model[i].StoreName
+                                    @Model[i].StockName
                                 </div>
                             }
                             <div class="list-item-heading mb-0 truncate w-15 ">

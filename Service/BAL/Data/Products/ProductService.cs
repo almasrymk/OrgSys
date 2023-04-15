@@ -42,10 +42,10 @@ namespace Service
             return obMw;
         }
 
-        public List<ProductModelView> GetAllByBalance(long StoreId, DateTime date)
+        public List<ProductModelView> GetAllByBalance(long StockId, DateTime date)
         {
             List<ProductModelView> list = new List<ProductModelView>();
-            var trns = repoAll.transactionProductRepo.GetList(e => e.StoreId == StoreId && e.Transaction.Date <= date, e => e.OrderBy(e => e.ProductId), "Transaction,Transaction.Store,Product,Unit,Product.ProductUnits", Utility.Status.All).ToList();
+            var trns = repoAll.transactionProductRepo.GetList(e => e.StockId == StockId && e.Transaction.Date <= date, e => e.OrderBy(e => e.ProductId), "Transaction,Transaction.Stock,Product,Unit,Product.ProductUnits", Utility.Status.All).ToList();
             var products = trns.Select(e => e.Product).Distinct().ToList();
             foreach (var product in products)
             {

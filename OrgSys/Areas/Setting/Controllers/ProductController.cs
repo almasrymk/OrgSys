@@ -130,9 +130,9 @@ namespace OrgSys.Areas.Setting.Controllers
             return Json(data);
         }
 
-        public JsonResult LoadProductsByStore(long storeId , DateTime date)
+        public JsonResult LoadProductsByStock(long StockId , DateTime date)
         {
-            var products = new ProductService(User.GetSchema()).GetAllByBalance(storeId , date);
+            var products = new ProductService(User.GetSchema()).GetAllByBalance(StockId , date);
             var data = products.Select(e=> new
             {
                 id = e.Id,

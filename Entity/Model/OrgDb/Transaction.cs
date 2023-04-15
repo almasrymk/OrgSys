@@ -12,15 +12,15 @@ namespace Entity.Model
 
         public virtual Dealer Dealer { get; set; }
 
-        [ForeignKey("Store")]
-        public virtual long? StoreId { get; set; }
+        [ForeignKey("Stock")]
+        public virtual long? StockId { get; set; }
 
-        public virtual Store Store { get; set; }
+        public virtual Stock Stock { get; set; }
 
-        [ForeignKey("ToStore")]
-        public virtual long? ToStoreId { get; set; }
+        [ForeignKey("ToStock")]
+        public virtual long? ToStockId { get; set; }
 
-        public virtual Store ToStore { get; set; }
+        public virtual Stock ToStock { get; set; }
 
         [ForeignKey("Order")]
         public virtual long? OrderId { get; set; }

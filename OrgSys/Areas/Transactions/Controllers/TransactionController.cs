@@ -28,7 +28,7 @@ namespace OrgSys.Areas.Transaction.Controllers
         public override TransactionModelView InitializeData(TransactionModelView ob)
         {
             var setting = new PreferenceService(User.GetSchema());
-            var StoreId = long.Parse("0" + setting.GetByKey("DefaultStore", "Transaction", ob.TypeId, 0)?.Value);
+            var StockId = long.Parse("0" + setting.GetByKey("DefaultStock", "Transaction", ob.TypeId, 0)?.Value);
 
             long DealerId = 0;
             if (ob.TypeId == 1)
@@ -50,13 +50,13 @@ namespace OrgSys.Areas.Transaction.Controllers
             {
                 ob.CodeNumber = new TransactionService(User.GetSchema()).GetMaxCode(ob.TypeId);
                 ob.Code = "" + ob.CodeNumber;
-                ob.StoreId = StoreId;
+                ob.StockId = StockId;
                 ob.DealerId = DealerId;
                 ob.Date = DateTime.Now;
                 ob.TransactionProductList = new List<TransactionProductModelView>();
             }
-            ob.StoreName = new StoreService(User.GetSchema()).Get(ob.StoreId??0).Name;
-            ob.ToStoreName = new StoreService(User.GetSchema()).Get(ob.ToStoreId??0)?.Name;
+            ob.StockName = new StockService(User.GetSchema()).Get(ob.StockId??0).Name;
+            ob.ToStockName = new StockService(User.GetSchema()).Get(ob.ToStockId??0)?.Name;
             ob.DealerName = new DealerService(User.GetSchema()).Get(ob.DealerId??0)?.Name;
             return ob;
         }

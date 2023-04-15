@@ -5,6 +5,6 @@ namespace Service
 {
     public class TransactionProductService : BaseOrgService<TransactionProductModelView, TransactionProduct>
     {
-        public TransactionProductService(string Schema) : base(Schema, "Transaction,Product,Unit,Store") { }
+        public TransactionProductService(string Schema) : base(Schema, "Transaction,Product,Unit,Stock") { }
     }
 }

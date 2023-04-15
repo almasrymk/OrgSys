@@ -294,20 +294,20 @@
                                         </div>
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <label>@Utility.Resource.Title_Designer.Store</label>
-                                        <div id="divStoreId">
+                                        <label>@Utility.Resource.Title_Designer.Stock</label>
+                                        <div id="divStockId">
                                             <div class="input-group DropAutoComplete">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="iconsminds-financial"></i></span>
                                                 </div>
-                                                <input type="text" class="form-control Droptxt" id="txtStoreId" value="@Model.StoreName" autocomplete="off" />
-                                                @Html.HiddenFor(model => model.StoreId)
+                                                <input type="text" class="form-control Droptxt" id="txtStockId" value="@Model.StockName" autocomplete="off" />
+                                                @Html.HiddenFor(model => model.StockId)
                                                 <div class="input-group-prepend Dropbtn">
                                                     <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
                                                 </div>
                                             </div>
                                         </div>
-                                        @Html.ValidationMessageFor(model => model.StoreId, "", new { @class = "text-danger " })
+                                        @Html.ValidationMessageFor(model => model.StockId, "", new { @class = "text-danger " })
                                     </div>
                                 </div>
 
@@ -335,20 +335,20 @@
                                     @if (Model.TypeId == 3)
                                     {
                                         <div class="form-group col-md-4">
-                                            @Utility.Resource.Title_Designer.ToStore
-                                            <div id="divToStoreId">
+                                            @Utility.Resource.Title_Designer.ToStock
+                                            <div id="divToStockId">
                                                 <div class="input-group DropAutoComplete">
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text"><i class="iconsminds-financial"></i></span>
                                                     </div>
-                                                    <input type="text" class="form-control Droptxt" id="txtToStoreId" value="@Model.ToStoreName" autocomplete="off" />
-                                                    @Html.HiddenFor(model => model.ToStoreId)
+                                                    <input type="text" class="form-control Droptxt" id="txtToStockId" value="@Model.ToStockName" autocomplete="off" />
+                                                    @Html.HiddenFor(model => model.ToStockId)
                                                     <div class="input-group-prepend Dropbtn">
                                                         <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
                                                     </div>
                                                 </div>
                                             </div>
-                                            @Html.ValidationMessageFor(model => model.ToStoreId, "", new { @class = "text-danger " })
+                                            @Html.ValidationMessageFor(model => model.ToStockId, "", new { @class = "text-danger " })
                                         </div>
                                     }
                                 </div>
@@ -589,15 +589,15 @@
                 },
             });
 
-            $("#txtStoreId").autocomplete({
+            $("#txtStockId").autocomplete({
                 minLength: 0,
                 source: function (request, response) {
-                    var searchPhrase = $("#txtStoreId").val();//request.term.trim().toLowerCase();
+                    var searchPhrase = $("#txtStockId").val();//request.term.trim().toLowerCase();
                     var noResultsLabel = 'NoResultsFound';
                     if (searchPhrase == "...")
                         searchPhrase = "";
                     $.ajax({
-                        url: "/Setting/Store/GetList",
+                        url: "/Setting/Stock/GetList",
                         type: "Get",
                         dataType: "json",
                         data: { txtSearch: searchPhrase, page: 1, pageSize: 7 },
@@ -607,8 +607,8 @@
                                     data = [{ name: noResultsLabel }];
                                 }
 
-                                if ("" + $("#txtStoreId").val() == "") {
-                                    $("#StoreId").val("");
+                                if ("" + $("#txtStockId").val() == "") {
+                                    $("#StockId").val("");
                                 }
 
                                 response($.map(data, function (item) {
@@ -625,8 +625,8 @@
                         event.preventDefault();
                         return;
                     }
-                    $("#StoreId").val(ui.item.id);
-                    $("#errorStoreId").remove();
+                    $("#StockId").val(ui.item.id);
+                    $("#errorStockId").remove();
                 },
                 focus: function (event, ui) {
                     if (ui.item.label === 'NoResultsFound') {
@@ -635,15 +635,15 @@
                 }
             });
 
-            $("#txtToStoreId").autocomplete({
+            $("#txtToStockId").autocomplete({
                 minLength: 0,
                 source: function (request, response) {
-                    var searchPhrase = $("#txtToStoreId").val();//request.term.trim().toLowerCase();
+                    var searchPhrase = $("#txtToStockId").val();//request.term.trim().toLowerCase();
                     var noResultsLabel = 'NoResultsFound';
                     if (searchPhrase == "...")
                         searchPhrase = "";
                     $.ajax({
-                        url: "/Setting/Store/GetList",
+                        url: "/Setting/Stock/GetList",
                         type: "Get",
                         dataType: "json",
                         data: { txtSearch: searchPhrase, page: 1, pageSize: 7 },
@@ -653,8 +653,8 @@
                                     data = [{ name: noResultsLabel }];
                                 }
 
-                                if ("" + $("#txtToStoreId").val() == "") {
-                                    $("#ToStoreId").val("");
+                                if ("" + $("#txtToStockId").val() == "") {
+                                    $("#ToStockId").val("");
                                 }
 
                                 response($.map(data, function (item) {
@@ -671,8 +671,8 @@
                         event.preventDefault();
                         return;
                     }
-                    $("#ToStoreId").val(ui.item.id);
-                    $("#errorToStoreId").remove();
+                    $("#ToStockId").val(ui.item.id);
+                    $("#errorToStockId").remove();
                 },
                 focus: function (event, ui) {
                     if (ui.item.label === 'NoResultsFound') {
@@ -780,11 +780,11 @@
                 AutoSave();
             });
 
-            $("#StoreId").change(function () {
+            $("#StockId").change(function () {
                 AutoSave();
             });
 
-            $("#ToStoreId").change(function () {
+            $("#ToStockId").change(function () {
                 AutoSave();
             });
 
@@ -1000,11 +1000,11 @@
                     Valid = false;
 
 
-                if (CheckRequired("StoreId", "divStoreId", '@Utility.Resource.Message_Designer.StoreRequired'))
+                if (CheckRequired("StockId", "divStockId", '@Utility.Resource.Message_Designer.StockRequired'))
                     Valid = false;
 
                 if ('@Model.TypeId' == 3) {
-                    if (CheckRequired("ToStoreId", "divToStoreId", '@Utility.Resource.Message_Designer.StoreRequired'))
+                    if (CheckRequired("ToStockId", "divToStockId", '@Utility.Resource.Message_Designer.StockRequired'))
                         Valid = false;
                 }
 
@@ -1048,11 +1048,11 @@
                     Valid = false;
 
 
-               if (CheckRequiredNoMessage("StoreId"))
+               if (CheckRequiredNoMessage("StockId"))
                    Valid = false;
 
                if ('@Model.TypeId' == 3) {
-                   if (CheckRequiredNoMessage("ToStoreId"))
+                   if (CheckRequiredNoMessage("ToStockId"))
                        Valid = false;
                }
             }
@@ -1090,7 +1090,7 @@
                         list.push({
                             TransactionId: $('#Id').val(),
                             ProductId: currentRow.find('#ProductId').val(),
-                            StoreId: $('#StoreId').val(),
+                            StockId: $('#StockId').val(),
                             UnitId: currentRow.find('#UnitId').val(),
                             Quantity: currentRow.find('#Quantity').val(),
                             Cost: currentRow.find('#Cost').val(),
@@ -1115,8 +1115,8 @@
                 MaskText: $('#MaskText').val(),
                 Date: TxtDate,
                 DealerId: $('#DealerId').val(),
-                StoreId: $('#StoreId').val(),
-                ToStoreId: $('#ToStoreId').val(),
+                StockId: $('#StockId').val(),
+                ToStockId: $('#ToStockId').val(),
                 Total: $('#AllTotal').val(),
                 Notes: $('#Notes').val(),
                 CreateUserId: $('#CreateUserId').val(),

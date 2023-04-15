@@ -7,9 +7,9 @@ namespace Entity.ModelView
     {
         public string DealerName { get; set; }
 
-        public string StoreName { get; set; }
+        public string StockName { get; set; }
 
-        public string ToStoreName { get; set; }
+        public string ToStockName { get; set; }
 
         public string ParentCode { get; set; }
 

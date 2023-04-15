@@ -17,10 +17,10 @@ namespace Entity.Model
 
         public virtual PaymentType PaymentType { get; set; }
 
-        [ForeignKey("Store")]
-        public virtual long? StoreId { get; set; }
+        [ForeignKey("Stock")]
+        public virtual long? StockId { get; set; }
 
-        public virtual Store Store { get; set; }
+        public virtual Stock Stock { get; set; }
 
         [ForeignKey("Transaction")]
         public virtual long? TransactionId { get; set; }

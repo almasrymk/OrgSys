@@ -45,7 +45,7 @@ namespace Repository.Seed
                 InitialUser(orgContext);
                 InitialCompanyProfile(orgContext);
                 InitialBranch(orgContext);
-                InitialStore(orgContext);
+                InitialStock(orgContext);
                 InitialDealerGroup(orgContext);
                 InitialDealer(orgContext);
                 InitialSafe(orgContext);
@@ -68,11 +68,11 @@ namespace Repository.Seed
                            new Permission { Id = 1010103, Name = "Edit", Key = "Branchs.Edit", ParentId = 10101, TypeId = 1 },
                            new Permission { Id = 1010104, Name = "Delete", Key = "Branchs.Delete", ParentId = 10101, TypeId = 1 },
 
-                       new Permission { Id = 10102, Name = "Stores", Key = "Stores.All", ParentId = 101 },
-                           new Permission { Id = 1010201, Name = "View", Key = "Stores.View", ParentId = 10102, TypeId = 1 },
-                           new Permission { Id = 1010202, Name = "Add", Key = "Stores.Add", ParentId = 10102, TypeId = 1 },
-                           new Permission { Id = 1010203, Name = "Edit", Key = "Stores.Edit", ParentId = 10102, TypeId = 1 },
-                           new Permission { Id = 1010204, Name = "Delete", Key = "Stores.Delete", ParentId = 10102, TypeId = 1 },
+                       new Permission { Id = 10102, Name = "Stocks", Key = "Stocks.All", ParentId = 101 },
+                           new Permission { Id = 1010201, Name = "View", Key = "Stocks.View", ParentId = 10102, TypeId = 1 },
+                           new Permission { Id = 1010202, Name = "Add", Key = "Stocks.Add", ParentId = 10102, TypeId = 1 },
+                           new Permission { Id = 1010203, Name = "Edit", Key = "Stocks.Edit", ParentId = 10102, TypeId = 1 },
+                           new Permission { Id = 1010204, Name = "Delete", Key = "Stocks.Delete", ParentId = 10102, TypeId = 1 },
 
                        new Permission { Id = 10103, Name = "Tables", Key = "Tables.All", ParentId = 101 },
                            new Permission { Id = 1010301, Name = "View", Key = "Tables.View", ParentId = 10103, TypeId = 1 },
@@ -353,7 +353,7 @@ namespace Repository.Seed
         public void InitialPreference(OrgContext orgContext)
         {
             List<Preference> list = new List<Preference> {
-               new Preference { Id = 1, Key = "DefaultStore", Value = "1", Reference = "Invoice", TypeId = 1, Hide = false },
+               new Preference { Id = 1, Key = "DefaultStock", Value = "1", Reference = "Invoice", TypeId = 1, Hide = false },
                new Preference { Id = 2, Key = "DefaultCustomer", Value = "1", Reference = "Invoice", TypeId = 1, Hide = false },
                new Preference { Id = 3, Key = "DefaultPaymentType", Value = "1", Reference = "Invoice", TypeId = 1, Hide = false },
                new Preference { Id = 4, Key = "DiscountValue", Value = "", Reference = "Invoice", TypeId = 1, Hide = false },
@@ -374,7 +374,7 @@ namespace Repository.Seed
                new Preference { Id = 19, Key = "LengthElectronicScale", Value = "7", Reference = "Invoice", TypeId = 1, Hide = false },
                new Preference { Id = 20, Key = "LengthQtyElectronicScale", Value = "5", Reference = "Invoice", TypeId = 1, Hide = false },
 
-               new Preference { Id = 101, Key = "DefaultStore", Value = "1", Reference = "Invoice", TypeId = 2, Hide = false },
+               new Preference { Id = 101, Key = "DefaultStock", Value = "1", Reference = "Invoice", TypeId = 2, Hide = false },
                new Preference { Id = 102, Key = "DefaultSupplier", Value = "1", Reference = "Invoice", TypeId = 2, Hide = false },
                new Preference { Id = 103, Key = "DefaultPaymentType", Value = "1", Reference = "Invoice", TypeId = 2, Hide = false },
                new Preference { Id = 104, Key = "DiscountValue", Value = "", Reference = "Invoice", TypeId = 2, Hide = false },
@@ -395,7 +395,7 @@ namespace Repository.Seed
                new Preference { Id = 119, Key = "LengthElectronicScale", Value = "7", Reference = "Invoice", TypeId = 2, Hide = false },
                new Preference { Id = 120, Key = "LengthQtyElectronicScale", Value = "5", Reference = "Invoice", TypeId = 2, Hide = false },
 
-               new Preference { Id = 201, Key = "DefaultStore", Value = "1", Reference = "Invoice", TypeId = 3, Hide = false },
+               new Preference { Id = 201, Key = "DefaultStock", Value = "1", Reference = "Invoice", TypeId = 3, Hide = false },
                new Preference { Id = 202, Key = "DefaultCustomer", Value = "1", Reference = "Invoice", TypeId = 3, Hide = false },
                new Preference { Id = 203, Key = "DefaultPaymentType", Value = "1", Reference = "Invoice", TypeId = 3, Hide = false },
                new Preference { Id = 204, Key = "DiscountValue", Value = "", Reference = "Invoice", TypeId = 3, Hide = false },
@@ -413,7 +413,7 @@ namespace Repository.Seed
                new Preference { Id = 216, Key = "AutoCreateTransaction", Value = "0", Reference = "Invoice", TypeId = 3, Hide = false },
                new Preference { Id = 217, Key = "DefaultCurrency", Value = "1", Reference = "Invoice", TypeId = 3, Hide = false },
 
-               new Preference { Id = 301, Key = "DefaultStore", Value = "1", Reference = "Invoice", TypeId = 4, Hide = false },
+               new Preference { Id = 301, Key = "DefaultStock", Value = "1", Reference = "Invoice", TypeId = 4, Hide = false },
                new Preference { Id = 302, Key = "DefaultSupplier", Value = "1", Reference = "Invoice", TypeId = 4, Hide = false },
                new Preference { Id = 303, Key = "DefaultPaymentType", Value = "1", Reference = "Invoice", TypeId = 4, Hide = false },
                new Preference { Id = 304, Key = "DiscountValue", Value = "", Reference = "Invoice", TypeId = 4, Hide = false },
@@ -431,7 +431,7 @@ namespace Repository.Seed
                new Preference { Id = 316, Key = "AutoCreateTransaction", Value = "0", Reference = "Invoice", TypeId = 4, Hide = false },
                new Preference { Id = 317, Key = "DefaultCurrency", Value = "1", Reference = "Invoice", TypeId = 4, Hide = false },
 
-               new Preference { Id = 401, Key = "DefaultStore", Value = "1", Reference = "Transaction", TypeId = 1, Hide = false },
+               new Preference { Id = 401, Key = "DefaultStock", Value = "1", Reference = "Transaction", TypeId = 1, Hide = false },
                new Preference { Id = 402, Key = "DefaultSupplier", Value = "1", Reference = "Transaction", TypeId = 1, Hide = false },
                new Preference { Id = 403, Key = "NumberLine", Value = "6", Reference = "Transaction", TypeId = 1, Hide = false },
                new Preference { Id = 404, Key = "OrderTabe", Value = "2", Reference = "Transaction", TypeId = 1, Hide = false },
@@ -440,7 +440,7 @@ namespace Repository.Seed
                new Preference { Id = 407, Key = "AllowRepeated", Value = "1", Reference = "Transaction", TypeId = 1, Hide = false },
                new Preference { Id = 408, Key = "SaveLastStatusSetting", Value = "1", Reference = "Transaction", TypeId = 1, Hide = false },
 
-               new Preference { Id = 501, Key = "DefaultStore", Value = "1", Reference = "Transaction", TypeId = 2, Hide = false },
+               new Preference { Id = 501, Key = "DefaultStock", Value = "1", Reference = "Transaction", TypeId = 2, Hide = false },
                new Preference { Id = 502, Key = "DefaultCustomer", Value = "1", Reference = "Transaction", TypeId = 2, Hide = false },
                new Preference { Id = 503, Key = "NumberLine", Value = "6", Reference = "Transaction", TypeId = 2, Hide = false },
                new Preference { Id = 504, Key = "OrderTabe", Value = "2", Reference = "Transaction", TypeId = 2, Hide = false },
@@ -449,7 +449,7 @@ namespace Repository.Seed
                new Preference { Id = 507, Key = "AllowRepeated", Value = "1", Reference = "Transaction", TypeId = 2, Hide = false },
                new Preference { Id = 508, Key = "SaveLastStatusSetting", Value = "1", Reference = "Transaction", TypeId = 2, Hide = false },
 
-               new Preference { Id = 601, Key = "DefaultStore", Value = "1", Reference = "Transaction", TypeId = 3, Hide = false },
+               new Preference { Id = 601, Key = "DefaultStock", Value = "1", Reference = "Transaction", TypeId = 3, Hide = false },
                new Preference { Id = 602, Key = "NumberLine", Value = "6", Reference = "Transaction", TypeId = 3, Hide = false },
                new Preference { Id = 603, Key = "OrderTabe", Value = "2", Reference = "Transaction", TypeId = 3, Hide = false },
                new Preference { Id = 604, Key = "AutoSave", Value = "0", Reference = "Transaction", TypeId = 3, Hide = false },
@@ -458,7 +458,7 @@ namespace Repository.Seed
                new Preference { Id = 607, Key = "SaveLastStatusSetting", Value = "1", Reference = "Transaction", TypeId = 3, Hide = false },
                new Preference { Id = 608, Key = "AutoReceived", Value = "0", Reference = "Transaction", TypeId = 3, Hide = false },
 
-               new Preference { Id = 701, Key = "DefaultStore", Value = "1", Reference = "Transaction", TypeId = 4, Hide = false },
+               new Preference { Id = 701, Key = "DefaultStock", Value = "1", Reference = "Transaction", TypeId = 4, Hide = false },
                new Preference { Id = 702, Key = "NumberLine", Value = "6", Reference = "Transaction", TypeId = 4, Hide = false },
                new Preference { Id = 703, Key = "OrderTabe", Value = "2", Reference = "Transaction", TypeId = 4, Hide = false },
                new Preference { Id = 704, Key = "AutoSave", Value = "0", Reference = "Transaction", TypeId = 4, Hide = false },
@@ -514,7 +514,7 @@ namespace Repository.Seed
                new Preference { Id = 1204, Key = "AutoSave", Value = "0", Reference = "Financial", TypeId = 3, Hide = false },
                new Preference { Id = 1205, Key = "TypeSerial", Value = "1", Reference = "Financial", TypeId = 3, Hide = false },
 
-               new Preference { Id = 1300, Key = "DefaultStore", Value = "1", Reference = "Inventory", TypeId = 0, Hide = false },
+               new Preference { Id = 1300, Key = "DefaultStock", Value = "1", Reference = "Inventory", TypeId = 0, Hide = false },
                new Preference { Id = 1301, Key = "AutoSave", Value = "0", Reference = "Inventory", TypeId = 0, Hide = false },
                new Preference { Id = 1302, Key = "TypeSerial", Value = "1", Reference = "Inventory", TypeId = 0, Hide = false }
             };
@@ -715,14 +715,14 @@ namespace Repository.Seed
             orgContext.SaveChanges();
         }
 
-        public void InitialStore(OrgContext orgContext)
+        public void InitialStock(OrgContext orgContext)
         {
-            List<Store> list = new List<Store> {
-                 new Store {Name = "Main Store", BranchId = 1, Hide = false }
+            List<Stock> list = new List<Stock> {
+                 new Stock {Name = "Main Stock", BranchId = 1, Hide = false }
             };
 
-            if (!orgContext.Stores.Any())
-                orgContext.Set<Store>().AddRange(list);
+            if (!orgContext.Stocks.Any())
+                orgContext.Set<Stock>().AddRange(list);
             orgContext.SaveChanges();
         }
 

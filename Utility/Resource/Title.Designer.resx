@@ -33,7 +33,7 @@
     Each data row contains a name, and value. The row also contains a 
     type or mimetype. Type corresponds to a .NET class that support 
     text/value conversion through the TypeConverter architecture. 
-    Classes that don't support this are serialized and stored with the 
+    Classes that don't support this are serialized and Stockd with the 
     mimetype set.
     
     The mimetype is used for serialized objects, and tells the 
@@ -131,6 +131,9 @@
   </data>
   <data name="Address" xml:space="preserve">
     <value>Address</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>All</value>
   </data>
   <data name="Amount" xml:space="preserve">
     <value>Amount</value>
@@ -294,8 +297,8 @@
   <data name="DefaultSafe" xml:space="preserve">
     <value>Default Safe</value>
   </data>
-  <data name="DefaultStore" xml:space="preserve">
-    <value>Default Store</value>
+  <data name="DefaultStock" xml:space="preserve">
+    <value>Default Stock</value>
   </data>
   <data name="DefaultSupplier" xml:space="preserve">
     <value>Default Supplier</value>
@@ -390,8 +393,8 @@
   <data name="FromDate" xml:space="preserve">
     <value>From Date</value>
   </data>
-  <data name="FromStore" xml:space="preserve">
-    <value>From Store</value>
+  <data name="FromStock" xml:space="preserve">
+    <value>From Stock</value>
   </data>
   <data name="GetStarted" xml:space="preserve">
     <value>Get Started</value>
@@ -579,8 +582,17 @@
   <data name="Product" xml:space="preserve">
     <value>Product</value>
   </data>
+  <data name="ProductBalance" xml:space="preserve">
+    <value>Product Balance</value>
+  </data>
   <data name="ProductCategories" xml:space="preserve">
     <value>Product Categories</value>
+  </data>
+  <data name="ProductList" xml:space="preserve">
+    <value>Product List</value>
+  </data>
+  <data name="ProductMovement" xml:space="preserve">
+    <value>Product Movement</value>
   </data>
   <data name="ProductRecipe" xml:space="preserve">
     <value>Product recipe</value>
@@ -753,11 +765,17 @@
   <data name="STARTNOW" xml:space="preserve">
     <value>START NOW</value>
   </data>
-  <data name="Store" xml:space="preserve">
-    <value>Store</value>
+  <data name="StockBalance" xml:space="preserve">
+    <value>Stock Balance</value>
   </data>
-  <data name="Stores" xml:space="preserve">
-    <value>Stores</value>
+  <data name="StockMovement" xml:space="preserve">
+    <value>Stock Movement</value>
+  </data>
+  <data name="Stock" xml:space="preserve">
+    <value>Stock</value>
+  </data>
+  <data name="Stocks" xml:space="preserve">
+    <value>Stocks</value>
   </data>
   <data name="SuplierSheetReport" xml:space="preserve">
     <value>Suplier Sheet Report</value>
@@ -813,8 +831,8 @@
   <data name="ToDate" xml:space="preserve">
     <value>To Date</value>
   </data>
-  <data name="ToStore" xml:space="preserve">
-    <value>To Store</value>
+  <data name="ToStock" xml:space="preserve">
+    <value>To Stock</value>
   </data>
   <data name="Total" xml:space="preserve">
     <value>Total</value>

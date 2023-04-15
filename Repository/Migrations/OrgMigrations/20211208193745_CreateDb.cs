@@ -632,7 +632,7 @@ namespace Repository.Migrations.OrgMigrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Store",
+                name: "Stock",
                 schema: _Schema,
                 columns: table => new
                 {
@@ -651,9 +651,9 @@ namespace Repository.Migrations.OrgMigrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Store", x => x.Id);
+                    table.PrimaryKey("PK_Stock", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Store_Branch_BranchId",
+                        name: "FK_Stock_Branch_BranchId",
                         column: x => x.BranchId,
                         principalSchema: _Schema,
                         principalTable: "Branch",
@@ -845,7 +845,7 @@ namespace Repository.Migrations.OrgMigrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<long>(type: "bigint", nullable: true),
-                    StoreId = table.Column<long>(type: "bigint", nullable: true),
+                    StockId = table.Column<long>(type: "bigint", nullable: true),
                     Notes = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
                     Review = table.Column<bool>(type: "bit", nullable: false),
                     Closed = table.Column<bool>(type: "bit", nullable: false),
@@ -885,10 +885,10 @@ namespace Repository.Migrations.OrgMigrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
-                        name: "FK_Inventory_Store_StoreId",
-                        column: x => x.StoreId,
+                        name: "FK_Inventory_Stock_StockId",
+                        column: x => x.StockId,
                         principalSchema: _Schema,
-                        principalTable: "Store",
+                        principalTable: "Stock",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
@@ -1507,7 +1507,7 @@ namespace Repository.Migrations.OrgMigrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DealerId = table.Column<long>(type: "bigint", nullable: false),
                     PaymentTypeId = table.Column<long>(type: "bigint", nullable: false),
-                    StoreId = table.Column<long>(type: "bigint", nullable: true),
+                    StockId = table.Column<long>(type: "bigint", nullable: true),
                     TransactionId = table.Column<long>(type: "bigint", nullable: true),
                     Total = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Discount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
@@ -1583,10 +1583,10 @@ namespace Repository.Migrations.OrgMigrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
-                        name: "FK_Invoice_Store_StoreId",
-                        column: x => x.StoreId,
+                        name: "FK_Invoice_Stock_StockId",
+                        column: x => x.StockId,
                         principalSchema: _Schema,
-                        principalTable: "Store",
+                        principalTable: "Stock",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
@@ -1655,7 +1655,7 @@ namespace Repository.Migrations.OrgMigrations
                     InvoiceId = table.Column<long>(type: "bigint", nullable: false),
                     ProductId = table.Column<long>(type: "bigint", nullable: false),
                     UnitId = table.Column<long>(type: "bigint", nullable: false),
-                    StoreId = table.Column<long>(type: "bigint", nullable: true),
+                    StockId = table.Column<long>(type: "bigint", nullable: true),
                     Quantity = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Total = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
@@ -1691,10 +1691,10 @@ namespace Repository.Migrations.OrgMigrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
-                        name: "FK_InvoiceProduct_Store_StoreId",
-                        column: x => x.StoreId,
+                        name: "FK_InvoiceProduct_Stock_StockId",
+                        column: x => x.StockId,
                         principalSchema: _Schema,
-                        principalTable: "Store",
+                        principalTable: "Stock",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
@@ -1861,8 +1861,8 @@ namespace Repository.Migrations.OrgMigrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DealerId = table.Column<long>(type: "bigint", nullable: true),
-                    StoreId = table.Column<long>(type: "bigint", nullable: true),
-                    ToStoreId = table.Column<long>(type: "bigint", nullable: true),
+                    StockId = table.Column<long>(type: "bigint", nullable: true),
+                    ToStockId = table.Column<long>(type: "bigint", nullable: true),
                     OrderId = table.Column<long>(type: "bigint", nullable: true),
                     Total = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Notes = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
@@ -1917,17 +1917,17 @@ namespace Repository.Migrations.OrgMigrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
-                        name: "FK_Transaction_Store_StoreId",
-                        column: x => x.StoreId,
+                        name: "FK_Transaction_Stock_StockId",
+                        column: x => x.StockId,
                         principalSchema: _Schema,
-                        principalTable: "Store",
+                        principalTable: "Stock",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
-                        name: "FK_Transaction_Store_ToStoreId",
-                        column: x => x.ToStoreId,
+                        name: "FK_Transaction_Stock_ToStockId",
+                        column: x => x.ToStockId,
                         principalSchema: _Schema,
-                        principalTable: "Store",
+                        principalTable: "Stock",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
@@ -1957,7 +1957,7 @@ namespace Repository.Migrations.OrgMigrations
                     TransactionId = table.Column<long>(type: "bigint", nullable: false),
                     ProductId = table.Column<long>(type: "bigint", nullable: false),
                     UnitId = table.Column<long>(type: "bigint", nullable: false),
-                    StoreId = table.Column<long>(type: "bigint", nullable: true),
+                    StockId = table.Column<long>(type: "bigint", nullable: true),
                     Quantity = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Cost = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Total = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
@@ -1982,10 +1982,10 @@ namespace Repository.Migrations.OrgMigrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
-                        name: "FK_TransactionProduct_Store_StoreId",
-                        column: x => x.StoreId,
+                        name: "FK_TransactionProduct_Stock_StockId",
+                        column: x => x.StockId,
                         principalSchema: _Schema,
-                        principalTable: "Store",
+                        principalTable: "Stock",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
@@ -2185,10 +2185,10 @@ namespace Repository.Migrations.OrgMigrations
                 column: "ShiftId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Inventory_StoreId",
+                name: "IX_Inventory_StockId",
                 schema: _Schema,
                 table: "Inventory",
-                column: "StoreId");
+                column: "StockId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Inventory_UserId",
@@ -2257,10 +2257,10 @@ namespace Repository.Migrations.OrgMigrations
                 column: "ShiftId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Invoice_StoreId",
+                name: "IX_Invoice_StockId",
                 schema: _Schema,
                 table: "Invoice",
-                column: "StoreId");
+                column: "StockId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Invoice_TransactionId",
@@ -2281,10 +2281,10 @@ namespace Repository.Migrations.OrgMigrations
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_InvoiceProduct_StoreId",
+                name: "IX_InvoiceProduct_StockId",
                 schema: _Schema,
                 table: "InvoiceProduct",
-                column: "StoreId");
+                column: "StockId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_InvoiceProduct_UnitId",
@@ -2461,9 +2461,9 @@ namespace Repository.Migrations.OrgMigrations
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Store_BranchId",
+                name: "IX_Stock_BranchId",
                 schema: _Schema,
-                table: "Store",
+                table: "Stock",
                 column: "BranchId");
 
             migrationBuilder.CreateIndex(
@@ -2503,16 +2503,16 @@ namespace Repository.Migrations.OrgMigrations
                 column: "ShiftId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Transaction_StoreId",
+                name: "IX_Transaction_StockId",
                 schema: _Schema,
                 table: "Transaction",
-                column: "StoreId");
+                column: "StockId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Transaction_ToStoreId",
+                name: "IX_Transaction_ToStockId",
                 schema: _Schema,
                 table: "Transaction",
-                column: "ToStoreId");
+                column: "ToStockId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TransactionProduct_ProductId",
@@ -2521,10 +2521,10 @@ namespace Repository.Migrations.OrgMigrations
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TransactionProduct_StoreId",
+                name: "IX_TransactionProduct_StockId",
                 schema: _Schema,
                 table: "TransactionProduct",
-                column: "StoreId");
+                column: "StockId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TransactionProduct_TransactionId",
@@ -2604,9 +2604,9 @@ namespace Repository.Migrations.OrgMigrations
                 table: "Order");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_Store_Branch_BranchId",
+                name: "FK_Stock_Branch_BranchId",
                 schema: _Schema,
-                table: "Store");
+                table: "Stock");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Transaction_Branch_BranchId",
@@ -2886,7 +2886,7 @@ namespace Repository.Migrations.OrgMigrations
                 schema: _Schema);
 
             migrationBuilder.DropTable(
-                name: "Store",
+                name: "Stock",
                 schema: _Schema);
 
             migrationBuilder.DropTable(

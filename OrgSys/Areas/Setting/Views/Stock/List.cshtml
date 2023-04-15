@@ -1,5 +1,5 @@
 ﻿@using System.Globalization
-@model X.PagedList.IPagedList<Entity.ModelView.StoreModelView>
+@model X.PagedList.IPagedList<Entity.ModelView.StockModelView>
 @using OrgSys
 @{
     Layout = null;
@@ -14,12 +14,12 @@
     var AllowDelete = false;
     var AllowCancel = false;
     var AllowRedo = false;
-    AllowView = User.IsAllowed("Stores.View");
-    AllowAdd = User.IsAllowed("Stores.Add");
-    AllowEdit = User.IsAllowed("Stores.Edit");
-    AllowDelete = User.IsAllowed("Stores.Delete");
-    AllowCancel = User.IsAllowed("Stores.Cancel");
-    AllowRedo = User.IsAllowed("Stores.Redo");
+    AllowView = User.IsAllowed("Stocks.View");
+    AllowAdd = User.IsAllowed("Stocks.Add");
+    AllowEdit = User.IsAllowed("Stocks.Edit");
+    AllowDelete = User.IsAllowed("Stocks.Delete");
+    AllowCancel = User.IsAllowed("Stocks.Cancel");
+    AllowRedo = User.IsAllowed("Stocks.Redo");
 }
 
 @if (Model != null && Model.Count > 0)
@@ -56,7 +56,7 @@
                             </td>
                             <td class="text-center align-middle" style="width:50px;">
                                 <div class="list-thumbnail  border-0 rounded-circle badge-theme-1 m-0" style="height:40px;width:40px;font-size:17px;text-align:center;padding:9px;">
-                                    <i class="iconsminds-clothing-store"></i>
+                                    <i class="iconsminds-clothing-Stock"></i>
                                 </div>
                             </td>
                             <td class="@TextAlign align-middle">
@@ -133,7 +133,7 @@
                 <div class="card d-flex flex-row mb-2">
                     <div class="d-flex flex-grow-1 min-width-zero" style="border-radius:15px; height:60px; @(Model[i].Status == Utility.Status.Cancel ? "color:#a8a7a7;background:repeating-linear-gradient(60deg, transparent, transparent 5px, gainsboro 5px, gainsboro 6px);" : "")">
                         <div class="list-thumbnail  border-0 card-img-left badge-theme-1" style="height:60px; width:60px; font-size:x-large; text-align:center; padding:14px;">
-                            <i class="iconsminds-clothing-store"></i>
+                            <i class="iconsminds-clothing-Stock"></i>
                         </div>
 
                         <div class="card-body align-self-center d-flex flex-column flex-md-row  align-items-md-center">
@@ -201,7 +201,7 @@
                     <div class="card-body text-center m-0 p-2">
                         <div class="p-3">
                             <div class="img-thumbnail border-0 rounded-circle m-0 list-thumbnail badge-theme-1" style="height:120px;width:120px; font-size:45px;text-align:center;padding-top:25px;">
-                                <i class="iconsminds-clothing-store"></i>
+                                <i class="iconsminds-clothing-Stock"></i>
                             </div>
                         </div>
                         <div class="lead text-center">

@@ -9,7 +9,7 @@ namespace Entity.ModelView
 
         public string UnitName { get; set; }
 
-        public string StoreName { get; set; }
+        public string StockName { get; set; }
         public List<UnitModelView> UnitList { get; set; }
     }
 }

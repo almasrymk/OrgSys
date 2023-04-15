@@ -50,7 +50,7 @@ namespace Repository
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<ProductUnit> ProductUnits { get; set; }
         public virtual DbSet<Branch> Branches { get; set; }
-        public virtual DbSet<Store> Stores { get; set; }
+        public virtual DbSet<Stock> Stocks { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Shift> Shifts { get; set; }
         public virtual DbSet<User> Users { get; set; }
@@ -97,8 +97,21 @@ namespace Repository
         public virtual DbSet<DealerList> DealerListReport { get; set; }
         [NotMapped]
         public virtual DbSet<DealerStatment> DealerStatmentReport { get; set; }
+
         [NotMapped]
-        public virtual DbSet<DealerBalance> DealerBalanceReport { get; set; }        
+        public virtual DbSet<DealerBalance> DealerBalanceReport { get; set; }
+
+        [NotMapped]
+        public virtual DbSet<StockStatment> StockStatmentReport { get; set; }
+
+        [NotMapped]
+        public virtual DbSet<ProductStatment> ProductStatmentReport { get; set; }
+
+        [NotMapped]
+        public virtual DbSet<StockBalance> StockBalanceReport { get; set; }
+
+        [NotMapped]
+        public virtual DbSet<ProductBalance> ProductBalanceReport { get; set; }
     }
 
     public class DbSchemaAwareModelCacheKeyFactory : IModelCacheKeyFactory

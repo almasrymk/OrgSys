@@ -33,7 +33,7 @@
     Each data row contains a name, and value. The row also contains a 
     type or mimetype. Type corresponds to a .NET class that support 
     text/value conversion through the TypeConverter architecture. 
-    Classes that don't support this are serialized and stored with the 
+    Classes that don't support this are serialized and Stockd with the 
     mimetype set.
     
     The mimetype is used for serialized objects, and tells the 
@@ -306,8 +306,8 @@
   <data name="StartSearch" xml:space="preserve">
     <value>Start typing product to search...</value>
   </data>
-  <data name="StoreRequired" xml:space="preserve">
-    <value>Store Required</value>
+  <data name="StockRequired" xml:space="preserve">
+    <value>Stock Required</value>
   </data>
   <data name="SupplierFromWhomProductPurchased" xml:space="preserve">
     <value>A supplier from whom the product is purchased</value>

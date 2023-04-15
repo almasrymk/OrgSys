@@ -67,10 +67,14 @@
     <Content Remove="Areas\Reports\Views\Purchases\SuppliersBalanceList.cshtml" />
     <Content Remove="Areas\Reports\Views\Purchases\SuppliersStatment.cshtml" />
     <Content Remove="Areas\Reports\Views\Purchases\SuppliersStatmentList.cshtml" />
+    <Content Remove="Areas\Reports\Views\Warehouses\ClientsBalance.cshtml" />
+    <Content Remove="Areas\Reports\Views\Warehouses\ClientsBalanceList.cshtml" />
     <Content Remove="Areas\Reports\Views\Sales\ClientsBalance.cshtml" />
     <Content Remove="Areas\Reports\Views\Sales\ClientsBalanceList.cshtml" />
     <Content Remove="Areas\Reports\Views\Sales\ClientsStatment.cshtml" />
     <Content Remove="Areas\Reports\Views\Sales\ClientsStatmentList.cshtml" />
+    <Content Remove="Areas\Reports\Views\Warehouses\StockMovement.cshtml" />
+    <Content Remove="Areas\Reports\Views\Warehouses\StockMovementList.cshtml" />
     <Content Remove="Areas\Setting\Views\Branch\Index.cshtml" />
     <Content Remove="Areas\Setting\Views\Branch\List.cshtml" />
     <Content Remove="Areas\Setting\Views\Branch\Save.cshtml" />
@@ -106,9 +110,6 @@
     <Content Remove="Areas\Setting\Views\Shift\Index.cshtml" />
     <Content Remove="Areas\Setting\Views\Shift\List.cshtml" />
     <Content Remove="Areas\Setting\Views\Shift\Save.cshtml" />
-    <Content Remove="Areas\Setting\Views\Store\Index.cshtml" />
-    <Content Remove="Areas\Setting\Views\Store\List.cshtml" />
-    <Content Remove="Areas\Setting\Views\Store\Save.cshtml" />
     <Content Remove="Areas\Setting\Views\Table\Index.cshtml" />
     <Content Remove="Areas\Setting\Views\Table\List.cshtml" />
     <Content Remove="Areas\Setting\Views\Table\Save.cshtml" />
@@ -192,10 +193,13 @@
     <None Remove="SQLFiles\ProductPrices.sql" />
     <None Remove="SQLFiles\ProductsBalanceSql.sql" />
     <None Remove="SQLFiles\ProductsStatmentSql.sql" />
-    <None Remove="SQLFiles\StoresBalanceSql.sql" />
-    <None Remove="SQLFiles\StoreStatmentSql.sql" />
+    <None Remove="SQLFiles\StockStatmentSql.sql" />
     <None Remove="SQLFiles\Test.sql" />
     <None Remove="SQLFiles\TotalByPeriodSql.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="SQLFiles\StocksBalanceSql.sql" />
   </ItemGroup>
 
   <ItemGroup>
@@ -208,10 +212,7 @@
     <Content Include="SQLFiles\ProductsStatmentSql.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="SQLFiles\StoresBalanceSql.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="SQLFiles\StoreStatmentSql.sql">
+    <Content Include="SQLFiles\StockStatmentSql.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="SQLFiles\ProductPrices.sql">
@@ -272,6 +273,10 @@
     <EmbeddedResource Include="Areas\Reports\Views\Purchases\SuppliersBalanceList.cshtml" />
     <EmbeddedResource Include="Areas\Reports\Views\Purchases\SuppliersStatment.cshtml" />
     <EmbeddedResource Include="Areas\Reports\Views\Purchases\SuppliersStatmentList.cshtml" />
+    <EmbeddedResource Include="Areas\Reports\Views\Warehouses\ClientsBalance.cshtml" />
+    <EmbeddedResource Include="Areas\Reports\Views\Warehouses\ClientsBalanceList.cshtml" />
+    <EmbeddedResource Include="Areas\Reports\Views\Warehouses\StockMovement.cshtml" />
+    <EmbeddedResource Include="Areas\Reports\Views\Warehouses\StockMovementList.cshtml" />
     <EmbeddedResource Include="Areas\Reports\Views\Sales\ClientsBalance.cshtml" />
     <EmbeddedResource Include="Areas\Reports\Views\Sales\ClientsStatment.cshtml" />
     <EmbeddedResource Include="Areas\Reports\Views\Sales\ClientsBalanceList.cshtml" />
@@ -311,9 +316,9 @@
     <EmbeddedResource Include="Areas\Setting\Views\Shift\Index.cshtml" />
     <EmbeddedResource Include="Areas\Setting\Views\Shift\List.cshtml" />
     <EmbeddedResource Include="Areas\Setting\Views\Shift\Save.cshtml" />
-    <EmbeddedResource Include="Areas\Setting\Views\Store\Index.cshtml" />
-    <EmbeddedResource Include="Areas\Setting\Views\Store\List.cshtml" />
-    <EmbeddedResource Include="Areas\Setting\Views\Store\Save.cshtml" />
+    <EmbeddedResource Include="Areas\Setting\Views\Stock\Index.cshtml" />
+    <EmbeddedResource Include="Areas\Setting\Views\Stock\List.cshtml" />
+    <EmbeddedResource Include="Areas\Setting\Views\Stock\Save.cshtml" />
     <EmbeddedResource Include="Areas\Setting\Views\Table\Index.cshtml" />
     <EmbeddedResource Include="Areas\Setting\Views\Table\List.cshtml" />
     <EmbeddedResource Include="Areas\Setting\Views\Table\Save.cshtml" />

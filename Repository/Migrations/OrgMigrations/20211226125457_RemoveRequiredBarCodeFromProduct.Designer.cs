@@ -1045,7 +1045,7 @@ namespace Repository.Migrations.OrgMigrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<long?>("StoreId")
+                    b.Property<long?>("StockId")
                         .HasColumnType("bigint");
 
                     b.Property<long>("TypeId")
@@ -1064,7 +1064,7 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasIndex("ShiftId");
 
-                    b.HasIndex("StoreId");
+                    b.HasIndex("StockId");
 
                     b.HasIndex("UserId");
 
@@ -1241,7 +1241,7 @@ namespace Repository.Migrations.OrgMigrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<long?>("StoreId")
+                    b.Property<long?>("StockId")
                         .HasColumnType("bigint");
 
                     b.Property<decimal>("Tax")
@@ -1275,7 +1275,7 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasIndex("ShiftId");
 
-                    b.HasIndex("StoreId");
+                    b.HasIndex("StockId");
 
                     b.HasIndex("TransactionId");
 
@@ -1337,7 +1337,7 @@ namespace Repository.Migrations.OrgMigrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<long?>("StoreId")
+                    b.Property<long?>("StockId")
                         .HasColumnType("bigint");
 
                     b.Property<decimal>("Tax")
@@ -1358,7 +1358,7 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasIndex("ProductId");
 
-                    b.HasIndex("StoreId");
+                    b.HasIndex("StockId");
 
                     b.HasIndex("UnitId");
 
@@ -2591,7 +2591,7 @@ namespace Repository.Migrations.OrgMigrations
                     b.ToTable("Shift");
                 });
 
-            modelBuilder.Entity("Entity.Model.Store", b =>
+            modelBuilder.Entity("Entity.Model.Stock", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -2633,7 +2633,7 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasIndex("BranchId");
 
-                    b.ToTable("Store");
+                    b.ToTable("Stock");
                 });
 
             modelBuilder.Entity("Entity.Model.Table", b =>
@@ -2750,10 +2750,10 @@ namespace Repository.Migrations.OrgMigrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<long?>("StoreId")
+                    b.Property<long?>("StockId")
                         .HasColumnType("bigint");
 
-                    b.Property<long?>("ToStoreId")
+                    b.Property<long?>("ToStockId")
                         .HasColumnType("bigint");
 
                     b.Property<decimal>("Total")
@@ -2776,9 +2776,9 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasIndex("ShiftId");
 
-                    b.HasIndex("StoreId");
+                    b.HasIndex("StockId");
 
-                    b.HasIndex("ToStoreId");
+                    b.HasIndex("ToStockId");
 
                     b.ToTable("Transaction");
                 });
@@ -2826,7 +2826,7 @@ namespace Repository.Migrations.OrgMigrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<long?>("StoreId")
+                    b.Property<long?>("StockId")
                         .HasColumnType("bigint");
 
                     b.Property<decimal>("Total")
@@ -2845,7 +2845,7 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasIndex("ProductId");
 
-                    b.HasIndex("StoreId");
+                    b.HasIndex("StockId");
 
                     b.HasIndex("TransactionId");
 
@@ -3220,9 +3220,9 @@ namespace Repository.Migrations.OrgMigrations
                         .WithMany()
                         .HasForeignKey("ShiftId");
 
-                    b.HasOne("Entity.Model.Store", "Store")
+                    b.HasOne("Entity.Model.Stock", "Stock")
                         .WithMany()
-                        .HasForeignKey("StoreId");
+                        .HasForeignKey("StockId");
 
                     b.HasOne("Entity.Model.User", "User")
                         .WithMany()
@@ -3236,7 +3236,7 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.Navigation("Shift");
 
-                    b.Navigation("Store");
+                    b.Navigation("Stock");
 
                     b.Navigation("User");
                 });
@@ -3306,9 +3306,9 @@ namespace Repository.Migrations.OrgMigrations
                         .WithMany()
                         .HasForeignKey("ShiftId");
 
-                    b.HasOne("Entity.Model.Store", "Store")
+                    b.HasOne("Entity.Model.Stock", "Stock")
                         .WithMany()
-                        .HasForeignKey("StoreId");
+                        .HasForeignKey("StockId");
 
                     b.HasOne("Entity.Model.Transaction", "Transaction")
                         .WithMany()
@@ -3328,7 +3328,7 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.Navigation("Shift");
 
-                    b.Navigation("Store");
+                    b.Navigation("Stock");
 
                     b.Navigation("Transaction");
                 });
@@ -3347,9 +3347,9 @@ namespace Repository.Migrations.OrgMigrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Entity.Model.Store", "Store")
+                    b.HasOne("Entity.Model.Stock", "Stock")
                         .WithMany()
-                        .HasForeignKey("StoreId");
+                        .HasForeignKey("StockId");
 
                     b.HasOne("Entity.Model.Unit", "Unit")
                         .WithMany()
@@ -3361,7 +3361,7 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.Navigation("Product");
 
-                    b.Navigation("Store");
+                    b.Navigation("Stock");
 
                     b.Navigation("Unit");
                 });
@@ -3592,7 +3592,7 @@ namespace Repository.Migrations.OrgMigrations
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("Entity.Model.Store", b =>
+            modelBuilder.Entity("Entity.Model.Stock", b =>
                 {
                     b.HasOne("Entity.Model.Branch", "Branch")
                         .WithMany()
@@ -3631,13 +3631,13 @@ namespace Repository.Migrations.OrgMigrations
                         .WithMany()
                         .HasForeignKey("ShiftId");
 
-                    b.HasOne("Entity.Model.Store", "Store")
+                    b.HasOne("Entity.Model.Stock", "Stock")
                         .WithMany()
-                        .HasForeignKey("StoreId");
+                        .HasForeignKey("StockId");
 
-                    b.HasOne("Entity.Model.Store", "ToStore")
+                    b.HasOne("Entity.Model.Stock", "ToStock")
                         .WithMany()
-                        .HasForeignKey("ToStoreId");
+                        .HasForeignKey("ToStockId");
 
                     b.Navigation("Branch");
 
@@ -3651,9 +3651,9 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.Navigation("Shift");
 
-                    b.Navigation("Store");
+                    b.Navigation("Stock");
 
-                    b.Navigation("ToStore");
+                    b.Navigation("ToStock");
                 });
 
             modelBuilder.Entity("Entity.Model.TransactionProduct", b =>
@@ -3664,9 +3664,9 @@ namespace Repository.Migrations.OrgMigrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Entity.Model.Store", "Store")
+                    b.HasOne("Entity.Model.Stock", "Stock")
                         .WithMany()
-                        .HasForeignKey("StoreId");
+                        .HasForeignKey("StockId");
 
                     b.HasOne("Entity.Model.Transaction", "Transaction")
                         .WithMany("TransactionProducts")
@@ -3682,7 +3682,7 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.Navigation("Product");
 
-                    b.Navigation("Store");
+                    b.Navigation("Stock");
 
                     b.Navigation("Transaction");
 
@@ -3744,7 +3744,7 @@ namespace Repository.Migrations.OrgMigrations
                 {
                     b.Navigation("TransactionProducts");
                 });
-#pragma warning restore 612, 618
+#pragma warning reStock 612, 618
         }
     }
 }

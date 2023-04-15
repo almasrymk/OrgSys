@@ -21,6 +21,9 @@
                     <span>@Utility.Resource.Title_Designer.Invoice</span>
                 </li>
                 <li class="breadcrumb-item">
+                    <span>@Utility.Resource.Title_Designer.Report</span>
+                </li>
+                <li class="breadcrumb-item">
                     @Utility.Resource.Title_Designer.ClientsStatement
                 </li>
             </ol>
@@ -28,7 +31,7 @@
     </div>    
     <div class="card mb-4">
         <div class="card-body">
-            <h5 class="mb-4">Key Search</h5>
+            <h5 class="mb-4">@Utility.Resource.Title_Designer.KeySearch</h5>
             <div class="row">
                 <div class="form-group col-md-3">
                     <label>@Utility.Resource.Title_Designer.FromDate</label>
@@ -37,7 +40,7 @@
                             <div class="input-group-prepend ">
                                 <span class="input-group-text "><i class="simple-icon-calendar"></i></span>
                             </div>
-                            @Html.TextBox("FromDate", null, new { @class = "form-control datepicker" , @autocomplete="off" })
+                            @Html.TextBox("FromDate", null, new { @class = "form-control datepicker" , @value= ViewBag.FromDate  , @autocomplete="off" })
                         </div>
                     </div>
                 </div>
@@ -48,7 +51,7 @@
                             <div class="input-group-prepend ">
                                 <span class="input-group-text "><i class="simple-icon-calendar"></i></span>
                             </div>
-                            @Html.TextBox("ToDate", null, new { @class = "form-control datepicker", @autocomplete="off" })
+                            @Html.TextBox("ToDate", null, new { @class = "form-control datepicker", @value= ViewBag.ToDate, @autocomplete="off" })
                         </div>
                     </div>
                 </div>
@@ -59,7 +62,7 @@
                             <div class="input-group-prepend ">
                                 <span class="input-group-text "><i class="glyph-icon iconsminds-business-man-woman"></i></span>
                             </div>
-                            @Html.DropDownList("DealerId", (SelectList)@ViewBag.DealerList,null, new { @class = "form-control" })
+                            @Html.DropDownList("DealerId", (SelectList)@ViewBag.DealerList,Utility.Resource.Title_Designer.All, new { @class = "form-control select2-single" })
                         </div>
                     </div>
                 </div>
@@ -158,10 +161,7 @@
 
     <div class="card mb-4">
         <div id="List" class="card-body  m-0 p-3">
-            @if (Model != null &&  Model.Result != null && Model.Result.Count > 0)
-            {
-                @Html.Partial("ClientsStatmentList", Model)
-            }
+            @Html.Partial("ClientsStatmentList", Model)
         </div>
     </div>
 </div>

@@ -47,7 +47,7 @@ namespace OrgSys.Areas.Invoices.Controllers
         public override InvoiceModelView InitializeData(InvoiceModelView ob)
         {
             var setting = new PreferenceService(User.GetSchema());
-            var StoreId = long.Parse("0" + setting.GetByKey("DefaultStore", "Invoice", ob.TypeId, 0)?.Value);
+            var StockId = long.Parse("0" + setting.GetByKey("DefaultStock", "Invoice", ob.TypeId, 0)?.Value);
 
             long DealerId = 0;
             if (ob.TypeId == 1 || ob.TypeId == 3)
@@ -77,7 +77,7 @@ namespace OrgSys.Areas.Invoices.Controllers
             {
                 ob.CodeNumber = new InvoiceService(User.GetSchema()).GetMaxCode(ob.TypeId);
                 ob.Code = "" + ob.CodeNumber;
-                ob.StoreId = StoreId;
+                ob.StockId = StockId;
                 ob.DealerId = DealerId;
                 ob.PaymentTypeId = PaymentTypeId;
                 ob.CurrencyId = DefaultCurrencyId;
@@ -91,7 +91,7 @@ namespace OrgSys.Areas.Invoices.Controllers
                 ob.InvoiceProductList = new List<InvoiceProductModelView>();
             }
 
-            ob.StoreName = new StoreService(User.GetSchema()).Get(ob.StoreId??0)?.Name;
+            ob.StockName = new StockService(User.GetSchema()).Get(ob.StockId??0)?.Name;
             ob.DealerName = new DealerService(User.GetSchema()).Get(ob.DealerId)?.Name;
             ob.ParentCode = new InvoiceService(User.GetSchema()).Get(ob.ParentId)?.Code;
             ob.Rate = new CurrencyService(User.GetSchema()).Get(ob.CurrencyId)?.Rate??0;
