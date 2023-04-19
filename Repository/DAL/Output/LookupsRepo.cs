@@ -24,5 +24,23 @@ namespace Repository.DAL.Output
             string SQLStatment = string.Format( File.ReadAllText(Path.GetFullPath(@"SQLFiles/DealerListSql.sql")).Replace("Org" , _Schema) , txtSearch , DealerTypeId);
             return db.DealerListReport.FromSqlRaw<DealerList>(SQLStatment);
         }
+
+        public IQueryable<ProductList> GetProducts(long ClassificationId, string txtSearch)
+        {
+            string SQLStatment = string.Format(File.ReadAllText(Path.GetFullPath(@"SQLFiles/ProductListSql.sql")).Replace("Org", _Schema), txtSearch , ClassificationId);
+            return db.ProductListReport.FromSqlRaw<ProductList>(SQLStatment);
+        }
+
+        public IQueryable<StockList> GetStocks( string txtSearch)
+        {
+            string SQLStatment = string.Format(File.ReadAllText(Path.GetFullPath(@"SQLFiles/StockListSql.sql")).Replace("Org", _Schema), txtSearch);
+            return db.StockListReport.FromSqlRaw<StockList>(SQLStatment);
+        }  
+        
+        public IQueryable<SafeList> GetSafes( string txtSearch)
+        {
+            string SQLStatment = string.Format(File.ReadAllText(Path.GetFullPath(@"SQLFiles/SafeListSql.sql")).Replace("Org", _Schema), txtSearch);
+            return db.SafeListReport.FromSqlRaw<SafeList>(SQLStatment);
+        }
     }
 }

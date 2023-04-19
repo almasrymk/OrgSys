@@ -1,10 +1,10 @@
 ﻿using System;
 using Service;
+using Entity.ModelView;
+using Entity.ModelReport;
 using OrgSys.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Entity.ModelReport;
-using Entity.ModelView;
 
 namespace OrgSys.Areas.Reports.Controllers
 {
@@ -65,6 +65,16 @@ namespace OrgSys.Areas.Reports.Controllers
 
             var obList = new SalesReportService(User.GetSchema()).GetDealersBalance(1 , tDate, DealerId, ShiftId, BranchId, UserId, page, pageSize);
             return Request.Headers["X-Requested-With"] == "XMLHttpRequest" ? (ActionResult)PartialView("ClientsBalanceList", obList) : View(obList);
+        }
+
+        public IActionResult SalesPerPeriod()
+        {
+            return View();
+        }
+
+        public IActionResult SalesProductPerPeriod()
+        {
+            return View();
         }
     }
 }

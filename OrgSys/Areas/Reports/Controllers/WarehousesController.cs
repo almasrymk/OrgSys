@@ -1,18 +1,9 @@
-﻿using Entity.Model;
-using Entity.ModelReport;
+﻿using System;
+using Service;
 using Entity.ModelView;
+using Entity.ModelReport;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Operations;
-using Microsoft.EntityFrameworkCore.Metadata;
-using PuppeteerSharp;
-using Service;
-using System;
-using System.Collections.Generic;
-using System.Drawing.Printing;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace OrgSys.Areas.Reports.Controllers
 {
@@ -126,9 +117,25 @@ namespace OrgSys.Areas.Reports.Controllers
             return Request.Headers["X-Requested-With"] == "XMLHttpRequest" ? (ActionResult)PartialView("ProductBalanceList", obList) : View(obList);
         }
 
-        public IActionResult ProductList()
+        public IActionResult TransaferReport()
         {
             return View();
         }
+
+        public IActionResult ReceivedReport()
+        {
+            return View();
+        }
+
+        public IActionResult ProductStockInventoryList()
+        {
+            return View();
+        }
+
+        public IActionResult InventoryReport()
+        {
+            return View();
+        }
+        
     }
 }

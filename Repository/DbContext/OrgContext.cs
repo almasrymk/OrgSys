@@ -111,7 +111,16 @@ namespace Repository
         public virtual DbSet<StockBalance> StockBalanceReport { get; set; }
 
         [NotMapped]
-        public virtual DbSet<ProductBalance> ProductBalanceReport { get; set; }
+        public virtual DbSet<ProductBalance> ProductBalanceReport { get; set; } 
+        
+        [NotMapped]
+        public virtual DbSet<ProductList> ProductListReport { get; set; } 
+        
+        [NotMapped]
+        public virtual DbSet<StockList> StockListReport { get; set; }
+
+        [NotMapped]
+        public virtual DbSet<SafeList> SafeListReport { get; set; }
     }
 
     public class DbSchemaAwareModelCacheKeyFactory : IModelCacheKeyFactory
