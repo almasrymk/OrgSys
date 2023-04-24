@@ -1888,6 +1888,15 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select.
+        /// </summary>
+        public static string Select {
+            get {
+                return ResourceManager.GetString("Select", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select Product.
         /// </summary>
         public static string SelectProduct {
@@ -2005,6 +2014,15 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Stock.
+        /// </summary>
+        public static string Stock {
+            get {
+                return ResourceManager.GetString("Stock", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Stock Balance.
         /// </summary>
         public static string StockBalance {
@@ -2019,15 +2037,6 @@ namespace Utility.Resource {
         public static string StockMovement {
             get {
                 return ResourceManager.GetString("StockMovement", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Stock.
-        /// </summary>
-        public static string Stock {
-            get {
-                return ResourceManager.GetString("Stock", resourceCulture);
             }
         }
         

@@ -1,0 +1,60 @@
+﻿
+@using System.Globalization
+@model X.PagedList.IPagedList<Entity.ModelReport.ProductList>
+@using OrgSys
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var pull_dir = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "fa-pull-left" : "fa-pull-right";
+}
+
+<div class="container-fluid disable-text-selection">
+    <div class="col-12">
+        <h1> <i class="glyph-icon iconsminds-business-man-woman rounded-circle badge-theme-1  p-1"></i> @Utility.Resource.Title_Designer.Products</h1>
+
+        <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
+            <ol class="breadcrumb pt-0">
+                <li class="breadcrumb-item">
+                    <a href="/">@Utility.Resource.Title_Designer.Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <span>@Utility.Resource.Title_Designer.Transactions</span>
+                </li>
+                <li class="breadcrumb-item">
+                    @Utility.Resource.Title_Designer.ProductList
+                </li>
+            </ol>
+        </nav>   
+    </div>
+    <input type="hidden" id="TypeId" value="@ViewBag.TypeId" />
+    <input type="hidden" id="ParentId" value="0" />
+    <div class="card mb-3">
+        <div class="card-body m-0 p-3">
+            <h5 class="mb-3">@Utility.Resource.Title_Designer.KeySearch</h5>
+            <div class="row">
+                <div class="form-group  m-0 pl-3 pr-3 col-md-4">
+                    <label>@Utility.Resource.Title_Designer.Classifications</label>
+                    <div id="divDate">
+                        <div class="input-group  ">
+                            @Html.DropDownList("ClassificationId", (SelectList)@ViewBag.ClassificationList,Utility.Resource.Title_Designer.All, new { @class = "form-control select2-single" ,data_placeholder = Utility.Resource.Title_Designer.Select })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer m-0 p-2">
+            <button class="btn btn-primary @pull_dir" onclick="search(1)">
+                <i class="glyph-icon iconsminds-magnifi-glass">  </i> @Utility.Resource.Title_Designer.Search
+            </button>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div id="List" class="card-body  m-0 p-3">
+            @if (Model != null && Model.Count > 0)
+            {
+                @Html.Partial("ProductsList", Model)
+            }
+        </div>
+    </div>
+</div>

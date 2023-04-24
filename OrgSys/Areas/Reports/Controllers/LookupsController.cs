@@ -1,6 +1,7 @@
 ﻿using Service;
 using OrgSys.Controllers;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace OrgSys.Areas.Reports.Controllers
 {
@@ -27,6 +28,7 @@ namespace OrgSys.Areas.Reports.Controllers
 
         public IActionResult Products(long ClassificationId , string search, int page = 1, int pageSize = 100)
         {
+            ViewBag.ClassificationList = new SelectList(new ClassificationService(User.GetSchema()).GetAll(0, 1), "Id", "Name");
             ViewBag.pageNumber = page;
             ViewBag.ParentId = 0;
             ViewBag.ClassificationId = ClassificationId;
