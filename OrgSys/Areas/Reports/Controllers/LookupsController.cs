@@ -26,13 +26,13 @@ namespace OrgSys.Areas.Reports.Controllers
             return Request.Headers["X-Requested-With"] == "XMLHttpRequest" ? (ActionResult)PartialView("ClientsList", obList) : View(obList);
         }
 
-        public IActionResult Products(long ClassificationId , string search, int page = 1, int pageSize = 100)
+        public IActionResult Products(long ClassificationId , int page = 1, int pageSize = 100)
         {
             ViewBag.ClassificationList = new SelectList(new ClassificationService(User.GetSchema()).GetAll(0, 1), "Id", "Name");
             ViewBag.pageNumber = page;
             ViewBag.ParentId = 0;
             ViewBag.ClassificationId = ClassificationId;
-            var obList = new LookupsReportService(User.GetSchema()).GetProducts(ClassificationId, search, page, pageSize);
+            var obList = new LookupsReportService(User.GetSchema()).GetProducts(ClassificationId, page, pageSize);
             return Request.Headers["X-Requested-With"] == "XMLHttpRequest" ? (ActionResult)PartialView("ProductsList", obList) : View(obList);
         }
 

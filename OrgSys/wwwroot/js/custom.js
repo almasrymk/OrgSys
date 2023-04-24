@@ -142,7 +142,12 @@ function change(event, _page) {
 
 function search(_page) {
     page = _page; 
+    var Search1 = "";
     var Search2 = "";
+    if ($("#txtSearch").length) {
+        Search1 = "?search=" + $("#txtSearch").val();
+    }
+
     if ($("#FromDate").length) {
         Search2 = "&FromDate=" + $("#FromDate").val();
     }
@@ -152,10 +157,19 @@ function search(_page) {
     if ($("#DealerId").length) {
         Search2 += "&DealerId=" + $("#DealerId").val();
     }    
-    
+    if ($("#ClassificationId").length) {
+        if ($("#txtSearch").length) {
+            {
+                Search2 += "&ClassificationId=" + $("#ClassificationId").val();
+            }
+            else {
+                Search2 += "?ClassificationId=" + $("#ClassificationId").val();
+            }
+        }
+
     setTimeout(() => {
         $.ajax({
-            url: url + "?search=" + $('#txtSearch').val() + Search2 + "&page=" + page + "&ParentId=" + $("#ParentId").val() + "&TypeId=" + $("#TypeId").val(),
+            url: url + Search1 + Search2 + "&page=" + page + "&ParentId=" + $("#ParentId").val() + "&TypeId=" + $("#TypeId").val(),
             success: function (result) {
                 $('#List').empty();
                 $('#List').html(result);   

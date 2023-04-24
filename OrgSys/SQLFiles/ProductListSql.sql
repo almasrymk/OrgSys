@@ -1,7 +1,6 @@
 -----------------------------------
 -- (Parameters)
 -- 1- {0} ClassificationId
--- 2- {1} Text Search
 -----------------------------------
 
 SELECT 
@@ -18,4 +17,8 @@ cl.[Name] ClassificationName
 
 FROM Org.Product p
 INNER JOIN Org.[Classification] cl on cl.Id = p.ClassificationId
+
+WHERE 
+
+'{0}' = 0 OR  p.ClassificationId = '{0}'
 

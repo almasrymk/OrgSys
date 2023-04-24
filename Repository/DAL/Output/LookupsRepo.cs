@@ -25,9 +25,10 @@ namespace Repository.DAL.Output
             return db.DealerListReport.FromSqlRaw<DealerList>(SQLStatment);
         }
 
-        public IQueryable<ProductList> GetProducts(long ClassificationId, string txtSearch)
+        public IQueryable<ProductList> GetProducts(long ClassificationId)
         {
-            string SQLStatment = string.Format(File.ReadAllText(Path.GetFullPath(@"SQLFiles/ProductListSql.sql")).Replace("Org", _Schema), txtSearch , ClassificationId);
+            var xx = File.ReadAllText(Path.GetFullPath(@"SQLFiles/ProductListSql.sql")).Replace("Org", _Schema);
+            string SQLStatment = string.Format(xx, ClassificationId);
             return db.ProductListReport.FromSqlRaw<ProductList>(SQLStatment);
         }
 
