@@ -158,8 +158,7 @@ function search(_page) {
         Search2 += "&DealerId=" + $("#DealerId").val();
     }    
     if ($("#ClassificationId").length) {
-        if ($("#txtSearch").length) {
-            {
+        if ($("#txtSearch").length) {            
                 Search2 += "&ClassificationId=" + $("#ClassificationId").val();
             }
             else {
