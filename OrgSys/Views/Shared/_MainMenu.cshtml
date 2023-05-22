@@ -401,56 +401,56 @@
                                 </a>
                                 <div id="collapseTransaction" class="collapse show">
                                     <ul class="list-unstyled inner-level-menu">
-                                @if (User.IsAllowed("Addition.All"))
-                                {
-                                                    <li>
-                                                        <a href="/Transactions/Transaction?TypeId=1">
-                                                            <i class="iconsminds-down-1"></i> <span class="d-inline-block">
-                                                @Utility.Resource.Title_Designer.Addition
-                                                            </span>
-                                                        </a>
-                                                    </li>
-                                }
-                                @if (User.IsAllowed("Issue.All"))
-                                {
-                                                    <li>
-                                                        <a href="/Transactions/Transaction?TypeId=2">
-                                                            <i class="iconsminds-up-1"></i> <span class="d-inline-block">
-                                                @Utility.Resource.Title_Designer.Issue
-                                                            </span>
-                                                        </a>
-                                                    </li>
-                                }
-                                @if (User.IsAllowed("Transafer.All"))
-                                {
-                                                    <li>
-                                                        <a href="/Transactions/Transaction?TypeId=3">
-                                                            <i class="iconsminds-shuffle-1"></i> <span class="d-inline-block">
-                                                @Utility.Resource.Title_Designer.Transfer
-                                                            </span>
-                                                        </a>
-                                                    </li>
-                                }
-                                @if (User.IsAllowed("Received.All"))
-                                {
-                                                    <li>
-                                                        <a href="/Transactions/Transaction?TypeId=4">
-                                                            <i class="iconsminds-file-edit"></i> <span class="d-inline-block">
-                                                @Utility.Resource.Title_Designer.Received
-                                                            </span>
-                                                        </a>
-                                                    </li>
-                                }
-                                @if (User.IsAllowed("Inventory.All"))
-                                {
-                                                    <li>
-                                                        <a href="/Transactions/Inventory">
-                                                            <i class="iconsminds-check"></i> <span class="d-inline-block">
-                                                @Utility.Resource.Title_Designer.Inventory
-                                                            </span>
-                                                        </a>
-                                                    </li>
-                                }
+                                    @if (User.IsAllowed("Addition.All"))
+                                    {
+                                        <li>
+                                            <a href="/Transactions/Transaction?TypeId=1">
+                                                <i class="iconsminds-down-1"></i> <span class="d-inline-block">
+                                                    @Utility.Resource.Title_Designer.Addition
+                                                </span>
+                                            </a>
+                                        </li>
+                                    }
+                                    @if (User.IsAllowed("Issue.All"))
+                                    {
+                                        <li>
+                                            <a href="/Transactions/Transaction?TypeId=2">
+                                                <i class="iconsminds-up-1"></i> <span class="d-inline-block">
+                                                    @Utility.Resource.Title_Designer.Issue
+                                                </span>
+                                            </a>
+                                        </li>
+                                    }
+                                    @if (User.IsAllowed("Transafer.All"))
+                                    {
+                                        <li>
+                                            <a href="/Transactions/Transaction?TypeId=3">
+                                                <i class="iconsminds-shuffle-1"></i> <span class="d-inline-block">
+                                                    @Utility.Resource.Title_Designer.Transfer
+                                                </span>
+                                            </a>
+                                        </li>
+                                    }
+                                    @if (User.IsAllowed("Received.All"))
+                                    {
+                                        <li>
+                                            <a href="/Transactions/Transaction?TypeId=4">
+                                                <i class="iconsminds-file-edit"></i> <span class="d-inline-block">
+                                                    @Utility.Resource.Title_Designer.Received
+                                                </span>
+                                            </a>
+                                        </li>
+                                    }
+                                    @if (User.IsAllowed("Inventory.All"))
+                                    {
+                                        <li>
+                                            <a href="/Transactions/Inventory">
+                                                <i class="iconsminds-check"></i> <span class="d-inline-block">
+                                                     @Utility.Resource.Title_Designer.Inventory
+                                                </span>
+                                            </a>
+                                        </li>
+                                    }
                                     </ul>
                                 </div>
                             </li>
@@ -460,19 +460,22 @@
                                     <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Report</span>
                                 </a>
                                 <div id="collapseReportTransaction" class="collapse">
-                            <a href="/Reports/Lookups/Products">
+                                    <a href="/Reports/Lookups/Products">
                                         <i class="simple-icon-list"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.ProductList</span>
+                                    </a>
+                                    <a href="/Reports/Lookups/Stocks">
+                                        <i class="simple-icon-list"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.StocksList</span>
                                     </a>
                                     <a href="/Reports/Warehouses/StockMovement">
                                         <i class="iconsminds-orientation-1"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.StockMovement</span>
                                     </a>
-                                    <a href="Pages.Profile.Social.html">
+                                    <a href="/Reports/Warehouses/StockBalance">
                                         <i class="iconsminds-data-center"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.StockBalance</span>
                                     </a>
-                                    <a href="Pages.Profile.Social.html">
+                                    <a href="/Reports/Warehouses/ProductMovement">
                                         <i class="iconsminds-synchronize"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.ProductMovement</span>
                                     </a>
-                                    <a href="Pages.Profile.Social.html">
+                                    <a href="/Reports/Warehouses/ProductBalance">
                                         <i class="iconsminds-box-with-folders"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.ProductBalance</span>
                                     </a>
                                 </div>
@@ -489,39 +492,50 @@
                                 </a>
                                 <div id="collapseFinancial" class="collapse show">
                                     <ul class="list-unstyled inner-level-menu">
-                                @if (User.IsAllowed("Collection.All"))
-                                {
-                                                    <li>
-                                                        <a href="/Financials/Financial?TypeId=1">
-                                                            <i class="iconsminds-financial"></i> <span class="d-inline-block">
-                                                @Utility.Resource.Title_Designer.Collection
-                                                            </span>
-                                                        </a>
-                                                    </li>
-                                }
-                                @if (User.IsAllowed("Payment.All"))
-                                {
-                                                    <li>
-                                                        <a href="/Financials/Financial?TypeId=2">
-                                                            <i class="iconsminds-handshake"></i> <span class="d-inline-block">
+                                    @if (User.IsAllowed("Collection.All"))
+                                    {
+                                        <li>
+                                            <a href="/Financials/Financial?TypeId=1">
+                                                <i class="iconsminds-financial"></i> <span class="d-inline-block">
+                                                    @Utility.Resource.Title_Designer.Collection
+                                                </span>
+                                            </a>
+                                        </li>
+                                    }
+                                    @if (User.IsAllowed("Payment.All"))
+                                    {
+                                        <li>
+                                            <a href="/Financials/Financial?TypeId=2">
+                                                <i class="iconsminds-handshake"></i> <span class="d-inline-block">
                                                 @Utility.Resource.Title_Designer.Payment
-                                                            </span>
-                                                        </a>
-                                                    </li>
-                                }
-                                @if (User.IsAllowed("Outlay.All"))
-                                {
-                                                    <li>
-                                                        <a href="/Financials/Financial?TypeId=3">
-                                                            <i class="iconsminds-wallet"></i> <span class="d-inline-block">
-                                                @Utility.Resource.Title_Designer.Outlay
-                                                            </span>
-                                                        </a>
-                                                    </li>
-                                }
+                                                </span>
+                                            </a>
+                                        </li>
+                                    }
+                                    @if (User.IsAllowed("Outlay.All"))
+                                    {
+                                        <li>
+                                            <a href="/Financials/Financial?TypeId=3">
+                                                <i class="iconsminds-wallet"></i> <span class="d-inline-block">
+                                                    @Utility.Resource.Title_Designer.Outlay
+                                                </span>
+                                            </a>
+                                        </li>
+                                    }
                                     </ul>
                                 </div>
                             </li>
+                    <li>
+                        <a href="#" data-toggle="collapse" data-target="#collapseFinancial" aria-expanded="false"
+                           aria-controls="collapseFinancial" class="rotate-arrow-icon opacity-50 collapsed">
+                            <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Report</span>
+                        </a>
+                        <div id="collapseFinancial" class="collapse">
+                            <a href="/Reports/Finances/SafeMovement">
+                                <i class="simple-icon-list"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.SafeMovement</span>
+                            </a>
+                        </div>
+                    </li>
                         </ul>
             }
         </div>

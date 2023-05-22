@@ -853,6 +853,15 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Financial Type.
+        /// </summary>
+        public static string FinancialType {
+            get {
+                return ResourceManager.GetString("FinancialType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Forget Password.
         /// </summary>
         public static string ForgetPassword {
@@ -1110,6 +1119,15 @@ namespace Utility.Resource {
         public static string MoreThen {
             get {
                 return ResourceManager.GetString("MoreThen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Motion Code.
+        /// </summary>
+        public static string MotionCode {
+            get {
+                return ResourceManager.GetString("MotionCode", resourceCulture);
             }
         }
         
@@ -1510,6 +1528,33 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Products Code.
+        /// </summary>
+        public static string ProductsCode {
+            get {
+                return ResourceManager.GetString("ProductsCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Products Name.
+        /// </summary>
+        public static string ProductsName {
+            get {
+                return ResourceManager.GetString("ProductsName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product Statment.
+        /// </summary>
+        public static string ProductStatment {
+            get {
+                return ResourceManager.GetString("ProductStatment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Profits.
         /// </summary>
         public static string Profits {
@@ -1776,6 +1821,24 @@ namespace Utility.Resource {
         public static string Safe_Notices {
             get {
                 return ResourceManager.GetString("Safe Notices", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Safe Movement.
+        /// </summary>
+        public static string SafeMovement {
+            get {
+                return ResourceManager.GetString("SafeMovement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Safe Name.
+        /// </summary>
+        public static string SafeName {
+            get {
+                return ResourceManager.GetString("SafeName", resourceCulture);
             }
         }
         
@@ -2050,6 +2113,15 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Stocks List.
+        /// </summary>
+        public static string StocksList {
+            get {
+                return ResourceManager.GetString("StocksList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Suplier Sheet Report.
         /// </summary>
         public static string SuplierSheetReport {
@@ -2284,6 +2356,15 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Transaction Code.
+        /// </summary>
+        public static string TransactionCode {
+            get {
+                return ResourceManager.GetString("TransactionCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Transaction Data.
         /// </summary>
         public static string TransactionDetails {
@@ -2316,6 +2397,15 @@ namespace Utility.Resource {
         public static string Transactions {
             get {
                 return ResourceManager.GetString("Transactions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Transaction Type.
+        /// </summary>
+        public static string TransactionType {
+            get {
+                return ResourceManager.GetString("TransactionType", resourceCulture);
             }
         }
         

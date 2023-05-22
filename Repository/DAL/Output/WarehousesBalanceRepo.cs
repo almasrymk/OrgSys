@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using Entity.Model;
 using Entity.ModelReport;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,18 +19,18 @@ namespace Repository.DAL.Output
         }
 
         public IQueryable<StockBalance> GetStocksBalance( DateTime ToDate,
-            long StockId, long ShiftId, long BranchId, long UserId
+            long ProductId, long StockId, long ClassificationId, long ShiftId, long BranchId, long UserId
             )
         {
-            string SQLStatment = string.Format(File.ReadAllText(Path.GetFullPath(@"SQLFiles/StockBalanceSql.sql")).Replace("Org", _Schema), string.Format("{0:yyyy/MM/dd}", ToDate), StockId, ShiftId, BranchId, UserId);
+            string SQLStatment = string.Format(File.ReadAllText(Path.GetFullPath(@"SQLFiles/StocksBalanceSql.sql")).Replace("Org", _Schema), string.Format("{0:yyyy/MM/dd}", ToDate), ProductId, StockId, ClassificationId, ShiftId, BranchId, UserId);
             return db.StockBalanceReport.FromSqlRaw(SQLStatment);
         } 
         
         public IQueryable<ProductBalance> GetProductsBalance(DateTime ToDate,
-            long ProductId, long ShiftId, long BranchId, long UserId
+            long ProductId, long StockId, long ClassificationId, long ShiftId, long BranchId, long UserId
             )
         {
-            string SQLStatment = string.Format(File.ReadAllText(Path.GetFullPath(@"SQLFiles/ProductBalanceSql.sql")).Replace("Org", _Schema), string.Format("{0:yyyy/MM/dd}", ToDate), ProductId, ShiftId, BranchId, UserId);
+            string SQLStatment = string.Format(File.ReadAllText(Path.GetFullPath(@"SQLFiles/ProductsBalanceSql.sql")).Replace("Org", _Schema), string.Format("{0:yyyy/MM/dd}", ToDate), ProductId, StockId, ClassificationId ,ShiftId, BranchId, UserId);
             return db.ProductBalanceReport.FromSqlRaw(SQLStatment);
         }
     }

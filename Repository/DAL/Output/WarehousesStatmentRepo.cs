@@ -18,18 +18,18 @@ namespace Repository.DAL.Output
         }
 
         public IQueryable<StockStatment> GetStocksStatment(DateTime FromDate, DateTime ToDate,
-            long StockId, long ShiftId, long BranchId, long UserId
+            long StockId, long ProductId, long ShiftId, long BranchId, long UserId
             )
         {
-            string SQLStatment = string.Format(File.ReadAllText(Path.GetFullPath(@"SQLFiles/StockStatmentSql.sql")).Replace("Org", _Schema), string.Format("{0:yyyy/MM/dd}", FromDate), string.Format("{0:yyyy/MM/dd}", ToDate), StockId, ShiftId, BranchId, UserId);
+            string SQLStatment = string.Format(File.ReadAllText(Path.GetFullPath(@"SQLFiles/StockStatmentSql.sql")).Replace("Org", _Schema), string.Format("{0:yyyy/MM/dd}", FromDate), string.Format("{0:yyyy/MM/dd}", ToDate), StockId, ProductId, ShiftId, BranchId, UserId);
             return db.StockStatmentReport.FromSqlRaw(SQLStatment);
         }
 
         public IQueryable<ProductStatment> GetProductsStatment(DateTime FromDate, DateTime ToDate,
-          long ProductId, long ShiftId, long BranchId, long UserId
+          long StockId, long ProductId , long ShiftId, long BranchId, long UserId
           )
         {
-            string SQLStatment = string.Format(File.ReadAllText(Path.GetFullPath(@"SQLFiles/ProductStatmentSql.sql")).Replace("Org", _Schema), string.Format("{0:yyyy/MM/dd}", FromDate), string.Format("{0:yyyy/MM/dd}", ToDate), ProductId, ShiftId, BranchId, UserId);
+            string SQLStatment = string.Format(File.ReadAllText(Path.GetFullPath(@"SQLFiles/ProductStatmentSql.sql")).Replace("Org", _Schema), string.Format("{0:yyyy/MM/dd}", FromDate), string.Format("{0:yyyy/MM/dd}", ToDate), StockId, ProductId, ShiftId, BranchId, UserId);
             return db.ProductStatmentReport.FromSqlRaw(SQLStatment);
         }
     }

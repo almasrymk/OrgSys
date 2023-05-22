@@ -528,7 +528,32 @@ namespace Repository
 
                 return _warehousesBalanceRepo;
             }
-        }                  
+        }
+
+
+        private SafeStatmentRepo _SafeStatmentRepo;
+        public SafeStatmentRepo SafeStatmentRepo
+        {
+            get
+            {
+                if (this._SafeStatmentRepo == null)
+                    this._SafeStatmentRepo = new SafeStatmentRepo(Schema);
+
+                return _SafeStatmentRepo;
+            }
+        }
+
+        private SafeBalanceRepo _SafeBalanceRepo;
+        public SafeBalanceRepo SafeBalanceRepo
+        {
+            get
+            {
+                if (this._SafeBalanceRepo == null)
+                    this._SafeBalanceRepo = new SafeBalanceRepo(Schema);
+
+                return _SafeBalanceRepo;
+            }
+        }
         #endregion
     }
 }

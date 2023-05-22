@@ -912,4 +912,34 @@
   <data name="Select" xml:space="preserve">
     <value>أختر</value>
   </data>
+  <data name="StocksList" xml:space="preserve">
+    <value>قائمة المخازن</value>
+  </data>
+  <data name="ProductsCode" xml:space="preserve">
+    <value>كود المنتجات</value>
+  </data>
+  <data name="ProductsName" xml:space="preserve">
+    <value>اسم المنتجات</value>
+  </data>
+  <data name="ProductStatment" xml:space="preserve">
+    <value>كشف حساب المنتجات</value>
+  </data>
+  <data name="TransactionCode" xml:space="preserve">
+    <value>كود العملية</value>
+  </data>
+  <data name="TransactionType" xml:space="preserve">
+    <value>نوع العملية</value>
+  </data>
+  <data name="SafeMovement" xml:space="preserve">
+    <value>حركة الخزينة</value>
+  </data>
+  <data name="SafeName" xml:space="preserve">
+    <value>أسم الخزينة</value>
+  </data>
+  <data name="FinancialType" xml:space="preserve">
+    <value>النوع المالي</value>
+  </data>
+  <data name="MotionCode" xml:space="preserve">
+    <value>كود الحركة</value>
+  </data>
 </root>

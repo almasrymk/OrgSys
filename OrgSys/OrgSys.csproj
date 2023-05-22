@@ -59,6 +59,7 @@
     <Content Remove="Areas\Orders\Views\Order\List.cshtml" />
     <Content Remove="Areas\Orders\Views\Order\Products.cshtml" />
     <Content Remove="Areas\Orders\Views\Order\Save.cshtml" />
+    <Content Remove="Areas\Reports\Views\Finances\SafeMovementList.cshtml" />
     <Content Remove="Areas\Reports\Views\Lookups\Clients.cshtml" />
     <Content Remove="Areas\Reports\Views\Lookups\ClientsList.cshtml" />
     <Content Remove="Areas\Reports\Views\Lookups\Suppliers.cshtml" />
@@ -73,6 +74,7 @@
     <Content Remove="Areas\Reports\Views\Sales\ClientsBalanceList.cshtml" />
     <Content Remove="Areas\Reports\Views\Sales\ClientsStatment.cshtml" />
     <Content Remove="Areas\Reports\Views\Sales\ClientsStatmentList.cshtml" />
+    <Content Remove="Areas\Reports\Views\Warehouses\ProductMovementList.cshtml" />
     <Content Remove="Areas\Reports\Views\Warehouses\StockMovement.cshtml" />
     <Content Remove="Areas\Reports\Views\Warehouses\StockMovementList.cshtml" />
     <Content Remove="Areas\Setting\Views\Branch\Index.cshtml" />
@@ -186,6 +188,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Areas\Reports\Views\Finances\SafeMovement.cshtml~RF945302.TMP" />
     <None Remove="SQLFiles\DealerListSql.sql" />
     <None Remove="SQLFiles\DealersBalance1Sql.sql" />
     <None Remove="SQLFiles\DealersBalanceSql.sql" />
@@ -193,7 +196,9 @@
     <None Remove="SQLFiles\ProductListSql.sql" />
     <None Remove="SQLFiles\ProductPrices.sql" />
     <None Remove="SQLFiles\ProductsBalanceSql.sql" />
-    <None Remove="SQLFiles\ProductsStatmentSql.sql" />
+    <None Remove="SQLFiles\ProductStatmentSql.sql" />
+    <None Remove="SQLFiles\SafeStatmentSql.sql" />
+    <None Remove="SQLFiles\StockListSql.sql" />
     <None Remove="SQLFiles\StockStatmentSql.sql" />
     <None Remove="SQLFiles\Test.sql" />
     <None Remove="SQLFiles\TotalByPeriodSql.sql" />
@@ -204,6 +209,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="SQLFiles\SafeStatmentSql.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SQLFiles\StockListSql.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="SQLFiles\ProductListSql.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -213,7 +224,7 @@
     <Content Include="SQLFiles\ProductsBalanceSql.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="SQLFiles\ProductsStatmentSql.sql">
+    <Content Include="SQLFiles\ProductStatmentSql.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="SQLFiles\StockStatmentSql.sql">
@@ -269,6 +280,7 @@
     <EmbeddedResource Include="Areas\Orders\Views\Order\List.cshtml" />
     <EmbeddedResource Include="Areas\Orders\Views\Order\Products.cshtml" />
     <EmbeddedResource Include="Areas\Orders\Views\Order\Save.cshtml" />
+    <EmbeddedResource Include="Areas\Reports\Views\Finances\SafeMovementList.cshtml" />
     <EmbeddedResource Include="Areas\Reports\Views\Lookups\Clients.cshtml" />
     <EmbeddedResource Include="Areas\Reports\Views\Lookups\ClientsList.cshtml" />
     <EmbeddedResource Include="Areas\Reports\Views\Lookups\Suppliers.cshtml" />
@@ -280,6 +292,7 @@
     <EmbeddedResource Include="Areas\Reports\Views\Warehouses\ClientsBalance.cshtml" />
     <EmbeddedResource Include="Areas\Reports\Views\Warehouses\ClientsBalanceList.cshtml" />
     <EmbeddedResource Include="Areas\Reports\Views\Warehouses\StockMovement.cshtml" />
+    <EmbeddedResource Include="Areas\Reports\Views\Warehouses\ProductMovementList.cshtml" />
     <EmbeddedResource Include="Areas\Reports\Views\Warehouses\StockMovementList.cshtml" />
     <EmbeddedResource Include="Areas\Reports\Views\Sales\ClientsBalance.cshtml" />
     <EmbeddedResource Include="Areas\Reports\Views\Sales\ClientsStatment.cshtml" />

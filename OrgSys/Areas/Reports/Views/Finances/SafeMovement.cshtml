@@ -1,6 +1,6 @@
 ﻿@using System.Globalization
 @using Entity.ModelReport;
-@model ReportResult<StockStatmentData,StockStatment>
+@model ReportResult<SafeStatmentData,SafeStatment>
 @using OrgSys
 
 @{
@@ -10,7 +10,7 @@
 
 <div class="container-fluid disable-text-selection">
     <div class="col-12">
-        <h1> <i class="glyph-icon iconsminds-letter-open rounded-circle badge-theme-1  p-1"></i> @Utility.Resource.Title_Designer.StockMovement</h1>
+        <h1> <i class="glyph-icon iconsminds-letter-open rounded-circle badge-theme-1  p-1"></i> @Utility.Resource.Title_Designer.SafeMovement</h1>
 
         <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
             <ol class="breadcrumb pt-0">
@@ -18,17 +18,17 @@
                     <a href="/">@Utility.Resource.Title_Designer.Home</a>
                 </li>
                 <li class="breadcrumb-item">
-                    <span>@Utility.Resource.Title_Designer.Invoice</span>
+                    <span>@Utility.Resource.Title_Designer.Transactions</span>
                 </li>
                 <li class="breadcrumb-item">
                     <span>@Utility.Resource.Title_Designer.Report</span>
                 </li>
                 <li class="breadcrumb-item">
-                    @Utility.Resource.Title_Designer.StockMovement
+                    @Utility.Resource.Title_Designer.SafeMovement
                 </li>
             </ol>
         </nav>
-    </div>    
+    </div>
     <div class="card mb-4">
         <div class="card-body">
             <h5 class="mb-4">@Utility.Resource.Title_Designer.KeySearch</h5>
@@ -36,7 +36,7 @@
                 <div class="form-group col-md-3">
                     <label>@Utility.Resource.Title_Designer.FromDate</label>
                     <div id="divDate">
-                        <div class="input-group " >
+                        <div class="input-group ">
                             <div class="input-group-prepend ">
                                 <span class="input-group-text "><i class="simple-icon-calendar"></i></span>
                             </div>
@@ -55,20 +55,32 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group col-md-6">
-                    <label>@Utility.Resource.Title_Designer.Stocks</label>
+                <div class="form-group col-md-3">
+                    <label>@Utility.Resource.Title_Designer.Dealers</label>
                     <div id="divDate">
                         <div class="input-group ">
                             <div class="input-group-prepend ">
-                                <span class="input-group-text "><i class="simple-icon-share"></i></span>
+                                <span class="input-group-text "><i class="iconsminds-shopping-basket"></i></span>
                             </div>
-                            @Html.DropDownList("StockId", (SelectList)@ViewBag.StockList,Utility.Resource.Title_Designer.All, new { @class = "form-control select2-single" })
+                            @Html.DropDownList("DealerId", (SelectList)@ViewBag.DealerList,Utility.Resource.Title_Designer.All, new { @class = "form-control select2-single" })
                         </div>
                     </div>
                 </div>
-            </div>           
+                <div class="form-group col-md-3">
+                    <label>@Utility.Resource.Title_Designer.Safes</label>
+                    <div id="divDate">
+                        <div class="input-group ">
+                            <div class="input-group-prepend ">
+                                <span class="input-group-text "><i class="iconsminds-shopping-basket"></i></span>
+                            </div>
+                            @Html.DropDownList("SafeId", (SelectList)@ViewBag.SafeList,Utility.Resource.Title_Designer.All, new { @class = "form-control select2-single" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
         </div>
-        <div class="card-footer">           
+        <div class="card-footer">
             <button class="btn btn-primary @pull_dir" onclick="search(1)">
                 <i class="glyph-icon iconsminds-magnifi-glass">  </i> @Utility.Resource.Title_Designer.Search
             </button>
@@ -77,7 +89,7 @@
 
     <div class="card mb-4">
         <div id="List" class="card-body  m-0 p-3">
-            @Html.Partial("StockMovementList", Model)
+            @Html.Partial("SafeMovementList", Model)
         </div>
     </div>
 </div>

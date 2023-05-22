@@ -108,6 +108,9 @@ namespace Repository
         public virtual DbSet<ProductStatment> ProductStatmentReport { get; set; }
 
         [NotMapped]
+        public virtual DbSet<SafeStatment> SafeStatmentReport { get; set; }
+
+        [NotMapped]
         public virtual DbSet<StockBalance> StockBalanceReport { get; set; }
 
         [NotMapped]

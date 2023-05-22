@@ -1,41 +1,33 @@
 -----------------------------------
 -- (Parameters)
 -- 1- {0} FromDate
--- 2- {1} StockId
--- 3- {2} ShiftId
--- 4- {3} BranchId
--- 5- {4} CreateUserId
+-- 2- {1} ToDate
+-- 3- {2} ProductId
+-- 4- {3} StockId
+-- 5- {4} ClassificationId
 -----------------------------------
 
-SELECT 
-StockId ,  
-StockName ,
-ProductId,
-ProductName ,
-SUM(Quantity) Quantity FROM
-(
-SELECT 
-trn.StockId ,  
-st.[Name] StockName ,
-trnp.ProductId ,
-pr.[Name] ProductName ,
-SUM(trnp.Quantity * trnt.InOut) Quantity 
+select SUM(TP.Quantity * TT.InOut ) AS [Balance],
+TP.ProductId,
+P.[Name] ProductName,
+TP.StockId,
+S.[Name] StockName,
+C.Id ClassificationId,
+C.[Name] ClassificationName,
+C.[ImgPath] ClassificationImgPath,
+P.[ImgPath] ProductImgPath
 
-FROM org.[Transaction] trn 
-INNER JOIN org.TransactionProduct trnp ON trnp.TransactionId = trn.Id
-INNER JOIN org.TransactionType trnt ON trnt.Id = trn.TypeId
-INNER JOIN org.Stock st ON st.Id = trn.StockId
-INNER JOIN org.Product pr ON pr.Id = trnp.ProductId
+from [org].[TransactionProduct] TP
+inner join [org].[Transaction] T on T.Id = TP.TransactionId
+inner join [org].[Product] P on P.Id = TP.ProductId
+inner join [org].[Stock] S on S.Id = TP.StockId
+inner join [org].[TransactionType] TT on TT.Id = T.TypeId
+inner join [org].[Classification] C on C.Id = P.ClassificationId
 
 WHERE 		
-CONVERT(datetime , CONVERT(VARCHAR(20),trn.Date,111)) <= CONVERT(datetime , CONVERT(VARCHAR(20),N'{0}',111)) AND 
-(Convert(bigint, N'{1}') = 0 OR trn.StockId = Convert(bigint, N'{1}')) AND
-(Convert(bigint, N'{2}') = 0 OR trn.ShiftId = Convert(bigint, N'{2}')) AND
-(Convert(bigint, N'{3}') = 0 OR trn.BranchId = Convert(bigint, N'{3}')) AND
-(Convert(bigint, N'{4}') = 0 OR trn.CreateUserId = N'{4}')
+CONVERT(datetime , CONVERT(VARCHAR(20),T.Date,111)) <= CONVERT(datetime , CONVERT(VARCHAR(20),N'{0}',111)) AND 
+(Convert(bigint, N'{1}') = 0 OR TP.ProductId= Convert(bigint, N'{1}')) AND
+(Convert(bigint, N'{2}') = 0 OR TP.StockId = Convert(bigint, N'{2}')) AND
+(Convert(bigint, N'{3}') = 0 OR C.Id = Convert(bigint, N'{3}'))
 
-GROUP BY trn.StockId , st.[Name] , trnp.ProductId , pr.[Name]
-
-) TB 
-
-GROUP BY StockId , StockName , ProductId , ProductName
+group by TP.ProductId, P.[Name] , TP.StockId,S.[Name] , C.[Name] , C.Id , C.ImgPath,P.ImgPath

@@ -11,13 +11,11 @@ namespace Entity.ModelReport
         public long Id { get; set; }
         public long SafeId { get; set; }
         public string SafeName { get; set; }
-        public decimal PreviousBalance { get; set; }
-        public decimal CurrentBalance { get; set; }
-        public long BranchId { get; set; }
-        public string BranchName { get; set; }
-        public long ShiftId { get; set; }
-        public string ShiftName { get; set; }
-        public long UserId { get; set; }
-        public string UserName { get; set; }
+        public long DealerId { get; set; }
+        public string DealerName { get; set; }
+        public long CurrencyId { get; set; }
+        public string CurrencyName { get; set; }
+        public string SafeImgPath { get; set; }
+
     }
 }

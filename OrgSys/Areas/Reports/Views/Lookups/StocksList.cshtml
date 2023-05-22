@@ -1,5 +1,5 @@
 ﻿@using System.Globalization
-@model X.PagedList.IPagedList<Entity.ModelReport.ProductList>
+@model X.PagedList.IPagedList<Entity.ModelReport.StockList>
 @using OrgSys
 @{
     Layout = null;
@@ -44,9 +44,7 @@
                 <tr>
                     <th class="text-center">#</th>
                     <th style="text-align:center"></th>
-                    <th class="@TextAlign align-middle">@Utility.Resource.Title_Designer.Name</th>
-                    <th class="align-middle" style="text-align:center">@Utility.Resource.Title_Designer.Barcode</th>
-                    <th class="align-middle" style="text-align:center">@Utility.Resource.Title_Designer.Classification</th>
+                    <th class="align-middle" style="text-align:center">@Utility.Resource.Title_Designer.Name</th>
                 </tr>
             </thead>
             <tbody>
@@ -70,18 +68,11 @@
                             }
                         </td>
 
-                        <td class="text-center align-middle" style="width:100px;">
-                            @Model[i].ItemName
-                        </td>
+                        
                         <td class="text-center align-middle">
-                            @Model[i].BarCode
+                            @Model[i].Name
                         </td>
-                        <td class="text-center align-middle">
-                            @Model[i].ClassificationName
-                        </td>
-                        @*<td class="@TextAlign align-middle">
-                            @Model[i].Address
-                        </td>*@
+                        
                     </tr>
                 }
             </tbody>

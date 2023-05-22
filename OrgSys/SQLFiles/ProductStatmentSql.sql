@@ -4,18 +4,26 @@
 -- 2- {1} ToDate
 -- 3- {2} ProductId
 -- 4- {3} StockId
--- 5- {4} ClassificationId
 -----------------------------------
 
-select SUM(TP.Quantity * TT.InOut ) AS [Balance],
+
+select 
+TP.Id,
+TP.Quantity,
 TP.ProductId,
+TP.TransactionId AS ReferenceId,
 P.[Name] ProductName,
-TP.StockId,
+P.Code as ProductCode,
+P.ImgPath as ProductImgPath,
+P.ClassificationId,
+T.[Date],
+T.Code as TransactionCode,
+T.TypeId,
 S.[Name] StockName,
-C.Id ClassificationId,
-C.[Name] ClassificationName,
-C.[ImgPath] ClassificationImgPath,
-P.[ImgPath] ProductImgPath
+TP.StockId,
+TT.[Name] as TypeName,
+C.[Name] ClassificationName
+
 
 from [org].[TransactionProduct] TP
 inner join [org].[Transaction] T on T.Id = TP.TransactionId
@@ -24,11 +32,12 @@ inner join [org].[Stock] S on S.Id = TP.StockId
 inner join [org].[TransactionType] TT on TT.Id = T.TypeId
 inner join [org].[Classification] C on C.Id = P.ClassificationId
 
-WHERE 		
-CONVERT(datetime , CONVERT(VARCHAR(20),T.Date,111)) <= CONVERT(datetime , CONVERT(VARCHAR(20),N'{0}',111)) AND 
-(Convert(bigint, N'{1}') = 0 OR TP.ProductId= Convert(bigint, N'{1}')) AND
+where 
+CONVERT(datetime , CONVERT(VARCHAR(20),T.Date,111)) >= CONVERT(datetime , CONVERT(VARCHAR(20),N'{0}',111)) AND 
+CONVERT(datetime , CONVERT(VARCHAR(20),T.Date,111)) <= CONVERT(datetime , CONVERT(VARCHAR(20),N'{1}',111)) AND 
 (Convert(bigint, N'{2}') = 0 OR TP.StockId = Convert(bigint, N'{2}')) AND
-(Convert(bigint, N'{3}') = 0 OR C.Id = Convert(bigint, N'{3}'))
+(Convert(bigint, N'{3}') = 0 OR TP.ProductId = Convert(bigint, N'{3}')) 
 
-group by TP.ProductId, P.[Name] , TP.StockId,S.[Name] , C.[Name] , C.Id , C.ImgPath,P.ImgPath
+--WHERE p.Id = N'{3}'
+
 
