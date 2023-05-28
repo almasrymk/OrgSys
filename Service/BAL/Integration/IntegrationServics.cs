@@ -89,9 +89,14 @@ namespace Service
                 transaction.Code = "" + transactionOld.Code;
             }
 
+            transaction.Stock = null;
+            transaction.Dealer = null;
             foreach (var item in transaction.TransactionProductList)
+            {
                 item.Id = 0;
-
+                item.Product = null;
+                item.Unit = null;
+            }
 
             transaction = new TransactionService(_Schema).Save(transaction);
             inv.TransactionId = transaction.Id;

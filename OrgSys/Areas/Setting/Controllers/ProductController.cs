@@ -131,7 +131,7 @@ namespace OrgSys.Areas.Setting.Controllers
         }
 
         public JsonResult LoadProductsByStock(long StockId , DateTime date)
-        {
+        {            
             var products = new ProductService(User.GetSchema()).GetAllByBalance(StockId , date);
             var data = products.Select(e=> new
             {

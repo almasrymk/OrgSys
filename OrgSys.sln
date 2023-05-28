@@ -19,6 +19,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrgSysTest", "OrgSysTest\Or
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{8F5398EB-A8DC-495E-B56C-7A34C7905F21}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrgSysWeb", "OrgSysWeb\OrgSysWeb.csproj", "{9B211EFC-EDD5-483C-ADDD-1F2F29BE4059}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +55,10 @@ Global
 		{D6C6604B-35F8-4CAD-8102-212DA3E05148}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6C6604B-35F8-4CAD-8102-212DA3E05148}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D6C6604B-35F8-4CAD-8102-212DA3E05148}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B211EFC-EDD5-483C-ADDD-1F2F29BE4059}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B211EFC-EDD5-483C-ADDD-1F2F29BE4059}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B211EFC-EDD5-483C-ADDD-1F2F29BE4059}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B211EFC-EDD5-483C-ADDD-1F2F29BE4059}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

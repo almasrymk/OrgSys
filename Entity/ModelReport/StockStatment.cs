@@ -22,6 +22,7 @@ namespace Entity.ModelReport
         public string StockName { get; set; }
         public decimal Quantity { get; set; }
         public string StockImgPath { get; set; }
+        public string ProductImgPath { get; set; }
 
         //public int InOut { get; set; }
         //public decimal Balance { get; set; }

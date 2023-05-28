@@ -8,7 +8,7 @@ namespace Service
 {
     public class FinancialService : BaseOrgService<FinancialModelView, Financial>
     {
-        public FinancialService(string Schema) : base(Schema , "Dealer,PaymentType,Outlay,Currency,Safe,FinancialInvoices") { }
+        public FinancialService(string Schema) : base(Schema , "Dealer,PaymentType,Outlay,Currency,Safe,FinancialInvoices,FinancialInvoices.Invoice") { }
 
         public override FinancialModelView Save(FinancialModelView ob)
         {

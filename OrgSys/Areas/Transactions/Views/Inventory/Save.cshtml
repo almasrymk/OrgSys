@@ -1,7 +1,9 @@
 ﻿@model Entity.ModelView.InventoryModelView
+@using System.Globalization
 @{
     ViewData["Title_Designer"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var formateDate = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "{0:yyyy/MM/dd}" : "{0:dd/MM/yyyy}";
 }
 
 <div id="HPage" class="container-fluid">
@@ -271,9 +273,12 @@
     var Repeated;
     var ReCalc;
     jQuery(function ($) {
-        //$(".datepicker").datepicker();
-        //$(".datepicker").datepicker("option", "dateFormat", "yy/mm/dd");
-        $("#query").focus();
+        setTimeout(function () {
+            //$("html, body").scrollTop($("#HPage").offset().top - 300);
+            $("#query").focus();
+            //$(".sw-toolbar-bottom").css("display", "none");
+            $(".datepicker").val('@string.Format(formateDate, Model.Date)');
+        }, 600);
 
         $('#btn').click(function () {
             Save();
@@ -526,13 +531,18 @@
         }
 
         LoadProducts = function () {
+var ff = '@System.Threading.Thread.CurrentThread.CurrentCulture.DateTimeFormat.ShortDatePattern';
             $(".ProductRow").not(".trNew").remove();
             var StockId = $("#StockId").val();
+            var date = new Date($("#Date").val());
+            alert(ff);
             $.ajax({
                 dataType: 'json',
                 url: "/Setting/Product/LoadProductsByStock",
                 type: "Get",
-                data: { StockId: StockId, date : $("#Date").val()},
+                data: {
+                    StockId: StockId, date:date
+        },
                 success: function (data) {
                     for (var i = 0; i < data.length; i++) {
                         var $row = $('.trNew');

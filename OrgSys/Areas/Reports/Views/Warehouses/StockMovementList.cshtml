@@ -44,14 +44,15 @@
                 <thead>
                     <tr>
                         <th class="text-center">#</th>
-                        <th style="text-align:center"></th>
-                        <th class="@TextAlign align-middle">@Utility.Resource.Title_Designer.ProductsName</th>
-                        <th class="align-middle" style="text-align:center">@Utility.Resource.Title_Designer.ProductsCode</th>
-                        <th class="align-middle" style="text-align:center">@Utility.Resource.Title_Designer.TransactionCode</th>
-                        <th class="align-middle" style="@TextAlign">@Utility.Resource.Title_Designer.Date</th>
-                        <th class="@TextAlign align-middle">@Utility.Resource.Title_Designer.Type</th>
-                        <th class="text-center align-middle">@Utility.Resource.Title_Designer.Quantity</th>
+                        <th style="text-align:center"></th>                      
                         <th class="text-center align-middle">@Utility.Resource.Title_Designer.Stocks</th>
+                        <th style="text-align:center"></th>
+                        <th class="@TextAlign align-middle">@Utility.Resource.Title_Designer.Product</th>
+                        <th class="@TextAlign align-middle">@Utility.Resource.Title_Designer.Type</th>
+                        <th class="align-middle" style="text-align:center">@Utility.Resource.Title_Designer.TransactionCode</th>
+                        <th class="align-middle" style="@TextAlign">@Utility.Resource.Title_Designer.Date</th>                      
+                        <th class="text-center align-middle">@Utility.Resource.Title_Designer.Quantity</th>
+                        
                     </tr>
                 </thead>
                 <tbody>
@@ -62,7 +63,7 @@
                                 <p class="list-item-heading">@x</p>
                             </td>
                             <td class="text-center align-middle" style="width:50px;">
-                                <a href="/Transactions/Transaction/Save?id=@Model.Result[i].StockId&TypeId=1">
+                                <a href="/Setting/Stock/Save?id=@Model.Result[i].StockId">
                                     @if ("" + Model.Result[i].StockImgPath != "")
                                     {
                                         <img alt="Thumbnail" src="@Model.Result[i].StockImgPath"
@@ -71,29 +72,39 @@
                                     else
                                     {
                                         <div class="list-thumbnail  border-0 rounded-circle badge-theme-1 m-0" style="height:40px;width:40px;font-size:17px;text-align:center;padding:9px;">
-                                            <i class="simple-icon-people"></i>
+                                            <i class="simple-icon-layers"></i>
+                                        </div>
+                                    }
+                                </a>
+                            </td>
+                            <td class="text-center align-middle">
+                                <a href="/Setting/Stock/Save?id=@Model.Result[i].StockId">
+                                    @Model.Result[i].StockName
+                                </a>
+                            </td>
+                            <td class="text-center align-middle" style="width:50px;">
+                                <a href="/Setting/Product/Save?id=@Model.Result[i].ProductId">
+                                    @if ("" + Model.Result[i].StockImgPath != "")
+                                    {
+                                        <img alt="Thumbnail" src="@Model.Result[i].StockImgPath"
+                                             class="list-thumbnail  border-0 rounded-circle badge-theme-1 m-0" style="height:40px;width:40px;" />
+                                    }
+                                    else
+                                    {
+                                        <div class="list-thumbnail  border-0 rounded-circle badge-theme-1 m-0" style="height:40px;width:40px;font-size:17px;text-align:center;padding:9px;">
+                                            <i class="simple-icon-layers"></i>
                                         </div>
                                     }
                                 </a>
                             </td>
                             <td class="@TextAlign align-middle">
-                                <a href="/Transactions/Transaction/Save?id=@Model.Result[i].ProductId&TypeId=1">
-                                    @Model.Result[i].ProductName
+                                <a href="/Setting/Product/Save?id=@Model.Result[i].ProductId">
+                                    @Model.Result[i].ProductCode - @Model.Result[i].ProductName
                                 </a>
                             </td>
-                            <td class="text-center align-middle">
-                                    @Model.Result[i].ProductCode
-                            </td>
-                            <td class="text-center align-middle">
-                                @Model.Result[i].TransactionCode
-                            </td>
-                            <td class="align-middle" style="@TextAlign">
-                                <a href="/Transactions/Transaction/Save?id=@Model.Result[i].ReferenceId&TypeId=1">
-                                    <i class="simple-icon-calendar"></i> &nbsp;  @Model.Result[i].Date.ToString(DateFromate)
-                                </a>
-                            </td>
+
                             <td class="@TextAlign align-middle">
-                                <a href="/Invoices/Invoice/Save?id=@Model.Result[i].ReferenceId&TypeId=1">
+                                <a href="/Transactions/Transaction/Save?id=@Model.Result[i].ReferenceId&TypeId=1">
                                     @if (Model.Result[i].TypeId == 0)
                                     {
                                         <i class="glyph-icon iconsminds-business-man-woman"></i>
@@ -125,18 +136,25 @@
 
                                     @Model.Result[i].TypeName
                                 </a>
-                               
+
                             </td>
+                            <td class="text-center align-middle">                                
+                                <a href="/Transactions/Transaction/Save?id=@Model.Result[i].ReferenceId&TypeId=1">
+                                    @Model.Result[i].TransactionCode
+                                </a>
+                            </td>
+                            <td class="align-middle" style="@TextAlign">
+                                <a href="/Transactions/Transaction/Save?id=@Model.Result[i].ReferenceId&TypeId=1">
+                                    <i class="simple-icon-calendar"></i> &nbsp;  @Model.Result[i].Date.ToString(DateFromate)
+                                </a>
+                            </td>
+                            
                             <td class="text-center align-middle">
                                 <a href="/Invoices/Invoice/Save?id=@Model.Result[i].ReferenceId&TypeId=1">
                                     @Model.Result[i].Quantity
                                 </a>                                
                             </td>
-                            <td class="text-center align-middle">
-                                <a href="/Transactions/Transaction/Save?id=@Model.Result[i].ReferenceId&TypeId=1">
-                                    @Model.Result[i].StockName
-                                </a>
-                            </td>
+                           
                         </tr>
                     }
                 </tbody>

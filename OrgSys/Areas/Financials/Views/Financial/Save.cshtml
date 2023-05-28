@@ -7,6 +7,7 @@
     var TextAlign = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "text-right" : "text-left";
     var DateFromate = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "yyyy-MM-dd" : "dd-MM-yyyy";
     var TimeFromate = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "mm:hh t" : "hh:mm t";
+    var formateDate = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "{0:yyyy/MM/dd}" : "{0:dd/MM/yyyy}";
 }
 
 <div id="HPage" class="container-fluid">
@@ -76,7 +77,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="simple-icon-calendar"></i></span>
                                             </div>
-                                            @Html.TextBoxFor(model => model.Date, new { @class = "form-control dpicker" })
+                                            @Html.TextBoxFor(model => model.Date, new { @class = "form-control datepicker" })
                                         </div>
                                         @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                                     </div>
@@ -338,7 +339,7 @@
 <link href="~/css/jquery-ui.css" rel="stylesheet" />
 <script src="~/js/jquery-ui.js"></script>
 <script src="~/js/PopupScript.js"></script>
-<script>
+<script charset="utf-8">
     var AddNewRow;
     var AddNewInvoice;
     var AddInvoice;
@@ -348,14 +349,11 @@
     var AutoSave;
     var Repeated;
     jQuery(function ($) {
-        $(".dpicker").datepicker();
-        $(".dpicker").datepicker("option", "dateFormat", "dd/mm/yy");
-        $("#query").focus();
-
         setTimeout(function () {
             $("html, body").scrollTop($("#HPage").offset().top - 300);
+            $("#query").focus();
             $(".sw-toolbar-bottom").css("display", "none");
-
+            $(".datepicker").val('@string.Format(formateDate, Model.Date)');
         }, 600);
 
         $('#btn').click(function () {
