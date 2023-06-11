@@ -409,6 +409,7 @@
 
   <ItemGroup>
     <Folder Include="PrintOut\" />
+    <Folder Include="Properties\PublishProfiles\" />
     <Folder Include="wwwroot\bundle\css\" />
     <Folder Include="wwwroot\bundle\js\" />
     <Folder Include="wwwroot\Files\" />    
