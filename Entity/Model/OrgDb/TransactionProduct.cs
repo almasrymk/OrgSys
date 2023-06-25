@@ -29,10 +29,13 @@ namespace Entity.Model
 
         public virtual Stock Stock { get; set; }
 
+        [Column(TypeName = "decimal(18,2)")]
         public virtual decimal Quantity { get; set; }
-        
+
+        [Column(TypeName = "decimal(18,2)")]
         public virtual decimal Cost { get; set; }
 
+        [Column(TypeName = "decimal(18,2)")]
         public virtual decimal Total { get; set; }
         
         public virtual string Notes { get; set; }                       

@@ -27,6 +27,7 @@ namespace Entity.Model
 
         public virtual Order Order { get; set; }
 
+        [Column(TypeName = "decimal(18,2)")]
         public virtual decimal Total { get; set; }
 
         [StringLength(500)]

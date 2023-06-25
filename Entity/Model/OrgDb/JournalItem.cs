@@ -15,8 +15,10 @@ namespace Entity.Model
 
         public virtual Account Account { get; set; }
 
+        [Column(TypeName = "decimal(18,2)")]
         public virtual decimal Debit { get; set; }
 
+        [Column(TypeName = "decimal(18,2)")]
         public virtual decimal Credit { get; set; }
 
         public virtual string Note { get; set; }

@@ -17,8 +17,10 @@ namespace Entity.Model
 
         public virtual string Description { get; set; }
 
+        [Column(TypeName = "decimal(18,2)")]
         public virtual decimal Price { get; set; }
 
+        [Column(TypeName = "decimal(18,2)")]
         public virtual decimal Cost { get; set; }
 
         [ForeignKey("GeneralClassification")]

@@ -24,20 +24,25 @@ namespace Entity.Model
 
         public virtual Invoice Invoice { get; set; }
 
+        [Column(TypeName = "decimal(18,2)")]
         public virtual decimal Total { get; set; }
 
+        [Column(TypeName = "decimal(18,2)")]
         public virtual decimal Discount { get; set; }
 
         public virtual int DiscountType { get; set; }
 
+        [Column(TypeName = "decimal(18,2)")]
         public virtual decimal Tax { get; set; }
 
         public virtual int TaxType { get; set; }
 
+        [Column(TypeName = "decimal(18,2)")]
         public virtual decimal Service { get; set; }
 
         public virtual int ServiceType { get; set; }
 
+        [Column(TypeName = "decimal(18,2)")]
         public virtual decimal Net { get; set; }
 
         [StringLength(500)]

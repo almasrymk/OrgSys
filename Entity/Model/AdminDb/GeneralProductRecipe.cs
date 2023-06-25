@@ -9,8 +9,9 @@ namespace Entity.Model
         
         public virtual long RecipeId { get; set; }    
         
-        public virtual long UnitId { get; set; }    
-        
+        public virtual long UnitId { get; set; }
+
+        [Column(TypeName = "decimal(18,2)")]
         public virtual decimal Quantity { get; set; }
     }
 }

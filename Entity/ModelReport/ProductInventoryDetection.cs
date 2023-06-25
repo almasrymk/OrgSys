@@ -1,4 +1,6 @@
-﻿namespace Entity.ModelReport
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Entity.ModelReport
 {
     public class ProductInventoryDetection
     {
@@ -10,7 +12,11 @@
         public string ItemName { get; set; }
         public long StockId { get; set; }
         public string StockName { get; set; }
+
+        [Column(TypeName = "decimal(18,2)")]
         public decimal ActualBalance { get; set; }
+
+        [Column(TypeName = "decimal(18,2)")]
         public decimal Balance { get; set; }
     }
 }

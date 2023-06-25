@@ -27,16 +27,20 @@ namespace Entity.Model
 
         public virtual Transaction Transaction { get; set; }
 
+        [Column(TypeName = "decimal(18,2)")]
         public virtual decimal Total { get; set; }
 
+        [Column(TypeName = "decimal(18,2)")]
         public virtual decimal Discount { get; set; }
 
         public virtual int DiscountType { get; set; }
 
+        [Column(TypeName = "decimal(18,2)")]
         public virtual decimal Tax { get; set; }
 
         public virtual int TaxType { get; set; }
 
+        [Column(TypeName = "decimal(18,2)")]
         public virtual decimal Service { get; set; }
 
         public virtual int ServiceType { get; set; }
@@ -46,21 +50,28 @@ namespace Entity.Model
 
         public virtual Currency Currency { get; set; }
 
+        [Column(TypeName = "decimal(18,2)")]
         public virtual decimal Rate { get; set; }
 
+        [Column(TypeName = "decimal(18,2)")]
         public virtual decimal Net { get; set; }
 
+        [Column(TypeName = "decimal(18,2)")]
         public virtual decimal NetByDefaultCurrency { get; set; }
 
         [StringLength(500)]
         public virtual string Notes { get; set; }
 
+        [Column(TypeName = "decimal(18,2)")]
         public virtual decimal Remaining { get; set; }
 
+        [Column(TypeName = "decimal(18,2)")]
         public virtual decimal Paid { get; set; }
 
+        [Column(TypeName = "decimal(18,2)")]
         public virtual decimal Credit { get; set; }
 
+        [Column(TypeName = "decimal(18,2)")]
         public virtual decimal CreditByDefaultCurrency { get; set; }          
 
         public virtual ICollection<InvoiceProduct> InvoiceProducts { get; set; }

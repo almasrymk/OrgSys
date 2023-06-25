@@ -22,22 +22,29 @@ namespace Entity.Model
         [ForeignKey("Unit")]
         public virtual long UnitId { get; set; }
 
-        public virtual Unit Unit { get; set; }               
+        public virtual Unit Unit { get; set; }
 
+        [Column(TypeName = "decimal(18,2)")]
         public virtual decimal Quantity { get; set; }
-        
+
+        [Column(TypeName = "decimal(18,2)")]
         public virtual decimal Price { get; set; }
 
+        [Column(TypeName = "decimal(18,2)")]
         public virtual decimal Total { get; set; }
 
+        [Column(TypeName = "decimal(18,2)")]
         public virtual decimal Discount { get; set; }
 
+        [Column(TypeName = "decimal(18,2)")]
         public virtual decimal Service { get; set; }
 
+        [Column(TypeName = "decimal(18,2)")]
         public virtual decimal Tax { get; set; }
 
+        [Column(TypeName = "decimal(18,2)")]
         public virtual decimal Net { get; set; }
-
+       
         public virtual string Notes { get; set; }                       
     }
 }

@@ -17,6 +17,7 @@ namespace Entity.Model
         public virtual Unit Unit { get; set; }
 
         [Required]
+        [Column(TypeName = "decimal(18,2)")]
         public virtual decimal Rate { get; set; }
 
         public virtual bool DefaultUnit { get; set; }

@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <AspNetCoreModuleName>AspNetCoreModuleV2</AspNetCoreModuleName>
     <AspNetCoreHostingModel>OutOfProcess</AspNetCoreHostingModel>
   </PropertyGroup>
 
@@ -427,5 +429,5 @@
       <UserProperties bundleconfig_1json__JsonSchema="https://www.graphql-code-generator.com/config.schema.json" />
     </VisualStudio>
   </ProjectExtensions>
-
+  
 </Project>

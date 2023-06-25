@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entity.ModelReport
 {
@@ -20,6 +21,8 @@ namespace Entity.ModelReport
         public string ProductName { get; set; }
         public long StockId { get; set; }
         public string StockName { get; set; }
+
+        [Column(TypeName = "decimal(18,2)")]
         public decimal Quantity { get; set; }
         //public int InOut { get; set; }
         //public decimal Balance { get; set; }

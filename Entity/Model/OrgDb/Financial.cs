@@ -27,6 +27,7 @@ namespace Entity.Model
 
         public Currency Currency { get; set; }
 
+        [Column(TypeName = "decimal(18,2)")]
         public decimal Rate { get; set; }
 
         [ForeignKey("Safe")]
@@ -34,8 +35,10 @@ namespace Entity.Model
 
         public virtual Safe Safe { get; set; }
 
+        [Column(TypeName = "decimal(18,2)")]
         public decimal Amount { get; set; }
 
+        [Column(TypeName = "decimal(18,2)")]
         public decimal AmountByDefaultCurrency { get; set; }
 
         [StringLength(500)]

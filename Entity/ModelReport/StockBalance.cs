@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Buffers;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Cryptography.Xml;
 
 namespace Entity.ModelReport
@@ -10,9 +11,10 @@ namespace Entity.ModelReport
         [Key]
         public long StockId { get; set; }
         public string StockName { get; set; }
-        //public decimal OpenningBalance { get; set; }
+
+        [Column(TypeName = "decimal(18,2)")]
         public decimal Balance { get; set; }
-        //public string StockImgPath { get; set; }
+        
         public long ClassificationId { get; set; }
         public string ClassificationName { get; set; }
         public long ProductId { get; set; }

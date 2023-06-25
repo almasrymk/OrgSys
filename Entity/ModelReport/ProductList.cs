@@ -1,4 +1,6 @@
-﻿namespace Entity.ModelReport
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Entity.ModelReport
 {
     public class ProductList 
     {
@@ -9,7 +11,11 @@
         public string ItemCode { get; set; }
         public string ItemName { get; set; }
         public string BarCode { get; set; }
+
+        [Column(TypeName = "decimal(18,2)")]
         public decimal SalesPrice { get; set; }
+
+        [Column(TypeName = "decimal(18,2)")]
         public decimal PurchasePrice { get; set; }
         public string ImgPath { get; set; }
 

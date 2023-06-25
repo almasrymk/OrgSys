@@ -19,6 +19,7 @@ namespace Entity.Model
 
         public virtual Invoice Invoice { get; set; }
 
+        [Column(TypeName = "decimal(18,2)")]
         public virtual decimal Amount { get; set; }        
     }
 }

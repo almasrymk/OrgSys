@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entity.ModelReport
 {
@@ -6,8 +7,14 @@ namespace Entity.ModelReport
     {
         public long Id { get; set; }
         public DateTime Date { get; set; }
+
+        [Column(TypeName = "decimal(18,2)")]
         public decimal TotalAmount { get; set; }
+
+        [Column(TypeName = "decimal(18,2)")]
         public decimal ReturnAmount { get; set; }
+
+        [Column(TypeName = "decimal(18,2)")]
         public decimal NetAmount { get; set; }
         public long DealerId { get; set; }
         public string  DealerName { get; set; }
