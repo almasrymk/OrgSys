@@ -5,6 +5,7 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     var pull_dir = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "fa-pull-left" : "fa-pull-right";
+    DateTime toDate = ViewBag.ToDate != null ? DateTime.Parse(ViewBag.ToDate.ToString()) : new DateTime(DateTime.Now.Year, 12, 31);
 }
 
 <div class="container-fluid disable-text-selection">
@@ -31,7 +32,7 @@
     <div class="card mb-4">
         <div class="card-body">
             <h5 class="mb-4">@Utility.Resource.Title_Designer.KeySearch</h5>
-            <div class="row">                
+            <div class="row">
                 <div class="form-group col-md-3">
                     <label>@Utility.Resource.Title_Designer.ToDate</label>
                     <div id="divDate">
@@ -39,7 +40,8 @@
                             <div class="input-group-prepend ">
                                 <span class="input-group-text "><i class="simple-icon-calendar"></i></span>
                             </div>
-                            @Html.TextBox("ToDate", null, new { @class = "form-control datepicker", @value=ViewBag.ToDate })
+                            @Html.TextBox("ToDate", toDate.ToString("dd/MM/yyyy"), new { @class = "form-control datepicker", @autocomplete = "off" })
+                            @*  @Html.TextBox("ToDate", null, new { @class = "form-control datepicker", @value=ViewBag.ToDate }) *@
                         </div>
                     </div>
                 </div>
@@ -57,90 +59,90 @@
             </div>
 
             @*<div class="collapse row" id="collapseExample">
-                    <div class="form-group col-md-3">
-                        <label>@Utility.Resource.Title_Designer.Date</label>
-                        <div id="divDate">
-                            <div class="input-group ">
-                                <div class="input-group-prepend ">
-                                    <span class="input-group-text "><i class="simple-icon-calendar"></i></span>
-                                </div>
-                                @Html.TextBox("Date", null, new { @class = "form-control datepicker" })
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label>@Utility.Resource.Title_Designer.Date</label>
-                        <div id="divDate">
-                            <div class="input-group ">
-                                <div class="input-group-prepend ">
-                                    <span class="input-group-text "><i class="simple-icon-calendar"></i></span>
-                                </div>
-                                @Html.TextBox("Date", null, new { @class = "form-control datepicker" })
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label>@Utility.Resource.Title_Designer.Date</label>
-                        <div id="divDate">
-                            <div class="input-group ">
-                                <div class="input-group-prepend ">
-                                    <span class="input-group-text "><i class="simple-icon-calendar"></i></span>
-                                </div>
-                                @Html.TextBox("Date", null, new { @class = "form-control datepicker" })
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label>@Utility.Resource.Title_Designer.Date</label>
-                        <div id="divDate">
-                            <div class="input-group ">
-                                <div class="input-group-prepend ">
-                                    <span class="input-group-text "><i class="simple-icon-calendar"></i></span>
-                                </div>
-                                @Html.TextBox("Date", null, new { @class = "form-control datepicker" })
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label>@Utility.Resource.Title_Designer.Date</label>
-                        <div id="divDate">
-                            <div class="input-group ">
-                                <div class="input-group-prepend ">
-                                    <span class="input-group-text "><i class="simple-icon-calendar"></i></span>
-                                </div>
-                                @Html.TextBox("Date", null, new { @class = "form-control datepicker" })
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label>@Utility.Resource.Title_Designer.Date</label>
-                        <div id="divDate">
-                            <div class="input-group ">
-                                <div class="input-group-prepend ">
-                                    <span class="input-group-text "><i class="simple-icon-calendar"></i></span>
-                                </div>
-                                @Html.TextBox("Date", null, new { @class = "form-control datepicker" })
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label>@Utility.Resource.Title_Designer.Date</label>
-                        <div id="divDate">
-                            <div class="input-group ">
-                                <div class="input-group-prepend ">
-                                    <span class="input-group-text "><i class="simple-icon-calendar"></i></span>
-                                </div>
-                                @Html.TextBox("Date", null, new { @class = "form-control datepicker" })
-                            </div>
-                        </div>
-                    </div>
-                </div>*@
+            <div class="form-group col-md-3">
+            <label>@Utility.Resource.Title_Designer.Date</label>
+            <div id="divDate">
+            <div class="input-group ">
+            <div class="input-group-prepend ">
+            <span class="input-group-text "><i class="simple-icon-calendar"></i></span>
+            </div>
+            @Html.TextBox("Date", null, new { @class = "form-control datepicker" })
+            </div>
+            </div>
+            </div>
+            <div class="form-group col-md-3">
+            <label>@Utility.Resource.Title_Designer.Date</label>
+            <div id="divDate">
+            <div class="input-group ">
+            <div class="input-group-prepend ">
+            <span class="input-group-text "><i class="simple-icon-calendar"></i></span>
+            </div>
+            @Html.TextBox("Date", null, new { @class = "form-control datepicker" })
+            </div>
+            </div>
+            </div>
+            <div class="form-group col-md-3">
+            <label>@Utility.Resource.Title_Designer.Date</label>
+            <div id="divDate">
+            <div class="input-group ">
+            <div class="input-group-prepend ">
+            <span class="input-group-text "><i class="simple-icon-calendar"></i></span>
+            </div>
+            @Html.TextBox("Date", null, new { @class = "form-control datepicker" })
+            </div>
+            </div>
+            </div>
+            <div class="form-group col-md-3">
+            <label>@Utility.Resource.Title_Designer.Date</label>
+            <div id="divDate">
+            <div class="input-group ">
+            <div class="input-group-prepend ">
+            <span class="input-group-text "><i class="simple-icon-calendar"></i></span>
+            </div>
+            @Html.TextBox("Date", null, new { @class = "form-control datepicker" })
+            </div>
+            </div>
+            </div>
+            <div class="form-group col-md-3">
+            <label>@Utility.Resource.Title_Designer.Date</label>
+            <div id="divDate">
+            <div class="input-group ">
+            <div class="input-group-prepend ">
+            <span class="input-group-text "><i class="simple-icon-calendar"></i></span>
+            </div>
+            @Html.TextBox("Date", null, new { @class = "form-control datepicker" })
+            </div>
+            </div>
+            </div>
+            <div class="form-group col-md-3">
+            <label>@Utility.Resource.Title_Designer.Date</label>
+            <div id="divDate">
+            <div class="input-group ">
+            <div class="input-group-prepend ">
+            <span class="input-group-text "><i class="simple-icon-calendar"></i></span>
+            </div>
+            @Html.TextBox("Date", null, new { @class = "form-control datepicker" })
+            </div>
+            </div>
+            </div>
+            <div class="form-group col-md-3">
+            <label>@Utility.Resource.Title_Designer.Date</label>
+            <div id="divDate">
+            <div class="input-group ">
+            <div class="input-group-prepend ">
+            <span class="input-group-text "><i class="simple-icon-calendar"></i></span>
+            </div>
+            @Html.TextBox("Date", null, new { @class = "form-control datepicker" })
+            </div>
+            </div>
+            </div>
+            </div>*@
         </div>
         <div class="card-footer">
             @*<a data-toggle="collapse" href="#collapseExample"
-           role="button" aria-expanded="true" aria-controls="collapseExample">
+            role="button" aria-expanded="true" aria-controls="collapseExample">
             <small> <i class="glyph-icon iconsminds-arrow-down"> </i>  Advanced search</small>
-        </a>*@
+            </a>*@
             <button class="btn btn-primary @pull_dir" onclick="search(1)">
                 <i class="glyph-icon iconsminds-magnifi-glass">  </i> @Utility.Resource.Title_Designer.Search
             </button>
@@ -153,3 +155,22 @@
         </div>
     </div>
 </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/themes/smoothness/jquery-ui.css">
+<script>
+    $(document).ready(function () {
+
+        $('.datepicker').datepicker({
+            autoclose: true,
+            dateFormat: 'mm/dd/yy',
+        }).on("change", function () {
+            $(this).datepicker('hide');
+        });
+
+        $('.datepicker').on('changeDate', function () {
+            $(this).datepicker('hide');
+        });
+    });
+</script>

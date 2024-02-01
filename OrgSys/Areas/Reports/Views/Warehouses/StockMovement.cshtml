@@ -6,6 +6,8 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     var pull_dir = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "fa-pull-left" : "fa-pull-right";
+    DateTime fromDate = ViewBag.FromDate != null ? DateTime.Parse(ViewBag.FromDate.ToString()) : new DateTime(DateTime.Now.Year, 1, 1);
+    DateTime toDate = ViewBag.ToDate != null ? DateTime.Parse(ViewBag.ToDate.ToString()) : new DateTime(DateTime.Now.Year, 12, 31);
 }
 
 <div class="container-fluid disable-text-selection">
@@ -28,7 +30,7 @@
                 </li>
             </ol>
         </nav>
-    </div>    
+    </div>
     <div class="card mb-4">
         <div class="card-body">
             <h5 class="mb-4">@Utility.Resource.Title_Designer.KeySearch</h5>
@@ -36,11 +38,12 @@
                 <div class="form-group col-md-3">
                     <label>@Utility.Resource.Title_Designer.FromDate</label>
                     <div id="divDate">
-                        <div class="input-group " >
+                        <div class="input-group ">
                             <div class="input-group-prepend ">
                                 <span class="input-group-text "><i class="simple-icon-calendar"></i></span>
                             </div>
-                            @Html.TextBox("FromDate", null, new { @class = "form-control datepicker" , @value= ViewBag.FromDate  , @autocomplete="off" })
+                            @Html.TextBox("FromDate", fromDate.ToString("MM/dd/yyyy"), new { @class = "form-control datepicker", @autocomplete = "off" })
+                            @*         @Html.TextBox("FromDate", null, new { @class = "form-control datepicker" , @value= ViewBag.FromDate  , @autocomplete="off" }) *@
                         </div>
                     </div>
                 </div>
@@ -51,7 +54,8 @@
                             <div class="input-group-prepend ">
                                 <span class="input-group-text "><i class="simple-icon-calendar"></i></span>
                             </div>
-                            @Html.TextBox("ToDate", null, new { @class = "form-control datepicker", @value= ViewBag.ToDate, @autocomplete="off" })
+                            @Html.TextBox("ToDate", toDate.ToString("dd/MM/yyyy"), new { @class = "form-control datepicker", @autocomplete = "off" })
+                            @*    @Html.TextBox("ToDate", null, new { @class = "form-control datepicker", @value= ViewBag.ToDate, @autocomplete="off" }) *@
                         </div>
                     </div>
                 </div>
@@ -62,13 +66,13 @@
                             <div class="input-group-prepend ">
                                 <span class="input-group-text "><i class="simple-icon-share"></i></span>
                             </div>
-                            @Html.DropDownList("StockId", (SelectList)@ViewBag.StockList,Utility.Resource.Title_Designer.All, new { @class = "form-control select2-single" })
+                            @Html.DropDownList("StockId", (SelectList)@ViewBag.StockList, Utility.Resource.Title_Designer.All, new { @class = "form-control select2-single" })
                         </div>
                     </div>
                 </div>
-            </div>           
+            </div>
         </div>
-        <div class="card-footer">           
+        <div class="card-footer">
             <button class="btn btn-primary @pull_dir" onclick="search(1)">
                 <i class="glyph-icon iconsminds-magnifi-glass">  </i> @Utility.Resource.Title_Designer.Search
             </button>
@@ -81,3 +85,23 @@
         </div>
     </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+
+<script>
+    $(document).ready(function () {
+        // Initialize the datepicker with additional settings
+        $('.datepicker').datepicker({
+            autoclose: true, // Ensure this is set if you're using a version that supports it
+            dateFormat: 'mm/dd/yy', // Adjust the date format as needed
+        }).on("change", function () {
+            $(this).datepicker('hide'); // Explicitly hide the datepicker after selection
+        });
+
+        // If autoclose is not working as expected, ensure this block is included
+        $('.datepicker').on('changeDate', function () {
+            $(this).datepicker('hide');
+        });
+    });
+</script>

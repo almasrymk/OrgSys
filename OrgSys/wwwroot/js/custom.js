@@ -140,6 +140,56 @@ function change(event, _page) {
     }
 }
 
+function exportToExcel(_page) {
+    var searchParams = "";
+
+    if ($("#FromDate").length) {
+        searchParams += "&FromDate=" + $("#FromDate").val();
+    }
+    if ($("#ToDate").length) {
+        searchParams += "&ToDate=" + $("#ToDate").val();
+    }
+    if ($("#DealerId").length) {
+        searchParams += "&DealerId=" + $("#DealerId").val();
+    }
+    if ($("#ClassificationId").length) {
+        searchParams += "&ClassificationId=" + $("#ClassificationId").val();
+    }
+    if ($("#ProductId").length) {
+        searchParams += "&ProductId=" + $("#ProductId").val();
+    }
+    if ($("#StockId").length) {
+        searchParams += "&StockId=" + $("#StockId").val();
+    }
+    if ($("#SafeId").length) {
+        searchParams += "&SafeId=" + $("#SafeId").val();
+    }
+
+    // Assuming pageSize is fixed for the export, so it's directly included in the URL
+    var pageSize = 200;
+
+    // Construct the URL for the export action
+   // var exportUrl = `/Reports/Sales/ExportToExcel?pageSize=${pageSize}${searchParams}`;
+
+    // Redirect to the constructed URL to trigger the export
+   // window.location.href = exportUrl;
+
+    setTimeout(() => {
+        $.ajax({
+            url: url + "?search=" + $('#txtSearch').val() + Search2 + "&page=" + page + "&ParentId=" + $("#ParentId").val() + "&TypeId=" + $("#TypeId").val(),
+            success: function (result) {
+                $('#List').empty();
+                $('#List').html(result);
+                $(".group-add").hide();
+                $(".btn-add").show();
+                LiskChk();
+                DefulatMode();
+            }
+        });
+    }, 300);
+}
+
+
 function search(_page) {
     page = _page; 
     var Search2 = "";
