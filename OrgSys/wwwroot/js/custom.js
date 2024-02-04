@@ -176,7 +176,7 @@ function exportToExcel(_page) {
 
     setTimeout(() => {
         $.ajax({
-            url: url + "?search=" + $('#txtSearch').val() + Search2 + "&page=" + page + "&ParentId=" + $("#ParentId").val() + "&TypeId=" + $("#TypeId").val(),
+            url: url + "Excel" + "?search=" + $('#txtSearch').val() + Search2 + "&page=" + page + "&ParentId=" + $("#ParentId").val() + "&TypeId=" + $("#TypeId").val(),
             success: function (result) {
                 $('#List').empty();
                 $('#List').html(result);
@@ -190,6 +190,29 @@ function exportToExcel(_page) {
 }
 
 
+function excelSearch(_page, dir) {
+    page = _page;
+    var searchParams = "";
+    if ($("#FromDate").length) {
+        searchParams += "&FromDate=" + $("#FromDate").val();
+    }
+    if ($("#ToDate").length) {
+        searchParams += "&ToDate=" + $("#ToDate").val();
+    }
+    if ($("#DealerId").length) {
+        searchParams += "&DealerId=" + $("#DealerId").val();
+    }
+    // Add more parameters as needed...
+
+    // Construct the URL for the Excel download
+    var downloadUrl = url + dir + "?search=" + $('#txtSearch').val() + searchParams + "&page=" + page + "&ParentId=" + $("#ParentId").val() + "&TypeId=" + $("#TypeId").val();
+
+    // Directly navigate to the URL
+    // This assumes 'url' and 'dir' are defined elsewhere in your script and form a valid path to your Excel download action
+    window.location.href = downloadUrl;
+}
+
+ 
 function search(_page) {
     page = _page; 
     var Search2 = "";

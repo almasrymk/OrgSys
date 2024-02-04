@@ -30,16 +30,16 @@
                 <button class="btn btn-primary" id="exportToExcel">Export to Excel</button>
             </div> *@
 
-          @*   <button class="btn btn-primary @pull_dir" onclick="search(1)">
-                <i class="glyph-icon iconsminds-magnifi-glass">  </i> @Utility.Resource.Title_Designer.Search
+         @*    <button class="btn btn-primary @pull_dir" onclick="excelSearch(1 , 'Excel')">
+                <i class="glyph-icon iconsminds-magnifi-glass">  </i> @Utility.Resource.Title_Designer.Search zz
             </button> *@
             <a href="" id="printData" class="btn rounded-circle badge-theme-1 fa fa-print" style="height:30px;width:30px;font-size:10px;text-align:center;padding:5px;cursor:pointer;">
             </a>
 
-            <a href="" id="convertToPDF" class="btn rounded-circle badge-theme-1 fa fa-file-pdf" style="height: 30px; width: 30px; font-size: 10px; text-align: center; padding: 5px; cursor: pointer;">
+            <a href="" onclick="excelSearch(1 , 'Pdf')" class="btn rounded-circle badge-theme-1 fa fa-file-pdf" style="height: 30px; width: 30px; font-size: 10px; text-align: center; padding: 5px; cursor: pointer;">
             </a>
 
-            <a href="" id="exportToExcel" class="btn rounded-circle badge-theme-1 fa fa-file-excel" style="height: 30px; width: 30px; font-size: 10px; text-align: center; padding: 5px; cursor: pointer;">
+            <a href="" onclick="excelSearch(1 , 'Excel')" class="btn rounded-circle badge-theme-1 fa fa-file-excel" style="height: 30px; width: 30px; font-size: 10px; text-align: center; padding: 5px; cursor: pointer;">
             </a>
 
             @*    <a href="#" class="btn rounded-circle badge-theme-1 fa fa-file-word" style="height: 30px; width: 30px; font-size: 10px; text-align: center; padding: 5px; cursor: pointer;">
