@@ -300,7 +300,6 @@ namespace Repository
             modelBuilder.Entity<ClientPlan>().HasData(new ClientPlan { Id = 1, ClientId = 1 , PlanId = 1 , StartDate = new System.DateTime(2021 , 1, 1) , EndDate = new System.DateTime(2022, 1, 1) , Code = "1" , CodeNumber = 1 });
 
             modelBuilder.Entity<LoginUser>().HasData(new LoginUser { Id = 1, UserName = "Owner" , Password = Security.Encrypt("P@ssw0rd") , ClientId = 1 , Code = "1" , CodeNumber = 1 });
-
             modelBuilder.Entity<LoginUser>().HasData(new LoginUser { Id = 2, UserName = "Admin", Password = Security.Encrypt("P@ssw0rd") , ClientId = 1, Code = "1", CodeNumber = 1 });
         }
 

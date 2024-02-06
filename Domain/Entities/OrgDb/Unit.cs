@@ -7,6 +7,6 @@ namespace Domain.Entities
     public class Unit : BaseModel
     {
         [StringLength(50, MinimumLength = 2)]
-        public virtual string Name { get; set; }
+        public virtual string? Name { get; set; }
     }
 }

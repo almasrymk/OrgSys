@@ -1,4 +1,5 @@
 ﻿global using System;
+global using Entity;
 global using System.Linq;
 global using System.Text;
 global using Domain.Enums;

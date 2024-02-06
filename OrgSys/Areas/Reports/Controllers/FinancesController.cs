@@ -51,30 +51,27 @@ namespace OrgSys.Areas.Reports.Controllers
             return Request.Headers["X-Requested-With"] == "XMLHttpRequest" ? (ActionResult)PartialView("SafeMovementList", obList) : View(obList);
         }
 
+        public IActionResult SafeBalance(string ToDate = null,
+           long SafeId = 0, long ShiftId = 0, long BranchId = 0, long UserId = 0,
+           int page = 1, int pageSize = 100)
+        {
+            ViewBag.SafeList = new SelectList(new SafeService(User.GetSchema()).GetAll(0, 0), "Id", "Name");
+            ViewBag.pageNumber = page;
+            ViewBag.ParentId = 0;
+            ViewBag.TypeId = 1;
+            ViewBag.SafeId = SafeId;
 
+            DateTime fDate = new DateTime(DateTime.Now.Year, 1, 1);
+            DateTime tDate = DateTime.Now;
 
+            if (ToDate != null)
+                tDate = DateTime.Parse(ToDate);
 
-        //public IActionResult SafeBalance(string ToDate = null,
-        //   long SafeId = 0, long ShiftId = 0, long BranchId = 0, long UserId = 0,
-        //   int page = 1, int pageSize = 100)
-        //{
-        //    ViewBag.SafeList = new SelectList(new SafeService(User.GetSchema()).GetAll(0, 0), "Id", "Name");
-        //    ViewBag.pageNumber = page;
-        //    ViewBag.ParentId = 0;
-        //    ViewBag.TypeId = 1;
-        //    ViewBag.SafeId = SafeId;
+            ViewBag.ToDate = tDate;
 
-        //    DateTime fDate = new DateTime(DateTime.Now.Year, 1, 1);
-        //    DateTime tDate = DateTime.Now;
-
-        //    if (ToDate != null)
-        //        tDate = DateTime.Parse(ToDate);
-
-        //    ViewBag.ToDate = tDate;
-
-        //    var obList = new WarehousesReportService(User.GetSchema()).GetSafeBalance(1, tDate, SafeId, ShiftId, BranchId, UserId, page, pageSize);
-        //    return Request.Headers["X-Requested-With"] == "XMLHttpRequest" ? (ActionResult)PartialView("SafeBalanceList", obList) : View(obList);
-        //}
+            //var obList = new FinancesReportService(User.GetSchema()).GetSafeBalance(1, tDate, SafeId, ShiftId, BranchId, UserId, page, pageSize);
+            return Request.Headers["X-Requested-With"] == "XMLHttpRequest" ? (ActionResult)PartialView("SafeBalanceList", null) : View(null);
+        }
 
         //public IActionResult SafeBalance()
         //{

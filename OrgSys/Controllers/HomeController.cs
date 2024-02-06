@@ -362,7 +362,7 @@ namespace OrgSys.Controllers
             if ("" + MsgError != "")
                 ViewBag.message = MsgError;
             ViewBag.status = Status.ToString();
-
+            var _id = User.GetUserId();
             var IdUser = new UserService(User.GetSchema()).Get(id);
             return View("Profile", IdUser);
         }
@@ -378,14 +378,20 @@ namespace OrgSys.Controllers
                 if (_profile.NewPassword != null)
                     _profile.Password = _profile.NewPassword;
                 else
-
+                {
+                    if (User != null && User.Identity != null && User.Identity.IsAuthenticated)
+                    {
+                        new InitialData(User.GetSchema()).Run().Wait();
+                        if (_userService == null)
+                            _userService = new UserService(User.GetSchema());
+                    }
                     _userService.Save(_profile);
-
-                return Json(data: new { status = "success", id = _profile.Id, url = "/Home/Profile?id=" + _profile.Id + "&status=" + ResultStatus.success + "&MsgError=Success" });
+                }
+                return RedirectToAction("Profile", new { id = _profile.Id , Status = ResultStatus.success });
             }
             catch (Exception ex)
             {
-                return Json(ex.Message);
+                return View(_profile);
             }
         }
 

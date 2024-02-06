@@ -366,10 +366,10 @@
                         <span class="name" style="font-size:15px;">@User.GetName()</span>
                     </button>
                     <div class="dropdown-menu dropdown-menu-right mt-3">
-                        <div class="dropdown-item">@Html.ActionLink(Utility.Resource.Title_Designer.Account, "Profile", "Home", new { id = User.GetUserId() }) </div>
-                        <div class="dropdown-item"><a href="~/Home/PaymentMethod">Payment Method</a> </div>
+                        <div class="dropdown-item">@Html.ActionLink(Utility.Resource.Title_Designer.Profile, "Profile", "Home", new { id = User.GetUserId() }) </div>
+                        @*<div class="dropdown-item"><a href="~/Home/PaymentMethod">Payment Method</a> </div>
                         <div class="dropdown-item"><a href="~/Home/Print">Print</a> </div>
-                        @*<a class="dropdown-item" href="#">@Utility.Resource.Title_Designer.Features</a>
+*@                        @*<a class="dropdown-item" href="#">@Utility.Resource.Title_Designer.Features</a>
                             <a class="dropdown-item" href="#">@Utility.Resource.Title_Designer.History</a>
                             <a class="dropdown-item" href="#">@Utility.Resource.Title_Designer.Support</a>*@
                         <a class="dropdown-item" href="/Home/LogOut">@Utility.Resource.Title_Designer.SignOut</a>
