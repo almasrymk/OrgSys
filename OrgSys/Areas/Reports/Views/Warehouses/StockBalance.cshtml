@@ -5,6 +5,7 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     var pull_dir = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "fa-pull-left" : "fa-pull-right";
+    DateTime toDate = ViewBag.ToDate != null ? DateTime.Parse(ViewBag.ToDate.ToString()) : new DateTime(DateTime.Now.Year, 12, 31);
 }
 
 <div class="container-fluid disable-text-selection">
@@ -39,7 +40,8 @@
                             <div class="input-group-prepend ">
                                 <span class="input-group-text "><i class="simple-icon-calendar"></i></span>
                             </div>
-                            @Html.TextBox("ToDate", null, new { @class = "form-control datepicker"  , @value=ViewBag.ToDate })
+                            @*   @Html.TextBox("ToDate", null, new { @class = "form-control datepicker"  , @value=ViewBag.ToDate }) *@
+                            @Html.TextBox("ToDate", toDate.ToString("dd/MM/yyyy"), new { @class = "form-control datepicker", @autocomplete = "off" })
                         </div>
                     </div>
                 </div>
@@ -175,3 +177,22 @@
         </div>
     </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+
+<script>
+    $(document).ready(function () {
+        // Initialize the datepicker with additional settings
+        $('.datepicker').datepicker({
+            autoclose: true, // Ensure this is set if you're using a version that supports it
+            dateFormat: 'mm/dd/yy', // Adjust the date format as needed
+        }).on("change", function () {
+            $(this).datepicker('hide'); // Explicitly hide the datepicker after selection
+        });
+
+        // If autoclose is not working as expected, ensure this block is included
+        $('.datepicker').on('changeDate', function () {
+            $(this).datepicker('hide');
+        });
+    });
+</script>

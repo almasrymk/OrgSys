@@ -31,8 +31,8 @@
             <a href="#" class="btn rounded-circle badge-theme-1 fa fa-file-excel" style="height: 30px; width: 30px; font-size: 10px; text-align: center; padding: 5px; cursor: pointer;">
             </a>
 
-            <a href="#" class="btn rounded-circle badge-theme-1 fa fa-file-word" style="height: 30px; width: 30px; font-size: 10px; text-align: center; padding: 5px; cursor: pointer;">
-            </a>
+            @*       <a href="#" class="btn rounded-circle badge-theme-1 fa fa-file-word" style="height: 30px; width: 30px; font-size: 10px; text-align: center; padding: 5px; cursor: pointer;">
+        </a> *@
         </div>
     </div>
 
@@ -84,13 +84,13 @@
                                 </a>
                             </td>
                             <td class="text-center align-middle">
-                                    @Model.Result[i].ProductCode
+                                @Model.Result[i].ProductCode
                             </td>
                             <td class="text-center align-middle">
                                 @Model.Result[i].TransactionCode
                             </td>
                             <td class="align-middle" style="@TextAlign">
-                                    <i class="simple-icon-calendar"></i> &nbsp;  @Model.Result[i].Date.ToString(DateFromate)
+                                <i class="simple-icon-calendar"></i> &nbsp;  @Model.Result[i].Date.ToString(DateFromate)
                             </td>
                             <td class="@TextAlign align-middle">
                                 <a href="/Transactions/Transaction/Save?id=@Model.Result[i].ReferenceId&TypeId=1">
@@ -122,15 +122,15 @@
                                     {
                                         <i class="iconsminds-check"></i>
                                     }
-                                    
+
 
 
                                     @Model.Result[i].TypeName
                                 </a>
-                               
+
                             </td>
                             <td class="text-center align-middle">
-                                    @Model.Result[i].Quantity
+                                @Model.Result[i].Quantity
                             </td>
                             <td class="text-center align-middle">
                                 <a href="/Transactions/Transaction/Save?id=@Model.Result[i].ReferenceId&TypeId=1">
@@ -156,7 +156,7 @@
                             <i class="simple-icon-people"></i>
                         </div>
                     }
-                    
+
                 </a>
                 <div class=" d-flex flex-grow-1 min-width-zero">
                     <div class="card-body pl-0 align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero">
@@ -170,13 +170,13 @@
                     </div>
                 </div>
             </div>
-          @*  <div class="card card-body row mb-1">
-                <div class="row">
-                    <h4> @Utility.Resource.Title_Designer.Client :  @Model.Data.DealerName </h4>
-                 / 
-                    <h4> @Utility.Resource.Title_Designer.Client :  @Model.Data.DealerName </h4>
-                </div>
-            </div>*@
+            @*  <div class="card card-body row mb-1">
+    <div class="row">
+    <h4> @Utility.Resource.Title_Designer.Client :  @Model.Data.DealerName </h4>
+    /
+    <h4> @Utility.Resource.Title_Designer.Client :  @Model.Data.DealerName </h4>
+    </div>
+    </div>*@
             <table class="table table-hover table-striped responsive alert-success nowrap m-0 " style="background-color:transparent;" data-order="[[ 1, &quot;desc&quot; ]]">
                 <thead>
                     <tr>
@@ -205,12 +205,12 @@
                             <td class="align-middle" style="@TextAlign;width:70px;">
                                 <a href="/Transactions/Transaction/Save?id=@Model.Result[i].ReferenceId&TypeId=1">
                                     @Model.Result[i].TransactionCode
-                                </a>                               
+                                </a>
                             </td>
                             <td class="align-middle" style="@TextAlign">
                                 <a href="/Transactions/Transaction/Save?id=@Model.Result[i].ReferenceId&TypeId=1">
                                     <i class="simple-icon-calendar"></i> &nbsp; @Model.Result[i].Date.ToString(DateFromate)
-                                </a>                               
+                                </a>
                             </td>
                             <td class="align-middle" style="@TextAlign">
                                 <a href="/Transactions/Transaction/Save?id=@Model.Result[i].ReferenceId&TypeId=1">
@@ -245,19 +245,19 @@
 
                                     @Model.Result[i].TypeName
                                 </a>
-                               
+
                             </td>
                             <td class="text-center align-middle">
                                 <a href="/Transactions/Transaction/Save?id=@Model.Result[i].ReferenceId&TypeId=1">
                                     @Model.Result[i].Quantity
-                                </a>                               
+                                </a>
                             </td>
                             <td class="text-center align-middle">
                                 <a href="/Transactions/Transaction/Save?id=@Model.Result[i].ReferenceId&TypeId=1">
                                     @Model.Result[i].StockName
                                 </a>
                             </td>
-                            
+
                         </tr>
                     }
                 </tbody>
