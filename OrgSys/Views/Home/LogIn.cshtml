@@ -5,7 +5,7 @@
     var dirCss = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "rtl" : "ltr";
 }
 <!DOCTYPE html>
-<html lang="@System.Threading.Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName">
+<html style="background-color:transparent !important;" lang="@System.Threading.Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -95,7 +95,7 @@
         }
     </style>
 </head>
-<body style="background-color:#7190ca !important;" dir="@dirCss" >
+<body style="background-color:#f8f8f8 !important;" dir="@dirCss">
     <div class="wrapper fadeInDown">
         <div id="formLogin">
             <br />
@@ -108,7 +108,7 @@
                 <input type="hidden" name="KeepLoggedIn" id="KeepLoggedIn" />
 
                 <div id="dvEmail" style="padding-left: 40px; padding-right: 40px;">
-                    <input type="text" name="UserName" id="MyEmail" placeholder="@Utility.Resource.Title_Designer.Email" autocomplete="off">
+                    <input type="text" name="UserName" id="MyEmail" style="background-color:#f8f8f8 !important;" placeholder="@Utility.Resource.Title_Designer.Email" autocomplete="off">
                     <div id="EmailRequired" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
                         <span>@Utility.Resource.Message_Designer.EmailRequired</span>
                     </div>
@@ -123,8 +123,8 @@
                 </div>
 
                 <div id="dvPassword" style="display: none; padding-left: 40px; padding-right: 40px;">
-                    <input type="text" name="UserName" id="TheEmail" placeholder="@Utility.Resource.Title_Designer.Email" readonly="readonly">
-                    <input type="Password" name="Password" id="Password" placeholder="@Utility.Resource.Title_Designer.Password" class="fadeIn" autocomplete="off">
+                    <input type="text" name="UserName" id="TheEmail" style="background-color:#f8f8f8 !important;" placeholder="@Utility.Resource.Title_Designer.Email" readonly="readonly">
+                    <input type="Password" name="Password" id="Password" style="background-color:#f8f8f8 !important;" placeholder="@Utility.Resource.Title_Designer.Password" class="fadeIn" autocomplete="off">
                     <div id="PasswordRequired" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
                         <span>@Utility.Resource.Message_Designer.PasswordRequired</span>
                     </div>
@@ -152,9 +152,9 @@
 
                 <div id="dvNewPassword" style="display: none; padding-left: 40px; padding-right: 40px; ">
                     <br />
-                    <input type="text" name="TheEmail" id="TheEmail2" placeholder="@Utility.Resource.Title_Designer.Email" readonly="readonly">
+                    <input type="text" name="TheEmail" id="TheEmail2" style="background-color:#f8f8f8 !important;" placeholder="@Utility.Resource.Title_Designer.Email" readonly="readonly">
 
-                    <input type="Password" name="NewPassword" id="NewPassword" placeholder="@Utility.Resource.Title_Designer.NewPassword" />
+                    <input type="Password" name="NewPassword" id="NewPassword" style="background-color:#f8f8f8 !important;" placeholder="@Utility.Resource.Title_Designer.NewPassword" />
                     <div id="NewPasswordRequired" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
                         <span>@Utility.Resource.Message_Designer.PasswordRequired</span>
                     </div>
@@ -199,7 +199,7 @@
     <script src="~/js/vendor/jquery-3.3.1.min.js"></script>
     <script src="~/js/vendor/bootstrap.bundle.min.js"></script>
     <script src="~/js/dore.script.js"></script>
-
+    <script src="~/js/scripts.js"></script>
 
     <script>
         $("#MyEmail").on("keyup", function () { $("#EmailRequired").hide(); $("#EmailError").hide(); });
