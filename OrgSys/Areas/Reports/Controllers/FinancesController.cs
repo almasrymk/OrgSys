@@ -72,7 +72,7 @@ namespace OrgSys.Areas.Reports.Controllers
             var data = new ReportResult<SafeStatmentData, SafeStatment>
             {
                 PrintMode = false,
-              
+
                 Result = new FinancesReportService(User.GetSchema()).GetSafeStatment(fDate, tDate, DealerId, SafeId, ShiftId, BranchId, UserId, page, pageSize)
             };
 
@@ -105,7 +105,7 @@ namespace OrgSys.Areas.Reports.Controllers
                     SpacingAfter = 20
                 };
                 document.Add(titleParagraph);
-                PdfPTable table = new PdfPTable(new float[] { 1, 2, 2, 2, 1,2,2,2 })
+                PdfPTable table = new PdfPTable(new float[] { 1, 2, 2, 2, 1, 2, 2, 2 })
                 {
                     //   RunDirection = PdfWriter.RUN_DIRECTION_RTL,
                 };
@@ -122,18 +122,132 @@ namespace OrgSys.Areas.Reports.Controllers
 
 
 
-            ViewBag.ToDate = tDate;
+                int counter = 1;
 
-            //var obList = new FinancesReportService(User.GetSchema()).GetSafeBalance(1, tDate, SafeId, ShiftId, BranchId, UserId, page, pageSize);
-            return Request.Headers["X-Requested-With"] == "XMLHttpRequest" ? (ActionResult)PartialView("SafeBalanceList", null) : View(null);
+                foreach (var item in data.Result)
+                {
+                    table.AddCell(new PdfPCell(new Phrase(counter.ToString(), bodyFont)));
+                    table.AddCell(new PdfPCell(new Phrase(item.SafeName, bodyFont))
+                    {
+                        HorizontalAlignment = Element.ALIGN_RIGHT,
+                        RunDirection = PdfWriter.RUN_DIRECTION_RTL
+                    });
+                    
+                    table.AddCell(new PdfPCell(new Phrase(item.TypeName, bodyFont))
+                    {
+                        HorizontalAlignment = Element.ALIGN_RIGHT,
+                        RunDirection = PdfWriter.RUN_DIRECTION_RTL
+                    });
+
+                    table.AddCell(new PdfPCell(new Phrase(item.Date.ToString("dd/MM/yyyy"), bodyFont)));
+                    table.AddCell(new PdfPCell(new Phrase(item.Code.ToString(), bodyFont)));
+
+                    table.AddCell(new PdfPCell(new Phrase(item.DealerName, bodyFont))
+                    {
+                        HorizontalAlignment = Element.ALIGN_RIGHT,
+                        RunDirection = PdfWriter.RUN_DIRECTION_RTL
+                    });
+
+               
+                  
+                    table.AddCell(new PdfPCell(new Phrase(item.Amount.ToString(), bodyFont)));
+                    table.AddCell(new PdfPCell(new Phrase(item.CurrencyName.ToString(), bodyFont)));
+
+                    counter++;
+                }
+
+                document.Add(table);
+                document.Close();
+                var bytes = ms.ToArray();
+                return File(bytes, "application/pdf", "SuppliersStatment.pdf");
+            }
         }
 
-        //public IActionResult SafeBalance()
-        //{
-        //    return View();
-        //}
 
-        public IActionResult TotalsPerPeriod()
+
+        public IActionResult SafeMovementExcel(string FromDate = null, string ToDate = null,
+            long DealerId = 0, long SafeId = 0, long ShiftId = 0, long BranchId = 0, long UserId = 0,
+            int page = 1, int pageSize = 900)
+        {
+            ViewBag.pageNumber = 1;
+            ViewBag.ParentId = 0;
+            ViewBag.TypeId = 1;
+            DateTime fDate = new DateTime(DateTime.Now.Year, 1, 1);
+            DateTime tDate = new DateTime(DateTime.Now.Year, 12, 31);
+            if (FromDate != null)
+                fDate = DateTime.Parse(FromDate);
+            if (ToDate != null)
+                tDate = DateTime.Parse(ToDate);
+
+            var data = new ReportResult<SafeStatmentData, SafeStatment>
+            {
+                PrintMode = false,
+
+                Result = new FinancesReportService(User.GetSchema()).GetSafeStatment(fDate, tDate, DealerId, SafeId, ShiftId, BranchId, UserId, page, pageSize)
+            };
+
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            var package = new ExcelPackage();
+            var worksheet = package.Workbook.Worksheets.Add("Supplier Balance");
+
+            string[] headers = { "#", "SafeName", "FinancialType" , "Date" , "MotionCode", "Dealer", "Amount", "Amount", "Currency" };
+
+
+            for (int i = 0; i < headers.Length; i++)
+            {
+                worksheet.Cells[1, i + 1].Value = headers[i];
+            }
+
+            int row = 2;
+            int num = 1;
+            foreach (var item in data.Result)
+            {
+                worksheet.Cells[row, 1].Value = num;
+                worksheet.Cells[row, 2].Value = item.SafeName;
+                worksheet.Cells[row, 3].Value = item.TypeName;
+                worksheet.Cells[row, 4].Value = item.Date;
+                worksheet.Cells[row, 5].Value = item.Code;
+                worksheet.Cells[row, 6].Value = item.DealerName;
+                worksheet.Cells[row, 7].Value = item.Amount;
+                worksheet.Cells[row, 8].Value = item.Amount;
+                row++;
+                num++;
+            }
+
+            worksheet.Cells[worksheet.Dimension.Address].AutoFitColumns();
+            var stream = new MemoryStream();
+            package.SaveAs(stream);
+            stream.Position = 0;
+            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "SuppliersBalance.xlsx");
+        }
+        public IActionResult SafeBalance(string ToDate = null,
+           long SafeId = 0, long ShiftId = 0, long BranchId = 0, long UserId = 0,
+           int page = 1, int pageSize = 100)
+            {
+                ViewBag.SafeList = new SelectList(new SafeService(User.GetSchema()).GetAll(0, 0), "Id", "Name");
+                ViewBag.pageNumber = page;
+                ViewBag.ParentId = 0;
+                ViewBag.TypeId = 1;
+                ViewBag.SafeId = SafeId;
+
+                DateTime fDate = new DateTime(DateTime.Now.Year, 1, 1);
+                DateTime tDate = DateTime.Now;
+
+                if (ToDate != null)
+                    tDate = DateTime.Parse(ToDate);
+
+                ViewBag.ToDate = tDate;
+
+                //var obList = new FinancesReportService(User.GetSchema()).GetSafeBalance(1, tDate, SafeId, ShiftId, BranchId, UserId, page, pageSize);
+                return Request.Headers["X-Requested-With"] == "XMLHttpRequest" ? (ActionResult)PartialView("SafeBalanceList", null) : View(null);
+            }
+
+            //public IActionResult SafeBalance()
+            //{
+            //    return View();
+            //}
+
+            public IActionResult TotalsPerPeriod()
         {
             return View();
         }
