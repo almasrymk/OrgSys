@@ -159,7 +159,7 @@ namespace OrgSys.Areas.Reports.Controllers
                 document.Add(table);
                 document.Close();
                 var bytes = ms.ToArray();
-                return File(bytes, "application/pdf", "SuppliersStatment.pdf");
+                return File(bytes, "application/pdf", "SafeMovement.pdf");
             }
         }
 
@@ -188,9 +188,9 @@ namespace OrgSys.Areas.Reports.Controllers
 
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             var package = new ExcelPackage();
-            var worksheet = package.Workbook.Worksheets.Add("Supplier Balance");
+            var worksheet = package.Workbook.Worksheets.Add("Safe Movement");
 
-            string[] headers = { "#", "SafeName", "FinancialType" , "Date" , "MotionCode", "Dealer", "Amount", "Amount", "Currency" };
+            string[] headers = { "#", "SafeName", "FinancialType" , "Date" , "MotionCode", "Dealer", "Amount", "Currency" };
 
 
             for (int i = 0; i < headers.Length; i++)
@@ -218,7 +218,7 @@ namespace OrgSys.Areas.Reports.Controllers
             var stream = new MemoryStream();
             package.SaveAs(stream);
             stream.Position = 0;
-            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "SuppliersBalance.xlsx");
+            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "SafeMovement.xlsx");
         }
         public IActionResult SafeBalance(string ToDate = null,
            long SafeId = 0, long ShiftId = 0, long BranchId = 0, long UserId = 0,
