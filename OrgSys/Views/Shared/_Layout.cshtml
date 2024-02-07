@@ -17,7 +17,7 @@
     <Title>@ViewData["Title"] - @Utility.Resource.Title_Designer.OrgSys</Title>
 
     <link rel="stylesheet" href="~/font/AllFonts.css" />
-     
+
     <link rel="stylesheet" href="~/font/iconsmind-s/css/iconsminds.css" />
     <link rel="stylesheet" href="~/font/simple-line-icons/css/simple-line-icons.css" />
 
@@ -43,8 +43,8 @@
     <link rel="stylesheet" href="~/css/vendor/glide.core.min.css" />
     <link rel="stylesheet" href="~/css/vendor/smart_wizard.min.css" />
     <link rel="stylesheet" href="~/css/jquery.bonsai.css" />
-    <link rel="stylesheet" href="~/fontawesome-free-5.15.3-web/css/all.css" />   
-    
+    <link rel="stylesheet" href="~/fontawesome-free-5.15.3-web/css/all.css" />
+
     <style>
         body {
             font-family: Roboto,-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif !important;
@@ -335,45 +335,37 @@
 
             <div class="navbar-right">
                 <div class="header-icons d-inline-block align-middle">
-                   @* <div class="d-none d-md-inline-block align-text-bottom mr-3">
-                        <div class="custom-switch custom-switch-primary-inverse custom-switch-small pl-1"
-                             data-toggle="tooltip" data-placement="left" Title="Dark Mode">
-                            <input class="custom-switch-input" id="switchDark" type="checkbox" checked>
-                            <label class="custom-switch-btn" for="switchDark"></label>
-                        </div>
-                    </div>*@
-                    <button class="header-icon btn btn-empty d-none d-sm-inline-block" type="button" id="fullScreenButton">
-                        <i class="simple-icon-size-fullscreen"></i>
-                        <i class="simple-icon-size-actual"></i>
-                    </button>
+                    @* <div class="d-none d-md-inline-block align-text-bottom mr-3">
+                <div class="custom-switch custom-switch-primary-inverse custom-switch-small pl-1"
+                data-toggle="tooltip" data-placement="left" Title="Dark Mode">
+                <input class="custom-switch-input" id="switchDark" type="checkbox" checked>
+                <label class="custom-switch-btn" for="switchDark"></label>
                 </div>
-                <div class="user d-inline-block">
-                    <button class="btn btn-empty p-0" type="button" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false">
+                </div>*@
+                    @* <button class="header-icon btn btn-empty d-none d-sm-inline-block" type="button" id="fullScreenButton">
+                <i class="simple-icon-size-fullscreen"></i>
+                <i class="simple-icon-size-actual"></i>
+                </button>*@
+                </div>
 
+                <div class="user header-icons d-inline-block align-middle ml-0 mr-0 pl-0 pr-0">
+                    <a href="/Home/Profile" class="header-icon btn btn-empty d-none d-sm-inline-block" style="vertical-align:middle;" type="button">
                         @if (User.GetImage() == "")
                         {
-                            <span class="rounded-circle badge-theme-1  m-2" style="font-size:x-large;padding-top:5px;padding-bottom:5px;padding-right:3px;padding-left:3px">
-                                <i class="iconsminds-add-user"></i>
-                            </span>
+                            <img class="rounded-circle badge-theme-1  m-2" style="height:35px;width:35px;" src="/img/User.png" />
                         }
                         else
                         {
-                            <span>
-                                <img alt="Profile Picture" src="@User.GetImage()" />
-                            </span>
+                            <img class="rounded-circle badge-theme-1  m-2" style="height:35px;width:35px;" src="@User.GetImage()" />
                         }
                         <span class="name" style="font-size:15px;">@User.GetName()</span>
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-right mt-3">
-                        <div class="dropdown-item">@Html.ActionLink(Utility.Resource.Title_Designer.Account, "Profile", "Home", new { id = User.GetUserId() }) </div>
-                        <div class="dropdown-item"><a href="~/Home/PaymentMethod">Payment Method</a> </div>
-                        <div class="dropdown-item"><a href="~/Home/Print">Print</a> </div>
-                        @*<a class="dropdown-item" href="#">@Utility.Resource.Title_Designer.Features</a>
-                            <a class="dropdown-item" href="#">@Utility.Resource.Title_Designer.History</a>
-                            <a class="dropdown-item" href="#">@Utility.Resource.Title_Designer.Support</a>*@
-                        <a class="dropdown-item" href="/Home/LogOut">@Utility.Resource.Title_Designer.SignOut</a>
-                    </div>
+                    </a>
+                </div>
+                <span>|</span>
+                <div class="header-icons d-inline-block align-middle ">
+                    <a href="/Home/LogOut" class="header-icon btn btn-empty d-none d-sm-inline-block" type="button">
+                        <i class="fa fa-power-off"></i>
+                    </a>
                 </div>
             </div>
         }
@@ -382,10 +374,10 @@
     {
         @Html.Partial("_MainMenu")
     }
-<main>
-    @RenderBody()
-    <div class="MsgBox"></div>
-</main>   
+    <main>
+        @RenderBody()
+        <div class="MsgBox"></div>
+    </main>
     <footer class="page-footer">
         <div class="footer-content">
             <div class="container-fluid">
@@ -414,7 +406,7 @@
 
     @*<script src="~/bundle/js/bundle.min.js"></script>*@
 
-     <script src="~/js/vendor/jquery-3.3.1.min.js"></script>
+    <script src="~/js/vendor/jquery-3.3.1.min.js"></script>
     <script src="~/js/vendor/bootstrap.bundle.min.js"></script>
     <script src="~/js/vendor/Chart.bundle.min.js"></script>
     <script src="~/js/vendor/chartjs-plugin-datalabels.js"></script>
@@ -448,51 +440,51 @@
     <script src="~/js/vendor/cropper.min.js"></script>
     <script src="~/js/vendor/typeahead.bundle.js"></script>
     <script src="~/js/dore-plugins/select.from.library.js"></script>
-   
+
 
 
     <script>
         jQuery(function ($) {
-			//$(".datepicker").datepicker();
-			//$(".datepicker").datepicker("option", "dateFormat", "YY/MM/DD");
+            //$(".datepicker").datepicker();
+            //$(".datepicker").datepicker("option", "dateFormat", "YY/MM/DD");
 
-			//$('input[type=datetime]').datepicker({
-			//    dateFormate: 'dd M yy',
-			//    changeMonth: true,
-			//    changeYear: true,
-			//    yearRange: "-10:+10"
-			//});
+            //$('input[type=datetime]').datepicker({
+            //    dateFormate: 'dd M yy',
+            //    changeMonth: true,
+            //    changeYear: true,
+            //    yearRange: "-10:+10"
+            //});
 
-			//$('.datepicker').datepicker({
-			//    format: "dd/mm/yyyy",
-			//     today: 'Today',
-			//     clear: 'Clear',
-			//});
-            
-			url = '@ViewBag.page';
-			page = '@ViewBag.pageNumber';
-			pageTitle = '@ViewBag.PageTitle'
+            //$('.datepicker').datepicker({
+            //    format: "dd/mm/yyyy",
+            //     today: 'Today',
+            //     clear: 'Clear',
+            //});
 
-			DefulatMode();
+            url = '@ViewBag.page';
+            page = '@ViewBag.pageNumber';
+            pageTitle = '@ViewBag.PageTitle'
 
-			$(".btn-deleteList").on("click", function (event) {
-				event.preventDefault();
-				ShowConfirmMsg(
-					'simple-icon-trash',
-					'@Utility.Resource.Message_Designer.DeleteConfirmation',
-					'@Utility.Resource.Message_Designer.DoYouWantDeleteFile',
-					'@Utility.Resource.Title_Designer.Ok');
-			});
+            DefulatMode();
 
-			if ('@ViewBag.message' != '') {
-				showNotification(
-					'@ViewBag.message',
-					'@ViewBag.status',
-					'@ViewBag.area',
-					'@ViewBag.page');
-			}
+            $(".btn-deleteList").on("click", function (event) {
+                event.preventDefault();
+                ShowConfirmMsg(
+                    'simple-icon-trash',
+                    '@Utility.Resource.Message_Designer.DeleteConfirmation',
+                    '@Utility.Resource.Message_Designer.DoYouWantDeleteFile',
+                    '@Utility.Resource.Title_Designer.Ok');
+            });
 
-		});
+            if ('@ViewBag.message' != '') {
+                showNotification(
+                    '@ViewBag.message',
+                    '@ViewBag.status',
+                    '@ViewBag.area',
+                    '@ViewBag.page');
+            }
+
+        });
 
 
     </script>

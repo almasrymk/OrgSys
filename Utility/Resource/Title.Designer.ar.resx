@@ -942,4 +942,7 @@
   <data name="MotionCode" xml:space="preserve">
     <value>كود الحركة</value>
   </data>
+  <data name="Profile" xml:space="preserve">
+    <value>الملف الشخصي</value>
+  </data>
 </root>

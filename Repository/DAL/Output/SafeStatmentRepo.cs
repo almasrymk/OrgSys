@@ -23,8 +23,14 @@ namespace Repository.DAL.Output
             string SQLStatment = string.Format(File.ReadAllText(Path.GetFullPath(@"SQLFiles/SafeStatmentSql.sql")).Replace("Org", _Schema), string.Format("{0:yyyy/MM/dd}", FromDate), string.Format("{0:yyyy/MM/dd}", ToDate), DealerId, SafeId, ShiftId, BranchId, UserId);
             return db.SafeStatmentReport.FromSqlRaw(SQLStatment);
         }
-        
 
-        
+
+        public IQueryable<SafeBalance> GetSafeBalance(DateTime ToDate,
+         long SafeId, long ShiftId, long BranchId, long UserId
+         )
+        {
+            string SQLStatment = "";//string.Format(File.ReadAllText(Path.GetFullPath(@"SQLFiles/SafeBalanceSql.sql")).Replace("Org", _Schema), string.Format("{0:yyyy/MM/dd}", FromDate), string.Format("{0:yyyy/MM/dd}", ToDate), DealerId, SafeId, ShiftId, BranchId, UserId);
+            return db.SafeBalanceReport.FromSqlRaw(SQLStatment);
+        }
     }
 }

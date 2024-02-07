@@ -9,68 +9,69 @@
     <div class="row">
         <div class="col-12">
             <div class="mb-1">
-                <h1>Profile</h1>
+                <h1>@Utility.Resource.Title_Designer.Profile</h1>
             </div>
             <div class="row">
-                <div class="col-12">                   
-                        @using (Html.BeginForm("Index", "Home", FormMethod.Post))
-                        {
-                            <div class="card  mt-1">
-                                <div class="row">
-                                    <div class="col-sm-12 col-md-12 col-lg-3 pt-2 pb-4">
-                                        <div class="card mb-4 p-3">
-                                            <div class="position-absolute card-top-buttons" style="padding:21px;">
-                                                <button type="button" onclick="document.getElementById('flImage').click();" class="btn btn-outline-white icon-button ">
-                                                    <i class="simple-icon-pencil"></i>
-                                                </button>
-                                                <input id="flImage" type="file" name="file" onchange="SelectImage(this)" style="display:none" accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*" />
-                                                <button type="button" class="btn btn-outline-white icon-button" onclick="document.getElementById('flImage').value ='' ;$('#img').attr('src', '/img/profiles/ClientCard.png')">
-                                                    X
-                                                </button>
-                                            </div>
-                                            @if ("" + Model.ImgPath != "")
-                                            {
-                                                <img id="img" src="@Model.ImgPath" alt="Fruitcake" class="list-thumbnail border-0  badge-theme-1" style="height:200px;">
-                                            }
-                                            else
-                                            {
-                                                <img id="img" src="~/img/profiles/ClientCard.png" alt="Fruitcake" class="list-thumbnail border-0  badge-theme-1" style="height:200px;">
-                                            }
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 col-sm-12 col-lg-9 p-4">
-                                        @Html.HiddenFor(model => model.Id)
-                                        @Html.HiddenFor(Model => Model.RoleId)
-                                        @Html.HiddenFor(model => model.ImgPath)
+                <div class="col-12">
+                    <form action="Profile" method="post" enctype="multipart/form-data" class="tooltip-label-right" novalidate>
 
-                                        <div class="form-row">
-                                            <div class="form-group col-md-7">
-                                                <label>@Utility.Resource.Title_Designer.Name</label>
-                                                <div class="input-group">                                                    
-                                                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Phone })
-                                                </div>
-                                                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger " })
-                                            </div>                                            
+                        <div class="card  mt-1">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12 col-lg-3 pt-2 pb-4">
+                                    <div class="card mb-4 p-3">
+                                        <div class="position-absolute card-top-buttons" style="padding:21px;">
+                                            <button type="button" onclick="document.getElementById('flImage').click();" class="btn btn-outline-white icon-button ">
+                                                <i class="simple-icon-pencil"></i>
+                                            </button>
+                                            <input id="flImage" type="file" name="file" onchange="SelectImage(this)" style="display:none" accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*" />
+                                            <button type="button" class="btn btn-outline-white icon-button" onclick="document.getElementById('ImgPath').value ='';document.getElementById('flImage').value ='' ;$('#img').attr('src', '/img/profiles/ClientCard.png')">
+                                                X
+                                            </button>
                                         </div>
-                                        <div class="form-row">                                           
-                                            <div class="form-group col-md-7">
-                                                <label>@Utility.Resource.Title_Designer.Email</label>
-                                                <div class="input-group">
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text" style="background-color: whitesmoke;"><i class="iconsminds-mail"></i></span>
-                                                    </div>
-                                                    @Html.TextBoxFor(model => model.UserName, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Email })
-                                                </div>
-                                                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger " })
-                                            </div>
-                                        </div>
+                                        @if ("" + Model.ImgPath != "")
+                                        {
+                                            <img id="img" src="@Model.ImgPath" alt="Fruitcake" class="list-thumbnail border-0  badge-theme-1" style="height:200px;">
+                                        }
+                                        else
+                                        {
+                                            <img id="img" src="~/img/profiles/ClientCard.png" alt="Fruitcake" class="list-thumbnail border-0  badge-theme-1" style="height:200px;">
+                                        }
                                     </div>
                                 </div>
-                                <div class="card-footer m-0 " style="background-color:transparent;">
-                                    <button class="btn btn-primary" onclick="Save()" value="">@Utility.Resource.Title_Designer.Save</button>
+                                <div class="col-md-12 col-sm-12 col-lg-9 p-4">
+                                    @Html.HiddenFor(model => model.Id)
+                                    @Html.HiddenFor(Model => Model.RoleId)
+                                    @Html.HiddenFor(Model => Model.LoginUserId)
+                                    @Html.HiddenFor(model => model.ImgPath)
+
+                                    <div class="form-row">
+                                        <div class="form-group col-md-7">
+                                            <label>@Utility.Resource.Title_Designer.Name</label>
+                                            <div class="input-group">
+                                                @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Name })
+                                            </div>
+                                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger " })
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-7">
+                                            <label>@Utility.Resource.Title_Designer.Email</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" style="background-color: whitesmoke;"><i class="iconsminds-mail"></i></span>
+                                                </div>
+                                                @Html.TextBoxFor(model => model.UserName, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Email })
+                                            </div>
+                                            @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger " })
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        }
+                            <div class="card-footer m-0 " style="background-color:transparent;">
+                                <button class="btn btn-primary" onclick="Save()" value="">@Utility.Resource.Title_Designer.Save</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -119,36 +120,34 @@
             var regEx = /^([a-zA-Z0-9_\-\.]+)@@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
             var validEmail = regEx.test(email);
 
-              if (!validEmail) {
-                  $("#EmailError").show();
-                  valid = false;
-              }
-                else {
+            if (!validEmail) {
+                $("#EmailError").show();
+                valid = false;
+            }
+            else {
 
-                    $.ajax({
-                        async: false,
-                        type: 'POST',
-                        url: "/Home/CheckEmail?Email=" + $("#Email").val(),
-                        success: function (res) {
-                            if (res) {
-                                $("#EmailErrorExist").show();
-                                isValid = false;
-                            }
+                $.ajax({
+                    async: false,
+                    type: 'POST',
+                    url: "/Home/CheckEmail?Email=" + $("#Email").val(),
+                    success: function (res) {
+                        if (res) {
+                            $("#EmailErrorExist").show();
+                            isValid = false;
                         }
-                    });
+                    }
+                });
 
-              }
+            }
         }
 
-        if (currentPassword.length > 1)
-        {
+        if (currentPassword.length > 1) {
 
             $.ajax({
                 async: false,
                 type: 'POST',
-                url: "/Home/CheckCurrentPassword?Id="+@Model.Id+"&CurrentPassword=" + $("#CurrentPassword").val(),
-                success: function (res)
-                {
+                url: "/Home/CheckCurrentPassword?Id=" + @Model.Id+"&CurrentPassword=" + $("#CurrentPassword").val(),
+                success: function (res) {
                     debugger
                     if (res == false) {
                         $("#CurrentPasswordError").show();
@@ -172,11 +171,10 @@
                             valid = false;
                         }
                         else {
-                                if (confirmPassword != newPassword)
-                                {
-                                    $("#ConfirmPasswordError").show();
-                                    valid = false;
-                                }
+                            if (confirmPassword != newPassword) {
+                                $("#ConfirmPasswordError").show();
+                                valid = false;
+                            }
                         }
 
                     }
@@ -188,26 +186,26 @@
         }
 
         if (valid)
-         $('#ProfileForm').submit();
+            $('#ProfileForm').submit();
 
 
-            //var data = {
-            //    Id: $('#Id').val(),
-            //    Name: $('#Name').val().trim(),
-            //    UserName: $('#Email').val().trim(),
-            //    Password: $('#CurrentPassword').val().trim(),
-            //    NewPassword: $('#NewPassword').val().trim(),
-            //    ImgPath: $('#ImgPath').val(),
-            //};
+        //var data = {
+        //    Id: $('#Id').val(),
+        //    Name: $('#Name').val().trim(),
+        //    UserName: $('#Email').val().trim(),
+        //    Password: $('#CurrentPassword').val().trim(),
+        //    NewPassword: $('#NewPassword').val().trim(),
+        //    ImgPath: $('#ImgPath').val(),
+        //};
 
-            //$.ajax({
-            //    type: 'POST',
-            //    url: "/Home/Profile",
-            //    data: { _profile: data },
-            //    success: function (res) {
-            //        window.location.replace(res.url);
-            //    }
-            //});
+        //$.ajax({
+        //    type: 'POST',
+        //    url: "/Home/Profile",
+        //    data: { _profile: data },
+        //    success: function (res) {
+        //        window.location.replace(res.url);
+        //    }
+        //});
 
     }
 

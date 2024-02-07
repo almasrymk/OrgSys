@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Net.Http;
 using System.Net.Mail;
 using System.Net.Mime;
 using System.Threading.Tasks;
@@ -146,17 +147,17 @@ namespace OrgSys.Controllers
         {
             return View();
         }
-        
+
         [HttpGet]
         [AllowAnonymous]
         public IActionResult LogIn(string ReturnUrl)
         {
             return View();
         }
-       
+
         [HttpPost]
         [AllowAnonymous]
-        public IActionResult LogIn(LoginUserModelView _user , string ReturnUrl)
+        public IActionResult LogIn(LoginUserModelView _user, string ReturnUrl)
         {
             try
             {
@@ -279,15 +280,15 @@ namespace OrgSys.Controllers
                     var loginUser = new LoginUserModelView();
                     loginUser.ClientId = client.Id;
                     loginUser.UserName = client.Email;
-                    loginUser.Password = Utility.Security.Encrypt(Password) ;
+                    loginUser.Password = Utility.Security.Encrypt(Password);
                     if (loginUser != null)
                         loginUser = new LoginUserService().Save(loginUser);
 
                     OrgContext _orgContext = new OrgContext(_option, client.DbSchema);
                     _orgContext.Database.EnsureCreated();
                     _orgContext.Database.Migrate();
-                   //RelationalDatabaseCreator creator = (RelationalDatabaseCreator)_orgContext.Database.GetService<IRelationalDatabaseCreator>();
-                    
+                    //RelationalDatabaseCreator creator = (RelationalDatabaseCreator)_orgContext.Database.GetService<IRelationalDatabaseCreator>();
+
                     //creator.CreateTables();
                     //string createEFMigrationsHistoryCommand = $@"
                     //    USE [{_orgContext.Database.GetDbConnection().Database}];
@@ -357,13 +358,13 @@ namespace OrgSys.Controllers
         }
 
         [HttpGet]
-        public ActionResult Profile(int id, ResultStatus Status = ResultStatus.nothing, string MsgError = "")
+        public ActionResult Profile(ResultStatus Status = ResultStatus.nothing, string MsgError = "")
         {
             if ("" + MsgError != "")
                 ViewBag.message = MsgError;
             ViewBag.status = Status.ToString();
-
-            var IdUser = new UserService(User.GetSchema()).Get(id);
+            var _id = User.GetUserId();
+            var IdUser = new UserService(User.GetSchema()).Get(_id);
             return View("Profile", IdUser);
         }
 
@@ -378,19 +379,30 @@ namespace OrgSys.Controllers
                 if (_profile.NewPassword != null)
                     _profile.Password = _profile.NewPassword;
                 else
-
+                {
+                    if (User != null && User.Identity != null && User.Identity.IsAuthenticated)
+                    {
+                        new InitialData(User.GetSchema()).Run().Wait();
+                        if (_userService == null)
+                            _userService = new UserService(User.GetSchema());
+                    }
                     _userService.Save(_profile);
-
-                return Json(data: new { status = "success", id = _profile.Id, url = "/Home/Profile?id=" + _profile.Id + "&status=" + ResultStatus.success + "&MsgError=Success" });
+                    var us = new UserService(User.GetSchema()).Get(_profile.Id);
+                    if (us != null)
+                        us.SignIn(HttpContext, User.GetSchema());
+                }
+                return RedirectToAction("Profile", new { Status = ResultStatus.success });
             }
             catch (Exception ex)
             {
-                return Json(ex.Message);
+                return View(_profile);
             }
         }
 
         public virtual string SaveFile(string LastPath)
         {
+            if (Request.Form.Files == null || Request.Form.Files.Count == 0)
+                return LastPath;
             string NewPath = null;
             string path = Path.GetFullPath("~/wwwroot").Replace("~\\", "");
             string oldPath = Path.GetFullPath("~/wwwroot" + LastPath).Replace("~\\", "").Replace(@"\\", @"\");
