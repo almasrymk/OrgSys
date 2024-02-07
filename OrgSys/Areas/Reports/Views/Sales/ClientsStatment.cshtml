@@ -7,7 +7,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var pull_dir = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "fa-pull-left" : "fa-pull-right";
     DateTime fromDate = ViewBag.FromDate != null ? DateTime.Parse(ViewBag.FromDate.ToString()) : new DateTime(DateTime.Now.Year, 1, 1);
-    DateTime toDate = ViewBag.ToDate != null ? DateTime.Parse(ViewBag.ToDate.ToString()) : new DateTime(DateTime.Now.Year, 12, 31);
+    DateTime toDate = ViewBag.ToDate != null ? DateTime.Parse(ViewBag.ToDate.ToString()) : new DateTime(DateTime.Now.Year, 31, 12);
     var formateDate = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "{0:yyyy/MM/dd}" : "{0:dd/MM/yyyy}";
 }
 

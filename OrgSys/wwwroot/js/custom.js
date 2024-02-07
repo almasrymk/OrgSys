@@ -190,7 +190,7 @@ function exportToExcel(_page) {
 }
 
 
-function excelSearch(_page, dir) {
+function ReportSearch(_page, dir) {
     page = _page;
     var searchParams = "";
     if ($("#FromDate").length) {
