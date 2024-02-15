@@ -1,0 +1,147 @@
+﻿@using System.Globalization
+@model X.PagedList.IPagedList<Entity.ModelReport.SalesBalance>
+@using OrgSys
+@{
+    Layout = null;
+    var pull_dir = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "fa-pull-left" : "fa-pull-right";
+    var IsRightToLeft = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft;
+    var TextAlign = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "text-right" : "text-left";
+    var TextAlign2 = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "text-left" : "text-right";
+    var DateFromate = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "yyyy-MM-dd" : "dd-MM-yyyy";
+    var TimeFromate = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "mm:hh t" : "hh:mm t";
+}
+
+<style>
+    tr td {
+        padding: 5px !important;
+        margin: 0px !important;
+    }
+</style>
+
+@if (Model != null && Model.Count > 0)
+{
+    <div class="card-header p-0 position-relative">
+        <div class="position-absolute handle card-icon  ">
+
+
+            @*  <a href="@Url.Action("ExportToExcel", "Sales", new { area = "Reports" })" class="btn btn-success">Export to Excel</a> *@
+
+            @* <div class="text-right mb-3">
+        <button class="btn btn-primary" id="exportToExcel">Export to Excel</button>
+        </div> *@
+
+            @*    <button class="btn btn-primary @pull_dir" onclick="excelSearch(1 , 'Excel')">
+        <i class="glyph-icon iconsminds-magnifi-glass">  </i> @Utility.Resource.Title_Designer.Search zz
+        </button> *@
+            @*             <a href="" id="printData" class="btn rounded-circle badge-theme-1 fa fa-print" style="height:30px;width:30px;font-size:10px;text-align:center;padding:5px;cursor:pointer;">
+        </a> *@
+
+            <a href="" onclick="ReportSearch(1 , 'Pdf')" class="btn rounded-circle badge-theme-1 fa fa-file-pdf" style="height: 30px; width: 30px; font-size: 10px; text-align: center; padding: 5px; cursor: pointer;">
+            </a>
+
+            <a href="" onclick="ReportSearch(1 , 'Excel')" class="btn rounded-circle badge-theme-1 fa fa-file-excel" style="height: 30px; width: 30px; font-size: 10px; text-align: center; padding: 5px; cursor: pointer;">
+            </a>
+
+            @*    <a href="#" class="btn rounded-circle badge-theme-1 fa fa-file-word" style="height: 30px; width: 30px; font-size: 10px; text-align: center; padding: 5px; cursor: pointer;">
+        </a> *@
+        </div>
+    </div>
+}
+<h5 class="mb-4">@Utility.Resource.Title_Designer.SearchResults</h5>
+<div class="col-12 m-0 p-0" data-check-all="checkAll" id="all">
+    @if (Model != null && Model.Count > 0)
+    {
+        <table id="dataTable" class="table table-hover table-striped responsive alert-success nowrap m-0 " style="background-color:transparent;" data-order="[[ 1, &quot;desc&quot; ]]">
+            <thead>
+                <tr>
+                    <th class="text-center">#</th>
+                    <th style="text-align:center">InAmount</th>
+                    <th style="text-align:center">OutAmount</th>
+                    <th style="text-align:center">Net</th>
+           
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0, x = ((Model.PageNumber - 1) * Model.PageSize) + 1; i < Model.Count; i++, x++)
+                {
+                    <tr>
+                        <td class="text-center align-middle" style="width:50px;">
+                            <p class="list-item-heading">@x</p>
+                        </td>
+                        
+                        <td class="text-center align-middle">
+                            @Model[i].Date
+                        </td>
+                        
+                        <td class="text-center align-middle">
+                            @Model[i].InAmount
+                        </td>
+                        <td class="text-center align-middle">
+                            @Model[i].OutAmount
+                        </td>
+                        <td class="text-center align-middle">
+                            @Model[i].Net
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+    @Html.Partial("PagedList", Model)
+</div>
+
+<!--  SheetJS library -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
+<!--  html2pdf.js -->
+<script src="https://rawgit.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
+
+
+
+
+
+
+
+<script>
+    $(document).ready(function () {
+
+        $('#exportToExcel').click(function () {
+            exportToExcel();
+        });
+
+
+        $('#printData').click(function () {
+            togglePrintStyles();
+            window.print();
+            togglePrintStyles();
+        });
+
+        function exportToExcel() {
+            var table = document.getElementById('dataTable');
+            var ws = XLSX.utils.table_to_sheet(table);
+            var wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+            XLSX.writeFile(wb, 'ClientsBalance.xlsx');
+        }
+
+        function togglePrintStyles() {
+
+            $('.no-print').toggleClass('d-none');
+        }
+
+
+        $('#convertToPDF').click(function () {
+            convertToPDF();
+        });
+        function convertToPDF() {
+            // Use html2pdf.js to convert the content to PDF
+            var element = document.getElementById('all');
+            html2pdf(element);
+        }
+    });
+</script>
+
+
+

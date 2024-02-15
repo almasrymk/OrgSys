@@ -99,7 +99,9 @@ namespace Repository
         public virtual DbSet<DealerStatment> DealerStatmentReport { get; set; }
 
         [NotMapped]
-        public virtual DbSet<DealerBalance> DealerBalanceReport { get; set; }
+        public virtual DbSet<DealerBalance> DealerBalanceReport { get; set; } 
+        [NotMapped]
+        public virtual DbSet<SalesBalance> SalesBalanceReport { get; set; }
 
         [NotMapped]
         public virtual DbSet<StockStatment> StockStatmentReport { get; set; }

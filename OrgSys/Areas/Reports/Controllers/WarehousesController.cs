@@ -9,15 +9,53 @@ using iTextSharp.text.pdf;
 using iTextSharp.text;
 using OfficeOpenXml;
 using System.IO;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Linq;
+using System.Text;
 
 namespace OrgSys.Areas.Reports.Controllers
 {
     [Area("Reports")]
     public class WarehousesController : Controller
     {
-
+        async Task Main(string body, int id, int count)
+        {
+            var browserFetcher = new PuppeteerSharp.BrowserFetcher();
+            await browserFetcher.DownloadAsync();
+            await using var browser = await PuppeteerSharp.Puppeteer.LaunchAsync(new PuppeteerSharp.LaunchOptions { Headless = true });
+            await using var page = await browser.NewPageAsync();
+            await page.SetContentAsync(body);
+            string path = @"PrintOut/";
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+            if (System.IO.File.Exists(path + id + ".pdf"))
+            { System.IO.File.Delete(path + id + ".pdf"); }
+            var baseURL = Request.Scheme + "://" + Request.Host;
+            //var ImagePath = System.IO.File.ReadAllText("wwwroot/logos/logos22.svg");
+            await page.PdfAsync(path + id + ".pdf", new PuppeteerSharp.PdfOptions
+            {
+                Format = new PuppeteerSharp.Media.PaperFormat(decimal.Parse("2.24409"), 1 + (count / 4)),// PuppeteerSharp.Media.PaperFormat.A4,
+                PrintBackground = false,
+                OmitBackground = true,
+                DisplayHeaderFooter = true,
+                //FooterTemplate = "<div style=\"font-size: 8px; padding-top: 8px; text-align: center; width: 100%; \"><span class=\"pageNumber\"></span></div>",
+                // HeaderTemplate = "<div style=\"text-align:center!important; margin-top:-25px; margin-left:50%; transform: translateX(-50%);\">" + ImagePath + "</div>",
+                MarginOptions = new PuppeteerSharp.Media.MarginOptions
+                {
+                    Bottom = "90px",
+                    Top = "120px",
+                    Left = "10px",
+                    Right = "10px"
+                }
+            });
+        }
         #region Stock Movement
-        public ActionResult StockMovementPdf(string FromDate = null, string ToDate = null,
+
+
+        public async Task<ActionResult> StockMovementPdf(string FromDate = null, string ToDate = null,
             long StockId = 0, long ProductId = 0, long ShiftId = 0, long BranchId = 0, long UserId = 0,
             int page = 1, int pageSize = 900)
         {
@@ -32,83 +70,150 @@ namespace OrgSys.Areas.Reports.Controllers
             var data = new ReportResult<StockStatmentData, StockStatment>
             {
                 PrintMode = false,
-                
-                Result = new WarehousesReportService(User.GetSchema()).GetStockStatment(fDate, tDate, StockId, ProductId, ShiftId, BranchId, UserId, page, pageSize)
+
+                Result = new WarehousesReportService(User.GetSchema()).GetStockStatment(fDate, tDate, StockId, ProductId, ShiftId, BranchId, UserId)
             };
 
-            using (var ms = new MemoryStream())
+            List<string> Css = new List<string>();
+            Css.Add("/css/vendor/bootstrap.min.css");
+            Css.Add("/css/vendor/bootstrap.rtl.only.min.css");
+            Css.Add("/css/vendor/fullcalendar.min.css");
+            Css.Add("/css/vendor/dataTables.bootstrap4.min.css");
+            Css.Add("/css/vendor/datatables.responsive.bootstrap4.min.css");
+            Css.Add("/css/vendor/select2.min.css");
+            Css.Add("/css/vendor/select2-bootstrap.min.css");
+            Css.Add("/css/vendor/perfect-scrollbar.css");
+            Css.Add("/css/vendor/glide.core.min.css");
+            Css.Add("/css/vendor/bootstrap-stars.css");
+            Css.Add("/css/vendor/nouislider.min.css");
+            Css.Add("/css/vendor/smart_wizard.min.css");
+            Css.Add("/css/vendor/component-custom-switch.min.css");
+            Css.Add("/css/main.css");
+            Css.Add("/css/jquery.bonsai.css");
+            Css.Add("/fontawesome-free-5.15.3-web/css/all.css");
+            Css.Add("/css/vendor/bootstrap-datepicker3.min.css");
+
+            Css = Css.Select(c =>
             {
+                string output = System.IO.File.ReadAllText("wwwroot" + c, Encoding.Default);
+                return output;
+            }).ToList();
 
+            ViewBag.CssFiles = Css;
+            //if ("" + ob.ImageBase64String == "")
+            //{
+            //    if (System.IO.File.Exists(IHostingEnvironment.ContentRootPath + "/wwwroot/img/ClientCard.png"))
+            //    {
+            //        var res = Convert.ToBase64String(System.IO.File.ReadAllBytes(HostingEnvironment.ContentRootPath + "/wwwroot/img/ClientCard.png"));
+            //        if (res != "")
+            //            ob.ImageBase64String = "data:image/png;base64," + res;
+            //    }
+            //}
 
-                var document = new Document(PageSize.A4, 50, 50, 25, 25);
-                PdfWriter.GetInstance(document, ms);
-                document.Open();
-                var logoPath = Path.Combine(Environment.CurrentDirectory, "wwwroot", "logos", "logo.png");
-                var logo = Image.GetInstance(logoPath);
-                logo.ScaleToFit(50f, 50f);
+            var viewHtml = await Utility.General.RenderViewAsync<ReportResult<StockStatmentData, StockStatment>>(this, "StockMovementPdf", data);
+            await Main(viewHtml, 0, 10);
+            var cd = new System.Net.Mime.ContentDisposition
+            {
+                //Open In New Tap Or Download
+                Inline = true
+            };
+            Response.Headers.Add(Microsoft.Net.Http.Headers.HeaderNames.ContentDisposition, cd.ToString());
+            var stream = new FileStream("PrintOut/0.pdf", FileMode.Open);
+            return new FileStreamResult(stream, "application/pdf");
 
-
-                document.Add(logo);
-
-
-                var fontPath = Path.Combine("wwwroot", "font", "cairo", "cairo-light.ttf");
-
-                var baseFont = BaseFont.CreateFont(fontPath, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
-                var titleFont = new Font(baseFont, 18, Font.BOLD);
-                var headerFont = new Font(baseFont, 12, Font.BOLD);
-                var bodyFont = new Font(baseFont, 12, Font.NORMAL);
-
-
-                var titleParagraph = new Paragraph("Stock Movement", titleFont)
-                {
-                    Alignment = Element.ALIGN_CENTER,
-                    SpacingAfter = 20
-                };
-                document.Add(titleParagraph);
-                PdfPTable table = new PdfPTable(new float[] { 1, 3, 2, 2, 2, })
-                {
-                    //   RunDirection = PdfWriter.RUN_DIRECTION_RTL,
-                };
-                table.AddCell(new PdfPCell(new Phrase("No.", headerFont)) { BackgroundColor = BaseColor.LIGHT_GRAY });
-                table.AddCell(new PdfPCell(new Phrase("ProductsName", headerFont)) { BackgroundColor = BaseColor.LIGHT_GRAY, });
-               
-                table.AddCell(new PdfPCell(new Phrase("Date", headerFont)) { BackgroundColor = BaseColor.LIGHT_GRAY });
-                table.AddCell(new PdfPCell(new Phrase("Type", headerFont)) { BackgroundColor = BaseColor.LIGHT_GRAY });
-                table.AddCell(new PdfPCell(new Phrase("Quantity", headerFont)) { BackgroundColor = BaseColor.LIGHT_GRAY });
-               
-
-
-
-                int counter = 1;
-
-                foreach (var item in data.Result)
-                {
-                    table.AddCell(new PdfPCell(new Phrase(counter.ToString(), bodyFont)));
-
-                    table.AddCell(new PdfPCell(new Phrase(item.ProductName, bodyFont))
-                    {
-                        HorizontalAlignment = Element.ALIGN_RIGHT,
-                        RunDirection = PdfWriter.RUN_DIRECTION_RTL
-                    });
-               
-                    table.AddCell(new PdfPCell(new Phrase(item.Date.ToString("dd/MM/yyyy"), bodyFont)));
-                 
-                    table.AddCell(new PdfPCell(new Phrase(item.TypeName, bodyFont))
-                    {
-                        HorizontalAlignment = Element.ALIGN_RIGHT,
-                        RunDirection = PdfWriter.RUN_DIRECTION_RTL
-                    });
-                    table.AddCell(new PdfPCell(new Phrase(item.Quantity.ToString(), bodyFont)));
-
-                    counter++;
-                }
-
-                document.Add(table);
-                document.Close();
-                var bytes = ms.ToArray();
-                return File(bytes, "application/pdf", "StockMovement.pdf");
-            }
         }
+        //public ActionResult StockMovementPdf(string FromDate = null, string ToDate = null,
+        //    long StockId = 0, long ProductId = 0, long ShiftId = 0, long BranchId = 0, long UserId = 0,
+        //    int page = 1, int pageSize = 900)
+        //{
+
+        //    DateTime fDate = new DateTime(DateTime.Now.Year, 1, 1);
+        //    DateTime tDate = new DateTime(DateTime.Now.Year, 12, 31);
+        //    if (FromDate != null)
+        //        fDate = DateTime.Parse(FromDate);
+        //    if (ToDate != null)
+        //        tDate = DateTime.Parse(ToDate);
+
+        //    var data = new ReportResult<StockStatmentData, StockStatment>
+        //    {
+        //        PrintMode = false,
+                
+        //        Result = new WarehousesReportService(User.GetSchema()).GetStockStatment(fDate, tDate, StockId, ProductId, ShiftId, BranchId, UserId, page, pageSize)
+        //    };
+
+        //    using (var ms = new MemoryStream())
+        //    {
+
+
+        //        var document = new Document(PageSize.A4, 50, 50, 25, 25);
+        //        PdfWriter.GetInstance(document, ms);
+        //        document.Open();
+        //        var logoPath = Path.Combine(Environment.CurrentDirectory, "wwwroot", "logos", "logo.png");
+        //        var logo = Image.GetInstance(logoPath);
+        //        logo.ScaleToFit(50f, 50f);
+
+
+        //        document.Add(logo);
+
+
+        //        var fontPath = Path.Combine("wwwroot", "font", "cairo", "cairo-light.ttf");
+
+        //        var baseFont = BaseFont.CreateFont(fontPath, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+        //        var titleFont = new Font(baseFont, 18, Font.BOLD);
+        //        var headerFont = new Font(baseFont, 12, Font.BOLD);
+        //        var bodyFont = new Font(baseFont, 12, Font.NORMAL);
+
+
+        //        var titleParagraph = new Paragraph("Stock Movement", titleFont)
+        //        {
+        //            Alignment = Element.ALIGN_CENTER,
+        //            SpacingAfter = 20
+        //        };
+        //        document.Add(titleParagraph);
+        //        PdfPTable table = new PdfPTable(new float[] { 1, 3, 2, 2, 2, })
+        //        {
+        //            //   RunDirection = PdfWriter.RUN_DIRECTION_RTL,
+        //        };
+        //        table.AddCell(new PdfPCell(new Phrase("No.", headerFont)) { BackgroundColor = BaseColor.LIGHT_GRAY });
+        //        table.AddCell(new PdfPCell(new Phrase("ProductsName", headerFont)) { BackgroundColor = BaseColor.LIGHT_GRAY, });
+               
+        //        table.AddCell(new PdfPCell(new Phrase("Date", headerFont)) { BackgroundColor = BaseColor.LIGHT_GRAY });
+        //        table.AddCell(new PdfPCell(new Phrase("Type", headerFont)) { BackgroundColor = BaseColor.LIGHT_GRAY });
+        //        table.AddCell(new PdfPCell(new Phrase("Quantity", headerFont)) { BackgroundColor = BaseColor.LIGHT_GRAY });
+               
+
+
+
+        //        int counter = 1;
+
+        //        foreach (var item in data.Result)
+        //        {
+        //            table.AddCell(new PdfPCell(new Phrase(counter.ToString(), bodyFont)));
+
+        //            table.AddCell(new PdfPCell(new Phrase(item.ProductName, bodyFont))
+        //            {
+        //                HorizontalAlignment = Element.ALIGN_RIGHT,
+        //                RunDirection = PdfWriter.RUN_DIRECTION_RTL
+        //            });
+               
+        //            table.AddCell(new PdfPCell(new Phrase(item.Date.ToString("dd/MM/yyyy"), bodyFont)));
+                 
+        //            table.AddCell(new PdfPCell(new Phrase(item.TypeName, bodyFont))
+        //            {
+        //                HorizontalAlignment = Element.ALIGN_RIGHT,
+        //                RunDirection = PdfWriter.RUN_DIRECTION_RTL
+        //            });
+        //            table.AddCell(new PdfPCell(new Phrase(item.Quantity.ToString(), bodyFont)));
+
+        //            counter++;
+        //        }
+
+        //        document.Add(table);
+        //        document.Close();
+        //        var bytes = ms.ToArray();
+        //        return File(bytes, "application/pdf", "StockMovement.pdf");
+        //    }
+        //}
 
 
 
@@ -206,7 +311,103 @@ namespace OrgSys.Areas.Reports.Controllers
 
 
         #region Product Movement
-        public ActionResult ProductMovementPdf(string FromDate = null, string ToDate = null,
+
+
+        //public ActionResult ProductMovementPdf(string FromDate = null, string ToDate = null,
+        //  long StockId = 0, long ProductId = 0, long ShiftId = 0, long BranchId = 0, long UserId = 0,
+        //  int page = 1, int pageSize = 900)
+        //{
+
+        //    DateTime fDate = new DateTime(DateTime.Now.Year, 1, 1);
+        //    DateTime tDate = new DateTime(DateTime.Now.Year, 12, 31);
+        //    if (FromDate != null)
+        //        fDate = DateTime.Parse(FromDate);
+        //    if (ToDate != null)
+        //        tDate = DateTime.Parse(ToDate);
+
+        //    var data = new ReportResult<ProductStatmentData, ProductStatment>
+        //    {
+        //        PrintMode = false,
+                
+        //        Result = new WarehousesReportService(User.GetSchema()).GetProductStatment(fDate, tDate, StockId, ProductId, ShiftId, BranchId, UserId, page, pageSize)
+        //    };
+
+        //    using (var ms = new MemoryStream())
+        //    {
+
+
+        //        var document = new Document(PageSize.A4, 50, 50, 25, 25);
+        //        PdfWriter.GetInstance(document, ms);
+        //        document.Open();
+        //        var logoPath = Path.Combine(Environment.CurrentDirectory, "wwwroot", "logos", "logo.png");
+        //        var logo = Image.GetInstance(logoPath);
+        //        logo.ScaleToFit(50f, 50f);
+
+
+        //        document.Add(logo);
+
+
+        //        var fontPath = Path.Combine("wwwroot", "font", "cairo", "cairo-light.ttf");
+
+        //        var baseFont = BaseFont.CreateFont(fontPath, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+        //        var titleFont = new Font(baseFont, 18, Font.BOLD);
+        //        var headerFont = new Font(baseFont, 12, Font.BOLD);
+        //        var bodyFont = new Font(baseFont, 12, Font.NORMAL);
+
+
+        //        var titleParagraph = new Paragraph("Product Movement", titleFont)
+        //        {
+        //            Alignment = Element.ALIGN_CENTER,
+        //            SpacingAfter = 20
+        //        };
+        //        document.Add(titleParagraph);
+        //        PdfPTable table = new PdfPTable(new float[] { 1, 3, 2, 2, 2, })
+        //        {
+        //            //   RunDirection = PdfWriter.RUN_DIRECTION_RTL,
+        //        };
+        //        table.AddCell(new PdfPCell(new Phrase("No.", headerFont)) { BackgroundColor = BaseColor.LIGHT_GRAY });
+        //        table.AddCell(new PdfPCell(new Phrase("ProductsName", headerFont)) { BackgroundColor = BaseColor.LIGHT_GRAY, });
+
+        //        table.AddCell(new PdfPCell(new Phrase("Date", headerFont)) { BackgroundColor = BaseColor.LIGHT_GRAY });
+        //        table.AddCell(new PdfPCell(new Phrase("Type", headerFont)) { BackgroundColor = BaseColor.LIGHT_GRAY });
+        //        table.AddCell(new PdfPCell(new Phrase("Quantity", headerFont)) { BackgroundColor = BaseColor.LIGHT_GRAY });
+
+
+
+
+        //        int counter = 1;
+
+        //        foreach (var item in data.Result)
+        //        {
+        //            table.AddCell(new PdfPCell(new Phrase(counter.ToString(), bodyFont)));
+
+        //            table.AddCell(new PdfPCell(new Phrase(item.ProductName, bodyFont))
+        //            {
+        //                HorizontalAlignment = Element.ALIGN_RIGHT,
+        //                RunDirection = PdfWriter.RUN_DIRECTION_RTL
+        //            });
+
+        //            table.AddCell(new PdfPCell(new Phrase(item.Date.ToString("dd/MM/yyyy"), bodyFont)));
+
+        //            table.AddCell(new PdfPCell(new Phrase(item.TypeName, bodyFont))
+        //            {
+        //                HorizontalAlignment = Element.ALIGN_RIGHT,
+        //                RunDirection = PdfWriter.RUN_DIRECTION_RTL
+        //            });
+        //            table.AddCell(new PdfPCell(new Phrase(item.Quantity.ToString(), bodyFont)));
+
+        //            counter++;
+        //        }
+
+        //        document.Add(table);
+        //        document.Close();
+        //        var bytes = ms.ToArray();
+        //        return File(bytes, "application/pdf", "ProductMovement.pdf");
+        //    }
+        //}
+
+
+        public async Task<ActionResult> ProductMovementPdf(string FromDate = null, string ToDate = null,
           long StockId = 0, long ProductId = 0, long ShiftId = 0, long BranchId = 0, long UserId = 0,
           int page = 1, int pageSize = 900)
         {
@@ -221,85 +422,58 @@ namespace OrgSys.Areas.Reports.Controllers
             var data = new ReportResult<ProductStatmentData, ProductStatment>
             {
                 PrintMode = false,
-                
-                Result = new WarehousesReportService(User.GetSchema()).GetProductStatment(fDate, tDate, StockId, ProductId, ShiftId, BranchId, UserId, page, pageSize)
+
+                Result = new WarehousesReportService(User.GetSchema()).GetProductStatment(fDate, tDate, StockId, ProductId, ShiftId, BranchId, UserId)
             };
 
-            using (var ms = new MemoryStream())
+            List<string> Css = new List<string>();
+            Css.Add("/css/vendor/bootstrap.min.css");
+            Css.Add("/css/vendor/bootstrap.rtl.only.min.css");
+            Css.Add("/css/vendor/fullcalendar.min.css");
+            Css.Add("/css/vendor/dataTables.bootstrap4.min.css");
+            Css.Add("/css/vendor/datatables.responsive.bootstrap4.min.css");
+            Css.Add("/css/vendor/select2.min.css");
+            Css.Add("/css/vendor/select2-bootstrap.min.css");
+            Css.Add("/css/vendor/perfect-scrollbar.css");
+            Css.Add("/css/vendor/glide.core.min.css");
+            Css.Add("/css/vendor/bootstrap-stars.css");
+            Css.Add("/css/vendor/nouislider.min.css");
+            Css.Add("/css/vendor/smart_wizard.min.css");
+            Css.Add("/css/vendor/component-custom-switch.min.css");
+            Css.Add("/css/main.css");
+            Css.Add("/css/jquery.bonsai.css");
+            Css.Add("/fontawesome-free-5.15.3-web/css/all.css");
+            Css.Add("/css/vendor/bootstrap-datepicker3.min.css");
+
+            Css = Css.Select(c =>
             {
+                string output = System.IO.File.ReadAllText("wwwroot" + c, Encoding.Default);
+                return output;
+            }).ToList();
 
+            ViewBag.CssFiles = Css;
+            //if ("" + ob.ImageBase64String == "")
+            //{
+            //    if (System.IO.File.Exists(IHostingEnvironment.ContentRootPath + "/wwwroot/img/ClientCard.png"))
+            //    {
+            //        var res = Convert.ToBase64String(System.IO.File.ReadAllBytes(HostingEnvironment.ContentRootPath + "/wwwroot/img/ClientCard.png"));
+            //        if (res != "")
+            //            ob.ImageBase64String = "data:image/png;base64," + res;
+            //    }
+            //}
 
-                var document = new Document(PageSize.A4, 50, 50, 25, 25);
-                PdfWriter.GetInstance(document, ms);
-                document.Open();
-                var logoPath = Path.Combine(Environment.CurrentDirectory, "wwwroot", "logos", "logo.png");
-                var logo = Image.GetInstance(logoPath);
-                logo.ScaleToFit(50f, 50f);
+            var viewHtml = await Utility.General.RenderViewAsync<ReportResult<ProductStatmentData, ProductStatment>>(this, "ProductMovementPdf", data);
+            await Main(viewHtml, 0, 10);
+            var cd = new System.Net.Mime.ContentDisposition
+            {
+                //Open In New Tap Or Download
+                Inline = true
+            };
+            Response.Headers.Add(Microsoft.Net.Http.Headers.HeaderNames.ContentDisposition, cd.ToString());
+            var stream = new FileStream("PrintOut/0.pdf", FileMode.Open);
+            return new FileStreamResult(stream, "application/pdf");
 
-
-                document.Add(logo);
-
-
-                var fontPath = Path.Combine("wwwroot", "font", "cairo", "cairo-light.ttf");
-
-                var baseFont = BaseFont.CreateFont(fontPath, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
-                var titleFont = new Font(baseFont, 18, Font.BOLD);
-                var headerFont = new Font(baseFont, 12, Font.BOLD);
-                var bodyFont = new Font(baseFont, 12, Font.NORMAL);
-
-
-                var titleParagraph = new Paragraph("Product Movement", titleFont)
-                {
-                    Alignment = Element.ALIGN_CENTER,
-                    SpacingAfter = 20
-                };
-                document.Add(titleParagraph);
-                PdfPTable table = new PdfPTable(new float[] { 1, 3, 2, 2, 2, })
-                {
-                    //   RunDirection = PdfWriter.RUN_DIRECTION_RTL,
-                };
-                table.AddCell(new PdfPCell(new Phrase("No.", headerFont)) { BackgroundColor = BaseColor.LIGHT_GRAY });
-                table.AddCell(new PdfPCell(new Phrase("ProductsName", headerFont)) { BackgroundColor = BaseColor.LIGHT_GRAY, });
-
-                table.AddCell(new PdfPCell(new Phrase("Date", headerFont)) { BackgroundColor = BaseColor.LIGHT_GRAY });
-                table.AddCell(new PdfPCell(new Phrase("Type", headerFont)) { BackgroundColor = BaseColor.LIGHT_GRAY });
-                table.AddCell(new PdfPCell(new Phrase("Quantity", headerFont)) { BackgroundColor = BaseColor.LIGHT_GRAY });
-
-
-
-
-                int counter = 1;
-
-                foreach (var item in data.Result)
-                {
-                    table.AddCell(new PdfPCell(new Phrase(counter.ToString(), bodyFont)));
-
-                    table.AddCell(new PdfPCell(new Phrase(item.ProductName, bodyFont))
-                    {
-                        HorizontalAlignment = Element.ALIGN_RIGHT,
-                        RunDirection = PdfWriter.RUN_DIRECTION_RTL
-                    });
-
-                    table.AddCell(new PdfPCell(new Phrase(item.Date.ToString("dd/MM/yyyy"), bodyFont)));
-
-                    table.AddCell(new PdfPCell(new Phrase(item.TypeName, bodyFont))
-                    {
-                        HorizontalAlignment = Element.ALIGN_RIGHT,
-                        RunDirection = PdfWriter.RUN_DIRECTION_RTL
-                    });
-                    table.AddCell(new PdfPCell(new Phrase(item.Quantity.ToString(), bodyFont)));
-
-                    counter++;
-                }
-
-                document.Add(table);
-                document.Close();
-                var bytes = ms.ToArray();
-                return File(bytes, "application/pdf", "ProductMovement.pdf");
-            }
         }
-
-
 
         public IActionResult ProductMovementExcel(string FromDate = null, string ToDate = null,
             long StockId = 0, long ProductId = 0, long ShiftId = 0, long BranchId = 0, long UserId = 0,
@@ -402,101 +576,163 @@ namespace OrgSys.Areas.Reports.Controllers
         #endregion
 
         #region StockBalanc
-        public ActionResult StockBalancePdf(string ToDate = null,
+
+        public async Task<ActionResult> StockBalancePdf(string ToDate = null,
            long StockId = 0, long ProductId = 0, long ClassificationId = 0, long ShiftId = 0, long BranchId = 0, long UserId = 0,
            int page = 1, int pageSize = 900)
         {
 
             DateTime fDate = new DateTime(DateTime.Now.Year, 1, 1);
             DateTime tDate = new DateTime(DateTime.Now.Year, 12, 31);
-            
+
             if (ToDate != null)
                 tDate = DateTime.Parse(ToDate);
 
             var data = new WarehousesReportService(User.GetSchema()).GetStocksBalance(1, tDate, ProductId, StockId, ClassificationId, ShiftId, BranchId, UserId, page, pageSize);
-            using (var ms = new MemoryStream())
+
+            List<string> Css = new List<string>();
+            Css.Add("/css/vendor/bootstrap.min.css");
+            Css.Add("/css/vendor/bootstrap.rtl.only.min.css");
+            Css.Add("/css/vendor/fullcalendar.min.css");
+            Css.Add("/css/vendor/dataTables.bootstrap4.min.css");
+            Css.Add("/css/vendor/datatables.responsive.bootstrap4.min.css");
+            Css.Add("/css/vendor/select2.min.css");
+            Css.Add("/css/vendor/select2-bootstrap.min.css");
+            Css.Add("/css/vendor/perfect-scrollbar.css");
+            Css.Add("/css/vendor/glide.core.min.css");
+            Css.Add("/css/vendor/bootstrap-stars.css");
+            Css.Add("/css/vendor/nouislider.min.css");
+            Css.Add("/css/vendor/smart_wizard.min.css");
+            Css.Add("/css/vendor/component-custom-switch.min.css");
+            Css.Add("/css/main.css");
+            Css.Add("/css/jquery.bonsai.css");
+            Css.Add("/fontawesome-free-5.15.3-web/css/all.css");
+            Css.Add("/css/vendor/bootstrap-datepicker3.min.css");
+
+            Css = Css.Select(c =>
             {
+                string output = System.IO.File.ReadAllText("wwwroot" + c, Encoding.Default);
+                return output;
+            }).ToList();
+
+            ViewBag.CssFiles = Css;
+            //if ("" + ob.ImageBase64String == "")
+            //{
+            //    if (System.IO.File.Exists(IHostingEnvironment.ContentRootPath + "/wwwroot/img/ClientCard.png"))
+            //    {
+            //        var res = Convert.ToBase64String(System.IO.File.ReadAllBytes(HostingEnvironment.ContentRootPath + "/wwwroot/img/ClientCard.png"));
+            //        if (res != "")
+            //            ob.ImageBase64String = "data:image/png;base64," + res;
+            //    }
+            //}
+
+            var viewHtml = await Utility.General.RenderViewAsync <List<Entity.ModelReport.StockBalance>> (this, "StockBalancePdf", data.ToList());
+            await Main(viewHtml, 0, 10);
+            var cd = new System.Net.Mime.ContentDisposition
+            {
+                //Open In New Tap Or Download
+                Inline = true
+            };
+            Response.Headers.Add(Microsoft.Net.Http.Headers.HeaderNames.ContentDisposition, cd.ToString());
+            var stream = new FileStream("PrintOut/0.pdf", FileMode.Open);
+            return new FileStreamResult(stream, "application/pdf");
+
+        }
+        //public ActionResult StockBalancePdf(string ToDate = null,
+        //   long StockId = 0, long ProductId = 0, long ClassificationId = 0, long ShiftId = 0, long BranchId = 0, long UserId = 0,
+        //   int page = 1, int pageSize = 900)
+        //{
+
+        //    DateTime fDate = new DateTime(DateTime.Now.Year, 1, 1);
+        //    DateTime tDate = new DateTime(DateTime.Now.Year, 12, 31);
+            
+        //    if (ToDate != null)
+        //        tDate = DateTime.Parse(ToDate);
+
+        //    var data = new WarehousesReportService(User.GetSchema()).GetStocksBalance(1, tDate, ProductId, StockId, ClassificationId, ShiftId, BranchId, UserId, page, pageSize);
+        //    using (var ms = new MemoryStream())
+        //    {
 
 
-                var document = new Document(PageSize.A4, 50, 50, 25, 25);
-                PdfWriter.GetInstance(document, ms);
-                document.Open();
-                var logoPath = Path.Combine(Environment.CurrentDirectory, "wwwroot", "logos", "logo.png");
-                var logo = Image.GetInstance(logoPath);
-                logo.ScaleToFit(50f, 50f);
+        //        var document = new Document(PageSize.A4, 50, 50, 25, 25);
+        //        PdfWriter.GetInstance(document, ms);
+        //        document.Open();
+        //        var logoPath = Path.Combine(Environment.CurrentDirectory, "wwwroot", "logos", "logo.png");
+        //        var logo = Image.GetInstance(logoPath);
+        //        logo.ScaleToFit(50f, 50f);
 
 
-                document.Add(logo);
+        //        document.Add(logo);
 
 
-                var fontPath = Path.Combine("wwwroot", "font", "cairo", "cairo-light.ttf");
+        //        var fontPath = Path.Combine("wwwroot", "font", "cairo", "cairo-light.ttf");
 
-                var baseFont = BaseFont.CreateFont(fontPath, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
-                var titleFont = new Font(baseFont, 18, Font.BOLD);
-                var headerFont = new Font(baseFont, 12, Font.BOLD);
-                var bodyFont = new Font(baseFont, 12, Font.NORMAL);
-
-
-                var titleParagraph = new Paragraph("Stock Movement", titleFont)
-                {
-                    Alignment = Element.ALIGN_CENTER,
-                    SpacingAfter = 20
-                };
-                document.Add(titleParagraph);
-                PdfPTable table = new PdfPTable(new float[] { 1, 3, 2, 2, 2, })
-                {
-                    //   RunDirection = PdfWriter.RUN_DIRECTION_RTL,
-                };
-                table.AddCell(new PdfPCell(new Phrase("No.", headerFont)) { BackgroundColor = BaseColor.LIGHT_GRAY });
-                table.AddCell(new PdfPCell(new Phrase("Product", headerFont)) { BackgroundColor = BaseColor.LIGHT_GRAY, });
-
-                table.AddCell(new PdfPCell(new Phrase("Classification", headerFont)) { BackgroundColor = BaseColor.LIGHT_GRAY });
-                table.AddCell(new PdfPCell(new Phrase("Quantity", headerFont)) { BackgroundColor = BaseColor.LIGHT_GRAY });
-                table.AddCell(new PdfPCell(new Phrase("Stock", headerFont)) { BackgroundColor = BaseColor.LIGHT_GRAY });
+        //        var baseFont = BaseFont.CreateFont(fontPath, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+        //        var titleFont = new Font(baseFont, 18, Font.BOLD);
+        //        var headerFont = new Font(baseFont, 12, Font.BOLD);
+        //        var bodyFont = new Font(baseFont, 12, Font.NORMAL);
 
 
+        //        var titleParagraph = new Paragraph("Stock Movement", titleFont)
+        //        {
+        //            Alignment = Element.ALIGN_CENTER,
+        //            SpacingAfter = 20
+        //        };
+        //        document.Add(titleParagraph);
+        //        PdfPTable table = new PdfPTable(new float[] { 1, 3, 2, 2, 2, })
+        //        {
+        //            //   RunDirection = PdfWriter.RUN_DIRECTION_RTL,
+        //        };
+        //        table.AddCell(new PdfPCell(new Phrase("No.", headerFont)) { BackgroundColor = BaseColor.LIGHT_GRAY });
+        //        table.AddCell(new PdfPCell(new Phrase("Product", headerFont)) { BackgroundColor = BaseColor.LIGHT_GRAY, });
+
+        //        table.AddCell(new PdfPCell(new Phrase("Classification", headerFont)) { BackgroundColor = BaseColor.LIGHT_GRAY });
+        //        table.AddCell(new PdfPCell(new Phrase("Quantity", headerFont)) { BackgroundColor = BaseColor.LIGHT_GRAY });
+        //        table.AddCell(new PdfPCell(new Phrase("Stock", headerFont)) { BackgroundColor = BaseColor.LIGHT_GRAY });
 
 
-                int counter = 1;
 
-                foreach (var item in data)
-                {
-                    table.AddCell(new PdfPCell(new Phrase(counter.ToString(), bodyFont)));
 
-                    table.AddCell(new PdfPCell(new Phrase(item.ProductName, bodyFont))
-                    {
-                        HorizontalAlignment = Element.ALIGN_RIGHT,
-                        RunDirection = PdfWriter.RUN_DIRECTION_RTL
-                    });
+        //        int counter = 1;
+
+        //        foreach (var item in data)
+        //        {
+        //            table.AddCell(new PdfPCell(new Phrase(counter.ToString(), bodyFont)));
+
+        //            table.AddCell(new PdfPCell(new Phrase(item.ProductName, bodyFont))
+        //            {
+        //                HorizontalAlignment = Element.ALIGN_RIGHT,
+        //                RunDirection = PdfWriter.RUN_DIRECTION_RTL
+        //            });
                     
-                    table.AddCell(new PdfPCell(new Phrase(item.ClassificationName, bodyFont))
-                    {
-                        HorizontalAlignment = Element.ALIGN_RIGHT,
-                        RunDirection = PdfWriter.RUN_DIRECTION_RTL
-                    });
+        //            table.AddCell(new PdfPCell(new Phrase(item.ClassificationName, bodyFont))
+        //            {
+        //                HorizontalAlignment = Element.ALIGN_RIGHT,
+        //                RunDirection = PdfWriter.RUN_DIRECTION_RTL
+        //            });
 
                    
 
-                    table.AddCell(new PdfPCell(new Phrase(item.Balance.ToString(), bodyFont))
-                    {
-                        HorizontalAlignment = Element.ALIGN_RIGHT,
-                        RunDirection = PdfWriter.RUN_DIRECTION_RTL
-                    });
-                    table.AddCell(new PdfPCell(new Phrase(item.StockName, bodyFont))
-                    {
-                        HorizontalAlignment = Element.ALIGN_RIGHT,
-                        RunDirection = PdfWriter.RUN_DIRECTION_RTL
-                    });
+        //            table.AddCell(new PdfPCell(new Phrase(item.Balance.ToString(), bodyFont))
+        //            {
+        //                HorizontalAlignment = Element.ALIGN_RIGHT,
+        //                RunDirection = PdfWriter.RUN_DIRECTION_RTL
+        //            });
+        //            table.AddCell(new PdfPCell(new Phrase(item.StockName, bodyFont))
+        //            {
+        //                HorizontalAlignment = Element.ALIGN_RIGHT,
+        //                RunDirection = PdfWriter.RUN_DIRECTION_RTL
+        //            });
 
-                    counter++;
-                }
+        //            counter++;
+        //        }
 
-                document.Add(table);
-                document.Close();
-                var bytes = ms.ToArray();
-                return File(bytes, "application/pdf", "StockMovement.pdf");
-            }
-        }
+        //        document.Add(table);
+        //        document.Close();
+        //        var bytes = ms.ToArray();
+        //        return File(bytes, "application/pdf", "StockMovement.pdf");
+        //    }
+        //}
 
 
 

@@ -1,0 +1,20 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Entity.ModelReport
+{
+    public class SalesBalance
+    {
+
+       
+        public DateTime Date { get; set; }
+        public decimal InAmount { get; set; }
+        public decimal OutAmount { get; set; }
+        [Key]
+        public decimal Net { get; set; }
+    }
+}

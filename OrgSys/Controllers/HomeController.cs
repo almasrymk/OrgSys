@@ -483,7 +483,7 @@ namespace OrgSys.Controllers
             //reviewer.Lookups = await GetLookups(reviewer);
 
 
-            var viewHtml = await RenderViewAsync<InvoiceModelView>(this, "InvoicePrint", null);
+            var viewHtml = await RenderViewAsync<InvoiceModelView>(this, "InvoicePrint", new InvoiceService(User.GetSchema()).Get(8));
             await Main(viewHtml, 0);
             var cd = new System.Net.Mime.ContentDisposition
             {

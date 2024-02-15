@@ -9,6 +9,10 @@ using OfficeOpenXml;
 using System.IO;
 using iTextSharp.text.pdf;
 using iTextSharp.text;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Text;
 
 namespace OrgSys.Areas.Reports.Controllers
 {
@@ -16,61 +20,156 @@ namespace OrgSys.Areas.Reports.Controllers
     public class PurchasesController : BaseReportController
     {
 
-        public ActionResult SuppliersBalancePdf(DateTime ToDate,
+        //public ActionResult SuppliersBalancePdf(DateTime ToDate,
+        // long DealerId = 0, long ShiftId = 0, long BranchId = 0, long UserId = 0,
+        // int page = 1, int pageSize = 900)
+        //{
+        //    var data = new SalesReportService(User.GetSchema()).GetDealersBalance(2, ToDate, DealerId, ShiftId, BranchId, UserId, page, pageSize);
+
+        //    using (var ms = new MemoryStream())
+        //    {
+        //        var document = new Document(PageSize.A4, 50, 50, 25, 25);
+        //        PdfWriter.GetInstance(document, ms);
+        //        document.Open();
+        //        var logoPath = Path.Combine(Environment.CurrentDirectory, "wwwroot", "logos", "logo.png");
+        //        var logo = Image.GetInstance(logoPath);
+        //        logo.ScaleToFit(50f, 50f);
+        //        document.Add(logo);
+        //        var fontPath = Path.Combine("wwwroot", "font", "cairo", "cairo-light.ttf");
+        //        var baseFont = BaseFont.CreateFont(fontPath, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+        //        var titleFont = new Font(baseFont, 18, Font.BOLD);
+        //        var headerFont = new Font(baseFont, 12, Font.BOLD);
+        //        var bodyFont = new Font(baseFont, 12, Font.NORMAL);
+        //        var titleParagraph = new Paragraph("Suppliers Balance", titleFont)
+        //        {
+        //            Alignment = Element.ALIGN_CENTER,
+        //            SpacingAfter = 20
+        //        };
+        //        document.Add(titleParagraph);
+        //        PdfPTable table = new PdfPTable(new float[] { 1, 2, 1 })
+        //        {
+        //            //   RunDirection = PdfWriter.RUN_DIRECTION_RTL,
+        //        };
+
+
+        //        table.AddCell(new PdfPCell(new Phrase("No.", headerFont)) { BackgroundColor = BaseColor.LIGHT_GRAY });
+        //        table.AddCell(new PdfPCell(new Phrase("Suppliers", headerFont)) { BackgroundColor = BaseColor.LIGHT_GRAY, });
+        //        table.AddCell(new PdfPCell(new Phrase("Balance", headerFont)) { BackgroundColor = BaseColor.LIGHT_GRAY });
+        //        int counter = 1;
+        //        foreach (var item in data)
+        //        {
+        //            table.AddCell(new PdfPCell(new Phrase(counter.ToString(), bodyFont)));
+        //            table.AddCell(new PdfPCell(new Phrase(item.DealerName, bodyFont))
+        //            {
+        //                HorizontalAlignment = Element.ALIGN_RIGHT,
+        //                RunDirection = PdfWriter.RUN_DIRECTION_RTL
+        //            });
+        //            table.AddCell(new PdfPCell(new Phrase(item.Balance.ToString(), bodyFont)));
+        //            counter++;
+        //        }
+        //        document.Add(table);
+        //        document.Close();
+
+        //        var bytes = ms.ToArray();
+        //        return File(bytes, "application/pdf", "SuppliersBalance.pdf");
+        //    }
+        //}
+
+
+        public async Task<ActionResult> SuppliersBalancePdf(string ToDate,
          long DealerId = 0, long ShiftId = 0, long BranchId = 0, long UserId = 0,
-         int page = 1, int pageSize = 900)
+        int page = 1, int pageSize = 900)
         {
-            var data = new SalesReportService(User.GetSchema()).GetDealersBalance(2, ToDate, DealerId, ShiftId, BranchId, UserId, page, pageSize);
 
-            using (var ms = new MemoryStream())
+            DateTime fDate = new DateTime(DateTime.Now.Year, 1, 1);
+            DateTime tDate = new DateTime(DateTime.Now.Year, 12, 31);
+            
+            if (ToDate != null)
+                tDate = DateTime.Parse(ToDate);
+            var data = new SalesReportService(User.GetSchema()).GetDealersBalance(2, tDate, DealerId, ShiftId, BranchId, UserId, page, pageSize);
+
+            List<string> Css = new List<string>();
+            Css.Add("/css/vendor/bootstrap.min.css");
+            Css.Add("/css/vendor/bootstrap.rtl.only.min.css");
+            Css.Add("/css/vendor/fullcalendar.min.css");
+            Css.Add("/css/vendor/dataTables.bootstrap4.min.css");
+            Css.Add("/css/vendor/datatables.responsive.bootstrap4.min.css");
+            Css.Add("/css/vendor/select2.min.css");
+            Css.Add("/css/vendor/select2-bootstrap.min.css");
+            Css.Add("/css/vendor/perfect-scrollbar.css");
+            Css.Add("/css/vendor/glide.core.min.css");
+            Css.Add("/css/vendor/bootstrap-stars.css");
+            Css.Add("/css/vendor/nouislider.min.css");
+            Css.Add("/css/vendor/smart_wizard.min.css");
+            Css.Add("/css/vendor/component-custom-switch.min.css");
+            Css.Add("/css/main.css");
+            Css.Add("/css/jquery.bonsai.css");
+            Css.Add("/fontawesome-free-5.15.3-web/css/all.css");
+            Css.Add("/css/vendor/bootstrap-datepicker3.min.css");
+
+            Css = Css.Select(c =>
             {
-                var document = new Document(PageSize.A4, 50, 50, 25, 25);
-                PdfWriter.GetInstance(document, ms);
-                document.Open();
-                var logoPath = Path.Combine(Environment.CurrentDirectory, "wwwroot", "logos", "logo.png");
-                var logo = Image.GetInstance(logoPath);
-                logo.ScaleToFit(50f, 50f);
-                document.Add(logo);
-                var fontPath = Path.Combine("wwwroot", "font", "cairo", "cairo-light.ttf");
-                var baseFont = BaseFont.CreateFont(fontPath, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
-                var titleFont = new Font(baseFont, 18, Font.BOLD);
-                var headerFont = new Font(baseFont, 12, Font.BOLD);
-                var bodyFont = new Font(baseFont, 12, Font.NORMAL);
-                var titleParagraph = new Paragraph("Suppliers Balance", titleFont)
-                {
-                    Alignment = Element.ALIGN_CENTER,
-                    SpacingAfter = 20
-                };
-                document.Add(titleParagraph);
-                PdfPTable table = new PdfPTable(new float[] { 1, 2, 1 })
-                {
-                    //   RunDirection = PdfWriter.RUN_DIRECTION_RTL,
-                };
+                string output = System.IO.File.ReadAllText("wwwroot" + c, Encoding.Default);
+                return output;
+            }).ToList();
 
+            ViewBag.CssFiles = Css;
+            //if ("" + ob.ImageBase64String == "")
+            //{
+            //    if (System.IO.File.Exists(IHostingEnvironment.ContentRootPath + "/wwwroot/img/ClientCard.png"))
+            //    {
+            //        var res = Convert.ToBase64String(System.IO.File.ReadAllBytes(HostingEnvironment.ContentRootPath + "/wwwroot/img/ClientCard.png"));
+            //        if (res != "")
+            //            ob.ImageBase64String = "data:image/png;base64," + res;
+            //    }
+            //}
 
-                table.AddCell(new PdfPCell(new Phrase("No.", headerFont)) { BackgroundColor = BaseColor.LIGHT_GRAY });
-                table.AddCell(new PdfPCell(new Phrase("Suppliers", headerFont)) { BackgroundColor = BaseColor.LIGHT_GRAY, });
-                table.AddCell(new PdfPCell(new Phrase("Balance", headerFont)) { BackgroundColor = BaseColor.LIGHT_GRAY });
-                int counter = 1;
-                foreach (var item in data)
-                {
-                    table.AddCell(new PdfPCell(new Phrase(counter.ToString(), bodyFont)));
-                    table.AddCell(new PdfPCell(new Phrase(item.DealerName, bodyFont))
-                    {
-                        HorizontalAlignment = Element.ALIGN_RIGHT,
-                        RunDirection = PdfWriter.RUN_DIRECTION_RTL
-                    });
-                    table.AddCell(new PdfPCell(new Phrase(item.Balance.ToString(), bodyFont)));
-                    counter++;
-                }
-                document.Add(table);
-                document.Close();
+            var viewHtml = await Utility.General.RenderViewAsync<List<Entity.ModelReport.DealerBalance>>(this, "SuppliersBalancePDF", data.ToList());
+            await Main(viewHtml, 0, 10);
+            var cd = new System.Net.Mime.ContentDisposition
+            {
+                //Open In New Tap Or Download
+                Inline = true
+            };
+            Response.Headers.Add(Microsoft.Net.Http.Headers.HeaderNames.ContentDisposition, cd.ToString());
+            var stream = new FileStream("PrintOut/0.pdf", FileMode.Open);
+            return new FileStreamResult(stream, "application/pdf");
 
-                var bytes = ms.ToArray();
-                return File(bytes, "application/pdf", "SuppliersBalance.pdf");
-            }
         }
 
+        async Task Main(string body, int id, int count)
+        {
+            var browserFetcher = new PuppeteerSharp.BrowserFetcher();
+            await browserFetcher.DownloadAsync();
+            await using var browser = await PuppeteerSharp.Puppeteer.LaunchAsync(new PuppeteerSharp.LaunchOptions { Headless = true });
+            await using var page = await browser.NewPageAsync();
+            await page.SetContentAsync(body);
+            string path = @"PrintOut/";
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+            if (System.IO.File.Exists(path + id + ".pdf"))
+            { System.IO.File.Delete(path + id + ".pdf"); }
+            var baseURL = Request.Scheme + "://" + Request.Host;
+            //var ImagePath = System.IO.File.ReadAllText("wwwroot/logos/logos22.svg");
+            await page.PdfAsync(path + id + ".pdf", new PuppeteerSharp.PdfOptions
+            {
+                Format = new PuppeteerSharp.Media.PaperFormat(decimal.Parse("2.24409"), 1 + (count / 4)),// PuppeteerSharp.Media.PaperFormat.A4,
+                PrintBackground = false,
+                OmitBackground = true,
+                DisplayHeaderFooter = true,
+                //FooterTemplate = "<div style=\"font-size: 8px; padding-top: 8px; text-align: center; width: 100%; \"><span class=\"pageNumber\"></span></div>",
+                // HeaderTemplate = "<div style=\"text-align:center!important; margin-top:-25px; margin-left:50%; transform: translateX(-50%);\">" + ImagePath + "</div>",
+                MarginOptions = new PuppeteerSharp.Media.MarginOptions
+                {
+                    Bottom = "90px",
+                    Top = "120px",
+                    Left = "10px",
+                    Right = "10px"
+                }
+            });
+        }
 
         public IActionResult SuppliersBalanceExcel(DateTime ToDate,
            long DealerId = 0, long ShiftId = 0, long BranchId = 0, long UserId = 0,
@@ -112,7 +211,96 @@ namespace OrgSys.Areas.Reports.Controllers
             return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "SuppliersBalance.xlsx");
         }
 
-        public ActionResult SuppliersStatmentPdf(string FromDate, string ToDate,
+//        public ActionResult SuppliersStatmentPdf(string FromDate, string ToDate,
+//long DealerId = 0, long ShiftId = 0, long BranchId = 0, long UserId = 0,
+//int page = 1, int pageSize = 900)
+//        {
+
+//            DateTime fDate = new DateTime(DateTime.Now.Year, 1, 1);
+//            DateTime tDate = new DateTime(DateTime.Now.Year, 12, 31);
+//            if (FromDate != null)
+//                fDate = DateTime.Parse(FromDate);
+//            if (ToDate != null)
+//                tDate = DateTime.Parse(ToDate);
+
+//            var data = new ReportResult<DealerStatmentData, DealerStatment>
+//            {
+//                PrintMode = false,
+
+//                Result = new SalesReportService(User.GetSchema()).GetDealersStatment(2, fDate, tDate, DealerId, ShiftId, BranchId, UserId, page, pageSize)
+//            };
+
+//            using (var ms = new MemoryStream())
+//            {
+
+
+//                var document = new Document(PageSize.A4, 50, 50, 25, 25);
+//                PdfWriter.GetInstance(document, ms);
+//                document.Open();
+//                var logoPath = Path.Combine(Environment.CurrentDirectory, "wwwroot", "logos", "logo.png");
+//                var logo = Image.GetInstance(logoPath);
+//                logo.ScaleToFit(50f, 50f);
+
+
+//                document.Add(logo);
+
+
+//                var fontPath = Path.Combine("wwwroot", "font", "cairo", "cairo-light.ttf");
+
+//                var baseFont = BaseFont.CreateFont(fontPath, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+//                var titleFont = new Font(baseFont, 18, Font.BOLD);
+//                var headerFont = new Font(baseFont, 12, Font.BOLD);
+//                var bodyFont = new Font(baseFont, 12, Font.NORMAL);
+
+
+//                var titleParagraph = new Paragraph("Suppliers Statment", titleFont)
+//                {
+//                    Alignment = Element.ALIGN_CENTER,
+//                    SpacingAfter = 20
+//                };
+//                document.Add(titleParagraph);
+//                PdfPTable table = new PdfPTable(new float[] { 1, 3, 1, 3, 3, 2 })
+//                {
+//                    //   RunDirection = PdfWriter.RUN_DIRECTION_RTL,
+//                };
+//                table.AddCell(new PdfPCell(new Phrase("No.", headerFont)) { BackgroundColor = BaseColor.LIGHT_GRAY });
+//                table.AddCell(new PdfPCell(new Phrase("Client", headerFont)) { BackgroundColor = BaseColor.LIGHT_GRAY, });
+//                table.AddCell(new PdfPCell(new Phrase("Code", headerFont)) { BackgroundColor = BaseColor.LIGHT_GRAY });
+//                table.AddCell(new PdfPCell(new Phrase("Date", headerFont)) { BackgroundColor = BaseColor.LIGHT_GRAY });
+//                table.AddCell(new PdfPCell(new Phrase("Type", headerFont)) { BackgroundColor = BaseColor.LIGHT_GRAY });
+//                table.AddCell(new PdfPCell(new Phrase("Amount", headerFont)) { BackgroundColor = BaseColor.LIGHT_GRAY });
+
+
+
+//                int counter = 1;
+
+//                foreach (var item in data.Result)
+//                {
+//                    table.AddCell(new PdfPCell(new Phrase(counter.ToString(), bodyFont)));
+
+//                    table.AddCell(new PdfPCell(new Phrase(item.DealerName, bodyFont))
+//                    {
+//                        HorizontalAlignment = Element.ALIGN_RIGHT,
+//                        RunDirection = PdfWriter.RUN_DIRECTION_RTL
+//                    });
+//                    table.AddCell(item.Code);
+//                    table.AddCell(new PdfPCell(new Phrase(item.Date.ToString("dd/MM/yyyy"), bodyFont)));
+//                    table.AddCell(new PdfPCell(new Phrase(item.TypeName.ToString(), bodyFont)));
+//                    table.AddCell(new PdfPCell(new Phrase(item.Amount.ToString(), bodyFont)));
+//                    counter++;
+//                }
+
+//                document.Add(table);
+//                document.Close();
+//                var bytes = ms.ToArray();
+//                return File(bytes, "application/pdf", "SuppliersStatment.pdf");
+//            }
+//        }
+
+
+
+
+        public async Task<ActionResult> SuppliersStatmentPdf(string FromDate, string ToDate,
 long DealerId = 0, long ShiftId = 0, long BranchId = 0, long UserId = 0,
 int page = 1, int pageSize = 900)
         {
@@ -123,79 +311,59 @@ int page = 1, int pageSize = 900)
                 fDate = DateTime.Parse(FromDate);
             if (ToDate != null)
                 tDate = DateTime.Parse(ToDate);
-
             var data = new ReportResult<DealerStatmentData, DealerStatment>
-            {
-                PrintMode = false,
+            {               PrintMode = false,
 
-                Result = new SalesReportService(User.GetSchema()).GetDealersStatment(2, fDate, tDate, DealerId, ShiftId, BranchId, UserId, page, pageSize)
+                           Result = new SalesReportService(User.GetSchema()).GetDealersStatment(2, fDate, tDate, DealerId, ShiftId, BranchId, UserId, page, pageSize)
+                      };
+
+            List<string> Css = new List<string>();
+            Css.Add("/css/vendor/bootstrap.min.css");
+            Css.Add("/css/vendor/bootstrap.rtl.only.min.css");
+            Css.Add("/css/vendor/fullcalendar.min.css");
+            Css.Add("/css/vendor/dataTables.bootstrap4.min.css");
+            Css.Add("/css/vendor/datatables.responsive.bootstrap4.min.css");
+            Css.Add("/css/vendor/select2.min.css");
+            Css.Add("/css/vendor/select2-bootstrap.min.css");
+            Css.Add("/css/vendor/perfect-scrollbar.css");
+            Css.Add("/css/vendor/glide.core.min.css");
+            Css.Add("/css/vendor/bootstrap-stars.css");
+            Css.Add("/css/vendor/nouislider.min.css");
+            Css.Add("/css/vendor/smart_wizard.min.css");
+            Css.Add("/css/vendor/component-custom-switch.min.css");
+            Css.Add("/css/main.css");
+            Css.Add("/css/jquery.bonsai.css");
+            Css.Add("/fontawesome-free-5.15.3-web/css/all.css");
+            Css.Add("/css/vendor/bootstrap-datepicker3.min.css");
+
+            Css = Css.Select(c =>
+            {
+                string output = System.IO.File.ReadAllText("wwwroot" + c, Encoding.Default);
+                return output;
+            }).ToList();
+
+            ViewBag.CssFiles = Css;
+            //if ("" + ob.ImageBase64String == "")
+            //{
+            //    if (System.IO.File.Exists(IHostingEnvironment.ContentRootPath + "/wwwroot/img/ClientCard.png"))
+            //    {
+            //        var res = Convert.ToBase64String(System.IO.File.ReadAllBytes(HostingEnvironment.ContentRootPath + "/wwwroot/img/ClientCard.png"));
+            //        if (res != "")
+            //            ob.ImageBase64String = "data:image/png;base64," + res;
+            //    }
+            //}
+
+            var viewHtml = await Utility.General.RenderViewAsync<ReportResult<DealerStatmentData, DealerStatment>>(this, "SuppliersStatmentPdf", data);
+            await Main(viewHtml, 0, 10);
+            var cd = new System.Net.Mime.ContentDisposition
+            {
+                //Open In New Tap Or Download
+                Inline = true
             };
+            Response.Headers.Add(Microsoft.Net.Http.Headers.HeaderNames.ContentDisposition, cd.ToString());
+            var stream = new FileStream("PrintOut/0.pdf", FileMode.Open);
+            return new FileStreamResult(stream, "application/pdf");
 
-            using (var ms = new MemoryStream())
-            {
-
-
-                var document = new Document(PageSize.A4, 50, 50, 25, 25);
-                PdfWriter.GetInstance(document, ms);
-                document.Open();
-                var logoPath = Path.Combine(Environment.CurrentDirectory, "wwwroot", "logos", "logo.png");
-                var logo = Image.GetInstance(logoPath);
-                logo.ScaleToFit(50f, 50f);
-
-
-                document.Add(logo);
-
-
-                var fontPath = Path.Combine("wwwroot", "font", "cairo", "cairo-light.ttf");
-
-                var baseFont = BaseFont.CreateFont(fontPath, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
-                var titleFont = new Font(baseFont, 18, Font.BOLD);
-                var headerFont = new Font(baseFont, 12, Font.BOLD);
-                var bodyFont = new Font(baseFont, 12, Font.NORMAL);
-
-
-                var titleParagraph = new Paragraph("Suppliers Statment", titleFont)
-                {
-                    Alignment = Element.ALIGN_CENTER,
-                    SpacingAfter = 20
-                };
-                document.Add(titleParagraph);
-                PdfPTable table = new PdfPTable(new float[] { 1, 3, 1, 3, 3, 2 })
-                {
-                    //   RunDirection = PdfWriter.RUN_DIRECTION_RTL,
-                };
-                table.AddCell(new PdfPCell(new Phrase("No.", headerFont)) { BackgroundColor = BaseColor.LIGHT_GRAY });
-                table.AddCell(new PdfPCell(new Phrase("Client", headerFont)) { BackgroundColor = BaseColor.LIGHT_GRAY, });
-                table.AddCell(new PdfPCell(new Phrase("Code", headerFont)) { BackgroundColor = BaseColor.LIGHT_GRAY });
-                table.AddCell(new PdfPCell(new Phrase("Date", headerFont)) { BackgroundColor = BaseColor.LIGHT_GRAY });
-                table.AddCell(new PdfPCell(new Phrase("Type", headerFont)) { BackgroundColor = BaseColor.LIGHT_GRAY });
-                table.AddCell(new PdfPCell(new Phrase("Amount", headerFont)) { BackgroundColor = BaseColor.LIGHT_GRAY });
-
-
-
-                int counter = 1;
-
-                foreach (var item in data.Result)
-                {
-                    table.AddCell(new PdfPCell(new Phrase(counter.ToString(), bodyFont)));
-
-                    table.AddCell(new PdfPCell(new Phrase(item.DealerName, bodyFont))
-                    {
-                        HorizontalAlignment = Element.ALIGN_RIGHT,
-                        RunDirection = PdfWriter.RUN_DIRECTION_RTL
-                    });
-                    table.AddCell(item.Code);
-                    table.AddCell(new PdfPCell(new Phrase(item.Date.ToString("dd/MM/yyyy"), bodyFont)));
-                    table.AddCell(new PdfPCell(new Phrase(item.TypeName.ToString(), bodyFont)));
-                    table.AddCell(new PdfPCell(new Phrase(item.Amount.ToString(), bodyFont)));
-                    counter++;
-                }
-
-                document.Add(table);
-                document.Close();
-                var bytes = ms.ToArray();
-                return File(bytes, "application/pdf", "SuppliersStatment.pdf");
-            }
         }
 
         public IActionResult SuppliersStatmentExcel(string FromDate, string ToDate,

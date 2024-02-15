@@ -31,6 +31,13 @@ namespace Service
             int page = 1, int pageSize = 100)
         {
             return repo.dealersBalanceRepo.GetDealersBalance(DealerTypeId , ToDate, DealerId, ShiftId, BranchId, UserId).OrderBy(e=>e.DealerId).AsEnumerable().ToPagedList(page, pageSize);
+        } 
+        public IPagedList<SalesBalance> GetSalesBalance(
+            DateTime ToDate,
+             long UserId,
+            int page = 1, int pageSize = 100)
+        {
+            return repo.dealersBalanceRepo.GetSalesBalance(ToDate,  UserId).AsEnumerable().ToPagedList(page, pageSize);
         }
     }
 }
