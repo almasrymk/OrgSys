@@ -477,7 +477,7 @@ namespace OrgSys.Areas.Reports.Controllers
         }
 
 
-        public IActionResult SalesBalance(string Date = null
+        public IActionResult SalesBalance(string ToDate = null
       , long UserId = 0,
            int page = 1, int pageSize = 100)
         {
@@ -490,14 +490,29 @@ namespace OrgSys.Areas.Reports.Controllers
             DateTime tDate = DateTime.Now;
 
 
-            if (Date != null)
-                tDate = DateTime.Parse(Date);
+            if (ToDate != null)
+                tDate = DateTime.Parse(ToDate);
             ViewBag.ToDate = tDate;
 
             var obList = new SalesReportService(User.GetSchema()).GetSalesBalance(tDate,  UserId, page, pageSize);
             return Request.Headers["X-Requested-With"] == "XMLHttpRequest" ? (ActionResult)PartialView("SalesBalanceList", obList) : View(obList);
         }
 
+
+
+        public IActionResult SalesClient(long DealerId = 0
+  , long UserId = 0,
+       int page = 1, int pageSize = 100)
+        {
+            ViewBag.DealerList = new SelectList(new DealerService(User.GetSchema()).GetAll(0, 1), "Id", "Name");
+
+            ViewBag.pageNumber = page;
+            ViewBag.ParentId = 0;
+            ViewBag.TypeId = 1;
+
+            var obList = new SalesReportService(User.GetSchema()).GetSalesClient(DealerId, UserId, page, pageSize);
+            return Request.Headers["X-Requested-With"] == "XMLHttpRequest" ? (ActionResult)PartialView("SalesClintList", obList) : View(obList);
+        }
         public IActionResult SalesPerPeriod()
         {
             return View();

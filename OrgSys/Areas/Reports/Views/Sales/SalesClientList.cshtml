@@ -1,5 +1,5 @@
 ﻿@using System.Globalization
-@model X.PagedList.IPagedList<Entity.ModelReport.SalesBalance>
+@model X.PagedList.IPagedList<Entity.ModelReport.SalesClient>
 @using OrgSys
 @{
     Layout = null;
@@ -55,11 +55,11 @@
             <thead>
                 <tr>
                     <th class="text-center">#</th>
-                    <th class="text-center">Date</th>
+                    <th class="text-center">Dealer</th>
                     <th style="text-align:center">InAmount</th>
                     <th style="text-align:center">OutAmount</th>
                     <th style="text-align:center">Net</th>
-           
+
                 </tr>
             </thead>
             <tbody>
@@ -69,11 +69,13 @@
                         <td class="text-center align-middle" style="width:50px;">
                             <p class="list-item-heading">@x</p>
                         </td>
-                        
-                        <td class="text-center align-middle">
-                            @Model[i].Date.ToString("dd/MM/yyyy")
+
+                        <td class="@TextAlign align-middle">
+                            <a href="/Setting/Dealer/Save?id=@Model[i].DealerId&TypeId=1">
+                                @Model[i].DealerName
+                            </a>
                         </td>
-                        
+
                         <td class="text-center align-middle">
                             @Model[i].InAmount
                         </td>

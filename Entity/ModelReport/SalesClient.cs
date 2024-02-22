@@ -7,16 +7,16 @@ using System.Threading.Tasks;
 
 namespace Entity.ModelReport
 {
-    public class SalesBalance
+    public class SalesClient
     {
-
         [Key]
-        public DateTime Date { get; set; }
-        
-  
+        public long DealerId { get; set; }
+        public string DealerName { get; set; }
+
+
         public decimal InAmount { get; set; }
         public decimal OutAmount { get; set; }
-    
+      
         public decimal Net { get; set; }
     }
 }

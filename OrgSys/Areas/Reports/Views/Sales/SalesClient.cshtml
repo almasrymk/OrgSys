@@ -1,5 +1,5 @@
 ﻿@using System.Globalization
-@model X.PagedList.IPagedList<Entity.ModelReport.SalesBalance>
+@model X.PagedList.IPagedList<Entity.ModelReport.SalesClient>
 @using OrgSys
 
 @{
@@ -10,7 +10,7 @@
 
 <div class="container-fluid disable-text-selection">
     <div class="col-12">
-        <h1> <i class="glyph-icon iconsminds-profile rounded-circle badge-theme-1  p-1"></i> Sales By Date</h1>
+        <h1> <i class="glyph-icon iconsminds-profile rounded-circle badge-theme-1  p-1"></i> Sales By Client</h1>
 
         <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
             <ol class="breadcrumb pt-0">
@@ -24,7 +24,7 @@
                     <span>@Utility.Resource.Title_Designer.Report</span>
                 </li>
                 <li class="breadcrumb-item">
-                    Sales By Date
+                    Sales By Client
                 </li>
             </ol>
         </nav>
@@ -33,20 +33,19 @@
         <div class="card-body">
             <h5 class="mb-4">@Utility.Resource.Title_Designer.KeySearch</h5>
             <div class="row">
-                <div class="form-group col-md-3">
-                    <label>@Utility.Resource.Title_Designer.ToDate</label>
-                    <div id="divDate">
+                <div class="form-group col-md-6">
+                    <label>@Utility.Resource.Title_Designer.Client</label>
+                    <div id="divDate2">
                         <div class="input-group ">
                             <div class="input-group-prepend ">
-                                <span class="input-group-text "><i class="simple-icon-calendar"></i></span>
+                                <span class="input-group-text "><i class="glyph-icon iconsminds-business-man-woman"></i></span>
                             </div>
 
-                            @*  @Html.TextBox("ToDate", null, new { @class = "form-control datepicker"  , @value=ViewBag.ToDate }) *@
-                            @Html.TextBox("ToDate", toDate.ToString("dd/MM/yyyy"), new { @class = "form-control datepicker", @autocomplete = "off" })
+                            @Html.DropDownList("DealerId", (SelectList)@ViewBag.DealerList, Utility.Resource.Title_Designer.All, new { @class = "form-control" })
                         </div>
                     </div>
                 </div>
-        
+
             </div>
 
             @*<div class="collapse row" id="collapseExample">
@@ -142,7 +141,7 @@
 
     <div class="card mb-4">
         <div id="List" class="card-body  m-0 p-3">
-            @Html.Partial("SalesBalanceList", Model)
+            @Html.Partial("SalesClientList", Model)
         </div>
     </div>
 </div>

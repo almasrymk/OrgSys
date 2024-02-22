@@ -31,6 +31,14 @@ namespace Repository.DAL.Output
         {
             string SQLStatment = string.Format(File.ReadAllText(Path.GetFullPath(@"SQLFiles/SalesBalanceSql.sql")).Replace("Org", _Schema), string.Format("{0:yyyy/MM/dd}", Date), UserId);
             return db.SalesBalanceReport.FromSqlRaw(SQLStatment);
+        }  
+        
+        public IQueryable<SalesClient> GetSalesClient( long DealerId,
+             long UserId
+            )
+        {
+            string SQLStatment = string.Format(File.ReadAllText(Path.GetFullPath(@"SQLFiles/SalesClientSql.sql")).Replace("Org", _Schema),  DealerId, UserId);
+            return db.SalesClientReport.FromSqlRaw(SQLStatment);
         }
     }
 }

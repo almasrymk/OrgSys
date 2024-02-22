@@ -38,6 +38,14 @@ namespace Service
             int page = 1, int pageSize = 100)
         {
             return repo.dealersBalanceRepo.GetSalesBalance(ToDate,  UserId).AsEnumerable().ToPagedList(page, pageSize);
+        } 
+        public IPagedList<SalesClient> GetSalesClient(
+          
+        long DealerId,
+             long UserId,
+            int page = 1, int pageSize = 100)
+        {
+            return repo.dealersBalanceRepo.GetSalesClient(DealerId,  UserId).AsEnumerable().ToPagedList(page, pageSize);
         }
     }
 }
