@@ -817,99 +817,68 @@ namespace OrgSys.Areas.Reports.Controllers
 
 
         #region Product Balance
-        public ActionResult ProductBalancePdf(string ToDate = null, long ProductId = 0, long StockId = 0, long ClassificationId = 0, long ShiftId = 0, long BranchId = 0, long UserId = 0,
+
+        public async Task<ActionResult> ProductBalancePdf(string ToDate = null, long ProductId = 0, long StockId = 0, long ClassificationId = 0, long ShiftId = 0, long BranchId = 0, long UserId = 0,
            int page = 1, int pageSize = 900)
         {
 
             DateTime fDate = new DateTime(DateTime.Now.Year, 1, 1);
             DateTime tDate = new DateTime(DateTime.Now.Year, 12, 31);
-
+          
             if (ToDate != null)
                 tDate = DateTime.Parse(ToDate);
+
             var data = new WarehousesReportService(User.GetSchema()).GetProductsBalance(1, tDate, ProductId, StockId, ClassificationId, ShiftId, BranchId, UserId, page, pageSize);
-            using (var ms = new MemoryStream())
+
+            List<string> Css = new List<string>();
+            Css.Add("/css/vendor/bootstrap.min.css");
+            Css.Add("/css/vendor/bootstrap.rtl.only.min.css");
+            Css.Add("/css/vendor/fullcalendar.min.css");
+            Css.Add("/css/vendor/dataTables.bootstrap4.min.css");
+            Css.Add("/css/vendor/datatables.responsive.bootstrap4.min.css");
+            Css.Add("/css/vendor/select2.min.css");
+            Css.Add("/css/vendor/select2-bootstrap.min.css");
+            Css.Add("/css/vendor/perfect-scrollbar.css");
+            Css.Add("/css/vendor/glide.core.min.css");
+            Css.Add("/css/vendor/bootstrap-stars.css");
+            Css.Add("/css/vendor/nouislider.min.css");
+            Css.Add("/css/vendor/smart_wizard.min.css");
+            Css.Add("/css/vendor/component-custom-switch.min.css");
+            Css.Add("/css/main.css");
+            Css.Add("/css/jquery.bonsai.css");
+            Css.Add("/fontawesome-free-5.15.3-web/css/all.css");
+            Css.Add("/css/vendor/bootstrap-datepicker3.min.css");
+
+            Css = Css.Select(c =>
             {
+                string output = System.IO.File.ReadAllText("wwwroot" + c, Encoding.Default);
+                return output;
+            }).ToList();
 
+            ViewBag.CssFiles = Css;
+            //if ("" + ob.ImageBase64String == "")
+            //{
+            //    if (System.IO.File.Exists(IHostingEnvironment.ContentRootPath + "/wwwroot/img/ClientCard.png"))
+            //    {
+            //        var res = Convert.ToBase64String(System.IO.File.ReadAllBytes(HostingEnvironment.ContentRootPath + "/wwwroot/img/ClientCard.png"));
+            //        if (res != "")
+            //            ob.ImageBase64String = "data:image/png;base64," + res;
+            //    }
+            //}
 
-                var document = new Document(PageSize.A4, 50, 50, 25, 25);
-                PdfWriter.GetInstance(document, ms);
-                document.Open();
-                var logoPath = Path.Combine(Environment.CurrentDirectory, "wwwroot", "logos", "logo.png");
-                var logo = Image.GetInstance(logoPath);
-                logo.ScaleToFit(50f, 50f);
+            var viewHtml = await Utility.General.RenderViewAsync<List<Entity.ModelReport.ProductBalance>>(this, "ProductBalancePdf", data.ToList());
+            await Main(viewHtml, 0, 10);
+            var cd = new System.Net.Mime.ContentDisposition
+            {
+                //Open In New Tap Or Download
+                Inline = true
+            };
+            Response.Headers.Add(Microsoft.Net.Http.Headers.HeaderNames.ContentDisposition, cd.ToString());
+            var stream = new FileStream("PrintOut/0.pdf", FileMode.Open);
+            return new FileStreamResult(stream, "application/pdf");
 
-
-                document.Add(logo);
-
-
-                var fontPath = Path.Combine("wwwroot", "font", "cairo", "cairo-light.ttf");
-
-                var baseFont = BaseFont.CreateFont(fontPath, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
-                var titleFont = new Font(baseFont, 18, Font.BOLD);
-                var headerFont = new Font(baseFont, 12, Font.BOLD);
-                var bodyFont = new Font(baseFont, 12, Font.NORMAL);
-
-
-                var titleParagraph = new Paragraph("Product Balance", titleFont)
-                {
-                    Alignment = Element.ALIGN_CENTER,
-                    SpacingAfter = 20
-                };
-                document.Add(titleParagraph);
-                PdfPTable table = new PdfPTable(new float[] { 1, 3, 2, 2, 2, })
-                {
-                    //   RunDirection = PdfWriter.RUN_DIRECTION_RTL,
-                };
-                table.AddCell(new PdfPCell(new Phrase("No.", headerFont)) { BackgroundColor = BaseColor.LIGHT_GRAY });
-                table.AddCell(new PdfPCell(new Phrase("Product", headerFont)) { BackgroundColor = BaseColor.LIGHT_GRAY, });
-
-                table.AddCell(new PdfPCell(new Phrase("Classification", headerFont)) { BackgroundColor = BaseColor.LIGHT_GRAY });
-                table.AddCell(new PdfPCell(new Phrase("Quantity", headerFont)) { BackgroundColor = BaseColor.LIGHT_GRAY });
-                table.AddCell(new PdfPCell(new Phrase("Stock", headerFont)) { BackgroundColor = BaseColor.LIGHT_GRAY });
-
-
-
-
-                int counter = 1;
-
-                foreach (var item in data)
-                {
-                    table.AddCell(new PdfPCell(new Phrase(counter.ToString(), bodyFont)));
-
-                    table.AddCell(new PdfPCell(new Phrase(item.ProductName, bodyFont))
-                    {
-                        HorizontalAlignment = Element.ALIGN_RIGHT,
-                        RunDirection = PdfWriter.RUN_DIRECTION_RTL
-                    });
-
-                    table.AddCell(new PdfPCell(new Phrase(item.ClassificationName, bodyFont))
-                    {
-                        HorizontalAlignment = Element.ALIGN_RIGHT,
-                        RunDirection = PdfWriter.RUN_DIRECTION_RTL
-                    });
-
-
-
-                    table.AddCell(new PdfPCell(new Phrase(item.Balance.ToString(), bodyFont))
-                    {
-                        HorizontalAlignment = Element.ALIGN_RIGHT,
-                        RunDirection = PdfWriter.RUN_DIRECTION_RTL
-                    });
-                    table.AddCell(new PdfPCell(new Phrase(item.StockName, bodyFont))
-                    {
-                        HorizontalAlignment = Element.ALIGN_RIGHT,
-                        RunDirection = PdfWriter.RUN_DIRECTION_RTL
-                    });
-
-                    counter++;
-                }
-
-                document.Add(table);
-                document.Close();
-                var bytes = ms.ToArray();
-                return File(bytes, "application/pdf", "ProductBalance.pdf");
-            }
         }
+     
 
 
 

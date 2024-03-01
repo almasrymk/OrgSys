@@ -10,7 +10,7 @@ inner join [org].[InvoiceType] it on it.Id = i.TypeId
 INNER JOIN [org].[Dealer] dl ON dl.Id = i.DealerId
 where
 --dl.TypeId = Convert(bigint, N'{0}') AND 
-(Convert(bigint, N'{0}') = 0 OR dl.Id = Convert(bigint, N'{1}')) 
+( N'{0}' = 0 OR dl.Id =  '{0}')
 
 
 

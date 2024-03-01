@@ -1,0 +1,90 @@
+﻿@using System.Globalization
+@model List<Entity.ModelReport.ProductBalance>
+@using OrgSys
+@{
+    Layout = null;
+    var IsRightToLeft = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft;
+    var TextAlign = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "text-right" : "text-left";
+    var TextAlign2 = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "text-left" : "text-right";
+    var DateFromate = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "yyyy-MM-dd" : "dd-MM-yyyy";
+    var TimeFromate = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "mm:hh t" : "hh:mm t";
+}
+
+     <head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"]</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    @*<link rel="icon" type="image/x-icon" href="@baseURL/favicon.ico">*@
+    @foreach (var item in (List<string>)ViewBag.CssFiles)
+    {
+        <style>@Html.Raw(item)</style>
+    }
+    <style>
+    tr td {
+        padding: 5px !important;
+        margin: 0px !important;
+    }
+</style>
+</head>
+<body>
+
+
+
+
+<div class="col-12 m-0 p-0" data-check-all="checkAll">
+    @if (Model != null && Model.Count > 0)
+    {
+        <table class="table table-hover table-striped responsive alert-success nowrap m-0 " style="background-color:transparent;" data-order="[[ 1, &quot;desc&quot; ]]">
+            <thead>
+                <tr>
+                    <th class="text-center">#</th>
+                    <th style="text-align:center"></th>
+                    <th class="@TextAlign align-middle">@Utility.Resource.Title_Designer.Product</th>
+                    <th class="@TextAlign align-middle">@Utility.Resource.Title_Designer.Classification</th>
+                    <th class="text-center align-middle">@Utility.Resource.Title_Designer.Quantity</th>
+                    <th class="@TextAlign align-middle">@Utility.Resource.Title_Designer.Stock</th>
+
+
+
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.Count; i++)
+                {
+                    <tr>
+                        <td class="text-center align-middle" style="width:50px;">
+                            <p class="list-item-heading">@i</p>
+                        </td>
+                        <td class="text-center align-middle" style="width:50px;">
+                            <div class="list-thumbnail  border-0 rounded-circle badge-theme-1 m-0" style="height:40px;width:40px;font-size:17px;text-align:center;padding:9px;">
+                                <i class="glyph-icon iconsminds-business-man-woman"></i>
+                            </div>
+                        </td>
+                        <td class="@TextAlign align-middle">
+                            <a href="/Transactions/Transaction/Save?id=@Model[i].ProductId&TypeId=1">
+                                @Model[i].ProductName
+                            </a>
+                        </td>
+                        <td class="@TextAlign align-middle">
+                            <a href="/Transactions/Transaction/Save?id=@Model[i].ClassificationId&TypeId=1">
+                                @Model[i].ClassificationName
+                            </a>
+                        </td>
+                        <td class="text-center align-middle">
+                            @Model[i].Balance
+                        </td>
+                        <td class="@TextAlign align-middle">
+                            <a href="/Transactions/Transaction/Save?id=@Model[i].StockId&TypeId=1">
+                                @Model[i].StockName
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+ 
+</div>
+
+                        </body>
