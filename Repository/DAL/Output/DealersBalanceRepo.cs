@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using Entity.ModelReport;
 using Microsoft.EntityFrameworkCore;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Repository.DAL.Output
 {
@@ -33,11 +34,11 @@ namespace Repository.DAL.Output
             return db.SalesBalanceReport.FromSqlRaw(SQLStatment);
         }  
         
-        public IQueryable<SalesClient> GetSalesClient( long DealerId,
+        public IQueryable<SalesClient> GetSalesClient(DateTime Date, long DealerId,
              long UserId
             )
         {
-            string SQLStatment = string.Format(File.ReadAllText(Path.GetFullPath(@"SQLFiles/SalesClientSql.sql")).Replace("Org", _Schema),  DealerId, UserId);
+            string SQLStatment = string.Format(File.ReadAllText(Path.GetFullPath(@"SQLFiles/SalesClientSql.sql")).Replace("Org", _Schema), string.Format("{0:yyyy/MM/dd}", Date), DealerId, UserId);
             return db.SalesClientReport.FromSqlRaw(SQLStatment);
         }
     }

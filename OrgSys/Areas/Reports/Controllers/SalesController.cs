@@ -499,18 +499,139 @@ namespace OrgSys.Areas.Reports.Controllers
         }
 
 
+        public async Task<ActionResult> SalesBalancePdf(string ToDate = null
+      , long UserId = 0,
+           int page = 1, int pageSize = 100)
+        {
+            DateTime tDate = DateTime.Now;
 
-        public IActionResult SalesClient(long DealerId = 0
+
+            if (ToDate != null)
+                tDate = DateTime.Parse(ToDate);
+            ViewBag.ToDate = tDate;
+
+            var data = new SalesReportService(User.GetSchema()).GetSalesBalance(tDate, UserId, page, pageSize);
+
+            List<string> Css = new List<string>();
+            Css.Add("/css/vendor/bootstrap.min.css");
+            Css.Add("/css/vendor/bootstrap.rtl.only.min.css");
+            Css.Add("/css/vendor/fullcalendar.min.css");
+            Css.Add("/css/vendor/dataTables.bootstrap4.min.css");
+            Css.Add("/css/vendor/datatables.responsive.bootstrap4.min.css");
+            Css.Add("/css/vendor/select2.min.css");
+            Css.Add("/css/vendor/select2-bootstrap.min.css");
+            Css.Add("/css/vendor/perfect-scrollbar.css");
+            Css.Add("/css/vendor/glide.core.min.css");
+            Css.Add("/css/vendor/bootstrap-stars.css");
+            Css.Add("/css/vendor/nouislider.min.css");
+            Css.Add("/css/vendor/smart_wizard.min.css");
+            Css.Add("/css/vendor/component-custom-switch.min.css");
+            Css.Add("/css/main.css");
+            Css.Add("/css/jquery.bonsai.css");
+            Css.Add("/fontawesome-free-5.15.3-web/css/all.css");
+            Css.Add("/css/vendor/bootstrap-datepicker3.min.css");
+
+            Css = Css.Select(c =>
+            {
+                string output = System.IO.File.ReadAllText("wwwroot" + c, Encoding.Default);
+                return output;
+            }).ToList();
+
+            ViewBag.CssFiles = Css;
+            //if ("" + ob.ImageBase64String == "")
+            //{
+            //    if (System.IO.File.Exists(IHostingEnvironment.ContentRootPath + "/wwwroot/img/ClientCard.png"))
+            //    {
+            //        var res = Convert.ToBase64String(System.IO.File.ReadAllBytes(HostingEnvironment.ContentRootPath + "/wwwroot/img/ClientCard.png"));
+            //        if (res != "")
+            //            ob.ImageBase64String = "data:image/png;base64," + res;
+            //    }
+            //}
+
+            var viewHtml = await Utility.General.RenderViewAsync<List<Entity.ModelReport.SalesBalance>>(this, "SalesBalancePDF", data.ToList());
+            await Main(viewHtml, 0, 10);
+            var cd = new System.Net.Mime.ContentDisposition
+            {
+                //Open In New Tap Or Download
+                Inline = true
+            };
+            Response.Headers.Add(Microsoft.Net.Http.Headers.HeaderNames.ContentDisposition, cd.ToString());
+            var stream = new FileStream("PrintOut/0.pdf", FileMode.Open);
+            return new FileStreamResult(stream, "application/pdf");
+
+        }
+
+
+        public IActionResult SalesBalanceExcel(string ToDate = null
+      , long UserId = 0,
+           int page = 1, int pageSize = 100)
+        {
+            ViewBag.pageNumber = 1;
+            ViewBag.ParentId = 0;
+            ViewBag.TypeId = 1;
+
+            DateTime fDate = new DateTime(DateTime.Now.Year, 1, 1);
+            DateTime tDate = DateTime.Now;
+
+
+            if (ToDate != null)
+                tDate = DateTime.Parse(ToDate);
+            ViewBag.ToDate = tDate;
+
+            var data = new SalesReportService(User.GetSchema()).GetSalesBalance(tDate, UserId, page, pageSize);
+  
+
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            var package = new ExcelPackage();
+            var worksheet = package.Workbook.Worksheets.Add("Clients Balance");
+
+            string[] headers = { "#", "Date", "InAmount" , "OutAmount", "Net" };
+
+
+            for (int i = 0; i < headers.Length; i++)
+            {
+                worksheet.Cells[1, i + 1].Value = headers[i];
+            }
+
+            int row = 2;
+            int num = 1;
+            foreach (var item in data)
+            {
+                worksheet.Cells[row, 1].Value = num;
+                worksheet.Cells[row, 2].Value = item.Date.ToString("dd/MM/yyy");
+                worksheet.Cells[row, 3].Value = item.InAmount;
+                worksheet.Cells[row, 4].Value = item.OutAmount;
+                worksheet.Cells[row, 5].Value = item.Net;
+                row++;
+                num++;
+            }
+
+            worksheet.Cells[worksheet.Dimension.Address].AutoFitColumns();
+            var stream = new MemoryStream();
+            package.SaveAs(stream);
+            stream.Position = 0;
+            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "SalesBalance.xlsx");
+        }
+
+
+
+        public IActionResult SalesClient(string ToDate = null,long DealerId = 0
   , long UserId = 0,
        int page = 1, int pageSize = 100)
         {
+            DateTime fDate = new DateTime(DateTime.Now.Year, 1, 1);
+            DateTime tDate = DateTime.Now;
             ViewBag.DealerList = new SelectList(new DealerService(User.GetSchema()).GetAll(0, 1), "Id", "Name");
 
             ViewBag.pageNumber = page;
             ViewBag.ParentId = 0;
             ViewBag.TypeId = 1;
 
-            var obList = new SalesReportService(User.GetSchema()).GetSalesClient(DealerId, UserId, page, pageSize);
+            if (ToDate != null)
+                tDate = DateTime.Parse(ToDate);
+            ViewBag.ToDate = tDate;
+
+            var obList = new SalesReportService(User.GetSchema()).GetSalesClient(tDate, DealerId, UserId, page, pageSize);
             return Request.Headers["X-Requested-With"] == "XMLHttpRequest" ? (ActionResult)PartialView("SalesClintList", obList) : View(obList);
         }
         public IActionResult SalesPerPeriod()

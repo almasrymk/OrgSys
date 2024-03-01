@@ -9,9 +9,12 @@ namespace Entity.ModelReport
 {
     public class SalesClient
     {
+
         [Key]
         public long DealerId { get; set; }
         public string DealerName { get; set; }
+
+   
 
 
         public decimal InAmount { get; set; }
