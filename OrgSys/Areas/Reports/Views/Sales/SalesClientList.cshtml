@@ -1,5 +1,5 @@
 ﻿@using System.Globalization
-@model X.PagedList.IPagedList<Entity.ModelReport.DealerBalance>
+@model X.PagedList.IPagedList<Entity.ModelReport.SalesClient>
 @using OrgSys
 @{
     Layout = null;
@@ -23,18 +23,18 @@
     <div class="card-header p-0 position-relative">
         <div class="position-absolute handle card-icon  ">
 
-        
-           @*  <a href="@Url.Action("ExportToExcel", "Sales", new { area = "Reports" })" class="btn btn-success">Export to Excel</a> *@
+
+            @*  <a href="@Url.Action("ExportToExcel", "Sales", new { area = "Reports" })" class="btn btn-success">Export to Excel</a> *@
 
             @* <div class="text-right mb-3">
-                <button class="btn btn-primary" id="exportToExcel">Export to Excel</button>
-            </div> *@
+        <button class="btn btn-primary" id="exportToExcel">Export to Excel</button>
+        </div> *@
 
-         @*    <button class="btn btn-primary @pull_dir" onclick="excelSearch(1 , 'Excel')">
-                <i class="glyph-icon iconsminds-magnifi-glass">  </i> @Utility.Resource.Title_Designer.Search zz
-            </button> *@
-@*             <a href="" id="printData" class="btn rounded-circle badge-theme-1 fa fa-print" style="height:30px;width:30px;font-size:10px;text-align:center;padding:5px;cursor:pointer;">
-            </a> *@
+            @*    <button class="btn btn-primary @pull_dir" onclick="excelSearch(1 , 'Excel')">
+        <i class="glyph-icon iconsminds-magnifi-glass">  </i> @Utility.Resource.Title_Designer.Search zz
+        </button> *@
+            @*             <a href="" id="printData" class="btn rounded-circle badge-theme-1 fa fa-print" style="height:30px;width:30px;font-size:10px;text-align:center;padding:5px;cursor:pointer;">
+        </a> *@
 
             <a href="" onclick="ReportSearch(1 , 'Pdf')" class="btn rounded-circle badge-theme-1 fa fa-file-pdf" style="height: 30px; width: 30px; font-size: 10px; text-align: center; padding: 5px; cursor: pointer;">
             </a>
@@ -55,9 +55,11 @@
             <thead>
                 <tr>
                     <th class="text-center">#</th>
-                    <th style="text-align:center"></th>
-                    <th class="@TextAlign align-middle">@Utility.Resource.Title_Designer.Client</th>
-                    <th class="text-center align-middle">@Utility.Resource.Title_Designer.Amount</th>
+                    <th class="text-center">Dealer</th>
+                    <th style="text-align:center">InAmount</th>
+                    <th style="text-align:center">OutAmount</th>
+                    <th style="text-align:center">Net</th>
+
                 </tr>
             </thead>
             <tbody>
@@ -67,18 +69,21 @@
                         <td class="text-center align-middle" style="width:50px;">
                             <p class="list-item-heading">@x</p>
                         </td>
-                        <td class="text-center align-middle" style="width:50px;">
-                            <div class="list-thumbnail  border-0 rounded-circle badge-theme-1 m-0" style="height:40px;width:40px;font-size:17px;text-align:center;padding:9px;">
-                                <i class="glyph-icon iconsminds-business-man-woman"></i>
-                            </div>
-                        </td>
+
                         <td class="@TextAlign align-middle">
                             <a href="/Setting/Dealer/Save?id=@Model[i].DealerId&TypeId=1">
                                 @Model[i].DealerName
                             </a>
                         </td>
+
                         <td class="text-center align-middle">
-                            @Model[i].Balance
+                            @Model[i].InAmount
+                        </td>
+                        <td class="text-center align-middle">
+                            @Model[i].OutAmount
+                        </td>
+                        <td class="text-center align-middle">
+                            @Model[i].Net
                         </td>
                     </tr>
                 }
@@ -104,16 +109,16 @@
 
 <script>
     $(document).ready(function () {
-        
+
         $('#exportToExcel').click(function () {
             exportToExcel();
         });
 
-       
+
         $('#printData').click(function () {
             togglePrintStyles();
             window.print();
-            togglePrintStyles(); 
+            togglePrintStyles();
         });
 
         function exportToExcel() {
@@ -125,7 +130,7 @@
         }
 
         function togglePrintStyles() {
-           
+
             $('.no-print').toggleClass('d-none');
         }
 

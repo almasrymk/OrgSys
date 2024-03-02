@@ -1,19 +1,16 @@
 ﻿@using System.Globalization
-@using Entity.ModelReport;
-@model ReportResult<DealerStatmentData,DealerStatment>
+@model X.PagedList.IPagedList<Entity.ModelReport.SalesBalance>
 @using OrgSys
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     var pull_dir = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "fa-pull-left" : "fa-pull-right";
-    DateTime fromDate = ViewBag.FromDate != null ? DateTime.Parse(ViewBag.FromDate.ToString()) : new DateTime(DateTime.Now.Year, 1, 1);
-    DateTime toDate = ViewBag.ToDate != null ? DateTime.Parse(ViewBag.ToDate.ToString()) : new DateTime(DateTime.Now.Year, 31, 12);
-    var formateDate = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "{0:yyyy/MM/dd}" : "{0:dd/MM/yyyy}";
+    DateTime toDate = ViewBag.ToDate != null ? DateTime.Parse(ViewBag.ToDate.ToString()) : new DateTime(DateTime.Now.Year, 12, 31);
 }
 
 <div class="container-fluid disable-text-selection">
     <div class="col-12">
-        <h1> <i class="glyph-icon iconsminds-letter-open rounded-circle badge-theme-1  p-1"></i> @Utility.Resource.Title_Designer.ClientsStatement</h1>
+        <h1> <i class="glyph-icon iconsminds-profile rounded-circle badge-theme-1  p-1"></i> Sales By Date</h1>
 
         <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
             <ol class="breadcrumb pt-0">
@@ -27,7 +24,7 @@
                     <span>@Utility.Resource.Title_Designer.Report</span>
                 </li>
                 <li class="breadcrumb-item">
-                    @Utility.Resource.Title_Designer.ClientsStatement
+                    Sales By Date
                 </li>
             </ol>
         </nav>
@@ -37,19 +34,6 @@
             <h5 class="mb-4">@Utility.Resource.Title_Designer.KeySearch</h5>
             <div class="row">
                 <div class="form-group col-md-3">
-                    <label>@Utility.Resource.Title_Designer.FromDate</label>
-                    <div id="divDate">
-                        <div class="input-group ">
-                            <div class="input-group-prepend ">
-                                <span class="input-group-text "><i class="simple-icon-calendar"></i></span>
-                            </div>
-                            @Html.TextBox("FromDate", fromDate.ToString("dd/MM/yyyy"), new { @class = "form-control datepicker", @autocomplete = "off" })
-
-                            @*  @Html.TextBox("FromDate", null, new { @class = "form-control datepicker", @value = ViewBag.FromDate.ToString("MM/dd/yyyy"), @autocomplete = "off" }) *@
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group col-md-3">
                     <label>@Utility.Resource.Title_Designer.ToDate</label>
                     <div id="divDate">
                         <div class="input-group ">
@@ -57,23 +41,12 @@
                                 <span class="input-group-text "><i class="simple-icon-calendar"></i></span>
                             </div>
 
-
+                            @*  @Html.TextBox("ToDate", null, new { @class = "form-control datepicker"  , @value=ViewBag.ToDate }) *@
                             @Html.TextBox("ToDate", toDate.ToString("dd/MM/yyyy"), new { @class = "form-control datepicker", @autocomplete = "off" })
-                            @*             @Html.TextBox("ToDate", null, new { @class = "form-control datepicker", @value= ViewBag.ToDate, @autocomplete="off" }) *@
                         </div>
                     </div>
                 </div>
-                <div class="form-group col-md-6">
-                    <label>@Utility.Resource.Title_Designer.Client</label>
-                    <div id="divDate">
-                        <div class="input-group ">
-                            <div class="input-group-prepend ">
-                                <span class="input-group-text "><i class="glyph-icon iconsminds-business-man-woman"></i></span>
-                            </div>
-                            @Html.DropDownList("DealerId", (SelectList)@ViewBag.DealerList, Utility.Resource.Title_Designer.All, new { @class = "form-control select2-single" })
-                        </div>
-                    </div>
-                </div>
+        
             </div>
 
             @*<div class="collapse row" id="collapseExample">
@@ -169,26 +142,30 @@
 
     <div class="card mb-4">
         <div id="List" class="card-body  m-0 p-3">
-            @Html.Partial("ClientsStatmentList", Model)
+            @Html.Partial("SalesBalanceList", Model)
         </div>
     </div>
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
-<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/themes/smoothness/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+
 <script>
     $(document).ready(function () {
-
+        // Initialize the datepicker with additional settings
         $('.datepicker').datepicker({
-            autoclose: true,
-            dateFormat: 'mm/dd/yy',
+            autoclose: true, // Ensure this is set if you're using a version that supports it
+            dateFormat: 'mm/dd/yy', // Adjust the date format as needed
         }).on("change", function () {
-            $(this).datepicker('hide');
+            $(this).datepicker('hide'); // Explicitly hide the datepicker after selection
         });
 
+        // If autoclose is not working as expected, ensure this block is included
         $('.datepicker').on('changeDate', function () {
             $(this).datepicker('hide');
         });
     });
 </script>
+
+
+

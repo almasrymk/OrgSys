@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using Entity.ModelReport;
 using Microsoft.EntityFrameworkCore;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Repository.DAL.Output
 {
@@ -23,6 +24,22 @@ namespace Repository.DAL.Output
         {
             string SQLStatment = string.Format(File.ReadAllText(Path.GetFullPath(@"SQLFiles/DealersBalanceSql.sql")).Replace("Org", _Schema), DealerTypeId, string.Format("{0:yyyy/MM/dd}", ToDate), DealerId, ShiftId, BranchId, UserId);
             return db.DealerBalanceReport.FromSqlRaw(SQLStatment);
+        } 
+        
+        public IQueryable<SalesBalance> GetSalesBalance( DateTime Date,
+             long UserId
+            )
+        {
+            string SQLStatment = string.Format(File.ReadAllText(Path.GetFullPath(@"SQLFiles/SalesBalanceSql.sql")).Replace("Org", _Schema), string.Format("{0:yyyy/MM/dd}", Date), UserId);
+            return db.SalesBalanceReport.FromSqlRaw(SQLStatment);
+        }  
+        
+        public IQueryable<SalesClient> GetSalesClient(DateTime Date, long DealerId,
+             long UserId
+            )
+        {
+            string SQLStatment = string.Format(File.ReadAllText(Path.GetFullPath(@"SQLFiles/SalesClientSql.sql")).Replace("Org", _Schema), string.Format("{0:yyyy/MM/dd}", Date), DealerId, UserId);
+            return db.SalesClientReport.FromSqlRaw(SQLStatment);
         }
     }
 }

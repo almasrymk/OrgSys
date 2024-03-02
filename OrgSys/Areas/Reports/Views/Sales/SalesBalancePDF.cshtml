@@ -1,0 +1,79 @@
+﻿@using System.Globalization
+@model List<Entity.ModelReport.SalesBalance>
+@using OrgSys
+@{
+    Layout = null;
+    var pull_dir = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "fa-pull-left" : "fa-pull-right";
+    var IsRightToLeft = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft;
+    var TextAlign = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "text-right" : "text-left";
+    var TextAlign2 = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "text-left" : "text-right";
+    var DateFromate = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "yyyy-MM-dd" : "dd-MM-yyyy";
+    var TimeFromate = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "mm:hh t" : "hh:mm t";
+}
+
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"]</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    @*<link rel="icon" type="image/x-icon" href="@baseURL/favicon.ico">*@
+    @foreach (var item in (List<string>)ViewBag.CssFiles)
+    {
+        <style>@Html.Raw(item)</style>
+    }
+    <style>
+    tr td {
+        padding: 5px !important;
+        margin: 0px !important;
+    }
+</style>
+</head>
+
+<body style="width: 100%; margin: 0; padding: 0;">
+    @if (Model != null && Model.Count > 0)
+    {
+        <table id="dataTable" class="table table-hover table-striped responsive alert-success nowrap m-0 " style="background-color:transparent;" data-order="[[ 1, &quot;desc&quot; ]]">
+            <thead>
+                <tr>
+                    <th class="text-center">#</th>
+                    <th class="text-center">Date</th>
+                    <th style="text-align:center">InAmount</th>
+                    <th style="text-align:center">OutAmount</th>
+                    <th style="text-align:center">Net</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0;  i < Model.Count; i++)
+                {
+                    <tr>
+                        <td class="text-center align-middle" style="width:50px;">
+                            <p class="list-item-heading">@i</p>
+                        </td>
+
+                        <td class="text-center align-middle">
+                            @Model[i].Date.ToString("dd/MM/yyyy")
+                        </td>
+
+                        <td class="text-center align-middle">
+                            @Model[i].InAmount
+                        </td>
+                        <td class="text-center align-middle">
+                            @Model[i].OutAmount
+                        </td>
+                        <td class="text-center align-middle">
+                            @Model[i].Net
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+    </body>
+
+
+
+
+
+
+

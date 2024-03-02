@@ -329,6 +329,11 @@ namespace Utility.Resource {
                 return ResourceManager.GetString("ClientsBalances", resourceCulture);
             }
         }
+        public static string SalesByDate {
+            get {
+                return ResourceManager.GetString("SalesByDate", resourceCulture);
+            }
+        }
         
         /// <summary>
         ///   Looks up a localized string similar to Clients statement.

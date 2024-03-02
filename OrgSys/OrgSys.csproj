@@ -70,6 +70,7 @@
     <Content Remove="Areas\Reports\Views\Purchases\SuppliersBalanceList.cshtml" />
     <Content Remove="Areas\Reports\Views\Purchases\SuppliersStatment.cshtml" />
     <Content Remove="Areas\Reports\Views\Purchases\SuppliersStatmentList.cshtml" />
+    <Content Remove="Areas\Reports\Views\Sales\ClientsBalancePDF.cshtml" />
     <Content Remove="Areas\Reports\Views\Warehouses\ClientsBalance.cshtml" />
     <Content Remove="Areas\Reports\Views\Warehouses\ClientsBalanceList.cshtml" />
     <Content Remove="Areas\Reports\Views\Sales\ClientsBalance.cshtml" />
@@ -291,6 +292,7 @@
     <EmbeddedResource Include="Areas\Reports\Views\Purchases\SuppliersBalanceList.cshtml" />
     <EmbeddedResource Include="Areas\Reports\Views\Purchases\SuppliersStatment.cshtml" />
     <EmbeddedResource Include="Areas\Reports\Views\Purchases\SuppliersStatmentList.cshtml" />
+    <EmbeddedResource Include="Areas\Reports\Views\Sales\ClientsBalancePDF.cshtml" />
     <EmbeddedResource Include="Areas\Reports\Views\Warehouses\ClientsBalance.cshtml" />
     <EmbeddedResource Include="Areas\Reports\Views\Warehouses\ClientsBalanceList.cshtml" />
     <EmbeddedResource Include="Areas\Reports\Views\Warehouses\StockMovement.cshtml" />
