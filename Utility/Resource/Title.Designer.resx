@@ -945,4 +945,67 @@
   <data name="Profile" xml:space="preserve">
     <value>Profile</value>
   </data>
+  <data name="AccountBank" xml:space="preserve">
+    <value>Account Bank</value>
+  </data>
+  <data name="AccountBanks" xml:space="preserve">
+    <value>Account Banks</value>
+  </data>
+  <data name="Accounts" xml:space="preserve">
+    <value>Accounts</value>
+  </data>
+  <data name="Area" xml:space="preserve">
+    <value>Area</value>
+  </data>
+  <data name="Areas" xml:space="preserve">
+    <value>Areas</value>
+  </data>
+  <data name="Bank" xml:space="preserve">
+    <value>Bank</value>
+  </data>
+  <data name="BankBranch" xml:space="preserve">
+    <value>Bank Branch</value>
+  </data>
+  <data name="BankBranchs" xml:space="preserve">
+    <value>Bank Branchs</value>
+  </data>
+  <data name="Banks" xml:space="preserve">
+    <value>Banks</value>
+  </data>
+  <data name="Cities" xml:space="preserve">
+    <value>Cities</value>
+  </data>
+  <data name="City" xml:space="preserve">
+    <value>City</value>
+  </data>
+  <data name="ClientGroup" xml:space="preserve">
+    <value>Client Group</value>
+  </data>
+  <data name="ClientGroups" xml:space="preserve">
+    <value>Client Groups</value>
+  </data>
+  <data name="Countries" xml:space="preserve">
+    <value>Countries</value>
+  </data>
+  <data name="Country" xml:space="preserve">
+    <value>Country</value>
+  </data>
+  <data name="District" xml:space="preserve">
+    <value>District</value>
+  </data>
+  <data name="Districts" xml:space="preserve">
+    <value>Districts</value>
+  </data>
+  <data name="SafeTerm" xml:space="preserve">
+    <value>Safe Term</value>
+  </data>
+  <data name="SafeTerms" xml:space="preserve">
+    <value>Safe Terms</value>
+  </data>
+  <data name="SupplierGroup" xml:space="preserve">
+    <value>Supplier Group</value>
+  </data>
+  <data name="SupplierGroups" xml:space="preserve">
+    <value>Supplier Groups</value>
+  </data>
 </root>

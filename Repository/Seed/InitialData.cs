@@ -26,7 +26,7 @@ namespace Repository.Seed
             var DatabaseVersion = config.GetSection("DatabaseVersion")?.Value ?? "0";
             AdminContext adminContext = new AdminContext(new DbContextOptions<AdminContext>());
             var admin = adminContext.Clients.FirstOrDefault(e => e.DbSchema == _Schema);
-            if (admin != null && admin.Id > 0 && "" + (admin?.VersionDb ?? 0) != DatabaseVersion)
+            if (admin != null && admin.Id > 0 /*&& "" + (admin?.VersionDb ?? 0) != DatabaseVersion*/)
             {
                 admin.VersionDb = long.Parse("0" + DatabaseVersion);
                 OrgContext orgContext = new OrgContext(new DbContextOptions<OrgContext>(), _Schema);
@@ -122,17 +122,29 @@ namespace Repository.Seed
 
                      new Permission { Id = 104, Name = "Dealers", Key = "Dealers", ParentId = 10 },
 
-                       new Permission { Id = 10401, Name = "Clients", Key = "Clients.All", ParentId = 104 },
-                           new Permission { Id = 1040101, Name = "View", Key = "Clients.View", ParentId = 10401, TypeId = 1 },
-                           new Permission { Id = 1040102, Name = "Add", Key = "Clients.Add", ParentId = 10401, TypeId = 1 },
-                           new Permission { Id = 1040103, Name = "Edit", Key = "Clients.Edit", ParentId = 10401, TypeId = 1 },
-                           new Permission { Id = 1040104, Name = "Delete", Key = "Clients.Delete", ParentId = 10401, TypeId = 1 },
+                       new Permission { Id = 10401, Name = "ClientGroups", Key = "ClientGroups.All", ParentId = 104 },
+                           new Permission { Id = 1040101, Name = "View", Key = "ClientGroups.View", ParentId = 10401, TypeId = 1 },
+                           new Permission { Id = 1040102, Name = "Add", Key = "ClientGroups.Add", ParentId = 10401, TypeId = 1 },
+                           new Permission { Id = 1040103, Name = "Edit", Key = "ClientGroups.Edit", ParentId = 10401, TypeId = 1 },
+                           new Permission { Id = 1040104, Name = "Delete", Key = "ClientGroups.Delete", ParentId = 10401, TypeId = 1 },
 
-                       new Permission { Id = 10402, Name = "Suppliers", Key = "Suppliers.All", ParentId = 104 },
-                           new Permission { Id = 1040201, Name = "View", Key = "Suppliers.View", ParentId = 10402, TypeId = 1 },
-                           new Permission { Id = 1040202, Name = "Add", Key = "Suppliers.Add", ParentId = 10402, TypeId = 1 },
-                           new Permission { Id = 1040203, Name = "Edit", Key = "Suppliers.Edit", ParentId = 10402, TypeId = 1 },
-                           new Permission { Id = 1040204, Name = "Delete", Key = "Suppliers.Delete", ParentId = 10402, TypeId = 1 },
+                       new Permission { Id = 10402, Name = "Clients", Key = "Clients.All", ParentId = 104 },
+                           new Permission { Id = 1040201, Name = "View", Key = "Clients.View", ParentId = 10402, TypeId = 1 },
+                           new Permission { Id = 1040202, Name = "Add", Key = "Clients.Add", ParentId = 10402, TypeId = 1 },
+                           new Permission { Id = 1040203, Name = "Edit", Key = "Clients.Edit", ParentId = 10402, TypeId = 1 },
+                           new Permission { Id = 1040204, Name = "Delete", Key = "Clients.Delete", ParentId = 10402, TypeId = 1 },
+
+                       new Permission { Id = 10403, Name = "SupplierGroups", Key = "SupplierGroups.All", ParentId = 104 },
+                           new Permission { Id = 1040301, Name = "View", Key = "SupplierGroups.View", ParentId = 10403, TypeId = 2 },
+                           new Permission { Id = 1040302, Name = "Add", Key = "SupplierGroups.Add", ParentId = 10403, TypeId = 2 },
+                           new Permission { Id = 1040303, Name = "Edit", Key = "SupplierGroups.Edit", ParentId = 10403, TypeId = 2 },
+                           new Permission { Id = 1040304, Name = "Delete", Key = "SupplierGroups.Delete", ParentId = 10403, TypeId = 2 },
+
+                       new Permission { Id = 10404, Name = "Suppliers", Key = "Suppliers.All", ParentId = 104 },
+                           new Permission { Id = 1040401, Name = "View", Key = "Suppliers.View", ParentId = 10404, TypeId = 2 },
+                           new Permission { Id = 1040402, Name = "Add", Key = "Suppliers.Add", ParentId = 10404, TypeId = 2 },
+                           new Permission { Id = 1040403, Name = "Edit", Key = "Suppliers.Edit", ParentId = 10404, TypeId = 2 },
+                           new Permission { Id = 1040404, Name = "Delete", Key = "Suppliers.Delete", ParentId = 10404, TypeId = 2 },
 
                     new Permission { Id = 105, Name = "Financials", Key = "Financials", ParentId = 10 },
 
@@ -166,17 +178,11 @@ namespace Repository.Seed
                            new Permission { Id = 1050503, Name = "Edit", Key = "Accountbanks.Edit", ParentId = 10505, TypeId = 1 },
                            new Permission { Id = 1050504, Name = "Delete", Key = "Accountbanks.Delete", ParentId = 10505, TypeId = 1 },
 
-                       new Permission { Id = 10506, Name = "Safes", Key = "Safes.All", ParentId = 105 },
-                           new Permission { Id = 1050601, Name = "View", Key = "Safes.View", ParentId = 10506, TypeId = 1 },
-                           new Permission { Id = 1050602, Name = "Add", Key = "Safes.Add", ParentId = 10506, TypeId = 1 },
-                           new Permission { Id = 1050603, Name = "Edit", Key = "Safes.Edit", ParentId = 10506, TypeId = 1 },
-                           new Permission { Id = 1050604, Name = "Delete", Key = "Safes.Delete", ParentId = 10506, TypeId = 1 },
-
-                       new Permission { Id = 10507, Name = "Outlay Terms", Key = "OutlayTerms.All", ParentId = 105 },
-                           new Permission { Id = 1050701, Name = "View", Key = "OutlayTerms.View", ParentId = 10507, TypeId = 1 },
-                           new Permission { Id = 1050702, Name = "Add", Key = "OutlayTerms.Add", ParentId = 10507, TypeId = 1 },
-                           new Permission { Id = 1050703, Name = "Edit", Key = "OutlayTerms.Edit", ParentId = 10507, TypeId = 1 },
-                           new Permission { Id = 1050704, Name = "Delete", Key = "OutlayTerms.Delete", ParentId = 10507, TypeId = 1 },
+                       new Permission { Id = 10507, Name = "Safe Terms", Key = "SafeTerms.All", ParentId = 105 },
+                           new Permission { Id = 1050701, Name = "View", Key = "SafeTerms.View", ParentId = 10507, TypeId = 1 },
+                           new Permission { Id = 1050702, Name = "Add", Key = "SafeTerms.Add", ParentId = 10507, TypeId = 1 },
+                           new Permission { Id = 1050703, Name = "Edit", Key = "SafeTerms.Edit", ParentId = 10507, TypeId = 1 },
+                           new Permission { Id = 1050704, Name = "Delete", Key = "SafeTerms.Delete", ParentId = 10507, TypeId = 1 },
 
                        new Permission { Id = 10508, Name = "Currencies", Key = "Currencies.All", ParentId = 105 },
                            new Permission { Id = 1050801, Name = "View", Key = "Currencies.View", ParentId = 10508, TypeId = 1 },

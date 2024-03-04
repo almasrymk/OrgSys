@@ -945,4 +945,67 @@
   <data name="Profile" xml:space="preserve">
     <value>الملف الشخصي</value>
   </data>
+  <data name="AccountBank" xml:space="preserve">
+    <value>حساب بنك</value>
+  </data>
+  <data name="AccountBanks" xml:space="preserve">
+    <value>حسابات البنوك</value>
+  </data>
+  <data name="Accounts" xml:space="preserve">
+    <value>شجرة الحسابات</value>
+  </data>
+  <data name="Area" xml:space="preserve">
+    <value>الموقع و المكان</value>
+  </data>
+  <data name="Areas" xml:space="preserve">
+    <value>المواقع و الاماكن</value>
+  </data>
+  <data name="Bank" xml:space="preserve">
+    <value>بنك</value>
+  </data>
+  <data name="BankBranch" xml:space="preserve">
+    <value>فرع بنك</value>
+  </data>
+  <data name="BankBranchs" xml:space="preserve">
+    <value>فروع البنوك</value>
+  </data>
+  <data name="Banks" xml:space="preserve">
+    <value>البنوك</value>
+  </data>
+  <data name="Cities" xml:space="preserve">
+    <value>المدن</value>
+  </data>
+  <data name="City" xml:space="preserve">
+    <value>مدينة</value>
+  </data>
+  <data name="ClientGroup" xml:space="preserve">
+    <value>مجموعة عميل</value>
+  </data>
+  <data name="ClientGroups" xml:space="preserve">
+    <value>مجموعات العملاء</value>
+  </data>
+  <data name="Countries" xml:space="preserve">
+    <value>البلاد</value>
+  </data>
+  <data name="Country" xml:space="preserve">
+    <value>البد</value>
+  </data>
+  <data name="District" xml:space="preserve">
+    <value>منطقة و حي</value>
+  </data>
+  <data name="Districts" xml:space="preserve">
+    <value>المناطق و الاحياء</value>
+  </data>
+  <data name="SafeTerm" xml:space="preserve">
+    <value>بند الخزانة</value>
+  </data>
+  <data name="SafeTerms" xml:space="preserve">
+    <value>بنود الخزانة</value>
+  </data>
+  <data name="SupplierGroup" xml:space="preserve">
+    <value>مجموعة مورد</value>
+  </data>
+  <data name="SupplierGroups" xml:space="preserve">
+    <value>مجموعات الموردين</value>
+  </data>
 </root>
