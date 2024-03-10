@@ -1008,4 +1008,13 @@
   <data name="SupplierGroups" xml:space="preserve">
     <value>Supplier Groups</value>
   </data>
+  <data name="ClientsGroup" xml:space="preserve">
+    <value>ClientsGroup</value>
+  </data>
+  <data name="DealersGroup" xml:space="preserve">
+    <value>DealersGroup</value>
+  </data>
+  <data name="SuppliersGroup" xml:space="preserve">
+    <value>SuppliersGroup</value>
+  </data>
 </root>

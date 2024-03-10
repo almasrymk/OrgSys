@@ -448,6 +448,15 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ClientsGroup.
+        /// </summary>
+        public static string ClientsGroup {
+            get {
+                return ResourceManager.GetString("ClientsGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Clients statement.
         /// </summary>
         public static string ClientsStatement {
@@ -669,6 +678,15 @@ namespace Utility.Resource {
         public static string Dealers {
             get {
                 return ResourceManager.GetString("Dealers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DealersGroup.
+        /// </summary>
+        public static string DealersGroup {
+            get {
+                return ResourceManager.GetString("DealersGroup", resourceCulture);
             }
         }
         
@@ -2361,6 +2379,15 @@ namespace Utility.Resource {
         public static string SuppliersBalances {
             get {
                 return ResourceManager.GetString("SuppliersBalances", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SuppliersGroup.
+        /// </summary>
+        public static string SuppliersGroup {
+            get {
+                return ResourceManager.GetString("SuppliersGroup", resourceCulture);
             }
         }
         

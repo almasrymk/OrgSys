@@ -162,7 +162,7 @@
                                     @if (User.IsAllowed("ClientGroups.All"))
                                     {
                                         <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "ClientGroup" && "" + ViewBag.TypeId  == "1" ? "active" : "")">
-                                            <a href="/Setting/ClientGroup?TypeId=1">
+                                            <a href="/Setting/DealerGroup?TypeId=1">
                                                 <i class="simple-icon-people"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.ClientGroups</span>
                                             </a>
                                         </li>
@@ -178,7 +178,7 @@
                                     @if (User.IsAllowed("SupplierGroups.All"))
                                     {
                                         <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "SupplierGroup"  &&  "" + ViewBag.TypeId  == "2" ? "active" : "")">
-                                            <a href="/Setting/SupplierGroup?TypeId=2">
+                                            <a href="/Setting/DealerGroup?TypeId=2">
                                                 <i class="simple-icon-people"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.SupplierGroups</span>
                                             </a>
                                         </li>
