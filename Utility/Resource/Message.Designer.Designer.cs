@@ -205,6 +205,15 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to CountryRequired.
+        /// </summary>
+        public static string CountryRequired {
+            get {
+                return ResourceManager.GetString("CountryRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Customer Required.
         /// </summary>
         public static string CustomerRequired {

@@ -165,6 +165,9 @@
   <data name="CostRequired" xml:space="preserve">
     <value>Cost Required</value>
   </data>
+  <data name="CountryRequired" xml:space="preserve">
+    <value>CountryRequired</value>
+  </data>
   <data name="CustomerRequired" xml:space="preserve">
     <value>Customer Required</value>
   </data>

@@ -83,6 +83,9 @@
     <Content Remove="Areas\Setting\Views\Branch\Index.cshtml" />
     <Content Remove="Areas\Setting\Views\Branch\List.cshtml" />
     <Content Remove="Areas\Setting\Views\Branch\Save.cshtml" />
+    <Content Remove="Areas\Setting\Views\City\Index.cshtml" />
+    <Content Remove="Areas\Setting\Views\City\List.cshtml" />
+    <Content Remove="Areas\Setting\Views\City\Save.cshtml" />
     <Content Remove="Areas\Setting\Views\Classification\Index.cshtml" />
     <Content Remove="Areas\Setting\Views\Classification\List.cshtml" />
     <Content Remove="Areas\Setting\Views\Classification\Save.cshtml" />
@@ -305,6 +308,9 @@
     <EmbeddedResource Include="Areas\Setting\Views\Branch\Index.cshtml" />
     <EmbeddedResource Include="Areas\Setting\Views\Branch\List.cshtml" />
     <EmbeddedResource Include="Areas\Setting\Views\Branch\Save.cshtml" />
+    <EmbeddedResource Include="Areas\Setting\Views\City\Index.cshtml" />
+    <EmbeddedResource Include="Areas\Setting\Views\City\List.cshtml" />
+    <EmbeddedResource Include="Areas\Setting\Views\City\Save.cshtml" />
     <EmbeddedResource Include="Areas\Setting\Views\Classification\Index.cshtml" />
     <EmbeddedResource Include="Areas\Setting\Views\Classification\List.cshtml" />
     <EmbeddedResource Include="Areas\Setting\Views\Classification\Save.cshtml" />

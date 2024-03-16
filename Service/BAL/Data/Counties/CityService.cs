@@ -1,6 +1,5 @@
 ﻿using Entity.Model;
 using Entity.ModelView;
-using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,12 +9,11 @@ using System.Threading.Tasks;
 
 namespace Service
 {
-   
-    public class CountryService : BaseOrgService<CountryModelView, Country>
+    public class CityService : BaseOrgService<CityModelView, City>
     {
-        public CountryService(string Schema) : base(Schema) { }
+        public CityService(string Schema) : base(Schema, "Country") { }
 
-        public override Expression<Func<Country, bool>> CreateFilter(string textSearch, long ParentId = 0, long TypeId = 0)
+        public override Expression<Func<City, bool>> CreateFilter(string textSearch, long ParentId = 0, long TypeId = 0)
         {
             return e => "" + textSearch == "" || e.Name.ToLower().Contains(textSearch.ToLower()) || e.Code.ToLower().Contains(textSearch.ToLower());
         }
