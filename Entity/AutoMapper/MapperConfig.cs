@@ -227,7 +227,9 @@ namespace Entity
 
             // District
             cfg.CreateMap<DistrictModelView, District>();
-            cfg.CreateMap<District, DistrictModelView>();
+            cfg.CreateMap<District, DistrictModelView>()
+             .ForMember(d => d.CountryName, o => o.MapFrom(s => s.Country.Name))
+            .ForMember(d => d.CityName, o => o.MapFrom(s => s.City.Name));
             //
 
             // Financial Invoice

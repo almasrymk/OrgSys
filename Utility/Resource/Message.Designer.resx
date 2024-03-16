@@ -135,6 +135,9 @@
   <data name="BranchRequired" xml:space="preserve">
     <value>Branch Required</value>
   </data>
+  <data name="CityRequired" xml:space="preserve">
+    <value>Ciry Required</value>
+  </data>
   <data name="ClassificationRequired" xml:space="preserve">
     <value>Classification Required</value>
   </data>

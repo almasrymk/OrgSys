@@ -95,6 +95,9 @@
     <Content Remove="Areas\Setting\Views\Dealer\Index.cshtml" />
     <Content Remove="Areas\Setting\Views\Dealer\List.cshtml" />
     <Content Remove="Areas\Setting\Views\Dealer\Save.cshtml" />
+    <Content Remove="Areas\Setting\Views\District\Index.cshtml" />
+    <Content Remove="Areas\Setting\Views\District\List.cshtml" />
+    <Content Remove="Areas\Setting\Views\District\Save.cshtml" />
     <Content Remove="Areas\Setting\Views\Outlay\Index.cshtml" />
     <Content Remove="Areas\Setting\Views\Outlay\List.cshtml" />
     <Content Remove="Areas\Setting\Views\Outlay\Save.cshtml" />
@@ -320,6 +323,9 @@
     <EmbeddedResource Include="Areas\Setting\Views\Dealer\Index.cshtml" />
     <EmbeddedResource Include="Areas\Setting\Views\Dealer\List.cshtml" />
     <EmbeddedResource Include="Areas\Setting\Views\Dealer\Save.cshtml" />
+    <EmbeddedResource Include="Areas\Setting\Views\District\Index.cshtml" />
+    <EmbeddedResource Include="Areas\Setting\Views\District\List.cshtml" />
+    <EmbeddedResource Include="Areas\Setting\Views\District\Save.cshtml" />
     <EmbeddedResource Include="Areas\Setting\Views\Outlay\Index.cshtml" />
     <EmbeddedResource Include="Areas\Setting\Views\Outlay\List.cshtml" />
     <EmbeddedResource Include="Areas\Setting\Views\Outlay\Save.cshtml" />
