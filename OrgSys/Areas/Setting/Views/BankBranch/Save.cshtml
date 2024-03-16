@@ -1,0 +1,228 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model Entity.ModelView.BankBranchModelView
+@{
+    ViewData["Title_Designer"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="HPage" class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="mb-3">
+                <h1>@Utility.Resource.Title_Designer.BankBranchs</h1>
+                <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
+                    <ol class="breadcrumb pt-0">
+                        <li class="breadcrumb-item">
+                            <a href="/">@Utility.Resource.Title_Designer.Home</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <span>@Utility.Resource.Title_Designer.Settings</span>
+                        </li>
+                        <li class="breadcrumb-item">
+                            @Utility.Resource.Title_Designer.Financial
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-12 col-lg-12 mb-4">
+            <div class="card h-100">
+
+                <div class="card p-4">
+                    <div class="d-md-block" id="displayOptions">
+                        <h3 class="mr-4 mb-2 ml-4 d-inline-block float-md-left">                         
+                            @if (Model == null || Model.Id == 0)
+                            {
+                                <span class="mb-4"> @Utility.Resource.Title_Designer.New ...</span>
+                            }
+                            else
+                            {
+                                <span class="mb-4"> @Utility.Resource.Title_Designer.Edit ...</span>
+                            }
+                        </h3>
+                        <div class="position-absolute card-top-buttons">
+                            <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId" class="btn btn-primary"><i class="simple-icon-action-undo"></i>  @Utility.Resource.Title_Designer.Back</a>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="card-body p-0">
+                        <form action="Save" method="post" enctype="multipart/form-data" class="tooltip-label-right">
+                            <input type="hidden" asp-for="Id" />
+                            <input type="hidden" asp-for="TypeId" />
+                            <input type="hidden" asp-for="ParentId" />
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label>@Utility.Resource.Title_Designer.Bank</label>
+                                    <div id="divBranch" class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" style="background-color:whitesmoke";><i class="simple-icon-share"></i></span>
+                                        </div>
+                                        <select asp-for="BankId" asp-items="@ViewBag.BankList" class="form-control">
+                                            <option value=""> ... </option>
+                                        </select>
+                                    </div>
+                                    @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.BranchRequired</small>*@
+                                    @Html.ValidationMessageFor(model => model.BankId, "", new { @class = "text-danger " })
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>@Utility.Resource.Title_Designer.Country</label>
+                                    <div id="divBranch" class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" style="background-color:whitesmoke" ;><i class="simple-icon-share"></i></span>
+                                        </div>
+                                        <select asp-for="CountryId" asp-items="@ViewBag.CountryList" class="form-control">
+                                            <option value=""> ... </option>
+                                        </select>
+                                    </div>
+                                    @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.BranchRequired</small>*@
+                                    @Html.ValidationMessageFor(model => model.CountryId, "", new { @class = "text-danger " })
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>@Utility.Resource.Title_Designer.City</label>
+                                    <div id="divBranch" class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" style="background-color:whitesmoke" ;><i class="simple-icon-share"></i></span>
+                                        </div>
+                                        <select asp-for="CityId" asp-items="@ViewBag.CityList" class="form-control">
+                                            <option value=""> ... </option>
+                                        </select>
+                                    </div>
+                                    @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.BranchRequired</small>*@
+                                    @Html.ValidationMessageFor(model => model.CityId, "", new { @class = "text-danger " })
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>@Utility.Resource.Title_Designer.District</label>
+                                    <div id="divBranch" class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" style="background-color:whitesmoke" ;><i class="simple-icon-share"></i></span>
+                                        </div>
+                                        <select asp-for="DistrictId" asp-items="@ViewBag.CityList" class="form-control">
+                                            <option value=""> ... </option>
+                                        </select>
+                                    </div>
+                                    @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.BranchRequired</small>*@
+                                    @Html.ValidationMessageFor(model => model.DistrictId, "", new { @class = "text-danger " })
+                                </div>
+                                <div class="form-group col-md-6">
+                                   <label>@Utility.Resource.Title_Designer.Name</label>
+                                    <input asp-for="Name" class="form-control" placeholder="@Utility.Resource.Title_Designer.Name" />
+                                    @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.NameRequired</small>*@
+                                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger " })
+                                </div>
+                            </div>
+                            <hr />
+                            <button type="button" onclick="Save()" class="btn btn-primary mb-0">@Utility.Resource.Title_Designer.Save</button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/vendor/jquery-3.3.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#CountryId').change(function () {
+            var countryId = $(this).val(); // Get selected country ID
+            if (countryId) {
+                $.ajax({
+                    url: '/Setting/BankBranch/GetCitiesByCountryId', // Adjust controller/action as necessary
+                    type: "GET",
+                    data: { countryId: countryId },
+                    success: function (cities) {
+                        $('#CityId').empty(); // Clear existing options
+                        $('#CityId').append('<option value="">Select a city...</option>');
+                        $.each(cities, function (index, city) {
+                            
+                            $('#CityId').append('<option value="' + city.id + '">' + city.name + '</option>');
+                        });
+                    }
+                });
+            } else {
+                $('#CityId').empty().append('<option value="">Select a country first...</option>');
+            }
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $('#CityId').change(function () {
+            var CityId = $(this).val(); // Get selected country ID
+            if (CityId) {
+                $.ajax({
+                    url: '/Setting/BankBranch/GetDistrictsByCityId', // Adjust controller/action as necessary
+                    type: "GET",
+                    data: { CityId: CityId },
+                    success: function (districts) {
+                        $('#DistrictId').empty(); // Clear existing options
+                        $('#DistrictId').append('<option value="">Select a city...</option>');
+                        $.each(districts, function (index, district) {
+                            console.log("c", district)
+                            $('#DistrictId').append('<option value="' + district.id + '">' + district.name + '</option>');
+                        });
+                    }
+                });
+            } else {
+                $('#CityId').empty().append('<option value="">Select a country first...</option>');
+            }
+        });
+    });
+</script>
+
+<script>
+
+    function Save() {
+        var Valid = true;
+
+        if (CheckRequired("CountryId", "divBranch", '@Utility.Resource.Message_Designer.CountryRequired'))
+            Valid = false;
+
+
+        if (CheckRequired("BankId", "divBranch", '@Utility.Resource.Message_Designer.BankRequired'))
+            Valid = false;
+            if (CheckRequired("CityId", "divBranch", '@Utility.Resource.Message_Designer.CityRequired'))
+            Valid = false;
+
+        if (CheckRequired("DistrictId", "divBranch", '@Utility.Resource.Message_Designer.DistrictRequired'))
+            Valid = false;
+        if (CheckRequired("Name", "Name", '@Utility.Resource.Message_Designer.NameRequired'))
+            Valid = false;
+
+        else if (CheckRage("Name", "Name", 3, 50, '@Utility.Resource.Message_Designer.NameRange'))
+            Valid = false;
+
+        if (Valid == true) {
+
+            var data = {
+                Id: $('#Id').val(),
+                BankId: $('#BankId').val().trim(),
+                CountryId: $('#CountryId').val().trim(),
+                CityId: $('#CityId').val().trim(),
+                DistrictId: $('#DistrictId').val().trim(),
+                Name: $('#Name').val().trim(),
+                ParentId: $('#ParentId').val(),
+                TypeId: $('#TypeId').val()
+            };
+
+            $.ajax({
+                type: 'POST',
+                url: "/Setting/BankBranch/Save",
+                data: { model: data},
+                success: function (res) {
+                    if (res.status == "success") {
+                        window.location.replace(res.url);
+                    }
+                    else {
+                        LogError(data.Error);
+                    }
+                }
+            });
+        }
+    }
+</script>

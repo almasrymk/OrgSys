@@ -19,9 +19,9 @@ namespace Service
             return e => "" + textSearch == "" || e.Name.ToLower().Contains(textSearch.ToLower()) || e.Code.ToLower().Contains(textSearch.ToLower());
         }
 
-        public virtual List<DistrictModelView> GetById(long parentId = 0, long TypeId = 0)
+        public virtual List<DistrictModelView> GetById(long parentId = 0)
         {
-            return repo.GetList(CreateFilter("", parentId, TypeId), e => e.OrderBy(e => e.Id), Includes, Utility.Status.New).Select(e => e.Map<DistrictModelView>()).ToList();
+            return repo.GetList(CreateFilter("", parentId), e => e.OrderBy(e => e.Id), Includes, Utility.Status.New).Where(x => x.CityId == parentId).Select(e => e.Map<DistrictModelView>()).ToList();
         }
     }
 }

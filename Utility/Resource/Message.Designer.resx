@@ -126,6 +126,9 @@
   <data name="AddressRequired" xml:space="preserve">
     <value>Address Required</value>
   </data>
+  <data name="BankRequired" xml:space="preserve">
+    <value>Bank Required</value>
+  </data>
   <data name="BarcodeRange" xml:space="preserve">
     <value>The barcode is a letter number between 5 to 15</value>
   </data>
@@ -185,6 +188,9 @@
   </data>
   <data name="DescriptionRequired" xml:space="preserve">
     <value>Description Required</value>
+  </data>
+  <data name="DistrictRequired" xml:space="preserve">
+    <value>District Required</value>
   </data>
   <data name="DoublicatUserName" xml:space="preserve">
     <value>Doublicat is UserName / Email</value>

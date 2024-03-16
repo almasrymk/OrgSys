@@ -88,6 +88,15 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bank Required.
+        /// </summary>
+        public static string BankRequired {
+            get {
+                return ResourceManager.GetString("BankRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The barcode is a letter number between 5 to 15.
         /// </summary>
         public static string BarcodeRange {
@@ -264,6 +273,15 @@ namespace Utility.Resource {
         public static string DescriptionRequired {
             get {
                 return ResourceManager.GetString("DescriptionRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to District Required.
+        /// </summary>
+        public static string DistrictRequired {
+            get {
+                return ResourceManager.GetString("DistrictRequired", resourceCulture);
             }
         }
         
