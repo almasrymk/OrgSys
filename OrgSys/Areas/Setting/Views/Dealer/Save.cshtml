@@ -70,6 +70,16 @@
                                             @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.CodeIncreasedAutomaticallyCanBechanged</small>*@
                                             @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger " })
                                         </div>
+                                        <div id="divBranch" class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" style="background-color:whitesmoke" ;><i class="simple-icon-share"></i></span>
+                                            </div>
+                                            <select asp-for="DealerGroupId" asp-items="@ViewBag.DealersGroupList" class="form-control">
+                                                <option value=""> ... </option>
+                                            </select>
+                                        </div>
+                                        @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.BranchRequired</small>*@
+                                        @Html.ValidationMessageFor(model => model.DealerGroupId, "", new { @class = "text-danger " })
                                         <div class="form-group col-md-6">
                                             <label>@Utility.Resource.Title_Designer.Name</label>
                                             @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Name })
@@ -159,3 +169,4 @@
         }
     }
 </script>
+

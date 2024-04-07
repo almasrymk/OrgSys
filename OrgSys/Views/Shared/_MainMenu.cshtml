@@ -267,7 +267,7 @@
                         </li>
                     }
 
-                    @if (User.IsAllowed("Countries.All,Cities.All,Districts.All"))
+                    @if (User.IsAllowed("Countrys.All,Citys.All,Districts.All"))
                     {
                         <li>
                             <a href="#" data-toggle="collapse" data-target="#collapseAreas" aria-expanded="false"
@@ -276,7 +276,7 @@
                             </a>
                             <div id="collapseAreas" class="collapse  @("Country,City,District".Contains(ViewContext.RouteData.Values["controller"].ToString()) ? "show" : "")">
                                 <ul class="list-unstyled inner-level-menu">
-                                    @if (User.IsAllowed("Countries.All"))
+                                    @if (User.IsAllowed("Countrys.All"))
                                     {
                                         <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Country"  ? "active" : "")">
                                             <a href="/Setting/Country">
@@ -284,7 +284,7 @@
                                             </a>
                                         </li>
                                     }
-                                    @if (User.IsAllowed("Cities.All"))
+                                    @if (User.IsAllowed("Citys.All"))
                                     {
                                         <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "City"  ? "active" : "")">
                                             <a href="/Setting/City">

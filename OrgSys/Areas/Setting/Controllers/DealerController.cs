@@ -2,6 +2,7 @@
 using System.Linq;
 using Entity.ModelView;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using OrgSys.Controllers;
 using Service;
 
@@ -10,8 +11,15 @@ namespace OrgSys.Areas.Setting.Controllers
     [Area("Setting")]
     public class DealerController : BaseController<DealerModelView>
     {
+
+        public override void LoadViewBag(DealerModelView model)
+        {
+            ViewBag.DealersGroupList = new SelectList(new DealerGroupService(User.GetSchema()).GetAll(model.ParentId, model.TypeId), "Id", "Name", model.DealerGroupId);
+            // ViewBag.CityList = new SelectList(new CityService(User.GetSchema()).GetAll(model.ParentId, model.TypeId), "Id", "Name", model.CityId);
+        }
         public override DealerModelView InitializeData(DealerModelView ob)
         {
+            ViewBag.DealersGroupList = new SelectList(new DealerGroupService(User.GetSchema()).GetAll(ob.ParentId, ob.TypeId), "Id", "Name", ob.DealerGroupId);
             if (ob == null)
                 ob = new DealerModelView();
             if (ob.Id == 0)
