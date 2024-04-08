@@ -32,7 +32,7 @@
                         <th class="text-center">#</th>
                         <th style="text-align:center"></th>
                         <th class="@TextAlign align-middle">@Utility.Resource.Title_Designer.Name</th>
-                        <th class="@TextAlign align-middle">@Utility.Resource.Title_Designer.Country</th>
+                        <th class="@TextAlign align-middle">@Utility.Resource.Title_Designer.AccountType</th>
                         <th class="@TextAlign align-middle">@Utility.Resource.Title_Designer.Country</th>
                         @if (AllowEdit || AllowCancel || AllowDelete)
                         {
@@ -112,11 +112,18 @@
                             <small>@Utility.Resource.Title_Designer.Name</small>
                         </div>
                         <div class="list-item-heading mb-0 w-40">
-                            <small>@Utility.Resource.Title_Designer.Country</small>
+                            <small>@Utility.Resource.Title_Designer.AccountType</small>
                         </div>
-                        <div class="w-15 @TextAlign2">
-
+                        <div class="list-item-heading mb-0 w-40">
+                            <small>@Utility.Resource.Title_Designer.Parent</small>
                         </div>
+                        <div class="list-item-heading mb-0 w-40">
+                            <small>@Utility.Resource.Title_Designer.Credit</small>
+                        </div>
+                        <div class="list-item-heading mb-0 w-40">
+                            <small>@Utility.Resource.Title_Designer.Debit</small>
+                        </div>
+                      
                     </div>
 
                     <div style="width:30px;">
@@ -147,6 +154,13 @@
                                     @Model[i].ParentId
                                 </a>
                             </div>
+                             <div class="list-item-heading mb-0 w-80">
+                                @Model[i].Credit
+                            </div>
+                            <div class="list-item-heading mb-0 w-80">
+                                @Model[i].Debit
+                            </div>
+                         
                             <div class="w-15 @TextAlign2">
                                 @if (AllowEdit)
                                 {

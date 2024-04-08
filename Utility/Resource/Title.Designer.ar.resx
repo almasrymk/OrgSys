@@ -1008,4 +1008,10 @@
   <data name="SupplierGroups" xml:space="preserve">
     <value>مجموعات الموردين</value>
   </data>
+  <data name="AccountType" xml:space="preserve">
+    <value>نوع الحساب</value>
+  </data>
+  <data name="Parent" xml:space="preserve">
+    <value>حساب</value>
+  </data>
 </root>

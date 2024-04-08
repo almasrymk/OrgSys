@@ -9,7 +9,7 @@
     <div class="row">
         <div class="col-12">
             <div class="mb-3">
-                <h1>@Utility.Resource.Title_Designer.City</h1>
+                <h1>@Utility.Resource.Title_Designer.Account</h1>
                 <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
                     <ol class="breadcrumb pt-0">
                         <li class="breadcrumb-item">
@@ -19,7 +19,7 @@
                             <span>@Utility.Resource.Title_Designer.Settings</span>
                         </li>
                         <li class="breadcrumb-item">
-                            @Utility.Resource.Title_Designer.Areas
+                            @Utility.Resource.Title_Designer.Financial
                         </li>
                     </ol>
                 </nav>
@@ -56,7 +56,7 @@
 
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <label>@Utility.Resource.Title_Designer.Country</label>
+                                    <label>@Utility.Resource.Title_Designer.Parent</label>
                                     <div id="divBranch" class="input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" style="background-color:whitesmoke";><i class="simple-icon-share"></i></span>
@@ -69,7 +69,7 @@
                                     @Html.ValidationMessageFor(model => model.ParentId, "", new { @class = "text-danger " })
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label>@Utility.Resource.Title_Designer.Country</label>
+                                    <label>@Utility.Resource.Title_Designer.AccountType</label>
                                     <div id="divBranch" class="input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" style="background-color:whitesmoke" ;><i class="simple-icon-share"></i></span>
@@ -86,6 +86,20 @@
                                     <input asp-for="Name" class="form-control" placeholder="@Utility.Resource.Title_Designer.Name" />
                                     @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.NameRequired</small>*@
                                     @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger " })
+                                </div>
+
+                                  <div class="form-group col-md-6">
+                                    <label>@Utility.Resource.Title_Designer.Debit</label>
+                                    <input asp-for="Debit" class="form-control" placeholder="@Utility.Resource.Title_Designer.Name" />
+                                    @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.NameRequired</small>*@
+                                    @Html.ValidationMessageFor(model => model.Debit, "", new { @class = "text-danger " })
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label>@Utility.Resource.Title_Designer.Credit</label>
+                                    <input asp-for="Credit" class="form-control" placeholder="@Utility.Resource.Title_Designer.Name" />
+                                    @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.NameRequired</small>*@
+                                    @Html.ValidationMessageFor(model => model.Credit, "", new { @class = "text-danger " })
                                 </div>
                             </div>
                             <hr />
@@ -121,8 +135,10 @@
                
                 Name: $('#Name').val().trim(),
                 ParentId: $('#ParentId').val(),
-                TypeId: $('#TypeId').val(),
-                AccountTypeId: $('#AccountTypeId').val()
+                TypeId: $('#TypeId').val().trim(),
+                AccountTypeId: $('#AccountTypeId').val(),
+                Debit: $('#Debit').val(),
+                Credit: $('#Credit').val(),
 
             };
 
