@@ -149,7 +149,7 @@
 
                         </li>
                     }
-                   
+
                     @if (User.IsAllowed("ClientGroups.All,Clients.All,SupplierGroups.All,Suppliers.All"))
                     {
                         <li>
@@ -424,16 +424,16 @@
                         </a>
                         <div id="collapsePurchasesReports" class="collapse">
                             <ul class="list-unstyled inner-level-menu">
-                                @* <li>
-                            <a href="/Reports/Lookups/Clients">
-                            <i class="glyph-icon iconsminds-business-man-woman"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Clients</span>
-                            </a>
-                            </li>
-                            <li>
-                            <a href="/Reports/Lookups/Suppliers">
-                            <i class="glyph-icon iconsminds-business-mens"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Suppliers</span>
-                            </a>
-                            </li>*@
+                                <li>
+                                    <a href="/Reports/Lookups/Clients">
+                                        <i class="glyph-icon iconsminds-letter-open"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Clients</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/Reports/Lookups/Suppliers">
+                                        <i class="glyph-icon iconsminds-letter-open"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Suppliers</span>
+                                    </a>
+                                </li>
                                 <li>
                                     <a href="/Reports/Sales/ClientsStatment">
                                         <i class="glyph-icon iconsminds-letter-open"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.ClientsStatement</span>
@@ -444,7 +444,16 @@
                                         <i class="glyph-icon iconsminds-files"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.SuppliersStatement</span>
                                     </a>
                                 </li>
-
+                                <li>
+                                    <a href="/Reports/Sales/SalesClient">
+                                        <i class="glyph-icon iconsminds-profile"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.SalesClient</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/Reports/Sales/SalesBalance">
+                                        <i class="glyph-icon iconsminds-profile"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.SalesBalance</span>
+                                    </a>
+                                </li>
                                 <li>
                                     <a href="/Reports/Sales/ClientsBalance">
                                         <i class="glyph-icon iconsminds-profile"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.ClientsBalances</span>
@@ -465,10 +474,10 @@
                 <ul class="list-unstyled" data-link="Transaction" id="Transaction">
                     <li>
                         <a href="#" data-toggle="collapse" data-target="#collapseTransaction" aria-expanded="true"
-                           aria-controls="collapseTransaction" class="rotate-arrow-icon opacity-50">
+                           aria-controls="collapseTransaction" class="rotate-arrow-icon opacity-50 collapsed">
                             <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.TransactionNotices</span>
                         </a>
-                        <div id="collapseTransaction" class="collapse show">
+                        <div id="collapseTransaction" class="collapse">
                             <ul class="list-unstyled inner-level-menu">
                                 @if (User.IsAllowed("Addition.All"))
                                 {

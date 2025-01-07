@@ -63,23 +63,41 @@
                                     @Html.HiddenFor(model => model.TypeId)
                                     @Html.HiddenFor(model => model.ParentId)
                                     @Html.HiddenFor(model => model.ImgPath)
+                                    <div class="form-row">                                       
+                                        <div class="form-group col-md-6">
+                                            <label>
+                                                @if (Model.TypeId == 1)
+                                                {
+                                                    @Utility.Resource.Title_Designer.ClientGroup
+                                                }
+                                                else if (Model.TypeId == 2)
+                                                {
+                                                    @Utility.Resource.Title_Designer.SuppliersGroup
+                                                }
+                                            </label>
+                                            <div id="divDealerGroupName">
+                                                <div class="input-group DropAutoComplete">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i class="simple-icon-people"></i></span>
+                                                    </div>
+                                                    <input type="text" class="form-control Droptxt" id="txtDealerGroupId" value="@Model.DealerGroupName" autocomplete="off" />
+                                                    @Html.HiddenFor(model => model.DealerGroupId)
+                                                    <div class="input-group-prepend Dropbtn">
+                                                        <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
+                                                    </div>
+                                                </div>
+                                                @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                                            </div>
+                                            @Html.ValidationMessageFor(model => model.DealerGroupId, "", new { @class = "text-danger " })
+                                        </div>                                       
+                                    </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label>@Utility.Resource.Title_Designer.Code</label>
                                             @Html.TextBoxFor(model => model.Code, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Code })
                                             @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.CodeIncreasedAutomaticallyCanBechanged</small>*@
                                             @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger " })
-                                        </div>
-                                        <div id="divBranch" class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" style="background-color:whitesmoke" ;><i class="simple-icon-share"></i></span>
-                                            </div>
-                                            <select asp-for="DealerGroupId" asp-items="@ViewBag.DealersGroupList" class="form-control">
-                                                <option value=""> ... </option>
-                                            </select>
-                                        </div>
-                                        @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.BranchRequired</small>*@
-                                        @Html.ValidationMessageFor(model => model.DealerGroupId, "", new { @class = "text-danger " })
+                                        </div>                                       
                                         <div class="form-group col-md-6">
                                             <label>@Utility.Resource.Title_Designer.Name</label>
                                             @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Name })
@@ -157,7 +175,85 @@
     </div>
 </div>
 
+<script src="~/js/vendor/jquery-3.3.1.min.js"></script>
+<script src="~/js/vendor/bootstrap3-typeahead.js"></script>
+<link href="~/css/jquery-ui.css" rel="stylesheet" />
+<script src="~/js/jquery-ui.js"></script>
+<script src="~/js/PopupScript.js"></script>
 <script>
+       jQuery(function ($) {
+        RefreshSomeEventListener();
+        function RefreshSomeEventListener () {
+            $("#txtDealerGroupId").autocomplete({
+                minLength: 0,
+                source: function (request, response) {
+                    var searchPhrase = $("#txtDealerGroupId").val();//request.term.trim().toLowerCase();
+                    var TypeId = $("#TypeId").val()
+                    var noResultsLabel = 'NoResultsFound';
+                    if (searchPhrase == "...")
+                        searchPhrase = "";
+                    $.ajax({
+                        url: "/Setting/DealerGroup/GetList",
+                        type: "Get",
+                        dataType: "json",
+                        data: { txtSearch: searchPhrase, TypeId : TypeId, page: 1, pageSize: 7 },
+                        success: function (data) {
+                            try {
+                                if (!data.length) {
+                                    data = [{ name: noResultsLabel }];
+                                }
+
+                                if ("" + $("#txtDealerGroupId").val() == "") {
+                                    $("#DealerGroupId").val("");
+                                    $("#errorDealerGroupId").remove();
+                                }
+
+                                response($.map(data, function (item) {
+                                    return {
+                                        label: item.name, value: item.name, id: item.id
+                                    };
+                                }));
+                            } catch (err) { }
+                        }
+                    });
+                },
+                select: function (event, ui) {
+                    if (ui.item.label === 'NoResultsFound') {
+                        event.preventDefault();
+                        return;
+                    }
+                    $("#DealerGroupId").val(ui.item.id);
+                    $("#errorDealerGroupId").remove();
+                },
+                focus: function (event, ui) {
+                    if (ui.item.label === 'NoResultsFound') {
+                        event.preventDefault();
+                    }
+                }
+            });
+
+            $(".Droptxt").click(function () {
+                event.preventDefault();
+                if ($(this).val() == "" || $(this).val() == "...")
+                    $(this).autocomplete("search", "");
+                return;
+            });
+
+            $(".Dropbtn").click(function () {
+                event.preventDefault();
+                $(this).parent().find(".Droptxt").autocomplete("search", "");
+                return;
+            });
+         
+            $(".Droptxt").dblclick(function () {
+                event.preventDefault();
+                if ($(this).val() != "")
+                    $(this).autocomplete("search", "");
+                return;
+            });
+        }
+    });
+
     function SelectImage(input) {
         //$("#data_PhotoPath").val("sdf");
         if (input.files && input.files[0]) {
@@ -167,6 +263,6 @@
             }
             reader.readAsDataURL(input.files[0]);
         }
-    }
+    }  
 </script>
 

@@ -448,7 +448,7 @@ namespace Utility.Resource {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ClientsGroup.
+        ///   Looks up a localized string similar to Clients Group.
         /// </summary>
         public static string ClientsGroup {
             get {
@@ -2059,6 +2059,24 @@ namespace Utility.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sales Balance.
+        /// </summary>
+        public static string SalesBalance {
+            get {
+                return ResourceManager.GetString("SalesBalance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sales Client.
+        /// </summary>
+        public static string SalesClient {
+            get {
+                return ResourceManager.GetString("SalesClient", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sales Detail.
         /// </summary>
         public static string SalesDetail {
@@ -2320,15 +2338,6 @@ namespace Utility.Resource {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
-        public static string String1 {
-            get {
-                return ResourceManager.GetString("String1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Suplier Sheet Report.
         /// </summary>
         public static string SuplierSheetReport {
@@ -2392,7 +2401,7 @@ namespace Utility.Resource {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SuppliersGroup.
+        ///   Looks up a localized string similar to Suppliers Group.
         /// </summary>
         public static string SuppliersGroup {
             get {

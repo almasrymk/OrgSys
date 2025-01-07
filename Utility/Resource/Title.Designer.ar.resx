@@ -1008,4 +1008,10 @@
   <data name="SupplierGroups" xml:space="preserve">
     <value>مجموعات الموردين</value>
   </data>
+  <data name="SalesBalance" xml:space="preserve">
+    <value>رصيد المندوب</value>
+  </data>
+  <data name="SalesClient" xml:space="preserve">
+    <value>عملاء المندوب</value>
+  </data>
 </root>

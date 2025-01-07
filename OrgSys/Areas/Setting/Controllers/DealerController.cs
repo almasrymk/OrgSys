@@ -17,6 +17,7 @@ namespace OrgSys.Areas.Setting.Controllers
             ViewBag.DealersGroupList = new SelectList(new DealerGroupService(User.GetSchema()).GetAll(model.ParentId, model.TypeId), "Id", "Name", model.DealerGroupId);
             // ViewBag.CityList = new SelectList(new CityService(User.GetSchema()).GetAll(model.ParentId, model.TypeId), "Id", "Name", model.CityId);
         }
+
         public override DealerModelView InitializeData(DealerModelView ob)
         {
             ViewBag.DealersGroupList = new SelectList(new DealerGroupService(User.GetSchema()).GetAll(ob.ParentId, ob.TypeId), "Id", "Name", ob.DealerGroupId);

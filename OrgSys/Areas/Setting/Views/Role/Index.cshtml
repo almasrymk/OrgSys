@@ -7,7 +7,7 @@
 <div class="container-fluid disable-text-selection">
     <div class="row">
         <div class="col-12">
-            <div class="mb-3">
+            <div class="mb-2">
                 <h1>@Utility.Resource.Title_Designer.Roles</h1>
                 <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
                     <ol class="breadcrumb pt-0">
@@ -23,7 +23,7 @@
                     </ol>
                 </nav>
             </div>
-            <div class="mb-2">
+            <div class="">
                 <a class="btn pt-0 pl-0 d-inline-block d-md-none" data-toggle="collapse" href="#displayOptions"
                    role="button" aria-expanded="true" aria-controls="displayOptions">
                     @Utility.Resource.Title_Designer.DisplayOptions
@@ -80,7 +80,7 @@
                     <input type="hidden" id="TypeId" value="@ViewBag.TypeId" />
                 </div>
             </div>
-            <div class="separator mb-3"></div>
+            @* <div class="separator mb-3"></div> *@
         </div>
     </div>
     @if (Model != null && Model.Count > 0)

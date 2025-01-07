@@ -1009,15 +1009,18 @@
     <value>Supplier Groups</value>
   </data>
   <data name="ClientsGroup" xml:space="preserve">
-    <value>ClientsGroup</value>
+    <value>Clients Group</value>
   </data>
   <data name="DealersGroup" xml:space="preserve">
     <value>DealersGroup</value>
   </data>
   <data name="SuppliersGroup" xml:space="preserve">
-    <value>SuppliersGroup</value>
+    <value>Suppliers Group</value>
   </data>
-  <data name="String1" xml:space="preserve">
-    <value />
+  <data name="SalesBalance" xml:space="preserve">
+    <value>Sales Balance</value>
+  </data>
+  <data name="SalesClient" xml:space="preserve">
+    <value>Sales Client</value>
   </data>
 </root>
