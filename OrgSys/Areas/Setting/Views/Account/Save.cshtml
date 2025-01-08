@@ -1,0 +1,160 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model Entity.ModelView.AccountModelView
+@{
+    ViewData["Title_Designer"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="HPage" class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="mb-3">
+                <h1>@Utility.Resource.Title_Designer.Account</h1>
+                <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
+                    <ol class="breadcrumb pt-0">
+                        <li class="breadcrumb-item">
+                            <a href="/">@Utility.Resource.Title_Designer.Home</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <span>@Utility.Resource.Title_Designer.Settings</span>
+                        </li>
+                        <li class="breadcrumb-item">
+                            @Utility.Resource.Title_Designer.Financial
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-12 col-lg-12 mb-4">
+            <div class="card h-100">
+
+                <div class="card p-4">
+                    <div class="d-md-block" id="displayOptions">
+                        <h3 class="mr-4 mb-2 ml-4 d-inline-block float-md-left">                         
+                            @if (Model == null || Model.Id == 0)
+                            {
+                                <span class="mb-4"> @Utility.Resource.Title_Designer.New ...</span>
+                            }
+                            else
+                            {
+                                <span class="mb-4"> @Utility.Resource.Title_Designer.Edit ...</span>
+                            }
+                        </h3>
+                        <div class="position-absolute card-top-buttons">
+                            <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId" class="btn btn-primary"><i class="simple-icon-action-undo"></i>  @Utility.Resource.Title_Designer.Back</a>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="card-body p-0">
+                        <form action="Save" method="post" enctype="multipart/form-data" class="tooltip-label-right">
+                            <input type="hidden" asp-for="Id" />
+                            <input type="hidden" asp-for="TypeId" />
+                            <input type="hidden" asp-for="ParentId" />
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label>@Utility.Resource.Title_Designer.Parent</label>
+                                    <div id="divBranch" class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" style="background-color:whitesmoke";><i class="simple-icon-share"></i></span>
+                                        </div>
+                                        <select asp-for="ParentId" asp-items="@ViewBag.BranchList" class="form-control">
+                                            <option value=""> ... </option>
+                                        </select>
+                                    </div>
+                                    @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.BranchRequired</small>*@
+                                    @Html.ValidationMessageFor(model => model.ParentId, "", new { @class = "text-danger " })
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>@Utility.Resource.Title_Designer.AccountType</label>
+                                    <div id="divBranch" class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" style="background-color:whitesmoke" ;><i class="simple-icon-share"></i></span>
+                                        </div>
+                                        <select asp-for="AccountTypeId" asp-items="@ViewBag.AccountType" class="form-control">
+                                            <option value=""> ... </option>
+                                        </select>
+                                    </div>
+                                    @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.BranchRequired</small>*@
+                                    @Html.ValidationMessageFor(model => model.AccountTypeId, "", new { @class = "text-danger " })
+                                </div>
+                                <div class="form-group col-md-6">
+                                   <label>@Utility.Resource.Title_Designer.Name</label>
+                                    <input asp-for="Name" class="form-control" placeholder="@Utility.Resource.Title_Designer.Name" />
+                                    @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.NameRequired</small>*@
+                                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger " })
+                                </div>
+
+                                  <div class="form-group col-md-6">
+                                    <label>@Utility.Resource.Title_Designer.Debit</label>
+                                    <input asp-for="Debit" class="form-control" placeholder="@Utility.Resource.Title_Designer.Name" />
+                                    @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.NameRequired</small>*@
+                                    @Html.ValidationMessageFor(model => model.Debit, "", new { @class = "text-danger " })
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label>@Utility.Resource.Title_Designer.Credit</label>
+                                    <input asp-for="Credit" class="form-control" placeholder="@Utility.Resource.Title_Designer.Name" />
+                                    @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.NameRequired</small>*@
+                                    @Html.ValidationMessageFor(model => model.Credit, "", new { @class = "text-danger " })
+                                </div>
+                            </div>
+                            <hr />
+                            <button type="button" onclick="Save()" class="btn btn-primary mb-0">@Utility.Resource.Title_Designer.Save</button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/vendor/jquery-3.3.1.min.js"></script>
+<script>
+
+    function Save() {
+        var Valid = true;
+
+        if (CheckRequired("ParentId", "divBranch", '@Utility.Resource.Message_Designer.CountryRequired'))
+            Valid = false;
+
+        if (CheckRequired("Name", "Name", '@Utility.Resource.Message_Designer.NameRequired'))
+            Valid = false;
+
+        else if (CheckRage("Name", "Name", 3, 50, '@Utility.Resource.Message_Designer.NameRange'))
+            Valid = false;
+
+        if (Valid == true) {
+
+            var data = {
+                Id: $('#Id').val(),
+               
+                Name: $('#Name').val().trim(),
+                ParentId: $('#ParentId').val(),
+                TypeId: $('#TypeId').val().trim(),
+                AccountTypeId: $('#AccountTypeId').val(),
+                Debit: $('#Debit').val(),
+                Credit: $('#Credit').val(),
+
+            };
+
+            $.ajax({
+                type: 'POST',
+                url: "/Setting/Account/Save",
+                data: { model: data},
+                success: function (res) {
+                    if (res.status == "success") {
+                        window.location.replace(res.url);
+                    }
+                    else {
+                        LogError(data.Error);
+                    }
+                }
+            });
+        }
+    }
+</script>

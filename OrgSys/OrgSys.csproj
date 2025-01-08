@@ -80,6 +80,9 @@
     <Content Remove="Areas\Reports\Views\Warehouses\ProductMovementList.cshtml" />
     <Content Remove="Areas\Reports\Views\Warehouses\StockMovement.cshtml" />
     <Content Remove="Areas\Reports\Views\Warehouses\StockMovementList.cshtml" />
+    <Content Remove="Areas\Setting\Views\Account\Index.cshtml" />
+    <Content Remove="Areas\Setting\Views\Account\List.cshtml" />
+    <Content Remove="Areas\Setting\Views\Account\Save.cshtml" />
     <Content Remove="Areas\Setting\Views\BankBranch\Index.cshtml" />
     <Content Remove="Areas\Setting\Views\BankBranch\List.cshtml" />
     <Content Remove="Areas\Setting\Views\BankBranch\Save.cshtml" />
@@ -311,6 +314,9 @@
     <EmbeddedResource Include="Areas\Reports\Views\Sales\ClientsStatment.cshtml" />
     <EmbeddedResource Include="Areas\Reports\Views\Sales\ClientsBalanceList.cshtml" />
     <EmbeddedResource Include="Areas\Reports\Views\Sales\ClientsStatmentList.cshtml" />
+    <EmbeddedResource Include="Areas\Setting\Views\Account\Index.cshtml" />
+    <EmbeddedResource Include="Areas\Setting\Views\Account\List.cshtml" />
+    <EmbeddedResource Include="Areas\Setting\Views\Account\Save.cshtml" />
     <EmbeddedResource Include="Areas\Setting\Views\BankBranch\Index.cshtml" />
     <EmbeddedResource Include="Areas\Setting\Views\BankBranch\List.cshtml" />
     <EmbeddedResource Include="Areas\Setting\Views\BankBranch\Save.cshtml" />

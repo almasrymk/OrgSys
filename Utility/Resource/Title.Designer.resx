@@ -1023,4 +1023,10 @@
   <data name="SalesClient" xml:space="preserve">
     <value>Sales Client</value>
   </data>
+  <data name="AccountType" xml:space="preserve">
+    <value>Account Type</value>
+  </data>
+  <data name="Parent" xml:space="preserve">
+    <value>Parent</value>
+  </data>
 </root>
