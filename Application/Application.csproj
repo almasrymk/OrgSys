@@ -7,16 +7,31 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Contracts\**" />
+    <Compile Remove="Features\**" />
+    <Compile Remove="Profiles\**" />
+    <EmbeddedResource Remove="Contracts\**" />
+    <EmbeddedResource Remove="Features\**" />
+    <EmbeddedResource Remove="Profiles\**" />
+    <None Remove="Contracts\**" />
+    <None Remove="Features\**" />
+    <None Remove="Profiles\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="12.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Contracts\Mappings\" />
-    <Folder Include="Contracts\UnitOfwork\" />
-    <Folder Include="Contracts\Repositories\" />
-    <Folder Include="Contracts\Persistence\" />
-    <Folder Include="Features\" />
-    <Folder Include="Profiles\" />
+    <Folder Include="Common\" />
+    <Folder Include="DTOs\" />
+    <Folder Include="Commands\" />
+    <Folder Include="Queries\" />
+    <Folder Include="Validators\" />
   </ItemGroup>
 
 </Project>

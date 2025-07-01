@@ -20,6 +20,7 @@
     <Compile Remove="Areas\Transactions\Models\**" />
     <Compile Remove="Views\Account\**" />
     <Compile Remove="wwwroot\Assets\Revolutions\**" />
+    <Compile Remove="wwwroot\bundle\**" />
     <Content Remove="Areas\Financials\Data\**" />
     <Content Remove="Areas\Financials\Models\**" />
     <Content Remove="Areas\Invoices\Data\**" />
@@ -32,6 +33,7 @@
     <Content Remove="Areas\Transactions\Models\**" />
     <Content Remove="Views\Account\**" />
     <Content Remove="wwwroot\Assets\Revolutions\**" />
+    <Content Remove="wwwroot\bundle\**" />
     <Content Remove="Areas\Financials\Views\Financial\Index.cshtml" />
     <Content Remove="Areas\Financials\Views\Financial\Invoices.cshtml" />
     <Content Remove="Areas\Financials\Views\Financial\List.cshtml" />
@@ -188,6 +190,7 @@
     <EmbeddedResource Remove="Areas\Transactions\Models\**" />
     <EmbeddedResource Remove="Views\Account\**" />
     <EmbeddedResource Remove="wwwroot\Assets\Revolutions\**" />
+    <EmbeddedResource Remove="wwwroot\bundle\**" />
     <None Remove="Areas\Financials\Data\**" />
     <None Remove="Areas\Financials\Models\**" />
     <None Remove="Areas\Invoices\Data\**" />
@@ -199,7 +202,8 @@
     <None Remove="Areas\Transactions\Data\**" />
     <None Remove="Areas\Transactions\Models\**" />
     <None Remove="Views\Account\**" />
-    <None Remove="wwwroot\Assets\Revolutions\**" />    
+    <None Remove="wwwroot\Assets\Revolutions\**" />
+    <None Remove="wwwroot\bundle\**" />    
   </ItemGroup>
 
   <ItemGroup>
@@ -440,8 +444,6 @@
   <ItemGroup>
     <Folder Include="PrintOut\" />
     <Folder Include="Properties\PublishProfiles\" />
-    <Folder Include="wwwroot\bundle\css\" />
-    <Folder Include="wwwroot\bundle\js\" />
     <Folder Include="wwwroot\Files\" />    
   </ItemGroup>
 
