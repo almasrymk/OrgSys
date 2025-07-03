@@ -30,7 +30,6 @@
     <Folder Include="Commands\Admin\" />
     <Folder Include="Commands\Org\City\Delete\" />
     <Folder Include="Commands\Org\City\Update\" />
-    <Folder Include="Common\" />
     <Folder Include="DTOs\" />
     <Folder Include="Queries\Admin\" />
     <Folder Include="Queries\Org\" />
