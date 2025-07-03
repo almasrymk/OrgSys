@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Domain.Entities
 {
     [Table("ProductUnit")]
-    public class ProductUnit : BaseModel
+    public class ProductUnit : BaseEntity
     {
         [ForeignKey("Product")]
         public virtual long ProductId { get; set; }

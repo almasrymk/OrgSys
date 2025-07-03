@@ -3,7 +3,7 @@
 namespace Domain.Entities
 {
     [Table("ProductPropertyElement")]
-   public class ProductPropertyElement :BaseModel
+   public class ProductPropertyElement : BaseEntity
     {
         [ForeignKey("Product")]
         public virtual long? ProductId { get; set; }

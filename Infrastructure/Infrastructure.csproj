@@ -1,15 +1,24 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Persistence\" />
-    <Folder Include="Repositories\" />
-    <Folder Include="UnitOfwork\" />
+    <Compile Remove="Repositories\**" />
+    <Compile Remove="UnitOfwork\**" />
+    <EmbeddedResource Remove="Repositories\**" />
+    <EmbeddedResource Remove="UnitOfwork\**" />
+    <None Remove="Repositories\**" />
+    <None Remove="UnitOfwork\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.6" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.6" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.6" />
   </ItemGroup>
 
   <ItemGroup>

@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Domain.Entities
 {
     [Table("LogSys")]
-    public class LogSys : BaseModel
+    public class LogSys : BaseEntity    
     {
         public virtual long UserId { get; set; }
 

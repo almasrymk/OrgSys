@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Domain.Entities
 {
     [Table("Dealer")]
-    public class Dealer : BaseModel
+    public class Dealer : BaseEntity
     {
         [Required]
         public virtual string Name { get; set; }

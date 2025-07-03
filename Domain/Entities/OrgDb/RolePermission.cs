@@ -3,7 +3,7 @@
 namespace Domain.Entities
 {
     [Table("RolePermission")]
-    public class RolePermission : BaseModel
+    public class RolePermission : BaseEntity
     {
         [ForeignKey("Role")]
         public virtual long RoleId { get; set; }

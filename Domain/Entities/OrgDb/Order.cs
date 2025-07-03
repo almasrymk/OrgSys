@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Domain.Entities
 {
     [Table("Order")]
-    public class Order : MovementModel
+    public class Order : BaseTransactionEntity
     {
         [ForeignKey("Table")]
         public virtual long? TableId { get; set; }

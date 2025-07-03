@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Domain.Entities
 {
     [Table("PropertyElement")]
-    public class PropertyElement : BaseModel
+    public class PropertyElement : BaseEntity
     {
         [ForeignKey("Property")]
         public virtual long PropertyId { get; set; }

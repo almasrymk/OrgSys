@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Domain.Entities
 {
     [Table("GeneralPropertyElement", Schema = "admin")]
-    public class GeneralPropertyElement : BaseModel
+    public class GeneralPropertyElement : BaseEntity
     {
         [ForeignKey("GeneralProperty")]
         public virtual long GeneralPropertyId { get; set; }

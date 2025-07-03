@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Domain.Entities
 {
     [Table("GeneralClassification", Schema = "admin")]
-    public class GeneralClassification : BaseModel
+    public class GeneralClassification : BaseEntity
     {
         [Required]
         [StringLength(50, MinimumLength = 3)]

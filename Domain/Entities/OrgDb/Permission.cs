@@ -3,10 +3,10 @@
 namespace Domain.Entities
 {
     [Table("Permission")]
-    public class Permission : BaseModel
+    public class Permission : BaseEntity
     {
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public override long Id { get ; set ; }
+        public override Guid Id { get ; set ; }
 
         public virtual string Key { get; set; }
 

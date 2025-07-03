@@ -3,7 +3,7 @@
 namespace Domain.Entities
 {
     [Table("JournalItem")]
-    public class JournalItem : BaseModel
+    public class JournalItem : BaseEntity
     {        
         [ForeignKey("Journal")]
         public virtual long JournalId { get; set; }

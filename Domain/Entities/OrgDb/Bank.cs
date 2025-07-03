@@ -1,4 +1,4 @@
-﻿namespace Domain.Entities.OrgDb
+﻿namespace Domain.Entities
 {
     [Table("Bank")]
     public class Bank : BaseLockupEntity

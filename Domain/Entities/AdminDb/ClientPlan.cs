@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Domain.Entities
 {
     [Table("ClientPlan", Schema = "admin")]
-    public class ClientPlan : BaseModel
+    public class ClientPlan : BaseEntity
     {
         public virtual DateTime StartDate { get; set; }
         public virtual DateTime EndDate { get; set; }

@@ -4,10 +4,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Domain.Entities
 {
     [Table("InvoiceType")]
-    public class InvoiceType : BaseModel
+    public class InvoiceType : BaseEntity
     {
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public override long Id { get; set; }
+        public override Guid Id { get; set; }
 
         [StringLength(50, MinimumLength = 3)]
         public virtual string Name { get; set; }

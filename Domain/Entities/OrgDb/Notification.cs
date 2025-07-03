@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Domain.Entities
 {
     [Table("Notification")]
-    public class Notification : BaseModel
+    public class Notification : BaseEntity
     {
         [StringLength(50, MinimumLength = 3)]
         public string Subject { get; set; }

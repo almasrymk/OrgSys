@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Domain.Entities
 {
     [Table("GeneralProperty", Schema = "admin")]
-   public class GeneralProperty : BaseModel
+   public class GeneralProperty : BaseEntity
     {       
         [StringLength(50, MinimumLength = 3)]
         public virtual string Name { get; set; }

@@ -3,7 +3,7 @@
 namespace Domain.Entities
 {
     [Table("ProductRecipe")]
-    public class ProductRecipe : BaseModel
+    public class ProductRecipe : BaseEntity
     {            
         public virtual long ProductId { get; set; } 
         

@@ -3,10 +3,10 @@
 namespace Domain.Entities
 {
     [Table("Preference")]
-    public class Preference : BaseModel
+    public class Preference : BaseEntity
     {
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public override long Id { get; set; }
+        public override Guid Id { get; set; }
 
         public virtual string Key { get; set; }
 

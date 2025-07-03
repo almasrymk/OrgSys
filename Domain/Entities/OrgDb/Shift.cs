@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Domain.Entities
 {
     [Table("Shift")]
-    public class Shift : BaseModel
+    public class Shift : BaseEntity
     {
         [StringLength(50, MinimumLength = 3)]
         public virtual string Name { get; set; }

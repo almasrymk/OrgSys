@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Domain.Entities
 {
     [Table("Inventory")]
-    public class Inventory : MovementModel
+    public class Inventory : BaseTransactionEntity
     {      
         public virtual long? UserId { get; set; }
 

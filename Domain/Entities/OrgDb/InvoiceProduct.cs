@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Domain.Entities
 {
     [Table("InvoiceProduct")]
-    public class InvoiceProduct : BaseModel
+    public class InvoiceProduct : BaseEntity
     {
         [Required]
         public virtual long RowNumber { get; set; }

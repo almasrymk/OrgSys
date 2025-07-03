@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Domain.Entities
 {
     [Table("Property")]
-   public class Property : BaseModel
+   public class Property : BaseEntity
     {       
         [StringLength(50, MinimumLength = 3)]
         public virtual string Name { get; set; }
