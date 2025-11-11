@@ -7,7 +7,7 @@
         public override string? Name { get; set; }
 
         [ForeignKey("Country")]
-        public string? CountryId { get; set; }
+        public long? CountryId { get; set; }
        
         public virtual Country? Country { get; set; }
     }

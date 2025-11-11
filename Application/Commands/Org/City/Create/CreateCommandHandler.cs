@@ -18,6 +18,7 @@
                 {
                     Id = new Guid(),
                     Name = request.Name,
+                    CountryId = request.CountryId,
                     Status = 0
                 };
 
@@ -26,7 +27,7 @@
                 {
                     return new Result<CreateCommandResponse>(
                         HttpStatusCode.OK,
-                        new CreateCommandResponse(res.Id, res.Name!),
+                        new CreateCommandResponse(res.Id , res.CountryId, res.Name!),
                         null);
                 }
 
