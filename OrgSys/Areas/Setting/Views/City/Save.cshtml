@@ -114,6 +114,7 @@
             $.ajax({
                 type: 'POST',
                 url: "/Setting/City/Save",
+                async: false,
                 data: { model: data},
                 success: function (res) {
                     if (res.status == "success") {

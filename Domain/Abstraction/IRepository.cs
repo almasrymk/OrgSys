@@ -1,7 +1,7 @@
 ﻿namespace Domain.Abstraction
 {
     using System.Linq.Expressions;
-    public interface IRepository<TEntity> where TEntity : BaseEntity
+    public interface IRepository<TEntity> where TEntity : Entity.BaseModel //BaseEntity
     {
         ValueTask<TEntity> CreateAsync(TEntity Ob);
         ValueTask<bool> UpdateAsync(TEntity Ob);

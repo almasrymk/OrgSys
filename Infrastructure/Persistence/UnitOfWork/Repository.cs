@@ -5,9 +5,10 @@
     using System.Linq.Expressions;
     using Microsoft.EntityFrameworkCore;
 
-    public class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity
+    public class Repository<TEntity> : IRepository<TEntity> where TEntity : Entity.BaseModel //BaseEntity
     {
         private readonly IOrgContext dbContext;
+       
         private readonly DbSet<TEntity> dbEntity;
 
         public Repository(IOrgContext _dbContext)
@@ -34,7 +35,7 @@
             var Ob = await dbEntity.FirstOrDefaultAsync(Filter);
             if (Ob != null)
             {
-                Ob.Status =  Domain.Enums.Status.Deleted;
+                Ob.Status = Utility.Status.Deleted; //Domain.Enums.Status.Deleted;
                 dbEntity.Attach(Ob);
                 return true;
             }

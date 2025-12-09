@@ -1,4 +1,5 @@
-﻿using Entity.Model;
+﻿using Domain.Abstraction;
+using Entity.Model;
 using Entity.ModelReport;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -35,7 +36,6 @@ namespace Repository
             string assemblyName = typeof(OrgContext).Namespace;
             optionsBuilder.UseSqlServer(config.GetConnectionString("OrgConnection"), e => e.MigrationsHistoryTable($"__MigrationsHistory", Schema)).ReplaceService<IModelCacheKeyFactory, DbSchemaAwareModelCacheKeyFactory>().ReplaceService<IMigrationsAssembly, DbSchemaAwareMigrationAssembly>();            
         }
-
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

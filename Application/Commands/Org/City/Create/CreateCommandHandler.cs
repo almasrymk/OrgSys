@@ -1,45 +1,20 @@
 ﻿namespace Application.Commands.Org.City.Create
 {
-    using System.Net;
-    using Domain.Shared;  
-    using Domain.Entities;
-    using System.Threading;
+    using Entity.Model;
+    using Entity.ModelView;
+    using Application.Common;
     using Domain.Abstraction;
-    using System.Threading.Tasks;
-    using Application.Abstraction.Command;
 
-    public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<City> _Repository) : ICommandHandler<CreateCommand, CreateCommandResponse>
+    public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.City> _Repository) : CreateCommandHandler<CreateCommand, Entity.Model.City , CityModelView>(_UnitOfWork, _Repository)
     {
-        public async Task<Result<CreateCommandResponse>> Handle(CreateCommand request, CancellationToken cancellationToken)
+        public override City GetMapModel(CreateCommand request)
         {
-            try
-            {
-                var ob = new City
-                {
-                    Id = new Guid(),
-                    Name = request.Name,
-                    CountryId = request.CountryId,
-                    Status = 0
-                };
+            return new City { CountryId = request.CountryId, Name = request.Name };
+        }
 
-                var res = await _Repository.CreateAsync(ob);
-                if (await _UnitOfWork.SaveChangeAsync() > 0)
-                {
-                    return new Result<CreateCommandResponse>(
-                        HttpStatusCode.OK,
-                        new CreateCommandResponse(res.Id , res.CountryId, res.Name!),
-                        null);
-                }
-
-                return new Result<CreateCommandResponse>(
-                    HttpStatusCode.InternalServerError,
-                    null,
-                    new List<string> { "Error" });
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+        public override CityModelView GetMapResponse(City model)
+        {
+            return new CityModelView { Id = model.Id, Name = model.Name, CountryId = model.CountryId };
         }
     }
 }
