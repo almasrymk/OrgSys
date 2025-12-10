@@ -1,3 +1,4 @@
+using Application.Commands.Org.City.Commands;
 using AutoMapper;
 using Domain.Abstraction;
 using Entity;
@@ -75,7 +76,7 @@ namespace OrgSys
             options.UseSqlServer(Configuration.GetConnectionString("Default")));
 
             services.AddScoped<IOrgContext>(provider => provider.GetRequiredService<Infrastructure.Persistence.Data.OrgContext>());
-
+            services.AddAutoMapper(typeof(MappingProfile));
             services.ConfigureApplicationCookie(options =>
             {
                 //options.Cookie.HttpOnly = true;
@@ -88,7 +89,7 @@ namespace OrgSys
             services.AddMediatR(cfg =>
             {
                 //cfg.RegisterServicesFromAssembly(typeof(Program).Assembly);                      // Web layer
-                cfg.RegisterServicesFromAssembly(typeof(Application.Commands.Org.City.Create.CreateCommand).Assembly); // Application layer
+                cfg.RegisterServicesFromAssembly(typeof(CreateCommand).Assembly); // Application layer
             });
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();

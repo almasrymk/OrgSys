@@ -171,6 +171,7 @@
     <Content Remove="Views\Shared\Error.cshtml" />
     <Content Remove="Views\Shared\PagedList.cshtml" />
     <Content Remove="Views\Shared\PagedListReport.cshtml" />
+    <Content Remove="Views\Shared\ToPagedList.cshtml" />
     <Content Remove="Views\Shared\TreeView.cshtml" />
     <Content Remove="Views\Shared\_Layout.cshtml" />
     <Content Remove="Views\Shared\_Layout_Website.cshtml" />
@@ -409,6 +410,7 @@
     <EmbeddedResource Include="Views\Home\Tables.cshtml" />
     <EmbeddedResource Include="Views\Home\TermsAndConditions.cshtml" />
     <EmbeddedResource Include="Views\Shared\Error.cshtml" />
+    <EmbeddedResource Include="Views\Shared\ToPagedList.cshtml" />
     <EmbeddedResource Include="Views\Shared\PagedList.cshtml" />
     <EmbeddedResource Include="Views\Shared\PagedListReport.cshtml" />
     <EmbeddedResource Include="Views\Shared\TreeView.cshtml" />

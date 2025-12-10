@@ -1,0 +1,192 @@
+﻿@model Domain.Shared.Pagination
+@{
+}
+
+@if (@Model.PageCount > 1)
+{
+    <nav class="mt-3">
+        <ul class="pagination justify-content-center mb-0">
+            @if (Model.Page > 1)
+            {
+                <li class="page-item ">
+                    <button class="page-link first" onclick="search(1)">
+                        <i class="simple-icon-control-start"></i>
+                    </button>
+                </li>
+                <li class="page-item">
+                    <button class="page-link prev" onclick="search(@Model.Page - 1)">
+                        <i class="simple-icon-arrow-left"></i>
+                    </button>
+                </li>
+            }
+            else
+            {
+                <li class="page-item diabled">
+                    <a class="page-link first">
+                        <i class="simple-icon-control-start"></i>
+                    </a>
+                </li>
+                <li class="page-item ">
+                    <a class="page-link prev">
+                        <i class="simple-icon-arrow-left"></i>
+                    </a>
+                </li>
+            }
+
+            @if (Model.PageCount <= 5)
+            {
+                @for (int i = 1; i <= Model.PageCount; i++)
+                {
+                    if (i == Model.Page)
+                    {
+                        <li class="page-item active">
+                            <a class="page-link">@i</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="page-item ">
+                            <button class="page-link" onclick="search(@i)">@i</button>
+                        </li>
+                    }
+                }
+            }
+            else
+            {
+                if (Model.Page < 5)
+                {
+                    @for (int i = 1; i <= 5; i++)
+                    {
+                        if (i == Model.Page)
+                        {
+                            <li class="page-item active">
+                                <a class="page-link">@i</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="page-item ">
+                                <button class="page-link" onclick="search(@i)">@i</button>
+                            </li>
+                        }
+                    }
+                }
+
+                if (Model.Page >= 5)
+                {
+
+                    @for (int i = 1; i <= 2; i++)
+                    {
+                        <li class="page-item ">
+                            <button class="page-link" onclick="search(@i)">@i</button>
+                        </li>
+                    }
+                    <li class="page-item ">
+                        &ensp;
+                    </li>
+                }
+
+
+                if (Model.Page >= 5 && Model.Page <= Model.PageCount - 5)
+                {
+
+                    @for (int i = Model.Page - 1; i <= Model.Page + 3; i++)
+                    {
+                        if (i == Model.Page)
+                        {
+                            <li class="page-item active">
+                                <a class="page-link">@i</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="page-item ">
+                                <button class="page-link" onclick="search(@i)">@i</button>
+                            </li>
+                        }
+                    }
+                }
+
+                if (Model.Page == Model.PageCount - 4)
+                {
+
+                    @for (int i = Model.Page - 2; i <= Model.Page + 2; i++)
+                    {
+                        if (i == Model.Page)
+                        {
+                            <li class="page-item active">
+                                <a class="page-link">@i</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="page-item ">
+                                <button class="page-link" onclick="search(@i)">@i</button>
+                            </li>
+                        }
+                    }
+                }
+
+                if (Model.Page > Model.PageCount - 4)
+                {
+                    @for (int i = Model.PageCount - 4; i <= Model.PageCount; i++)
+                    {
+                        if (i == Model.Page)
+                        {
+                            <li class="page-item active">
+                                <a class="page-link">@i</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="page-item ">
+                                <button class="page-link" onclick="search(@i)">@i</button>
+                            </li>
+                        }
+                    }
+                }
+
+
+                if (Model.Page < Model.PageCount - 3)
+                {
+                    <li class="page-item ">
+                        &ensp;
+                    </li>
+                    @for (int i = Model.PageCount - 1; i <= Model.PageCount; i++)
+                    {
+                        <li class="page-item ">
+                            <button class="page-link" onclick="search(@i)">@i</button>
+                        </li>
+                    }
+                }
+            }
+
+            @if (Model.Page < Model.PageCount)
+            {
+                <li class="page-item ">
+                    <button class="page-link next" aria-label="Next" onclick="search( @Model.Page + 1)">
+                        <i class="simple-icon-arrow-right"></i>
+                    </button>
+                </li>
+                <li class="page-item ">
+                    <button class="page-link last" onclick="search(@Model.PageCount)">
+                        <i class="simple-icon-control-end"></i>
+                    </button>
+                </li>
+            }
+            else
+            {
+                <li class="page-item ">
+                    <a class="page-link next" aria-label="Next">
+                        <i class="simple-icon-arrow-right"></i>
+                    </a>
+                </li>
+                <li class="page-item ">
+                    <a class="page-link last">
+                        <i class="simple-icon-control-end"></i>
+                    </a>
+                </li>
+            }
+        </ul>
+    </nav>
+}

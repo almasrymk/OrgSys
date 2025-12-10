@@ -12,4 +12,14 @@
     {
 
     }
+
+    public interface ICommandCollection<TResponse> : IRequest<ResultCollection<TResponse>>
+    {
+
+    }  
+    
+    public interface ICommandPagination<TResponse> : IRequest<ResultPagination<TResponse>>
+    {
+
+    }    
 }

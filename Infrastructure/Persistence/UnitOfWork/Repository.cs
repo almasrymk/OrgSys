@@ -1,9 +1,11 @@
 ﻿namespace Infrastructure.Persistence.UnitOfWork
 {
-    using Domain.Common.Base;
+    using CorePagination.Extensions;
+    using CorePagination.Paginators.SizeAwarePaginator;
     using Domain.Abstraction;   
-    using System.Linq.Expressions;
+    using Domain.Common.Base;
     using Microsoft.EntityFrameworkCore;
+    using System.Linq.Expressions;
 
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : Entity.BaseModel //BaseEntity
     {
@@ -58,6 +60,11 @@
             return await dbEntity.Where(Filter).AsQueryable().ToListAsync();
         }
 
+        public virtual async ValueTask<SizeAwarePaginationResult<TEntity>?> GetListByFilterAsync(Expression<Func<TEntity, bool>> Filter , int Page , int PageSize)
+        {
+            return await dbEntity.Where(Filter).AsQueryable().PaginateAsync(Page , PageSize);
+        }
+
         public virtual async ValueTask<bool> ShiftDeleteAsync(Expression<Func<TEntity, bool>> Filter)
         {
             var Ob = await dbEntity.FirstOrDefaultAsync(Filter);
@@ -74,7 +81,7 @@
         {
             if (await dbEntity.AnyAsync(e => e == Ob))
             {
-                dbEntity.Attach(Ob);
+                dbEntity.Entry(dbEntity.Find(Ob.Id)!).CurrentValues.SetValues(Ob);
                 return true;
             }
 

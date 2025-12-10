@@ -3,17 +3,8 @@
     using System.Net;
 
     public partial record Result(HttpStatusCode StatusCode, List<string>? Errors);
-    public partial record Result<TResponse>(HttpStatusCode StatusCode, TResponse? Response, List<string>? Errors);
-    //public class MyResult<T>
-    //{
-    //    public bool Success { get; set; }
-    //    public string? Message { get; set; }
-    //    public T? Data { get; set; }
-
-    //    public static MyResult<T> SuccessResult(T data, string message = "") =>
-    //        new() { Success = true, Data = data, Message = message };
-
-    //    public static MyResult<T> Failure(string message) =>
-    //        new() { Success = false, Message = message };
-    //}
+    public partial record Result<TResponse>(HttpStatusCode StatusCode, TResponse? Response, List<string>? Errors);    
+    public partial record ResultCollection<TResponse>(HttpStatusCode StatusCode, List<TResponse> Response , List<string>? Errors);    
+    public partial record ResultPagination<TResponse>(HttpStatusCode StatusCode, List<TResponse> Response , int Page , int PageSize , int PageCount, List<string>? Errors);    
+    public partial record Pagination(int Page , int PageSize , int PageCount);    
 }

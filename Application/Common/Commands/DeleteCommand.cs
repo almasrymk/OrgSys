@@ -1,13 +1,14 @@
-﻿namespace Application.Common
+﻿namespace Application.Common.Commands
 {
-    using System.Net;
-    using Domain.Shared;
-    using System.Threading;
-    using Domain.Abstraction;
-    using System.Threading.Tasks;
     using Application.Abstraction.Command;
+    using AutoMapper;
+    using Domain.Abstraction;
+    using Domain.Shared;
+    using System.Net;
+    using System.Threading;
+    using System.Threading.Tasks;
 
-    public class DeleteCommandHandler<TDto, TModel>(IUnitOfWork _UnitOfWork, IRepository<TModel> _Repository) : ICommandHandler<TDto>
+    public class DeleteCommandHandler<TDto, TModel>(IUnitOfWork _UnitOfWork, IRepository<TModel> _Repository, IMapper mapper) : ICommandHandler<TDto>
         where TDto : ICommand
         where TModel : Entity.BaseModel
     {
@@ -16,7 +17,7 @@
         {
             try
             {
-                var ob = GetMapModel(request);
+                var ob = mapper.Map<TModel>(request);
 
                 var res = await _Repository.DeleteAsync(e => e.Id == ob.Id);
                 if (_UnitOfWork.SaveChangeAsync().Result > 0)

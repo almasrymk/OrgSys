@@ -1,18 +1,18 @@
-﻿using Application.Commands.Org.City.Create;
+﻿using Application.Commands.Org.City;
 using Entity.ModelView;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using OrgSys.Controllers;
-using Service;
 using System;
+using Service;
+using Utility;
+using System.Net;
 using System.Linq;
 using System.Reflection;
-using System.Threading;
 using System.Threading.Tasks;
-using Utility;
-using static iTextSharp.text.pdf.events.IndexEvents;
+using Application.Commands.Org.City.Queries;
+using Application.Commands.Org.City.Commands;
 
 namespace OrgSys.Areas.Setting.Controllers
 {
@@ -23,7 +23,7 @@ namespace OrgSys.Areas.Setting.Controllers
         string ControllerName = "";
 
         [HttpGet]
-        public virtual ActionResult Index(string search, long ParentId = 0, long TypeId = 0, int page = 1, int pageSize = 10, ResultStatus Status = ResultStatus.nothing, string MsgError = "")
+        public async Task<ActionResult> Index(string search, long ParentId = 0, long TypeId = 0, int page = 1, int pageSize = 10, ResultStatus Status = ResultStatus.nothing, string MsgError = "")
         {
             if ("" + MsgError != "")
                 ViewBag.message = MsgError;
@@ -31,8 +31,9 @@ namespace OrgSys.Areas.Setting.Controllers
             ViewBag.pageNumber = page;
             ViewBag.ParentId = ParentId;
             ViewBag.TypeId = TypeId;
-            //LoadViewBagIndex(ParentId, TypeId);
-            var list = new Service.CityService("org").GetAll(search, ParentId, TypeId, page, pageSize);
+            //LoadViewBagIndex(ParentId, TypeId); 
+            var list = await sender.Send(new SearchCommand(search, ParentId ,  TypeId , page , pageSize), HttpContext.RequestAborted);
+            //var list = new Service.CityService("org").GetAll(search, ParentId, TypeId, page, pageSize);
             return Request.Headers["X-Requested-With"] == "XMLHttpRequest" ? (ActionResult)PartialView("List", list) : View("Index", list);
         }
 
@@ -40,12 +41,7 @@ namespace OrgSys.Areas.Setting.Controllers
         {
             ViewBag.BranchList = new SelectList(new CountryService(User.GetSchema()).GetAll(model.ParentId, model.TypeId), "Id", "Name", model.CountryId);
         }
-
-        //public override void LoadViewBag(CityModelView model)
-        //{
-        //    ViewBag.BranchList = new SelectList(new CountryService(User.GetSchema()).GetAll(model.ParentId, model.TypeId), "Id", "Name", model.CountryId);
-        //}
-
+ 
         public JsonResult GetList(string txtSearch = "", int page = 1, int pageSize = 10)
         {
             if (txtSearch != null)
@@ -81,19 +77,35 @@ namespace OrgSys.Areas.Setting.Controllers
 
         [HttpPost]
         public async Task<ActionResult> Save(CityModelView model)
-        {
-            var res = await sender.Send(new CreateCommand(model.CountryId, model.Name), HttpContext.RequestAborted);
+        {           
+            var res = await sender.Send(
+               model.Id == 0 ? new CreateCommand(model.CountryId, model.Name) : new UpdateCommand(model.Id , model.CountryId, model.Name)
+                , HttpContext.RequestAborted);
             if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
                     return Ok(new { status = "success" , id = model.Id , url = "/" + AreaName + "/" + ControllerName + "?ParentId=" + model.ParentId + "&TypeId=" + model.TypeId + "&status=" + ResultStatus.success + "&MsgError=Success" });
                 return Redirect("/" + AreaName + "/" + ControllerName + "?ParentId=" + model.ParentId + "&TypeId=" + model.TypeId + "&status=" + ResultStatus.success + "&MsgError=Success");
         }
 
-        //public override async Task<ActionResult> Save(CityModelView model)
-        //{
-        //    var res = sender.Send(new CreateCommand(model.CountryId, model.Name), new CancellationToken());
-        //    return View(res);
-        //    //return base.Save(model);
-        //}
+        [HttpGet]
+        public async Task<Result>  Delete(long id)
+        {
+            var ob = new Service.CityService("org").Get(id);
+            try
+            {
+                if (ob != null && ob.Id > 0)
+                {
+                    //DeleteFile(ob.ImgPath);
+                    await sender.Send(new DeleteCommand(ob.Id, ob.Name), HttpContext.RequestAborted);
+                    //service.Delete(id);
+                    return new Result();
+                }
+            }
+            catch (Exception ex)
+            {
+                return new Result(HttpStatusCode.InternalServerError, ex.Message);
+            }
+            return new Result(HttpStatusCode.BadRequest, "Error");
+        }
 
         public override void OnActionExecuting(ActionExecutingContext context)
         {

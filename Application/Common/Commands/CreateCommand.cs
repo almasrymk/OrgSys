@@ -1,14 +1,16 @@
-﻿namespace Application.Common
+﻿namespace Application.Common.Commands
 {
-    using System.Net;
-    using Domain.Shared;
-    using System.Threading;
-    using Domain.Abstraction;
-    using System.Threading.Tasks;
     using Application.Abstraction.Command;
+    using AutoMapper;
+    using Domain.Abstraction;
+    using Domain.Shared;
+    using Entity.ModelView;
+    using System.Net;
+    using System.Threading;
+    using System.Threading.Tasks;
 
 
-    public class CreateCommandHandler<TRequest, TModel, TResponse>(IUnitOfWork _UnitOfWork, IRepository<TModel> _Repository) : ICommandHandler<TRequest, TResponse>
+    public class CreateCommandHandler<TRequest, TModel, TResponse>(IUnitOfWork _UnitOfWork, IRepository<TModel> _Repository, IMapper mapper) : ICommandHandler<TRequest, TResponse>
         where TRequest : ICommand<TResponse>
         where TModel : Entity.BaseModel 
         where TResponse : Entity.BaseModel
@@ -17,14 +19,14 @@
         {
             try
             {
-                var ob = GetMapModel(request);
+                var ob = mapper.Map<TModel>(request);
 
                 var res = await _Repository.CreateAsync(ob);
                 if (_UnitOfWork.SaveChangeAsync().Result > 0)
                 {
                     return new Result<TResponse>(
                     HttpStatusCode.InternalServerError,
-                    GetMapResponse(res),
+                   mapper.Map<TResponse>(ob),
                     null);
                 }
 
@@ -40,16 +42,6 @@
                     null,
                     new List<string> { "Error" });
             }
-        }
-
-        public virtual TModel GetMapModel(TRequest request)
-        {
-            return default!;
-        }
-
-        public virtual TResponse GetMapResponse(TModel model)
-        {
-            return default!;
         }
     }
 }
