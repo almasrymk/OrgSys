@@ -1,21 +1,19 @@
 ﻿namespace Application.Common.Commands
 {
-    using Application.Abstraction.Command;
-    using AutoMapper;
-    using Domain.Abstraction;
-    using Domain.Shared;
-    using Entity.ModelView;
     using System.Net;
+    using AutoMapper;
+    using Domain.Shared;
     using System.Threading;
+    using Domain.Abstraction;
     using System.Threading.Tasks;
+    using Application.Abstraction.Command;
 
-
-    public class CreateCommandHandler<TRequest, TModel, TResponse>(IUnitOfWork _UnitOfWork, IRepository<TModel> _Repository, IMapper mapper) : ICommandHandler<TRequest, TResponse>
-        where TRequest : ICommand<TResponse>
-        where TModel : Entity.BaseModel 
-        where TResponse : Entity.BaseModel
+    public class CreateCommandHandler<TDto, TModel>(IUnitOfWork _UnitOfWork, IRepository<TModel> _Repository, IMapper mapper) : ICommandHandler<TDto>
+        where TDto : ICommand
+        where TModel : Entity.BaseModel
     {
-        public virtual async Task<Result<TResponse>> Handle(TRequest request, CancellationToken cancellationToken)
+
+        public async Task<Result> Handle(TDto request, CancellationToken cancellationToken)
         {
             try
             {
@@ -24,22 +22,17 @@
                 var res = await _Repository.CreateAsync(ob);
                 if (_UnitOfWork.SaveChangeAsync().Result > 0)
                 {
-                    return new Result<TResponse>(
-                    HttpStatusCode.InternalServerError,
-                   mapper.Map<TResponse>(ob),
-                    null);
+                    return new Result(HttpStatusCode.OK, null);
                 }
 
-                return new Result<TResponse>(
+                return new Result(
                     HttpStatusCode.InternalServerError,
-                    null,
                     new List<string> { "Error" });
             }
             catch (Exception ex)
             {
-                return new Result<TResponse>(
+                return new Result(
                     HttpStatusCode.InternalServerError,
-                    null,
                     new List<string> { "Error" });
             }
         }

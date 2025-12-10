@@ -34,11 +34,14 @@
 
         public virtual async ValueTask<bool> DeleteAsync(Expression<Func<TEntity, bool>> Filter)
         {
-            var Ob = await dbEntity.FirstOrDefaultAsync(Filter);
-            if (Ob != null)
+            var ObList = dbEntity.Where(Filter);
+            if (ObList != null)
             {
-                Ob.Status = Utility.Status.Deleted; //Domain.Enums.Status.Deleted;
-                dbEntity.Attach(Ob);
+                foreach (var Ob in ObList)
+                {
+                    Ob.Status = Utility.Status.Deleted; 
+                    dbEntity.Attach(Ob);
+                }
                 return true;
             }
 
@@ -67,10 +70,10 @@
 
         public virtual async ValueTask<bool> ShiftDeleteAsync(Expression<Func<TEntity, bool>> Filter)
         {
-            var Ob = await dbEntity.FirstOrDefaultAsync(Filter);
+            var Ob = dbEntity.Where(Filter);
             if (Ob != null)
             {
-                dbEntity.Remove(Ob);
+                dbEntity.RemoveRange(Ob);
                 return true;
             }
 

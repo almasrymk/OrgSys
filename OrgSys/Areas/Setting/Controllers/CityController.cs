@@ -1,18 +1,19 @@
 ﻿using Application.Commands.Org.City;
+using Application.Commands.Org.City.Commands;
+using Application.Commands.Org.City.Queries;
 using Entity.ModelView;
+using iTextSharp.text;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
 using Service;
-using Utility;
-using System.Net;
+using System;
 using System.Linq;
+using System.Net;
 using System.Reflection;
 using System.Threading.Tasks;
-using Application.Commands.Org.City.Queries;
-using Application.Commands.Org.City.Commands;
+using Utility;
 
 namespace OrgSys.Areas.Setting.Controllers
 {
@@ -32,7 +33,7 @@ namespace OrgSys.Areas.Setting.Controllers
             ViewBag.ParentId = ParentId;
             ViewBag.TypeId = TypeId;
             //LoadViewBagIndex(ParentId, TypeId); 
-            var list = await sender.Send(new SearchCommand(search, ParentId ,  TypeId , page , pageSize), HttpContext.RequestAborted);
+            var list = await sender.Send(new SearchCommand(search, ParentId, TypeId, page, pageSize), HttpContext.RequestAborted);
             //var list = new Service.CityService("org").GetAll(search, ParentId, TypeId, page, pageSize);
             return Request.Headers["X-Requested-With"] == "XMLHttpRequest" ? (ActionResult)PartialView("List", list) : View("Index", list);
         }
@@ -41,7 +42,7 @@ namespace OrgSys.Areas.Setting.Controllers
         {
             ViewBag.BranchList = new SelectList(new CountryService(User.GetSchema()).GetAll(model.ParentId, model.TypeId), "Id", "Name", model.CountryId);
         }
- 
+
         public JsonResult GetList(string txtSearch = "", int page = 1, int pageSize = 10)
         {
             if (txtSearch != null)
@@ -59,17 +60,15 @@ namespace OrgSys.Areas.Setting.Controllers
         }
 
         [HttpGet]
-        public virtual ActionResult Save(long id = 0, long ParentId = 0, long TypeId = 0, ResultStatus status = ResultStatus.nothing, string MsgError = "")
+        public async Task<ActionResult> Save(long id = 0, long ParentId = 0, long TypeId = 0, ResultStatus status = ResultStatus.nothing, string MsgError = "")
         {
+            ViewBag.ParentId = ParentId;
             ViewBag.TypeId = TypeId;
-            var ob = new Service.CityService("org").Get(id);
-            if (ob == null || ob.Id == 0)
-            {
-                if (ob == null)
-                    ob = new CityModelView();
-                ob.ParentId = ParentId;
-                ob.TypeId = TypeId;
-            }
+            var ob = new CityModelView { ParentId = ParentId, TypeId = TypeId };
+            var res = await sender.Send(new GetByIdCommand(id), HttpContext.RequestAborted);
+            if (res != null && res.Response != null && res.Response.Id > 0)
+                ob = res.Response;
+
             //ob = InitializeData(ob);
             LoadViewBag(ob);
             return View(ob);
@@ -77,26 +76,46 @@ namespace OrgSys.Areas.Setting.Controllers
 
         [HttpPost]
         public async Task<ActionResult> Save(CityModelView model)
-        {           
+        {
             var res = await sender.Send(
-               model.Id == 0 ? new CreateCommand(model.CountryId, model.Name) : new UpdateCommand(model.Id , model.CountryId, model.Name)
+               model.Id == 0 ? new CreateCommand(model.CountryId, model.Name) : new UpdateCommand(model.Id, model.CountryId, model.Name)
                 , HttpContext.RequestAborted);
             if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
-                    return Ok(new { status = "success" , id = model.Id , url = "/" + AreaName + "/" + ControllerName + "?ParentId=" + model.ParentId + "&TypeId=" + model.TypeId + "&status=" + ResultStatus.success + "&MsgError=Success" });
-                return Redirect("/" + AreaName + "/" + ControllerName + "?ParentId=" + model.ParentId + "&TypeId=" + model.TypeId + "&status=" + ResultStatus.success + "&MsgError=Success");
+                return Ok(new { status = "success", id = model.Id, url = "/" + AreaName + "/" + ControllerName + "?ParentId=" + model.ParentId + "&TypeId=" + model.TypeId + "&status=" + ResultStatus.success + "&MsgError=Success" });
+            return Redirect("/" + AreaName + "/" + ControllerName + "?ParentId=" + model.ParentId + "&TypeId=" + model.TypeId + "&status=" + ResultStatus.success + "&MsgError=Success");
         }
 
         [HttpGet]
-        public async Task<Result>  Delete(long id)
+        public async Task<Result> Delete(long id)
         {
-            var ob = new Service.CityService("org").Get(id);
+            var ob = await sender.Send(new GetByIdCommand(id), HttpContext.RequestAborted);
             try
             {
-                if (ob != null && ob.Id > 0)
+                if (ob != null && ob.Response.Id > 0)
                 {
                     //DeleteFile(ob.ImgPath);
-                    await sender.Send(new DeleteCommand(ob.Id, ob.Name), HttpContext.RequestAborted);
+                    await sender.Send(new DeleteCommand(ob.Response.Id), HttpContext.RequestAborted);
                     //service.Delete(id);
+                    return new Result();
+                }
+            }
+            catch (Exception ex)
+            {
+                return new Result(HttpStatusCode.InternalServerError, ex.Message);
+            }
+            return new Result(HttpStatusCode.BadRequest, "Error");
+        }
+
+        [HttpPost]
+        public async Task<Result> DeleteList(long[] ids, long ParentId = 0, long TypeId = 0)
+        {
+            try
+            {
+                if (ids != null && ids.Length > 0)
+                {                    
+                    var res = await sender.Send(new DeleteListCommand(ids.ToList()), HttpContext.RequestAborted);
+                    //if (res)
+                    //DeleteFile(list.Select(e => e.ImgPath).ToList());
                     return new Result();
                 }
             }
@@ -119,6 +138,6 @@ namespace OrgSys.Areas.Setting.Controllers
             ViewBag.area = AreaName;
             ViewBag.PageTitle = ControllerContext.ActionDescriptor.ControllerName;
             base.OnActionExecuting(context);
-        }        
+        }
     }
 }

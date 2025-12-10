@@ -4,6 +4,8 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
+    using Microsoft.EntityFrameworkCore;
+    using System.Linq.Expressions;
     using System.Net;
     using System.Threading;
     using System.Threading.Tasks;
@@ -17,17 +19,29 @@
         {
             try
             {
-                var ob = mapper.Map<TModel>(request);
-
-                var res = await _Repository.DeleteAsync(e => e.Id == ob.Id);
+                var res = await _Repository.ShiftDeleteAsync(CreateFilter(request));
                 if (_UnitOfWork.SaveChangeAsync().Result > 0)
-                {
                     return new Result(HttpStatusCode.OK, null);
+                else
+                {
+                    var res2 = await _Repository.DeleteAsync(CreateFilter(request));
+                    if (_UnitOfWork.SaveChangeAsync().Result > 0)
+                        return new Result(HttpStatusCode.OK, null);
                 }
 
                 return new Result(
                     HttpStatusCode.InternalServerError,
                     new List<string> { "Error" });
+            }
+            catch (AggregateException ex) 
+            {
+                var res2 = await _Repository.DeleteAsync(CreateFilter(request));
+                if (_UnitOfWork.SaveChangeAsync().Result > 0)
+                    return new Result(HttpStatusCode.OK, null);
+
+                return new Result(
+                 HttpStatusCode.InternalServerError,
+                 new List<string> { "Error" });
             }
             catch (Exception ex)
             {
@@ -37,9 +51,9 @@
             }
         }
 
-        public virtual TModel GetMapModel(TDto request)
+        public virtual Expression<Func<TModel, bool>> CreateFilter(TDto request)
         {
-            return default!;
+            return e => true;
         }
     }
 }
