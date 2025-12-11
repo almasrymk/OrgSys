@@ -5,6 +5,7 @@ using X.PagedList;
 using System.Linq;
 using System.Collections.Generic;
 using System.Reflection;
+using X.PagedList.Extensions;
 
 namespace Service
 {

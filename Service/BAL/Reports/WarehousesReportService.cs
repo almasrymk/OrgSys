@@ -5,6 +5,7 @@ using System.Linq;
 using Entity.ModelReport;
 using Utility;
 using Entity.Model;
+using X.PagedList.Extensions;
 
 namespace Service
 {

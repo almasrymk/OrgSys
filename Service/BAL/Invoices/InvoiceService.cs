@@ -4,6 +4,7 @@ using X.PagedList;
 using Entity.Model;
 using Entity.ModelView;
 using System.Collections.Generic;
+using X.PagedList.Extensions;
 
 namespace Service
 {

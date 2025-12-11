@@ -76,7 +76,6 @@ namespace OrgSys
             options.UseSqlServer(Configuration.GetConnectionString("Default")));
 
             services.AddScoped<IOrgContext>(provider => provider.GetRequiredService<Infrastructure.Persistence.Data.OrgContext>());
-            services.AddAutoMapper(typeof(MappingProfile));
             services.ConfigureApplicationCookie(options =>
             {
                 //options.Cookie.HttpOnly = true;
@@ -106,8 +105,8 @@ namespace OrgSys
                 var p = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
                 options.Filters.Add(new AuthorizeFilter(p));
             }).AddXmlSerializerFormatters();
-
-            services.AddAutoMapper(typeof(MapperConfig));
+            services.AddAutoMapper(cfg => { cfg.AddProfile<MappingProfile>(); });
+            services.AddAutoMapper(cfg => { cfg.AddProfile<MapperConfig>(); });
             services.AddControllersWithViews();
 
             services.AddSession();

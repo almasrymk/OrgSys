@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using AutoMapper.Configuration;
 using Entity.Model;
 using Entity.ModelView;
-using AutoMapper.Configuration;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Linq;
 
 namespace Entity
@@ -11,16 +13,16 @@ namespace Entity
         public IMapper Mapper { get; set; }
         public MapperConfig()
         {
-            var cfg = new MapperConfigurationExpression();
+            //var cfg = new MapperConfigurationExpression();
             
-            AdminConfig(cfg);
-            OrgConfig(cfg);
-
-            cfg.AddProfile(this);
-            Mapper = new MapperConfiguration(cfg).CreateMapper();
+            AdminConfig(this);
+            OrgConfig(this);
+            //ILoggerFactory loggerFactory = (ILoggerFactory)Activator.CreateInstance(typeof(ILoggerFactory));
+            //cfg.AddProfile(this);
+            //Mapper = new MapperConfiguration(cfg, loggerFactory).CreateMapper();
         }
 
-        public void AdminConfig(MapperConfigurationExpression cfg)
+        public void AdminConfig(Profile cfg)
         {
             // Client
             cfg.CreateMap<ClientModelView, Client>();
@@ -149,7 +151,7 @@ namespace Entity
             //
         }
 
-        public void OrgConfig(MapperConfigurationExpression cfg)
+        public void OrgConfig(Profile cfg)
         {
             // Account Bank
             cfg.CreateMap<AccountBankModelView, AccountBank>();
