@@ -2,6 +2,7 @@
 {
     using Entity.Model;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.ChangeTracking;
 
     public interface IOrgContext : IDisposable
     {
@@ -56,9 +57,18 @@
         //DbSet<JournalItem> JournalItems { get; set; }
         //DbSet<CompanyProfile> CompanyProfiles { get; set; }
 
+        void ResetDbContextState();
+
         DbSet<TEntity> Set<TEntity>() where TEntity : class;
 
         int SaveChanges();
+
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
+
+        Task BeginTransactionAsync();
+
+        Task CommitAsync();
+
+        Task RollbackAsync();
     }
 }

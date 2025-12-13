@@ -33,7 +33,7 @@ namespace OrgSys.Areas.Setting.Controllers
             ViewBag.ParentId = ParentId;
             ViewBag.TypeId = TypeId;
             //LoadViewBagIndex(ParentId, TypeId); 
-            var list = await sender.Send(new SearchCommand(search, ParentId, TypeId, page, pageSize), HttpContext.RequestAborted);
+            var list = await sender.Send(new SearchQuery(search, ParentId, TypeId, page, pageSize), HttpContext.RequestAborted);
             //var list = new Service.CityService("org").GetAll(search, ParentId, TypeId, page, pageSize);
             return Request.Headers["X-Requested-With"] == "XMLHttpRequest" ? (ActionResult)PartialView("List", list) : View("Index", list);
         }
@@ -65,7 +65,7 @@ namespace OrgSys.Areas.Setting.Controllers
             ViewBag.ParentId = ParentId;
             ViewBag.TypeId = TypeId;
             var ob = new CityModelView { ParentId = ParentId, TypeId = TypeId };
-            var res = await sender.Send(new GetByIdCommand(id), HttpContext.RequestAborted);
+            var res = await sender.Send(new GetByIdQuery(id), HttpContext.RequestAborted);
             if (res != null && res.Response != null && res.Response.Id > 0)
                 ob = res.Response;
 
@@ -88,7 +88,7 @@ namespace OrgSys.Areas.Setting.Controllers
         [HttpGet]
         public async Task<Result> Delete(long id)
         {
-            var ob = await sender.Send(new GetByIdCommand(id), HttpContext.RequestAborted);
+            var ob = await sender.Send(new GetByIdQuery(id), HttpContext.RequestAborted);
             try
             {
                 if (ob != null && ob.Response.Id > 0)

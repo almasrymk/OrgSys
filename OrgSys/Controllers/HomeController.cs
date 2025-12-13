@@ -169,8 +169,8 @@ namespace OrgSys.Controllers
                 }
 
                 OrgContext _orgContext = new OrgContext(_option, us.Schema);
-                _orgContext.Database.Migrate();
-                new InitialData(us.Schema).Run().Wait();
+                //_orgContext.Database.Migrate();
+                //new InitialData(us.Schema).Run().Wait();
 
                 _userService = new UserService(us.Schema);
                 var usSys = _userService.GetByLoginUserId(us.Id);

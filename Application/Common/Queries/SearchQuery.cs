@@ -22,11 +22,11 @@
         {
             try
             {
-                var res = await _Repository.GetListByFilterAsync(CreateFilter(request), Page, PageSize);
+                var res = await _Repository.GetListByFilterAsync(CreateFilter(request) , CreateOrderBy(request), CreateInclude() , Page, PageSize);
                 if (res != null && res.Items != null)
                 {
                     return new ResultPagination<TResponse>(
-                    HttpStatusCode.InternalServerError,
+                    HttpStatusCode.OK,
                     res.Items.Select(e=> mapper.Map<TResponse>(e)).ToList(),
                     res.Page, res.PageSize, res.TotalPages,
                     null);
@@ -49,6 +49,16 @@
         public virtual Expression<Func<TModel, bool>> CreateFilter(TRequest request)
         {
             return e => true;
+        }
+
+        public virtual string CreateInclude()
+        {
+            return "";
+        }
+
+        public virtual Func<IQueryable<TModel>, IOrderedQueryable<TModel>> CreateOrderBy(TRequest request)
+        {
+            return null;
         }
     }
 }

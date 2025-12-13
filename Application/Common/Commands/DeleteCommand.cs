@@ -17,37 +17,50 @@
 
         public async Task<Result> Handle(TDto request, CancellationToken cancellationToken)
         {
-            try
+            using (var transaction = _UnitOfWork.BeginTransactionAsync())
             {
-                var res = await _Repository.ShiftDeleteAsync(CreateFilter(request));
-                if (_UnitOfWork.SaveChangeAsync().Result > 0)
-                    return new Result(HttpStatusCode.OK, null);
-                else
+                try
                 {
+                    var res = await _Repository.ShiftDeleteAsync(CreateFilter(request));
+                    if (_UnitOfWork.SaveChangeAsync().Result > 0)
+                    {
+                        await _UnitOfWork.CommitAsync();
+                        return new Result(HttpStatusCode.OK, null);
+                    }
+                    else
+                    {
+                        var res2 = await _Repository.DeleteAsync(CreateFilter(request));
+                        if (_UnitOfWork.SaveChangeAsync().Result > 0)
+                        {
+                            await _UnitOfWork.CommitAsync();
+                            return new Result(HttpStatusCode.OK, null);
+                        }
+                    }
+                     
+                    return new Result(
+                        HttpStatusCode.InternalServerError,
+                        new List<string> { "Error" });
+                }
+                catch (AggregateException ex)
+                {
+                    _UnitOfWork.ResetDbContextState();
                     var res2 = await _Repository.DeleteAsync(CreateFilter(request));
                     if (_UnitOfWork.SaveChangeAsync().Result > 0)
+                    {
+                        await _UnitOfWork.CommitAsync();
                         return new Result(HttpStatusCode.OK, null);
+                    }
+
+                    return new Result(
+                     HttpStatusCode.InternalServerError,
+                     new List<string> { "Error" });
                 }
-
-                return new Result(
-                    HttpStatusCode.InternalServerError,
-                    new List<string> { "Error" });
-            }
-            catch (AggregateException ex) 
-            {
-                var res2 = await _Repository.DeleteAsync(CreateFilter(request));
-                if (_UnitOfWork.SaveChangeAsync().Result > 0)
-                    return new Result(HttpStatusCode.OK, null);
-
-                return new Result(
-                 HttpStatusCode.InternalServerError,
-                 new List<string> { "Error" });
-            }
-            catch (Exception ex)
-            {
-                return new Result(
-                    HttpStatusCode.InternalServerError,
-                    new List<string> { "Error" });
+                catch (Exception ex)
+                {
+                    return new Result(
+                        HttpStatusCode.InternalServerError,
+                        new List<string> { "Error" });
+                }
             }
         }
 

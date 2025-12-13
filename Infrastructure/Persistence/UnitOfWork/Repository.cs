@@ -1,11 +1,15 @@
 ﻿namespace Infrastructure.Persistence.UnitOfWork
 {
+    using Azure;
     using CorePagination.Extensions;
     using CorePagination.Paginators.SizeAwarePaginator;
     using Domain.Abstraction;   
     using Domain.Common.Base;
+    using Entity.Model;
     using Microsoft.EntityFrameworkCore;
     using System.Linq.Expressions;
+    using Utility;
+    using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : Entity.BaseModel //BaseEntity
     {
@@ -39,8 +43,8 @@
             {
                 foreach (var Ob in ObList)
                 {
-                    Ob.Status = Utility.Status.Deleted; 
-                    dbEntity.Attach(Ob);
+                    Ob.Status = Utility.Status.Deleted;
+                    dbEntity.Entry(dbEntity.Find(Ob.Id)!).CurrentValues.SetValues(Ob);
                 }
                 return true;
             }
@@ -53,19 +57,58 @@
             return await dbEntity.FirstOrDefaultAsync(Filter);
         }
 
-        public virtual async ValueTask<IEnumerable<TEntity>?> GetListByFilterAsync()
+        public virtual async ValueTask<IEnumerable<TEntity>?> GetListByFilterAsync(Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy, string includeProperties)
         {
-            return await dbEntity.AsQueryable().ToListAsync();
+            var query = dbEntity.AsQueryable();
+            foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(includeProperty);
+            }
+
+            if (orderBy != null)
+            {
+                return await orderBy(query.Where(e => e.Status != Status.Deleted && e.Hide != true)).AsQueryable().ToListAsync();
+            }
+            else
+            {
+                return await query.Where(e => e.Status != Status.Deleted && e.Hide != true).AsQueryable().ToListAsync();
+            }
         }
 
-        public virtual async ValueTask<IEnumerable<TEntity>?> GetListByFilterAsync(Expression<Func<TEntity, bool>> Filter)
+        public virtual async ValueTask<IEnumerable<TEntity>?> GetListByFilterAsync(Expression<Func<TEntity, bool>> Filter, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy, string includeProperties)
         {
-            return await dbEntity.Where(Filter).AsQueryable().ToListAsync();
+            var query = dbEntity.Where(Filter).AsQueryable();
+            foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(includeProperty);
+            }
+
+            if (orderBy != null)
+            {
+                return await orderBy(query.Where(e => e.Status != Status.Deleted && e.Hide != true)).AsQueryable().ToListAsync();
+            }
+            else
+            {
+                return await query.Where(e => e.Status != Status.Deleted && e.Hide != true).AsQueryable().ToListAsync();
+            }
         }
 
-        public virtual async ValueTask<SizeAwarePaginationResult<TEntity>?> GetListByFilterAsync(Expression<Func<TEntity, bool>> Filter , int Page , int PageSize)
+        public virtual async ValueTask<SizeAwarePaginationResult<TEntity>?> GetListByFilterAsync(Expression<Func<TEntity, bool>> Filter, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy , string includeProperties , int Page , int PageSize)
         {
-            return await dbEntity.Where(Filter).AsQueryable().PaginateAsync(Page , PageSize);
+            var query =  dbEntity.Where(Filter);
+            foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(includeProperty);
+            }
+
+            if (orderBy != null)
+            {
+                return await orderBy(query.Where(e => e.Status != Status.Deleted  && e.Hide != true)).AsQueryable().PaginateAsync(Page, PageSize);
+            }
+            else
+            {
+                return await query.Where(e => e.Status != Status.Deleted  && e.Hide != true).AsQueryable().PaginateAsync(Page, PageSize);
+            }
         }
 
         public virtual async ValueTask<bool> ShiftDeleteAsync(Expression<Func<TEntity, bool>> Filter)

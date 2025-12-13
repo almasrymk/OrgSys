@@ -19,11 +19,11 @@
         {
             try
             {
-                var res = await _Repository.GetListByFilterAsync(CreateFilter(request));
+                var res = await _Repository.GetListByFilterAsync(CreateFilter(request) , CreateOrderBy(request) , CreateInclude());
                 if (res != null)
                 {
                     return new ResultCollection<TResponse>(
-                    HttpStatusCode.InternalServerError,
+                    HttpStatusCode.OK,
                     res.Select(e=> mapper.Map<TResponse>(e)).ToList(),
                     null);
                 }
@@ -45,6 +45,16 @@
         public virtual Expression<Func<TModel, bool>> CreateFilter(TRequest request)
         {
             return e => true;
+        }
+
+        public virtual string CreateInclude()
+        {
+            return "";
+        }
+
+        public virtual Func<IQueryable<TModel>, IOrderedQueryable<TModel>> CreateOrderBy(TRequest request)
+        {
+            return e => e.OrderBy(s => s.Id);
         }
     }
 }

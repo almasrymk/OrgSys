@@ -9,6 +9,8 @@
     using Microsoft.EntityFrameworkCore.Infrastructure;
     using Microsoft.EntityFrameworkCore.Migrations.Internal;
     using Entity.Model;
+    using System.Threading.Tasks;
+    using Microsoft.EntityFrameworkCore.ChangeTracking;
 
     public class OrgContext : DbContext , IOrgContext
     {
@@ -37,6 +39,21 @@
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasDefaultSchema(Schema);
+        }
+
+        public Task BeginTransactionAsync()
+        {
+           return this.Database.BeginTransactionAsync();
+        }
+
+        public Task CommitAsync()
+        {
+           return this.Database.CommitTransactionAsync();
+        }
+
+        public Task RollbackAsync()
+        {
+            return this.Database.RollbackTransactionAsync();
         }
 
         //public virtual DbSet<Unit> Units { get; set; }
@@ -84,6 +101,28 @@
         //public virtual DbSet<Bank> Banks { get; set; }
         //public virtual DbSet<BankBranch> BankBranchs { get; set; }
         public virtual DbSet<City> Cities { get; set; }
+
+        public void ResetDbContextState()
+        {
+            foreach (var entry in this.ChangeTracker.Entries())
+            {
+                switch (entry.State)
+                {
+                    case EntityState.Added:
+                        entry.State = EntityState.Detached;
+                        break;
+
+                    case EntityState.Modified:
+                        entry.CurrentValues.SetValues(entry.OriginalValues);
+                        entry.State = EntityState.Unchanged;
+                        break;
+
+                    case EntityState.Deleted:
+                        entry.State = EntityState.Unchanged;
+                        break;
+                }
+            }
+        }
         //public virtual DbSet<Country> Countries { get; set; }
         //public virtual DbSet<District> Districts { get; set; }
         //public virtual DbSet<Journal> Journals { get; set; }
