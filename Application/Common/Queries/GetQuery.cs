@@ -19,8 +19,7 @@
         public virtual async Task<Result<TResponse>> Handle(TRequest request, CancellationToken cancellationToken)
         {
             try
-            {
-
+            {                
                 var res = await _Repository.GetByFilterAsync(CreateFilter(request));
                 if (res!= null && res.Id > 0)
                 {

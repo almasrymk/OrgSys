@@ -1,21 +1,21 @@
 ﻿using AutoMapper;
 using Entity.Model;
 using Entity.ModelView;
-using Application.Commands.Org.City;
+using Application.Commands.Org.Country.Commands;
 
 public partial class MappingProfile : Profile
 {
     public void CountryMappingProfile()
     {
-        #region City
+        #region Country
         CreateMap<Country, CountryModelView>();
         CreateMap<CountryModelView, Country>();
-        //CreateMap<City, CreateCommand>();
-        //CreateMap<CreateCommand, City>();
-        //CreateMap<City, UpdateCommand>();
-        //CreateMap<UpdateCommand, City>();
-        //CreateMap<City, DeleteCommand>();
-        //CreateMap<DeleteCommand, City>();
+        CreateMap<Country, CreateCountryCommand>();
+        CreateMap<CreateCountryCommand, Country>();
+        CreateMap<Country, UpdateCountryCommand>();
+        CreateMap<UpdateCountryCommand, Country>();
+        CreateMap<Country, DeleteCountryCommand>();
+        CreateMap<DeleteCountryCommand, Country>();
         #endregion
     }
 }

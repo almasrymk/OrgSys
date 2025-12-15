@@ -24,15 +24,15 @@ namespace API.Controllers
         }
 
         [HttpGet("GetList")]
-        public virtual async Task<IActionResult> GetList(CancellationToken cancellationToken)
+        public virtual async Task<IActionResult> GetList(string? KeySearch, int Page, int PageSize, CancellationToken cancellationToken)
         {
-            var query = (TSearch)Activator.CreateInstance(typeof(TSearch), "", 0, 0, 1, 100)!;
+            var query = (TSearch)Activator.CreateInstance(typeof(TSearch), KeySearch, 0, 0, Page, PageSize)!;
             var res = await sender.Send(query, cancellationToken);
             return res.StatusCode == HttpStatusCode.OK ? Ok(res) : BadRequest(res);
         }
 
         [HttpGet("Search")]
-        public virtual async Task<IActionResult> Search(string KeySearch, int Page, int PageSize, CancellationToken cancellationToken)
+        public virtual async Task<IActionResult> Search(string? KeySearch, int Page, int PageSize, CancellationToken cancellationToken)
         {
             var query = (TSearch)Activator.CreateInstance(typeof(TSearch), KeySearch, 0, 0, Page, PageSize)!;
             var res = await sender.Send(query, cancellationToken);
@@ -44,10 +44,12 @@ namespace API.Controllers
         {
             var res = await sender.Send(Create, cancellationToken);
             return res.StatusCode == HttpStatusCode.OK ? Ok(res) : BadRequest(res);
+
+            throw new NotImplementedException();
         }
 
         [HttpPut("Update")]
-        public virtual async Task<IActionResult> Update(TUpdate Update, CancellationToken cancellationToken)
+        public virtual async Task<IActionResult> Update([FromBody] TUpdate Update, CancellationToken cancellationToken)
         {
             var res = await sender.Send(Update, cancellationToken);
             return res.StatusCode == HttpStatusCode.OK ? Ok(res) : BadRequest(res);
@@ -61,9 +63,8 @@ namespace API.Controllers
             return res.StatusCode == HttpStatusCode.OK ? Ok(res) : BadRequest(res);
         }
 
-
         [HttpDelete("DeleteList")]
-        public virtual async Task<IActionResult> DeleteList(List<long> Ids, CancellationToken cancellationToken)
+        public virtual async Task<IActionResult> DeleteList([FromQuery] List<long> Ids, CancellationToken cancellationToken)
         {
             var command = (TDeleteList)Activator.CreateInstance(typeof(TDeleteList), Ids)!;
             var res = await sender.Send(command, cancellationToken);

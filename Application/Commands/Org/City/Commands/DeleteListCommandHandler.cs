@@ -9,11 +9,11 @@
     using Entity.ModelView;
     using System.Linq.Expressions;
 
-    public sealed record DeleteListCommand(List<long> Ids) : ICommand, IDeleteListCommand<Result>;   
+    public sealed record DeleteListCityCommand(List<long> Ids) : ICommand, IDeleteListCommand<Result>;   
 
-    public sealed class DeleteListCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.City> _Repository , IMapper mapper) : DeleteCommandHandler<DeleteListCommand, Entity.Model.City>(_UnitOfWork, _Repository , mapper)
+    public sealed class DeleteListCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.City> _Repository , IMapper mapper) : DeleteCommandHandler<DeleteListCityCommand, Entity.Model.City>(_UnitOfWork, _Repository , mapper)
     {
-        public override Expression<Func<Entity.Model.City, bool>> CreateFilter(DeleteListCommand request)
+        public override Expression<Func<Entity.Model.City, bool>> CreateFilter(DeleteListCityCommand request)
         {
             return e => request.Ids.Contains(e.Id) && e.Status != Utility.Status.Deleted && e.Hide != true;
         }

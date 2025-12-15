@@ -8,9 +8,9 @@
     using Domain.Shared;
     using Entity.ModelView;
 
-    public sealed record CreateCommand(long? CountryId, string Name) : ICommand , ICreateCommand<Result>;
+    public sealed record CreateCityCommand(long? CountryId, string Name) : ICommand , ICreateCommand<Result>;
 
-    public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.City> _Repository , IMapper mapper) : CreateCommandHandler<CreateCommand, Entity.Model.City>(_UnitOfWork, _Repository , mapper)
+    public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.City> _Repository , IMapper mapper) : CreateCommandHandler<CreateCityCommand, Entity.Model.City>(_UnitOfWork, _Repository , mapper)
     {
        
     }

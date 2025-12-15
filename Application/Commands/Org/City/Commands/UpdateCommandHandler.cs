@@ -8,9 +8,9 @@
     using Domain.Shared;
     using Entity.ModelView;
 
-    public sealed record UpdateCommand(long Id , long? CountryId, string Name) : ICommand, IUpdateCommand<Result>;
+    public sealed record UpdateCityCommand(long Id , long? CountryId, string Name) : ICommand, IUpdateCommand<Result>;
 
-    public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.City> _Repository , IMapper mapper) : UpdateCommandHandler<UpdateCommand, Entity.Model.City>(_UnitOfWork, _Repository , mapper)
+    public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.City> _Repository , IMapper mapper) : UpdateCommandHandler<UpdateCityCommand, Entity.Model.City>(_UnitOfWork, _Repository , mapper)
     {
        
     }

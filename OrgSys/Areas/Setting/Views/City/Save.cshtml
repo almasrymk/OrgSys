@@ -1,5 +1,4 @@
-﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@model Entity.ModelView.CityModelView
+﻿@model Entity.ModelView.CityModelView
 @{
     ViewData["Title_Designer"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -115,7 +114,7 @@
                 type: 'POST',
                 url: "/Setting/City/Save",
                 async: false,
-                data: { model: data},
+                data: { ob: data},
                 success: function (res) {
                     if (res.status == "success") {
                         window.location.replace(res.url);

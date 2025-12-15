@@ -7,11 +7,11 @@ using Entity.ModelView;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace API.Controllers.Org
+namespace API.Controllers.Org.City
 {
     [ApiController]
-    [Route("[controller]/[action]")]
-    public class CityController(ISender sender) : BaseController<GetByIdQuery, SearchQuery, CreateCommand, UpdateCommand, DeleteCommand , DeleteListCommand, CityModelView>(sender)
+    [Route("[controller]")]
+    public class CityController(ISender sender) : BaseController<GetByIdCityQuery, SearchCityQuery, CreateCityCommand, UpdateCityCommand, DeleteCityCommand , DeleteListCityCommand, CityModelView>(sender)
     {
 
     }

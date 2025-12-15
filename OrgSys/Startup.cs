@@ -85,8 +85,8 @@ namespace OrgSys
 
             services.AddMediatR(cfg =>
             {
-                //cfg.RegisterServicesFromAssembly(typeof(Program).Assembly);                      // Web layer
-                cfg.RegisterServicesFromAssembly(typeof(CreateCommand).Assembly); // Application layer
+                cfg.RegisterServicesFromAssembly(typeof(Program).Assembly);                      // Web layer
+                //cfg.RegisterServicesFromAssembly(typeof(CreateCommand).Assembly); // Application layer
             });
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
