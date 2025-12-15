@@ -17,11 +17,9 @@ builder.Services.AddDbContext<Infrastructure.Persistence.Data.OrgContext>(option
 
 builder.Services.AddScoped<IOrgContext>(provider => provider.GetRequiredService<Infrastructure.Persistence.Data.OrgContext>());
 
-builder.Services.AddMediatR(cfg => 
-{ 
-    //cfg.RegisterServicesFromAssemblies(typeof(Program).Assembly); 
-    cfg.RegisterServicesFromAssembly(typeof(Application.Commands.Org.City.Commands.CreateCityCommand).Assembly); 
-    cfg.RegisterServicesFromAssembly(typeof(Application.Commands.Org.Country.Commands.CreateCountryCommand).Assembly); 
+builder.Services.AddMediatR(cfg =>
+{
+    cfg.RegisterServicesFromAssembly(typeof(MappingProfile).Assembly);
 });
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
