@@ -1,13 +1,14 @@
-﻿using Service;
-using System.Linq;
-using Entity.ModelView;
-using OrgSys.Controllers;
+﻿using Entity.ModelView;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using OrgSys.Controllers;
+using Service;
+using System.Linq;
 
 namespace OrgSys.Areas.Setting.Controllers
 {
     [Area("Setting")]
-    public class CountryController() :MainController<CountryModelView>("Country")
+    public class CountryController(IConfiguration configuration) :MainController<CountryModelView>(configuration)
     {
         public JsonResult GetList(string txtSearch = "", int page = 1, int pageSize = 10)
         {

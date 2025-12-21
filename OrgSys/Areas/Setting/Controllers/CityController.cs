@@ -1,14 +1,15 @@
-﻿using Service;
-using System.Linq;
-using Entity.ModelView;
-using OrgSys.Controllers;
+﻿using Entity.ModelView;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Configuration;
+using OrgSys.Controllers;
+using Service;
+using System.Linq;
 
 namespace OrgSys.Areas.Setting.Controllers
 {
     [Area("Setting")]
-    public class CityController() : MainController<CityModelView>("City")
+    public class CityController(IConfiguration configuration) : MainController<CityModelView>(configuration)
     {               
         public override void LoadViewBag(CityModelView model)
         {
