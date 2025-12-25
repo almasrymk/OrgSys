@@ -20,7 +20,7 @@
         {
             try
             {                
-                var res = await _Repository.GetByFilterAsync(CreateFilter(request));
+                var res = await _Repository.GetByFilterAsync(CreateFilter(request), CreateInclude());
                 if (res!= null && res.Id > 0)
                 {
                     return new Result<TResponse>(
@@ -46,6 +46,11 @@
         public virtual Expression<Func<TModel, bool>> CreateFilter(TRequest request)
         {
             return e => true;
+        }
+
+        public virtual string CreateInclude()
+        {
+            return "";
         }
     }
 }

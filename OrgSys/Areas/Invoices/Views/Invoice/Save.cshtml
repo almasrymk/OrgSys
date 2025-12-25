@@ -164,7 +164,7 @@
                                                         </div>
                                                     </td>
                                                     <td style="width:150px;padding:0px;">
-                                                        @Html.DropDownList("UnitId", new SelectList(InvoiceProduct.UnitList, "Id", "Name", InvoiceProduct.UnitId), null, new { @class = "form-control UnitId", @style = BorderAlign })
+                                                        @Html.DropDownList("UnitId", new SelectList(InvoiceProduct.Product.ProductUnits.Select(e => e.Unit), "Id", "Name", InvoiceProduct.UnitId), null, new { @class = "form-control UnitId", @style = BorderAlign })
                                                     </td>
                                                     <td style="width:100px;padding:0px;">
                                                         <input type="text" id="Price" name="Price" class="form-control Price" value="@InvoiceProduct.Price" style="@BorderAlign" placeholder="0.0" autocomplete="off" />

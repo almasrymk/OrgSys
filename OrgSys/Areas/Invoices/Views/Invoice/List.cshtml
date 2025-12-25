@@ -1,6 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
 @using System.Globalization
-@model X.PagedList.IPagedList<Entity.ModelView.InvoiceModelView>
+@model Domain.Shared.ResultPagination<Entity.ModelView.InvoiceModelView>
 @using OrgSys
 @{
     Layout = null;
@@ -59,7 +59,7 @@
     }
 }
 
-@if (Model != null && Model.Count > 0)
+@if (Model != null && Model.Response.Count > 0)
 {
     <div id="tbList" class="card" style="display:none;">
         <div class="card-body pl-0 pr-0 pb-2 pt-0">
@@ -109,10 +109,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @for (int i = 0, x = ((Model.PageNumber - 1) * Model.PageSize) + 1; i < Model.Count; i++, x++)
+                    @for (int i = 0, x = ((Model.Page - 1) * Model.PageSize) + 1; i < Model.Response.Count; i++, x++)
                     {
 
-                        <tr style="@(Model[i].Status == Utility.Status.Cancel ? "color:#a8a7a7;background:repeating-linear-gradient(60deg, transparent, transparent 5px, gainsboro 5px, gainsboro 6px);" : "")">
+                        <tr style="@(Model.Response[i].Status == Utility.Status.Cancel ? "color:#a8a7a7;background:repeating-linear-gradient(60deg, transparent, transparent 5px, gainsboro 5px, gainsboro 6px);" : "")">
                             <td class="text-center align-middle" style="width:50px;">
                                 <p class="list-item-heading">@x</p>
                             </td>
@@ -122,57 +122,57 @@
                                 </div>
                             </td>
                             <td class="w-10 text-center align-middle">
-                                @Model[i].Code
+                                @Model.Response[i].Code
                             </td>
                             <td class="@TextAlign align-middle">
-                                @Model[i].DealerName
+                                @Model.Response[i].DealerName
                             </td>
                             <td class="w-12 text-center align-middle">
-                                @Model[i].Date.ToString(DateFromate, new CultureInfo("en-US"))
+                                @Model.Response[i].Date.ToString(DateFromate, new CultureInfo("en-US"))
                             </td>
                             <td class="w-10 text-center align-middle">
-                                @Model[i].Net
+                                @Model.Response[i].Net
                             </td>
                             <td class="w-10 text-center align-middle">
-                                @if (@Model[i].Credit == 0)
+                                @if (@Model.Response[i].Credit == 0)
                                 {
                                     <small><i class="fa fa-check"></i> </small>
                                 }
                                 else
                                 {
-                                    if (AllowFinancial && Model[i].Status != Utility.Status.Cancel)
+                                    if (AllowFinancial && Model.Response[i].Status != Utility.Status.Cancel)
                                     {
-                                        <a href="/@ViewBag.area/@ViewBag.PageTitle/CreateFinancial?id=@Model[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.PageNumber">
-                                            @if (@Model[i].TypeId == 1 || @Model[i].TypeId == 4)
+                                        <a href="/@ViewBag.area/@ViewBag.PageTitle/CreateFinancial?id=@Model.Response[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.Page">
+                                            @if (@Model.Response[i].TypeId == 1 || @Model.Response[i].TypeId == 4)
                                             {
-                                                <i class="iconsminds-financial"> <small> @Model[i].Credit </small>  </i>
+                                                <i class="iconsminds-financial"> <small> @Model.Response[i].Credit </small>  </i>
                                             }
                                             else
                                             {
-                                                <i class="iconsminds-handshake"> <small> @Model[i].Credit </small> </i>
+                                                <i class="iconsminds-handshake"> <small> @Model.Response[i].Credit </small> </i>
                                             }
                                         </a>
                                     }
                                     else
                                     {
-                                        <small> @Model[i].Credit </small>
+                                        <small> @Model.Response[i].Credit </small>
                                     }
                                 }
                             </td>
                             <td class="text-center align-middle" style="width:10px;">
-                                @if (Model[i].Transaction == null || "" + Model[i].Transaction.Code == "")
+                                @if (Model.Response[i].Transaction == null || "" + Model.Response[i].Transaction.Code == "")
                                 {
-                                    if (Model[i].Status != Utility.Status.Cancel && User.IsAllowed("Addition.Add"))
+                                    if (Model.Response[i].Status != Utility.Status.Cancel && User.IsAllowed("Addition.Add"))
                                     {
-                                        <a href="/@ViewBag.area/@ViewBag.PageTitle/CreateTransaction?id=@Model[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.PageNumber"> <i class="iconsminds-synchronize-2"></i>  </a>
+                                        <a href="/@ViewBag.area/@ViewBag.PageTitle/CreateTransaction?id=@Model.Response[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.Page"> <i class="iconsminds-synchronize-2"></i>  </a>
                                     }
                                 }
                                 else
                                 {
                                     if (User.IsAllowed("Addition.View") || User.IsAllowed("Addition.Edit"))
                                     {
-                                        <a href="/Transactions/Transaction/Save?id=@Model[i].TransactionId&ParentId=0&amp;TypeId=1">
-                                            @Model[i].Transaction?.Code
+                                        <a href="/Transactions/Transaction/Save?id=@Model.Response[i].TransactionId&ParentId=0&amp;TypeId=1">
+                                            @Model.Response[i].Transaction?.Code
                                         </a>
                                     }
                                     else
@@ -184,20 +184,20 @@
                             @if (AllowEdit || AllowCancel || AllowDelete)
                             {
                                 <td class="w-20 @TextAlign2 align-middle">
-                                    @if (Model[i].Status == Utility.Status.Cancel)
+                                    @if (Model.Response[i].Status == Utility.Status.Cancel)
                                     {
-                                        <a href="/@ViewBag.area/@ViewBag.PageTitle/Redo?id=@Model[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.PageNumber"> <i class="simple-icon-action-redo"></i> </a>
+                                        <a href="/@ViewBag.area/@ViewBag.PageTitle/Redo?id=@Model.Response[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.Page"> <i class="simple-icon-action-redo"></i> </a>
                                         if (AllowDelete)
                                         {
                                             <span>&nbsp; | &nbsp;</span>
-                                            <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
+                                            <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
                                         }
                                     }
                                     else
                                     {
                                         if (AllowEdit)
                                         {
-                                            <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit" style="color:green"></i> </a>
+                                            <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit" style="color:green"></i> </a>
                                             if (AllowCancel || AllowDelete)
                                             {
                                                 <span>&nbsp; | &nbsp;</span>
@@ -205,7 +205,7 @@
                                         }
                                         if (AllowCancel)
                                         {
-                                            <a href="/@ViewBag.area/@ViewBag.PageTitle/Cancel?id=@Model[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.PageNumber"> <i>X</i> </a>
+                                            <a href="/@ViewBag.area/@ViewBag.PageTitle/Cancel?id=@Model.Response[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.Page"> <i>X</i> </a>
                                             @if (AllowDelete)
                                             {
                                                 <span>&nbsp; | &nbsp;</span>
@@ -213,21 +213,21 @@
                                         }
                                         if (AllowDelete)
                                         {
-                                            <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
+                                            <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
                                         }
                                         <span>&nbsp; | &nbsp;</span>
-                                        <a href="/@ViewBag.area/@ViewBag.PageTitle/Print?id=@Model[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.PageNumber" target="_blank"> <i class="fa fa-print text-info"></i> </a>
+                                        <a href="/@ViewBag.area/@ViewBag.PageTitle/Print?id=@Model.Response[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.Page" target="_blank"> <i class="fa fa-print text-info"></i> </a>
                                     }
                                 </td>
                             }
                             @if (AllowDelete)
                             {
                                 <td class="align-middle @TextAlign2" style="width:30px">
-                                    @if (Model[i].Status != Utility.Status.Cancel)
+                                    @if (Model.Response[i].Status != Utility.Status.Cancel)
                                     {
                                         <label class="custom-control custom-checkbox pt-2">
-                                            <input id="chk_@Model[i].Id" type="checkbox" class="custom-control-input chk">
-                                            <input type="hidden" value="@Model[i].Id" />
+                                            <input id="chk_@Model.Response[i].Id" type="checkbox" class="custom-control-input chk">
+                                            <input type="hidden" value="@Model.Response[i].Id" />
                                             <span class="custom-control-label">&nbsp;</span>
                                         </label>
                                     }
@@ -291,69 +291,69 @@
 
                 </div>
             </div>
-            @for (int i = 0, x = ((Model.PageNumber - 1) * Model.PageSize) + 1; i < Model.Count; i++, x++)
+            @for (int i = 0, x = ((Model.Page - 1) * Model.PageSize) + 1; i < Model.Response.Count; i++, x++)
             {
                 <div class="card d-flex flex-row mb-2">
-                    <div class="d-flex flex-grow-1 min-width-zero" style="border-radius:15px; height:60px; @(Model[i].Status == Utility.Status.Cancel ? "color:#a8a7a7;background:repeating-linear-gradient(60deg, transparent, transparent 5px, gainsboro 5px, gainsboro 6px);" : "")">
+                    <div class="d-flex flex-grow-1 min-width-zero" style="border-radius:15px; height:60px; @(Model.Response[i].Status == Utility.Status.Cancel ? "color:#a8a7a7;background:repeating-linear-gradient(60deg, transparent, transparent 5px, gainsboro 5px, gainsboro 6px);" : "")">
                         <div class="list-thumbnail  border-0 card-img-left badge-theme-1" style="height:60px; width:60px; font-size:x-large; text-align:center; padding:14px;">
                             <i class="@ViewBag.InvoicesIcon"></i>
                         </div>
 
                         <div class="card-body align-self-center d-flex flex-column flex-md-row  align-items-md-center">
                             <div class="list-item-heading mb-0  w-10  ">
-                                @Model[i].Code
+                                @Model.Response[i].Code
                             </div>
                             <div class="list-item-heading mb-0  w-40">
-                                @Model[i].DealerName
+                                @Model.Response[i].DealerName
                             </div>
                             <div class="list-item-heading mb-0 truncate w-15 ">
-                                @Model[i].Date.ToString(DateFromate, new CultureInfo("en-US"))
+                                @Model.Response[i].Date.ToString(DateFromate, new CultureInfo("en-US"))
                             </div>
                             <div class="w-10">
-                                @Model[i].Net
+                                @Model.Response[i].Net
                             </div>
                             <div class="w-10">
-                                @if (@Model[i].Credit == 0)
+                                @if (@Model.Response[i].Credit == 0)
                                 {
                                     <small><i class="fa fa-check"></i> </small>
                                 }
                                 else
                                 {
-                                    if (AllowFinancial && Model[i].Status != Utility.Status.Cancel)
+                                    if (AllowFinancial && Model.Response[i].Status != Utility.Status.Cancel)
                                     {
-                                        <a href="/@ViewBag.area/@ViewBag.PageTitle/CreateFinancial?id=@Model[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.PageNumber">
-                                            @if (@Model[i].TypeId == 1 || @Model[i].TypeId == 4)
+                                        <a href="/@ViewBag.area/@ViewBag.PageTitle/CreateFinancial?id=@Model.Response[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.Page">
+                                            @if (@Model.Response[i].TypeId == 1 || @Model.Response[i].TypeId == 4)
                                             {
-                                                <i class="iconsminds-financial"> <small> @Model[i].Credit </small>  </i>
+                                                <i class="iconsminds-financial"> <small> @Model.Response[i].Credit </small>  </i>
                                             }
                                             else
                                             {
-                                                <i class="iconsminds-handshake"> <small> @Model[i].Credit </small> </i>
+                                                <i class="iconsminds-handshake"> <small> @Model.Response[i].Credit </small> </i>
                                             }
                                         </a>
                                     }
                                     else
                                     {
-                                        <small> @Model[i].Credit </small>
+                                        <small> @Model.Response[i].Credit </small>
                                     }
                                 }
                             </div>
                             <div class="w-10">
 
-                                @if ("" + Model[i].Transaction?.Code == "")
+                                @if ("" + Model.Response[i].Transaction?.Code == "")
                                 {
-                                    if (Model[i].Status != Utility.Status.Cancel && AllowAdd)
+                                    if (Model.Response[i].Status != Utility.Status.Cancel && AllowAdd)
                                     {
 
-                                        <a href="/@ViewBag.area/@ViewBag.PageTitle/CreateTransaction?id=@Model[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.PageNumber"> <i class="iconsminds-synchronize-2"></i>  </a>
+                                        <a href="/@ViewBag.area/@ViewBag.PageTitle/CreateTransaction?id=@Model.Response[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.Page"> <i class="iconsminds-synchronize-2"></i>  </a>
                                     }
                                 }
                                 else
                                 {
                                     if (AllowView || AllowEdit)
                                     {
-                                        <a href="/Transactions/Transaction/Save?id=@Model[i].TransactionId&ParentId=0&amp;TypeId=1">
-                                            @Model[i].Transaction?.Code
+                                        <a href="/Transactions/Transaction/Save?id=@Model.Response[i].TransactionId&ParentId=0&amp;TypeId=1">
+                                            @Model.Response[i].Transaction?.Code
                                         </a>
                                     }
                                     else
@@ -363,20 +363,20 @@
                                 }
                             </div>
                             <div class="w-20 @TextAlign2">
-                                @if (Model[i].Status == Utility.Status.Cancel)
+                                @if (Model.Response[i].Status == Utility.Status.Cancel)
                                 {
-                                    <a href="/@ViewBag.area/@ViewBag.PageTitle/Redo?id=@Model[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.PageNumber"> <i class="simple-icon-action-redo"></i> </a>
+                                    <a href="/@ViewBag.area/@ViewBag.PageTitle/Redo?id=@Model.Response[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.Page"> <i class="simple-icon-action-redo"></i> </a>
                                     if (AllowDelete)
                                     {
                                         <span>&nbsp; | &nbsp;</span>
-                                        <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
+                                        <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
                                     }
                                 }
                                 else
                                 {
                                     if (AllowEdit)
                                     {
-                                        <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit" style="color:green"></i> </a>
+                                        <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit" style="color:green"></i> </a>
                                         if (AllowCancel || AllowDelete)
                                         {
                                             <span>&nbsp; | &nbsp;</span>
@@ -384,7 +384,7 @@
                                     }
                                     if (AllowCancel)
                                     {
-                                        <a href="/@ViewBag.area/@ViewBag.PageTitle/Cancel?id=@Model[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.PageNumber"> <i>X</i> </a>
+                                        <a href="/@ViewBag.area/@ViewBag.PageTitle/Cancel?id=@Model.Response[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.Page"> <i>X</i> </a>
                                         @if (AllowDelete)
                                         {
                                             <span>&nbsp; | &nbsp;</span>
@@ -392,11 +392,11 @@
                                     }
                                     if (AllowDelete)
                                     {
-                                        <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
+                                        <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
                                     }
 
                                     <span>&nbsp; | &nbsp;</span>
-                                    <a href="/@ViewBag.area/@ViewBag.PageTitle/Print?id=@Model[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.PageNumber" target="_blank"> <i class="fa fa-print text-info"></i> </a>
+                                    <a href="/@ViewBag.area/@ViewBag.PageTitle/Print?id=@Model.Response[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.Page" target="_blank"> <i class="fa fa-print text-info"></i> </a>
                                 }
                             </div>
                         </div>
@@ -404,11 +404,11 @@
                         <div style="width:30px;">
                             @if (AllowDelete)
                             {
-                                @if (Model[i].Status != Utility.Status.Cancel)
+                                @if (Model.Response[i].Status != Utility.Status.Cancel)
                                 {
                                     <label class="custom-control custom-checkbox pt-3">
-                                        <input id="chk_@Model[i].Id" type="checkbox" class="custom-control-input chk">
-                                        <input type="hidden" value="@Model[i].Id" />
+                                        <input id="chk_@Model.Response[i].Id" type="checkbox" class="custom-control-input chk">
+                                        <input type="hidden" value="@Model.Response[i].Id" />
                                         <span class="custom-control-label">&nbsp;</span>
                                     </label>
                                 }
@@ -423,4 +423,4 @@
     </div>
 }
 
-@Html.Partial("PagedList", Model)
+@Html.Partial("ToPagedList", new Domain.Shared.Pagination(Model.Page, Model.PageSize, Model.PageCount))

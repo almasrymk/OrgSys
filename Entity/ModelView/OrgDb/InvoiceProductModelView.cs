@@ -1,5 +1,6 @@
 ﻿using Entity.Model;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Entity.ModelView
 {
@@ -10,6 +11,5 @@ namespace Entity.ModelView
         public string UnitName { get; set; }
 
         public string StockName { get; set; }
-        public List<UnitModelView> UnitList { get; set; }
     }
 }

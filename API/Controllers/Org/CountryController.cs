@@ -1,5 +1,5 @@
-﻿using Application.Commands.Org.Country.Commands;
-using Application.Commands.Org.Country.Queries;
+﻿using Application.Commands.Org.Setting.Country.Commands;
+using Application.Commands.Org.Setting.Country.Queries;
 using Application.Interfaces.CQRS;
 using Azure;
 using Domain.Shared;

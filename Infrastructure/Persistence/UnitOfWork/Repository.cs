@@ -52,9 +52,14 @@
             return false;
         }
 
-        public virtual async ValueTask<TEntity?> GetByFilterAsync(Expression<Func<TEntity, bool>> Filter)
+        public virtual async ValueTask<TEntity?> GetByFilterAsync(Expression<Func<TEntity, bool>> Filter, string includeProperties)
         {
-            return await dbEntity.FirstOrDefaultAsync(Filter);
+            var query = dbEntity.AsQueryable();
+            foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(includeProperty);
+            }
+            return await query.FirstOrDefaultAsync(Filter);
         }
 
         public virtual async ValueTask<IEnumerable<TEntity>?> GetListByFilterAsync(Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy, string includeProperties)

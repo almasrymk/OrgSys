@@ -138,10 +138,10 @@ namespace Service
             var ob =  base.Get(Id);
             if (ob == null)
                 ob = new InvoiceModelView() { InvoiceProductList = new List<InvoiceProductModelView>() };
-            foreach (var products in ob.InvoiceProductList)
-            {
-                products.UnitList = products.Product.ProductUnits.Select(e => e.Unit.Map<UnitModelView>()).ToList();
-            }
+            //foreach (var products in ob.InvoiceProductList)
+            //{
+            //    products.UnitList = products.Product.ProductUnits.Select(e => e.Unit.Map<UnitModelView>()).ToList();
+            //}
             return ob;
         }
 

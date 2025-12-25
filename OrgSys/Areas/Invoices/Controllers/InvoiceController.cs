@@ -1,6 +1,9 @@
 ﻿using Entity.ModelView;
+using iTextSharp.text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.DotNet.Scaffolding.Shared.Project;
+using Microsoft.Extensions.Configuration;
 using OrgSys.Controllers;
 using Service;
 using System;
@@ -13,22 +16,22 @@ using Utility;
 namespace OrgSys.Areas.Invoices.Controllers
 {
     [Area("Invoices")]
-    public class InvoiceController : BaseController<InvoiceModelView>
+    public class InvoiceController(IConfiguration configuration) : MainController<InvoiceModelView>(configuration)
     {
-        public override void LoadViewBagIndex(long ParentId = 0, long TypeId = 0)
+        public override async Task LoadViewBagIndex(long ParentId = 0, long TypeId = 0)
         {
-            var type = new InvoiceTypeService(User.GetSchema()).Get(TypeId);
+            var type = await GetObApi<InvoiceTypeModelView>( Domain.Enums.ApiMethodType.Get , $"GetById?Id={TypeId}");
             ViewBag.InvoicesType = type.Name;
             ViewBag.InvoicesGroup = type.Group;
             ViewBag.InvoicesIcon = type.Icon;
 
-            base.LoadViewBagIndex();
+           await base.LoadViewBagIndex();
         }
 
-        public override void LoadViewBag(InvoiceModelView model)
-        {
-            ViewBag.CurrencyId = new SelectList(new CurrencyService(User.GetSchema()).GetAll(0, 0, 1, 20), "Id", "Name", model.CurrencyId);
-            ViewBag.PaymentTypeId = new SelectList(new PaymentTypeService(User.GetSchema()).GetAll(0, 0, 1, 20), "Id", "Name", model.PaymentTypeId);
+        public override async Task LoadViewBag(InvoiceModelView model)
+        {            
+            ViewBag.CurrencyId = new SelectList(await GetListApi<CurrencyModelView>(Domain.Enums.ApiMethodType.Get, $"GetList?KeySearch=&Page=1&PageSize=20"), "Id", "Name", model.CurrencyId);
+            ViewBag.PaymentTypeId = new SelectList(await GetListApi<PaymentTypeModelView>(Domain.Enums.ApiMethodType.Get, $"GetList?KeySearch=&Page=1&PageSize=20"), "Id", "Name", model.PaymentTypeId);
 
             List<SelectListItem> selectListItems = new List<SelectListItem>();
             selectListItems.Add(new SelectListItem { Value = "1", Text = Translate.GetTranslate("Amount") });
@@ -38,13 +41,13 @@ namespace OrgSys.Areas.Invoices.Controllers
             ViewBag.ServiceType = new SelectList(selectListItems, "Value", "Text");
             ViewBag.TaxType = new SelectList(selectListItems, "Value", "Text");
 
-            var type = new InvoiceTypeService(User.GetSchema()).Get(model.TypeId);
+            var type = await GetObApi<InvoiceTypeModelView>(Domain.Enums.ApiMethodType.Get, $"GetById?Id={model.TypeId}");
             ViewBag.InvoicesType = type.Name;
             ViewBag.InvoicesGroup = type.Group;
             ViewBag.InvoicesIcon = type.Icon;
         }
 
-        public override InvoiceModelView InitializeData(InvoiceModelView ob)
+        public override async Task<InvoiceModelView> InitializeData(InvoiceModelView ob)
         {
             var setting = new PreferenceService(User.GetSchema());
             var StockId = long.Parse("0" + setting.GetByKey("DefaultStock", "Invoice", ob.TypeId, 0)?.Value);
@@ -172,10 +175,10 @@ namespace OrgSys.Areas.Invoices.Controllers
             return Redirect("/Invoices/Invoice/Index?ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" + ResultStatus.success + "&MsgError=Success");
         }
 
-        public override Task<IActionResult> Print(long Id, string ViewName = "InvoicePrint")
-        {
-            return base.Print(Id, ViewName);
-        }
+        //public override Task<IActionResult> Print(long Id, string ViewName = "InvoicePrint")
+        //{
+        //    return base.Print(Id, ViewName);
+        //}
 
         public JsonResult GetProductInvoice(int Id)
         {

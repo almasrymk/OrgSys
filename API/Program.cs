@@ -27,6 +27,8 @@ builder.Services.AddAutoMapper(cfg => { cfg.AddProfile<MapperConfig>(); });
 
 builder.Services.AddSwaggerGen(c => { c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First()); });
 
+builder.Services.AddControllers().AddJsonOptions(options => { options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles; });
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())

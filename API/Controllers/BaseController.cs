@@ -1,5 +1,4 @@
-﻿using Application.Commands.Org.City.Queries;
-using Application.Interfaces.CQRS;
+﻿using Application.Interfaces.CQRS;
 using Domain.Shared;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -24,17 +23,17 @@ namespace API.Controllers
         }
 
         [HttpGet("GetList")]
-        public virtual async Task<IActionResult> GetList(string? KeySearch, int Page, int PageSize, CancellationToken cancellationToken)
+        public virtual async Task<IActionResult> GetList(string? KeySearch, long ParentId, long TypeId, int Page, int PageSize, CancellationToken cancellationToken)
         {
-            var query = (TSearch)Activator.CreateInstance(typeof(TSearch), KeySearch, 0, 0, Page, PageSize)!;
+            var query = (TSearch)Activator.CreateInstance(typeof(TSearch), KeySearch, ParentId, TypeId, Page, PageSize)!;
             var res = await sender.Send(query, cancellationToken);
             return res.StatusCode == HttpStatusCode.OK ? Ok(res) : BadRequest(res);
         }
 
         [HttpGet("Search")]
-        public virtual async Task<IActionResult> Search(string? KeySearch, int Page, int PageSize, CancellationToken cancellationToken)
+        public virtual async Task<IActionResult> Search(string? KeySearch , long ParentId, long TypeId , int Page, int PageSize, CancellationToken cancellationToken)
         {
-            var query = (TSearch)Activator.CreateInstance(typeof(TSearch), KeySearch, 0, 0, Page, PageSize)!;
+            var query = (TSearch)Activator.CreateInstance(typeof(TSearch), KeySearch, ParentId, TypeId, Page, PageSize)!;
             var res = await sender.Send(query, cancellationToken);
             return res.StatusCode == HttpStatusCode.OK ? Ok(res) : BadRequest(res);
         }

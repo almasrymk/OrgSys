@@ -7,7 +7,7 @@
     {
         ValueTask<TEntity> CreateAsync(TEntity Ob);
         ValueTask<bool> UpdateAsync(TEntity Ob);
-        ValueTask<TEntity?> GetByFilterAsync(Expression<Func<TEntity, bool>> Filter);
+        ValueTask<TEntity?> GetByFilterAsync(Expression<Func<TEntity, bool>> Filter, string includeProperties);
         ValueTask<IEnumerable<TEntity>?> GetListByFilterAsync(Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy, string includeProperties);
         ValueTask<IEnumerable<TEntity>?> GetListByFilterAsync(Expression<Func<TEntity, bool>> Filter, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy, string includeProperties);
         ValueTask<SizeAwarePaginationResult<TEntity>?> GetListByFilterAsync(Expression<Func<TEntity, bool>> Filter, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy, string includeProperties, int Page, int PageSize);

@@ -53,8 +53,70 @@ namespace OrgSys.Controllers
             return null;
         }
 
+        public virtual async Task<List<TSubDto>> GetListApi<TSubDto>(ApiMethodType apiMethodType, string NameActionAndParamenter, TSubDto Ob = null) where TSubDto : BaseModel
+        {
+            string ApiUrl = configuration["ApiUrl"];
+            HttpClient httpClient = new HttpClient();
+            HttpResponseMessage response = new HttpResponseMessage();
+            var ob = (List<TSubDto>)Activator.CreateInstance(typeof(List<TSubDto>));
+            string ApiControllerName = typeof(TSubDto).Name.Replace("ModelView", "").Replace("Dto", "");
+            switch (apiMethodType)
+            {
+                case ApiMethodType.Get:
+                    response = await httpClient.GetAsync($"{ApiUrl}/{ApiControllerName}/{NameActionAndParamenter}");
+                    break;
+                case ApiMethodType.Post:
+                    response = await httpClient.PostAsJsonAsync($"{ApiUrl}/{ApiControllerName}/{NameActionAndParamenter}", Ob);
+                    break;
+                case ApiMethodType.Put:
+                    response = await httpClient.PutAsJsonAsync($"{ApiUrl}/{ApiControllerName}/{NameActionAndParamenter}", Ob);
+                    break;  
+                case ApiMethodType.Delete:
+                    response = await httpClient.DeleteAsync($"{ApiUrl}/{ApiControllerName}/{NameActionAndParamenter}");
+                    break;
+                default:
+                    break;
+            }
+            response.EnsureSuccessStatusCode();
+            var data = await response.Content.ReadAsStringAsync();
+            var res = JsonConvert.DeserializeObject<ResultCollection<TSubDto>>(data);
+            if (res != null)
+                ob = res.Response;
+            return ob;
+        }
 
-        [HttpGet]
+        public virtual async Task<TSubDto> GetObApi<TSubDto>(ApiMethodType apiMethodType, string NameActionAndParamenter, TSubDto Ob = null) where TSubDto : BaseModel
+        {
+            string ApiUrl = configuration["ApiUrl"];
+            HttpClient httpClient = new HttpClient();
+            HttpResponseMessage response = new HttpResponseMessage();
+            var ob = (TSubDto)Activator.CreateInstance(typeof(TSubDto));
+            string ApiControllerName = typeof(TSubDto).Name.Replace("ModelView", "").Replace("Dto", "");
+            switch (apiMethodType)
+            {
+                case ApiMethodType.Get:
+                    response = await httpClient.GetAsync($"{ApiUrl}/{ApiControllerName}/{NameActionAndParamenter}");
+                    break;
+                case ApiMethodType.Post:
+                    response = await httpClient.PostAsJsonAsync($"{ApiUrl}/{ApiControllerName}/{NameActionAndParamenter}", Ob);
+                    break;
+                case ApiMethodType.Put:
+                    response = await httpClient.PutAsJsonAsync($"{ApiUrl}/{ApiControllerName}/{NameActionAndParamenter}", Ob);
+                    break;
+                case ApiMethodType.Delete:
+                    response = await httpClient.DeleteAsync($"{ApiUrl}/{ApiControllerName}/{NameActionAndParamenter}");
+                    break;
+                default:
+                    break;
+            }
+            response.EnsureSuccessStatusCode();
+            var data = await response.Content.ReadAsStringAsync();
+            var res = JsonConvert.DeserializeObject<Result<TSubDto>>(data);
+            if (res != null)
+                ob = res.Response;
+            return ob;
+        }
+      
         public virtual async Task<ActionResult> Index(string search, long ParentId = 0, long TypeId = 0, int page = 1, int pageSize = 10, ResultStatus Status = ResultStatus.nothing, string MsgError = "")
         {
             if ("" + MsgError != "")
@@ -63,10 +125,10 @@ namespace OrgSys.Controllers
             ViewBag.pageNumber = page;
             ViewBag.ParentId = ParentId;
             ViewBag.TypeId = TypeId;
-            LoadViewBagIndex(ParentId, TypeId);
+            await LoadViewBagIndex(ParentId, TypeId);
             //if (string.IsNullOrEmpty(search))
             //    search = "0";
-            var response = await ApiMethod(ApiMethodType.Get, $"Search?KeySearch={search}&Page={page}&PageSize={pageSize}");
+            var response = await ApiMethod(ApiMethodType.Get, $"Search?KeySearch={search}&ParentId={ParentId}&TypeId={TypeId}&Page={page}&PageSize={pageSize}");
             response.EnsureSuccessStatusCode();
             var data = await response.Content.ReadAsStringAsync();
             var dataList = JsonConvert.DeserializeObject<ResultPagination<TDto>>(data);
@@ -74,7 +136,6 @@ namespace OrgSys.Controllers
             return Request.Headers["X-Requested-With"] == "XMLHttpRequest" ? (ActionResult)PartialView("List", dataList) : View("Index", dataList);
         }
 
-        [HttpGet]
         public virtual async Task<ActionResult> Save(long id = 0, long ParentId = 0, long TypeId = 0, ResultStatus status = ResultStatus.nothing, string MsgError = "")
         {
             ViewBag.TypeId = TypeId;
@@ -92,8 +153,8 @@ namespace OrgSys.Controllers
                     ob = res.Response;
             }
 
-            ob = InitializeData(ob);
-            LoadViewBag(ob);
+            ob = await InitializeData(ob);
+            await LoadViewBag(ob);
             return View(ob);
         }
 
@@ -115,13 +176,12 @@ namespace OrgSys.Controllers
                     return Redirect("/" + AreaName + "/" + ControllerName + "?ParentId=" + ob.ParentId + "&TypeId=" + ob.TypeId + "&status=" + ResultStatus.success + "&MsgError=Success");
                 }
             }
-            LoadViewBag(ob);
+           await LoadViewBag(ob);
             if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
                 return BadRequest("Error");
             return View(ob);
         }
 
-        [HttpGet]
         public virtual async Task<Utility.Result> Delete(long id)
         {            
             var ob = await ApiMethod(ApiMethodType.Get, $"GetById?Id={id}");
@@ -167,17 +227,17 @@ namespace OrgSys.Controllers
             return new Utility.Result(HttpStatusCode.BadRequest, "Error");
         }
 
-        public virtual void LoadViewBag(TDto model)
+        public virtual async Task LoadViewBag(TDto model)
         {
 
         }
 
-        public virtual void LoadViewBagIndex(long ParentId = 0, long TypeId = 0)
+        public virtual async Task LoadViewBagIndex(long ParentId = 0, long TypeId = 0)
         {
 
         }
 
-        public virtual TDto InitializeData(TDto ob)
+        public virtual async Task<TDto> InitializeData(TDto ob)
         {
             return ob;
         }
