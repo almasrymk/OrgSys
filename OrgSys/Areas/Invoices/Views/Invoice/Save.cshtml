@@ -1314,7 +1314,7 @@
                     type: 'POST',
                     url: "/Invoices/Invoice/Save",
                     async: false,
-                    data: { model: data },
+                    data: { ob: data },
                     success: function (res) {
                         window.location.replace(res.url);
                     },
@@ -1361,7 +1361,7 @@
                             type: 'POST',
                             url: "/Invoices/Invoice/Save",
                             async: false,
-                            data: { model: data },
+                            data: { ob: data },
                             success: function (res) {
                                 if (res != "Error") {
 

@@ -1,4 +1,5 @@
-﻿using Application.Commands.Org.Setting.Country.Commands;
+﻿using Application.Commands.Org.Setting.City.Queries;
+using Application.Commands.Org.Setting.Country.Commands;
 using Application.Commands.Org.Setting.Country.Queries;
 using Application.Interfaces.CQRS;
 using Azure;
@@ -11,7 +12,7 @@ namespace API.Controllers.Org.Country
 {
     [ApiController]
     [Route("[controller]")]
-    public class CountryController(ISender sender) : BaseController<GetByIdCountryQuery, SearchCountryQuery, CreateCountryCommand, UpdateCountryCommand, DeleteCountryCommand, DeleteListCountryCommand, CountryModelView>(sender)
+    public class CountryController(ISender sender) : BaseController<GetByIdCountryQuery, SearchCountryQuery , GetListCountryQuery, CreateCountryCommand, UpdateCountryCommand, DeleteCountryCommand, DeleteListCountryCommand, CountryModelView>(sender)
     {
 
     }

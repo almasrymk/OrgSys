@@ -9,17 +9,19 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-
     public class ListCommandHandler<TRequest, TModel, TResponse>(IRepository<TModel> _Repository, IMapper mapper) : ICommandCollectionHandler<TRequest, TResponse>
         where TRequest : ICommandCollection<TResponse>
         where TModel : Entity.BaseModel 
         where TResponse : Entity.BaseModel
     {
+        public int Page { get; set; }
+        public int PageSize { get; set; }
+
         public virtual async Task<ResultCollection<TResponse>> Handle(TRequest request, CancellationToken cancellationToken)
         {
             try
             {
-                var res = await _Repository.GetListByFilterAsync(CreateFilter(request) , CreateOrderBy(request) , CreateInclude());
+                var res = await _Repository.GetListByFilterAsync(CreateFilter(request) , CreateOrderBy(request) , CreateInclude(), Page, PageSize);
                 if (res != null)
                 {
                     return new ResultCollection<TResponse>(
@@ -30,14 +32,14 @@
 
                 return new ResultCollection<TResponse>(
                     HttpStatusCode.InternalServerError,
-                    null,
+                    new List<TResponse>(),
                     new List<string> { "Error" });
             }
             catch (Exception ex)
             {
                 return new ResultCollection<TResponse>(
                     HttpStatusCode.InternalServerError,
-                    null,
+                    new List<TResponse>(),
                     new List<string> { "Error" });
             }
         }

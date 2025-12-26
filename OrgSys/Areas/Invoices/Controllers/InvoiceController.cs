@@ -49,36 +49,36 @@ namespace OrgSys.Areas.Invoices.Controllers
 
         public override async Task<InvoiceModelView> InitializeData(InvoiceModelView ob)
         {
-            var setting = new PreferenceService(User.GetSchema());
-            var StockId = long.Parse("0" + setting.GetByKey("DefaultStock", "Invoice", ob.TypeId, 0)?.Value);
+            var preferenceList = await GetListApi<PreferenceModelView>(Domain.Enums.ApiMethodType.Get, $"GetList?KeySearch=Invoice&TypeId={ob.TypeId}&Page=1&PageSize=1000");
+            var StockId = long.Parse("0" + preferenceList.FirstOrDefault(e=>e.Key == "DefaultStock")?.Value);
 
             long DealerId = 0;
             if (ob.TypeId == 1 || ob.TypeId == 3)
-                DealerId = long.Parse("0" + setting.GetByKey("DefaultCustomer", "Invoice", ob.TypeId, 0)?.Value);
+                DealerId = long.Parse("0" + preferenceList.FirstOrDefault(e => e.Key == "DefaultCustomer")?.Value);
             else if (ob.TypeId == 2 || ob.TypeId == 4)
-                DealerId = long.Parse("0" + setting.GetByKey("DefaultSupplier", "Invoice", ob.TypeId, 0)?.Value);
+                DealerId = long.Parse("0" + preferenceList.FirstOrDefault(e => e.Key == "DefaultSupplier")?.Value);
 
-            var PaymentTypeId = long.Parse("0" + setting.GetByKey("DefaultPaymentType", "Invoice", ob.TypeId, 0)?.Value);
-            var DefaultCurrencyId = long.Parse("0" + setting.GetByKey("DefaultCurrency", "Invoice", ob.TypeId, 0)?.Value);
-            var DefaultDiscountType = int.Parse("0" + setting.GetByKey("DefaultDiscountType", "Invoice", ob.TypeId, 0)?.Value);
-            var DefaultServiceType = int.Parse("0" + setting.GetByKey("DefaultServiceType", "Invoice", ob.TypeId, 0)?.Value);
-            var DefaultTaxType = int.Parse("0" + setting.GetByKey("DefaultTaxType", "Invoice", ob.TypeId, 0)?.Value);
-            var DiscountValue = decimal.Parse("0" + setting.GetByKey("DiscountValue", "Invoice", ob.TypeId, 0)?.Value);
-            var ServiceValue = decimal.Parse("0" + setting.GetByKey("ServiceValue", "Invoice", ob.TypeId, 0)?.Value);
-            var TaxValue = decimal.Parse("0" + setting.GetByKey("TaxValue", "Invoice", ob.TypeId, 0)?.Value);
-            ViewBag.NumberLine = int.Parse("0" + setting.GetByKey("NumberLine", "Invoice", ob.TypeId, 0)?.Value);
-            ViewBag.OrderTabe = int.Parse("0" + setting.GetByKey("OrderTabe", "Invoice", ob.TypeId, 0)?.Value);
-            ViewBag.AutoSave = int.Parse("0" + setting.GetByKey("AutoSave", "Invoice", ob.TypeId, 0)?.Value);
-            var TypeCode = int.Parse("0" + setting.GetByKey("TypeSerial", "Invoice", ob.TypeId, 0)?.Value);
+            var PaymentTypeId = long.Parse("0" + preferenceList.FirstOrDefault(e => e.Key == "DefaultPaymentType")?.Value);
+            var DefaultCurrencyId = long.Parse("0" + preferenceList.FirstOrDefault(e => e.Key == "DefaultCurrency")?.Value);
+            var DefaultDiscountType = int.Parse("0" + preferenceList.FirstOrDefault(e => e.Key == "DefaultDiscountType")?.Value);
+            var DefaultServiceType = int.Parse("0" + preferenceList.FirstOrDefault(e => e.Key == "DefaultServiceType")?.Value);
+            var DefaultTaxType = int.Parse("0" + preferenceList.FirstOrDefault(e => e.Key == "DefaultTaxType")?.Value);
+            var DiscountValue = decimal.Parse("0" + preferenceList.FirstOrDefault(e => e.Key == "DiscountValue")?.Value);
+            var ServiceValue = decimal.Parse("0" + preferenceList.FirstOrDefault(e => e.Key == "ServiceValue")?.Value);
+            var TaxValue = decimal.Parse("0" + preferenceList.FirstOrDefault(e => e.Key == "TaxValue")?.Value);
+            ViewBag.NumberLine = int.Parse("0" + preferenceList.FirstOrDefault(e => e.Key == "NumberLine")?.Value);
+            ViewBag.OrderTabe = int.Parse("0" + preferenceList.FirstOrDefault(e => e.Key == "OrderTabe")?.Value);
+            ViewBag.AutoSave = int.Parse("0" + preferenceList.FirstOrDefault(e => e.Key == "AutoSave")?.Value);
+            var TypeCode = int.Parse("0" + preferenceList.FirstOrDefault(e => e.Key == "TypeSerial")?.Value);
             ViewBag.TypeSerial = TypeCode;
-            ViewBag.AllowRepeated = int.Parse("0" + setting.GetByKey("AllowRepeated", "Invoice", ob.TypeId, 0)?.Value);
+            ViewBag.AllowRepeated = int.Parse("0" + preferenceList.FirstOrDefault(e => e.Key == "AllowRepeated")?.Value);
 
             if (ob == null)
                 ob = new InvoiceModelView();
 
             if (ob.Id == 0)
             {
-                ob.CodeNumber = new InvoiceService(User.GetSchema()).GetMaxCode(ob.TypeId);
+                ob.CodeNumber = (long) await GetValueApi<InvoiceModelView>(Domain.Enums.ApiMethodType.Get, $"GetMax?TypeId={ob.TypeId}") ;
                 ob.Code = "" + ob.CodeNumber;
                 ob.StockId = StockId;
                 ob.DealerId = DealerId;
@@ -99,6 +99,21 @@ namespace OrgSys.Areas.Invoices.Controllers
             ob.ParentCode = new InvoiceService(User.GetSchema()).Get(ob.ParentId)?.Code;
             ob.Rate = new CurrencyService(User.GetSchema()).Get(ob.CurrencyId)?.Rate??0;
             return ob;
+        }
+
+        public override Task<InvoiceModelView> FixData(InvoiceModelView ob)
+        {
+            if (ob.Id == 0)
+            {
+                ob.CreateUserId = User.GetUserId();
+                ob.CreateDate = DateTime.Now;
+            }
+            else
+            {
+                ob.ModifyUserId = User.GetUserId();
+                ob.ModifyDate = DateTime.Now;
+            }
+            return base.FixData(ob);
         }
 
         public ActionResult CreateTransaction(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1)

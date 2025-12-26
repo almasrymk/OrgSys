@@ -8,8 +8,7 @@
     using Domain.Shared;
     using Entity.ModelView;
 
-    public sealed record UpdateInvoiceCommand(long Id , long? CountryId, string Name) : ICommand, IUpdateCommand<Result>;
-
+    public sealed class UpdateInvoiceCommand : Entity.ModelView.InvoiceModelView , ICommand, IUpdateCommand<Result>;
     public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.Invoice> _Repository , IMapper mapper) : UpdateCommandHandler<UpdateInvoiceCommand, Entity.Model.Invoice>(_UnitOfWork, _Repository , mapper)
     {
        

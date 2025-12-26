@@ -5,14 +5,15 @@ using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
 namespace API.Controllers
-{  
-    public class BaseController<TGetById, TSearch, TCreate, TUpdate, TDelete , TDeleteList , TResponse>(ISender sender) : ControllerBase
-    where TGetById : IGetByIdQuery<Result<TResponse>>
-    where TSearch : ISearchQuery<ResultPagination<TResponse>>
-    where TCreate : ICreateCommand<Result>
-    where TUpdate : IUpdateCommand<Result>
-    where TDelete : IDeleteCommand<Result>
-    where TDeleteList : IDeleteListCommand<Result>
+{
+    public class CoreController<TGetById, TSearch , TList , TCreate, TUpdate, TDelete, TDeleteList, TResponse>(ISender sender) : ControllerBase
+        where TGetById : IGetByIdQuery<Result<TResponse>>
+        where TSearch : ISearchQuery<ResultPagination<TResponse>>
+        where TList : IListQuery<ResultCollection<TResponse>>
+        where TCreate : ICreateCommand<Result>
+        where TUpdate : IUpdateCommand<Result>
+        where TDelete : IDeleteCommand<Result>
+        where TDeleteList : IDeleteListCommand<Result>
     {
         [HttpGet("GetById")]
         public virtual async Task<IActionResult> GetById(long Id, CancellationToken cancellationToken)
@@ -21,17 +22,17 @@ namespace API.Controllers
             var res = await sender.Send(query, cancellationToken);
             return res.StatusCode == HttpStatusCode.OK ? Ok(res) : BadRequest(res);
         }
-
+       
         [HttpGet("GetList")]
         public virtual async Task<IActionResult> GetList(string? KeySearch, long ParentId, long TypeId, int Page, int PageSize, CancellationToken cancellationToken)
         {
-            var query = (TSearch)Activator.CreateInstance(typeof(TSearch), KeySearch, ParentId, TypeId, Page, PageSize)!;
+            var query = (TList)Activator.CreateInstance(typeof(TList), KeySearch, ParentId, TypeId, Page, PageSize)!;
             var res = await sender.Send(query, cancellationToken);
             return res.StatusCode == HttpStatusCode.OK ? Ok(res) : BadRequest(res);
         }
 
         [HttpGet("Search")]
-        public virtual async Task<IActionResult> Search(string? KeySearch , long ParentId, long TypeId , int Page, int PageSize, CancellationToken cancellationToken)
+        public virtual async Task<IActionResult> Search(string? KeySearch, long ParentId, long TypeId, int Page, int PageSize, CancellationToken cancellationToken)
         {
             var query = (TSearch)Activator.CreateInstance(typeof(TSearch), KeySearch, ParentId, TypeId, Page, PageSize)!;
             var res = await sender.Send(query, cancellationToken);
@@ -43,8 +44,6 @@ namespace API.Controllers
         {
             var res = await sender.Send(Create, cancellationToken);
             return res.StatusCode == HttpStatusCode.OK ? Ok(res) : BadRequest(res);
-
-            throw new NotImplementedException();
         }
 
         [HttpPut("Update")]
@@ -69,5 +68,37 @@ namespace API.Controllers
             var res = await sender.Send(command, cancellationToken);
             return res.StatusCode == HttpStatusCode.OK ? Ok(res) : BadRequest(res);
         }
+    }
+
+    public class BaseController<TGetById, TSearch , TList , TCreate, TUpdate, TDelete, TDeleteList, TResponse>(ISender sender) : CoreController<TGetById, TSearch , TList , TCreate, TUpdate, TDelete, TDeleteList, TResponse>(sender)
+        where TGetById : IGetByIdQuery<Result<TResponse>>
+        where TSearch : ISearchQuery<ResultPagination<TResponse>>
+        where TList : IListQuery<ResultCollection<TResponse>>
+        where TCreate : ICreateCommand<Result>
+        where TUpdate : IUpdateCommand<Result>
+        where TDelete : IDeleteCommand<Result>
+        where TDeleteList : IDeleteListCommand<Result>
+    {
+
+    }
+
+    public class BaseController<TGetById, TSearch , TList , TCreate, TUpdate, TDelete, TDeleteList, IGetMax, TResponse>(ISender sender) : CoreController<TGetById, TSearch , TList , TCreate, TUpdate, TDelete, TDeleteList, TResponse>(sender)
+        where TGetById : IGetByIdQuery<Result<TResponse>>
+        where TSearch : ISearchQuery<ResultPagination<TResponse>>
+        where TList : IListQuery<ResultCollection<TResponse>>
+        where TCreate : ICreateCommand<Result>
+        where TUpdate : IUpdateCommand<Result>
+        where TDelete : IDeleteCommand<Result>
+        where IGetMax : IGetMaxQuery
+        where TDeleteList : IDeleteListCommand<Result>
+    {
+
+        [HttpGet("GetMax")]
+        public virtual async Task<IActionResult> GetMax(long ParentId, long TypeId, CancellationToken cancellationToken)
+        {
+            var query = (IGetMax)Activator.CreateInstance(typeof(IGetMax), ParentId, TypeId)!;
+            var res = await sender.Send(query, cancellationToken);
+            return res != null ? Ok(res) : BadRequest(res);
+        }        
     }
 }

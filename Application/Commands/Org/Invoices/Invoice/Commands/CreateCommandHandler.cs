@@ -8,7 +8,7 @@
     using Domain.Shared;
     using Entity.ModelView;
 
-    public sealed record CreateInvoiceCommand(long? CountryId, string Name) : ICommand , ICreateCommand<Result>;
+    public sealed class CreateInvoiceCommand : Entity.ModelView.InvoiceModelView, ICommand , ICreateCommand<Result>;
 
     public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.Invoice> _Repository , IMapper mapper) : CreateCommandHandler<CreateInvoiceCommand, Entity.Model.Invoice>(_UnitOfWork, _Repository , mapper)
     {

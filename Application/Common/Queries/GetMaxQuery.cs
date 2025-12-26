@@ -9,32 +9,31 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-    public class GetCommandHandler<TRequest, TModel, TResponse>(IRepository<TModel> _Repository, IMapper mapper) : ICommandHandler<TRequest, TResponse>
-        where TRequest : ICommand<TResponse>
+    public class GetMaxCommandHandler<TRequest, TModel>(IRepository<TModel> _Repository, IMapper mapper) : ICommandHandler<TRequest, object>
+        where TRequest : ICommand<object>
         where TModel : Entity.BaseModel 
-        where TResponse : Entity.BaseModel
     {
-        public virtual async Task<Result<TResponse>> Handle(TRequest request, CancellationToken cancellationToken)
+        public virtual async Task<Result<object>> Handle(TRequest request, CancellationToken cancellationToken)
         {
             try
             {                
-                var res = await _Repository.GetByFilterAsync(CreateFilter(request), CreateInclude());
-                if (res!= null && res.Id > 0)
+                var res = await _Repository.GetMaxByFilterAsync(CreateFilter(request), CreateSelector());
+                if (res!= null)
                 {
-                    return new Result<TResponse>(
+                    return new Result<object>(
                     HttpStatusCode.OK,
-                    mapper.Map<TResponse>(res),
+                    res,
                     null);
                 }
 
-                return new Result<TResponse>(
+                return new Result<object>(
                     HttpStatusCode.InternalServerError,
                     null,
                     new List<string> { "Error" });
             }
             catch (Exception ex)
             {
-                return new Result<TResponse>(
+                return new Result<object>(
                     HttpStatusCode.InternalServerError,
                     null,
                     new List<string> { "Error" });
@@ -46,9 +45,9 @@
             return e => true;
         }
 
-        public virtual string CreateInclude()
+        public virtual Expression<Func<TModel, object>> CreateSelector()
         {
-            return "";
+           return null;
         }
     }
 }

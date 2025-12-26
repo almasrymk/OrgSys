@@ -9,7 +9,6 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-
     public class SearchCommandHandler<TRequest, TModel, TResponse>(IRepository<TModel> _Repository, IMapper mapper) : ICommandPaginationHandler<TRequest, TResponse>
         where TRequest : ICommandPagination<TResponse>
         where TModel : Entity.BaseModel 
@@ -22,7 +21,7 @@
         {
             try
             {
-                var res = await _Repository.GetListByFilterAsync(CreateFilter(request) , CreateOrderBy(request), CreateInclude() , Page, PageSize);
+                var res = await _Repository.GetPaginationByFilterAsync(CreateFilter(request) , CreateOrderBy(request), CreateInclude() , Page, PageSize);
                 if (res != null && res.Items != null)
                 {
                     return new ResultPagination<TResponse>(
@@ -34,14 +33,14 @@
 
                 return new ResultPagination<TResponse>(
                     HttpStatusCode.InternalServerError,
-                    null, 0, 0, 0,
+                    new List<TResponse>(), 0, 0, 0,
                     new List<string> { "Error" });
             }
             catch (Exception ex)
             {
                 return new ResultPagination<TResponse>(
                     HttpStatusCode.InternalServerError,
-                    null, 0, 0, 0,
+                    new List<TResponse>(), 0, 0, 0,
                     new List<string> { "Error" });
             }
         }

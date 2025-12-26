@@ -11,7 +11,7 @@ namespace API.Controllers.Org.City
 {
     [ApiController]
     [Route("[controller]")]
-    public class CityController(ISender sender) : BaseController<GetByIdCityQuery, SearchCityQuery, CreateCityCommand, UpdateCityCommand, DeleteCityCommand , DeleteListCityCommand, CityModelView>(sender)
+    public class CityController(ISender sender) : BaseController<GetByIdCityQuery, SearchCityQuery , GetListCityQuery , CreateCityCommand, UpdateCityCommand, DeleteCityCommand , DeleteListCityCommand, CityModelView>(sender)
     {
 
     }

@@ -52,6 +52,11 @@
             return false;
         }
 
+        public virtual async ValueTask<TResponse> GetMaxByFilterAsync<TResponse>(Expression<Func<TEntity, bool>> Filter , Expression<Func<TEntity, TResponse>> Selector)
+        {           
+            return await dbEntity.Where(Filter).MaxAsync(Selector);
+        }
+
         public virtual async ValueTask<TEntity?> GetByFilterAsync(Expression<Func<TEntity, bool>> Filter, string includeProperties)
         {
             var query = dbEntity.AsQueryable();
@@ -80,7 +85,7 @@
             }
         }
 
-        public virtual async ValueTask<IEnumerable<TEntity>?> GetListByFilterAsync(Expression<Func<TEntity, bool>> Filter, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy, string includeProperties)
+        public virtual async ValueTask<IEnumerable<TEntity>?> GetListByFilterAsync(Expression<Func<TEntity, bool>> Filter, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy, string includeProperties, int Page, int PageSize)
         {
             var query = dbEntity.Where(Filter).AsQueryable();
             foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
@@ -90,15 +95,15 @@
 
             if (orderBy != null)
             {
-                return await orderBy(query.Where(e => e.Status != Status.Deleted && e.Hide != true)).AsQueryable().ToListAsync();
+                return await orderBy(query.Where(e => e.Status != Status.Deleted && e.Hide != true)).AsQueryable().Skip((Page - 1) * PageSize).Take(PageSize).ToListAsync();
             }
             else
             {
-                return await query.Where(e => e.Status != Status.Deleted && e.Hide != true).AsQueryable().ToListAsync();
+                return await query.Where(e => e.Status != Status.Deleted && e.Hide != true).AsQueryable().Skip((Page - 1) * PageSize).Take(PageSize).ToListAsync();
             }
         }
 
-        public virtual async ValueTask<SizeAwarePaginationResult<TEntity>?> GetListByFilterAsync(Expression<Func<TEntity, bool>> Filter, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy , string includeProperties , int Page , int PageSize)
+        public virtual async ValueTask<SizeAwarePaginationResult<TEntity>?> GetPaginationByFilterAsync(Expression<Func<TEntity, bool>> Filter, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy , string includeProperties , int Page , int PageSize)
         {
             var query =  dbEntity.Where(Filter);
             foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))

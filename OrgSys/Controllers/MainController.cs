@@ -116,7 +116,36 @@ namespace OrgSys.Controllers
                 ob = res.Response;
             return ob;
         }
-      
+
+        public virtual async Task<object> GetValueApi<TSubDto>(ApiMethodType apiMethodType, string NameActionAndParamenter, TSubDto Ob = null) where TSubDto : BaseModel
+        {
+            string ApiUrl = configuration["ApiUrl"];
+            HttpClient httpClient = new HttpClient();
+            HttpResponseMessage response = new HttpResponseMessage();
+            string ApiControllerName = typeof(TSubDto).Name.Replace("ModelView", "").Replace("Dto", "");
+            switch (apiMethodType)
+            {
+                case ApiMethodType.Get:
+                    response = await httpClient.GetAsync($"{ApiUrl}/{ApiControllerName}/{NameActionAndParamenter}");
+                    break;
+                case ApiMethodType.Post:
+                    response = await httpClient.PostAsJsonAsync($"{ApiUrl}/{ApiControllerName}/{NameActionAndParamenter}", Ob);
+                    break;
+                case ApiMethodType.Put:
+                    response = await httpClient.PutAsJsonAsync($"{ApiUrl}/{ApiControllerName}/{NameActionAndParamenter}", Ob);
+                    break;
+                case ApiMethodType.Delete:
+                    response = await httpClient.DeleteAsync($"{ApiUrl}/{ApiControllerName}/{NameActionAndParamenter}");
+                    break;
+                default:
+                    break;
+            }
+            response.EnsureSuccessStatusCode();
+            var data = await response.Content.ReadAsStringAsync();
+            var res = JsonConvert.DeserializeObject<object>(data);           
+            return res;
+        }
+
         public virtual async Task<ActionResult> Index(string search, long ParentId = 0, long TypeId = 0, int page = 1, int pageSize = 10, ResultStatus Status = ResultStatus.nothing, string MsgError = "")
         {
             if ("" + MsgError != "")
@@ -163,7 +192,8 @@ namespace OrgSys.Controllers
         {
             if (ModelState.IsValid)
             {
-               HttpResponseMessage response = null;
+                ob = await FixData(ob);
+                HttpResponseMessage response = null;
                 if (ob.Id == 0)
                     response = await ApiMethod(ApiMethodType.Post, $"Create", ob);
                 else
@@ -238,6 +268,11 @@ namespace OrgSys.Controllers
         }
 
         public virtual async Task<TDto> InitializeData(TDto ob)
+        {
+            return ob;
+        }
+
+        public virtual async Task<TDto> FixData(TDto ob)
         {
             return ob;
         }

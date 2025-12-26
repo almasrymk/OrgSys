@@ -29,7 +29,7 @@
         //DbSet<ProductRecipe> ProductRecipes { get; set; }
         //DbSet<PropertyElement> PropertyElements { get; set; }
         //DbSet<ProductPropertyElement> ProductPropertyElements { get; set; }
-        //DbSet<Preference> Preferences { get; set; }
+        DbSet<Preference> Preferences { get; set; }
         //DbSet<TransactionType> TransactionTypes { get; set; }
         //DbSet<Transaction> Transactions { get; set; }
         //DbSet<TransactionProduct> TransactionProducts { get; set; }
