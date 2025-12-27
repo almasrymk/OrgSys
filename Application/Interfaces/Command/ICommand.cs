@@ -13,6 +13,12 @@
 
     }
 
+    public interface ICommandOb<TResponse> : IRequest<Result<object>>
+    {
+
+    }
+
+
     public interface ICommandCollection<TResponse> : IRequest<ResultCollection<TResponse>>
     {
 

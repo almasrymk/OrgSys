@@ -12,6 +12,10 @@
     { 
     }
 
+    public interface ICommandObHandler<TCommand, TResponse> : IRequestHandler<TCommand, object> where TCommand : ICommandOb<object>
+    { 
+    }
+
     public interface ICommandCollectionHandler<TCommand, TResponse> : IRequestHandler<TCommand, ResultCollection<TResponse>> where TCommand : ICommandCollection<TResponse>
     { 
     }

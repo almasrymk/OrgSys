@@ -89,16 +89,16 @@ namespace API.Controllers
         where TCreate : ICreateCommand<Result>
         where TUpdate : IUpdateCommand<Result>
         where TDelete : IDeleteCommand<Result>
-        where IGetMax : IGetMaxQuery
+        where IGetMax : IGetMaxQuery<object>
         where TDeleteList : IDeleteListCommand<Result>
     {
 
         [HttpGet("GetMax")]
         public virtual async Task<IActionResult> GetMax(long ParentId, long TypeId, CancellationToken cancellationToken)
         {
-            var query = (IGetMax)Activator.CreateInstance(typeof(IGetMax), ParentId, TypeId)!;
+            var query = (IGetMax)Activator.CreateInstance(typeof(IGetMax), TypeId , ParentId)!;
             var res = await sender.Send(query, cancellationToken);
-            return res != null ? Ok(res) : BadRequest(res);
+            return Ok(res);
         }        
     }
 }

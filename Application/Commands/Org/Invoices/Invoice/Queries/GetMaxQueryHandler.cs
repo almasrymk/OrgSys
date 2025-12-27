@@ -12,13 +12,18 @@
     using System;
     using System.Linq.Expressions;
 
-    public sealed record GetMaxInvoiceQuery(long TypeId , long ParentId) : ICommand<object> , IGetMaxQuery;
+    public sealed record GetMaxInvoiceQuery(long TypeId , long ParentId) : ICommandOb<object> , IGetMaxQuery<object>;
 
-    public sealed class GetMaxQueryHandler(IRepository<Entity.Model.Invoice> _Repository, IMapper mapper) : GetMaxCommandHandler<GetMaxInvoiceQuery, Entity.Model.Invoice>(_Repository, mapper)
+    public sealed class GetMaxQueryHandler(IRepository<Entity.Model.Invoice> _Repository) : GetMaxCommandHandler<GetMaxInvoiceQuery, Entity.Model.Invoice>(_Repository)
     {
         public override Expression<Func<Invoice, bool>> CreateFilter(GetMaxInvoiceQuery request)
         {
             return e=>e.TypeId == request.TypeId;
+        }
+
+        public override Expression<Func<Invoice, object>> CreateSelector()
+        {
+            return e => e.CodeNumber;
         }
     }
 }

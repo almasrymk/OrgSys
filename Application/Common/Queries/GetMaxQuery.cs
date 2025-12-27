@@ -9,34 +9,25 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-    public class GetMaxCommandHandler<TRequest, TModel>(IRepository<TModel> _Repository, IMapper mapper) : ICommandHandler<TRequest, object>
-        where TRequest : ICommand<object>
+    public class GetMaxCommandHandler<TRequest, TModel>(IRepository<TModel> _Repository) : ICommandObHandler<TRequest, object>
+        where TRequest : ICommandOb<object>
         where TModel : Entity.BaseModel 
     {
-        public virtual async Task<Result<object>> Handle(TRequest request, CancellationToken cancellationToken)
+        public virtual async Task<object> Handle(TRequest request, CancellationToken cancellationToken)
         {
             try
             {                
                 var res = await _Repository.GetMaxByFilterAsync(CreateFilter(request), CreateSelector());
                 if (res!= null)
                 {
-                    return new Result<object>(
-                    HttpStatusCode.OK,
-                    res,
-                    null);
+                    return res;
                 }
 
-                return new Result<object>(
-                    HttpStatusCode.InternalServerError,
-                    null,
-                    new List<string> { "Error" });
+                return null;
             }
             catch (Exception ex)
             {
-                return new Result<object>(
-                    HttpStatusCode.InternalServerError,
-                    null,
-                    new List<string> { "Error" });
+                return null;
             }
         }
 

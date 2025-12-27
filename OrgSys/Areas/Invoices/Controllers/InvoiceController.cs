@@ -20,16 +20,16 @@ namespace OrgSys.Areas.Invoices.Controllers
     {
         public override async Task LoadViewBagIndex(long ParentId = 0, long TypeId = 0)
         {
-            var type = await GetObApi<InvoiceTypeModelView>( Domain.Enums.ApiMethodType.Get , $"GetById?Id={TypeId}");
+            var type = await GetObApi<InvoiceTypeModelView>(Domain.Enums.ApiMethodType.Get, $"GetById?Id={TypeId}");
             ViewBag.InvoicesType = type.Name;
             ViewBag.InvoicesGroup = type.Group;
             ViewBag.InvoicesIcon = type.Icon;
 
-           await base.LoadViewBagIndex();
+            await base.LoadViewBagIndex();
         }
 
         public override async Task LoadViewBag(InvoiceModelView model)
-        {            
+        {
             ViewBag.CurrencyId = new SelectList(await GetListApi<CurrencyModelView>(Domain.Enums.ApiMethodType.Get, $"GetList?KeySearch=&Page=1&PageSize=20"), "Id", "Name", model.CurrencyId);
             ViewBag.PaymentTypeId = new SelectList(await GetListApi<PaymentTypeModelView>(Domain.Enums.ApiMethodType.Get, $"GetList?KeySearch=&Page=1&PageSize=20"), "Id", "Name", model.PaymentTypeId);
 
@@ -50,7 +50,7 @@ namespace OrgSys.Areas.Invoices.Controllers
         public override async Task<InvoiceModelView> InitializeData(InvoiceModelView ob)
         {
             var preferenceList = await GetListApi<PreferenceModelView>(Domain.Enums.ApiMethodType.Get, $"GetList?KeySearch=Invoice&TypeId={ob.TypeId}&Page=1&PageSize=1000");
-            var StockId = long.Parse("0" + preferenceList.FirstOrDefault(e=>e.Key == "DefaultStock")?.Value);
+            var StockId = long.Parse("0" + preferenceList.FirstOrDefault(e => e.Key == "DefaultStock")?.Value);
 
             long DealerId = 0;
             if (ob.TypeId == 1 || ob.TypeId == 3)
@@ -78,7 +78,7 @@ namespace OrgSys.Areas.Invoices.Controllers
 
             if (ob.Id == 0)
             {
-                ob.CodeNumber = (long) await GetValueApi<InvoiceModelView>(Domain.Enums.ApiMethodType.Get, $"GetMax?TypeId={ob.TypeId}") ;
+                ob.CodeNumber = long.Parse("0" + await GetValueApi<InvoiceModelView>(Domain.Enums.ApiMethodType.Get, $"GetMax?TypeId={ob.TypeId}")) + 1;
                 ob.Code = "" + ob.CodeNumber;
                 ob.StockId = StockId;
                 ob.DealerId = DealerId;
@@ -94,10 +94,10 @@ namespace OrgSys.Areas.Invoices.Controllers
                 ob.InvoiceProductList = new List<InvoiceProductModelView>();
             }
 
-            ob.StockName = new StockService(User.GetSchema()).Get(ob.StockId??0)?.Name;
-            ob.DealerName = new DealerService(User.GetSchema()).Get(ob.DealerId)?.Name;
-            ob.ParentCode = new InvoiceService(User.GetSchema()).Get(ob.ParentId)?.Code;
-            ob.Rate = new CurrencyService(User.GetSchema()).Get(ob.CurrencyId)?.Rate??0;
+            ob.StockName = (await GetObApi<StockModelView>(Domain.Enums.ApiMethodType.Get, $"GetById?Id={ob.StockId ?? 0}"))?.Name;
+            ob.DealerName = (await GetObApi<DealerModelView>(Domain.Enums.ApiMethodType.Get, $"GetById?Id={ob.DealerId}"))?.Name;
+            ob.ParentCode = (await GetObApi<InvoiceModelView>(Domain.Enums.ApiMethodType.Get, $"GetById?Id={ob.StockId ?? 0}"))?.Code;
+            ob.Rate = (await GetObApi<CurrencyModelView>(Domain.Enums.ApiMethodType.Get, $"GetById?Id={ob.StockId ?? 0}"))?.Rate ?? 0;
             return ob;
         }
 
@@ -164,9 +164,9 @@ namespace OrgSys.Areas.Invoices.Controllers
             return Type != 1 ? (ActionResult)PartialView("SearchInvoicesList", list) : View("SearchInvoices", list);
         }
 
-        public JsonResult checkStock(int id)
+        public async Task<JsonResult> checkStock(int id)
         {
-            var invoice = new InvoiceService(User.GetSchema()).Get(id);
+            var invoice = await GetObApi<InvoiceModelView>(Domain.Enums.ApiMethodType.Get, $"GetById?Id={id}");
             var data = new
             {
                 code = invoice.Code,
@@ -197,7 +197,7 @@ namespace OrgSys.Areas.Invoices.Controllers
 
         public JsonResult GetProductInvoice(int Id)
         {
-           
+
             var item = new InvoiceService(User.GetSchema()).GetProductInvoicesNotReturn(Id);
             if (item == null)
                 item = new List<InvoiceProductModelView>();

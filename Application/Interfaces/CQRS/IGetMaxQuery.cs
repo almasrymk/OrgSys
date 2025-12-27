@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Application.Interfaces.CQRS
 {
-    public interface IGetMaxQuery : IRequest<object>
+    public interface IGetMaxQuery<TResponse> : IRequest<TResponse>
     {
         long ParentId { get; }
         long TypeId { get; }
