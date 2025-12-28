@@ -1,42 +1,41 @@
-﻿using Entity.ModelView;
+﻿using System.Linq;
+using Entity.ModelView;
+using OrgSys.Controllers;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using OrgSys.Controllers;
-using Service;
-using System.Linq;
+using Microsoft.Extensions.Configuration;
 
 namespace OrgSys.Areas.Setting.Controllers
 {
     [Area("Setting")]
-    public class BankBranchController : BaseController<BankBranchModelView>
+    public class BankBranchController(IConfiguration configuration) : MainController<BankBranchModelView>(configuration) 
     {
-        public override void LoadViewBag(BankBranchModelView model)
+        public override async Task LoadViewBag(BankBranchModelView model)
         {
-            ViewBag.BankList = new SelectList(new BankService(User.GetSchema()).GetAll(model.ParentId, model.TypeId), "Id", "Name", model.BankId);
-            ViewBag.CountryList = new SelectList(new CountryService(User.GetSchema()).GetAll(model.ParentId, model.TypeId), "Id", "Name", model.CountryId);
-            // ViewBag.CityList = new SelectList(new CityService(User.GetSchema()).GetAll(model.ParentId, model.TypeId), "Id", "Name", model.CityId);
+            ViewBag.BankList = new SelectList(await GetListApi<BankModelView>(Domain.Enums.ApiMethodType.Get, $"GetList?KeySearch=&Page=1&PageSize=20"), "Id", "Name", model.BankId);
+            ViewBag.CountryList = new SelectList(await GetListApi<CountryModelView>(Domain.Enums.ApiMethodType.Get, $"GetList?KeySearch=&Page=1&PageSize=20"), "Id", "Name", model.CountryId);
         }
 
-        public JsonResult GetCitiesByCountryId(int countryId)
+        public async Task<JsonResult> GetCitiesByCountryId(int countryId)
         {
-            var cities = new CityService(User.GetSchema()).GetById(countryId);
+            var cities = await GetListApi<CityModelView>(Domain.Enums.ApiMethodType.Get, $"GetListByCountryId?KeySearch=&CountryId={countryId}&Page=1&PageSize=20");
             var cityList = cities.OrderBy(c => c.Name).Select(c => new { c.Id, c.Name }).ToList();
             return Json(cityList);
         }
 
-        public JsonResult GetDistrictsByCityId(int cityId)
+        public async Task<JsonResult> GetDistrictsByCityId(int cityId)
         {
-            var districts = new DistrictService(User.GetSchema()).GetById(cityId);
+            var districts = await GetListApi<DistrictModelView>(Domain.Enums.ApiMethodType.Get, $"GetListByCityId?KeySearch=&CityId={cityId}&Page=1&PageSize=20");
             var districtsiList = districts.OrderBy(c => c.Name).Select(c => new { c.Id, c.Name }).ToList();
             return Json(districtsiList);
         }
 
-        public JsonResult GetList(string txtSearch = "", int page = 1, int pageSize = 10)
+        public async Task<JsonResult> GetList(string txtSearch = "", int page = 1, int pageSize = 10)
         {
             if (txtSearch != null)
                 txtSearch = txtSearch.Trim().ToLower();
-
-            var itemsList = new BankBranchService(User.GetSchema()).GetAll(txtSearch, 0, 0, page, pageSize);
+            var itemsList = await GetListApi<BankModelView>(Domain.Enums.ApiMethodType.Get, $"GetList?KeySearch=&Page=1&PageSize=20");
             var list = itemsList.Distinct().OrderBy(_ => _.Name)
                 .Select(_ => new
                 {

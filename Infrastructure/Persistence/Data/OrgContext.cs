@@ -10,7 +10,6 @@
     using Microsoft.EntityFrameworkCore.Migrations.Internal;
     using Entity.Model;
     using System.Threading.Tasks;
-    using Microsoft.EntityFrameworkCore.ChangeTracking;
 
     public class OrgContext : DbContext , IOrgContext
     {
@@ -56,19 +55,19 @@
             return this.Database.RollbackTransactionAsync();
         }
 
-        //public virtual DbSet<Unit> Units { get; set; }
-        //public virtual DbSet<Property> Properties { get; set; }
-        //public virtual DbSet<DealerGroup> DealerGroups { get; set; }
+        public virtual DbSet<Unit> Units { get; set; }
+        public virtual DbSet<Property> Properties { get; set; }
+        public virtual DbSet<DealerGroup> DealerGroups { get; set; }
         public virtual DbSet<Dealer> Dealers { get; set; }
-        //public virtual DbSet<Classification> Classifications { get; set; }
-        //public virtual DbSet<Product> Products { get; set; }
-        //public virtual DbSet<ProductUnit> ProductUnits { get; set; }
-        //public virtual DbSet<Branch> Branches { get; set; }
+        public virtual DbSet<Classification> Classifications { get; set; }
+        public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<ProductUnit> ProductUnits { get; set; }
+        public virtual DbSet<Branch> Branches { get; set; }
         public virtual DbSet<Stock> Stocks { get; set; }
-        //public virtual DbSet<Role> Roles { get; set; }
-        //public virtual DbSet<Shift> Shifts { get; set; }
-        //public virtual DbSet<User> Users { get; set; }
-        //public virtual DbSet<Permission> Permissions { get; set; }
+        public virtual DbSet<Role> Roles { get; set; }
+        public virtual DbSet<Shift> Shifts { get; set; }
+        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Permission> Permissions { get; set; }
         public virtual DbSet<Invoice> Invoices { get; set; }
         public virtual DbSet<InvoiceProduct> InvoiceProducts { get; set; }
         public virtual DbSet<InvoiceType> InvoiceTypes { get; set; }
@@ -86,22 +85,24 @@
         //public virtual DbSet<Inventory> Inventories { get; set; }
         //public virtual DbSet<InventoryProduct> InventoryProducts { get; set; }
         //public virtual DbSet<OrderType> OrderTypes { get; set; }
-        //public virtual DbSet<Table> Tables { get; set; }
-        //public virtual DbSet<Safe> Safes { get; set; }
+        public virtual DbSet<Table> Tables { get; set; }
+        public virtual DbSet<Safe> Safes { get; set; }
         //public virtual DbSet<Financial> Financials { get; set; }
         //public virtual DbSet<FinancialInvoice> FinancialInvoices { get; set; }
         //public virtual DbSet<FinancialType> FinancialTypes { get; set; }
-        //public virtual DbSet<Outlay> Outlays { get; set; }
+        public virtual DbSet<Outlay> Outlays { get; set; }
         public virtual DbSet<Currency> Currencys { get; set; }
         //public virtual DbSet<RolePermission> RolePermissions { get; set; }
         //public virtual DbSet<Notification> Notifications { get; set; }
-        //public virtual DbSet<Account> Accounts { get; set; }
-        //public virtual DbSet<AccountBank> AccountBanks { get; set; }
-        //public virtual DbSet<AccountType> AccountTypes { get; set; }
-        //public virtual DbSet<Bank> Banks { get; set; }
-        //public virtual DbSet<BankBranch> BankBranchs { get; set; }
+        public virtual DbSet<Account> Accounts { get; set; }
+        public virtual DbSet<AccountBank> AccountBanks { get; set; }
+        public virtual DbSet<AccountType> AccountTypes { get; set; }
+        public virtual DbSet<Bank> Banks { get; set; }
+        public virtual DbSet<BankBranch> BankBranchs { get; set; }
         public virtual DbSet<City> Cities { get; set; }
         public virtual DbSet<Country> Countries { get; set; }
+        public virtual DbSet<District> Districts { get; set; }
+
 
         public void ResetDbContextState()
         {
@@ -125,7 +126,6 @@
             }
         }
         //public virtual DbSet<Country> Countries { get; set; }
-        //public virtual DbSet<District> Districts { get; set; }
         //public virtual DbSet<Journal> Journals { get; set; }
         //public virtual DbSet<JournalItem> JournalItems { get; set; }
         //public virtual DbSet<CompanyProfile> CompanyProfiles { get; set; }
