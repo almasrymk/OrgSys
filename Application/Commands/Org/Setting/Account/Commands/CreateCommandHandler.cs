@@ -8,7 +8,7 @@
     using Domain.Shared;
     using Entity.ModelView;
 
-    public sealed record CreateAccountCommand(string Name) : ICommand , ICreateCommand<Result>;
+    public sealed class CreateAccountCommand : Entity.ModelView.AccountModelView, ICommand , ICreateCommand<Result>;
 
     public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.Account> _Repository , IMapper mapper) : CreateCommandHandler<CreateAccountCommand, Entity.Model.Account>(_UnitOfWork, _Repository , mapper)
     {

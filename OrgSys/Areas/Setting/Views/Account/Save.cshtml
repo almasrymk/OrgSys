@@ -33,7 +33,7 @@
 
                 <div class="card p-4">
                     <div class="d-md-block" id="displayOptions">
-                        <h3 class="mr-4 mb-2 ml-4 d-inline-block float-md-left">                         
+                        <h3 class="mr-4 mb-2 ml-4 d-inline-block float-md-left">
                             @if (Model == null || Model.Id == 0)
                             {
                                 <span class="mb-4"> @Utility.Resource.Title_Designer.New ...</span>
@@ -59,7 +59,7 @@
                                     <label>@Utility.Resource.Title_Designer.Parent</label>
                                     <div id="divBranch" class="input-group">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text" style="background-color:whitesmoke";><i class="simple-icon-share"></i></span>
+                                            <span class="input-group-text" style="background-color:whitesmoke" ;><i class="simple-icon-share"></i></span>
                                         </div>
                                         <select asp-for="ParentId" asp-items="@ViewBag.BranchList" class="form-control">
                                             <option value=""> ... </option>
@@ -82,13 +82,13 @@
                                     @Html.ValidationMessageFor(model => model.AccountTypeId, "", new { @class = "text-danger " })
                                 </div>
                                 <div class="form-group col-md-6">
-                                   <label>@Utility.Resource.Title_Designer.Name</label>
+                                    <label>@Utility.Resource.Title_Designer.Name</label>
                                     <input asp-for="Name" class="form-control" placeholder="@Utility.Resource.Title_Designer.Name" />
                                     @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.NameRequired</small>*@
                                     @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger " })
                                 </div>
 
-                                  <div class="form-group col-md-6">
+                                <div class="form-group col-md-6">
                                     <label>@Utility.Resource.Title_Designer.Debit</label>
                                     <input asp-for="Debit" class="form-control" placeholder="@Utility.Resource.Title_Designer.Name" />
                                     @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.NameRequired</small>*@
@@ -132,20 +132,19 @@
 
             var data = {
                 Id: $('#Id').val(),
-               
                 Name: $('#Name').val().trim(),
                 ParentId: $('#ParentId').val(),
                 TypeId: $('#TypeId').val().trim(),
                 AccountTypeId: $('#AccountTypeId').val(),
                 Debit: $('#Debit').val(),
-                Credit: $('#Credit').val(),
-
+                Credit: $('#Credit').val()
             };
 
             $.ajax({
                 type: 'POST',
                 url: "/Setting/Account/Save",
-                data: { model: data},
+                async: false,
+                data: { ob: data},
                 success: function (res) {
                     if (res.status == "success") {
                         window.location.replace(res.url);
