@@ -20,9 +20,18 @@
                 @if (User.IsAllowed("SalesInvoices.All,SalesReturns.All,PurchasesInvoices.All,PurchasesReturns.All"))
                 {
                     <li>
-                        <a href="#Invoices">
+                        <a href="#Purchases">
                             <i class="simple-icon-basket-loaded"></i>
-                            <span>@Utility.Resource.Title_Designer.Invoices</span>
+                            <span>@Utility.Resource.Title_Designer.Purchases</span>
+                        </a>
+                    </li>
+                }
+                @if (User.IsAllowed("SalesInvoices.All,SalesReturns.All,PurchasesInvoices.All,PurchasesReturns.All"))
+                {
+                    <li>
+                        <a href="#Sales">
+                            <i class="simple-icon-basket-loaded"></i>
+                            <span>@Utility.Resource.Title_Designer.Sales</span>
                         </a>
                     </li>
                 }
@@ -30,7 +39,7 @@
                 {
                     <li>
                         <a href="#Transaction">
-                            <i class="iconsminds-synchronize-2"></i> @Utility.Resource.Title_Designer.Transactions
+                            <i class="iconsminds-synchronize-2"></i> Warehouse
                         </a>
                     </li>
                 }
@@ -356,11 +365,71 @@
             }
             @if (User.IsAllowed("SalesInvoices.All,SalesReturns.All,PurchasesInvoices.All,PurchasesReturns.All"))
             {
-                <ul class="list-unstyled" data-link="Invoices" id="Invoices">
+                <ul class="list-unstyled" data-link="Purchases" id="Purchases">                   
+                    <li>
+                        <a href="#" data-toggle="collapse" data-target="#collapsePurchases" aria-expanded="false"
+                           aria-controls="collapsePurchases" class="rotate-arrow-icon opacity-50 @("Invoice".Contains(ViewContext.RouteData.Values["controller"].ToString()) && ("" + ViewBag.TypeId == "2" || "" + ViewBag.TypeId == "4") ? "collapsed" : "")">
+                            <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Invoices</span>
+                        </a>
+                        <div id="collapsePurchases" class="collapse @("Invoice".Contains(ViewContext.RouteData.Values["controller"].ToString()) && ("" + ViewBag.TypeId == "2" || "" + ViewBag.TypeId == "4") ? "show" : "")">
+                            <ul class="list-unstyled inner-level-menu">
+                                @if (User.IsAllowed("PurchasesInvoices.All"))
+                                {
+                                    <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Invoice" && "" + ViewBag.TypeId == "2" ? "active" : "")">
+                                        <a href="/Invoices/Invoice?TypeId=2">
+                                            <i class="simple-icon-basket-loaded"></i> <span class="d-inline-block">
+                                                @Utility.Resource.Title_Designer.Invoices
+                                            </span>
+                                        </a>
+                                    </li>
+                                }
+                                @if (User.IsAllowed("PurchasesReturns.All"))
+                                {
+                                    <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Invoice" && "" + ViewBag.TypeId == "4" ? "active" : "")">
+                                        <a href="/Invoices/Invoice?TypeId=4">
+                                            <i class="simple-icon-action-undo"></i> <span class="d-inline-block">
+                                                @Utility.Resource.Title_Designer.Returns
+                                            </span>
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#" data-toggle="collapse" data-target="#collapsePurchasesReports" aria-expanded="false"
+                           aria-controls="collapsePurchasesReports" class="rotate-arrow-icon opacity-50 collapsed">
+                            <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Report</span>
+                        </a>
+                        <div id="collapsePurchasesReports" class="collapse">
+                            <ul class="list-unstyled inner-level-menu">                              
+                                <li>
+                                    <a href="/Reports/Lookups/Suppliers">
+                                        <i class="glyph-icon iconsminds-letter-open"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Suppliers</span>
+                                    </a>
+                                </li>                              
+                                <li>
+                                    <a href="/Reports/Purchases/SuppliersStatment">
+                                        <i class="glyph-icon iconsminds-files"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.SuppliersStatement</span>
+                                    </a>
+                                </li>                                                              
+                                <li>
+                                    <a href="/Reports/Purchases/SuppliersBalance">
+                                        <i class="glyph-icon iconsminds-notepad"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.SuppliersBalances</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            }
+            @if (User.IsAllowed("SalesInvoices.All,SalesReturns.All,PurchasesInvoices.All,PurchasesReturns.All"))
+            {
+                <ul class="list-unstyled" data-link="Sales" id="Sales">
                     <li>
                         <a href="#" data-toggle="collapse" data-target="#collapseSales" aria-expanded="false"
                            aria-controls="collapseSales" class="rotate-arrow-icon opacity-50 @("Invoice".Contains(ViewContext.RouteData.Values["controller"].ToString()) && ("" + ViewBag.TypeId  == "1" || "" + ViewBag.TypeId  == "3") ? "collapsed" : "")">
-                            <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Sales</span>
+                            <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Invoices</span>
                         </a>
                         <div id="collapseSales" class="collapse @("Invoice".Contains(ViewContext.RouteData.Values["controller"].ToString()) && ("" + ViewBag.TypeId  == "1" || "" + ViewBag.TypeId  == "3") ? "show" : "")">
                             <ul class="list-unstyled inner-level-menu">
@@ -386,37 +455,7 @@
                                 }
                             </ul>
                         </div>
-                    </li>
-                    <li>
-                        <a href="#" data-toggle="collapse" data-target="#collapsePurchases" aria-expanded="false"
-                           aria-controls="collapsePurchases" class="rotate-arrow-icon opacity-50 @("Invoice".Contains(ViewContext.RouteData.Values["controller"].ToString()) && ("" + ViewBag.TypeId  == "2" || "" + ViewBag.TypeId  == "4") ? "collapsed" : "")">
-                            <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Purchases</span>
-                        </a>
-                        <div id="collapsePurchases" class="collapse @("Invoice".Contains(ViewContext.RouteData.Values["controller"].ToString()) && ("" + ViewBag.TypeId  == "2" || "" + ViewBag.TypeId  == "4") ? "show" : "")">
-                            <ul class="list-unstyled inner-level-menu">
-                                @if (User.IsAllowed("PurchasesInvoices.All"))
-                                {
-                                    <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Invoice" && "" + ViewBag.TypeId  == "2" ? "active" : "")">
-                                        <a href="/Invoices/Invoice?TypeId=2">
-                                            <i class="simple-icon-basket-loaded"></i> <span class="d-inline-block">
-                                                @Utility.Resource.Title_Designer.Invoices
-                                            </span>
-                                        </a>
-                                    </li>
-                                }
-                                @if (User.IsAllowed("PurchasesReturns.All"))
-                                {
-                                    <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Invoice" && "" + ViewBag.TypeId  == "4" ? "active" : "")">
-                                        <a href="/Invoices/Invoice?TypeId=4">
-                                            <i class="simple-icon-action-undo"></i> <span class="d-inline-block">
-                                                @Utility.Resource.Title_Designer.Returns
-                                            </span>
-                                        </a>
-                                    </li>
-                                }
-                            </ul>
-                        </div>
-                    </li>
+                    </li>                   
                     <li>
                         <a href="#" data-toggle="collapse" data-target="#collapsePurchasesReports" aria-expanded="false"
                            aria-controls="collapsePurchasesReports" class="rotate-arrow-icon opacity-50 collapsed">
@@ -428,20 +467,15 @@
                                     <a href="/Reports/Lookups/Clients">
                                         <i class="glyph-icon iconsminds-letter-open"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Clients</span>
                                     </a>
-                                </li>
-                                <li>
-                                    <a href="/Reports/Lookups/Suppliers">
-                                        <i class="glyph-icon iconsminds-letter-open"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Suppliers</span>
-                                    </a>
-                                </li>
+                                </li>                              
                                 <li>
                                     <a href="/Reports/Sales/ClientsStatment">
                                         <i class="glyph-icon iconsminds-letter-open"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.ClientsStatement</span>
                                     </a>
-                                </li>
+                                </li>    
                                 <li>
-                                    <a href="/Reports/Purchases/SuppliersStatment">
-                                        <i class="glyph-icon iconsminds-files"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.SuppliersStatement</span>
+                                    <a href="/Reports/Sales/ClientsBalance">
+                                        <i class="glyph-icon iconsminds-profile"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.ClientsBalances</span>
                                     </a>
                                 </li>
                                 <li>
@@ -454,16 +488,7 @@
                                         <i class="glyph-icon iconsminds-profile"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.SalesBalance</span>
                                     </a>
                                 </li>
-                                <li>
-                                    <a href="/Reports/Sales/ClientsBalance">
-                                        <i class="glyph-icon iconsminds-profile"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.ClientsBalances</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="/Reports/Purchases/SuppliersBalance">
-                                        <i class="glyph-icon iconsminds-notepad"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.SuppliersBalances</span>
-                                    </a>
-                                </li>
+                                                           
                             </ul>
                         </div>
                     </li>
