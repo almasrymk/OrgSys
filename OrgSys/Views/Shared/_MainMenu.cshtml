@@ -21,7 +21,7 @@
                 {
                     <li>
                         <a href="#Purchases">
-                            <i class="simple-icon-basket-loaded"></i>
+                            <i class="iconsminds-add-cart"></i>
                             <span>@Utility.Resource.Title_Designer.Purchases</span>
                         </a>
                     </li>
@@ -30,7 +30,7 @@
                 {
                     <li>
                         <a href="#Sales">
-                            <i class="simple-icon-basket-loaded"></i>
+                            <i class="iconsminds-remove-cart"></i>
                             <span>@Utility.Resource.Title_Designer.Sales</span>
                         </a>
                     </li>
@@ -172,7 +172,7 @@
                                     {
                                         <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "ClientGroup" && "" + ViewBag.TypeId  == "1" ? "active" : "")">
                                             <a href="/Setting/DealerGroup?TypeId=1">
-                                                <i class="simple-icon-people"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.ClientGroups</span>
+                                                <i class="iconsminds-conference"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.ClientGroups</span>
                                             </a>
                                         </li>
                                     }
@@ -180,7 +180,7 @@
                                     {
                                         <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Dealer" && "" + ViewBag.TypeId  == "1" ? "active" : "")">
                                             <a href="/Setting/Dealer?TypeId=1">
-                                                <i class="simple-icon-people"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Clients</span>
+                                                <i class="iconsminds-business-man-woman"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Clients</span>
                                             </a>
                                         </li>
                                     }
@@ -188,7 +188,7 @@
                                     {
                                         <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "SupplierGroup"  &&  "" + ViewBag.TypeId  == "2" ? "active" : "")">
                                             <a href="/Setting/DealerGroup?TypeId=2">
-                                                <i class="simple-icon-people"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.SupplierGroups</span>
+                                                <i class="iconsminds-network"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.SupplierGroups</span>
                                             </a>
                                         </li>
                                     }
@@ -196,7 +196,7 @@
                                     {
                                         <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Dealer"  &&  "" + ViewBag.TypeId  == "2" ? "active" : "")">
                                             <a href="/Setting/Dealer?TypeId=2">
-                                                <i class="simple-icon-people"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Suppliers</span>
+                                                <i class="iconsminds-business-mens"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Suppliers</span>
                                             </a>
                                         </li>
                                     }
@@ -222,6 +222,14 @@
                                             </a>
                                         </li>
                                     }
+                                    @if (User.IsAllowed("SafeTerms.All"))
+                                    {
+                                        <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Outlay" ? "active" : "")">
+                                            <a href="/Setting/SafeTerm">
+                                                <i class="simple-icon-grid"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.SafeTerms</span>
+                                            </a>
+                                        </li>
+                                    }
                                     @if (User.IsAllowed("Safes.All"))
                                     {
                                         <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Safe" ? "active" : "")">
@@ -235,7 +243,7 @@
                                     {
                                         <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Bank" ? "active" : "")">
                                             <a href="/Setting/Bank">
-                                                <i class="iconsminds-wallet"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Banks</span>
+                                                <i class="iconsminds-bank"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Banks</span>
                                             </a>
                                         </li>
                                     }
@@ -243,7 +251,7 @@
                                     {
                                         <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "BankBranch" ? "active" : "")">
                                             <a href="/Setting/BankBranch">
-                                                <i class="iconsminds-wallet"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.BankBranchs</span>
+                                                <i class="iconsminds-hotel"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.BankBranchs</span>
                                             </a>
                                         </li>
                                     }
@@ -251,15 +259,7 @@
                                     {
                                         <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "AccountBank" ? "active" : "")">
                                             <a href="/Setting/AccountBank">
-                                                <i class="iconsminds-wallet"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.AccountBanks</span>
-                                            </a>
-                                        </li>
-                                    }
-                                    @if (User.IsAllowed("SafeTerms.All"))
-                                    {
-                                        <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Outlay" ? "active" : "")">
-                                            <a href="/Setting/SafeTerm">
-                                                <i class="iconsminds-wallet"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.SafeTerms</span>
+                                                <i class="iconsminds-safe-box"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.AccountBanks</span>
                                             </a>
                                         </li>
                                     }
@@ -289,7 +289,7 @@
                                     {
                                         <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Country"  ? "active" : "")">
                                             <a href="/Setting/Country">
-                                                <i class="simple-icon-people"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Countries</span>
+                                                <i class="iconsminds-globe-2"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Countries</span>
                                             </a>
                                         </li>
                                     }
@@ -297,7 +297,7 @@
                                     {
                                         <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "City"  ? "active" : "")">
                                             <a href="/Setting/City">
-                                                <i class="simple-icon-people"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Cities</span>
+                                                <i class="iconsminds-map2"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Cities</span>
                                             </a>
                                         </li>
                                     }
@@ -305,7 +305,7 @@
                                     {
                                         <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "District"  ? "active" : "")">
                                             <a href="/Setting/District">
-                                                <i class="simple-icon-people"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Districts</span>
+                                                <i class="iconsminds-location-2"></i> <span class="d-inline-block">@Utility.Resource.Title_Designer.Districts</span>
                                             </a>
                                         </li>
                                     }

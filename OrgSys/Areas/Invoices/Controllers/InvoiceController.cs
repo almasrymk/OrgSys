@@ -1,14 +1,11 @@
 ﻿using Entity.ModelView;
-using iTextSharp.text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.DotNet.Scaffolding.Shared.Project;
 using Microsoft.Extensions.Configuration;
 using OrgSys.Controllers;
 using Service;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Utility;
@@ -20,7 +17,7 @@ namespace OrgSys.Areas.Invoices.Controllers
     {
         public override async Task LoadViewBagIndex(long ParentId = 0, long TypeId = 0)
         {
-            var type = await GetObApi<InvoiceTypeModelView>(Domain.Enums.ApiMethodType.Get, $"GetById?Id={TypeId}");
+            var type = await GetObApi<InvoiceTypeModelView>($"GetById?Id={TypeId}");
             ViewBag.InvoicesType = type.Name;
             ViewBag.InvoicesGroup = type.Group;
             ViewBag.InvoicesIcon = type.Icon;
@@ -30,8 +27,8 @@ namespace OrgSys.Areas.Invoices.Controllers
 
         public override async Task LoadViewBag(InvoiceModelView model)
         {
-            ViewBag.CurrencyId = new SelectList(await GetListApi<CurrencyModelView>(Domain.Enums.ApiMethodType.Get, $"GetList?KeySearch=&Page=1&PageSize=20"), "Id", "Name", model.CurrencyId);
-            ViewBag.PaymentTypeId = new SelectList(await GetListApi<PaymentTypeModelView>(Domain.Enums.ApiMethodType.Get, $"GetList?KeySearch=&Page=1&PageSize=20"), "Id", "Name", model.PaymentTypeId);
+            ViewBag.CurrencyId = new SelectList(await GetListApi<CurrencyModelView>(), "Id", "Name", model.CurrencyId);
+            ViewBag.PaymentTypeId = new SelectList(await GetListApi<PaymentTypeModelView>(), "Id", "Name", model.PaymentTypeId);
 
             List<SelectListItem> selectListItems = new List<SelectListItem>();
             selectListItems.Add(new SelectListItem { Value = "1", Text = Translate.GetTranslate("Amount") });
@@ -41,7 +38,7 @@ namespace OrgSys.Areas.Invoices.Controllers
             ViewBag.ServiceType = new SelectList(selectListItems, "Value", "Text");
             ViewBag.TaxType = new SelectList(selectListItems, "Value", "Text");
 
-            var type = await GetObApi<InvoiceTypeModelView>(Domain.Enums.ApiMethodType.Get, $"GetById?Id={model.TypeId}");
+            var type = await GetObApi<InvoiceTypeModelView>($"GetById?Id={model.TypeId}");
             ViewBag.InvoicesType = type.Name;
             ViewBag.InvoicesGroup = type.Group;
             ViewBag.InvoicesIcon = type.Icon;
@@ -49,7 +46,7 @@ namespace OrgSys.Areas.Invoices.Controllers
 
         public override async Task<InvoiceModelView> InitializeData(InvoiceModelView ob)
         {
-            var preferenceList = await GetListApi<PreferenceModelView>(Domain.Enums.ApiMethodType.Get, $"GetList?KeySearch=Invoice&TypeId={ob.TypeId}&Page=1&PageSize=1000");
+            var preferenceList = await GetListApi<PreferenceModelView>(TypeId: ob.TypeId, PageSize: 1000);
             var StockId = long.Parse("0" + preferenceList.FirstOrDefault(e => e.Key == "DefaultStock")?.Value);
 
             long DealerId = 0;
@@ -78,7 +75,7 @@ namespace OrgSys.Areas.Invoices.Controllers
 
             if (ob.Id == 0)
             {
-                ob.CodeNumber = long.Parse("0" + await GetValueApi<InvoiceModelView>(Domain.Enums.ApiMethodType.Get, $"GetMax?TypeId={ob.TypeId}")) + 1;
+                ob.CodeNumber = long.Parse("0" + await GetValueApi<InvoiceModelView>($"GetMax?TypeId={ob.TypeId}")) + 1;
                 ob.Code = "" + ob.CodeNumber;
                 ob.StockId = StockId;
                 ob.DealerId = DealerId;
@@ -94,10 +91,10 @@ namespace OrgSys.Areas.Invoices.Controllers
                 ob.InvoiceProductList = new List<InvoiceProductModelView>();
             }
 
-            ob.StockName = (await GetObApi<StockModelView>(Domain.Enums.ApiMethodType.Get, $"GetById?Id={ob.StockId ?? 0}"))?.Name;
-            ob.DealerName = (await GetObApi<DealerModelView>(Domain.Enums.ApiMethodType.Get, $"GetById?Id={ob.DealerId}"))?.Name;
-            ob.ParentCode = (await GetObApi<InvoiceModelView>(Domain.Enums.ApiMethodType.Get, $"GetById?Id={ob.StockId ?? 0}"))?.Code;
-            ob.Rate = (await GetObApi<CurrencyModelView>(Domain.Enums.ApiMethodType.Get, $"GetById?Id={ob.StockId ?? 0}"))?.Rate ?? 0;
+            ob.StockName = (await GetObApi<StockModelView>($"GetById?Id={ob.StockId ?? 0}"))?.Name;
+            ob.DealerName = (await GetObApi<DealerModelView>($"GetById?Id={ob.DealerId}"))?.Name;
+            ob.ParentCode = (await GetObApi<InvoiceModelView>($"GetById?Id={ob.StockId ?? 0}"))?.Code;
+            ob.Rate = (await GetObApi<CurrencyModelView>($"GetById?Id={ob.StockId ?? 0}"))?.Rate ?? 0;
             return ob;
         }
 
@@ -166,7 +163,7 @@ namespace OrgSys.Areas.Invoices.Controllers
 
         public async Task<JsonResult> checkStock(int id)
         {
-            var invoice = await GetObApi<InvoiceModelView>(Domain.Enums.ApiMethodType.Get, $"GetById?Id={id}");
+            var invoice = await GetObApi<InvoiceModelView>($"GetById?Id={id}");
             var data = new
             {
                 code = invoice.Code,

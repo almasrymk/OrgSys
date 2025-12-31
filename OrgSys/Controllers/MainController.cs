@@ -31,7 +31,7 @@ namespace OrgSys.Controllers
         string AreaName = "";
         string ControllerName = "";
 
-        public virtual async Task<HttpResponseMessage> ApiMethod(ApiMethodType apiMethodType, string NameActionAndParamenter, TDto Ob = null)
+        public virtual async Task<HttpResponseMessage> ApiMethod(ApiMethodType apiMethodType, string NameActionAndParamenter , TDto Ob = null)
         {
             string ApiUrl = configuration["ApiUrl"];
             HttpClient httpClient = new HttpClient();
@@ -53,30 +53,14 @@ namespace OrgSys.Controllers
             return null;
         }
 
-        public virtual async Task<List<TSubDto>> GetListApi<TSubDto>(ApiMethodType apiMethodType, string NameActionAndParamenter, TSubDto Ob = null) where TSubDto : BaseModel
+        public virtual async Task<List<TSubDto>> GetListApi<TSubDto>(string NameActionAndParamenter) where TSubDto : BaseModel
         {
             string ApiUrl = configuration["ApiUrl"];
-            HttpClient httpClient = new HttpClient();
-            HttpResponseMessage response = new HttpResponseMessage();
+           
             var ob = (List<TSubDto>)Activator.CreateInstance(typeof(List<TSubDto>));
             string ApiControllerName = typeof(TSubDto).Name.Replace("ModelView", "").Replace("Dto", "");
-            switch (apiMethodType)
-            {
-                case ApiMethodType.Get:
-                    response = await httpClient.GetAsync($"{ApiUrl}/{ApiControllerName}/{NameActionAndParamenter}");
-                    break;
-                case ApiMethodType.Post:
-                    response = await httpClient.PostAsJsonAsync($"{ApiUrl}/{ApiControllerName}/{NameActionAndParamenter}", Ob);
-                    break;
-                case ApiMethodType.Put:
-                    response = await httpClient.PutAsJsonAsync($"{ApiUrl}/{ApiControllerName}/{NameActionAndParamenter}", Ob);
-                    break;  
-                case ApiMethodType.Delete:
-                    response = await httpClient.DeleteAsync($"{ApiUrl}/{ApiControllerName}/{NameActionAndParamenter}");
-                    break;
-                default:
-                    break;
-            }
+            HttpClient httpClient = new HttpClient();
+            HttpResponseMessage response = await httpClient.GetAsync($"{ApiUrl}/{ApiControllerName}/{NameActionAndParamenter}");           
             response.EnsureSuccessStatusCode();
             var data = await response.Content.ReadAsStringAsync();
             var res = JsonConvert.DeserializeObject<ResultCollection<TSubDto>>(data);
@@ -85,30 +69,30 @@ namespace OrgSys.Controllers
             return ob;
         }
 
-        public virtual async Task<TSubDto> GetObApi<TSubDto>(ApiMethodType apiMethodType, string NameActionAndParamenter, TSubDto Ob = null) where TSubDto : BaseModel
+        public virtual async Task<List<TSubDto>> GetListApi<TSubDto>(long TypeId = 0 , long ParentId = 0 , string TextSearch = "", int Page = 1 , int PageSize = 20) where TSubDto : BaseModel
         {
             string ApiUrl = configuration["ApiUrl"];
+
+            var ob = (List<TSubDto>)Activator.CreateInstance(typeof(List<TSubDto>));
+            string ApiControllerName = typeof(TSubDto).Name.Replace("ModelView", "").Replace("Dto", "");
             HttpClient httpClient = new HttpClient();
-            HttpResponseMessage response = new HttpResponseMessage();
+            HttpResponseMessage response = await httpClient.GetAsync($"{ApiUrl}/{ApiControllerName}/GetList?KeySearch={TextSearch}&TypeId={TypeId}&ParentId={ParentId}&Page={Page}&PageSize={Page}");
+            response.EnsureSuccessStatusCode();
+            var data = await response.Content.ReadAsStringAsync();
+            var res = JsonConvert.DeserializeObject<ResultCollection<TSubDto>>(data);
+            if (res != null)
+                ob = res.Response;
+            return ob;
+        }
+
+        public virtual async Task<TSubDto> GetObApi<TSubDto>(string NameActionAndParamenter) where TSubDto : BaseModel
+        {
+            string ApiUrl = configuration["ApiUrl"];
+          
             var ob = (TSubDto)Activator.CreateInstance(typeof(TSubDto));
             string ApiControllerName = typeof(TSubDto).Name.Replace("ModelView", "").Replace("Dto", "");
-            switch (apiMethodType)
-            {
-                case ApiMethodType.Get:
-                    response = await httpClient.GetAsync($"{ApiUrl}/{ApiControllerName}/{NameActionAndParamenter}");
-                    break;
-                case ApiMethodType.Post:
-                    response = await httpClient.PostAsJsonAsync($"{ApiUrl}/{ApiControllerName}/{NameActionAndParamenter}", Ob);
-                    break;
-                case ApiMethodType.Put:
-                    response = await httpClient.PutAsJsonAsync($"{ApiUrl}/{ApiControllerName}/{NameActionAndParamenter}", Ob);
-                    break;
-                case ApiMethodType.Delete:
-                    response = await httpClient.DeleteAsync($"{ApiUrl}/{ApiControllerName}/{NameActionAndParamenter}");
-                    break;
-                default:
-                    break;
-            }
+            HttpClient httpClient = new HttpClient();
+            HttpResponseMessage response = await httpClient.GetAsync($"{ApiUrl}/{ApiControllerName}/{NameActionAndParamenter}");           
             response.EnsureSuccessStatusCode();
             var data = await response.Content.ReadAsStringAsync();
             var res = JsonConvert.DeserializeObject<Result<TSubDto>>(data);
@@ -117,29 +101,12 @@ namespace OrgSys.Controllers
             return ob;
         }
 
-        public virtual async Task<object> GetValueApi<TSubDto>(ApiMethodType apiMethodType, string NameActionAndParamenter, TSubDto Ob = null) where TSubDto : BaseModel
+        public virtual async Task<object> GetValueApi<TSubDto>(string NameActionAndParamenter, TSubDto Ob = null) where TSubDto : BaseModel
         {
             string ApiUrl = configuration["ApiUrl"];
-            HttpClient httpClient = new HttpClient();
-            HttpResponseMessage response = new HttpResponseMessage();
             string ApiControllerName = typeof(TSubDto).Name.Replace("ModelView", "").Replace("Dto", "");
-            switch (apiMethodType)
-            {
-                case ApiMethodType.Get:
-                    response = await httpClient.GetAsync($"{ApiUrl}/{ApiControllerName}/{NameActionAndParamenter}");
-                    break;
-                case ApiMethodType.Post:
-                    response = await httpClient.PostAsJsonAsync($"{ApiUrl}/{ApiControllerName}/{NameActionAndParamenter}", Ob);
-                    break;
-                case ApiMethodType.Put:
-                    response = await httpClient.PutAsJsonAsync($"{ApiUrl}/{ApiControllerName}/{NameActionAndParamenter}", Ob);
-                    break;
-                case ApiMethodType.Delete:
-                    response = await httpClient.DeleteAsync($"{ApiUrl}/{ApiControllerName}/{NameActionAndParamenter}");
-                    break;
-                default:
-                    break;
-            }
+            HttpClient httpClient = new HttpClient();
+            HttpResponseMessage response = await httpClient.GetAsync($"{ApiUrl}/{ApiControllerName}/{NameActionAndParamenter}");           
             response.EnsureSuccessStatusCode();
             var data = await response.Content.ReadAsStringAsync();
             var res = JsonConvert.DeserializeObject<object>(data);           

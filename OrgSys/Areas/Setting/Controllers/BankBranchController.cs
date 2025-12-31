@@ -13,20 +13,20 @@ namespace OrgSys.Areas.Setting.Controllers
     {
         public override async Task LoadViewBag(BankBranchModelView model)
         {
-            ViewBag.BankList = new SelectList(await GetListApi<BankModelView>(Domain.Enums.ApiMethodType.Get, $"GetList?KeySearch=&Page=1&PageSize=20"), "Id", "Name", model.BankId);
-            ViewBag.CountryList = new SelectList(await GetListApi<CountryModelView>(Domain.Enums.ApiMethodType.Get, $"GetList?KeySearch=&Page=1&PageSize=20"), "Id", "Name", model.CountryId);
+            ViewBag.BankList = new SelectList(await GetListApi<BankModelView>(), "Id", "Name", model.BankId);
+            ViewBag.CountryList = new SelectList(await GetListApi<CountryModelView>(), "Id", "Name", model.CountryId);
         }
 
         public async Task<JsonResult> GetCitiesByCountryId(int countryId)
         {
-            var cities = await GetListApi<CityModelView>(Domain.Enums.ApiMethodType.Get, $"GetListByCountryId?KeySearch=&CountryId={countryId}&Page=1&PageSize=20");
+            var cities = await GetListApi<CityModelView>($"GetListByCountryId?KeySearch=&CountryId={countryId}&Page=1&PageSize=20");
             var cityList = cities.OrderBy(c => c.Name).Select(c => new { c.Id, c.Name }).ToList();
             return Json(cityList);
         }
 
         public async Task<JsonResult> GetDistrictsByCityId(int cityId)
         {
-            var districts = await GetListApi<DistrictModelView>(Domain.Enums.ApiMethodType.Get, $"GetListByCityId?KeySearch=&CityId={cityId}&Page=1&PageSize=20");
+            var districts = await GetListApi<DistrictModelView>($"GetListByCityId?KeySearch=&CityId={cityId}&Page=1&PageSize=20");
             var districtsiList = districts.OrderBy(c => c.Name).Select(c => new { c.Id, c.Name }).ToList();
             return Json(districtsiList);
         }
@@ -35,7 +35,7 @@ namespace OrgSys.Areas.Setting.Controllers
         {
             if (txtSearch != null)
                 txtSearch = txtSearch.Trim().ToLower();
-            var itemsList = await GetListApi<BankModelView>(Domain.Enums.ApiMethodType.Get, $"GetList?KeySearch=&Page=1&PageSize=20");
+            var itemsList = await GetListApi<BankModelView>();
             var list = itemsList.Distinct().OrderBy(_ => _.Name)
                 .Select(_ => new
                 {
