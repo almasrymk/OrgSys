@@ -1,15 +1,15 @@
 ﻿namespace Infrastructure.Persistence.Data
 {
+    using Entity.Model;
     using System.Reflection;
     using Domain.Abstraction;
+    using System.Threading.Tasks;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.EntityFrameworkCore.Migrations;
     using Microsoft.EntityFrameworkCore.Diagnostics;
     using Microsoft.EntityFrameworkCore.Infrastructure;
     using Microsoft.EntityFrameworkCore.Migrations.Internal;
-    using Entity.Model;
-    using System.Threading.Tasks;
 
     public class OrgContext : DbContext , IOrgContext
     {

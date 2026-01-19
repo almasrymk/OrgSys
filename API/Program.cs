@@ -1,7 +1,13 @@
-﻿using Entity;
+﻿using API.Middlewares;
+using Application.Validators;
 using Domain.Abstraction;
-using Microsoft.EntityFrameworkCore;
+using Entity;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Infrastructure.Persistence.UnitOfWork;
+using MediatR;
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
  
@@ -29,6 +35,17 @@ builder.Services.AddSwaggerGen(c => { c.ResolveConflictingActions(apiDescription
 
 builder.Services.AddControllers().AddJsonOptions(options => { options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles; });
 
+//builder.Services.AddFluentValidationAutoValidation();
+
+builder.Services.AddValidatorsFromAssembly(typeof(MappingProfile).Assembly);
+
+builder.Services.AddMediatR(cfg =>
+{
+    cfg.RegisterServicesFromAssembly(typeof(FluentValidationFilter<,>).Assembly);
+});
+
+builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(FluentValidationFilter<,>));
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -43,5 +60,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseMiddleware<GlobalExceptionMiddleware>();
 
 app.Run();

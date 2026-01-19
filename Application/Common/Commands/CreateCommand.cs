@@ -1,22 +1,24 @@
 ﻿namespace Application.Common.Commands
 {
-    using System.Net;
-    using AutoMapper;
-    using Domain.Shared;
-    using System.Threading;
-    using Domain.Abstraction;
-    using System.Threading.Tasks;
     using Application.Abstraction.Command;
+    using Application.Interfaces.CQRS;
+    using AutoMapper;
+    using Domain.Abstraction;
+    using Domain.Shared;
+    using System.Net;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
     public class CreateCommandHandler<TDto, TModel>(IUnitOfWork _UnitOfWork, IRepository<TModel> _Repository, IMapper mapper) : ICommandHandler<TDto>
         where TDto : ICommand
-        where TModel : Entity.BaseModel
+        where TModel : Entity.BaseModel        
     {
 
         public async Task<Result> Handle(TDto request, CancellationToken cancellationToken)
         {
             try
-            {
+            {               
                 var ob = mapper.Map<TModel>(request);
 
                 var res = await _Repository.CreateAsync(ob);

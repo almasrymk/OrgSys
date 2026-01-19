@@ -1,14 +1,13 @@
 ﻿namespace Application.Commands.Org.Setting.City.Queries
 {
-    using Application.Abstraction.Command;
-    using Application.Common.Commands;
-    using Application.Common.Queries;
-    using Application.Interfaces.CQRS;
     using AutoMapper;
-    using Domain.Abstraction;
     using Domain.Shared;
     using Entity.ModelView;
+    using Domain.Abstraction;
     using System.Linq.Expressions;
+    using Application.Interfaces.CQRS;
+    using Application.Common.Commands;
+    using Application.Abstraction.Command;
 
     public sealed record GetByIdCityQuery(long Id) : ICommand<CityModelView> , IGetByIdQuery<Result<CityModelView>>;
 

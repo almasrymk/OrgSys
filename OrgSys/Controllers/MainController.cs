@@ -1,4 +1,5 @@
-﻿using Domain.Enums;
+﻿using Application.Interfaces.CQRS;
+using Domain.Enums;
 using Domain.Shared;
 using Entity;
 using iTextSharp.text;
@@ -26,12 +27,14 @@ using Utility;
 namespace OrgSys.Controllers
 {
     [Authorize]
-    public class MainController<TDto>(IConfiguration configuration) : Controller where TDto : BaseModel
+    public class MainController<TDto>(IConfiguration configuration) : Controller
+        //where TCreate : ICreateCommand<Domain.Shared.Result>
+        where TDto : BaseModel
     {
         string AreaName = "";
         string ControllerName = "";
 
-        public virtual async Task<HttpResponseMessage> ApiMethod(ApiMethodType apiMethodType, string NameActionAndParamenter , TDto Ob = null)
+        public virtual async Task<HttpResponseMessage> ApiMethod(ApiMethodType apiMethodType, string NameActionAndParamenter, object Ob = null)
         {
             string ApiUrl = configuration["ApiUrl"];
             HttpClient httpClient = new HttpClient();
@@ -56,11 +59,11 @@ namespace OrgSys.Controllers
         public virtual async Task<List<TSubDto>> GetListApi<TSubDto>(string NameActionAndParamenter) where TSubDto : BaseModel
         {
             string ApiUrl = configuration["ApiUrl"];
-           
+
             var ob = (List<TSubDto>)Activator.CreateInstance(typeof(List<TSubDto>));
             string ApiControllerName = typeof(TSubDto).Name.Replace("ModelView", "").Replace("Dto", "");
             HttpClient httpClient = new HttpClient();
-            HttpResponseMessage response = await httpClient.GetAsync($"{ApiUrl}/{ApiControllerName}/{NameActionAndParamenter}");           
+            HttpResponseMessage response = await httpClient.GetAsync($"{ApiUrl}/{ApiControllerName}/{NameActionAndParamenter}");
             response.EnsureSuccessStatusCode();
             var data = await response.Content.ReadAsStringAsync();
             var res = JsonConvert.DeserializeObject<ResultCollection<TSubDto>>(data);
@@ -69,7 +72,7 @@ namespace OrgSys.Controllers
             return ob;
         }
 
-        public virtual async Task<List<TSubDto>> GetListApi<TSubDto>(long TypeId = 0 , long ParentId = 0 , string TextSearch = "", int Page = 1 , int PageSize = 20) where TSubDto : BaseModel
+        public virtual async Task<List<TSubDto>> GetListApi<TSubDto>(long TypeId = 0, long ParentId = 0, string TextSearch = "", int Page = 1, int PageSize = 20) where TSubDto : BaseModel
         {
             string ApiUrl = configuration["ApiUrl"];
 
@@ -88,11 +91,11 @@ namespace OrgSys.Controllers
         public virtual async Task<TSubDto> GetObApi<TSubDto>(string NameActionAndParamenter) where TSubDto : BaseModel
         {
             string ApiUrl = configuration["ApiUrl"];
-          
+
             var ob = (TSubDto)Activator.CreateInstance(typeof(TSubDto));
             string ApiControllerName = typeof(TSubDto).Name.Replace("ModelView", "").Replace("Dto", "");
             HttpClient httpClient = new HttpClient();
-            HttpResponseMessage response = await httpClient.GetAsync($"{ApiUrl}/{ApiControllerName}/{NameActionAndParamenter}");           
+            HttpResponseMessage response = await httpClient.GetAsync($"{ApiUrl}/{ApiControllerName}/{NameActionAndParamenter}");
             response.EnsureSuccessStatusCode();
             var data = await response.Content.ReadAsStringAsync();
             var res = JsonConvert.DeserializeObject<Result<TSubDto>>(data);
@@ -106,10 +109,10 @@ namespace OrgSys.Controllers
             string ApiUrl = configuration["ApiUrl"];
             string ApiControllerName = typeof(TSubDto).Name.Replace("ModelView", "").Replace("Dto", "");
             HttpClient httpClient = new HttpClient();
-            HttpResponseMessage response = await httpClient.GetAsync($"{ApiUrl}/{ApiControllerName}/{NameActionAndParamenter}");           
+            HttpResponseMessage response = await httpClient.GetAsync($"{ApiUrl}/{ApiControllerName}/{NameActionAndParamenter}");
             response.EnsureSuccessStatusCode();
             var data = await response.Content.ReadAsStringAsync();
-            var res = JsonConvert.DeserializeObject<object>(data);           
+            var res = JsonConvert.DeserializeObject<object>(data);
             return res;
         }
 
@@ -166,6 +169,8 @@ namespace OrgSys.Controllers
                 else
                     response = await ApiMethod(ApiMethodType.Put, $"Update", ob);
 
+                var data = await response.Content.ReadAsStringAsync();
+                var res = JsonConvert.DeserializeObject<Domain.Shared.Result>(data);
                 if (response.IsSuccessStatusCode)
                 {
                     if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
@@ -173,14 +178,14 @@ namespace OrgSys.Controllers
                     return Redirect("/" + AreaName + "/" + ControllerName + "?ParentId=" + ob.ParentId + "&TypeId=" + ob.TypeId + "&status=" + ResultStatus.success + "&MsgError=Success");
                 }
             }
-           await LoadViewBag(ob);
+            await LoadViewBag(ob);
             if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
                 return BadRequest("Error");
             return View(ob);
         }
 
         public virtual async Task<Utility.Result> Delete(long id)
-        {            
+        {
             var ob = await ApiMethod(ApiMethodType.Get, $"GetById?Id={id}");
             ob.EnsureSuccessStatusCode();
             var data = await ob.Content.ReadAsStringAsync();
@@ -209,7 +214,7 @@ namespace OrgSys.Controllers
             try
             {
                 if (ids != null && ids.Length > 0)
-                {                    
+                {
                     var query = string.Join("&", ids.Select(i => $"ids={i}"));
                     var response = await ApiMethod(ApiMethodType.Delete, $"DeleteList?{query}");
 

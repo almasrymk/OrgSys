@@ -72,7 +72,7 @@
                                    <label>@Utility.Resource.Title_Designer.Name</label>
                                     <input asp-for="Name" class="form-control" placeholder="@Utility.Resource.Title_Designer.Name" />
                                     @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.NameRequired</small>*@
-                                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger " })
+                                    @* @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger " }) *@
                                 </div>
                             </div>
                             <hr />
@@ -95,11 +95,11 @@
         if (CheckRequired("CountryId", "divBranch", '@Utility.Resource.Message_Designer.CountryRequired'))
             Valid = false;
 
-        if (CheckRequired("Name", "Name", '@Utility.Resource.Message_Designer.NameRequired'))
-            Valid = false;
+        // if (CheckRequired("Name", "Name", '@Utility.Resource.Message_Designer.NameRequired'))
+        //     Valid = false;
 
-        else if (CheckRage("Name", "Name", 3, 50, '@Utility.Resource.Message_Designer.NameRange'))
-            Valid = false;
+        // else if (CheckRage("Name", "Name", 3, 50, '@Utility.Resource.Message_Designer.NameRange'))
+        //     Valid = false;
 
         if (Valid == true) {
 

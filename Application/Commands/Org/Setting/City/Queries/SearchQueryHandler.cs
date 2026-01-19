@@ -1,14 +1,14 @@
 ﻿namespace Application.Commands.Org.Setting.City.Queries
 {
-    using Application.Abstraction.Command;
-    using Application.Common.Queries;
-    using Application.Interfaces.CQRS;
+    using Utility;
     using AutoMapper;
-    using Domain.Abstraction;
     using Domain.Shared;
     using Entity.ModelView;
+    using Domain.Abstraction;
     using System.Linq.Expressions;
-    using Utility;
+    using Application.Common.Queries;
+    using Application.Interfaces.CQRS;
+    using Application.Abstraction.Command;
 
     public sealed record SearchCityQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandPagination<CityModelView> ,ISearchQuery<ResultPagination<CityModelView>>;
 

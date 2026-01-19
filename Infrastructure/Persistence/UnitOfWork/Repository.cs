@@ -1,15 +1,11 @@
 ﻿namespace Infrastructure.Persistence.UnitOfWork
 {
-    using Azure;
-    using CorePagination.Extensions;
-    using CorePagination.Paginators.SizeAwarePaginator;
-    using Domain.Abstraction;   
-    using Domain.Common.Base;
-    using Entity.Model;
-    using Microsoft.EntityFrameworkCore;
-    using System.Linq.Expressions;
     using Utility;
-    using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+    using Domain.Abstraction;   
+    using System.Linq.Expressions;
+    using CorePagination.Extensions;
+    using Microsoft.EntityFrameworkCore;
+    using CorePagination.Paginators.SizeAwarePaginator;
 
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : Entity.BaseModel //BaseEntity
     {
@@ -103,6 +99,24 @@
             }
         }
 
+        public virtual async ValueTask<IEnumerable<TEntity>?> GetListByFilterAsync(Expression<Func<TEntity, bool>> Filter)
+        {
+            var query = dbEntity.Where(Filter).AsQueryable();
+
+            return await query.Where(e => e.Status != Status.Deleted && e.Hide != true).AsQueryable().ToListAsync();
+        }
+
+        public virtual async ValueTask<IEnumerable<TEntity>?> GetListByFilterAsync(Expression<Func<TEntity, bool>> Filter, string includeProperties)
+        {
+            var query = dbEntity.Where(Filter).AsQueryable();
+            foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(includeProperty);
+            }
+
+            return await query.Where(e => e.Status != Status.Deleted && e.Hide != true).AsQueryable().ToListAsync();
+        }
+
         public virtual async ValueTask<SizeAwarePaginationResult<TEntity>?> GetPaginationByFilterAsync(Expression<Func<TEntity, bool>> Filter, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy , string includeProperties , int Page , int PageSize)
         {
             var query =  dbEntity.Where(Filter);
@@ -142,6 +156,16 @@
             }
 
             return false;
+        }
+
+        public virtual async ValueTask<bool> AnyAsync(Expression<Func<TEntity, bool>> Filter)
+        {
+            return await dbEntity.AnyAsync(Filter);
+        }
+
+        public virtual async ValueTask<bool> AnyAsync(Expression<Func<TEntity, bool>> Filter, CancellationToken cancellationToken)
+        {
+            return await dbEntity.AnyAsync(Filter , cancellationToken);
         }
     }
 }

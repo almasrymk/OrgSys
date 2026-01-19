@@ -1,12 +1,11 @@
 ﻿namespace Application.Commands.Org.Setting.City.Commands
 {
-    using Application.Abstraction.Command;
-    using Application.Common.Commands;
-    using Application.Interfaces.CQRS;
     using AutoMapper;
-    using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.ModelView;
+    using Domain.Abstraction;
+    using Application.Interfaces.CQRS;
+    using Application.Common.Commands;
+    using Application.Abstraction.Command;
 
     public sealed record UpdateCityCommand(long Id , long? CountryId, string Name) : ICommand, IUpdateCommand<Result>;
 

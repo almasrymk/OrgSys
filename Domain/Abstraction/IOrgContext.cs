@@ -2,7 +2,6 @@
 {
     using Entity.Model;
     using Microsoft.EntityFrameworkCore;
-    using Microsoft.EntityFrameworkCore.ChangeTracking;
 
     public interface IOrgContext : IDisposable
     {
