@@ -1,4 +1,7 @@
-﻿using Entity.ModelView;
+﻿using Application.Commands.Org.Setting.City.Commands;
+using Application.Commands.Org.Setting.Country.Commands;
+using AutoMapper;
+using Entity.ModelView;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using OrgSys.Controllers;
@@ -8,7 +11,7 @@ using System.Linq;
 namespace OrgSys.Areas.Setting.Controllers
 {
     [Area("Setting")]
-    public class CountryController(IConfiguration configuration) :MainController<CountryModelView>(configuration)
+    public class CountryController(IConfiguration configuration, IMapper mapper) :MainController<CountryModelView, CreateCountryCommand, UpdateCountryCommand>(configuration , mapper)
     {
         public JsonResult GetList(string txtSearch = "", int page = 1, int pageSize = 10)
         {

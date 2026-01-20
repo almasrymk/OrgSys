@@ -39,7 +39,7 @@
                      
                     return new Result(
                         HttpStatusCode.InternalServerError,
-                        new List<string> { "Error" });
+                    new List<Error> { new Error("Error") });
                 }
                 catch (AggregateException ex)
                 {
@@ -53,13 +53,13 @@
 
                     return new Result(
                      HttpStatusCode.InternalServerError,
-                     new List<string> { "Error" });
+                    new List<Error> { new Error( ex.Message) });
                 }
                 catch (Exception ex)
                 {
                     return new Result(
                         HttpStatusCode.InternalServerError,
-                        new List<string> { "Error" });
+                    new List<Error> { new Error( ex.Message) });
                 }
             }
         }

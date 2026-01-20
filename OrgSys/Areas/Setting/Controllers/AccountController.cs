@@ -1,4 +1,6 @@
-﻿using Entity.ModelView;
+﻿using Application.Commands.Org.Setting.Account.Commands;
+using AutoMapper;
+using Entity.ModelView;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
@@ -9,7 +11,7 @@ using System.Threading.Tasks;
 namespace OrgSys.Areas.Setting.Controllers
 {
     [Area("Setting")]
-    public class AccountController(IConfiguration configuration) : MainController<AccountModelView>(configuration)
+    public class AccountController(IConfiguration configuration, IMapper mapper) : MainController<AccountModelView , CreateAccountCommand , UpdateAccountCommand>(configuration , mapper)
     {
         public override async Task LoadViewBag(AccountModelView model)
         {

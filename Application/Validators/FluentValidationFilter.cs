@@ -33,11 +33,7 @@ namespace Application.Validators
 
             if (failures.Any())
             {
-                var errorMessages = failures.Select(f => f.ErrorMessage).ToList();
-                throw new AppValidationException(errorMessages);
-                //throw (new Domain.Shared.Result(HttpStatusCode.BadRequest, errorMessages));
-                //return (TResponse) new Domain.Shared.Result(HttpStatusCode.BadRequest, errorMessages);
-                //return (TResponse)Activator.CreateInstance(typeof(TResponse), HttpStatusCode.BadRequest, errorMessages)!;
+                throw new AppValidationException(failures.Select(f => new Domain.Shared.Error(f.ErrorMessage , f.PropertyName)).ToList());
             }
 
             return await next();

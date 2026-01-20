@@ -1,4 +1,7 @@
-﻿using Entity.ModelView;
+﻿using Application.Commands.Org.Setting.BankBranch.Commands;
+using Application.Commands.Org.Setting.City.Commands;
+using AutoMapper;
+using Entity.ModelView;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
@@ -10,7 +13,7 @@ using System.Threading.Tasks;
 namespace OrgSys.Areas.Setting.Controllers
 {
     [Area("Setting")]
-    public class CityController(IConfiguration configuration) : MainController<CityModelView>(configuration)
+    public class CityController(IConfiguration configuration, IMapper mapper) : MainController<CityModelView, CreateCityCommand, UpdateCityCommand>(configuration , mapper)
     {               
         public override async Task LoadViewBag(CityModelView model)
         {

@@ -1,15 +1,18 @@
-﻿using System.Linq;
+﻿using Application.Commands.Org.Setting.Account.Commands;
+using Application.Commands.Org.Setting.BankBranch.Commands;
+using AutoMapper;
 using Entity.ModelView;
-using OrgSys.Controllers;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
+using OrgSys.Controllers;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace OrgSys.Areas.Setting.Controllers
 {
     [Area("Setting")]
-    public class BankBranchController(IConfiguration configuration) : MainController<BankBranchModelView>(configuration) 
+    public class BankBranchController(IConfiguration configuration, IMapper mapper) : MainController<BankBranchModelView, CreateBankBranchCommand, UpdateBankBranchCommand>(configuration , mapper) 
     {
         public override async Task LoadViewBag(BankBranchModelView model)
         {

@@ -1,4 +1,6 @@
-﻿using Application.Interfaces.CQRS;
+﻿using Application.Commands.Org.Setting.City.Commands;
+using Application.Interfaces.CQRS;
+using AutoMapper;
 using Domain.Enums;
 using Domain.Shared;
 using Entity;
@@ -23,12 +25,14 @@ using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 using Utility;
+using static iTextSharp.text.pdf.events.IndexEvents;
 
 namespace OrgSys.Controllers
 {
     [Authorize]
-    public class MainController<TDto>(IConfiguration configuration) : Controller
-        //where TCreate : ICreateCommand<Domain.Shared.Result>
+    public class MainController<TDto, TCreate, TUpdate>(IConfiguration configuration , IMapper mapper) : Controller
+        where TCreate : ICreateCommand<Domain.Shared.Result>
+        where TUpdate : IUpdateCommand<Domain.Shared.Result>
         where TDto : BaseModel
     {
         string AreaName = "";
@@ -160,17 +164,25 @@ namespace OrgSys.Controllers
         [HttpPost]
         public virtual async Task<ActionResult> Save(TDto ob)
         {
+            Domain.Shared.Result res = null;
             if (ModelState.IsValid)
             {
                 ob = await FixData(ob);
                 HttpResponseMessage response = null;
                 if (ob.Id == 0)
-                    response = await ApiMethod(ApiMethodType.Post, $"Create", ob);
+                {
+                    var CreateOb = mapper.Map<TCreate>(ob);
+                    response = await ApiMethod(ApiMethodType.Post, $"Create", CreateOb);
+                }
                 else
-                    response = await ApiMethod(ApiMethodType.Put, $"Update", ob);
+                {
+                    var UpdateOb = mapper.Map<TUpdate>(ob);
+                    response = await ApiMethod(ApiMethodType.Put, $"Update", UpdateOb);
+                }
 
                 var data = await response.Content.ReadAsStringAsync();
-                var res = JsonConvert.DeserializeObject<Domain.Shared.Result>(data);
+                res = JsonConvert.DeserializeObject<Domain.Shared.Result>(data);
+
                 if (response.IsSuccessStatusCode)
                 {
                     if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
@@ -178,9 +190,10 @@ namespace OrgSys.Controllers
                     return Redirect("/" + AreaName + "/" + ControllerName + "?ParentId=" + ob.ParentId + "&TypeId=" + ob.TypeId + "&status=" + ResultStatus.success + "&MsgError=Success");
                 }
             }
+            
             await LoadViewBag(ob);
             if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
-                return BadRequest("Error");
+                return BadRequest(new { res.Errors });
             return View(ob);
         }
 

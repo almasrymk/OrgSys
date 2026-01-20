@@ -1,6 +1,7 @@
 ﻿using Application.Validators;
 using Domain.Shared;
 using FluentValidation;
+using System.Linq;
 using System.Net;
 using System.Text.Json;
 
@@ -34,7 +35,7 @@ namespace API.Middlewares
                 await WriteResponse(
                     context,
                     HttpStatusCode.BadRequest,
-                    ex.Errors.Select(e => e.ErrorMessage).ToList()
+                    ex.Errors.Select(e => new Error(e.ErrorMessage , e.PropertyName)).ToList()
                 );
             }
             catch (Exception ex)
@@ -42,7 +43,7 @@ namespace API.Middlewares
                 await WriteResponse(
                     context,
                     HttpStatusCode.InternalServerError,
-                    new List<string> { ex.Message }
+                    new List<Error> { new Error(ex.Message) }
                 );
             }
         }
@@ -50,7 +51,7 @@ namespace API.Middlewares
         private static async Task WriteResponse(
             HttpContext context,
             HttpStatusCode statusCode,
-            List<string> errors)
+            List<Error> errors)
         {
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)statusCode;

@@ -105,7 +105,7 @@ namespace OrgSys
             services.AddAutoMapper(cfg => { cfg.AddProfile<MappingProfile>(); });
             services.AddAutoMapper(cfg => { cfg.AddProfile<MapperConfig>(); });
             services.AddControllersWithViews();
-
+             
             services.AddSession();
             services.AddMvc();
         }

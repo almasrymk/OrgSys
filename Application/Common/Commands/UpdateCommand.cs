@@ -27,13 +27,13 @@
 
                 return new Result(
                     HttpStatusCode.InternalServerError,
-                    new List<string> { "Error" });
+                    new List<Error> { new Error("Error") });
             }
             catch (Exception ex)
             {
                 return new Result(
                     HttpStatusCode.InternalServerError,
-                    new List<string> { "Error" });
+                    new List<Error> { new Error(ex.Message) });
             }
         }        
     }

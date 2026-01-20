@@ -34,14 +34,14 @@
                 return new ResultPagination<TResponse>(
                     HttpStatusCode.InternalServerError,
                     new List<TResponse>(), 0, 0, 0,
-                    new List<string> { "Error" });
+                    new List<Error> { new Error ( "Error" ) });
             }
             catch (Exception ex)
             {
                 return new ResultPagination<TResponse>(
                     HttpStatusCode.InternalServerError,
                     new List<TResponse>(), 0, 0, 0,
-                    new List<string> { "Error" });
+                    new List<Error> { new Error(ex.Message) });
             }
         }
 

@@ -15,6 +15,10 @@ public partial class MappingProfile : Profile
         CreateMap<CreateCityCommand, City>();
         CreateMap<City, UpdateCityCommand>();
         CreateMap<UpdateCityCommand, City>();
+        CreateMap<CityModelView, CreateCityCommand>();
+        CreateMap<CreateCityCommand, CityModelView>();
+        CreateMap<CityModelView, UpdateCityCommand>();
+        CreateMap<UpdateCityCommand, CityModelView>();
         CreateMap<City, DeleteCityCommand>();
         CreateMap<DeleteCityCommand, City>();
         #endregion

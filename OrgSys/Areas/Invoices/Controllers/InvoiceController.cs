@@ -1,19 +1,21 @@
-﻿using Entity.ModelView;
+﻿using AutoMapper;
+using Entity.ModelView;
+using OrgSys.Controllers;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
-using OrgSys.Controllers;
+using Application.Commands.Org.Invoices.Invoice.Commands;
 using Service;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Utility;
 
 namespace OrgSys.Areas.Invoices.Controllers
 {
     [Area("Invoices")]
-    public class InvoiceController(IConfiguration configuration) : MainController<InvoiceModelView>(configuration)
+    public class InvoiceController(IConfiguration configuration, IMapper mapper) : MainController<InvoiceModelView, CreateInvoiceCommand, UpdateInvoiceCommand>(configuration, mapper)
     {
         public override async Task LoadViewBagIndex(long ParentId = 0, long TypeId = 0)
         {

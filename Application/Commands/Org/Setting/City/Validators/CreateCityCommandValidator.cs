@@ -9,7 +9,9 @@
         public CreateCityCommandValidator(IRepository<Entity.Model.City> _Repository , IRepository<Entity.Model.Country> _CountryRepository) : base(_Repository)
         {
             RuleFor(c => c.Name)
-            .NotEmpty().WithMessage("The name field is required")
+            .NotEmpty().WithMessage("The name field is required");
+
+            RuleFor(c => c.Name)
             .MaximumLength(150).WithMessage("The name must not exceed 150 characters");
 
             RuleFor(c => c.CountryId)

@@ -30,14 +30,14 @@
                 return new Result<TResponse>(
                     HttpStatusCode.InternalServerError,
                     null,
-                    new List<string> { "Error" });
+                    new List<Error> { new Error("Error") });
             }
             catch (Exception ex)
             {
                 return new Result<TResponse>(
                     HttpStatusCode.InternalServerError,
                     null,
-                    new List<string> { "Error" });
+                    new List<Error> { new Error(ex.Message) });
             }
         }
 
