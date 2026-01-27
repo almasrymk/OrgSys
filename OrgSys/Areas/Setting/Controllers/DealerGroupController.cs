@@ -1,34 +1,37 @@
-﻿using Entity.ModelView;
-using Microsoft.AspNetCore.Mvc;
-using OrgSys.Controllers;
-using Service;
-
-using System.Linq;
-
-namespace OrgSys.Areas.Setting.Controllers
+﻿namespace OrgSys.Areas.Setting.Controllers
 {
+    using Application.Commands.Org.Setting.DealerGroup.Commands;
+    using AutoMapper;
+    using Entity.ModelView;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Configuration;
+    using OrgSys.Controllers;
+    using Service;
+    using System.Linq;
+    using System.Threading.Tasks;
+
     [Area("Setting")]
-    public class DealerGroupController :  BaseController<DealerGroupModelView>
+    public class DealerGroupController(IConfiguration configuration, IMapper mapper) : MainController<DealerGroupModelView, CreateDealerGroupCommand, UpdateDealerGroupCommand>(configuration, mapper)
     {
-        public override DealerGroupModelView InitializeData(DealerGroupModelView ob)
+        public override async Task<DealerGroupModelView> InitializeData(DealerGroupModelView ob)
         {
             if (ob == null)
                 ob = new DealerGroupModelView();
             if (ob.Id == 0)
             {
-                ob.CodeNumber = new DealerGroupService(User.GetSchema()).GetMaxCode(ob.TypeId);
+                ob.CodeNumber = long.Parse("0" + await GetValueApi<DealerGroupModelView>($"GetMax?TypeId={ob.TypeId}")) + 1;
                 ob.Code = "" + ob.CodeNumber;
             }
             return ob;
         }
 
-        public JsonResult GetList(string txtSearch = "", long TypeId = 0, int page = 1, int pageSize = 10)
+        public async Task<JsonResult> GetList(string txtSearch = "", long TypeId = 0, int page = 1, int pageSize = 10)
         {
             if (txtSearch != null)
                 txtSearch = txtSearch.Trim().ToLower();
             long TypeDealerId = TypeId == 1 || TypeId == 3 ? 1 : 2;
 
-            var itemsList = new DealerGroupService(User.GetSchema()).GetAll(txtSearch, 0, TypeDealerId, page, pageSize);
+            var itemsList = await GetListApi<DealerGroupModelView>(TypeDealerId);
             var list = itemsList.Distinct().OrderBy(_ => _.Name)
                 .Select(_ => new
                 {

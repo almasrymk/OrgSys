@@ -1,6 +1,6 @@
 ﻿namespace Application.Commands.Org.Setting.Table.Commands
 {
-    using Application.Abstraction.Command;    
+    using Application.Abstraction.Command;
     using Application.Common.Commands;
     using Application.Interfaces.CQRS;
     using AutoMapper;

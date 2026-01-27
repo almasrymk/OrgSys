@@ -1,43 +1,47 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Entity.ModelView;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using OrgSys.Controllers;
-using Service;
-
-namespace OrgSys.Areas.Setting.Controllers
+﻿namespace OrgSys.Areas.Setting.Controllers
 {
+    using Application.Commands.Org.Setting.Product.Commands;
+    using AutoMapper;
+    using Entity.ModelView;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Rendering;
+    using Microsoft.Extensions.Configuration;
+    using OrgSys.Controllers;
+    using Service;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+
     [Area("Setting")]
-    public class ProductController : BaseController<ProductModelView>
-    {        
-        public override void LoadViewBag(ProductModelView model)
+    public class ProductController(IConfiguration configuration, IMapper mapper) : MainController<ProductModelView, CreateProductCommand, UpdateProductCommand>(configuration, mapper)
+    {
+        public override async Task LoadViewBag(ProductModelView model)
         {
             ViewBag.UnitList = new SelectList(new UnitService(User.GetSchema()).GetAll(model.ParentId, model.TypeId), "Id", "Name");
         }
 
-        public override ProductModelView InitializeData(ProductModelView ob)
+        public override async Task<ProductModelView> InitializeData(ProductModelView ob)
         {
             if (ob.ProductUnits == null)
-                 ob.ProductUnitList = new List<ProductUnitModelView>();
+                ob.ProductUnitList = new List<ProductUnitModelView>();
             if (ob.Id == 0)
             {
                 ob.CodeNumber = new ProductService(User.GetSchema()).GetMaxCode(ob.TypeId);
                 ob.Code = "" + new ProductService(User.GetSchema()).GetMaxCode(ob.TypeId);
             }
             ob.ClassificationName = new ClassificationService(User.GetSchema()).Get(ob.ClassificationId)?.Name;
-            ob.DealerName = new DealerService(User.GetSchema()).Get(ob.DealerId??1)?.Name;
+            ob.DealerName = new DealerService(User.GetSchema()).Get(ob.DealerId ?? 1)?.Name;
             return ob;
         }
 
         public JsonResult GetList(int ProductId)
         {
-            var ProductUnitList = new SelectList(new ProductUnitService(User.GetSchema()).GetAll(0,0).Where(e=>e.ProductId==ProductId).Select(e=>e.UnitName));
+            var ProductUnitList = new SelectList(new ProductUnitService(User.GetSchema()).GetAll(0, 0).Where(e => e.ProductId == ProductId).Select(e => e.UnitName));
             return Json(new { success = true, ProductUnitList });
         }
 
-        public ActionResult SearchProducts(string txt = "", int page = 1 , int Type = 1 , int index = 0)
+        public ActionResult SearchProducts(string txt = "", int page = 1, int Type = 1, int index = 0)
         {
             ViewBag.index = index;
             var list = new ProductService(User.GetSchema()).GetAll(txt, 0, 0, page, 7);
@@ -56,7 +60,7 @@ namespace OrgSys.Areas.Setting.Controllers
             var LengthElectronicScale = int.Parse(setting.GetByKey("LengthElectronicScale", "Invoice", TypeInv, 0)?.Value);
             var LengthQtyElectronicScale = int.Parse(setting.GetByKey("LengthQtyElectronicScale", "Invoice", TypeInv, 0)?.Value);
 
-            if (phrase.Length >= LengthElectronicScale &&  "" + CodeElectronicScale != "" && "" + CodeElectronicScale != "0" && "" + LengthElectronicScale != "" && "" + LengthElectronicScale != "0")
+            if (phrase.Length >= LengthElectronicScale && "" + CodeElectronicScale != "" && "" + CodeElectronicScale != "0" && "" + LengthElectronicScale != "" && "" + LengthElectronicScale != "0")
             {
                 if (phrase.StartsWith(CodeElectronicScale))
                 {
@@ -77,7 +81,7 @@ namespace OrgSys.Areas.Setting.Controllers
                     _.Price,
                     _.Cost,
                     quantity = Quantity,
-                     Code = phrase == _.Code ? Utility.Resource.Title_Designer.Code + " " +  _.Code : "",
+                    Code = phrase == _.Code ? Utility.Resource.Title_Designer.Code + " " + _.Code : "",
                     ClassificationName = "" + phrase != "" && _.ClassificationName.ToLower().Contains("" + phrase) ? _.ClassificationName : ""
                 })
                 .ToList();
@@ -95,12 +99,12 @@ namespace OrgSys.Areas.Setting.Controllers
             var LengthElectronicScale = int.Parse(setting.GetByKey("LengthElectronicScale", "Invoice", TypeInv, 0)?.Value);
             var LengthQtyElectronicScale = int.Parse(setting.GetByKey("LengthQtyElectronicScale", "Invoice", TypeInv, 0)?.Value);
 
-            if (txtSearch.Length >= LengthElectronicScale && "" + CodeElectronicScale != "" && "" + CodeElectronicScale != "0" && "" + LengthElectronicScale != "" && "" + LengthElectronicScale != "0") 
+            if (txtSearch.Length >= LengthElectronicScale && "" + CodeElectronicScale != "" && "" + CodeElectronicScale != "0" && "" + LengthElectronicScale != "" && "" + LengthElectronicScale != "0")
             {
                 if (txtSearch.StartsWith(CodeElectronicScale))
                 {
                     var code = txtSearch.Substring(0, LengthElectronicScale);
-                    var qty = txtSearch.Substring( LengthElectronicScale);
+                    var qty = txtSearch.Substring(LengthElectronicScale);
                     Quantity = decimal.Parse("0" + qty) / 1000;
                     txtSearch = code;
                 }
@@ -130,10 +134,10 @@ namespace OrgSys.Areas.Setting.Controllers
             return Json(data);
         }
 
-        public JsonResult LoadProductsByStock(long StockId , DateTime date)
-        {            
-            var products = new ProductService(User.GetSchema()).GetAllByBalance(StockId , date);
-            var data = products.Select(e=> new
+        public JsonResult LoadProductsByStock(long StockId, DateTime date)
+        {
+            var products = new ProductService(User.GetSchema()).GetAllByBalance(StockId, date);
+            var data = products.Select(e => new
             {
                 id = e.Id,
                 name = e.Name,

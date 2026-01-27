@@ -1,36 +1,26 @@
-﻿using Application.Commands.Org.Setting.City.Commands;
-using Application.Interfaces.CQRS;
-using AutoMapper;
-using Domain.Enums;
-using Domain.Shared;
-using Entity;
-using iTextSharp.text;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting.Internal;
-using Newtonsoft.Json;
-using Service;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Json;
-using System.Reflection;
-using System.Reflection.Metadata;
-using System.Text;
-using System.Threading.Tasks;
-using Utility;
-using static iTextSharp.text.pdf.events.IndexEvents;
-
-namespace OrgSys.Controllers
+﻿namespace OrgSys.Controllers
 {
+    using System;
+    using Entity;
+    using Utility;
+    using System.Net;
+    using AutoMapper;
+    using System.Linq;
+    using Domain.Enums;
+    using Domain.Shared;
+    using System.Net.Http;
+    using Newtonsoft.Json;
+    using System.Net.Http.Json;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Mvc;
+    using System.Collections.Generic;
+    using Application.Interfaces.CQRS;
+    using Microsoft.AspNetCore.Mvc.Filters;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.Extensions.Configuration;
+
     [Authorize]
-    public class MainController<TDto, TCreate, TUpdate>(IConfiguration configuration , IMapper mapper) : Controller
+    public class MainController<TDto, TCreate, TUpdate>(IConfiguration configuration, IMapper mapper) : Controller
         where TCreate : ICreateCommand<Domain.Shared.Result>
         where TUpdate : IUpdateCommand<Domain.Shared.Result>
         where TDto : BaseModel
@@ -190,7 +180,7 @@ namespace OrgSys.Controllers
                     return Redirect("/" + AreaName + "/" + ControllerName + "?ParentId=" + ob.ParentId + "&TypeId=" + ob.TypeId + "&status=" + ResultStatus.success + "&MsgError=Success");
                 }
             }
-            
+
             await LoadViewBag(ob);
             if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
                 return BadRequest(new { res.Errors });

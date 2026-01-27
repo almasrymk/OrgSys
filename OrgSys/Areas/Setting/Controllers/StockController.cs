@@ -1,27 +1,31 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Entity.ModelView;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using OrgSys.Controllers;
-using Service;
-
-namespace OrgSys.Areas.Setting.Controllers
+﻿namespace OrgSys.Areas.Setting.Controllers
 {
+    using Application.Commands.Org.Setting.Stock.Commands;
+    using AutoMapper;
+    using Entity.ModelView;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Rendering;
+    using Microsoft.Extensions.Configuration;
+    using OrgSys.Controllers;
+    using Service;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+
     [Area("Setting")]
-    public class StockController : BaseController<StockModelView>
+    public class StockController(IConfiguration configuration, IMapper mapper) : MainController<StockModelView, CreateStockCommand, UpdateStockCommand>(configuration, mapper)
     {
-        public override void LoadViewBag(StockModelView model)
+        public override async Task LoadViewBag(StockModelView model)
         {
             ViewBag.BranchList = new SelectList(new BranchService(User.GetSchema()).GetAll(model.ParentId, model.TypeId), "Id", "Name", model.BranchId);
         }
 
-        public JsonResult GetList(string txtSearch = "",  int page = 1, int pageSize = 10)
+        public JsonResult GetList(string txtSearch = "", int page = 1, int pageSize = 10)
         {
             if (txtSearch != null)
                 txtSearch = txtSearch.Trim().ToLower();
 
-            var itemsList = new StockService(User.GetSchema()).GetAll(txtSearch, 0,0, page, pageSize);
+            var itemsList = new StockService(User.GetSchema()).GetAll(txtSearch, 0, 0, page, pageSize);
             var list = itemsList.Distinct().OrderBy(_ => _.Name)
                 .Select(_ => new
                 {

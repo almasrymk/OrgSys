@@ -19,7 +19,7 @@ namespace API.Middlewares
         public async Task InvokeAsync(HttpContext context)
         {
             try
-            {
+            {                
                 await _next(context);
             }
             catch (AppValidationException ex)
@@ -28,6 +28,14 @@ namespace API.Middlewares
                     context,
                     HttpStatusCode.BadRequest,
                     ex.Errors.ToList()
+                );
+            }
+            catch (BadHttpRequestException ex)
+            {
+                await WriteResponse(
+                    context,
+                    HttpStatusCode.BadRequest,
+                    new List<Error> { new Error(ex.Message) }
                 );
             }
             catch (ValidationException ex)

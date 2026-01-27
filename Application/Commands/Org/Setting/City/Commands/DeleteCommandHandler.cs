@@ -4,8 +4,8 @@
     using Domain.Shared;
     using Domain.Abstraction;
     using System.Linq.Expressions;
-    using Application.Interfaces.CQRS;
     using Application.Common.Commands;
+    using Application.Interfaces.CQRS;
     using Application.Abstraction.Command;
 
     public sealed record DeleteCityCommand(long Id) : ICommand , IDeleteCommand<Result>;

@@ -1,7 +1,7 @@
-﻿using Domain.Shared;
-
-namespace Application.Validators
+﻿namespace Application.Validators
 {
+    using Domain.Shared;
+
     public class AppValidationException : Exception
     {
         public IReadOnlyList<Error> Errors { get; }

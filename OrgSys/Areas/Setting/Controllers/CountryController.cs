@@ -1,24 +1,23 @@
-﻿using Application.Commands.Org.Setting.City.Commands;
-using Application.Commands.Org.Setting.Country.Commands;
-using AutoMapper;
-using Entity.ModelView;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using OrgSys.Controllers;
-using Service;
-using System.Linq;
-
-namespace OrgSys.Areas.Setting.Controllers
+﻿namespace OrgSys.Areas.Setting.Controllers
 {
+    using Application.Commands.Org.Setting.Country.Commands;
+    using AutoMapper;
+    using Entity.ModelView;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Configuration;
+    using OrgSys.Controllers;
+    using System.Linq;
+    using System.Threading.Tasks;
+
     [Area("Setting")]
-    public class CountryController(IConfiguration configuration, IMapper mapper) :MainController<CountryModelView, CreateCountryCommand, UpdateCountryCommand>(configuration , mapper)
+    public class CountryController(IConfiguration configuration, IMapper mapper) : MainController<CountryModelView, CreateCountryCommand, UpdateCountryCommand>(configuration, mapper)
     {
-        public JsonResult GetList(string txtSearch = "", int page = 1, int pageSize = 10)
+        public async Task<JsonResult> GetList(string txtSearch = "", int page = 1, int pageSize = 10)
         {
             if (txtSearch != null)
                 txtSearch = txtSearch.Trim().ToLower();
 
-            var itemsList = new BranchService(User.GetSchema()).GetAll(txtSearch, 0, 0, page, pageSize);
+            var itemsList = await GetListApi<ClassificationModelView>();
             var list = itemsList.Distinct().OrderBy(_ => _.Name)
                 .Select(_ => new
                 {

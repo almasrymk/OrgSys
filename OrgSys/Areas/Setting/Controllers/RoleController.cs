@@ -1,21 +1,25 @@
-﻿using Entity.ModelView;
-using Microsoft.AspNetCore.Mvc;
-using OrgSys.Controllers;
-using Service;
-
-namespace OrgSys.Areas.Setting.Controllers
+﻿namespace OrgSys.Areas.Setting.Controllers
 {
+    using Application.Commands.Org.Setting.Role.Commands;
+    using AutoMapper;
+    using Entity.ModelView;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Configuration;
+    using OrgSys.Controllers;
+    using Service;
+    using System.Threading.Tasks;
+
     [Area("Setting")]
-    public class RoleController : BaseController<RoleModelView>
+    public class RoleController(IConfiguration configuration, IMapper mapper) : MainController<RoleModelView, CreateRoleCommand, UpdateRoleCommand>(configuration, mapper)
     {
-        public override ActionResult Save(RoleModelView model)
+        public override async Task<ActionResult> Save(RoleModelView model)
         {
-            var res = base.Save(model);
+            var res = await base.Save(model);
             if (User.IsCurrentUserAndRole(User.GetUserId(), model.Id))
             {
                 var us = new UserService(User.GetSchema()).Get(User.GetUserId());
                 if (us != null)
-                    us.SignIn(HttpContext , User.GetSchema());
+                    us.SignIn(HttpContext, User.GetSchema());
             }
             return res;
         }

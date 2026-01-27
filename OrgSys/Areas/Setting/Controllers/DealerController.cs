@@ -1,24 +1,27 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Entity.ModelView;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using OrgSys.Controllers;
-using Service;
-
-namespace OrgSys.Areas.Setting.Controllers
+﻿namespace OrgSys.Areas.Setting.Controllers
 {
+    using Application.Commands.Org.Setting.Dealer.Commands;
+    using AutoMapper;
+    using Entity.ModelView;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Rendering;
+    using Microsoft.Extensions.Configuration;
+    using OrgSys.Controllers;
+    using Service;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+
     [Area("Setting")]
-    public class DealerController : BaseController<DealerModelView>
+    public class DealerController(IConfiguration configuration, IMapper mapper) : MainController<DealerModelView, CreateDealerCommand, UpdateDealerCommand>(configuration, mapper)
     {
 
-        public override void LoadViewBag(DealerModelView model)
+        public override async Task LoadViewBag(DealerModelView model)
         {
             ViewBag.DealersGroupList = new SelectList(new DealerGroupService(User.GetSchema()).GetAll(model.ParentId, model.TypeId), "Id", "Name", model.DealerGroupId);
-            // ViewBag.CityList = new SelectList(new CityService(User.GetSchema()).GetAll(model.ParentId, model.TypeId), "Id", "Name", model.CityId);
         }
 
-        public override DealerModelView InitializeData(DealerModelView ob)
+        public override async Task<DealerModelView> InitializeData(DealerModelView ob)
         {
             ViewBag.DealersGroupList = new SelectList(new DealerGroupService(User.GetSchema()).GetAll(ob.ParentId, ob.TypeId), "Id", "Name", ob.DealerGroupId);
             if (ob == null)
@@ -37,7 +40,7 @@ namespace OrgSys.Areas.Setting.Controllers
                 txtSearch = txtSearch.Trim().ToLower();
             long TypeDealerId = TypeId == 1 || TypeId == 3 ? 1 : 2;
 
-            var itemsList = new DealerService(User.GetSchema()).GetAll(txtSearch , 0 , TypeDealerId, page , pageSize);
+            var itemsList = new DealerService(User.GetSchema()).GetAll(txtSearch, 0, TypeDealerId, page, pageSize);
             var list = itemsList.Distinct().OrderBy(_ => _.Name)
                 .Select(_ => new
                 {

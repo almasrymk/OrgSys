@@ -1,14 +1,17 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Entity.ModelView;
-using Microsoft.AspNetCore.Mvc;
-using OrgSys.Controllers;
-using Service;
-
-namespace OrgSys.Areas.Setting.Controllers
+﻿namespace OrgSys.Areas.Setting.Controllers
 {
+    using Application.Commands.Org.Setting.Unit.Commands;
+    using AutoMapper;
+    using Entity.ModelView;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Configuration;
+    using OrgSys.Controllers;
+    using Service;
+    using System.Collections.Generic;
+    using System.Linq;
+
     [Area("Setting")]
-    public class UnitController : BaseController<UnitModelView>
+    public class UnitController(IConfiguration configuration, IMapper mapper) : MainController<UnitModelView, CreateUnitCommand, UpdateUnitCommand>(configuration, mapper)
     {
         public JsonResult GetList(string txtSearch = "", int page = 1, int pageSize = 10)
         {

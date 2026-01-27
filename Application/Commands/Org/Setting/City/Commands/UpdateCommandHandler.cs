@@ -3,8 +3,8 @@
     using AutoMapper;
     using Domain.Shared;
     using Domain.Abstraction;
-    using Application.Interfaces.CQRS;
     using Application.Common.Commands;
+    using Application.Interfaces.CQRS;
     using Application.Abstraction.Command;
 
     public sealed record UpdateCityCommand(long Id , long? CountryId, string Name) : ICommand, IUpdateCommand<Result>;

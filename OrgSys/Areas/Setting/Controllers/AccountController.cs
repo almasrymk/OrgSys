@@ -1,21 +1,21 @@
-﻿using Application.Commands.Org.Setting.Account.Commands;
-using AutoMapper;
-using Entity.ModelView;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.Extensions.Configuration;
-using OrgSys.Controllers;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace OrgSys.Areas.Setting.Controllers
+﻿namespace OrgSys.Areas.Setting.Controllers
 {
+    using AutoMapper;
+    using System.Linq;
+    using Entity.ModelView;
+    using OrgSys.Controllers;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Rendering;
+    using Microsoft.Extensions.Configuration;
+    using Application.Commands.Org.Setting.Account.Commands;
+
     [Area("Setting")]
-    public class AccountController(IConfiguration configuration, IMapper mapper) : MainController<AccountModelView , CreateAccountCommand , UpdateAccountCommand>(configuration , mapper)
+    public class AccountController(IConfiguration configuration, IMapper mapper) : MainController<AccountModelView, CreateAccountCommand, UpdateAccountCommand>(configuration, mapper)
     {
         public override async Task LoadViewBag(AccountModelView model)
         {
-            ViewBag.BranchList = new SelectList(await GetListApi<AccountModelView>(), "Id", "Name", model.ParentId);
+            ViewBag.BranchList = new SelectList(await GetListApi<BranchModelView>(), "Id", "Name", model.ParentId);
             ViewBag.AccountType = new SelectList(await GetListApi<AccountTypeModelView>(), "Id", "Name", model.AccountTypeId);
         }
 

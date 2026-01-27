@@ -2,6 +2,7 @@
 {
     using FluentValidation;
     using Domain.Abstraction;
+    using Application.Validators;
     using Application.Commands.Org.Setting.City.Commands;
 
     public class DeleteCityCommandValidator : Validator<DeleteCityCommand, Entity.Model.City>

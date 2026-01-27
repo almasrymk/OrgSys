@@ -1,35 +1,39 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Entity.ModelView;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using OrgSys.Controllers;
-using Service;
-
-namespace OrgSys.Areas.Setting.Controllers
+﻿namespace OrgSys.Areas.Setting.Controllers
 {
+    using Application.Commands.Org.Setting.User.Commands;
+    using AutoMapper;
+    using Entity.ModelView;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Rendering;
+    using Microsoft.Extensions.Configuration;
+    using OrgSys.Controllers;
+    using Service;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+
     [Area("Setting")]
-    public class UserController : BaseController<UserModelView>
+    public class UserController(IConfiguration configuration, IMapper mapper) : MainController<UserModelView, CreateUserCommand, UpdateUserCommand>(configuration, mapper)
     {
-        public override void LoadViewBag(UserModelView model)
+        public override async Task LoadViewBag(UserModelView model)
         {
-            ViewBag.BranchList = new SelectList(new BranchService(User.GetSchema()).GetAll(model.ParentId, model.TypeId), "Id", "Name", model.BranchId);
-            ViewBag.RoleList = new SelectList(new RoleService(User.GetSchema()).GetAll(model.ParentId, model.TypeId), "Id", "Name", model.RoleId);
+            ViewBag.BranchList = new SelectList(await GetListApi<BranchModelView>(), "Id", "Name", model.BranchId);
+            ViewBag.RoleList = new SelectList(await GetListApi<RoleModelView>(), "Id", "Name", model.RoleId);
         }
 
-        public JsonResult CheckUDoublicat(string userName , int id)
+        public JsonResult CheckUDoublicat(string userName, int id)
         {
-            return Json(new UserService(User.GetSchema()).CheckDoublicat(userName , id));
+            return Json(new UserService(User.GetSchema()).CheckDoublicat(userName, id));
         }
 
-        public override ActionResult Save(UserModelView model)
+        public override async Task<ActionResult> Save(UserModelView model)
         {
-            var res = base.Save(model);
-            if(User.IsCurrentUserAndRole(model.Id , model.RoleId))
+            var res = await base.Save(model);
+            if (User.IsCurrentUserAndRole(model.Id, model.RoleId))
             {
                 var us = new UserService(User.GetSchema()).Get(model.Id);
                 if (us != null)
-                    us.SignIn(HttpContext , User.GetSchema());
+                    us.SignIn(HttpContext, User.GetSchema());
             }
             return res;
         }
