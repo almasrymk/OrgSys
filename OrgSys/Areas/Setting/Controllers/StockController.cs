@@ -17,15 +17,15 @@
     {
         public override async Task LoadViewBag(StockModelView model)
         {
-            ViewBag.BranchList = new SelectList(new BranchService(User.GetSchema()).GetAll(model.ParentId, model.TypeId), "Id", "Name", model.BranchId);
+            ViewBag.BranchList = new SelectList(await GetListApi<BranchModelView>(), "Id", "Name", model.BranchId);
         }
 
-        public JsonResult GetList(string txtSearch = "", int page = 1, int pageSize = 10)
+        public async Task<JsonResult> GetList(string txtSearch = "", int page = 1, int pageSize = 10)
         {
             if (txtSearch != null)
                 txtSearch = txtSearch.Trim().ToLower();
 
-            var itemsList = new StockService(User.GetSchema()).GetAll(txtSearch, 0, 0, page, pageSize);
+            var itemsList = await GetListApi<StockModelView>();
             var list = itemsList.Distinct().OrderBy(_ => _.Name)
                 .Select(_ => new
                 {

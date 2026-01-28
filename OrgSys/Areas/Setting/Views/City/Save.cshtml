@@ -92,14 +92,14 @@
     function Save() {
         var Valid = true;
 
-        // if (CheckRequired("CountryId", "divBranch", '@Utility.Resource.Message_Designer.CountryRequired'))
-        //     Valid = false;
+        if (CheckRequired("CountryId", "divBranch", '@Utility.Resource.Message_Designer.CountryRequired'))
+            Valid = false;
 
-        // if (CheckRequired("Name", "Name", '@Utility.Resource.Message_Designer.NameRequired'))
-        //     Valid = false;
+        if (CheckRequired("Name", "Name", '@Utility.Resource.Message_Designer.NameRequired'))
+            Valid = false;
 
-        // else if (CheckRage("Name", "Name", 3, 50, '@Utility.Resource.Message_Designer.NameRange'))
-        //     Valid = false;
+        else if (CheckRage("Name", "Name", 3, 50, '@Utility.Resource.Message_Designer.NameRange'))
+            Valid = false;
 
         if (Valid == true) {
 

@@ -6,7 +6,6 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.ModelView;
 
     public sealed record CreateBranchCommand(string Name) : ICommand , ICreateCommand<Result>;
 

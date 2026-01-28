@@ -92,7 +92,7 @@
         //public virtual DbSet<FinancialType> FinancialTypes { get; set; }
         public virtual DbSet<Outlay> Outlays { get; set; }
         public virtual DbSet<Currency> Currencys { get; set; }
-        //public virtual DbSet<RolePermission> RolePermissions { get; set; }
+        public virtual DbSet<RolePermission> RolePermissions { get; set; }
         //public virtual DbSet<Notification> Notifications { get; set; }
         public virtual DbSet<Account> Accounts { get; set; }
         public virtual DbSet<AccountBank> AccountBanks { get; set; }

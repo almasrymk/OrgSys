@@ -40,7 +40,7 @@ namespace OrgSys
 
             foreach (var per in permissionsArr)
             {
-                if (identityClaimsArr.Contains(per))
+                if (identityClaimsArr.Any( e=> e == per))
                 {
                     return true;
                 }

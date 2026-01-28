@@ -1,4 +1,4 @@
-﻿@model X.PagedList.IPagedList<Entity.ModelView.DealerModelView>
+﻿@model Domain.Shared.ResultPagination<Entity.ModelView.DealerModelView>
 @using OrgSys
 @{
     ViewData["Title_Designer"] = "Index";
@@ -90,7 +90,7 @@
         </div>
     </div>
 
-    @if (Model != null && Model.Count > 0)
+    @if (Model != null && Model.Response.Count > 0)
     {
         <div class="row">
             <div id="List" class="col-12" data-check-all="checkAll">

@@ -1,5 +1,5 @@
 ﻿@using System.Globalization
-@model X.PagedList.IPagedList<Entity.ModelView.UserModelView>
+@model Domain.Shared.ResultPagination<Entity.ModelView.UserModelView>
 @using OrgSys
 @{
     Layout = null;
@@ -46,16 +46,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @for (int i = 0, x = ((Model.PageNumber - 1) * Model.PageSize) + 1; i < Model.Count; i++, x++)
+                    @for (int i = 0, x = ((Model.Page - 1) * Model.PageSize) + 1; i < Model.Count; i++, x++)
                     {
-                    <tr style="@(Model[i].Status == Utility.Status.Cancel ? "color:#a8a7a7;background:repeating-linear-gradient(60deg, transparent, transparent 5px, gainsboro 5px, gainsboro 6px);" : "")">
+                    <tr style="@(Model.Response[i].Status == Utility.Status.Cancel ? "color:#a8a7a7;background:repeating-linear-gradient(60deg, transparent, transparent 5px, gainsboro 5px, gainsboro 6px);" : "")">
                         <td class="text-center align-middle" style="width:50px;">
                             <p class="list-item-heading">@x</p>
                         </td>
                         <td class="text-center align-middle" style="width:50px;">
-                            @if ("" + Model[i].ImgPath != "")
+                            @if ("" + Model.Response[i].ImgPath != "")
                             {
-                                <img alt="Thumbnail" src="@Model[i].ImgPath"
+                                <img alt="Thumbnail" src="@Model.Response[i].ImgPath"
                                      class="list-thumbnail  border-0 rounded-circle badge-theme-1 m-0" style="height:60px;width:60px;" />
                             }
                             else
@@ -66,17 +66,17 @@
                             }
                         </td>
                         <td class="@TextAlign align-middle">
-                            @Model[i].Name
+                            @Model.Response[i].Name
                         </td>
                         <td class="@TextAlign align-middle">
-                            @Model[i].RoleName
+                            @Model.Response[i].RoleName
                         </td>
                         @if (AllowEdit || AllowDelete)
                         {
                             <td class="w-15 @TextAlign2 align-middle">
                                 @if (AllowEdit)
                                 {
-                                    <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit" style="color:green"></i> </a>
+                                    <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit" style="color:green"></i> </a>
                                     if (AllowDelete)
                                     {
                                         <span>&nbsp; | &nbsp;</span>
@@ -84,7 +84,7 @@
                                 }
                                 @if (AllowDelete)
                                 {
-                                    <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
+                                    <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
                                 }
                             </td>
                         }
@@ -92,8 +92,8 @@
                         {
                             <td class="align-middle @TextAlign2" style="width:30px">
                                 <label class="custom-control custom-checkbox pt-2">
-                                    <input id="chk_@Model[i].Id" type="checkbox" class="custom-control-input chk">
-                                    <input type="hidden" value="@Model[i].Id" />
+                                    <input id="chk_@Model.Response[i].Id" type="checkbox" class="custom-control-input chk">
+                                    <input type="hidden" value="@Model.Response[i].Id" />
                                     <span class="custom-control-label">&nbsp;</span>
                                 </label>
                             </td>
@@ -129,13 +129,13 @@
 
                 </div>
             </div>
-            @for (int i = 0, x = ((Model.PageNumber - 1) * Model.PageSize) + 1; i < Model.Count; i++, x++)
+            @for (int i = 0, x = ((Model.Page - 1) * Model.PageSize) + 1; i < Model.Count; i++, x++)
             {
                 <div class="card d-flex flex-row mb-2">
-                    <div class="d-flex flex-grow-1 min-width-zero" style="border-radius:15px; height:60px; @(Model[i].Status == Utility.Status.Cancel ? "color:#a8a7a7;background:repeating-linear-gradient(60deg, transparent, transparent 5px, gainsboro 5px, gainsboro 6px);" : "")">
-                        @if ("" + Model[i].ImgPath != "")
+                    <div class="d-flex flex-grow-1 min-width-zero" style="border-radius:15px; height:60px; @(Model.Response[i].Status == Utility.Status.Cancel ? "color:#a8a7a7;background:repeating-linear-gradient(60deg, transparent, transparent 5px, gainsboro 5px, gainsboro 6px);" : "")">
+                        @if ("" + Model.Response[i].ImgPath != "")
                         {
-                            <img alt="Thumbnail" src="@Model[i].ImgPath"
+                            <img alt="Thumbnail" src="@Model.Response[i].ImgPath"
                                  class="list-thumbnail  border-0 card-img-left badge-theme-1" style="height:85px;width:85px;" />
                         }
                         else
@@ -147,15 +147,15 @@
 
                     <div class="card-body align-self-center d-flex flex-column flex-md-row  align-items-md-center">
                         <div class="list-item-heading mb-0 w-90">
-                            @Model[i].Name
+                            @Model.Response[i].Name
                         </div>
                         <div class="list-item-heading mb-0 w-40">
-                            @Model[i].RoleName
+                            @Model.Response[i].RoleName
                         </div>
                         <div class="w-15 @TextAlign2">
                             @if (AllowEdit)
                             {
-                                <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit" style="color:green"></i> </a>
+                                <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit" style="color:green"></i> </a>
                                 if (AllowDelete)
                                 {
                                     <span>&nbsp; | &nbsp;</span>
@@ -163,7 +163,7 @@
                             }
                             @if (AllowDelete)
                             {
-                                <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
+                                <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
                             }
                         </div>
                     </div>
@@ -172,8 +172,8 @@
                             @if (AllowDelete)
                             {
                                 <label class="custom-control custom-checkbox pt-3">
-                                    <input id="chk_@Model[i].Id" type="checkbox" class="custom-control-input chk">
-                                    <input type="hidden" value="@Model[i].Id" />
+                                    <input id="chk_@Model.Response[i].Id" type="checkbox" class="custom-control-input chk">
+                                    <input type="hidden" value="@Model.Response[i].Id" />
                                     <span class="custom-control-label">&nbsp;</span>
                                 </label>
                             }
@@ -186,14 +186,14 @@
     </div>
 
     @*<div id="obList" class="row list disable-text-selection pt-2" data-check-all="checkAll" style="display:none;">
-            @for (int i = 0, x = ((Model.PageNumber - 1) * Model.PageSize) + 1; i < Model.Count; i++, x++)
+            @for (int i = 0, x = ((Model.Page - 1) * Model.PageSize) + 1; i < Model.Count; i++, x++)
             {
                 <div href="#" class="card m-2 p-1">
                     <label class="custom-control custom-checkbox mr-1 ml-1">
-                        @if (Model[i].Status == Utility.Status.All)
+                        @if (Model.Response[i].Status == Utility.Status.All)
                         {
-                            <input id="chk_@Model[i].Id" type="checkbox" class="custom-control-input chk">
-                            <input type="hidden" value="@Model[i].Id" />
+                            <input id="chk_@Model.Response[i].Id" type="checkbox" class="custom-control-input chk">
+                            <input type="hidden" value="@Model.Response[i].Id" />
                             <span class="custom-control-label">&nbsp;</span>
                         }
                     </label>
@@ -202,9 +202,9 @@
                     </div>
                     <div class="card-body text-center m-0 p-2">
                         <div class="p-3">
-                            @if ("" + Model[i].ImgPath != "")
+                            @if ("" + Model.Response[i].ImgPath != "")
                             {
-                                <img alt="Profile" src="@Model[i].ImgPath" class="img-thumbnail border-0 rounded-circle m-0 list-thumbnail badge-theme-1" style="height:120px;width:120px;">
+                                <img alt="Profile" src="@Model.Response[i].ImgPath" class="img-thumbnail border-0 rounded-circle m-0 list-thumbnail badge-theme-1" style="height:120px;width:120px;">
                             }
                             else
                             {
@@ -215,13 +215,13 @@
                         </div>
                         <div class="lead text-center">
                             <p  class="w-100" style="text-align:center;font-size:large;">
-                                @Model[i].Name
+                                @Model.Response[i].Name
                             </p>
                         </div>
                         <div class="m-0 p-0">
-                            <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit"></i> @Utility.Resource.Title_Designer.Edit</a>
+                            <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit"></i> @Utility.Resource.Title_Designer.Edit</a>
                             <span> &nbsp; | &nbsp; </span>
-                            <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete</a>
+                            <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete</a>
                         </div>
                     </div>
                 </div>
@@ -229,4 +229,4 @@
         </div>*@
 }
 
-@Html.Partial("PagedList", Model)
+@Html.Partial("ToPagedList", new Domain.Shared.Pagination(Model.Page, Model.PageSize, Model.PageCount))

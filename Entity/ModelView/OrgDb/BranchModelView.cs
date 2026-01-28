@@ -1,9 +1,10 @@
-﻿using Entity.Model;
-
-namespace Entity.ModelView
+﻿namespace Entity.ModelView
 {
-    public class BranchModelView : Branch
+    using System.ComponentModel.DataAnnotations;
+
+    public class BranchModelView :  BaseModel
     {
-       
+        [StringLength(50, MinimumLength = 3)]
+        public string Name { get; set; }
     }
 }

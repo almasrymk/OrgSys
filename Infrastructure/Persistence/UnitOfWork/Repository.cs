@@ -106,6 +106,17 @@
             return await query.Where(e => e.Status != Status.Deleted && e.Hide != true).AsQueryable().ToListAsync();
         }
 
+        public virtual async ValueTask<IEnumerable<TEntity>?> GetListByFilterAsync(string includeProperties)
+        {
+            var query = dbEntity.AsQueryable();
+            foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(includeProperty);
+            }
+
+            return await query.Where(e => e.Status != Status.Deleted && e.Hide != true).AsQueryable().ToListAsync();
+        }
+
         public virtual async ValueTask<IEnumerable<TEntity>?> GetListByFilterAsync(Expression<Func<TEntity, bool>> Filter, string includeProperties)
         {
             var query = dbEntity.Where(Filter).AsQueryable();

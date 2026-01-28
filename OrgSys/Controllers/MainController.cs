@@ -136,15 +136,12 @@
             ob.ParentId = ParentId;
             ob.TypeId = TypeId;
 
-            if (id > 0)
-            {
-                var response = await ApiMethod(ApiMethodType.Get, $"GetById?Id={id}");
-                response.EnsureSuccessStatusCode();
-                var data = await response.Content.ReadAsStringAsync();
-                var res = JsonConvert.DeserializeObject<Result<TDto>>(data);
-                if (res != null)
-                    ob = res.Response;
-            }
+            var response = await ApiMethod(ApiMethodType.Get, $"GetById?Id={id}");
+            response.EnsureSuccessStatusCode();
+            var data = await response.Content.ReadAsStringAsync();
+            var res = JsonConvert.DeserializeObject<Result<TDto>>(data);
+            if (res != null)
+                ob = res.Response;
 
             ob = await InitializeData(ob);
             await LoadViewBag(ob);

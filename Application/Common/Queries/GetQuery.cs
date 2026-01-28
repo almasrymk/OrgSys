@@ -17,20 +17,15 @@
         public virtual async Task<Result<TResponse>> Handle(TRequest request, CancellationToken cancellationToken)
         {
             try
-            {                
-                var res = await _Repository.GetByFilterAsync(CreateFilter(request), CreateInclude());
-                if (res!= null && res.Id > 0)
-                {
-                    return new Result<TResponse>(
-                    HttpStatusCode.OK,
-                    mapper.Map<TResponse>(res),
-                    null);
-                }
+            {
+                TModel? res = await _Repository.GetByFilterAsync(CreateFilter(request), CreateInclude());
+                if (res == null || res.Id == 0)
+                    res = (TModel)Activator.CreateInstance(typeof(TModel))!;
 
                 return new Result<TResponse>(
-                    HttpStatusCode.InternalServerError,
-                    null,
-                    new List<Error> { new Error("Error") });
+                     HttpStatusCode.OK,
+                     mapper.Map<TResponse>(res),
+                     null);
             }
             catch (Exception ex)
             {

@@ -114,7 +114,8 @@
             $.ajax({
                 type: 'POST',
                 url: "/Setting/Stock/Save",
-                data: { model: data},
+                async: false,
+                data: { ob: data},
                 success: function (res) {
                     if (res.status == "success") {
                         window.location.replace(res.url);

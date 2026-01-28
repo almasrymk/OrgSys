@@ -63,6 +63,4 @@ app.MapControllers();
 
 app.UseMiddleware<GlobalExceptionMiddleware>();
 
-app.MapGet("/", () => { throw new BadHttpRequestException("ده BadRequest error تجريبي"); });
-
 app.Run();

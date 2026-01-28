@@ -42,7 +42,7 @@
         //DbSet<FinancialType> FinancialTypes { get; set; }
         DbSet<Outlay> Outlays { get; set; }
         DbSet<Currency> Currencys { get; set; }
-        //DbSet<RolePermission> RolePermissions { get; set; }
+        DbSet<RolePermission> RolePermissions { get; set; }
         //DbSet<Notification> Notifications { get; set; }
         DbSet<Account> Accounts { get; set; }
         DbSet<AccountBank> AccountBanks { get; set; }
