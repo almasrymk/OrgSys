@@ -23,7 +23,7 @@
         {
             var ob = await _Repository.GetByFilterAsync(e => e.Id == request.Id, CreateInclude());
             if (ob == null)
-                ob = new RoleModelView();
+                ob = new Role();
 
             var PermissionList = await GetPermissions();
             var RolePermissionList = await GetRolePermissions(request.Id);

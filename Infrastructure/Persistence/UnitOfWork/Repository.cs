@@ -32,6 +32,12 @@
             return Ob;
         }
 
+        public virtual async ValueTask<List<TEntity>> CreateAsync(List<TEntity> Ob)
+        {
+            await dbEntity.AddRangeAsync(Ob);
+            return Ob;
+        }
+
         public virtual async ValueTask<bool> DeleteAsync(Expression<Func<TEntity, bool>> Filter)
         {
             var ObList = dbEntity.Where(Filter);
@@ -100,6 +106,13 @@
         }
 
         public virtual async ValueTask<IEnumerable<TEntity>?> GetListByFilterAsync(Expression<Func<TEntity, bool>> Filter)
+        {
+            var query = dbEntity.Where(Filter).AsQueryable();
+
+            return await query.Where(e => e.Status != Status.Deleted && e.Hide != true).AsQueryable().ToListAsync();
+        }
+
+        public virtual async ValueTask<IEnumerable<TEntity>?> GetListByFilterAsync(Expression<Func<TEntity, bool>> Filter, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy)
         {
             var query = dbEntity.Where(Filter).AsQueryable();
 

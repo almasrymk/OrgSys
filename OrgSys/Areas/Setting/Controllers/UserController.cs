@@ -21,10 +21,10 @@
             ViewBag.RoleList = new SelectList(await GetListApi<RoleModelView>(), "Id", "Name", model.RoleId);
         }
 
-        public JsonResult CheckUDoublicat(string userName, int id)
-        {
-            return Json(new UserService(User.GetSchema()).CheckDoublicat(userName, id));
-        }
+        //public JsonResult CheckUDoublicat(string userName, int id)
+        //{
+        //    return Json(new UserService(User.GetSchema()).CheckDoublicat(userName, id));
+        //}
 
         public override async Task<ActionResult> Save(UserModelView model)
         {
@@ -38,12 +38,12 @@
             return res;
         }
 
-        public JsonResult GetList(string txtSearch = "", int page = 1, int pageSize = 10)
+        public async Task<JsonResult> GetList(string txtSearch = "", int page = 1, int pageSize = 10)
         {
             if (txtSearch != null)
                 txtSearch = txtSearch.Trim().ToLower();
 
-            var itemsList = new UserService(User.GetSchema()).GetAll(txtSearch, 0, 0, page, pageSize);
+            var itemsList = await GetListApi<UserModelView>();
             var list = itemsList.Distinct().OrderBy(_ => _.Name)
                 .Select(_ => new
                 {

@@ -131,7 +131,7 @@
         if (CheckRequired("BranchId", "divBranch", '@Utility.Resource.Message_Designer.BranchRequired'))
             Valid = false;
 
-          if (CheckRequired("RoleId", "divRole", '@Utility.Resource.Message_Designer.RoleRequired'))
+        if (CheckRequired("RoleId", "divRole", '@Utility.Resource.Message_Designer.RoleRequired'))
             Valid = false;
 
         if (CheckRequired("Name", "Name", '@Utility.Resource.Message_Designer.NameRequired'))
@@ -143,13 +143,12 @@
         if (CheckRequired("UserName", "UserName", '@Utility.Resource.Message_Designer.EmailRequired'))
             Valid = false;
 
-        @*else if (CheckRage("UserName", "UserName", 5, 15, '@Utility.Resource.Message_Designer.UsernameRequired'))
-            Valid = false;*@
+        // @*else if (CheckRage("UserName", "UserName", 5, 15, '@Utility.Resource.Message_Designer.UsernameRequired'))
+        //     Valid = false;*@
 
-        else if (CheckUDoublicat())
-            Valid = false;
-
-
+        // else if (CheckUDoublicat())
+        //     Valid = false;
+         
         if (Valid == true) {
 
             var data = {
@@ -165,6 +164,7 @@
             $.ajax({
                 type: 'POST',
                 url: "/Setting/User/Save",
+                async: false,
                 data: { model: data},
                 success: function (res) {
                     if (res.status == "success") {
@@ -173,32 +173,42 @@
                     else {
                        
                     }
+                },
+                error: function (xhr) {
+                    if (xhr.status === 400) {
+                        var errors = xhr.responseJSON.errors;
+
+                        $.each(errors, function (index, res) {
+                            var span = $("[data-valmsg-for='" + res.key + "']");
+                            span.text(res.messageError);
+                        });
+                    }
                 }
             });
         }
     }
 
-    function CheckUDoublicat() {
-        var resval =  false;
-        $("#errorUserName").remove();
-        $.ajax({
-            type: 'GET',
-            url: "/Setting/User/CheckUDoublicat" ,
-            data: { userName: $("#UserName").val(), id: $("#Id").val() },
-            async: false,
-            success: function (res) {
-                if (res == true) {
-                    $("#UserName").after('<span id="errorUserName" class="error" style="color:red">' + '@Utility.Resource.Message_Designer.DoublicatUserName' + '</span>');
-                    $("#UserName").focus();
-                    $("#UserName").on("change", function () {
-                        $("#errorUserName").remove();
-                    });
-                    resval = true;
-                }
-            }
-        });
-        return resval;
-    }
+    // function CheckUDoublicat() {
+    //     var resval =  false;
+    //     $("#errorUserName").remove();
+    //     $.ajax({
+    //         type: 'GET',
+    //         url: "/Setting/User/CheckUDoublicat" ,
+    //         data: { userName: $("#UserName").val(), id: $("#Id").val() },
+    //         async: false,
+    //         success: function (res) {
+    //             if (res == true) {
+    //                 $("#UserName").after('<span id="errorUserName" class="error" style="color:red">' + '@Utility.Resource.Message_Designer.DoublicatUserName' + '</span>');
+    //                 $("#UserName").focus();
+    //                 $("#UserName").on("change", function () {
+    //                     $("#errorUserName").remove();
+    //                 });
+    //                 resval = true;
+    //             }
+    //         }
+    //     });
+    //     return resval;
+    // }
 
 
     $('.demo1').bonsai();

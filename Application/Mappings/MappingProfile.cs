@@ -9,6 +9,10 @@ public partial class MappingProfile : Profile
         BranchMappingProfile();
         StockMappingProfile();
 
+        // 1-2- Security
+        RoleMappingProfile();
+        UserMappingProfile();
+
         CityMappingProfile();
         CountryMappingProfile();
     }

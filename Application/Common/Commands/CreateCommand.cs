@@ -15,7 +15,7 @@
         where TModel : Entity.BaseModel        
     {
 
-        public async Task<Result> Handle(TDto request, CancellationToken cancellationToken)
+        public virtual async Task<Result> Handle(TDto request, CancellationToken cancellationToken)
         {
             try
             {               

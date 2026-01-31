@@ -6,6 +6,7 @@
     public interface IRepository<TEntity> where TEntity : Entity.BaseModel //BaseEntity
     {
         ValueTask<TEntity> CreateAsync(TEntity Ob);
+        ValueTask<List<TEntity>> CreateAsync(List<TEntity> Ob);
         ValueTask<bool> UpdateAsync(TEntity Ob);
         ValueTask<bool> AnyAsync(Expression<Func<TEntity, bool>> Filter);
         ValueTask<bool> AnyAsync(Expression<Func<TEntity, bool>> Filter, CancellationToken cancellationToken);
@@ -14,6 +15,7 @@
         ValueTask<IEnumerable<TEntity>?> GetListByFilterAsync(Expression<Func<TEntity, bool>> Filter);
         ValueTask<IEnumerable<TEntity>?> GetListByFilterAsync(string includeProperties);
         ValueTask<IEnumerable<TEntity>?> GetListByFilterAsync(Expression<Func<TEntity, bool>> Filter, string includeProperties);
+        ValueTask<IEnumerable<TEntity>?> GetListByFilterAsync(Expression<Func<TEntity, bool>> Filter, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy);
         ValueTask<IEnumerable<TEntity>?> GetListByFilterAsync(Expression<Func<TEntity, bool>> Filter, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy, string includeProperties, int Page, int PageSize);
         ValueTask<SizeAwarePaginationResult<TEntity>?> GetPaginationByFilterAsync(Expression<Func<TEntity, bool>> Filter, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy, string includeProperties, int Page, int PageSize);
         ValueTask<bool> DeleteAsync(Expression<Func<TEntity, bool>> Filter);
