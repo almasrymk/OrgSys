@@ -16,7 +16,7 @@
     {
         public override async Task LoadViewBag(CityModelView model)
         {
-            ViewBag.BranchList = new SelectList(new CountryService(User.GetSchema()).GetAll(model.ParentId, model.TypeId), "Id", "Name", model.CountryId);
+            ViewBag.BranchList = new SelectList(await GetListApi<BranchModelView>(), "Id", "Name", model.CountryId);
         }
 
         public async Task<JsonResult> GetList(string txtSearch = "", int page = 1, int pageSize = 10)

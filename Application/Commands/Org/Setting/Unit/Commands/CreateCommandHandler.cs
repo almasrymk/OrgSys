@@ -8,7 +8,7 @@
     using Domain.Shared;
     using Entity.ModelView;
 
-    public sealed record CreateUnitCommand(string Name) : ICommand , ICreateCommand<Result>;
+    public sealed class CreateUnitCommand: UnitModelView , ICommand , ICreateCommand<Result>;
 
     public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.Unit> _Repository , IMapper mapper) : CreateCommandHandler<CreateUnitCommand, Entity.Model.Unit>(_UnitOfWork, _Repository , mapper)
     {

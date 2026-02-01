@@ -13,6 +13,10 @@ public partial class MappingProfile : Profile
         RoleMappingProfile();
         UserMappingProfile();
 
+        // 1-3- Product
+        ClassificationMappingProfile();
+        UnitMappingProfile();
+
         CityMappingProfile();
         CountryMappingProfile();
     }

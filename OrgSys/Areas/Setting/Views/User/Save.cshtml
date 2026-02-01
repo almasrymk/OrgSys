@@ -143,12 +143,6 @@
         if (CheckRequired("UserName", "UserName", '@Utility.Resource.Message_Designer.EmailRequired'))
             Valid = false;
 
-        // @*else if (CheckRage("UserName", "UserName", 5, 15, '@Utility.Resource.Message_Designer.UsernameRequired'))
-        //     Valid = false;*@
-
-        // else if (CheckUDoublicat())
-        //     Valid = false;
-         
         if (Valid == true) {
 
             var data = {
@@ -187,30 +181,7 @@
             });
         }
     }
-
-    // function CheckUDoublicat() {
-    //     var resval =  false;
-    //     $("#errorUserName").remove();
-    //     $.ajax({
-    //         type: 'GET',
-    //         url: "/Setting/User/CheckUDoublicat" ,
-    //         data: { userName: $("#UserName").val(), id: $("#Id").val() },
-    //         async: false,
-    //         success: function (res) {
-    //             if (res == true) {
-    //                 $("#UserName").after('<span id="errorUserName" class="error" style="color:red">' + '@Utility.Resource.Message_Designer.DoublicatUserName' + '</span>');
-    //                 $("#UserName").focus();
-    //                 $("#UserName").on("change", function () {
-    //                     $("#errorUserName").remove();
-    //                 });
-    //                 resval = true;
-    //             }
-    //         }
-    //     });
-    //     return resval;
-    // }
-
-
+     
     $('.demo1').bonsai();
     $('#auto-checkboxes').bonsai({
         expandAll: false,

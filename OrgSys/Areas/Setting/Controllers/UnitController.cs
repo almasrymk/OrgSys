@@ -9,16 +9,17 @@
     using Service;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
 
     [Area("Setting")]
     public class UnitController(IConfiguration configuration, IMapper mapper) : MainController<UnitModelView, CreateUnitCommand, UpdateUnitCommand>(configuration, mapper)
     {
-        public JsonResult GetList(string txtSearch = "", int page = 1, int pageSize = 10)
+        public async Task<JsonResult> GetList(string txtSearch = "", int page = 1, int pageSize = 10)
         {
             if (txtSearch != null)
                 txtSearch = txtSearch.Trim().ToLower();
 
-            var itemsList = new UnitService(User.GetSchema()).GetAll(txtSearch, 0, 0, page, pageSize);
+            var itemsList = await GetListApi<UnitModelView>();
             var list = itemsList.Distinct().OrderBy(_ => _.Name)
                 .Select(_ => new
                 {

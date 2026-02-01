@@ -20,9 +20,8 @@
 
             RuleFor(c => c.Name)           
             .MustAsync(async (Name, cancellationToken) => await NotAnyAsync(c => c.Name == Name, cancellationToken))
-            .WithMessage("The role name already exists")
+            .WithMessage("The user already exists")
             .OverridePropertyName(nameof(CreateUserCommand.Name));
-
 
             RuleFor(c => c.UserName)
             .MustAsync(async (UserName, cancellationToken) => await NotAnyAsync(c => c.UserName == UserName, cancellationToken))

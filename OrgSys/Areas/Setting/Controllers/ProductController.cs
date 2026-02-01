@@ -2,6 +2,7 @@
 {
     using Application.Commands.Org.Setting.Product.Commands;
     using AutoMapper;
+    using Entity.Model;
     using Entity.ModelView;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
@@ -18,7 +19,7 @@
     {
         public override async Task LoadViewBag(ProductModelView model)
         {
-            ViewBag.UnitList = new SelectList(new UnitService(User.GetSchema()).GetAll(model.ParentId, model.TypeId), "Id", "Name");
+            ViewBag.UnitList = new SelectList(await GetListApi<UnitModelView>(), "Id", "Name");
         }
 
         public override async Task<ProductModelView> InitializeData(ProductModelView ob)
@@ -27,38 +28,41 @@
                 ob.ProductUnitList = new List<ProductUnitModelView>();
             if (ob.Id == 0)
             {
-                ob.CodeNumber = new ProductService(User.GetSchema()).GetMaxCode(ob.TypeId);
-                ob.Code = "" + new ProductService(User.GetSchema()).GetMaxCode(ob.TypeId);
+                ob.CodeNumber = long.Parse("0" + await GetValueApi<ProductModelView>($"GetMax?TypeId={ob.TypeId}")) + 1;
+                ob.Code = "" + ob.CodeNumber;
             }
-            ob.ClassificationName = new ClassificationService(User.GetSchema()).Get(ob.ClassificationId)?.Name;
-            ob.DealerName = new DealerService(User.GetSchema()).Get(ob.DealerId ?? 1)?.Name;
+            ob.ClassificationName = (await GetObApi<ClassificationModelView>($"GetById?Id={ob.ClassificationId}"))?.Name;
+            ob.DealerName = (await GetObApi<DealerModelView>($"GetById?Id={ob.DealerId ?? 1}"))?.Name;
             return ob;
         }
 
-        public JsonResult GetList(int ProductId)
+        public async Task<JsonResult> GetUnitNameListByProductId(int ProductId)
         {
-            var ProductUnitList = new SelectList(new ProductUnitService(User.GetSchema()).GetAll(0, 0).Where(e => e.ProductId == ProductId).Select(e => e.UnitName));
-            return Json(new { success = true, ProductUnitList });
+            var ProductUnitList = await GetListApi<ProductUnitModelView>($"GetByProductId?ProductId={ProductId}");
+            if (ProductUnitList == null)
+                ProductUnitList = new List<ProductUnitModelView>();
+            var UnitNameList = new SelectList(ProductUnitList.Select(e=>e.UnitName));
+            return Json(new { success = true, UnitNameList });
         }
 
-        public ActionResult SearchProducts(string txt = "", int page = 1, int Type = 1, int index = 0)
+        public async Task<ActionResult> SearchProducts(string txt = "", int page = 1, int Type = 1, int index = 0)
         {
             ViewBag.index = index;
-            var list = new ProductService(User.GetSchema()).GetAll(txt, 0, 0, page, 7);
+            var list = await GetListApi<ProductModelView>($"GetList?KeySearch={txt}&Page={page}&PageSize=7");
             return Type != 1 ? (ActionResult)PartialView("SearchProductsList", list) : View("SearchProducts", list);
         }
 
-        public JsonResult SearchItems(string phrase = "", int TypeInv = 1)
+        public async Task<JsonResult> SearchItems(string phrase = "", int TypeInv = 1)
         {
             decimal Quantity = 1;
-            var setting = new PreferenceService(User.GetSchema());
+            var setting = await GetListApi<PreferenceModelView>(TypeId: TypeInv, PageSize: 1000);
             if (phrase == null)
                 phrase = "";
             phrase = phrase.Trim().ToLower();
 
-            var CodeElectronicScale = setting.GetByKey("CodeElectronicScale", "Invoice", TypeInv, 0)?.Value;
-            var LengthElectronicScale = int.Parse(setting.GetByKey("LengthElectronicScale", "Invoice", TypeInv, 0)?.Value);
-            var LengthQtyElectronicScale = int.Parse(setting.GetByKey("LengthQtyElectronicScale", "Invoice", TypeInv, 0)?.Value);
+            var CodeElectronicScale = setting.FirstOrDefault(e => e.Key == "CodeElectronicScale" && e.Reference == "Invoice")?.Value;
+            var LengthElectronicScale = int.Parse(setting.FirstOrDefault(e => e.Key == "LengthElectronicScale" && e.Reference == "Invoice")?.Value);
+            var LengthQtyElectronicScale = int.Parse(setting.FirstOrDefault(e => e.Key == "LengthQtyElectronicScale" && e.Reference == "Invoice")?.Value);
 
             if (phrase.Length >= LengthElectronicScale && "" + CodeElectronicScale != "" && "" + CodeElectronicScale != "0" && "" + LengthElectronicScale != "" && "" + LengthElectronicScale != "0")
             {
@@ -71,7 +75,7 @@
                 }
             }
 
-            var itemsList = new ProductService(User.GetSchema()).GetAll(phrase, 0, 0, 1, 10);
+            var itemsList = await GetListApi<ProductModelView>($"GetList?KeySearch={phrase}&Page=1&PageSize=10");
             var list = itemsList.Distinct().OrderBy(_ => _.Name)
                 .Select(_ => new
                 {
@@ -88,16 +92,16 @@
             return Json(list);
         }
 
-        public JsonResult SearchItemName(string txtSearch = "", int TypeInv = 1)
+        public async Task<JsonResult> SearchItemName(string txtSearch = "", int TypeInv = 1)
         {
-            var setting = new PreferenceService(User.GetSchema());
             decimal Quantity = 1;
+            var setting = await GetListApi<PreferenceModelView>(TypeId: TypeInv, PageSize: 1000);             
             if (txtSearch != null)
                 txtSearch = txtSearch.Trim().ToLower();
 
-            var CodeElectronicScale = setting.GetByKey("CodeElectronicScale", "Invoice", TypeInv, 0)?.Value;
-            var LengthElectronicScale = int.Parse(setting.GetByKey("LengthElectronicScale", "Invoice", TypeInv, 0)?.Value);
-            var LengthQtyElectronicScale = int.Parse(setting.GetByKey("LengthQtyElectronicScale", "Invoice", TypeInv, 0)?.Value);
+            var CodeElectronicScale = setting.FirstOrDefault(e => e.Key == "CodeElectronicScale" && e.Reference == "Invoice")?.Value;
+            var LengthElectronicScale = int.Parse(setting.FirstOrDefault(e => e.Key == "LengthElectronicScale" && e.Reference == "Invoice")?.Value);
+            var LengthQtyElectronicScale = int.Parse(setting.FirstOrDefault(e => e.Key == "LengthQtyElectronicScale" && e.Reference == "Invoice")?.Value);
 
             if (txtSearch.Length >= LengthElectronicScale && "" + CodeElectronicScale != "" && "" + CodeElectronicScale != "0" && "" + LengthElectronicScale != "" && "" + LengthElectronicScale != "0")
             {

@@ -8,7 +8,7 @@
     using Domain.Shared;
     using Entity.ModelView;
 
-    public sealed record CreateClassificationCommand(string Name) : ICommand , ICreateCommand<Result>;
+    public sealed class CreateClassificationCommand: ClassificationModelView, ICommand , ICreateCommand<Result>;
 
     public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.Classification> _Repository , IMapper mapper) : CreateCommandHandler<CreateClassificationCommand, Entity.Model.Classification>(_UnitOfWork, _Repository , mapper)
     {

@@ -8,7 +8,7 @@
     using Domain.Shared;
     using Entity.ModelView;
 
-    public sealed record UpdateUnitCommand(long Id , long? UnitId, string Name) : ICommand, IUpdateCommand<Result>;
+    public sealed class UpdateUnitCommand : UnitModelView, ICommand, IUpdateCommand<Result>;
 
     public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.Unit> _Repository , IMapper mapper) : UpdateCommandHandler<UpdateUnitCommand, Entity.Model.Unit>(_UnitOfWork, _Repository , mapper)
     {

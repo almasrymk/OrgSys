@@ -19,12 +19,7 @@
         {
             ViewBag.BranchList = new SelectList(await GetListApi<BranchModelView>(), "Id", "Name", model.BranchId);
             ViewBag.RoleList = new SelectList(await GetListApi<RoleModelView>(), "Id", "Name", model.RoleId);
-        }
-
-        //public JsonResult CheckUDoublicat(string userName, int id)
-        //{
-        //    return Json(new UserService(User.GetSchema()).CheckDoublicat(userName, id));
-        //}
+        } 
 
         public override async Task<ActionResult> Save(UserModelView model)
         {

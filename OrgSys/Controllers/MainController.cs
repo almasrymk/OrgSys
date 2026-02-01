@@ -1,23 +1,24 @@
 ﻿namespace OrgSys.Controllers
 {
-    using System;
-    using Entity;
-    using Utility;
-    using System.Net;
+    using Application.Interfaces.CQRS;
     using AutoMapper;
-    using System.Linq;
     using Domain.Enums;
     using Domain.Shared;
-    using System.Net.Http;
+    using Entity;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Filters;
+    using Microsoft.AspNetCore.Mvc.ModelBinding;
+    using Microsoft.Extensions.Configuration;
     using Newtonsoft.Json;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Net;
+    using System.Net.Http;
     using System.Net.Http.Json;
     using System.Threading.Tasks;
-    using Microsoft.AspNetCore.Mvc;
-    using System.Collections.Generic;
-    using Application.Interfaces.CQRS;
-    using Microsoft.AspNetCore.Mvc.Filters;
-    using Microsoft.AspNetCore.Authorization;
-    using Microsoft.Extensions.Configuration;
+    using Utility;
 
     [Authorize]
     public class MainController<TDto, TCreate, TUpdate>(IConfiguration configuration, IMapper mapper) : Controller
@@ -181,6 +182,9 @@
             await LoadViewBag(ob);
             if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
                 return BadRequest(new { res.Errors });
+
+            foreach (var item in res.Errors)
+                ModelState.AddModelError(item.Key, item.MessageError);
             return View(ob);
         }
 
