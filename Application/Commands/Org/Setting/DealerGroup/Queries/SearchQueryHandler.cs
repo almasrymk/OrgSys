@@ -21,6 +21,7 @@
 
             return e => 
             (string.IsNullOrEmpty(request.KeySearch) || e.Name.Contains(request.KeySearch)) &&
+            e.TypeId == request.TypeId &&
             e.Status != Status.Deleted && e.Hide != true;
         }
          

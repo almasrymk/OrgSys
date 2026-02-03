@@ -17,6 +17,10 @@ public partial class MappingProfile : Profile
         ClassificationMappingProfile();
         UnitMappingProfile();
 
+        // 1-4- Dealer
+        DealerGroupMappingProfile();
+        DealerMappingProfile();
+
         CityMappingProfile();
         CountryMappingProfile();
     }

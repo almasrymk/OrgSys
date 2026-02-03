@@ -21,9 +21,10 @@
 
             return e => 
             (string.IsNullOrEmpty(request.KeySearch) || e.Name.Contains(request.KeySearch)) &&
+            e.TypeId == request.TypeId &&
             e.Status != Status.Deleted && e.Hide != true;
         }
-         
+        
         override public Func<IQueryable<Entity.Model.Dealer>, IOrderedQueryable<Entity.Model.Dealer>> CreateOrderBy(SearchDealerQuery request)
         {
             return q => q.OrderByDescending(e => e.Id);
