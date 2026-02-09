@@ -31,9 +31,9 @@
                     <tr>
                         <th class="text-center">#</th>
                         <th style="text-align:center"></th>
+                        <th class="@TextAlign align-middle">@Utility.Resource.Title_Designer.Code</th>
                         <th class="@TextAlign align-middle">@Utility.Resource.Title_Designer.Name</th>
                         <th class="@TextAlign align-middle">@Utility.Resource.Title_Designer.AccountType</th>
-                        <th class="@TextAlign align-middle">@Utility.Resource.Title_Designer.Parent</th>
                         @if (AllowEdit || AllowCancel || AllowDelete)
                         {
                             <th>
@@ -61,16 +61,15 @@
                                 </div>
                             </td>
                             <td class="@TextAlign align-middle">
+                                @Model.Response[i].Code
+                            </td>
+                            <td class="@TextAlign align-middle">
                                 @Model.Response[i].Name
                             </td>
                             <td class="@TextAlign align-middle">
                                 @Model.Response[i].AccountTypeName
                             </td>
-                            <td class="@TextAlign align-middle">
-                                <a href="/Setting/Account/Save?id=@Model.Response[i].ParentId">
-                                    @Model.Response[i].ParentId
-                                </a>                                
-                            </td>
+                           
                             @if (AllowEdit || AllowDelete)
                             {
                                 <td class="w-15 @TextAlign2 align-middle">
@@ -115,16 +114,17 @@
                         <small>#</small>
                     </div>
                     <div class="card-body align-self-center d-flex flex-column flex-md-row  align-items-md-center">
+                        <div class="list-item-heading mb-0 w-20">
+                            <small>@Utility.Resource.Title_Designer.Code</small>
+                        </div>
                         <div class="list-item-heading mb-0 w-80">
                             <small>@Utility.Resource.Title_Designer.Name</small>
                         </div>
                         <div class="list-item-heading mb-0 w-40">
                             <small>@Utility.Resource.Title_Designer.AccountType</small>
+                        </div> 
+                        <div class="w-15 @TextAlign2">
                         </div>
-                        <div class="list-item-heading mb-0 w-40">
-                            <small>@Utility.Resource.Title_Designer.Parent</small>
-                        </div>
-                                   
                     </div>
 
                     <div style="width:30px;">
@@ -141,17 +141,16 @@
                             <i class="simple-icon-layers"></i>
                         </div>                        
                         <div class="card-body align-self-center d-flex flex-column flex-md-row  align-items-md-center">
+                            <div class="list-item-heading mb-0 w-20">
+                                @Model.Response[i].Code
+                            </div>
                             <div class="list-item-heading mb-0 w-80">
                                 @Model.Response[i].Name
                             </div>
                             <div class="list-item-heading mb-0 w-40">
                                 @Model.Response[i].AccountTypeName
                             </div>
-                            <div class="list-item-heading mb-0 w-40">
-                                <a href="/Setting/Country/Save?id=@Model.Response[i].ParentId">
-                                    @Model.Response[i].ParentId
-                                </a>
-                            </div>
+                            
                             <div class="w-15 @TextAlign2">
                                 @if (AllowEdit)
                                 {

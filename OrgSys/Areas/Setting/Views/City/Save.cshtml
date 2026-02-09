@@ -57,11 +57,11 @@
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label>@Utility.Resource.Title_Designer.Country</label>
-                                    <div id="divBranch" class="input-group">
+                                    <div id="divCountry" class="input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" style="background-color:whitesmoke";><i class="simple-icon-share"></i></span>
                                         </div>
-                                        <select asp-for="CountryId" asp-items="@ViewBag.BranchList" class="form-control">
+                                        <select asp-for="CountryId" asp-items="@ViewBag.CountryList" class="form-control">
                                             <option value=""> ... </option>
                                         </select>
                                     </div>
@@ -92,7 +92,7 @@
     function Save() {
         var Valid = true;
 
-        if (CheckRequired("CountryId", "divBranch", '@Utility.Resource.Message_Designer.CountryRequired'))
+        if (CheckRequired("CountryId", "divCountry", '@Utility.Resource.Message_Designer.CountryRequired'))
             Valid = false;
 
         if (CheckRequired("Name", "Name", '@Utility.Resource.Message_Designer.NameRequired'))

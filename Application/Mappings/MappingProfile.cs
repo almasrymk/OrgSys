@@ -21,6 +21,10 @@ public partial class MappingProfile : Profile
         DealerGroupMappingProfile();
         DealerMappingProfile();
 
+        // 1-5- Dealer
+        AccountMappingProfile();
+
+
         CityMappingProfile();
         CountryMappingProfile();
     }

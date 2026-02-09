@@ -357,4 +357,10 @@
   <data name="YouWillReceiveAnEmailNowOn" xml:space="preserve">
     <value>You will receive an email now on</value>
   </data>
+  <data name="UsernameRequired" xml:space="preserve">
+    <value>Username Required</value>
+  </data>
+  <data name="AccountTypeRequired" xml:space="preserve">
+    <value>Account Type Required</value>
+  </data>
 </root>

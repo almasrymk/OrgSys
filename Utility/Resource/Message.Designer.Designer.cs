@@ -19,7 +19,7 @@ namespace Utility.Resource {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Message_Designer {
@@ -66,6 +66,15 @@ namespace Utility.Resource {
         public static string AbbreviatedNameProduct {
             get {
                 return ResourceManager.GetString("AbbreviatedNameProduct", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Account Type Required.
+        /// </summary>
+        public static string AccountTypeRequired {
+            get {
+                return ResourceManager.GetString("AccountTypeRequired", resourceCulture);
             }
         }
         
@@ -759,6 +768,15 @@ namespace Utility.Resource {
         public static string UnitsWhichProductMeasured {
             get {
                 return ResourceManager.GetString("UnitsWhichProductMeasured", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Username Required.
+        /// </summary>
+        public static string UsernameRequired {
+            get {
+                return ResourceManager.GetString("UsernameRequired", resourceCulture);
             }
         }
         

@@ -15,8 +15,22 @@
     {
         public override async Task LoadViewBag(AccountModelView model)
         {
-            ViewBag.BranchList = new SelectList(await GetListApi<BranchModelView>(), "Id", "Name", model.ParentId);
             ViewBag.AccountType = new SelectList(await GetListApi<AccountTypeModelView>(), "Id", "Name", model.AccountTypeId);
+            ViewBag.AccountList = new SelectList(await GetListApi<AccountModelView>(), "Id", "Name", model.ParentId);
+        }
+
+        public override async Task<AccountModelView> InitializeData(AccountModelView ob)
+        {
+            ViewBag.AccountList = new SelectList(await GetListApi<AccountModelView>(), "Id", "Name", ob.ParentId);
+            if (ob == null)
+                ob = new AccountModelView();
+            if (ob.Id == 0)
+            {
+                ob.CodeNumber = long.Parse("0" + await GetValueApi<AccountModelView>($"GetMax")) + 1;
+                ob.Code = "" + ob.CodeNumber;
+            }
+            ob.ParentName = (await GetObApi<AccountModelView>($"GetById?Id={ob.ParentId}"))?.Name;
+            return ob;
         }
 
         public async Task<JsonResult> GetList(string txtSearch = "", int page = 1, int pageSize = 10)

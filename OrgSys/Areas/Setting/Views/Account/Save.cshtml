@@ -53,24 +53,12 @@
                             <input type="hidden" asp-for="Id" />
                             <input type="hidden" asp-for="TypeId" />
                             <input type="hidden" asp-for="ParentId" />
+                            <input type="hidden" asp-for="CodeNumber" />
 
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label>@Utility.Resource.Title_Designer.Parent</label>
-                                    <div id="divBranch" class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text" style="background-color:whitesmoke" ;><i class="simple-icon-share"></i></span>
-                                        </div>
-                                        <select asp-for="ParentId" asp-items="@ViewBag.BranchList" class="form-control">
-                                            <option value=""> ... </option>
-                                        </select>
-                                    </div>
-                                    @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.BranchRequired</small>*@
-                                    @Html.ValidationMessageFor(model => model.ParentId, "", new { @class = "text-danger " })
-                                </div>
+                            <div class="form-row">                               
                                 <div class="form-group col-md-6">
                                     <label>@Utility.Resource.Title_Designer.AccountType</label>
-                                    <div id="divBranch" class="input-group">
+                                    <div id="divAccountType" class="input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" style="background-color:whitesmoke" ;><i class="simple-icon-share"></i></span>
                                         </div>
@@ -80,6 +68,12 @@
                                     </div>
                                     @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.BranchRequired</small>*@
                                     @Html.ValidationMessageFor(model => model.AccountTypeId, "", new { @class = "text-danger " })
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>@Utility.Resource.Title_Designer.Code</label>
+                                    <input asp-for="Code" class="form-control" placeholder="@Utility.Resource.Title_Designer.Code" />
+                                    @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.NameRequired</small>*@
+                                    @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger " })
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label>@Utility.Resource.Title_Designer.Name</label>
@@ -101,6 +95,25 @@
                                     @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.NameRequired</small>*@
                                     @Html.ValidationMessageFor(model => model.Credit, "", new { @class = "text-danger " })
                                 </div>
+                                <div class="form-group col-md-6">
+                                    <label>
+                                        @Utility.Resource.Title_Designer.Parent
+                                    </label>
+                                    <div id="divParentName">
+                                        <div class="input-group DropAutoComplete">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="simple-icon-people"></i></span>
+                                            </div>
+                                            <input type="text" class="form-control Droptxt" id="txtParentId" value="@Model.ParentName" autocomplete="off" />
+                                            @Html.HiddenFor(model => model.ParentId)
+                                            <div class="input-group-prepend Dropbtn">
+                                                <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
+                                            </div>
+                                        </div>
+                                        @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.ParentId, "", new { @class = "text-danger " })
+                                </div>
                             </div>
                             <hr />
                             <button type="button" onclick="Save()" class="btn btn-primary mb-0">@Utility.Resource.Title_Designer.Save</button>
@@ -112,14 +125,92 @@
         </div>
     </div>
 </div>
-
 <script src="~/js/vendor/jquery-3.3.1.min.js"></script>
+<script src="~/js/vendor/bootstrap3-typeahead.js"></script>
+<link href="~/css/jquery-ui.css" rel="stylesheet" />
+<script src="~/js/jquery-ui.js"></script>
+<script src="~/js/PopupScript.js"></script>
 <script>
+    jQuery(function ($) {
+        RefreshSomeEventListener();
+        function RefreshSomeEventListener () {
+            $("#txtParentId").autocomplete({
+                minLength: 0,
+                source: function (request, response) {
+                    var searchPhrase = $("#txtParentId").val();//request.term.trim().toLowerCase();
+                    var TypeId = $("#TypeId").val()
+                    var noResultsLabel = 'NoResultsFound';
+                    if (searchPhrase == "...")
+                        searchPhrase = "";
+                    $.ajax({
+                        url: "/Setting/Account/GetList",
+                        type: "Get",
+                        dataType: "json",
+                        data: { txtSearch: searchPhrase, TypeId : TypeId, page: 1, pageSize: 7 },
+                        success: function (data) {
+                            try {
+                                if (!data.length) {
+                                    data = [{ name: noResultsLabel }];
+                                }
+
+                                if ("" + $("#txtParentId").val() == "") {
+                                    $("#ParentId").val("");
+                                    $("#errorParentId").remove();
+                                }
+
+                                response($.map(data, function (item) {
+                                    return {
+                                        label: item.name, value: item.name, id: item.id
+                                    };
+                                }));
+                            } catch (err) { }
+                        }
+                    });
+                },
+                select: function (event, ui) {
+                    if (ui.item.label === 'NoResultsFound') {
+                        event.preventDefault();
+                        return;
+                    }
+                    $("#ParentId").val(ui.item.id);
+                    $("#errorParentId").remove();
+                },
+                focus: function (event, ui) {
+                    if (ui.item.label === 'NoResultsFound') {
+                        event.preventDefault();
+                    }
+                }
+            });
+
+            $(".Droptxt").click(function () {
+                event.preventDefault();
+                if ($(this).val() == "" || $(this).val() == "...")
+                    $(this).autocomplete("search", "");
+                return;
+            });
+
+            $(".Dropbtn").click(function () {
+                event.preventDefault();
+                $(this).parent().find(".Droptxt").autocomplete("search", "");
+                return;
+            });
+
+            $(".Droptxt").dblclick(function () {
+                event.preventDefault();
+                if ($(this).val() != "")
+                    $(this).autocomplete("search", "");
+                return;
+            });
+        }
+    });
 
     function Save() {
         var Valid = true;
 
-        if (CheckRequired("ParentId", "divBranch", '@Utility.Resource.Message_Designer.CountryRequired'))
+         if (CheckRequired("AccountTypeId", "divAccountType", '@Utility.Resource.Message_Designer.AccountTypeRequired'))
+            Valid = false;
+
+        if (CheckRequired("Code", "Code", '@Utility.Resource.Message_Designer.CodeRequired'))
             Valid = false;
 
         if (CheckRequired("Name", "Name", '@Utility.Resource.Message_Designer.NameRequired'))
@@ -132,6 +223,8 @@
 
             var data = {
                 Id: $('#Id').val(),
+                Code: $('#Code').val().trim(),
+                CodeNumber: $('#CodeNumber').val(),
                 Name: $('#Name').val().trim(),
                 ParentId: $('#ParentId').val(),
                 TypeId: $('#TypeId').val().trim(),
@@ -151,6 +244,16 @@
                     }
                     else {
                         LogError(data.Error);
+                    }
+                },
+                error: function (xhr) {
+                    if (xhr.status === 400) {
+                        var errors = xhr.responseJSON.errors;
+
+                        $.each(errors, function (index, res) {
+                            var span = $("[data-valmsg-for='" + res.key + "']");
+                            span.text(res.messageError);
+                        });
                     }
                 }
             });

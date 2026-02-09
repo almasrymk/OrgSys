@@ -16,21 +16,21 @@
     var AllowRedo = false;
     if (ViewBag.TypeId == 1)
     {
-        AllowView = User.IsAllowed("Clients.View");
-        AllowAdd = User.IsAllowed("Clients.Add");
-        AllowEdit = User.IsAllowed("Clients.Edit");
-        AllowDelete = User.IsAllowed("Clients.Delete");
-        AllowCancel = User.IsAllowed("Clients.Cancel");
-        AllowRedo = User.IsAllowed("Clients.Redo");
+        AllowView = User.IsAllowed("ClientGroups.View");
+        AllowAdd = User.IsAllowed("ClientGroups.Add");
+        AllowEdit = User.IsAllowed("ClientGroups.Edit");
+        AllowDelete = User.IsAllowed("ClientGroups.Delete");
+        AllowCancel = User.IsAllowed("ClientGroups.Cancel");
+        AllowRedo = User.IsAllowed("ClientGroups.Redo");
     }
     if (ViewBag.TypeId == 2)
     {
-        AllowView = User.IsAllowed("Supplers.View");
-        AllowAdd = User.IsAllowed("Supplers.Add");
-        AllowEdit = User.IsAllowed("Supplers.Edit");
-        AllowDelete = User.IsAllowed("Supplers.Delete");
-        AllowCancel = User.IsAllowed("Supplers.Cancel");
-        AllowRedo = User.IsAllowed("Supplers.Redo");
+        AllowView = User.IsAllowed("SupplierGroups.View");
+        AllowAdd = User.IsAllowed("SupplierGroups.Add");
+        AllowEdit = User.IsAllowed("SupplierGroups.Edit");
+        AllowDelete = User.IsAllowed("SupplierGroups.Delete");
+        AllowCancel = User.IsAllowed("SupplierGroups.Cancel");
+        AllowRedo = User.IsAllowed("SupplierGroups.Redo");
     }
 }
 

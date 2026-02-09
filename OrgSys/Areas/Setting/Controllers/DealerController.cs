@@ -30,6 +30,8 @@
                 ob.CodeNumber = long.Parse("0" + await GetValueApi<DealerModelView>($"GetMax?TypeId={ob.TypeId}")) + 1;
                 ob.Code = "" + ob.CodeNumber;
             }
+            ob.DealerGroupName = (await GetObApi<DealerGroupModelView>($"GetById?Id={ob.DealerGroupId ?? 0}"))?.Name;
+
             return ob;
         }
 

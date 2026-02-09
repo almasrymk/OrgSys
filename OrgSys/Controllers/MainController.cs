@@ -67,14 +67,14 @@
             return ob;
         }
 
-        public virtual async Task<List<TSubDto>> GetListApi<TSubDto>(long TypeId = 0, long ParentId = 0, string TextSearch = "", int Page = 1, int PageSize = 20) where TSubDto : BaseModel
+        public virtual async Task<List<TSubDto>> GetListApi<TSubDto>(long TypeId = 0, long ParentId = 0, string TextSearch = "", int Page = 1, int PageSize = 25) where TSubDto : BaseModel
         {
             string ApiUrl = configuration["ApiUrl"];
 
             var ob = (List<TSubDto>)Activator.CreateInstance(typeof(List<TSubDto>));
             string ApiControllerName = typeof(TSubDto).Name.Replace("ModelView", "").Replace("Dto", "");
             HttpClient httpClient = new HttpClient();
-            HttpResponseMessage response = await httpClient.GetAsync($"{ApiUrl}/{ApiControllerName}/GetList?KeySearch={TextSearch}&TypeId={TypeId}&ParentId={ParentId}&Page={Page}&PageSize={Page}");
+            HttpResponseMessage response = await httpClient.GetAsync($"{ApiUrl}/{ApiControllerName}/GetList?KeySearch={TextSearch}&TypeId={TypeId}&ParentId={ParentId}&Page={Page}&PageSize={PageSize}");
             response.EnsureSuccessStatusCode();
             var data = await response.Content.ReadAsStringAsync();
             var res = JsonConvert.DeserializeObject<ResultCollection<TSubDto>>(data);
@@ -134,9 +134,7 @@
         {
             ViewBag.TypeId = TypeId;
             var ob = (TDto)Activator.CreateInstance(typeof(TDto));
-            ob.ParentId = ParentId;
-            ob.TypeId = TypeId;
-
+          
             var response = await ApiMethod(ApiMethodType.Get, $"GetById?Id={id}");
             response.EnsureSuccessStatusCode();
             var data = await response.Content.ReadAsStringAsync();
@@ -144,6 +142,8 @@
             if (res != null)
                 ob = res.Response;
 
+            ob.ParentId = ParentId;
+            ob.TypeId = TypeId;
             ob = await InitializeData(ob);
             await LoadViewBag(ob);
             return View(ob);

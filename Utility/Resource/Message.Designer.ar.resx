@@ -33,7 +33,7 @@
     Each data row contains a name, and value. The row also contains a 
     type or mimetype. Type corresponds to a .NET class that support 
     text/value conversion through the TypeConverter architecture. 
-    Classes that don't support this are serialized and Stockd with the 
+    Classes that don't support this are serialized and stored with the 
     mimetype set.
     
     The mimetype is used for serialized objects, and tells the 
@@ -126,6 +126,9 @@
   <data name="AddressRequired" xml:space="preserve">
     <value>يجب ادخال العنوان</value>
   </data>
+  <data name="BankRequired" xml:space="preserve">
+    <value>يجب ادخال البنك</value>
+  </data>
   <data name="BarcodeRange" xml:space="preserve">
     <value>الباركود عدد حرف بين 5 الى 15</value>
   </data>
@@ -134,6 +137,9 @@
   </data>
   <data name="BranchRequired" xml:space="preserve">
     <value>يجب ادخال الفرع</value>
+  </data>
+  <data name="CityRequired" xml:space="preserve">
+    <value>يجب ادخال المددينة</value>
   </data>
   <data name="ClassificationRequired" xml:space="preserve">
     <value>يجب ادخال التصنيف</value>
@@ -165,6 +171,9 @@
   <data name="CostRequired" xml:space="preserve">
     <value>يجب ادخال التكلفة</value>
   </data>
+  <data name="CountryRequired" xml:space="preserve">
+    <value>يجب ادخال الدولة</value>
+  </data>
   <data name="CustomerRequired" xml:space="preserve">
     <value>يجب ادخال العميل</value>
   </data>
@@ -179,6 +188,9 @@
   </data>
   <data name="DescriptionRequired" xml:space="preserve">
     <value>يجب ادخال الوصف</value>
+  </data>
+  <data name="DistrictRequired" xml:space="preserve">
+    <value>يجب ادخال الحي</value>
   </data>
   <data name="DoublicatUserName" xml:space="preserve">
     <value>تم ادخال اسم المستخدم / البريد الالكتروني من قيل</value>
@@ -258,6 +270,9 @@
   <data name="PasswordRequired" xml:space="preserve">
     <value>يجب ادخال كلمة المرور</value>
   </data>
+  <data name="PaymentTypeRequired" xml:space="preserve">
+    <value>يجب ادخال نوع الدفع</value>
+  </data>
   <data name="PhoneExist" xml:space="preserve">
     <value>الهاتف موجود</value>
   </data>
@@ -303,6 +318,9 @@
   <data name="StartSearch" xml:space="preserve">
     <value>ابدأ في كتابة المنتج للبحث ...</value>
   </data>
+  <data name="StockRequired" xml:space="preserve">
+    <value>يجب ادخال المخزن</value>
+  </data>
   <data name="SupplierFromWhomProductPurchased" xml:space="preserve">
     <value>مورد الذى يتم شراء المنتج منه</value>
   </data>
@@ -333,13 +351,16 @@
   <data name="UnitsWhichProductMeasured" xml:space="preserve">
     <value>الوحدات التى يقاس بها المنتج</value>
   </data>
-  <data name="UsernameRequired" xml:space="preserve">
-    <value>يجب ادخال البريد الالكتروني</value>
-  </data>
   <data name="YoHaveAccount" xml:space="preserve">
     <value>إذا كان لديك حساب بالفعل ،</value>
   </data>
   <data name="YouWillReceiveAnEmailNowOn" xml:space="preserve">
     <value>سوف تتلقى رسالة بريد إلكتروني الآن على</value>
+  </data>
+  <data name="UsernameRequired" xml:space="preserve">
+    <value>يجب ادخال البريد الالكتروني</value>
+  </data>
+  <data name="AccountTypeRequired" xml:space="preserve">
+    <value>يجب ادخال نوع الحساب</value>
   </data>
 </root>
