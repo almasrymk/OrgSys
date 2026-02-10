@@ -186,47 +186,6 @@
             }
         </div>
     </div>
-
-
-
-    @*<div id="obList" class="row list disable-text-selection pt-2" data-check-all="checkAll" style="display:none;">
-            @for (int i = 0, x = ((Model.Page - 1) * Model.PageSize) + 1; i < Model.Count; i++, x++)
-            {
-                <div href="#" class="card m-2 p-1">
-                    <label class="custom-control custom-checkbox mr-1 ml-1">
-                        @if (Model.Response[i].Status == Utility.Status.All)
-                        {
-                            <input id="chk_@Model.Response[i].Id" type="checkbox" class="custom-control-input chk">
-                            <input type="hidden" value="@Model.Response[i].Id" />
-                            <span class="custom-control-label">&nbsp;</span>
-                        }
-                    </label>
-                    <div class="position-absolute card-top-buttons m-0 p-2">
-                        <h3 class="card-text badge badge-pill badge-theme-1 text-small">@x</h3>
-                    </div>
-                    <div class="card-body text-center m-0 p-2">
-                        <div class="p-3">
-                            <div class="img-thumbnail border-0 rounded-circle m-0 list-thumbnail badge-theme-1" style="height:120px;width:120px; font-size:45px;text-align:center;padding-top:25px;">
-                                <i class="iconsminds-clothing-Stock"></i>
-                            </div>
-                        </div>
-                        <div class="lead text-center">
-                            <p class="w-100" style="font-size:large;width:120px;">
-                                @Model.Response[i].Name
-                            </p>
-                            <a style="text-align:center;font-size:small;" href="/Setting/Branch/Save?id=@Model.Response[i].BranchId">
-                                <span> @Utility.Resource.Title_Designer.Branch : </span> @Model.Response[i].BranchName
-                            </a>
-                        </div>
-                        <div class="m-0 mt-2 p-0">
-                            <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit"></i> @Utility.Resource.Title_Designer.Edit</a>
-                            <span> &nbsp; | &nbsp; </span>
-                            <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete</a>
-                        </div>
-                    </div>
-                </div>
-            }
-        </div>*@
 }
 
 @Html.Partial("ToPagedList", new Domain.Shared.Pagination(Model.Page, Model.PageSize, Model.PageCount))

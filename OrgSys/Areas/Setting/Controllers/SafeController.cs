@@ -9,16 +9,17 @@
     using Service;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
 
     [Area("Setting")]
     public class SafeController(IConfiguration configuration, IMapper mapper) : MainController<SafeModelView, CreateSafeCommand, UpdateSafeCommand>(configuration, mapper)
-    {
-        public JsonResult GetList(string txtSearch = "", int page = 1, int pageSize = 10)
+    {       
+        public async Task<JsonResult> GetList(string txtSearch = "", int page = 1, int pageSize = 10)
         {
             if (txtSearch != null)
                 txtSearch = txtSearch.Trim().ToLower();
 
-            var itemsList = new SafeService(User.GetSchema()).GetAll(txtSearch, 0, 0, page, pageSize);
+            var itemsList = await GetListApi<SafeModelView>();
             var list = itemsList.Distinct().OrderBy(_ => _.Name)
                 .Select(_ => new
                 {

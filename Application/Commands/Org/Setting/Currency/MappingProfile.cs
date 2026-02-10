@@ -1,7 +1,7 @@
-﻿using AutoMapper;
+﻿using Application.Commands.Org.Setting.Currency.Commands;
+using AutoMapper;
 using Entity.Model;
 using Entity.ModelView;
-using Application.Commands.Org.Setting.Currency.Commands;
 
 public partial class MappingProfile : Profile
 {
@@ -9,7 +9,19 @@ public partial class MappingProfile : Profile
     {
         #region Currency
         CreateMap<Currency, CurrencyModelView>();
-        CreateMap<CurrencyModelView, Currency>();       
+        CreateMap<CurrencyModelView, Currency>();
+
+        CreateMap<Currency, CreateCurrencyCommand>();
+        CreateMap<CreateCurrencyCommand, Currency>();
+        CreateMap<Currency, UpdateCurrencyCommand>();
+        CreateMap<UpdateCurrencyCommand, Currency>();
+        CreateMap<Currency, DeleteCurrencyCommand>();
+        CreateMap<DeleteCurrencyCommand, Currency>();
+
+        CreateMap<CurrencyModelView, CreateCurrencyCommand>();
+        CreateMap<CreateCurrencyCommand, CurrencyModelView>();
+        CreateMap<CurrencyModelView, UpdateCurrencyCommand>();
+        CreateMap<UpdateCurrencyCommand, CurrencyModelView>();
         #endregion
     }
 }

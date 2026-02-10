@@ -8,10 +8,10 @@
     using Domain.Shared;
     using Entity.ModelView;
 
-    public sealed record UpdateBankBranchCommand(long Id , long? BankBranchId, string Name) : ICommand, IUpdateCommand<Result>;
+    public sealed class UpdateBankBranchCommand : BankBranchModelView, ICommand, IUpdateCommand<Result>;
 
-    public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.BankBranch> _Repository , IMapper mapper) : UpdateCommandHandler<UpdateBankBranchCommand, Entity.Model.BankBranch>(_UnitOfWork, _Repository , mapper)
+    public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.BankBranch> _Repository, IMapper mapper) : UpdateCommandHandler<UpdateBankBranchCommand, Entity.Model.BankBranch>(_UnitOfWork, _Repository, mapper)
     {
-       
+
     }
 }

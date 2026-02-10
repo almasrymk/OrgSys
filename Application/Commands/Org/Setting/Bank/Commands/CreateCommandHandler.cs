@@ -8,10 +8,10 @@
     using Domain.Shared;
     using Entity.ModelView;
 
-    public sealed record CreateBankCommand(string Name) : ICommand , ICreateCommand<Result>;
+    public sealed class CreateBankCommand : BankModelView, ICommand, ICreateCommand<Result>;
 
-    public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.Bank> _Repository , IMapper mapper) : CreateCommandHandler<CreateBankCommand, Entity.Model.Bank>(_UnitOfWork, _Repository , mapper)
+    public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.Bank> _Repository, IMapper mapper) : CreateCommandHandler<CreateBankCommand, Entity.Model.Bank>(_UnitOfWork, _Repository, mapper)
     {
-       
+
     }
 }

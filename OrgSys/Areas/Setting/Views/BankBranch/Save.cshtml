@@ -57,7 +57,7 @@
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label>@Utility.Resource.Title_Designer.Bank</label>
-                                    <div id="divBranch" class="input-group">
+                                    <div id="divBank" class="input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" style="background-color:whitesmoke";><i class="simple-icon-share"></i></span>
                                         </div>
@@ -70,7 +70,7 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label>@Utility.Resource.Title_Designer.Country</label>
-                                    <div id="divBranch" class="input-group">
+                                    <div id="divCountry" class="input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" style="background-color:whitesmoke" ;><i class="simple-icon-share"></i></span>
                                         </div>
@@ -83,7 +83,7 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label>@Utility.Resource.Title_Designer.City</label>
-                                    <div id="divBranch" class="input-group">
+                                    <div id="divCity" class="input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" style="background-color:whitesmoke" ;><i class="simple-icon-share"></i></span>
                                         </div>
@@ -96,7 +96,7 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label>@Utility.Resource.Title_Designer.District</label>
-                                    <div id="divBranch" class="input-group">
+                                    <div id="divDistrict" class="input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" style="background-color:whitesmoke" ;><i class="simple-icon-share"></i></span>
                                         </div>
@@ -180,17 +180,18 @@
     function Save() {
         var Valid = true;
 
-        if (CheckRequired("CountryId", "divBranch", '@Utility.Resource.Message_Designer.CountryRequired'))
+        if (CheckRequired("CountryId", "divCountry", '@Utility.Resource.Message_Designer.CountryRequired'))
             Valid = false;
 
-
-        if (CheckRequired("BankId", "divBranch", '@Utility.Resource.Message_Designer.BankRequired'))
-            Valid = false;
-            if (CheckRequired("CityId", "divBranch", '@Utility.Resource.Message_Designer.CityRequired'))
+        if (CheckRequired("BankId", "divBank", '@Utility.Resource.Message_Designer.BankRequired'))
             Valid = false;
 
-        if (CheckRequired("DistrictId", "divBranch", '@Utility.Resource.Message_Designer.DistrictRequired'))
+        if (CheckRequired("CityId", "divCity", '@Utility.Resource.Message_Designer.CityRequired'))
             Valid = false;
+
+        if (CheckRequired("DistrictId", "divDistrict", '@Utility.Resource.Message_Designer.DistrictRequired'))
+            Valid = false;
+
         if (CheckRequired("Name", "Name", '@Utility.Resource.Message_Designer.NameRequired'))
             Valid = false;
 
@@ -213,7 +214,7 @@
             $.ajax({
                 type: 'POST',
                 url: "/Setting/BankBranch/Save",
-                data: { model: data},
+                data: { ob: data},
                 success: function (res) {
                     if (res.status == "success") {
                         window.location.replace(res.url);

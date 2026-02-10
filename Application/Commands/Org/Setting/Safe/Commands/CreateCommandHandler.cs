@@ -8,7 +8,7 @@
     using Domain.Shared;
     using Entity.ModelView;
 
-    public sealed record CreateSafeCommand(string Name) : ICommand , ICreateCommand<Result>;
+    public sealed class CreateSafeCommand : SafeModelView , ICommand , ICreateCommand<Result>;
 
     public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.Safe> _Repository , IMapper mapper) : CreateCommandHandler<CreateSafeCommand, Entity.Model.Safe>(_UnitOfWork, _Repository , mapper)
     {

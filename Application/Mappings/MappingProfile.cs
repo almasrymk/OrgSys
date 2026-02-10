@@ -13,17 +13,20 @@ public partial class MappingProfile : Profile
         RoleMappingProfile();
         UserMappingProfile();
 
-        // 1-3- Product
+        // 1-3- Products
         ClassificationMappingProfile();
         UnitMappingProfile();
 
-        // 1-4- Dealer
+        // 1-4- Dealers
         DealerGroupMappingProfile();
         DealerMappingProfile();
 
-        // 1-5- Dealer
+        // 1-5- Financial
         AccountMappingProfile();
-
+        SafeMappingProfile();
+        BankBranchMappingProfile();
+        BankMappingProfile();
+        CurrencyMappingProfile();
 
         CityMappingProfile();
         CountryMappingProfile();

@@ -17,6 +17,8 @@
         {
             ViewBag.BankList = new SelectList(await GetListApi<BankModelView>(), "Id", "Name", model.BankId);
             ViewBag.CountryList = new SelectList(await GetListApi<CountryModelView>(), "Id", "Name", model.CountryId);
+            ViewBag.CityList = new SelectList(await GetListApi<CityModelView>(), "Id", "Name", model.CityId);
+            ViewBag.DistrictList = new SelectList(await GetListApi<DistrictModelView>(), "Id", "Name", model.DistrictId);
         }
 
         public async Task<JsonResult> GetCitiesByCountryId(int countryId)
