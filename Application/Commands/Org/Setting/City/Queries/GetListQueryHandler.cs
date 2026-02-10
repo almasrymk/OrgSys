@@ -10,7 +10,7 @@
     using Application.Interfaces.CQRS;
     using Application.Abstraction.Command;
 
-    public sealed record GetListCityQuery(string KeySearch , long? CountryId , long ParentId, long TypeId, int Page , int PageSize) : ICommandCollection<CityModelView> , IListQuery<ResultCollection<CityModelView>>;
+    public sealed record GetListCityQuery(string KeySearch , long ParentId, long TypeId, int Page , int PageSize) : ICommandCollection<CityModelView> , IListQuery<ResultCollection<CityModelView>>;
 
     public sealed class GetListQueryHandler(IRepository<Entity.Model.City> _Repository, IMapper mapper) : ListCommandHandler<GetListCityQuery, Entity.Model.City, CityModelView>(_Repository, mapper)
     {
@@ -20,8 +20,7 @@
             PageSize = request.PageSize;
 
             return e =>
-            (string.IsNullOrEmpty(request.KeySearch) || e.Name.Contains(request.KeySearch)) &&
-            (!request.CountryId.HasValue || e.CountryId == request.CountryId.Value) &&
+            (string.IsNullOrEmpty(request.KeySearch) || e.Name.Contains(request.KeySearch)) &&            
             e.Status != Status.Deleted && e.Hide != true;
         }
          

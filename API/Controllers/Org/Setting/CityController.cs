@@ -15,9 +15,9 @@ namespace API.Controllers.Org.Setting
     public class CityController(ISender sender) : BaseController<GetByIdCityQuery, SearchCityQuery , GetListCityQuery , CreateCityCommand, UpdateCityCommand, DeleteCityCommand , DeleteListCityCommand, CityModelView>(sender)
     {
         [HttpGet("GetListByCountryId")]
-        public virtual async Task<IActionResult> GetListByCountryId(string? KeySearch , long CountryId , long ParentId, long TypeId, int Page, int PageSize, CancellationToken cancellationToken)
+        public virtual async Task<IActionResult> GetListByCountryId(string? KeySearch , long ParentId, long TypeId, int Page, int PageSize, CancellationToken cancellationToken)
         {
-            var query = (GetListCityQuery)Activator.CreateInstance(typeof(GetListCityQuery), KeySearch , CountryId , ParentId, TypeId, Page, PageSize)!;
+            var query = (GetListCityQuery)Activator.CreateInstance(typeof(GetListCityQuery), KeySearch , ParentId, TypeId, Page, PageSize)!;
             var res = await sender.Send(query, cancellationToken);
             return res.StatusCode == HttpStatusCode.OK ? Ok(res) : BadRequest(res);
         }

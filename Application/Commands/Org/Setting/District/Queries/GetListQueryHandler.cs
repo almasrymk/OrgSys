@@ -10,7 +10,7 @@
     using System.Linq.Expressions;
     using Utility;
 
-    public sealed record GetListDistrictQuery(string KeySearch, long? CityId , long ParentId, long TypeId, int Page , int PageSize) : ICommandCollection<DistrictModelView> , IListQuery<ResultCollection<DistrictModelView>>;
+    public sealed record GetListDistrictQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandCollection<DistrictModelView> , IListQuery<ResultCollection<DistrictModelView>>;
 
     public sealed class GetListQueryHandler(IRepository<Entity.Model.District> _Repository, IMapper mapper) : ListCommandHandler<GetListDistrictQuery, Entity.Model.District, DistrictModelView>(_Repository, mapper)
     {
@@ -20,8 +20,7 @@
             PageSize = request.PageSize;
 
             return e =>
-            (string.IsNullOrEmpty(request.KeySearch) || e.Name.Contains(request.KeySearch)) &&
-            (!request.CityId.HasValue || e.CityId == request.CityId.Value) &&
+            (string.IsNullOrEmpty(request.KeySearch) || e.Name.Contains(request.KeySearch)) &&           
             e.Status != Status.Deleted && e.Hide != true;
         }
          

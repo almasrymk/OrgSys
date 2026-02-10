@@ -23,14 +23,14 @@
 
         public async Task<JsonResult> GetCitiesByCountryId(int countryId)
         {
-            var cities = await GetListApi<CityModelView>($"GetListByCountryId?KeySearch=&CountryId={countryId}&Page=1&PageSize=20");
+            var cities = await GetListApi<CityModelView>();
             var cityList = cities.OrderBy(c => c.Name).Select(c => new { c.Id, c.Name }).ToList();
             return Json(cityList);
         }
 
         public async Task<JsonResult> GetDistrictsByCityId(int cityId)
         {
-            var districts = await GetListApi<DistrictModelView>($"GetListByCityId?KeySearch=&CityId={cityId}&Page=1&PageSize=20");
+            var districts = await GetListApi<DistrictModelView>();
             var districtsiList = districts.OrderBy(c => c.Name).Select(c => new { c.Id, c.Name }).ToList();
             return Json(districtsiList);
         }
