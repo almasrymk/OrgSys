@@ -9,16 +9,17 @@
     using Service;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
 
     [Area("Setting")]
     public class ShiftController(IConfiguration configuration, IMapper mapper) : MainController<ShiftModelView, CreateShiftCommand, UpdateShiftCommand>(configuration, mapper)
     {
-        public JsonResult GetList(string txtSearch = "", int page = 1, int pageSize = 10)
+        public async Task<JsonResult> GetList(string txtSearch = "", int page = 1, int pageSize = 20)
         {
             if (txtSearch != null)
                 txtSearch = txtSearch.Trim().ToLower();
 
-            var itemsList = new ShiftService(User.GetSchema()).GetAll(txtSearch, 0, 0, page, pageSize);
+            var itemsList = await GetListApi<ShiftModelView>(TextSearch: txtSearch, Page: page, PageSize: pageSize);
             var list = itemsList.Distinct().OrderBy(_ => _.Name)
                 .Select(_ => new
                 {

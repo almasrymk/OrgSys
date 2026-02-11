@@ -1,9 +1,5 @@
 ﻿using Application.Commands.Org.Setting.District.Commands;
 using Application.Commands.Org.Setting.District.Queries;
-using Application.Commands.Org.Setting.Preference.Queries;
-using Application.Interfaces.CQRS;
-using Azure;
-using Domain.Shared;
 using Entity.ModelView;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -18,7 +14,7 @@ namespace API.Controllers.Org.Setting
         [HttpGet("GetListByCityId")]
         public virtual async Task<IActionResult> GetListByCityId(string? KeySearch , long CityId , long ParentId, long TypeId, int Page, int PageSize, CancellationToken cancellationToken)
         {
-            var query = (GetListDistrictQuery)Activator.CreateInstance(typeof(GetListDistrictQuery), KeySearch , CityId , ParentId, TypeId, Page, PageSize)!;
+            var query = (GetListByCityDistrictQuery)Activator.CreateInstance(typeof(GetListByCityDistrictQuery), KeySearch , CityId , ParentId, TypeId, Page, PageSize)!;
             var res = await sender.Send(query, cancellationToken);
             return res.StatusCode == HttpStatusCode.OK ? Ok(res) : BadRequest(res);
         }        

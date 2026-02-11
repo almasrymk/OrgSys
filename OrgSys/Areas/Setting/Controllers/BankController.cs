@@ -13,12 +13,12 @@
 
     public class BankController(IConfiguration configuration, IMapper mapper) : MainController<BankModelView, CreateBankCommand, UpdateBankCommand>(configuration, mapper)
     {
-        public async Task<JsonResult> GetList(string txtSearch = "", int page = 1, int pageSize = 10)
+        public async Task<JsonResult> GetList(string txtSearch = "", int page = 1, int pageSize = 20)
         {
             if (txtSearch != null)
                 txtSearch = txtSearch.Trim().ToLower();
 
-            var itemsList = await GetListApi<BankModelView>();
+            var itemsList = await GetListApi<BankModelView>(TextSearch: txtSearch, Page: page, PageSize: pageSize);
             var list = itemsList.Distinct().OrderBy(_ => _.Name)
                 .Select(_ => new
                 {

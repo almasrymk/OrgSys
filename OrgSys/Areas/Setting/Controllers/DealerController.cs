@@ -17,12 +17,12 @@
 
         public override async Task LoadViewBag(DealerModelView model)
         {
-            ViewBag.DealersGroupList = new SelectList(await GetListApi<DealerGroupModelView>(TypeId: model.TypeId), "Id", "Name", model.DealerGroupId);
+            ViewBag.DealersGroupList = new SelectList(await GetListApi<DealerGroupModelView>(TypeId: model.TypeId, Page: 1, PageSize: 20), "Id", "Name", model.DealerGroupId);
         }
 
         public override async Task<DealerModelView> InitializeData(DealerModelView ob)
         {
-            ViewBag.DealersGroupList = new SelectList(await GetListApi<DealerGroupModelView>(TypeId: ob.TypeId), "Id", "Name", ob.DealerGroupId);
+            ViewBag.DealersGroupList = new SelectList(await GetListApi<DealerGroupModelView>(TypeId: ob.TypeId , Page: 1, PageSize: 20), "Id", "Name", ob.DealerGroupId);
             if (ob == null)
                 ob = new DealerModelView();
             if (ob.Id == 0)
@@ -35,13 +35,13 @@
             return ob;
         }
 
-        public async Task<JsonResult> GetList(string txtSearch = "", long TypeId = 0, int page = 1, int pageSize = 10)
+        public async Task<JsonResult> GetList(string txtSearch = "", long TypeId = 0, int page = 1, int pageSize = 20)
         {
             if (txtSearch != null)
                 txtSearch = txtSearch.Trim().ToLower();
             long TypeDealerId = TypeId == 1 || TypeId == 3 ? 1 : 2;
 
-            var itemsList = await GetListApi<DealerGroupModelView>(TypeId: TypeDealerId);
+            var itemsList = await GetListApi<DealerGroupModelView>(TypeId: TypeDealerId , TextSearch: txtSearch, Page: page, PageSize: pageSize);
             var list = itemsList.Distinct().OrderBy(_ => _.Name)
                 .Select(_ => new
                 {

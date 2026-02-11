@@ -14,12 +14,12 @@
     [Area("Setting")]
     public class SafeController(IConfiguration configuration, IMapper mapper) : MainController<SafeModelView, CreateSafeCommand, UpdateSafeCommand>(configuration, mapper)
     {       
-        public async Task<JsonResult> GetList(string txtSearch = "", int page = 1, int pageSize = 10)
+        public async Task<JsonResult> GetList(string txtSearch = "", int page = 1, int pageSize = 20)
         {
             if (txtSearch != null)
                 txtSearch = txtSearch.Trim().ToLower();
 
-            var itemsList = await GetListApi<SafeModelView>();
+            var itemsList = await GetListApi<SafeModelView>(TextSearch: txtSearch, Page: page, PageSize: pageSize);
             var list = itemsList.Distinct().OrderBy(_ => _.Name)
                 .Select(_ => new
                 {

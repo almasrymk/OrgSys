@@ -98,7 +98,6 @@
     <Content Remove="Areas\Setting\Views\Classification\List.cshtml" />
     <Content Remove="Areas\Setting\Views\Classification\Save.cshtml" />
     <Content Remove="Areas\Setting\Views\Currency\Index.cshtml" />
-    <Content Remove="Areas\Setting\Views\Currency\List.cshtml" />
     <Content Remove="Areas\Setting\Views\Currency\Save.cshtml" />
     <Content Remove="Areas\Setting\Views\Dealer\Index.cshtml" />
     <Content Remove="Areas\Setting\Views\Dealer\List.cshtml" />
@@ -335,7 +334,6 @@
     <EmbeddedResource Include="Areas\Setting\Views\Classification\List.cshtml" />
     <EmbeddedResource Include="Areas\Setting\Views\Classification\Save.cshtml" />
     <EmbeddedResource Include="Areas\Setting\Views\Currency\Index.cshtml" />
-    <EmbeddedResource Include="Areas\Setting\Views\Currency\List.cshtml" />
     <EmbeddedResource Include="Areas\Setting\Views\Currency\Save.cshtml" />
     <EmbeddedResource Include="Areas\Setting\Views\Dealer\Index.cshtml" />
     <EmbeddedResource Include="Areas\Setting\Views\Dealer\List.cshtml" />

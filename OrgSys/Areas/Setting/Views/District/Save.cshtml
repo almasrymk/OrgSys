@@ -106,9 +106,9 @@
             var countryId = $(this).val(); // Get selected country ID
             if (countryId) {
                 $.ajax({
-                    url: '/Setting/District/GetCitiesByCountryId', // Adjust controller/action as necessary
+                    url: '/Setting/City/GetCitiesByCountryId', // Adjust controller/action as necessary
                     type: "GET",
-                    data: { countryId: countryId },
+                    data: { CountryId: countryId },
                     success: function (cities) {
                         $('#CityId').empty(); // Clear existing options
                         $('#CityId').append('<option value="">Select a city...</option>');

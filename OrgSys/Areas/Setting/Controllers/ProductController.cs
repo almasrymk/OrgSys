@@ -19,7 +19,7 @@
     {
         public override async Task LoadViewBag(ProductModelView model)
         {
-            ViewBag.UnitList = new SelectList(await GetListApi<UnitModelView>(), "Id", "Name");
+            ViewBag.UnitList = new SelectList(await GetListApi<UnitModelView>(Page: 1, PageSize: 20), "Id", "Name");
         }
 
         public override async Task<ProductModelView> InitializeData(ProductModelView ob)
@@ -38,24 +38,24 @@
 
         public async Task<JsonResult> GetUnitNameListByProductId(int ProductId)
         {
-            var ProductUnitList = await GetListApi<ProductUnitModelView>($"GetByProductId?ProductId={ProductId}");
+            var ProductUnitList = await GetListApi<ProductUnitModelView>($"GetByProductId?ProductId={ProductId}&Page=1&PageSize=20");
             if (ProductUnitList == null)
                 ProductUnitList = new List<ProductUnitModelView>();
-            var UnitNameList = new SelectList(ProductUnitList.Select(e=>e.UnitName));
+            var UnitNameList = new SelectList(ProductUnitList.Select(e => e.UnitName));
             return Json(new { success = true, UnitNameList });
         }
 
         public async Task<ActionResult> SearchProducts(string txt = "", int page = 1, int Type = 1, int index = 0)
         {
             ViewBag.index = index;
-            var list = await GetListApi<ProductModelView>($"GetList?KeySearch={txt}&Page={page}&PageSize=7");
+            var list = await GetListApi<ProductModelView>($"GetList?KeySearch={txt}&Page={page}&PageSize=20");
             return Type != 1 ? (ActionResult)PartialView("SearchProductsList", list) : View("SearchProducts", list);
         }
 
         public async Task<JsonResult> SearchItems(string phrase = "", int TypeInv = 1)
         {
             decimal Quantity = 1;
-            var setting = await GetListApi<PreferenceModelView>(TypeId: TypeInv, PageSize: 1000);
+            var setting = await GetListApi<PreferenceModelView>(TypeId: TypeInv, Page: 1, PageSize: 1000);
             if (phrase == null)
                 phrase = "";
             phrase = phrase.Trim().ToLower();
@@ -75,7 +75,7 @@
                 }
             }
 
-            var itemsList = await GetListApi<ProductModelView>($"GetList?KeySearch={phrase}&Page=1&PageSize=10");
+            var itemsList = await GetListApi<ProductModelView>($"GetList?KeySearch={phrase}&Page=1&PageSize=20");
             var list = itemsList.Distinct().OrderBy(_ => _.Name)
                 .Select(_ => new
                 {
@@ -95,7 +95,7 @@
         public async Task<JsonResult> SearchItemName(string txtSearch = "", int TypeInv = 1)
         {
             decimal Quantity = 1;
-            var setting = await GetListApi<PreferenceModelView>(TypeId: TypeInv, PageSize: 1000);             
+            var setting = await GetListApi<PreferenceModelView>(TypeId: TypeInv, Page: 1, PageSize: 1000);
             if (txtSearch != null)
                 txtSearch = txtSearch.Trim().ToLower();
 

@@ -3,6 +3,7 @@
     using Application.Commands.Org.Setting.User.Commands;
     using AutoMapper;
     using Entity.ModelView;
+    using iTextSharp.text;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.Extensions.Configuration;
@@ -17,8 +18,8 @@
     {
         public override async Task LoadViewBag(UserModelView model)
         {
-            ViewBag.BranchList = new SelectList(await GetListApi<BranchModelView>(), "Id", "Name", model.BranchId);
-            ViewBag.RoleList = new SelectList(await GetListApi<RoleModelView>(), "Id", "Name", model.RoleId);
+            ViewBag.BranchList = new SelectList(await GetListApi<BranchModelView>(Page: 1, PageSize: 20), "Id", "Name", model.BranchId);
+            ViewBag.RoleList = new SelectList(await GetListApi<RoleModelView>(Page: 1, PageSize: 20), "Id", "Name", model.RoleId);
         } 
 
         public override async Task<ActionResult> Save(UserModelView model)
@@ -33,12 +34,12 @@
             return res;
         }
 
-        public async Task<JsonResult> GetList(string txtSearch = "", int page = 1, int pageSize = 10)
+        public async Task<JsonResult> GetList(string txtSearch = "", int page = 1, int pageSize = 20)
         {
             if (txtSearch != null)
                 txtSearch = txtSearch.Trim().ToLower();
 
-            var itemsList = await GetListApi<UserModelView>();
+            var itemsList = await GetListApi<UserModelView>(TextSearch: txtSearch, Page: page, PageSize: pageSize);
             var list = itemsList.Distinct().OrderBy(_ => _.Name)
                 .Select(_ => new
                 {

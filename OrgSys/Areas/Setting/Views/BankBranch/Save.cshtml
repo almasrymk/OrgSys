@@ -132,36 +132,38 @@
             var countryId = $(this).val(); // Get selected country ID
             if (countryId) {
                 $.ajax({
-                    url: '/Setting/BankBranch/GetCitiesByCountryId', // Adjust controller/action as necessary
+                    url: '/Setting/City/GetCitiesByCountryId', // Adjust controller/action as necessary
                     type: "GET",
-                    data: { countryId: countryId },
+                    data: { CountryId: countryId },
                     success: function (cities) {
                         $('#CityId').empty(); // Clear existing options
-                        $('#CityId').append('<option value="">Select a city...</option>');
+                        $('#CityId').append('<option value="">...</option>');
+
+                        $('#DistrictId').empty();
+                        $('#DistrictId').append('<option value="">...</option>');
                         $.each(cities, function (index, city) {
-                            
                             $('#CityId').append('<option value="' + city.id + '">' + city.name + '</option>');
                         });
                     }
                 });
             } else {
-                $('#CityId').empty().append('<option value="">Select a country first...</option>');
+                $('#CityId').empty();
+                $('#CityId').empty().append('<option value="">...</option>');
+                $('#DistrictId').empty();
+                $('#DistrictId').append('<option value="">...</option>');
             }
         });
-    });
-</script>
-<script>
-    $(document).ready(function () {
+    
         $('#CityId').change(function () {
             var CityId = $(this).val(); // Get selected country ID
             if (CityId) {
                 $.ajax({
-                    url: '/Setting/BankBranch/GetDistrictsByCityId', // Adjust controller/action as necessary
+                    url: '/Setting/District/GetDistrictesByCityId', // Adjust controller/action as necessary
                     type: "GET",
                     data: { CityId: CityId },
                     success: function (districts) {
                         $('#DistrictId').empty(); // Clear existing options
-                        $('#DistrictId').append('<option value="">Select a city...</option>');
+                        $('#DistrictId').append('<option value="">...</option>');
                         $.each(districts, function (index, district) {
                             console.log("c", district)
                             $('#DistrictId').append('<option value="' + district.id + '">' + district.name + '</option>');
@@ -169,13 +171,11 @@
                     }
                 });
             } else {
-                $('#CityId').empty().append('<option value="">Select a country first...</option>');
+                $('#DistrictId').empty();
+                $('#DistrictId').empty().append('<option value="">...</option>');
             }
         });
     });
-</script>
-
-<script>
 
     function Save() {
         var Valid = true;
