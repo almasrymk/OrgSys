@@ -11,7 +11,7 @@
 
     public sealed class UpdateRoleCommand : RoleModelView, ICommand, IUpdateCommand<Result>;
 
-    public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.Role> _Repository, IRepository<Entity.Model.RolePermission> _rolePermissionRepository, IMapper mapper) : UpdateCommandHandler<UpdateRoleCommand, Entity.Model.Role>(_UnitOfWork, _Repository, mapper)
+    public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.Role> _Repository, IRepository<Entity.Model.RolePermission> _rolePermissionRepository, IMapper mapper, IServiceProvider _provider) : UpdateCommandHandler<UpdateRoleCommand, Entity.Model.Role>(_UnitOfWork, _Repository, mapper , _provider)
     {
 
         public override async Task<Result> Handle(UpdateRoleCommand request, CancellationToken cancellationToken)

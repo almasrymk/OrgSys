@@ -10,7 +10,7 @@
 
     public sealed record UpdatePaymentTypeCommand(long Id , long? PaymentTypeId, string Name) : ICommand, IUpdateCommand<Result>;
 
-    public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.PaymentType> _Repository , IMapper mapper) : UpdateCommandHandler<UpdatePaymentTypeCommand, Entity.Model.PaymentType>(_UnitOfWork, _Repository , mapper)
+    public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.PaymentType> _Repository , IMapper mapper, IServiceProvider _provider) : UpdateCommandHandler<UpdatePaymentTypeCommand, Entity.Model.PaymentType>(_UnitOfWork, _Repository , mapper , _provider)
     {
        
     }

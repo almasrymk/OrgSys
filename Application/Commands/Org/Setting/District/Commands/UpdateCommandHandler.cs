@@ -10,7 +10,7 @@
 
     public sealed record UpdateDistrictCommand(long Id , long? DistrictId, string Name) : ICommand, IUpdateCommand<Result>;
 
-    public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.District> _Repository , IMapper mapper) : UpdateCommandHandler<UpdateDistrictCommand, Entity.Model.District>(_UnitOfWork, _Repository , mapper)
+    public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.District> _Repository , IMapper mapper, IServiceProvider _provider) : UpdateCommandHandler<UpdateDistrictCommand, Entity.Model.District>(_UnitOfWork, _Repository , mapper , _provider)
     {
        
     }

@@ -6,6 +6,33 @@ using System.Net;
 
 namespace API.Controllers
 {
+    public class CoreController<TGetById, TSearch, TList, TResponse>(ISender sender) : ControllerBase
+        where TGetById : IGetByIdQuery<Result<TResponse>>
+        where TSearch : ISearchQuery<ResultPagination<TResponse>>
+        where TList : IListQuery<ResultCollection<TResponse>>
+    {
+        [HttpGet("GetById")]
+        public virtual async Task<Result<TResponse>> GetById(long Id, CancellationToken cancellationToken)
+        {
+            var query = (TGetById)Activator.CreateInstance(typeof(TGetById), Id)!;
+            return await sender.Send(query, cancellationToken);
+        }
+
+        [HttpGet("GetList")]
+        public virtual async Task<ResultCollection<TResponse>> GetList(string? KeySearch, long ParentId, long TypeId, int Page, int PageSize, CancellationToken cancellationToken)
+        {
+            var query = (TList)Activator.CreateInstance(typeof(TList), KeySearch, ParentId, TypeId, Page, PageSize)!;
+            return await sender.Send(query, cancellationToken);
+        }
+
+        [HttpGet("Search")]
+        public virtual async Task<ResultPagination<TResponse>> Search(string? KeySearch, long ParentId, long TypeId, int Page, int PageSize, CancellationToken cancellationToken)
+        {
+            var query = (TSearch)Activator.CreateInstance(typeof(TSearch), KeySearch, ParentId, TypeId, Page, PageSize)!;
+            return await sender.Send(query, cancellationToken);
+        }      
+    }
+
     public class CoreController<TGetById, TSearch , TList , TCreate, TUpdate, TDelete, TDeleteList, TResponse>(ISender sender) : ControllerBase
         where TGetById : IGetByIdQuery<Result<TResponse>>
         where TSearch : ISearchQuery<ResultPagination<TResponse>>

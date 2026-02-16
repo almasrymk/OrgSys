@@ -2,7 +2,6 @@
 {
     using Application.Commands.Org.Setting.Product.Commands;
     using AutoMapper;
-    using Entity.Model;
     using Entity.ModelView;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
@@ -24,7 +23,7 @@
 
         public override async Task<ProductModelView> InitializeData(ProductModelView ob)
         {
-            if (ob.ProductUnits == null)
+            if (ob.ProductUnitList == null)
                 ob.ProductUnitList = new List<ProductUnitModelView>();
             if (ob.Id == 0)
             {
@@ -48,7 +47,7 @@
         public async Task<ActionResult> SearchProducts(string txt = "", int page = 1, int Type = 1, int index = 0)
         {
             ViewBag.index = index;
-            var list = await GetListApi<ProductModelView>($"GetList?KeySearch={txt}&Page={page}&PageSize=20");
+            var list = await GetListApi<ProductModelView>(TextSearch:txt , Page: page , PageSize:20);
             return Type != 1 ? (ActionResult)PartialView("SearchProductsList", list) : View("SearchProducts", list);
         }
 
@@ -75,7 +74,7 @@
                 }
             }
 
-            var itemsList = await GetListApi<ProductModelView>($"GetList?KeySearch={phrase}&Page=1&PageSize=20");
+            var itemsList = await GetListApi<ProductModelView>(TextSearch: phrase, Page: 1, PageSize: 20);
             var list = itemsList.Distinct().OrderBy(_ => _.Name)
                 .Select(_ => new
                 {
@@ -122,25 +121,26 @@
             return Json(item);
         }
 
-        public JsonResult checkStock(int id)
+        public async Task<JsonResult> checkStock(int id)
         {
-            var product = new ProductService(User.GetSchema()).Get(id);
+            var product = (await GetObApi<ProductModelView>($"GetById?Id={id}"));
             var data = new
             {
                 id = product.Id,
                 name = product.Name,
                 price = product.Price,
                 cost = product.Cost,
-                selectunitid = product.ProductUnits.FirstOrDefault(e => e.DefaultUnit).UnitId,
+                selectunitid = product.ProductUnitList.FirstOrDefault(e => e.DefaultUnit).UnitId,
                 selectunitName = product.ProductUnitList.FirstOrDefault(e => e.DefaultUnit).UnitName,
-                unitlist = new UnitService(User.GetSchema()).GetAllByProductId(id)
+                unitlist = product.ProductUnitList,// new UnitService(User.GetSchema()).GetAllByProductId(id)
             };
             return Json(data);
         }
 
-        public JsonResult LoadProductsByStock(long StockId, DateTime date)
+        public async Task<JsonResult> LoadProductsByStock(long StockId, DateTime date)
         {
-            var products = new ProductService(User.GetSchema()).GetAllByBalance(StockId, date);
+            //var products = new ProductService(User.GetSchema()).GetAllByBalance(StockId, date);
+            var products = await GetListApi<ProductModelView>($"GetAllByBalance?StockId={StockId}&date={date}");
             var data = products.Select(e => new
             {
                 id = e.Id,

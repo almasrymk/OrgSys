@@ -10,7 +10,7 @@
 
     public sealed record UpdateCountryCommand(long Id , long? CountryId, string Name) : ICommand, IUpdateCommand<Result>;
 
-    public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.Country> _Repository , IMapper mapper) : UpdateCommandHandler<UpdateCountryCommand, Entity.Model.Country>(_UnitOfWork, _Repository , mapper)
+    public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.Country> _Repository , IMapper mapper, IServiceProvider _provider) : UpdateCommandHandler<UpdateCountryCommand, Entity.Model.Country>(_UnitOfWork, _Repository , mapper , _provider)
     {
        
     }

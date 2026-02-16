@@ -10,7 +10,7 @@
 
     public sealed class UpdatePreferenceCommand : Entity.ModelView.PreferenceModelView, ICommand, IUpdateCommand<Result>;
 
-    public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.Preference> _Repository , IMapper mapper) : UpdateCommandHandler<UpdatePreferenceCommand, Entity.Model.Preference>(_UnitOfWork, _Repository , mapper)
+    public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.Preference> _Repository , IMapper mapper, IServiceProvider _provider) : UpdateCommandHandler<UpdatePreferenceCommand, Entity.Model.Preference>(_UnitOfWork, _Repository , mapper , _provider)
     {
        
     }

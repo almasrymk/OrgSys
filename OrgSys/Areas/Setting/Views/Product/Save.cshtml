@@ -1,6 +1,8 @@
 ﻿@model Entity.ModelView.ProductModelView
-@{ ViewData["Title_Designer"] = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml"; }
+@{
+    ViewData["Title_Designer"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 
 <div id="HPage" class="container-fluid">
     <div class="row">
@@ -23,7 +25,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="row">
         <div class="col-12 mb-4">
             <div class="card h-100">
@@ -33,10 +35,12 @@
                         <h2 class="mr-4 mb-2 ml-4 d-inline-block float-md-left">
                             @if (Model != null || Model.Id == 0)
                             {
-                                <span class="mb-4"> @Utility.Resource.Title_Designer.New ...</span> }
+                                <span class="mb-4"> @Utility.Resource.Title_Designer.New ...</span>
+                            }
                             else
                             {
-                                <span class="mb-4"> @Utility.Resource.Title_Designer.Edit ...</span>}
+                                <span class="mb-4"> @Utility.Resource.Title_Designer.Edit ...</span>
+                            }
                         </h2>
                         <div class="position-absolute card-top-buttons">
                             <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId" class="btn btn-primary"><i class="simple-icon-action-undo"></i>  @Utility.Resource.Title_Designer.Back</a>
@@ -69,7 +73,7 @@
                                                         <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
                                                     </div>
                                                 </div>
-                                               @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                                                @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                                             </div>
                                             @Html.ValidationMessageFor(model => model.ClassificationId, "", new { @class = "text-danger " })
                                         </div>
@@ -110,7 +114,7 @@
                                                     </div>
                                                     @Html.TextBoxFor(model => model.Barcode, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Barcode })
                                                 </div>
-                                               @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.ItConsists13Numbers</small>*@
+                                                @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.ItConsists13Numbers</small>*@
                                             </div>
                                             @Html.ValidationMessageFor(model => model.Barcode, "", new { @class = "text-danger " })
                                         </div>
@@ -123,7 +127,7 @@
                                                     </div>
                                                     @Html.TextBoxFor(model => model.Price, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Price })
                                                 </div>
-                                               @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SellingPriceProduct</small>*@
+                                                @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SellingPriceProduct</small>*@
                                             </div>
                                             @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger " })
                                         </div>
@@ -138,12 +142,12 @@
                                                     </div>
                                                     @Html.TextBoxFor(model => model.Cost, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Cost })
                                                 </div>
-                                               @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.PurchasePriceFromSuppliers</small>*@
+                                                @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.PurchasePriceFromSuppliers</small>*@
                                             </div>
                                             @Html.ValidationMessageFor(model => model.Cost, "", new { @class = "text-danger " })
                                         </div>
                                         <div class="form-group col-md-6">
-                                           <label>@Utility.Resource.Title_Designer.Supplier</label>
+                                            <label>@Utility.Resource.Title_Designer.Supplier</label>
                                             <div id="divDealerId">
                                                 <div class="input-group DropAutoComplete">
                                                     <div class="input-group-prepend">
@@ -164,7 +168,7 @@
                                         <label>@Utility.Resource.Title_Designer.Description</label>
                                         <div id="divDescription">
                                             @Html.TextBoxFor(model => model.Description, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Description })
-                                           @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.PutYourNotesProduc</small>*@
+                                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.PutYourNotesProduc</small>*@
                                         </div>
                                         @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger mt-3 m-1" })
                                     </div>
@@ -202,15 +206,9 @@
                                                             <tbody>
                                                                 @foreach (var ob in Model.ProductUnitList)
                                                                 {
-                                                                    <tr>
+                                                                    <tr class="UnitRow">
                                                                         <td style="min-width:100px;">
                                                                             <input type="hidden" id="RowId" value="@ob.Id" />
-                                                                            @*<div id="divUnitId" class="input-group">
-                                                                                    <div class="input-group-prepend">
-                                                                                        <span class="input-group-text"><i class="simple-icon-pie-chart"></i></span>
-                                                                                    </div>
-                                                                                    @Html.DropDownListFor(model => ob.UnitId, (SelectList)ViewBag.UnitList, " - " + Utility.Resource.Title_Designer.SelectUnit + " - ", new { @id = "UnitId", @name = "UnitId", @class = "form-control", @onchange = "AddNewRowUnit($(this).parent().parent())" })
-                                                                                </div>*@
                                                                             <div id="divUnitId">
                                                                                 <div class="input-group DropAutoComplete">
                                                                                     <div class="input-group-prepend">
@@ -221,7 +219,7 @@
                                                                                     <div class="input-group-prepend Dropbtn">
                                                                                         <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
                                                                                     </div>
-                                                                                </div>                                                                               
+                                                                                </div>
                                                                             </div>
                                                                         </td>
                                                                         <td style="width:100px;">
@@ -233,36 +231,32 @@
                                                                                 <div id="DefaultUnit" class="custom-switch custom-switch-primary-inverse custom-switch-small">
                                                                                     <input onchange="CheckDefaultUnit($(this).parent().parent().parent())" class="custom-switch-input chkUnit" id="chkUnit_@ob.UnitId" type="checkbox" checked>
                                                                                     <label class="custom-switch-btn" for="chkUnit_@ob.UnitId"></label>
-                                                                                </div> 
-                                                                                }
+                                                                                </div>
+                                                                            }
                                                                             else
                                                                             {
                                                                                 <div id="DefaultUnit" class="custom-switch custom-switch-primary-inverse custom-switch-small">
                                                                                     <input onchange="CheckDefaultUnit($(this).parent().parent().parent())" class="custom-switch-input chkUnit" id="chkUnit_@ob.UnitId" type="checkbox">
                                                                                     <label class="custom-switch-btn" for="chkUnit_@ob.UnitId"></label>
                                                                                 </div>
-                                                                                }
+                                                                            }
                                                                         </td>
                                                                         <td style="width:100px;vertical-align:middle;">
                                                                             @if (ob != null && ob.Id >= 0)
                                                                             {
-                                                                                <a id="btDelete" href="javascript:;" onclick="RemoveRowUnit($(this).parent().parent())">  <i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete  </a> }
+                                                                                <a id="btDelete" href="javascript:;" onclick="RemoveRowUnit($(this).parent().parent())">  <i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete  </a>
+                                                                            }
                                                                             else
                                                                             {
-                                                                                <a id="btDelete" href="javascript:;" onclick="RemoveRowUnit($(this).parent().parent())" style="display:none">  <i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete </a>}
+                                                                                <a id="btDelete" href="javascript:;" onclick="RemoveRowUnit($(this).parent().parent())" style="display:none">  <i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete </a>
+                                                                            }
                                                                         </td>
                                                                     </tr>
                                                                 }
 
-                                                                <tr class="trNew">
+                                                                <tr class="trNew UnitRow">
                                                                     <td style="min-width:100px;">
                                                                         <input type="hidden" id="RowId" value="-1" />
-                                                                        @*<div id="divUnitId" class="input-group">
-                                                                                <div class="input-group-prepend">
-                                                                                    <span class="input-group-text"><i class="simple-icon-pie-chart"></i></span>
-                                                                                </div>
-                                                                                @Html.DropDownList("UnitId", (SelectList)ViewBag.UnitList, " - " + Utility.Resource.Title_Designer.SelectUnit + " - ", new { @id = "UnitId", @name = "UnitId", @class = "form-control", @onchange = "AddNewRowUnit($(this).parent().parent())" })
-                                                                            </div>*@
                                                                         <div id="divUnitId">
                                                                             <div class="input-group DropAutoComplete">
                                                                                 <div class="input-group-prepend">
@@ -273,7 +267,7 @@
                                                                                 <div class="input-group-prepend Dropbtn">
                                                                                     <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
                                                                                 </div>
-                                                                            </div>                                                                            
+                                                                            </div>
                                                                         </div>
                                                                     </td>
                                                                     <td style="width:100px;">
@@ -313,10 +307,12 @@
                                         </div>
                                         @if ("" + Model.ImgPath != "")
                                         {
-                                            <img id="img" src="@Model.ImgPath" alt="Fruitcake" class="list-thumbnail border-0  badge-theme-1" style="height:200px;"> }
+                                            <img id="img" src="@Model.ImgPath" alt="Fruitcake" class="list-thumbnail border-0  badge-theme-1" style="height:200px;">
+                                        }
                                         else
                                         {
-                                            <img id="img" src="~/img/profiles/ProductCard.png" alt="Fruitcake" class="list-thumbnail border-0  badge-theme-1" style="height:200px;">}
+                                            <img id="img" src="~/img/profiles/ProductCard.png" alt="Fruitcake" class="list-thumbnail border-0  badge-theme-1" style="height:200px;">
+                                        }
                                     </div>
                                 </div>
                             </div>
@@ -362,10 +358,11 @@
                                 if (!data.length) {
                                     data = [{ name: noResultsLabel }];
                                 }
+                                var divUnit = $(this).closest(".UnitRow");
 
-                                if ("" + $("#txtUnitId").val() == "") {
-                                    $("#UnitId").val("");
-                                    $("#errorUnitId").remove();
+                                if ("" + divUnit.find("#txtUnitId").val() == "") {
+                                    divUnit.find("#UnitId").val("");
+                                    divUnit.find("#errorUnitId").remove();
                                 }
 
                                 response($.map(data, function (item) {
@@ -382,8 +379,12 @@
                         event.preventDefault();
                         return;
                     }
-                    $("#UnitId").val(ui.item.id);
-                    $("#errorUnitId").remove();
+                    
+                    var divUnit = $(this).closest(".UnitRow");
+
+                    divUnit.find("#UnitId").val(ui.item.id);
+                    divUnit.find("#errorUnitId").remove();
+
                     AddNewRowUnit($(this).parent().parent().parent());
                 },
                 focus: function (event, ui) {
@@ -669,31 +670,30 @@
                 TypeId: $('#TypeId').val(),
                 ImgPath: $('#ImgPath').val(),
                 CodeNumber: $('#CodeNumber').val(),
-                ProductUnits: list
+                ProductUnitList: list
             };
 
             $.ajax({
                 type: 'POST',
                 url: "/Setting/Product/Save",
-                data: { model: data},
+                data: { ob: data},
                 success: function (res) {
                     if (res.status == "success") {
-                        $.ajax({
-                            type: 'POST',
-                            url: "/Setting/Product/SaveFile?id=" + res.id,
-                            data: fileData,
-                            processData: false,
-                            contentType: false,
-                            success: function (resImg) {
-                                window.location.replace(res.url);
-                            }
-                        });
+                        window.location.replace(res.url);
                     }
                     else {
-                        $("#divLoader").hide();
                         LogError(data.Error);
                     }
+                },
+                error: function (xhr) {
+                    if (xhr.status === 400) {
+                        var errors = xhr.responseJSON.errors;
 
+                        $.each(errors, function (index, res) {
+                            var span = $("[data-valmsg-for='" + res.key + "']");
+                            span.text(res.messageError);
+                        });
+                    }
                 }
             });
         }

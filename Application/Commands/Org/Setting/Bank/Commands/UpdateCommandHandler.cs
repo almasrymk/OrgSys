@@ -10,7 +10,7 @@
 
     public sealed class UpdateBankCommand : BankModelView, ICommand, IUpdateCommand<Result>;
 
-    public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.Bank> _Repository, IMapper mapper) : UpdateCommandHandler<UpdateBankCommand, Entity.Model.Bank>(_UnitOfWork, _Repository, mapper)
+    public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.Bank> _Repository, IMapper mapper, IServiceProvider _provider) : UpdateCommandHandler<UpdateBankCommand, Entity.Model.Bank>(_UnitOfWork, _Repository, mapper , _provider)
     {
 
     }

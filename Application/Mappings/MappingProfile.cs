@@ -14,6 +14,8 @@ public partial class MappingProfile : Profile
         UserMappingProfile();
 
         // 1-3- Products
+        ProductUnitMappingProfile();
+        ProductMappingProfile();
         ClassificationMappingProfile();
         UnitMappingProfile();
 

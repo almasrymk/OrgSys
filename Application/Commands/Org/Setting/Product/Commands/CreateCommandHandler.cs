@@ -8,7 +8,7 @@
     using Domain.Shared;
     using Entity.ModelView;
 
-    public sealed record CreateProductCommand(string Name) : ICommand , ICreateCommand<Result>;
+    public sealed class CreateProductCommand : ProductModelView , ICommand , ICreateCommand<Result>;
 
     public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.Product> _Repository , IMapper mapper) : CreateCommandHandler<CreateProductCommand, Entity.Model.Product>(_UnitOfWork, _Repository , mapper)
     {

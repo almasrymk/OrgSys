@@ -10,7 +10,7 @@
 
     public sealed class UpdateUnitCommand : UnitModelView, ICommand, IUpdateCommand<Result>;
 
-    public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.Unit> _Repository , IMapper mapper) : UpdateCommandHandler<UpdateUnitCommand, Entity.Model.Unit>(_UnitOfWork, _Repository , mapper)
+    public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.Unit> _Repository , IMapper mapper, IServiceProvider _provider) : UpdateCommandHandler<UpdateUnitCommand, Entity.Model.Unit>(_UnitOfWork, _Repository , mapper , _provider)
     {
        
     }

@@ -180,11 +180,14 @@
             }
 
             await LoadViewBag(ob);
-            if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
-                return BadRequest(new { res.Errors });
+            if (res != null)
+            {
+                if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+                    return BadRequest(new { res.Errors });
 
-            foreach (var item in res.Errors)
-                ModelState.AddModelError(item.Key, item.MessageError);
+                foreach (var item in res.Errors)
+                    ModelState.AddModelError(item.Key, item.MessageError);
+            }
             return View(ob);
         }
 

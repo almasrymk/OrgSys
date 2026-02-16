@@ -10,7 +10,7 @@
 
     public sealed class UpdateSafeCommand : SafeModelView, ICommand, IUpdateCommand<Result>;
 
-    public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.Safe> _Repository , IMapper mapper) : UpdateCommandHandler<UpdateSafeCommand, Entity.Model.Safe>(_UnitOfWork, _Repository , mapper)
+    public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.Safe> _Repository , IMapper mapper, IServiceProvider _provider) : UpdateCommandHandler<UpdateSafeCommand, Entity.Model.Safe>(_UnitOfWork, _Repository , mapper , _provider)
     {
        
     }

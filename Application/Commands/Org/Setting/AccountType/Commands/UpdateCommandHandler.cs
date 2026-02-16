@@ -10,7 +10,7 @@
 
     public sealed record UpdateAccountTypeCommand(long Id , long? AccountTypeId, string Name) : ICommand, IUpdateCommand<Result>;
 
-    public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.AccountType> _Repository , IMapper mapper) : UpdateCommandHandler<UpdateAccountTypeCommand, Entity.Model.AccountType>(_UnitOfWork, _Repository , mapper)
+    public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.AccountType> _Repository , IMapper mapper, IServiceProvider _provider) : UpdateCommandHandler<UpdateAccountTypeCommand, Entity.Model.AccountType>(_UnitOfWork, _Repository , mapper , _provider)
     {
        
     }

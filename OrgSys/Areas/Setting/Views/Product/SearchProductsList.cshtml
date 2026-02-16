@@ -1,4 +1,4 @@
-﻿@model X.PagedList.IPagedList<Entity.ModelView.ProductModelView>
+﻿@model Domain.Shared.ResultPagination<Entity.ModelView.ProductModelView>
 @{
     ViewData["Title_Designer"] = "Index";
 }
@@ -15,7 +15,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.Response)
         {
         <tr>
             <td style="width:50px;vertical-align: middle;text-align:center;padding:3px;">
@@ -64,7 +64,7 @@
 {
     <nav class="p-0 m-0">
         <ul class="pagination justify-content-center mb-0">
-            @if (Model.PageNumber > 1)
+            @if (Model.Page > 1)
             {
                 <li class="page-item ">
                     <button class="page-link first" onclick="searchProduct(1)">
@@ -72,7 +72,7 @@
                     </button>
                 </li>
                 <li class="page-item">
-                    <button class="page-link prev" onclick="searchProduct(@Model.PageNumber - 1)">
+                    <button class="page-link prev" onclick="searchProduct(@Model.Page - 1)">
                         <i class="simple-icon-arrow-left"></i>
                     </button>
                 </li>
@@ -95,7 +95,7 @@
             {
                 @for (int i = 1; i <= Model.PageCount; i++)
                 {
-                    if (i == Model.PageNumber)
+                    if (i == Model.Page)
                     {
                         <li class="page-item active">
                             <a class="page-link">@i</a>
@@ -111,11 +111,11 @@
             }
             else
             {
-                if (Model.PageNumber < 5)
+                if (Model.Page < 5)
                 {
                     @for (int i = 1; i <= 5; i++)
                     {
-                        if (i == Model.PageNumber)
+                        if (i == Model.Page)
                         {
                             <li class="page-item active">
                                 <a class="page-link">@i</a>
@@ -130,7 +130,7 @@
                     }
                 }
 
-                if (Model.PageNumber >= 5)
+                if (Model.Page >= 5)
                 {
 
                     @for (int i = 1; i <= 2; i++)
@@ -144,13 +144,11 @@
                     </li>
                 }
 
-
-                if (Model.PageNumber >= 5 && Model.PageNumber <= Model.PageCount - 5)
+                if (Model.Page >= 5 && Model.Page <= Model.PageCount - 5)
                 {
-
-                    @for (int i = Model.PageNumber - 1; i <= Model.PageNumber + 3; i++)
+                    @for (int i = Model.Page - 1; i <= Model.Page + 3; i++)
                     {
-                        if (i == Model.PageNumber)
+                        if (i == Model.Page)
                         {
                             <li class="page-item active">
                                 <a class="page-link">@i</a>
@@ -165,12 +163,11 @@
                     }
                 }
 
-                if (Model.PageNumber == Model.PageCount - 4)
+                if (Model.Page == Model.PageCount - 4)
                 {
-
-                    @for (int i = Model.PageNumber - 2; i <= Model.PageNumber + 2; i++)
+                    @for (int i = Model.Page - 2; i <= Model.Page + 2; i++)
                     {
-                        if (i == Model.PageNumber)
+                        if (i == Model.Page)
                         {
                             <li class="page-item active">
                                 <a class="page-link">@i</a>
@@ -185,11 +182,11 @@
                     }
                 }
 
-                if (Model.PageNumber > Model.PageCount - 4)
+                if (Model.Page > Model.PageCount - 4)
                 {
                     @for (int i = Model.PageCount - 4; i <= Model.PageCount; i++)
                     {
-                        if (i == Model.PageNumber)
+                        if (i == Model.Page)
                         {
                             <li class="page-item active">
                                 <a class="page-link">@i</a>
@@ -203,9 +200,8 @@
                         }
                     }
                 }
-
-
-                if (Model.PageNumber < Model.PageCount - 3)
+                 
+                if (Model.Page < Model.PageCount - 3)
                 {
                     <li class="page-item ">
                         &ensp;
@@ -219,10 +215,10 @@
                 }
             }
 
-            @if (Model.PageNumber < Model.PageCount)
+            @if (Model.Page < Model.PageCount)
             {
                 <li class="page-item ">
-                    <button class="page-link next" aria-label="Next" onclick="searchProduct( @Model.PageNumber + 1)">
+                    <button class="page-link next" aria-label="Next" onclick="searchProduct( @Model.Page + 1)">
                         <i class="simple-icon-arrow-right"></i>
                     </button>
                 </li>

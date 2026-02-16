@@ -188,15 +188,9 @@ namespace OrgSys.Areas.Invoices.Controllers
             new InvoiceService(User.GetSchema()).Redo(id);
             return Redirect("/Invoices/Invoice/Index?ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" + ResultStatus.success + "&MsgError=Success");
         }
-
-        //public override Task<IActionResult> Print(long Id, string ViewName = "InvoicePrint")
-        //{
-        //    return base.Print(Id, ViewName);
-        //}
-
+         
         public JsonResult GetProductInvoice(int Id)
         {
-
             var item = new InvoiceService(User.GetSchema()).GetProductInvoicesNotReturn(Id);
             if (item == null)
                 item = new List<InvoiceProductModelView>();

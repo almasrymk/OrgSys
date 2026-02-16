@@ -9,7 +9,7 @@
 
     public sealed record UpdateStockCommand(long Id , string Name, long BranchId) : ICommand, IUpdateCommand<Result>;
 
-    public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.Stock> _Repository , IMapper mapper) : UpdateCommandHandler<UpdateStockCommand, Entity.Model.Stock>(_UnitOfWork, _Repository , mapper)
+    public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.Stock> _Repository , IMapper mapper, IServiceProvider _provider) : UpdateCommandHandler<UpdateStockCommand, Entity.Model.Stock>(_UnitOfWork, _Repository , mapper , _provider)
     {
        
     }

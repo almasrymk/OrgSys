@@ -10,7 +10,7 @@
 
     public sealed record UpdatePropertyCommand(long Id , long? PropertyId, string Name) : ICommand, IUpdateCommand<Result>;
 
-    public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.Property> _Repository , IMapper mapper) : UpdateCommandHandler<UpdatePropertyCommand, Entity.Model.Property>(_UnitOfWork, _Repository , mapper)
+    public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.Property> _Repository , IMapper mapper, IServiceProvider _provider) : UpdateCommandHandler<UpdatePropertyCommand, Entity.Model.Property>(_UnitOfWork, _Repository , mapper,_provider)
     {
        
     }
