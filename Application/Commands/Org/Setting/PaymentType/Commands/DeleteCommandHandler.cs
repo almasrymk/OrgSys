@@ -11,7 +11,7 @@
 
     public sealed record DeletePaymentTypeCommand(long Id) : ICommand , IDeleteCommand<Result>;
 
-    public sealed class DeleteCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.PaymentType> _Repository , IMapper mapper) : DeleteCommandHandler<DeletePaymentTypeCommand, Entity.Model.PaymentType>(_UnitOfWork, _Repository , mapper)
+    public sealed class DeleteCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.PaymentType> _Repository, IServiceProvider _provider) : DeleteCommandHandler<DeletePaymentTypeCommand, Entity.Model.PaymentType>(_UnitOfWork, _Repository , _provider)
     {
         public override Expression<Func<Entity.Model.PaymentType, bool>> CreateFilter(DeletePaymentTypeCommand request)
         {

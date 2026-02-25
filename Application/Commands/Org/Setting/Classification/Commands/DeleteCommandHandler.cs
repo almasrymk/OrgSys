@@ -11,7 +11,7 @@
 
     public sealed record DeleteClassificationCommand(long Id) : ICommand , IDeleteCommand<Result>;
 
-    public sealed class DeleteCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.Classification> _Repository , IMapper mapper) : DeleteCommandHandler<DeleteClassificationCommand, Entity.Model.Classification>(_UnitOfWork, _Repository , mapper)
+    public sealed class DeleteCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.Classification> _Repository, IServiceProvider _provider) : DeleteCommandHandler<DeleteClassificationCommand, Entity.Model.Classification>(_UnitOfWork, _Repository , _provider)
     {
         public override Expression<Func<Entity.Model.Classification, bool>> CreateFilter(DeleteClassificationCommand request)
         {

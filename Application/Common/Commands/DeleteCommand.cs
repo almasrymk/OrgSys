@@ -5,12 +5,13 @@
     using Domain.Abstraction;
     using Domain.Shared;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.DependencyInjection;
     using System.Linq.Expressions;
     using System.Net;
     using System.Threading;
     using System.Threading.Tasks;
 
-    public class DeleteCommandHandler<TDto, TModel>(IUnitOfWork _UnitOfWork, IRepository<TModel> _Repository, IMapper mapper) : ICommandHandler<TDto>
+    public class DeleteCommandHandler<TDto, TModel>(IUnitOfWork _UnitOfWork, IRepository<TModel> _Repository , IServiceProvider _provider) : ICommandHandler<TDto>
         where TDto : ICommand
         where TModel : Entity.BaseModel
     {
@@ -21,6 +22,7 @@
             {
                 try
                 {
+                    var resDetails = await RemoveDetails(request);
                     var res = await _Repository.ShiftDeleteAsync(CreateFilter(request));
                     if (_UnitOfWork.SaveChangeAsync().Result > 0)
                     {
@@ -67,6 +69,26 @@
         public virtual Expression<Func<TModel, bool>> CreateFilter(TDto request)
         {
             return e => true;
+        }
+
+        public virtual async Task<bool> RemoveDetails(TDto request)
+        {
+            return true;
+        }
+         
+        protected async Task<bool> RemoveDetails<TModelDetails>(Expression<Func<TModelDetails , bool>> Filter)
+          where TModelDetails : Entity.BaseModel
+        {
+            try
+            {
+                var repository = _provider.GetRequiredService<IRepository<TModelDetails>>();
+                var res = await repository.ShiftDeleteAsync(Filter);
+                return res;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

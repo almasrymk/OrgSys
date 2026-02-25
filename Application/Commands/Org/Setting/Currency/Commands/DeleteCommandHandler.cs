@@ -11,7 +11,7 @@
 
     public sealed record DeleteCurrencyCommand(long Id) : ICommand , IDeleteCommand<Result>;
 
-    public sealed class DeleteCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.Currency> _Repository , IMapper mapper) : DeleteCommandHandler<DeleteCurrencyCommand, Entity.Model.Currency>(_UnitOfWork, _Repository , mapper)
+    public sealed class DeleteCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.Currency> _Repository, IServiceProvider _provider) : DeleteCommandHandler<DeleteCurrencyCommand, Entity.Model.Currency>(_UnitOfWork, _Repository , _provider)
     {
         public override Expression<Func<Entity.Model.Currency, bool>> CreateFilter(DeleteCurrencyCommand request)
         {

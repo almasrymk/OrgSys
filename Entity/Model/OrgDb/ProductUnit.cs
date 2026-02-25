@@ -6,6 +6,8 @@ namespace Entity.Model
     [Table("ProductUnit")]
     public class ProductUnit : BaseModel
     {
+        public ProductUnit() { }
+
         [ForeignKey("Product")]
         public virtual long ProductId { get; set; }
 

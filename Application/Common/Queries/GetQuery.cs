@@ -21,7 +21,7 @@
                 TModel? res = await _Repository.GetByFilterAsync(CreateFilter(request), CreateInclude());
                 if (res == null || res.Id == 0)
                     res = (TModel)Activator.CreateInstance(typeof(TModel))!;
-
+                var xx = mapper.Map<TResponse>(res);
                 return new Result<TResponse>(
                      HttpStatusCode.OK,
                      mapper.Map<TResponse>(res),

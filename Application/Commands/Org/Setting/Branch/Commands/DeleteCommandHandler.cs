@@ -11,7 +11,7 @@
 
     public sealed record DeleteBranchCommand(long Id) : ICommand , IDeleteCommand<Result>;
 
-    public sealed class DeleteCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.Branch> _Repository , IMapper mapper) : DeleteCommandHandler<DeleteBranchCommand, Entity.Model.Branch>(_UnitOfWork, _Repository , mapper)
+    public sealed class DeleteCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.Branch> _Repository, IServiceProvider _provider) : DeleteCommandHandler<DeleteBranchCommand, Entity.Model.Branch>(_UnitOfWork, _Repository , _provider)
     {
         public override Expression<Func<Entity.Model.Branch, bool>> CreateFilter(DeleteBranchCommand request)
         {

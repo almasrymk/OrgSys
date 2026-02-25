@@ -1,5 +1,6 @@
 ﻿using API.Middlewares;
 using Application.Validators;
+using AutoMapper;
 using Domain.Abstraction;
 using Entity;
 using FluentValidation;
@@ -29,7 +30,7 @@ builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
 builder.Services.AddAutoMapper(cfg => { cfg.AddProfile<MappingProfile>(); });
 
-builder.Services.AddAutoMapper(cfg => { cfg.AddProfile<MapperConfig>(); });
+//builder.Services.AddAutoMapper(cfg => { cfg.AddProfile<MapperConfig>(); });
 
 builder.Services.AddSwaggerGen(c => { c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First()); });
 
@@ -62,5 +63,8 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.UseMiddleware<GlobalExceptionMiddleware>();
+
+//var mapper = app.Services.GetRequiredService<IMapper>();
+//mapper.ConfigurationProvider.AssertConfigurationIsValid();
 
 app.Run();

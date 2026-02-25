@@ -11,7 +11,7 @@
 
     public sealed record DeleteDistrictCommand(long Id) : ICommand , IDeleteCommand<Result>;
 
-    public sealed class DeleteCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.District> _Repository , IMapper mapper) : DeleteCommandHandler<DeleteDistrictCommand, Entity.Model.District>(_UnitOfWork, _Repository , mapper)
+    public sealed class DeleteCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.District> _Repository, IServiceProvider _provider) : DeleteCommandHandler<DeleteDistrictCommand, Entity.Model.District>(_UnitOfWork, _Repository , _provider)
     {
         public override Expression<Func<Entity.Model.District, bool>> CreateFilter(DeleteDistrictCommand request)
         {

@@ -27,6 +27,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using static Org.BouncyCastle.Math.EC.ECCurve;
 
 namespace OrgSys
 {
@@ -102,10 +103,11 @@ namespace OrgSys
                 var p = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
                 options.Filters.Add(new AuthorizeFilter(p));
             }).AddXmlSerializerFormatters();
+            //services.AddAutoMapper(cfg => { cfg.AddProfile<MapperConfig>(); });
             services.AddAutoMapper(cfg => { cfg.AddProfile<MappingProfile>(); });
-            services.AddAutoMapper(cfg => { cfg.AddProfile<MapperConfig>(); });
+           
             services.AddControllersWithViews();
-             
+           
             services.AddSession();
             services.AddMvc();
         }
@@ -144,7 +146,10 @@ namespace OrgSys
             app.UseCookiePolicy(cookiePolicyOptions);
             app.UseAuthentication();
             app.UseAuthorization();
-          
+
+            //var mapper = app.ApplicationServices.GetRequiredService<IMapper>();
+            //mapper.ConfigurationProvider.AssertConfigurationIsValid();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

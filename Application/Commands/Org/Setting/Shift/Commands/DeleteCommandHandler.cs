@@ -11,7 +11,7 @@
 
     public sealed record DeleteShiftCommand(long Id) : ICommand , IDeleteCommand<Result>;
 
-    public sealed class DeleteCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.Shift> _Repository , IMapper mapper) : DeleteCommandHandler<DeleteShiftCommand, Entity.Model.Shift>(_UnitOfWork, _Repository , mapper)
+    public sealed class DeleteCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.Shift> _Repository, IServiceProvider _provider) : DeleteCommandHandler<DeleteShiftCommand, Entity.Model.Shift>(_UnitOfWork, _Repository , _provider)
     {
         public override Expression<Func<Entity.Model.Shift, bool>> CreateFilter(DeleteShiftCommand request)
         {

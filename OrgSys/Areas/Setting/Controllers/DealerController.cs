@@ -41,7 +41,7 @@
                 txtSearch = txtSearch.Trim().ToLower();
             long TypeDealerId = TypeId == 1 || TypeId == 3 ? 1 : 2;
 
-            var itemsList = await GetListApi<DealerGroupModelView>(TypeId: TypeDealerId , TextSearch: txtSearch, Page: page, PageSize: pageSize);
+            var itemsList = await GetListApi<DealerModelView>(TypeId: TypeDealerId , TextSearch: txtSearch, Page: page, PageSize: pageSize);
             var list = itemsList.Distinct().OrderBy(_ => _.Name)
                 .Select(_ => new
                 {

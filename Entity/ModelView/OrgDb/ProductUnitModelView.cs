@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Entity.ModelView
 {
     public class ProductUnitModelView : BaseModel
-    {
+    { 
         public virtual long ProductId { get; set; }
 
         public virtual long UnitId { get; set; }
@@ -15,8 +15,9 @@ namespace Entity.ModelView
 
         public  bool DefaultUnit { get; set; }
 
-        public string ProductName { get; set; }
+        public virtual string ProductName { get; set; }
 
-        public string UnitName { get; set; }
+        [StringLength(50, MinimumLength = 2)]
+        public virtual string UnitName { get; set; }
     }
 }

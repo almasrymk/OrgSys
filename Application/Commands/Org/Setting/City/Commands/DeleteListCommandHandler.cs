@@ -10,7 +10,7 @@
 
     public sealed record DeleteListCityCommand(List<long> Ids) : ICommand, IDeleteListCommand<Result>;   
 
-    public sealed class DeleteListCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.City> _Repository , IMapper mapper) : DeleteCommandHandler<DeleteListCityCommand, Entity.Model.City>(_UnitOfWork, _Repository , mapper)
+    public sealed class DeleteListCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.City> _Repository, IServiceProvider _provider) : DeleteCommandHandler<DeleteListCityCommand, Entity.Model.City>(_UnitOfWork, _Repository , _provider)
     {
         public override Expression<Func<Entity.Model.City, bool>> CreateFilter(DeleteListCityCommand request)
         {

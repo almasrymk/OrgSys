@@ -11,7 +11,7 @@
 
     public sealed record DeleteListStockCommand(List<long> Ids) : ICommand, IDeleteListCommand<Result>;   
 
-    public sealed class DeleteListCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.Stock> _Repository , IMapper mapper) : DeleteCommandHandler<DeleteListStockCommand, Entity.Model.Stock>(_UnitOfWork, _Repository , mapper)
+    public sealed class DeleteListCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.Stock> _Repository, IServiceProvider _provider) : DeleteCommandHandler<DeleteListStockCommand, Entity.Model.Stock>(_UnitOfWork, _Repository , _provider)
     {
         public override Expression<Func<Entity.Model.Stock, bool>> CreateFilter(DeleteListStockCommand request)
         {

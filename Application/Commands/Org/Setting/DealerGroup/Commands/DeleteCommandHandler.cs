@@ -11,7 +11,7 @@
 
     public sealed record DeleteDealerGroupCommand(long Id) : ICommand , IDeleteCommand<Result>;
 
-    public sealed class DeleteCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.DealerGroup> _Repository , IMapper mapper) : DeleteCommandHandler<DeleteDealerGroupCommand, Entity.Model.DealerGroup>(_UnitOfWork, _Repository , mapper)
+    public sealed class DeleteCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.DealerGroup> _Repository, IServiceProvider _provider) : DeleteCommandHandler<DeleteDealerGroupCommand, Entity.Model.DealerGroup>(_UnitOfWork, _Repository , _provider)
     {
         public override Expression<Func<Entity.Model.DealerGroup, bool>> CreateFilter(DeleteDealerGroupCommand request)
         {

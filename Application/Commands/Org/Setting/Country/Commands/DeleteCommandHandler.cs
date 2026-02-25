@@ -11,7 +11,7 @@
 
     public sealed record DeleteCountryCommand(long Id) : ICommand , IDeleteCommand<Result>;
 
-    public sealed class DeleteCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.Country> _Repository , IMapper mapper) : DeleteCommandHandler<DeleteCountryCommand, Entity.Model.Country>(_UnitOfWork, _Repository , mapper)
+    public sealed class DeleteCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.Country> _Repository, IServiceProvider _provider) : DeleteCommandHandler<DeleteCountryCommand, Entity.Model.Country>(_UnitOfWork, _Repository , _provider)
     {
         public override Expression<Func<Entity.Model.Country, bool>> CreateFilter(DeleteCountryCommand request)
         {
