@@ -17,29 +17,29 @@ namespace Repository
 
         #region Input
         #region Organization
-        private BranchRepo _branchRepo;
-        public BranchRepo branchRepo
-        {
-            get
-            {
-                if (this._branchRepo == null)
-                    this._branchRepo = new BranchRepo(Schema);
+        //private BranchRepo _branchRepo;
+        //public BranchRepo branchRepo
+        //{
+        //    get
+        //    {
+        //        if (this._branchRepo == null)
+        //            this._branchRepo = new BranchRepo(Schema);
 
-                return _branchRepo;
-            }
-        }
+        //        return _branchRepo;
+        //    }
+        //}
 
-        private StockRepo _StockRepo;
-        public StockRepo StockRepo
-        {
-            get
-            {
-                if (this._StockRepo == null)
-                    this._StockRepo = new StockRepo(Schema);
+        //private StockRepo _StockRepo;
+        //public StockRepo StockRepo
+        //{
+        //    get
+        //    {
+        //        if (this._StockRepo == null)
+        //            this._StockRepo = new StockRepo(Schema);
 
-                return _StockRepo;
-            }
-        }
+        //        return _StockRepo;
+        //    }
+        //}
 
         private ShiftRepo _shiftRepo;
         public ShiftRepo shiftRepo

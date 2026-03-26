@@ -27,7 +27,7 @@
             var res = await base.Save(model);
             if (User.IsCurrentUserAndRole(model.Id, model.RoleId))
             {
-                var us = new UserService(User.GetSchema()).Get(model.Id);
+                var us = (await GetObApi<UserModelView>($"GetById?Id={model.Id}"));
                 if (us != null)
                     us.SignIn(HttpContext, User.GetSchema());
             }

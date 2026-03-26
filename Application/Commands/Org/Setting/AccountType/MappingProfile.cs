@@ -1,7 +1,7 @@
-﻿using AutoMapper;
+﻿using Application.Commands.Org.Setting.AccountType.Commands;
+using AutoMapper;
 using Entity.Model;
 using Entity.ModelView;
-using Application.Commands.Org.Setting.AccountType.Commands;
 
 public partial class MappingProfile : Profile
 {
@@ -9,7 +9,19 @@ public partial class MappingProfile : Profile
     {
         #region AccountType
         CreateMap<AccountType, AccountTypeModelView>();
-        CreateMap<AccountTypeModelView, AccountType>();       
+        CreateMap<AccountTypeModelView, AccountType>();
+
+        CreateMap<AccountType, CreateAccountTypeCommand>();
+        CreateMap<CreateAccountTypeCommand, AccountType>();
+        CreateMap<AccountType, UpdateAccountTypeCommand>();
+        CreateMap<UpdateAccountTypeCommand, AccountType>();
+        CreateMap<AccountType, DeleteAccountTypeCommand>();
+        CreateMap<DeleteAccountTypeCommand, AccountType>();
+
+        CreateMap<AccountTypeModelView, CreateAccountTypeCommand>();
+        CreateMap<CreateAccountTypeCommand, AccountTypeModelView>();
+        CreateMap<AccountTypeModelView, UpdateAccountTypeCommand>();
+        CreateMap<UpdateAccountTypeCommand, AccountTypeModelView>();
         #endregion
     }
 }

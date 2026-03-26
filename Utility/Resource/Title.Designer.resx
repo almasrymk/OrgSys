@@ -532,7 +532,7 @@
     <value>Organizer System</value>
   </data>
   <data name="Outlaies" xml:space="preserve">
-    <value>Outlaies</value>
+    <value>Outlays</value>
   </data>
   <data name="Outlay" xml:space="preserve">
     <value>Outlay</value>
@@ -568,6 +568,9 @@
     <value>Preference</value>
   </data>
   <data name="Previous" xml:space="preserve">
+    <value>Previous</value>
+  </data>
+  <data name="Previous1" xml:space="preserve">
     <value>Previous</value>
   </data>
   <data name="Price" xml:space="preserve">
@@ -868,7 +871,7 @@
     <value>Transactions</value>
   </data>
   <data name="Transfer" xml:space="preserve">
-    <value>Transafer</value>
+    <value>Transfer</value>
   </data>
   <data name="Type" xml:space="preserve">
     <value>Type</value>
@@ -1028,5 +1031,14 @@
   </data>
   <data name="Parent" xml:space="preserve">
     <value>Parent</value>
+  </data>
+  <data name="Transafer" xml:space="preserve">
+    <value>Transfer</value>
+  </data>
+  <data name="ReturnInvoice" xml:space="preserve">
+    <value>Return Invoices</value>
+  </data>
+  <data name="Outlays" xml:space="preserve">
+    <value>Outlays</value>
   </data>
 </root>

@@ -24,13 +24,23 @@ public partial class MappingProfile : Profile
         DealerMappingProfile();
 
         // 1-5- Financial
+        AccountTypeMappingProfile();
         AccountMappingProfile();
         SafeMappingProfile();
         BankBranchMappingProfile();
         BankMappingProfile();
         CurrencyMappingProfile();
 
-        CityMappingProfile();
+        // 1-6- Location
         CountryMappingProfile();
+        CityMappingProfile();
+        DistrictMappingProfile();
+
+        // 1-Invoices
+        InvoiceTypeMappingProfile();
+        InvoiceMappingProfile();
+
+        // 1-Transactions
+        TransactionMappingProfile();
     }
 }

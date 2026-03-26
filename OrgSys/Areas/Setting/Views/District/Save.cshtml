@@ -111,7 +111,7 @@
                     data: { CountryId: countryId },
                     success: function (cities) {
                         $('#CityId').empty(); // Clear existing options
-                        $('#CityId').append('<option value="">Select a city...</option>');
+                        $('#CityId').append('<option value="">...</option>');
                         $.each(cities, function (index, city) {
                             console.log("c",city)
                             $('#CityId').append('<option value="' + city.id + '">' + city.name + '</option>');
@@ -155,7 +155,7 @@
             $.ajax({
                 type: 'POST',
                 url: "/Setting/District/Save",
-                data: { model: data},
+                data: { ob: data},
                 success: function (res) {
                     if (res.status == "success") {
                         window.location.replace(res.url);

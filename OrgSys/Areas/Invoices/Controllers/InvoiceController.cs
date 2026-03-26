@@ -22,9 +22,7 @@ namespace OrgSys.Areas.Invoices.Controllers
             var type = await GetObApi<InvoiceTypeModelView>($"GetById?Id={TypeId}");
             ViewBag.InvoicesType = type.Name;
             ViewBag.InvoicesGroup = type.Group;
-            ViewBag.InvoicesIcon = type.Icon;
-
-            await base.LoadViewBagIndex();
+            ViewBag.InvoicesIcon = type.Icon;             
         }
 
         public override async Task LoadViewBag(InvoiceModelView model)

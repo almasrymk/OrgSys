@@ -570,6 +570,9 @@
   <data name="Previous" xml:space="preserve">
     <value>السابق</value>
   </data>
+  <data name="Previous1" xml:space="preserve">
+    <value>السابق</value>
+  </data>
   <data name="Price" xml:space="preserve">
     <value>السعر</value>
   </data>
@@ -666,7 +669,7 @@
   <data name="Return" xml:space="preserve">
     <value>المرتجع</value>
   </data>
-  <data name="ReturnInvoice" xml:space="preserve">
+  <data name="ReturnInvoices" xml:space="preserve">
     <value>مرتد فواتير البيع</value>
   </data>
   <data name="Returns" xml:space="preserve">
@@ -1008,16 +1011,34 @@
   <data name="SupplierGroups" xml:space="preserve">
     <value>مجموعات الموردين</value>
   </data>
-  <data name="AccountType" xml:space="preserve">
-    <value>نوع الحساب</value>
+  <data name="ClientsGroup" xml:space="preserve">
+    <value>مجموعات العملاء</value>
   </data>
-  <data name="Parent" xml:space="preserve">
-    <value>حساب</value>
+  <data name="DealersGroup" xml:space="preserve">
+    <value>مجموعات المتعاملين</value>
+  </data>
+  <data name="SuppliersGroup" xml:space="preserve">
+    <value>مجموعات الموردين</value>
   </data>
   <data name="SalesBalance" xml:space="preserve">
     <value>رصيد المندوب</value>
   </data>
   <data name="SalesClient" xml:space="preserve">
     <value>عملاء المندوب</value>
+  </data>
+  <data name="AccountType" xml:space="preserve">
+    <value>نوع الحساب</value>
+  </data>
+  <data name="Parent" xml:space="preserve">
+    <value>حساب</value>
+  </data>
+  <data name="Transafer" xml:space="preserve">
+    <value>تحويلات</value>
+  </data>
+  <data name="ReturnInvoice" xml:space="preserve">
+    <value>مرتد فواتير البيع</value>
+  </data>
+  <data name="Outlays" xml:space="preserve">
+    <value>المصروفات</value>
   </data>
 </root>

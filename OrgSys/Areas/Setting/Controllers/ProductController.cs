@@ -113,7 +113,11 @@
                 }
             }
 
-            var item = new ProductService(User.GetSchema()).Get(txtSearch);
+            var list = await GetListApi<ProductModelView>(TextSearch: txtSearch, Page: 1, PageSize: 1);
+            if(list == null)
+                list = new List<ProductModelView>();
+
+            var item = list.FirstOrDefault();
             if (item == null)
                 item = new ProductModelView();
 

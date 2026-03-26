@@ -19,7 +19,7 @@ namespace Utility.Resource {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Title_Designer {
@@ -1501,7 +1501,7 @@ namespace Utility.Resource {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Outlaies.
+        ///   Looks up a localized string similar to Outlays.
         /// </summary>
         public static string Outlaies {
             get {
@@ -1515,6 +1515,15 @@ namespace Utility.Resource {
         public static string Outlay {
             get {
                 return ResourceManager.GetString("Outlay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Outlays.
+        /// </summary>
+        public static string Outlays {
+            get {
+                return ResourceManager.GetString("Outlays", resourceCulture);
             }
         }
         
@@ -1623,6 +1632,15 @@ namespace Utility.Resource {
         public static string Previous {
             get {
                 return ResourceManager.GetString("Previous", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Previous.
+        /// </summary>
+        public static string Previous1 {
+            get {
+                return ResourceManager.GetString("Previous1", resourceCulture);
             }
         }
         
@@ -1947,6 +1965,15 @@ namespace Utility.Resource {
         public static string Return {
             get {
                 return ResourceManager.GetString("Return", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Return Invoices.
+        /// </summary>
+        public static string ReturnInvoice {
+            get {
+                return ResourceManager.GetString("ReturnInvoice", resourceCulture);
             }
         }
         
@@ -2671,7 +2698,16 @@ namespace Utility.Resource {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Transafer.
+        ///   Looks up a localized string similar to Transfer.
+        /// </summary>
+        public static string Transafer {
+            get {
+                return ResourceManager.GetString("Transafer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Transfer.
         /// </summary>
         public static string Transfer {
             get {

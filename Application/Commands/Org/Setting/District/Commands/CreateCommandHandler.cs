@@ -8,7 +8,7 @@
     using Domain.Shared;
     using Entity.ModelView;
 
-    public sealed record CreateDistrictCommand(string Name) : ICommand , ICreateCommand<Result>;
+    public sealed class CreateDistrictCommand: DistrictModelView , ICommand , ICreateCommand<Result>;
 
     public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.District> _Repository , IMapper mapper) : CreateCommandHandler<CreateDistrictCommand, Entity.Model.District>(_UnitOfWork, _Repository , mapper)
     {

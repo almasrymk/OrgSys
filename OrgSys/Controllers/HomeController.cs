@@ -306,13 +306,13 @@ namespace OrgSys.Controllers
                     //_orgContext.Database.ExecuteSqlRaw(createEFMigrationsHistoryCommand);
                     //_orgContext.Database.ExecuteSqlRaw($"INSERT INTO [{client.DbSchema}].[__MigrationsHistory](MigrationId,ProductVersion) SELECT MigrationId,ProductVersion FROM org.__MigrationsHistory");
                     new InitialData(client.DbSchema).Run().Wait();
-                    var usSys = new UserModelView { BranchId = 1, RoleId = 1, Code = "1", CodeNumber = 1, UserName = loginUser.UserName, LoginUserId = loginUser.Id, Name = client.Name };
-                    _userService = new UserService(client.DbSchema);
-                    usSys = _userService.Save(usSys);
+                    //var usSys = new UserModelView { BranchId = 1, RoleId = 1, Code = "1", CodeNumber = 1, UserName = loginUser.UserName, LoginUserId = loginUser.Id, Name = client.Name };
+                    //_userService = new UserService(client.DbSchema);
+                    //usSys = _userService.Save(usSys);
 
                     // Save Company Profile from Client Data
 
-                    usSys.SignIn(HttpContext, client.DbSchema);
+                    //usSys.SignIn(HttpContext, client.DbSchema);
                     return RedirectToAction("Dashboard");
                 }
             }
@@ -364,8 +364,9 @@ namespace OrgSys.Controllers
                 ViewBag.message = MsgError;
             ViewBag.status = Status.ToString();
             var _id = User.GetUserId();
-            var IdUser = new UserService(User.GetSchema()).Get(_id);
-            return View("Profile", IdUser);
+            //var IdUser = new UserService(User.GetSchema()).Get(_id);
+            //return View("Profile", IdUser);
+            return View("Profile");
         }
 
         [HttpPost]
@@ -380,16 +381,16 @@ namespace OrgSys.Controllers
                     _profile.Password = _profile.NewPassword;
                 else
                 {
-                    if (User != null && User.Identity != null && User.Identity.IsAuthenticated)
-                    {
-                        new InitialData(User.GetSchema()).Run().Wait();
-                        if (_userService == null)
-                            _userService = new UserService(User.GetSchema());
-                    }
-                    _userService.Save(_profile);
-                    var us = new UserService(User.GetSchema()).Get(_profile.Id);
-                    if (us != null)
-                        us.SignIn(HttpContext, User.GetSchema());
+                    //if (User != null && User.Identity != null && User.Identity.IsAuthenticated)
+                    //{
+                    //    new InitialData(User.GetSchema()).Run().Wait();
+                    //    if (_userService == null)
+                    //        _userService = new UserService(User.GetSchema());
+                    //}
+                    //_userService.Save(_profile);
+                    //var us = new UserService(User.GetSchema()).Get(_profile.Id);
+                    //if (us != null)
+                    //    us.SignIn(HttpContext, User.GetSchema());
                 }
                 return RedirectToAction("Profile", new { Status = ResultStatus.success });
             }

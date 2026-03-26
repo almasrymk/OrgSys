@@ -2,6 +2,7 @@
 {
     using Application.Commands.Org.Setting.District.Commands;
     using AutoMapper;
+    using Entity.Model;
     using Entity.ModelView;
     using iTextSharp.text;
     using Microsoft.AspNetCore.Mvc;
@@ -18,6 +19,8 @@
         public override async Task LoadViewBag(DistrictModelView model)
         {
             ViewBag.CountryList = new SelectList(await GetListApi<CountryModelView>(Page: 1, PageSize: 20), "Id", "Name", model.CountryId);
+            if (model.Id > 0)
+                ViewBag.CityList = new SelectList(await GetListApi<CityModelView>($"GetListByCountryId?CountryId={model.CountryId}&Page=1&PageSize=20"), "Id", "Name", model.CityId);
         }
 
         public async Task<JsonResult> GetDistrictesByCityId(int CityId)
