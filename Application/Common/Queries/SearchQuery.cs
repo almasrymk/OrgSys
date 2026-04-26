@@ -52,12 +52,12 @@
 
         public virtual string CreateInclude()
         {
-            throw new NotImplementedException();
+            return string.Empty;
         }
 
         public virtual Func<IQueryable<TModel>, IOrderedQueryable<TModel>> CreateOrderBy(TRequest request)
         {
-            throw new NotImplementedException();
+            return q => q.OrderByDescending(e => e.Id);
         }
     }
 }
