@@ -15,7 +15,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting.Internal;
 using System.Net;
 using Newtonsoft.Json;
-using static iTextSharp.text.pdf.events.IndexEvents;
 
 namespace OrgSys.Controllers
 {

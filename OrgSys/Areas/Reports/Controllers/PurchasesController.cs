@@ -7,8 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using OfficeOpenXml;
 using System.IO;
-using iTextSharp.text.pdf;
-using iTextSharp.text;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

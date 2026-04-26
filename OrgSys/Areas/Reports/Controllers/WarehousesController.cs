@@ -5,8 +5,6 @@ using Entity.ModelReport;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Entity.Model;
-using iTextSharp.text.pdf;
-using iTextSharp.text;
 using OfficeOpenXml;
 using System.IO;
 using System.Collections.Generic;

@@ -2,8 +2,6 @@
 using OrgSys.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using iTextSharp.text.pdf;
-using iTextSharp.text;
 using OfficeOpenXml;
 using System.IO;
 using System;
@@ -97,60 +95,60 @@ namespace OrgSys.Areas.Reports.Controllers
         //}
 
 
-        public async Task<ActionResult> ProductsPdf(long ClassificationId, int page = 1, int pageSize = 900)
-        {
+        // public async Task<ActionResult> ProductsPdf(long ClassificationId, int page = 1, int pageSize = 900)
+        // {
 
 
-            var data = new LookupsReportService(User.GetSchema()).GetProducts(ClassificationId);
+        //     var data = new LookupsReportService(User.GetSchema()).GetProducts(ClassificationId);
 
-            List<string> Css = new List<string>();
-            Css.Add("/css/vendor/bootstrap.min.css");
-            Css.Add("/css/vendor/bootstrap.rtl.only.min.css");
-            Css.Add("/css/vendor/fullcalendar.min.css");
-            Css.Add("/css/vendor/dataTables.bootstrap4.min.css");
-            Css.Add("/css/vendor/datatables.responsive.bootstrap4.min.css");
-            Css.Add("/css/vendor/select2.min.css");
-            Css.Add("/css/vendor/select2-bootstrap.min.css");
-            Css.Add("/css/vendor/perfect-scrollbar.css");
-            Css.Add("/css/vendor/glide.core.min.css");
-            Css.Add("/css/vendor/bootstrap-stars.css");
-            Css.Add("/css/vendor/nouislider.min.css");
-            Css.Add("/css/vendor/smart_wizard.min.css");
-            Css.Add("/css/vendor/component-custom-switch.min.css");
-            Css.Add("/css/main.css");
-            Css.Add("/css/jquery.bonsai.css");
-            Css.Add("/fontawesome-free-5.15.3-web/css/all.css");
-            Css.Add("/css/vendor/bootstrap-datepicker3.min.css");
+        //     List<string> Css = new List<string>();
+        //     Css.Add("/css/vendor/bootstrap.min.css");
+        //     Css.Add("/css/vendor/bootstrap.rtl.only.min.css");
+        //     Css.Add("/css/vendor/fullcalendar.min.css");
+        //     Css.Add("/css/vendor/dataTables.bootstrap4.min.css");
+        //     Css.Add("/css/vendor/datatables.responsive.bootstrap4.min.css");
+        //     Css.Add("/css/vendor/select2.min.css");
+        //     Css.Add("/css/vendor/select2-bootstrap.min.css");
+        //     Css.Add("/css/vendor/perfect-scrollbar.css");
+        //     Css.Add("/css/vendor/glide.core.min.css");
+        //     Css.Add("/css/vendor/bootstrap-stars.css");
+        //     Css.Add("/css/vendor/nouislider.min.css");
+        //     Css.Add("/css/vendor/smart_wizard.min.css");
+        //     Css.Add("/css/vendor/component-custom-switch.min.css");
+        //     Css.Add("/css/main.css");
+        //     Css.Add("/css/jquery.bonsai.css");
+        //     Css.Add("/fontawesome-free-5.15.3-web/css/all.css");
+        //     Css.Add("/css/vendor/bootstrap-datepicker3.min.css");
 
-            Css = Css.Select(c =>
-            {
-                string output = System.IO.File.ReadAllText("wwwroot" + c, Encoding.Default);
-                return output;
-            }).ToList();
+        //     Css = Css.Select(c =>
+        //     {
+        //         string output = System.IO.File.ReadAllText("wwwroot" + c, Encoding.Default);
+        //         return output;
+        //     }).ToList();
 
-            ViewBag.CssFiles = Css;
-            //if ("" + ob.ImageBase64String == "")
-            //{
-            //    if (System.IO.File.Exists(IHostingEnvironment.ContentRootPath + "/wwwroot/img/ClientCard.png"))
-            //    {
-            //        var res = Convert.ToBase64String(System.IO.File.ReadAllBytes(HostingEnvironment.ContentRootPath + "/wwwroot/img/ClientCard.png"));
-            //        if (res != "")
-            //            ob.ImageBase64String = "data:image/png;base64," + res;
-            //    }
-            //}
+        //     ViewBag.CssFiles = Css;
+        //     //if ("" + ob.ImageBase64String == "")
+        //     //{
+        //     //    if (System.IO.File.Exists(IHostingEnvironment.ContentRootPath + "/wwwroot/img/ClientCard.png"))
+        //     //    {
+        //     //        var res = Convert.ToBase64String(System.IO.File.ReadAllBytes(HostingEnvironment.ContentRootPath + "/wwwroot/img/ClientCard.png"));
+        //     //        if (res != "")
+        //     //            ob.ImageBase64String = "data:image/png;base64," + res;
+        //     //    }
+        //     //}
 
-            var viewHtml = await Utility.General.RenderViewAsync<List<Entity.ModelReport.ProductList>>(this, "ProductsPdf", data.ToList());
-            await Main(viewHtml, 0, 10);
-            var cd = new System.Net.Mime.ContentDisposition
-            {
-                //Open In New Tap Or Download
-                Inline = true
-            };
-            Response.Headers.Add(Microsoft.Net.Http.Headers.HeaderNames.ContentDisposition, cd.ToString());
-            var stream = new FileStream("PrintOut/0.pdf", FileMode.Open);
-            return new FileStreamResult(stream, "application/pdf");
+        //     var viewHtml = await Utility.General.RenderViewAsync<List<Entity.ModelReport.ProductList>>(this, "ProductsPdf", data.ToList());
+        //     await Main(viewHtml, 0, 10);
+        //     var cd = new System.Net.Mime.ContentDisposition
+        //     {
+        //         //Open In New Tap Or Download
+        //         Inline = true
+        //     };
+        //     Response.Headers.Add(Microsoft.Net.Http.Headers.HeaderNames.ContentDisposition, cd.ToString());
+        //     var stream = new FileStream("PrintOut/0.pdf", FileMode.Open);
+        //     return new FileStreamResult(stream, "application/pdf");
 
-        }
+        // }
 
         async Task Main(string body, int id, int count)
         {

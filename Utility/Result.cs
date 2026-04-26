@@ -1,14 +1,13 @@
 ﻿using System.Net;
 using System.Text;
 using Newtonsoft.Json;
-using System.Web.Http;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Utility
 {
-    public class Result : IHttpActionResult
+    public class Result 
     {
         public Result(HttpStatusCode StatusCode = HttpStatusCode.OK, string Message = "")
         {
