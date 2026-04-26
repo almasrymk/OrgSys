@@ -40,42 +40,31 @@ namespace Utility
 
         private static byte[] Encrypt(byte[] bytesToBeEncrypted, byte[] passwordBytes)
         {
-            byte[] encryptedBytes;
+            byte[] encryptedBytes = null;
 
-            byte[] saltBytes = new byte[] { 1, 2, 3, 4, 5, 6, 7, 8 };
+            var saltBytes = new byte[] { 1, 2, 3, 4, 5, 6, 7, 8 };
 
-            using (var ms = new MemoryStream())
-            using (var aes = Aes.Create())
+            using (MemoryStream ms = new MemoryStream())
             {
-                aes.KeySize = 256;
-                aes.BlockSize = 128;
-                aes.Mode = CipherMode.CBC;
-                aes.Padding = PaddingMode.PKCS7;
-
-                // ✅ اشتقاق Key
-                byte[] key = Rfc2898DeriveBytes.Pbkdf2(
-                    passwordBytes,
-                    saltBytes,
-                    100000,
-                    HashAlgorithmName.SHA256,
-                    32
-                );
-
-                aes.Key = key;
-
-                // ✅ IV عشوائي (أفضل من اشتقاقه)
-                aes.GenerateIV();
-                byte[] iv = aes.IV;
-
-                // نكتب IV في بداية الناتج (عشان نستخدمه وقت فك التشفير)
-                ms.Write(iv, 0, iv.Length);
-
-                using (var cs = new CryptoStream(ms, aes.CreateEncryptor(), CryptoStreamMode.Write))
+                using (RijndaelManaged AES = new RijndaelManaged())
                 {
-                    cs.Write(bytesToBeEncrypted, 0, bytesToBeEncrypted.Length);
-                }
+                    var key = new Rfc2898DeriveBytes(passwordBytes, saltBytes, 1000);
 
-                encryptedBytes = ms.ToArray();
+                    AES.KeySize = 256;
+                    AES.BlockSize = 128;
+                    AES.Key = key.GetBytes(AES.KeySize / 8);
+                    AES.IV = key.GetBytes(AES.BlockSize / 8);
+
+                    AES.Mode = CipherMode.CBC;
+
+                    using (var cs = new CryptoStream(ms, AES.CreateEncryptor(), CryptoStreamMode.Write))
+                    {
+                        cs.Write(bytesToBeEncrypted, 0, bytesToBeEncrypted.Length);
+                        cs.Close();
+                    }
+
+                    encryptedBytes = ms.ToArray();
+                }
             }
 
             return encryptedBytes;
@@ -83,44 +72,31 @@ namespace Utility
 
         private static byte[] Decrypt(byte[] bytesToBeDecrypted, byte[] passwordBytes)
         {
-            byte[] saltBytes = new byte[] { 1, 2, 3, 4, 5, 6, 7, 8 };
-
-            using (var aes = Aes.Create())
+            byte[] decryptedBytes = null;
+            var saltBytes = new byte[] { 1, 2, 3, 4, 5, 6, 7, 8 };
+            using (MemoryStream ms = new MemoryStream())
             {
-                aes.KeySize = 256;
-                aes.BlockSize = 128;
-                aes.Mode = CipherMode.CBC;
-                aes.Padding = PaddingMode.PKCS7;
-
-                // ✅ اشتقاق نفس الـ Key
-                byte[] key = Rfc2898DeriveBytes.Pbkdf2(
-                    passwordBytes,
-                    saltBytes,
-                    100000,
-                    HashAlgorithmName.SHA256,
-                    32
-                );
-
-                aes.Key = key;
-
-                // ✅ قراءة IV من أول 16 بايت
-                byte[] iv = new byte[16];
-                byte[] cipherBytes = new byte[bytesToBeDecrypted.Length - 16];
-
-                Array.Copy(bytesToBeDecrypted, 0, iv, 0, 16);
-                Array.Copy(bytesToBeDecrypted, 16, cipherBytes, 0, cipherBytes.Length);
-
-                aes.IV = iv;
-
-                using (var ms = new MemoryStream())
-                using (var cs = new CryptoStream(ms, aes.CreateDecryptor(), CryptoStreamMode.Write))
+                using (RijndaelManaged AES = new RijndaelManaged())
                 {
-                    cs.Write(cipherBytes, 0, cipherBytes.Length);
-                    cs.FlushFinalBlock();
+                    var key = new Rfc2898DeriveBytes(passwordBytes, saltBytes, 1000);
 
-                    return ms.ToArray();
+                    AES.KeySize = 256;
+                    AES.BlockSize = 128;
+                    AES.Key = key.GetBytes(AES.KeySize / 8);
+                    AES.IV = key.GetBytes(AES.BlockSize / 8);
+                    AES.Mode = CipherMode.CBC;
+
+                    using (var cs = new CryptoStream(ms, AES.CreateDecryptor(), CryptoStreamMode.Write))
+                    {
+                        cs.Write(bytesToBeDecrypted, 0, bytesToBeDecrypted.Length);
+                        cs.Close();
+                    }
+
+                    decryptedBytes = ms.ToArray();
                 }
             }
+
+            return decryptedBytes;
         }
     }
 }
