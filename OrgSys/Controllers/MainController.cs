@@ -32,8 +32,7 @@
         public virtual async Task<HttpResponseMessage> ApiMethod(ApiMethodType apiMethodType, string NameActionAndParamenter, object Ob = null)
         {
             string ApiUrl = configuration["ApiUrl"];
-            HttpClient httpClient = new HttpClient();
-            HttpResponseMessage response;
+            HttpClient httpClient = new HttpClient();           
             string ApiControllerName = typeof(TDto).Name.Replace("ModelView", "").Replace("Dto", "");
             switch (apiMethodType)
             {

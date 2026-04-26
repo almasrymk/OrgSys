@@ -174,7 +174,7 @@ namespace OrgSys.Areas.Reports.Controllers
 
             var data = new SalesReportService(User.GetSchema()).GetDealersBalance(1, ToDate, DealerId, ShiftId, BranchId, UserId, page, pageSize);
 
-            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            ExcelPackage.License.SetNonCommercialPersonal("Your Name");
             var package = new ExcelPackage();
             var worksheet = package.Workbook.Worksheets.Add("Clients Balance");
 
@@ -416,7 +416,7 @@ namespace OrgSys.Areas.Reports.Controllers
                 Result = new SalesReportService(User.GetSchema()).GetDealersStatment(1, fDate, tDate, DealerId, ShiftId, BranchId, UserId, page, pageSize)
             };
 
-            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            ExcelPackage.License.SetNonCommercialPersonal("Your Name");
             var package = new ExcelPackage();
             var worksheet = package.Workbook.Worksheets.Add("Clients Statement");
 
@@ -576,9 +576,9 @@ namespace OrgSys.Areas.Reports.Controllers
             ViewBag.ToDate = tDate;
 
             var data = new SalesReportService(User.GetSchema()).GetSalesBalance(tDate, UserId, page, pageSize);
-  
 
-            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
+            ExcelPackage.License.SetNonCommercialPersonal("Your Name");
             var package = new ExcelPackage();
             var worksheet = package.Workbook.Worksheets.Add("Clients Balance");
 

@@ -19,11 +19,11 @@ using Newtonsoft.Json;
 namespace OrgSys.Controllers
 {
     [Authorize]
-    public class BaseController<entity> : Controller where entity : BaseModel
+    public class BaseController<Tentity> : Controller where Tentity : BaseModel
     {
         string AreaName = "";
         string ControllerName = "";
-        IBaseService<entity> service;
+        IBaseService<Tentity> service;
                
         [HttpGet]
         public virtual ActionResult Index(string search, long ParentId = 0, long TypeId = 0, int page = 1, int pageSize = 10, ResultStatus Status = ResultStatus.nothing, string MsgError = "")
@@ -47,7 +47,7 @@ namespace OrgSys.Controllers
             if (ob == null || ob.Id == 0)
             {
                 if (ob == null)
-                    ob = (entity)Activator.CreateInstance(typeof(entity));
+                    ob = (Tentity)Activator.CreateInstance(typeof(Tentity));
                 ob.ParentId = ParentId;
                 ob.TypeId = TypeId;
             }
@@ -57,7 +57,7 @@ namespace OrgSys.Controllers
         }
 
         [HttpPost]
-        public virtual ActionResult Save(entity model)
+        public virtual ActionResult Save(Tentity model)
         {
             if (ModelState.IsValid)
             {
@@ -123,7 +123,7 @@ namespace OrgSys.Controllers
             Assembly assembly = Assembly.Load("Service");            
             var ServiceName = "Service." + ControllerName + "Service";
             var type = assembly.GetType(ServiceName);
-            service = (IBaseService<entity>) Activator.CreateInstance(type, User.GetSchema());
+            service = (IBaseService<Tentity>) Activator.CreateInstance(type, User.GetSchema());
             //service = (BaseService<entity>)assembly.CreateInstance("Service." + RouteData.Values["controller"] + "Service");
             ViewBag.Page = "/" + context.RouteData.Values["area"] + "/" + ControllerContext.ActionDescriptor.ControllerName;
             ViewBag.area = AreaName;
@@ -131,7 +131,7 @@ namespace OrgSys.Controllers
             base.OnActionExecuting(context);
         }
 
-        public virtual void LoadViewBag(entity model)
+        public virtual void LoadViewBag(Tentity model)
         {
 
         }
@@ -141,7 +141,7 @@ namespace OrgSys.Controllers
 
         }
 
-        public virtual entity InitializeData(entity ob)
+        public virtual Tentity InitializeData(Tentity ob)
         {
             return ob;
         }
@@ -245,7 +245,7 @@ namespace OrgSys.Controllers
             return true;
         }
 
-        public virtual entity GetUserData(entity model)
+        public virtual Tentity GetUserData(Tentity model)
         {
             PropertyInfo CreateUserPro = model.GetType().GetProperty("CreateUserId");
             if(CreateUserPro != null)
@@ -311,7 +311,7 @@ namespace OrgSys.Controllers
             //    }
             //}
 
-            var viewHtml = await Utility.General.RenderViewAsync<entity>(this, ViewName, ob);
+            var viewHtml = await Utility.General.RenderViewAsync<Tentity>(this, ViewName, ob);
             await Main(viewHtml, 0 , 10);
             var cd = new System.Net.Mime.ContentDisposition
             {

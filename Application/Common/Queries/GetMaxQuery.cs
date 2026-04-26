@@ -17,17 +17,11 @@
         {
             try
             {                
-                var res = await _Repository.GetMaxByFilterAsync(CreateFilter(request), CreateSelector());
-                if (res!= null)
-                {
-                    return res;
-                }
-
-                return null;
+                return await _Repository.GetMaxByFilterAsync(CreateFilter(request), CreateSelector());               
             }
-            catch (Exception ex)
+            catch
             {
-                return null;
+                throw;
             }
         }
 
@@ -38,7 +32,7 @@
 
         public virtual Expression<Func<TModel, object>> CreateSelector()
         {
-           return null;
+            throw new NotImplementedException();
         }
     }
 }

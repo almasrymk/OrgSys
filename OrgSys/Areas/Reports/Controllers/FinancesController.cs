@@ -184,7 +184,7 @@ namespace OrgSys.Areas.Reports.Controllers
                 Result = new FinancesReportService(User.GetSchema()).GetSafeStatment(fDate, tDate, DealerId, SafeId, ShiftId, BranchId, UserId, page, pageSize)
             };
 
-            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            ExcelPackage.License.SetNonCommercialPersonal("Your Name");
             var package = new ExcelPackage();
             var worksheet = package.Workbook.Worksheets.Add("Safe Movement");
 

@@ -179,7 +179,7 @@ namespace OrgSys.Areas.Reports.Controllers
 
             var data = new SalesReportService(User.GetSchema()).GetDealersBalance(2, ToDate, DealerId, ShiftId, BranchId, UserId, page, pageSize);
 
-            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            ExcelPackage.License.SetNonCommercialPersonal("Your Name");
             var package = new ExcelPackage();
             var worksheet = package.Workbook.Worksheets.Add("Supplier Balance");
 
@@ -386,7 +386,7 @@ int page = 1, int pageSize = 900)
                 Result = new SalesReportService(User.GetSchema()).GetDealersStatment(2, fDate, tDate, DealerId, ShiftId, BranchId, UserId, page, pageSize)
             };
 
-            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            ExcelPackage.License.SetNonCommercialPersonal("Your Name");
             var package = new ExcelPackage();
             var worksheet = package.Workbook.Worksheets.Add("Suppliers Statment");
 

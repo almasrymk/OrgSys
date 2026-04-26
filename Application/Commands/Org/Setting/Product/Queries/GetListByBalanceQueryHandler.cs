@@ -11,7 +11,7 @@
 
     public sealed record GetListProductByBalanceQuery(long StockId, DateTime date) : ICommandCollection<ProductModelView>;
 
-    public sealed class GetListByBalanceQueryHandler(IRepository<Entity.Model.ProductUnit> _Repository, IRepository<Entity.Model.TransactionProduct> _trnsRepository, IMapper mapper) : ICommandCollectionHandler<GetListProductByBalanceQuery, ProductModelView>
+    public sealed class GetListByBalanceQueryHandler(IRepository<Entity.Model.TransactionProduct> _trnsRepository, IMapper mapper) : ICommandCollectionHandler<GetListProductByBalanceQuery, ProductModelView>
     {        
         public async Task<ResultCollection<ProductModelView>> Handle(GetListProductByBalanceQuery request, CancellationToken cancellationToken)
         {

@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Repository
 {
-    public class CurdOrg<entity> : ICurd<entity> where entity : BaseModel
+    public class CurdOrg<Tentity> : ICurd<Tentity> where Tentity : BaseModel
     {
         public OrgContext db;
         public CurdOrg(string Schema)
@@ -17,9 +17,9 @@ namespace Repository
             this.db = new OrgContext(new DbContextOptions<OrgContext>() , Schema);
         }
 
-        public virtual long GetMaXCode(Func<entity, bool> filter = null)
+        public virtual long GetMaXCode(Func<Tentity, bool> filter = null)
         {
-            IQueryable<entity> query = db.Set<entity>();
+            IQueryable<Tentity> query = db.Set<Tentity>();
             if (filter != null)
             {
                 if (query.Any(filter))
@@ -33,9 +33,9 @@ namespace Repository
             return 1;
         }
 
-        public virtual entity Get(Func<entity, bool> filter = null, string includeProperties = "")
+        public virtual Tentity Get(Func<Tentity, bool> filter = null, string includeProperties = "")
         {
-            IQueryable<entity> query = db.Set<entity>();
+            IQueryable<Tentity> query = db.Set<Tentity>();
             foreach (var includeProperty in includeProperties.Split(new char[] { ',' },
                 StringSplitOptions.RemoveEmptyEntries))
             {
@@ -44,9 +44,9 @@ namespace Repository
             return query.FirstOrDefault(filter);
         }
 
-        public virtual IQueryable<entity> GetList(Func<IQueryable<entity>, IOrderedQueryable<entity>> orderBy, string includeProperties = "", Status status = Status.All)
+        public virtual IQueryable<Tentity> GetList(Func<IQueryable<Tentity>, IOrderedQueryable<Tentity>> orderBy, string includeProperties = "", Status status = Status.All)
         {
-            IQueryable<entity> query = db.Set<entity>();
+            IQueryable<Tentity> query = db.Set<Tentity>();
 
             foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
             {
@@ -63,9 +63,9 @@ namespace Repository
             }
         }
 
-        public virtual IQueryable<entity> GetList(Expression<Func<entity, bool>> filter, Func<IQueryable<entity>, IOrderedQueryable<entity>> orderBy, string includeProperties = "", Status status = Status.All)
+        public virtual IQueryable<Tentity> GetList(Expression<Func<Tentity, bool>> filter, Func<IQueryable<Tentity>, IOrderedQueryable<Tentity>> orderBy, string includeProperties = "", Status status = Status.All)
         {
-            IQueryable<entity> query = db.Set<entity>();
+            IQueryable<Tentity> query = db.Set<Tentity>();
 
             if (filter != null)
             {
@@ -87,9 +87,9 @@ namespace Repository
             }
         }
 
-        public virtual IQueryable<entity> GetList(Expression<Func<entity, bool>> filter, string includeProperties = "", Status status = Status.All)
+        public virtual IQueryable<Tentity> GetList(Expression<Func<Tentity, bool>> filter, string includeProperties = "", Status status = Status.All)
         {
-            IQueryable<entity> query = db.Set<entity>();
+            IQueryable<Tentity> query = db.Set<Tentity>();
 
             if (filter != null)
             {
@@ -104,22 +104,22 @@ namespace Repository
             return query.Where(e => (e.Status != Status.Deleted || status == Status.All) && e.Hide != true);
         }
      
-        public virtual entity AddOrUpdate(entity ob)
+        public virtual Tentity AddOrUpdate(Tentity ob)
         {            
             if (ob.Id == 0)
-                db.Set<entity>().Add(ob);
+                db.Set<Tentity>().Add(ob);
             else
-                db.Entry<entity>(db.Set<entity>().Find(ob.Id)).CurrentValues.SetValues(ob);
+                db.Entry<Tentity>(db.Set<Tentity>().Find(ob.Id)).CurrentValues.SetValues(ob);
             db.SaveChanges();
             return ob;
         }
 
-        public virtual entity AddOrUpdateTemp(entity ob)
+        public virtual Tentity AddOrUpdateTemp(Tentity ob)
         {
             if (ob.Id == 0)
-                db.Set<entity>().Add(ob);
+                db.Set<Tentity>().Add(ob);
             else
-                db.Entry<entity>(db.Set<entity>().Find(ob.Id)).CurrentValues.SetValues(ob);
+                db.Entry<Tentity>(db.Set<Tentity>().Find(ob.Id)).CurrentValues.SetValues(ob);
             return ob;
         }
 
@@ -130,34 +130,34 @@ namespace Repository
 
         public virtual bool Delete(long Id)
         {
-            var ob = db.Set<entity>().Find(Id);
+            var ob = db.Set<Tentity>().Find(Id);
             if (ob == null || ob.Id == 0)
                 return false;
             ob.ImgPath = null;
             ob.Status = Status.Deleted;
-            db.Entry<entity>(db.Set<entity>().Find(ob.Id)).CurrentValues.SetValues(ob);
+            db.Entry<Tentity>(db.Set<Tentity>().Find(ob.Id)).CurrentValues.SetValues(ob);
             db.SaveChanges();
             return true;
         }
 
         public virtual bool ShiftDelete(long Id)
         {
-            var ob = db.Set<entity>().Find(Id);
+            var ob = db.Set<Tentity>().Find(Id);
             if (ob == null || ob.Id == 0)
                 return false;
-            db.Set<entity>().Remove(ob);
+            db.Set<Tentity>().Remove(ob);
             db.SaveChanges();
             return true;
         }
 
         public virtual bool Delete(List<long> Ids)
         {
-            var obs = db.Set<entity>().Where(e => Ids.Contains(e.Id)).ToList();
+            var obs = db.Set<Tentity>().Where(e => Ids.Contains(e.Id)).ToList();
             foreach (var ob in obs)
             {
                 ob.ImgPath = null;
                 ob.Status = Status.Deleted;
-                db.Entry<entity>(db.Set<entity>().Find(ob.Id)).CurrentValues.SetValues(ob);
+                db.Entry<Tentity>(db.Set<Tentity>().Find(ob.Id)).CurrentValues.SetValues(ob);
             }
             db.SaveChanges();
             return true;
@@ -165,18 +165,18 @@ namespace Repository
 
         public virtual bool ShiftDelete(List<long> Ids)
         {
-            var obs = db.Set<entity>().Where(e => Ids.Contains(e.Id)).ToList();
+            var obs = db.Set<Tentity>().Where(e => Ids.Contains(e.Id)).ToList();
             if (obs != null && obs.Count > 0)
             {
-                db.Set<entity>().RemoveRange(obs);
+                db.Set<Tentity>().RemoveRange(obs);
                 db.SaveChanges();
             }
             return true;
         }
 
-        public virtual bool Any(Func<entity, bool> filter = null)
+        public virtual bool Any(Func<Tentity, bool> filter = null)
         {
-            IQueryable<entity> query = db.Set<entity>();
+            IQueryable<Tentity> query = db.Set<Tentity>();
 
             return query.Any(filter);
         }

@@ -1,5 +1,4 @@
 ﻿using Application.Commands.Org.Setting.Dealer.Commands;
-using Application.Commands.Org.Setting.Dealer.Commands;
 using AutoMapper;
 using Entity.Model;
 using Entity.ModelView;

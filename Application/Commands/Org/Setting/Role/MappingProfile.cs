@@ -1,5 +1,4 @@
 ﻿using Application.Commands.Org.Setting.Role.Commands;
-using Application.Commands.Org.Setting.Role.Commands;
 using AutoMapper;
 using Entity.Model;
 using Entity.ModelView;

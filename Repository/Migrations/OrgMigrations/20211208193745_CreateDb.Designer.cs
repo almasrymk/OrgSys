@@ -15,7 +15,6 @@ namespace Repository.Migrations.OrgMigrations
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
-#pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("org")
                 .UseIdentityColumns()
@@ -3745,7 +3744,6 @@ namespace Repository.Migrations.OrgMigrations
                 {
                     b.Navigation("TransactionProducts");
                 });
-#pragma warning reStock 612, 618
         }
     }
 }

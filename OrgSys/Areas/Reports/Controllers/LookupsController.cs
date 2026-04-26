@@ -191,7 +191,7 @@ namespace OrgSys.Areas.Reports.Controllers
          
             var data = new LookupsReportService(User.GetSchema()).GetProducts(ClassificationId, page, pageSize);
 
-            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            ExcelPackage.License.SetNonCommercialPersonal("Your Name");
             var package = new ExcelPackage();
             var worksheet = package.Workbook.Worksheets.Add("Products");
 
@@ -359,7 +359,7 @@ namespace OrgSys.Areas.Reports.Controllers
 
             var data = new LookupsReportService(User.GetSchema()).GetStocks(search, page, pageSize);
 
-            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            ExcelPackage.License.SetNonCommercialPersonal("Your Name");
             var package = new ExcelPackage();
             var worksheet = package.Workbook.Worksheets.Add("Stocks");
 

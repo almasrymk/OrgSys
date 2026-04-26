@@ -212,7 +212,7 @@
         }
         public override string FindMigrationId(string nameOrId)
         {
-            return base.FindMigrationId(nameOrId);
+            return base.FindMigrationId(nameOrId)!;
         }
 
         public override Migration CreateMigration(TypeInfo migrationClass,
@@ -221,13 +221,13 @@
             if (activeProvider == null)
                 throw new ArgumentNullException(nameof(activeProvider));
 
-            PropertyInfo pinfo = typeof(OrgContext).GetProperty("Schema");
+            PropertyInfo pinfo = typeof(OrgContext).GetProperty("Schema")!;
             var Schema = "" + pinfo.GetValue(_context);
 
             var hasCtorWithSchema = migrationClass.GetConstructor(new[] { typeof(string) }) != null;
             if (hasCtorWithSchema)
             {
-                var instance = (Migration)Activator.CreateInstance(migrationClass.AsType(), Schema);
+                var instance = (Migration)Activator.CreateInstance(migrationClass.AsType(), Schema)!;
                 instance.ActiveProvider = activeProvider;
                 return instance;
             }

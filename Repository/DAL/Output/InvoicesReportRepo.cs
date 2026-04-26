@@ -10,12 +10,12 @@ namespace Repository
 {
    public class InvoicesReportRepo : CurdOrg<Invoice>
     {
-        public OrgContext db;
+        //public OrgContext db;
 
         public InvoicesReportRepo(string Schema) : base(Schema)
         {
-            if (this.db == null)
-                this.db = new OrgContext(new DbContextOptions<OrgContext>(), Schema);
+            //if (this.db == null)
+            //    this.db = new OrgContext(new DbContextOptions<OrgContext>(), Schema);
         }
     }
 }

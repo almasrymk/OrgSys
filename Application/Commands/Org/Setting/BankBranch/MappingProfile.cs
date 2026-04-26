@@ -1,5 +1,4 @@
 ﻿using Application.Commands.Org.Setting.BankBranch.Commands;
-using Application.Commands.Org.Setting.BankBranch.Commands;
 using AutoMapper;
 using Entity.Model;
 using Entity.ModelView;

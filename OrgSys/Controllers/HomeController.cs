@@ -177,7 +177,7 @@ namespace OrgSys.Controllers
                 usSys.SignIn(HttpContext, us.Schema, _user.KeepLoggedIn);
                 return RedirectToAction("Dashboard");
             }
-            catch (Exception ex)
+            catch
             {
                 throw;
             }
@@ -394,7 +394,7 @@ namespace OrgSys.Controllers
                 }
                 return RedirectToAction("Profile", new { Status = ResultStatus.success });
             }
-            catch (Exception ex)
+            catch
             {
                 return View(_profile);
             }

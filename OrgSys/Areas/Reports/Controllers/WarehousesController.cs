@@ -238,7 +238,7 @@ namespace OrgSys.Areas.Reports.Controllers
             };
 
 
-            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            ExcelPackage.License.SetNonCommercialPersonal("Your Name");
             var package = new ExcelPackage();
             var worksheet = package.Workbook.Worksheets.Add("Stock Movement");
 
@@ -496,7 +496,7 @@ namespace OrgSys.Areas.Reports.Controllers
             };
 
 
-            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            ExcelPackage.License.SetNonCommercialPersonal("Your Name");
             var package = new ExcelPackage();
             var worksheet = package.Workbook.Worksheets.Add("Product Movement");
 
@@ -750,7 +750,7 @@ namespace OrgSys.Areas.Reports.Controllers
             ViewBag.TypeId = 1;
             var data = new WarehousesReportService(User.GetSchema()).GetStocksBalance(1, tDate, ProductId, StockId, ClassificationId, ShiftId, BranchId, UserId, page, pageSize);
 
-            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            ExcelPackage.License.SetNonCommercialPersonal("Your Name");
             var package = new ExcelPackage();
             var worksheet = package.Workbook.Worksheets.Add("Stock Movement");
 
@@ -895,7 +895,7 @@ namespace OrgSys.Areas.Reports.Controllers
             ViewBag.TypeId = 1;
             var data = new WarehousesReportService(User.GetSchema()).GetProductsBalance(1, tDate, ProductId, StockId, ClassificationId, ShiftId, BranchId, UserId, page, pageSize);
 
-            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            ExcelPackage.License.SetNonCommercialPersonal("Your Name");
             var package = new ExcelPackage();
             var worksheet = package.Workbook.Worksheets.Add("Product Balance");
 

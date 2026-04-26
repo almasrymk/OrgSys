@@ -15,7 +15,6 @@ namespace Repository.Migrations.AdminMigrations
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
-#pragma warning disable 612, 618
             modelBuilder
                 .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
@@ -3989,7 +3988,6 @@ namespace Repository.Migrations.AdminMigrations
                 {
                     b.Navigation("PlanElements");
                 });
-#pragma warning reStock 612, 618
         }
     }
 }
