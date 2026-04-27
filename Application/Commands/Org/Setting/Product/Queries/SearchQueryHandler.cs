@@ -31,7 +31,7 @@
 
         public override string CreateInclude()
         {
-            return "Classification,Dealer,ProductUnits,ProductRecipes,ProductPropertyElements";
+            return "Classification,Dealer,ProductUnits,ProductUnits.Unit,ProductRecipes,ProductPropertyElements";
         }
     }
 }
