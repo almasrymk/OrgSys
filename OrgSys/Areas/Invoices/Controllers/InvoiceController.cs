@@ -88,7 +88,7 @@ namespace OrgSys.Areas.Invoices.Controllers
                 ob.Discount = DiscountValue;
                 ob.Service = ServiceValue;
                 ob.Tax = TaxValue;
-                ob.InvoiceProductList = new List<InvoiceProductModelView>();
+                ob.InvoiceProducts = new List<InvoiceProductModelView>();
             }
 
             ob.StockName = (await GetObApi<StockModelView>($"GetById?Id={ob.StockId ?? 0}"))?.Name;

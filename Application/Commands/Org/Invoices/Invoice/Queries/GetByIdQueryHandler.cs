@@ -16,7 +16,7 @@
     {
         public override string CreateInclude()
         {
-            return "InvoiceProducts,InvoiceProducts.Product.ProductUnits.Unit";
+            return "Transaction,Dealer,Shift,Stock,Branch,PaymentType,Currency,InvoiceProducts,InvoiceProducts.Product,InvoiceProducts.Product.ProductUnits,InvoiceProducts.Product.ProductUnits.Unit";
         }
 
         public override Expression<Func<Entity.Model.Invoice, bool>> CreateFilter(GetByIdInvoiceQuery request)

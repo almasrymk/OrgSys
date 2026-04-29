@@ -7,10 +7,10 @@ namespace Entity.ModelView
     {             
         public string GeneralClassificationName { get; set; }
 
-        public List<GeneralProductUnitModelView> GeneralProductUnitList { get; set; }
+        public List<GeneralProductUnitModelView> GeneralProductUnits { get; set; }
 
-        public List<GeneralProductRecipeModelView> GeneralProductRecipeList { get; set; }
+        public List<GeneralProductRecipeModelView> GeneralProductRecipes { get; set; }
 
-        public List<GeneralProductPropertyElementModelView> GeneralProductPropertyElementList { get; set; }
+        public List<GeneralProductPropertyElementModelView> GeneralProductPropertyElements { get; set; }
     }
 }

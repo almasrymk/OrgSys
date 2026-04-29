@@ -145,7 +145,7 @@ namespace Service
                 financial.Id = 0;
                 financial.Dealer = null;
                 financial.Amount = amount;
-                financial.Rate = inv.Rate > 0 ? inv.Rate : (inv.Currency?.Rate ?? 0);
+                financial.Rate = inv.Rate;
                 financial.AmountByDefaultCurrency = inv.Credit * financial.Rate;
                 financial.CreateDate = DateTime.Now;
                 financial.TypeId = inv.TypeId == 1 || inv.TypeId == 4 ? 1 : 2;
@@ -171,7 +171,7 @@ namespace Service
                 financial.Id = 0;
                 financial.Dealer = null;
                 financial.Amount = inv.Credit;
-                financial.Rate = inv.Rate > 0 ? inv.Rate : (inv.Currency?.Rate ?? 0);
+                financial.Rate = inv.Rate ;
                 financial.AmountByDefaultCurrency = inv.Credit * financial.Rate;
                 financial.CreateDate = DateTime.Now;
                 financial.TypeId = inv.TypeId == 1 || inv.TypeId == 4 ? 1 : 2;

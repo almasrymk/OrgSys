@@ -2,10 +2,13 @@
 {
     using Application.Commands.Org.Setting.Product.Commands;
     using AutoMapper;
+    using Domain.Enums;
+    using Domain.Shared;
     using Entity.ModelView;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.Extensions.Configuration;
+    using Newtonsoft.Json;
     using OrgSys.Controllers;
     using Service;
     using System;
@@ -23,8 +26,8 @@
 
         public override async Task<ProductModelView> InitializeData(ProductModelView ob)
         {
-            if (ob.ProductUnitList == null)
-                ob.ProductUnitList = new List<ProductUnitModelView>();
+            if (ob.ProductUnits == null)
+                ob.ProductUnits = new List<ProductUnitModelView>();
             if (ob.Id == 0)
             {
                 ob.CodeNumber = long.Parse("0" + await GetValueApi<ProductModelView>($"GetMax?TypeId={ob.TypeId}")) + 1;
@@ -37,17 +40,21 @@
 
         public async Task<JsonResult> GetUnitNameListByProductId(int ProductId)
         {
-            var ProductUnitList = await GetListApi<ProductUnitModelView>($"GetByProductId?ProductId={ProductId}&Page=1&PageSize=20");
-            if (ProductUnitList == null)
-                ProductUnitList = new List<ProductUnitModelView>();
-            var UnitNameList = new SelectList(ProductUnitList.Select(e => e.UnitName));
+            var ProductUnits = await GetListApi<ProductUnitModelView>($"GetByProductId?ProductId={ProductId}&Page=1&PageSize=20");
+            if (ProductUnits == null)
+                ProductUnits = new List<ProductUnitModelView>();
+            var UnitNameList = new SelectList(ProductUnits.Select(e => e.UnitName));
             return Json(new { success = true, UnitNameList });
         }
 
         public async Task<ActionResult> SearchProducts(string txt = "", int page = 1, int Type = 1, int index = 0)
         {
             ViewBag.index = index;
-            var list = await GetListApi<ProductModelView>(TextSearch:txt , Page: page , PageSize:20);
+            var response =  await ApiMethod(ApiMethodType.Get, $"Search?KeySearch={txt}&Page={page}&PageSize={20}");
+             response.EnsureSuccessStatusCode();
+            var data = await response.Content.ReadAsStringAsync();
+            var list = JsonConvert.DeserializeObject<ResultPagination<ProductModelView>>(data);
+            //var list = await GetListApi<ProductModelView>(TextSearch:txt , Page: page , PageSize:20);
             return Type != 1 ? (ActionResult)PartialView("SearchProductsList", list) : View("SearchProducts", list);
         }
 
@@ -134,9 +141,9 @@
                 name = product.Name,
                 price = product.Price,
                 cost = product.Cost,
-                selectunitid = product.ProductUnitList.FirstOrDefault(e => e.DefaultUnit).UnitId,
-                selectunitName = product.ProductUnitList.FirstOrDefault(e => e.DefaultUnit).UnitName,
-                unitlist = product.ProductUnitList,// new UnitService(User.GetSchema()).GetAllByProductId(id)
+                selectunitid = product.ProductUnits.FirstOrDefault(e => e.DefaultUnit).UnitId,
+                selectunitName = product.ProductUnits.FirstOrDefault(e => e.DefaultUnit).UnitName,
+                unitlist = product.ProductUnits,// new UnitService(User.GetSchema()).GetAllByProductId(id)
             };
             return Json(data);
         }
@@ -150,8 +157,8 @@
                 id = e.Id,
                 name = e.Name,
                 price = e.Price,
-                selectunitid = e.ProductUnitList.FirstOrDefault(e => e.DefaultUnit).UnitId,
-                selectunitName = e.ProductUnitList.FirstOrDefault(e => e.DefaultUnit).UnitName,
+                selectunitid = e.ProductUnits.FirstOrDefault(e => e.DefaultUnit).UnitId,
+                selectunitName = e.ProductUnits.FirstOrDefault(e => e.DefaultUnit).UnitName,
                 balance = e.Balance
             }).ToList();
             return Json(data);

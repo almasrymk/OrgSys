@@ -160,7 +160,7 @@
                                 }
                             </td>
                             <td class="text-center align-middle" style="width:10px;">
-                                @if (Model.Response[i].Transaction == null || "" + Model.Response[i].Transaction.Code == "")
+                                @if ("" + Model.Response[i].TransactionCode == "")
                                 {
                                     if (Model.Response[i].Status != Utility.Status.Cancel && User.IsAllowed("Addition.Add"))
                                     {
@@ -172,7 +172,7 @@
                                     if (User.IsAllowed("Addition.View") || User.IsAllowed("Addition.Edit"))
                                     {
                                         <a href="/Transactions/Transaction/Save?id=@Model.Response[i].TransactionId&ParentId=0&amp;TypeId=1">
-                                            @Model.Response[i].Transaction?.Code
+                                            @Model.Response[i].TransactionCode
                                         </a>
                                     }
                                     else
@@ -340,7 +340,7 @@
                             </div>
                             <div class="w-10">
 
-                                @if ("" + Model.Response[i].Transaction?.Code == "")
+                                @if ("" + Model.Response[i].TransactionCode == "")
                                 {
                                     if (Model.Response[i].Status != Utility.Status.Cancel && AllowAdd)
                                     {
@@ -353,7 +353,7 @@
                                     if (AllowView || AllowEdit)
                                     {
                                         <a href="/Transactions/Transaction/Save?id=@Model.Response[i].TransactionId&ParentId=0&amp;TypeId=1">
-                                            @Model.Response[i].Transaction?.Code
+                                            @Model.Response[i].TransactionCode
                                         </a>
                                     }
                                     else

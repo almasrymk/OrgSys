@@ -8,13 +8,28 @@ public partial class MappingProfile : Profile
     public void InvoiceMappingProfile()
     {
         #region Invoice
-        CreateMap<Invoice, InvoiceModelView>();
-            //.ForMember(dest => dest.InvoiceProductList.Select(e => e.UnitList).ToList(), opt => opt.MapFrom(src => src.InvoiceProducts.Select(e => e.Product.ProductUnits.Select(e => e.Unit))));
-        CreateMap<InvoiceModelView, Invoice>();
-        CreateMap<Invoice, CreateInvoiceCommand>();
-        CreateMap<CreateInvoiceCommand, Invoice>();
-        CreateMap<Invoice, UpdateInvoiceCommand>();
-        CreateMap<UpdateInvoiceCommand, Invoice>();
+        CreateMap<Invoice, InvoiceModelView>()
+            .ForMember(dest => dest.TransactionCode, opt => opt.MapFrom(src => src.Transaction.Code))
+            .ForMember(dest => dest.DealerName, opt => opt.MapFrom(src => src.Dealer.Name))
+            .ForMember(dest => dest.ShiftName, opt => opt.MapFrom(src => src.Shift.Name))        
+            .ForMember(dest => dest.StockName, opt => opt.MapFrom(src => src.Stock.Name))
+            .ForMember(dest => dest.BranchName, opt => opt.MapFrom(src => src.Branch.Name))
+            .ForMember(dest => dest.PaymentTypeName, opt => opt.MapFrom(src => src.PaymentType.Name))
+            .ForMember(dest => dest.CurrencyName, opt => opt.MapFrom(src => src.Currency.Name))
+            .ForMember(dest => dest.InvoiceProducts , opt => opt.MapFrom(src => src.InvoiceProducts));
+        CreateMap<InvoiceModelView, Invoice>()
+            .ForMember(dest => dest.InvoiceProducts , opt => opt.MapFrom(src => src.InvoiceProducts));
+
+        CreateMap<Invoice, CreateInvoiceCommand>()
+            .ForMember(dest => dest.InvoiceProducts, opt => opt.MapFrom(src => src.InvoiceProducts));
+        CreateMap<CreateInvoiceCommand, Invoice>()
+            .ForMember(dest => dest.InvoiceProducts, opt => opt.MapFrom(src => src.InvoiceProducts));
+
+        CreateMap<Invoice, UpdateInvoiceCommand>()
+            .ForMember(dest => dest.InvoiceProducts, opt => opt.MapFrom(src => src.InvoiceProducts));
+        CreateMap<UpdateInvoiceCommand, Invoice>()
+            .ForMember(dest => dest.InvoiceProducts, opt => opt.MapFrom(src => src.InvoiceProducts));
+
         CreateMap<Invoice, DeleteInvoiceCommand>();
         CreateMap<DeleteInvoiceCommand, Invoice>();
 

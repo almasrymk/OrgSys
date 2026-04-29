@@ -24,7 +24,7 @@ namespace Service
 
             if (ob.Id > 0)
             {
-                var ids = ob.InvoiceProductList.Select(e => e.Id).ToList();
+                var ids = ob.InvoiceProducts.Select(e => e.Id).ToList();
                 if (ids == null) ids = new List<long>();
 
                 // Delete row from database
@@ -32,7 +32,7 @@ namespace Service
                 if (deleted != null && deleted.Count > 0)
                     repoAll.invoiceProductRepo.ShiftDelete(deleted.Select(e => e.Id).ToList());
 
-                foreach (var productUnit in ob.InvoiceProductList)
+                foreach (var productUnit in ob.InvoiceProducts)
                 {
                     var model = productUnit.Map<InvoiceProduct>();
                     model.InvoiceId = Nwob.Id;
@@ -137,11 +137,7 @@ namespace Service
         {
             var ob =  base.Get(Id);
             if (ob == null)
-                ob = new InvoiceModelView() { InvoiceProductList = new List<InvoiceProductModelView>() };
-            //foreach (var products in ob.InvoiceProductList)
-            //{
-            //    products.UnitList = products.Product.ProductUnits.Select(e => e.Unit.Map<UnitModelView>()).ToList();
-            //}
+                ob = new InvoiceModelView() { InvoiceProducts = new List<InvoiceProductModelView>() };           
             return ob;
         }
 

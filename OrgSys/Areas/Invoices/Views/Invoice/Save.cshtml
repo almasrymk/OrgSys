@@ -137,7 +137,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach (var InvoiceProduct in Model.InvoiceProductList)
+                                            @foreach (var InvoiceProduct in Model.InvoiceProducts)
                                             {
                                                 <tr class="product-empty ProductRow">
                                                     <td class="text-center align-middle" style="width:35px;padding:0px;">
@@ -180,10 +180,10 @@
                                                     </td>
                                                 </tr>
                                             }
-                                            @if (Model.InvoiceProductList == null || (Model.InvoiceProductList.Count < int.Parse("0" + ViewBag.NumberLine) && int.Parse("0" + ViewBag.NumberLine) > 0))
+                                            @if (Model.InvoiceProducts == null || (Model.InvoiceProducts.Count < int.Parse("0" + ViewBag.NumberLine) && int.Parse("0" + ViewBag.NumberLine) > 0))
                                             {
 
-                                                @for (int i = 0, index = 1; i < int.Parse("0" + ViewBag.NumberLine) - Model.InvoiceProductList.Count; i++, index++)
+                                                @for (int i = 0, index = 1; i < int.Parse("0" + ViewBag.NumberLine) - Model.InvoiceProducts.Count; i++, index++)
                                                 {
                                                     <tr class="product-empty ProductRow">
                                                         <td class="text-center align-middle" style="width:35px;padding:0px;">
@@ -1088,9 +1088,9 @@
                         $row.find("#query").val(data.name);
                         var price = Number(data.price);
                         var $UnitID = $row.find('#UnitId');
-                        $UnitID.find('option').remove();
-                        $(data.unitlist).each(function (index, unit) {
-                            $UnitID.append($('<option></option>').val(unit.id).html(unit.name));
+                        $UnitID.find('option').remove();                       
+                        $(data.unitlist).each(function (index, unit) {                           
+                            $UnitID.append($('<option></option>').val(unit.unitId).html(unit.unitName));
                         });
                         $UnitID.val(data.selectunitid).trigger("change", SkipCallingAction = true);
 
@@ -1167,7 +1167,7 @@
                         var $UnitID = $row.find('#UnitId');
                         $UnitID.find('option').remove();
                         $(data.unitlist).each(function (index, unit) {
-                            $UnitID.append($('<option></option>').val(unit.id).html(unit.name));
+                            $UnitID.append($('<option></option>').val(unit.unitId).html(unit.unitName));
                         });
                         $UnitID.val(data.selectunitid).trigger("change", SkipCallingAction = true);
 
@@ -1318,8 +1318,8 @@
                     success: function (res) {
                         window.location.replace(res.url);
                     },
-                    error: function (request, status, error) {
-                        alert("Error");
+                    error: function (error) {                       
+                        alert( JSON.stringify(error));
                     }
                 });
             }
@@ -1402,7 +1402,8 @@
                         var discountRow = discount * rate;
                         var taxRow = tax * rate;
                         var serviceRow = service * rate;
-                        list.push({
+
+                        var item = {
                             InvoiceId: $('#Id').val(),
                             ProductId: currentRow.find('#ProductId').val(),
                             StockId: $('#StockId').val(),
@@ -1414,7 +1415,9 @@
                             Tax: taxRow,
                             Service: serviceRow,
                             Net: currentRow.find('#Total').val() - discountRow + taxRow + serviceRow,
-                        });
+                        };
+                       
+                        list.push(item);
                     }
                 }
             });
@@ -1462,8 +1465,9 @@
                 BranchId: $('#BranchId').val(),
                 Cash: $('#Cash').val(),
                 Credit: $('#Credit').val(),
-                InvoiceProductList: list
+                InvoiceProducts: list
             };
+           
             return data;
         }
 

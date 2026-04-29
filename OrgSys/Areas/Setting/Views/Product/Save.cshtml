@@ -204,7 +204,7 @@
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                @foreach (var ob in Model.ProductUnitList)
+                                                                @foreach (var ob in Model.ProductUnits)
                                                                 {
                                                                     <tr class="UnitRow">
                                                                         <td style="min-width:100px;">
@@ -670,7 +670,7 @@
                 TypeId: $('#TypeId').val(),
                 ImgPath: $('#ImgPath').val(),
                 CodeNumber: $('#CodeNumber').val(),
-                ProductUnitList: list
+                ProductUnits: list
             };
 
             $.ajax({
