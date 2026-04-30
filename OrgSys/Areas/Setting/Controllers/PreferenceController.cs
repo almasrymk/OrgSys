@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace OrgSys.Areas.Setting.Controllers
 {
@@ -17,7 +18,7 @@ namespace OrgSys.Areas.Setting.Controllers
 
         }
 
-        public ActionResult Show(string Resource = "", int type = 0)
+        public async Task<ActionResult> Show(string Resource = "", int type = 0)
         {
             ViewBag.Resource = Resource;
             ViewBag.type = type;

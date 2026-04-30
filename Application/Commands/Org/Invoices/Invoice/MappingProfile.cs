@@ -25,9 +25,19 @@ public partial class MappingProfile : Profile
         CreateMap<CreateInvoiceCommand, Invoice>()
             .ForMember(dest => dest.InvoiceProducts, opt => opt.MapFrom(src => src.InvoiceProducts));
 
+        CreateMap<InvoiceModelView, CreateInvoiceCommand>()
+            .ForMember(dest => dest.InvoiceProducts, opt => opt.MapFrom(src => src.InvoiceProducts));
+        CreateMap<CreateInvoiceCommand, InvoiceModelView>()
+            .ForMember(dest => dest.InvoiceProducts, opt => opt.MapFrom(src => src.InvoiceProducts));
+
         CreateMap<Invoice, UpdateInvoiceCommand>()
             .ForMember(dest => dest.InvoiceProducts, opt => opt.MapFrom(src => src.InvoiceProducts));
         CreateMap<UpdateInvoiceCommand, Invoice>()
+            .ForMember(dest => dest.InvoiceProducts, opt => opt.MapFrom(src => src.InvoiceProducts));
+
+        CreateMap<InvoiceModelView, UpdateInvoiceCommand>()
+            .ForMember(dest => dest.InvoiceProducts, opt => opt.MapFrom(src => src.InvoiceProducts));
+        CreateMap<UpdateInvoiceCommand, InvoiceModelView>()
             .ForMember(dest => dest.InvoiceProducts, opt => opt.MapFrom(src => src.InvoiceProducts));
 
         CreateMap<Invoice, DeleteInvoiceCommand>();
