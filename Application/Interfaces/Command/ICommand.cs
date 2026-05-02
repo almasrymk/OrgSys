@@ -4,7 +4,7 @@
     using Domain.Shared;
 
     public interface ICommand : IRequest<Result>
-    {
+    {   
 
     }
      

@@ -6,6 +6,7 @@
     using Domain.Shared;
     using Microsoft.Extensions.DependencyInjection;
     using System.Net;
+    using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -78,6 +79,12 @@
             {
                 return false;
             }
+        }
+
+
+        protected async Task<string> CreateInclude()
+        {
+            return string.Empty;
         }
     }
 }

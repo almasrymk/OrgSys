@@ -12,8 +12,13 @@ namespace API.Controllers.Org.Invoices
 {
     [ApiController]
     [Route("[controller]")]
-    public class InvoiceController(ISender sender) : BaseController<GetByIdInvoiceQuery, SearchInvoiceQuery , GetListInvoiceQuery , CreateInvoiceCommand, UpdateInvoiceCommand, DeleteInvoiceCommand , DeleteListInvoiceCommand , GetMaxInvoiceQuery , InvoiceModelView>(sender)
+    public class InvoiceController(ISender sender) : BaseController<GetByIdInvoiceQuery, SearchInvoiceQuery, GetListInvoiceQuery, CreateInvoiceCommand, UpdateInvoiceCommand, DeleteInvoiceCommand, DeleteListInvoiceCommand, InvoiceModelView>(sender)
     {
 
+        [HttpPut("Cancel")]
+        public async Task<Result> Cancel(long Id, CancellationToken cancellationToken)
+        {
+            return await sender.Send(new CancelInvoiceCommand(Id), cancellationToken);
+        }
     }
 }

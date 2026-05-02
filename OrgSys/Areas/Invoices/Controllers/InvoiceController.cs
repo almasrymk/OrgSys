@@ -1,15 +1,19 @@
-﻿using AutoMapper;
+﻿using Application.Commands.Org.Invoices.Invoice.Commands;
+using AutoMapper;
+using Azure;
+using Domain.Enums;
+using Domain.Shared;
 using Entity.ModelView;
-using OrgSys.Controllers;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
-using Application.Commands.Org.Invoices.Invoice.Commands;
+using Newtonsoft.Json;
+using OrgSys.Controllers;
 using Service;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Utility;
 
 namespace OrgSys.Areas.Invoices.Controllers
@@ -175,10 +179,14 @@ namespace OrgSys.Areas.Invoices.Controllers
             return Json(data);
         }
 
-        public ActionResult Cancel(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1)
+        public async Task<ActionResult> Cancel(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1)
         {
-            new InvoiceService(User.GetSchema()).Cancel(id);
-            return Redirect("/Invoices/Invoice/Index?ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" + ResultStatus.success + "&MsgError=Success");
+         var response =    await ApiMethod(ApiMethodType.Put , $"Cancel?Id={id}");
+            response.EnsureSuccessStatusCode();
+            var data = await response.Content.ReadAsStringAsync();
+            var res = JsonConvert.DeserializeObject<Domain.Shared.Result>(data);
+
+            return Redirect("/Invoices/Invoice/Index?ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" + (res.StatusCode != null ? ResultStatus.success : ResultStatus.error) + "&MsgError=Success");
         }
 
         public ActionResult Redo(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1)
