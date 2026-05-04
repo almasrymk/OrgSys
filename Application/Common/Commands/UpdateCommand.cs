@@ -4,6 +4,7 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
+    using Entity.Model;
     using Microsoft.Extensions.DependencyInjection;
     using System.Net;
     using System.Text;
@@ -44,7 +45,6 @@
         {
             return true;
         }
-
         protected async Task<bool> UpdateDetails<TModelDetails>(IEnumerable<TModelDetails> Details)
           where TModelDetails : Entity.BaseModel
         {
@@ -65,7 +65,6 @@
                 return false;
             }
         }
-
         protected async Task<bool> RemoveDetails<TModelDetails>(IEnumerable<TModelDetails> RemovedList)
           where TModelDetails : Entity.BaseModel
         {
@@ -80,11 +79,44 @@
                 return false;
             }
         }
-
-
         protected async Task<string> CreateInclude()
         {
             return string.Empty;
+        }
+        protected async Task<Result> UpdateInvoiceWithTransaction( long invoiceId, Utility.Status status)
+        {
+            try
+            {
+                var InvoiceRepo = _provider.GetRequiredService<IRepository<Invoice>>();
+
+                var invoice = await InvoiceRepo.GetByFilterAsync(x => x.Id == invoiceId, await CreateInclude());
+
+                if (invoice is null)
+                    return new Result(HttpStatusCode.NotFound, new List<Error> { new Error("Invoice not found") });
+
+                invoice.Status = status;
+
+                if (invoice.TransactionId > 0)
+                {
+                    var transactionRepo = _provider.GetRequiredService<IRepository<Transaction>>();
+
+                    var transaction = await transactionRepo.GetByFilterAsync(x => x.Id == invoice.TransactionId, await CreateInclude());
+
+                    if (transaction == null)
+                        return new Result(HttpStatusCode.InternalServerError, new List<Error> { new Error("Transaction not found") });
+
+                    transaction.Status = status;
+                }
+
+                var saved = await _UnitOfWork.SaveChangeAsync();
+
+                return saved > 0 ? new Result(HttpStatusCode.OK, null) : new Result(HttpStatusCode.InternalServerError, new List<Error> { new Error("Error saving changes") });
+            }
+            catch (Exception ex) { 
+
+                return new Result(HttpStatusCode.InternalServerError, new List<Error> { new Error("Error") });
+
+            }
         }
     }
 }
