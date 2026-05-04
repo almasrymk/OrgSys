@@ -4,6 +4,7 @@ using Application.Interfaces.CQRS;
 using AutoMapper;
 using Domain.Abstraction;
 using Domain.Shared;
+using Entity.Model;
 using MediatR;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,7 +23,38 @@ namespace Application.Commands.Org.Invoices.Invoice.Commands
 
         public override async Task<Result> Handle(CancelInvoiceCommand request, CancellationToken cancellationToken)
         {
-            return await UpdateInvoiceWithTransaction(request.Id, Utility.Status.Cancel);
+            try
+            {
+                var invoice = await _Repository.GetByFilterAsync(x => x.Id == request.Id, await CreateInclude());
+
+
+                if (invoice is null)
+                    return new Result(HttpStatusCode.NotFound, new List<Error> { new Error("Invoice not found") });
+
+                invoice.Status = Utility.Status.Cancel;
+
+                if (invoice.TransactionId > 0)
+                {
+                    var transactionRepo = _provider.GetRequiredService<IRepository<Entity.Model.Transaction>>();
+
+                    var transaction = await transactionRepo.GetByFilterAsync(x => x.Id == invoice.TransactionId, await CreateInclude());
+
+                    if (transaction == null)
+                        return new Result(HttpStatusCode.InternalServerError, new List<Error> { new Error("Transaction not found") });
+
+                    transaction.Status = Utility.Status.Cancel;
+                }
+
+                var saved = await _UnitOfWork.SaveChangeAsync();
+
+                return saved > 0 ? new Result(HttpStatusCode.OK, null) : new Result(HttpStatusCode.InternalServerError, new List<Error> { new Error("Error saving changes") });
+            }
+            catch (Exception ex)
+            {
+
+                return new Result(HttpStatusCode.InternalServerError, new List<Error> { new Error("Error") });
+
+            }
         }
     }
 }

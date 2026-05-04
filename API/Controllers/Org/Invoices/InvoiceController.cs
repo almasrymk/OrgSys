@@ -26,5 +26,12 @@ namespace API.Controllers.Org.Invoices
         {
             return await sender.Send(new RedoInvoiceCommand(Id), cancellationToken);
         }
+
+
+        //public async Task<Result> CollectPaidInvoice(long Id, CancellationToken cancellationToken)
+        //{
+        //    // Implement your method logic here
+        //    //return await Task.FromResult(new Result(HttpStatusCode.OK, null));
+        //}
     }
 }
