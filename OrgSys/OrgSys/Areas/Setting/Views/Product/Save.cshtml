@@ -1,0 +1,701 @@
+﻿@model Entity.ModelView.ProductModelView
+@{
+    ViewData["Title_Designer"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="HPage" class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="mb-1">
+                <h1>@Utility.Resource.Title_Designer.Product</h1>
+                <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
+                    <ol class="breadcrumb pt-0">
+                        <li class="breadcrumb-item">
+                            <a href="/">@Utility.Resource.Title_Designer.Home</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            @Utility.Resource.Title_Designer.Setting
+                        </li>
+                        <li class="breadcrumb-item">
+                            @Utility.Resource.Title_Designer.Product
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 mb-4">
+            <div class="card h-100">
+
+                <div class="card p-4">
+                    <div class="d-md-block" id="displayOptions">
+                        <h2 class="mr-4 mb-2 ml-4 d-inline-block float-md-left">
+                            @if (Model != null || Model.Id == 0)
+                            {
+                                <span class="mb-4"> @Utility.Resource.Title_Designer.New ...</span>
+                            }
+                            else
+                            {
+                                <span class="mb-4"> @Utility.Resource.Title_Designer.Edit ...</span>
+                            }
+                        </h2>
+                        <div class="position-absolute card-top-buttons">
+                            <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId" class="btn btn-primary"><i class="simple-icon-action-undo"></i>  @Utility.Resource.Title_Designer.Back</a>
+                        </div>
+                    </div>
+
+                    <hr />
+
+                    <div class="card-body p-0">
+                        <form id="frmId" action="Save" method="post" enctype="multipart/form-data" class="tooltip-label-right " novalidate>
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-lg-9 pl-4 pr-4">
+                                    @Html.HiddenFor(model => model.Id)
+                                    @Html.HiddenFor(model => model.TypeId)
+                                    @Html.HiddenFor(model => model.ParentId)
+                                    @Html.HiddenFor(model => model.CodeNumber)
+                                    @Html.HiddenFor(model => model.Status)
+                                    @Html.HiddenFor(model => model.ImgPath)
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label>@Utility.Resource.Title_Designer.Classification</label>
+                                            <div id="divClassificationName">
+                                                <div class="input-group DropAutoComplete">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i class="simple-icon-people"></i></span>
+                                                    </div>
+                                                    <input type="text" class="form-control Droptxt" id="txtClassificationId" value="@Model.ClassificationName" autocomplete="off" />
+                                                    @Html.HiddenFor(model => model.ClassificationId)
+                                                    <div class="input-group-prepend Dropbtn">
+                                                        <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
+                                                    </div>
+                                                </div>
+                                                @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                                            </div>
+                                            @Html.ValidationMessageFor(model => model.ClassificationId, "", new { @class = "text-danger " })
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>@Utility.Resource.Title_Designer.Code</label>
+                                            <div id="divCode">
+                                                @Html.TextBoxFor(model => model.Code, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Code })
+                                                @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.CodeIncreasedAutomaticallyCanBechanged</small>*@
+                                            </div>
+                                            @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger " })
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label>@Utility.Resource.Title_Designer.Name</label>
+                                            <div id="divName">
+                                                @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Name })
+                                                @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.NameRequired</small>*@
+                                            </div>
+                                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>@Utility.Resource.Title_Designer.Nickname</label>
+                                            <div id="divNickname">
+                                                @Html.TextBoxFor(model => model.Nickname, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Nickname })
+                                                @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.AbbreviatedNameProduct</small>*@
+                                            </div>
+                                            @Html.ValidationMessageFor(model => model.Nickname, "", new { @class = "text-danger " })
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label>@Utility.Resource.Title_Designer.Barcode</label>
+                                            <div id="divBarcode">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i class="iconsminds-qr-code"></i></span>
+                                                    </div>
+                                                    @Html.TextBoxFor(model => model.Barcode, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Barcode })
+                                                </div>
+                                                @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.ItConsists13Numbers</small>*@
+                                            </div>
+                                            @Html.ValidationMessageFor(model => model.Barcode, "", new { @class = "text-danger " })
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>@Utility.Resource.Title_Designer.Price</label>
+                                            <div id="divPrice">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">$</span>
+                                                    </div>
+                                                    @Html.TextBoxFor(model => model.Price, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Price })
+                                                </div>
+                                                @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SellingPriceProduct</small>*@
+                                            </div>
+                                            @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger " })
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label>@Utility.Resource.Title_Designer.Cost</label>
+                                            <div id="divCost">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">$</span>
+                                                    </div>
+                                                    @Html.TextBoxFor(model => model.Cost, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Cost })
+                                                </div>
+                                                @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.PurchasePriceFromSuppliers</small>*@
+                                            </div>
+                                            @Html.ValidationMessageFor(model => model.Cost, "", new { @class = "text-danger " })
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>@Utility.Resource.Title_Designer.Supplier</label>
+                                            <div id="divDealerId">
+                                                <div class="input-group DropAutoComplete">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i class="simple-icon-people"></i></span>
+                                                    </div>
+                                                    <input type="text" class="form-control Droptxt" id="txtDealerId" value="@Model.DealerName" autocomplete="off" />
+                                                    @Html.HiddenFor(model => model.DealerId)
+                                                    <div class="input-group-prepend Dropbtn">
+                                                        <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
+                                                    </div>
+                                                </div>
+                                                @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                                            </div>
+                                            @Html.ValidationMessageFor(model => model.DealerId, "", new { @class = "text-danger " })
+                                        </div>
+                                    </div>
+                                    <div class="form-group position-relative error-l-50">
+                                        <label>@Utility.Resource.Title_Designer.Description</label>
+                                        <div id="divDescription">
+                                            @Html.TextBoxFor(model => model.Description, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Description })
+                                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.PutYourNotesProduc</small>*@
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger mt-3 m-1" })
+                                    </div>
+
+                                    <div class="form-group position-relative error-l-50 mb-4">
+                                        <div class="card">
+                                            <div id="smartWizardClickable">
+                                                <ul class="card-header">
+                                                    <li>
+                                                        <a href="#checkStep1">
+                                                            @Utility.Resource.Title_Designer.UnitsMeasure<br />
+                                                            <small>@Utility.Resource.Message_Designer.UnitsWhichProductMeasured</small>
+                                                            <div id="divtblUnit"></div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#checkStep2">
+                                                            @Utility.Resource.Title_Designer.ProductRecipe<br />
+                                                            <small>@Utility.Resource.Message_Designer.IngredientsThatProductMadeOf</small>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+
+                                                <div class="card-body">
+                                                    <div id="checkStep1">
+                                                        <table id="tblUnit" class="table table-hover">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th scope="col">@Utility.Resource.Title_Designer.Unit</th>
+                                                                    <th scope="col">@Utility.Resource.Title_Designer.Rate</th>
+                                                                    <th scope="col" style="width:100px;text-align:center;">@Utility.Resource.Title_Designer.Default</th>
+                                                                    <th scope="col"></th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach (var ob in Model.ProductUnitList)
+                                                                {
+                                                                    <tr class="UnitRow">
+                                                                        <td style="min-width:100px;">
+                                                                            <input type="hidden" id="RowId" value="@ob.Id" />
+                                                                            <div id="divUnitId">
+                                                                                <div class="input-group DropAutoComplete">
+                                                                                    <div class="input-group-prepend">
+                                                                                        <span class="input-group-text"><i class="simple-icon-pie-chart"></i></span>
+                                                                                    </div>
+                                                                                    <input type="text" class="form-control search-box Droptxt" id="txtUnitId" value="@ob.UnitName" autocomplete="off" />
+                                                                                    <input type="hidden" id="UnitId" name="UnitId" value="@ob.UnitId" />
+                                                                                    <div class="input-group-prepend Dropbtn">
+                                                                                        <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td style="width:100px;">
+                                                                            @Html.EditorFor(modelItem => ob.Rate, new { htmlAttributes = new { @id = "Rate", @name = "Rate", @class = "form-control", @type = "text", @onkeyup = "AddNewRowUnit($(this).parent().parent())" } })
+                                                                        </td>
+                                                                        <td style="width:100px;text-align:center;vertical-align:middle;">
+                                                                            @if (ob.DefaultUnit)
+                                                                            {
+                                                                                <div id="DefaultUnit" class="custom-switch custom-switch-primary-inverse custom-switch-small">
+                                                                                    <input onchange="CheckDefaultUnit($(this).parent().parent().parent())" class="custom-switch-input chkUnit" id="chkUnit_@ob.UnitId" type="checkbox" checked>
+                                                                                    <label class="custom-switch-btn" for="chkUnit_@ob.UnitId"></label>
+                                                                                </div>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <div id="DefaultUnit" class="custom-switch custom-switch-primary-inverse custom-switch-small">
+                                                                                    <input onchange="CheckDefaultUnit($(this).parent().parent().parent())" class="custom-switch-input chkUnit" id="chkUnit_@ob.UnitId" type="checkbox">
+                                                                                    <label class="custom-switch-btn" for="chkUnit_@ob.UnitId"></label>
+                                                                                </div>
+                                                                            }
+                                                                        </td>
+                                                                        <td style="width:100px;vertical-align:middle;">
+                                                                            @if (ob != null && ob.Id >= 0)
+                                                                            {
+                                                                                <a id="btDelete" href="javascript:;" onclick="RemoveRowUnit($(this).parent().parent())">  <i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete  </a>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <a id="btDelete" href="javascript:;" onclick="RemoveRowUnit($(this).parent().parent())" style="display:none">  <i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete </a>
+                                                                            }
+                                                                        </td>
+                                                                    </tr>
+                                                                }
+
+                                                                <tr class="trNew UnitRow">
+                                                                    <td style="min-width:100px;">
+                                                                        <input type="hidden" id="RowId" value="-1" />
+                                                                        <div id="divUnitId">
+                                                                            <div class="input-group DropAutoComplete">
+                                                                                <div class="input-group-prepend">
+                                                                                    <span class="input-group-text"><i class="simple-icon-pie-chart"></i></span>
+                                                                                </div>
+                                                                                <input type="text" class="form-control search-box Droptxt" id="txtUnitId" autocomplete="off" />
+                                                                                <input type="hidden" id="UnitId" name="UnitId" />
+                                                                                <div class="input-group-prepend Dropbtn">
+                                                                                    <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td style="width:100px;">
+                                                                        @Html.Editor("Rate", new { htmlAttributes = new { @id = "Rate", @name = "Rate", placeholder = "0.0", @class = "form-control", @type = "text", @onkeyup = "AddNewRowUnit($(this).parent().parent())" } })
+                                                                    </td>
+                                                                    <td style="width:100px;text-align:center;vertical-align:middle;">
+                                                                        <div id="DefaultUnit" class="custom-switch custom-switch-primary-inverse custom-switch-small" style="display:none">
+                                                                            <input onchange="CheckDefaultUnit($(this).parent().parent().parent())" class="custom-switch-input chkUnit" id="chkUnit" type="checkbox">
+                                                                            <label class="custom-switch-btn" for="chkUnit"></label>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td style="width:100px;vertical-align:middle;">
+                                                                        <a id="btDelete" href="javascript:;" onclick="RemoveRowUnit($(this).parent().parent())" style="display:none">  <i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete </a>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div id="checkStep2">
+                                                        @Html.TextAreaFor(model => model.Recipe, new { @class = "form-control", @rows = "5", @placeholder = @Utility.Resource.Title_Designer.ProductRecipe })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-12 col-lg-3 pt-4 pb-4">
+                                    <div class="card mb-4 p-3">
+                                        <div class="position-absolute card-top-buttons" style="padding:21px;">
+                                            <button type="button" onclick="document.getElementById('flImage').click();" class="btn btn-outline-white icon-button ">
+                                                <i class="simple-icon-pencil"></i>
+                                            </button>
+                                            <input id="flImage" type="file" name="file" onchange="SelectImage(this)" style="display:none" accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*" />
+                                            <button type="button" class="btn btn-outline-white icon-button" onclick="document.getElementById('flImage').value ='' ;$('#img').attr('src', '/img/profiles/ClientCard.png')">
+                                                X
+                                            </button>
+                                        </div>
+                                        @if ("" + Model.ImgPath != "")
+                                        {
+                                            <img id="img" src="@Model.ImgPath" alt="Fruitcake" class="list-thumbnail border-0  badge-theme-1" style="height:200px;">
+                                        }
+                                        else
+                                        {
+                                            <img id="img" src="~/img/profiles/ProductCard.png" alt="Fruitcake" class="list-thumbnail border-0  badge-theme-1" style="height:200px;">
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="pl-2 pr-2">
+                                <button type="button" onclick="Save()" class="btn btn-primary mb-0">@Utility.Resource.Title_Designer.Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/vendor/jquery-3.3.1.min.js"></script>
+<script src="~/js/vendor/bootstrap3-typeahead.js"></script>
+<link href="~/css/jquery-ui.css" rel="stylesheet" />
+<script src="~/js/jquery-ui.js"></script>
+<script src="~/js/PopupScript.js"></script>
+<script>
+    jQuery(function ($) {
+        setTimeout(function () {
+            $(".sw-toolbar-bottom").css("display", "none");
+        }, 500);
+
+        RefreshSomeEventListener();
+        function RefreshSomeEventListener () {
+            $(".search-box").autocomplete({
+                minLength: 0,
+                source: function (request, response) {
+                    var searchPhrase = request.term.trim().toLowerCase();
+                    var noResultsLabel = 'NoResultsFound';
+                    if (searchPhrase == "...")
+                        searchPhrase = "";
+                    $.ajax({
+                        url: "/Setting/Unit/GetList",
+                        type: "Get",
+                        dataType: "json",
+                        data: { txtSearch: searchPhrase, page: 1, pageSize: 7 },
+                        success: function (data) {
+                            try {
+                                if (!data.length) {
+                                    data = [{ name: noResultsLabel }];
+                                }
+                                var divUnit = $(this).closest(".UnitRow");
+
+                                if ("" + divUnit.find("#txtUnitId").val() == "") {
+                                    divUnit.find("#UnitId").val("");
+                                    divUnit.find("#errorUnitId").remove();
+                                }
+
+                                response($.map(data, function (item) {
+                                    return {
+                                        label: item.name, value: item.name, id: item.id
+                                    };
+                                }));
+                            } catch (err) { }
+                        }
+                    });
+                },
+                select: function (event, ui) {
+                    if (ui.item.label === 'NoResultsFound') {
+                        event.preventDefault();
+                        return;
+                    }
+                    
+                    var divUnit = $(this).closest(".UnitRow");
+
+                    divUnit.find("#UnitId").val(ui.item.id);
+                    divUnit.find("#errorUnitId").remove();
+
+                    AddNewRowUnit($(this).parent().parent().parent());
+                },
+                focus: function (event, ui) {
+                    if (ui.item.label === 'NoResultsFound') {
+                        event.preventDefault();
+                    }
+                },
+            });
+
+            $("#txtClassificationId").autocomplete({
+                minLength: 0,
+                source: function (request, response) {
+                    var searchPhrase = $("#txtClassificationId").val();//request.term.trim().toLowerCase();
+                    var noResultsLabel = 'NoResultsFound';
+                    if (searchPhrase == "...")
+                        searchPhrase = "";
+                    $.ajax({
+                        url: "/Setting/Classification/GetList",
+                        type: "Get",
+                        dataType: "json",
+                        data: { txtSearch: searchPhrase, page: 1, pageSize: 7 },
+                        success: function (data) {
+                            try {
+                                if (!data.length) {
+                                    data = [{ name: noResultsLabel }];
+                                }
+
+                                if ("" + $("#txtClassificationId").val() == "") {
+                                    $("#ClassificationId").val("");
+                                    $("#errorClassificationId").remove();
+                                }
+
+                                response($.map(data, function (item) {
+                                    return {
+                                        label: item.name, value: item.name, id: item.id
+                                    };
+                                }));
+                            } catch (err) { }
+                        }
+                    });
+                },
+                select: function (event, ui) {
+                    if (ui.item.label === 'NoResultsFound') {
+                        event.preventDefault();
+                        return;
+                    }
+                    $("#ClassificationId").val(ui.item.id);
+                    $("#errorClassificationId").remove();
+                },
+                focus: function (event, ui) {
+                    if (ui.item.label === 'NoResultsFound') {
+                        event.preventDefault();
+                    }
+                }
+            });
+
+            $("#txtDealerId").autocomplete({
+                minLength: 0,
+                source: function (request, response) {
+                    var searchPhrase = $("#txtDealerId").val();//request.term.trim().toLowerCase();
+                    var noResultsLabel = 'NoResultsFound';
+                    if (searchPhrase == "...")
+                        searchPhrase = "";
+                    $.ajax({
+                        url: "/Setting/Dealer/GetList",
+                        type: "Get",
+                        dataType: "json",
+                        data: { txtSearch: searchPhrase, TypeId: $("#TypeId").val(), page: 1, pageSize: 7 },
+                        success: function (data) {
+                            try {
+                                if (!data.length) {
+                                    data = [{ name: noResultsLabel }];
+                                }
+
+                                if ("" + $("#txtDealerId").val() == "") {
+                                    $("#DealerId").val("");
+                                    $("#errorDealerId").remove();
+                                }
+
+                                response($.map(data, function (item) {
+                                    return {
+                                        label: item.name, value: item.name, id: item.id
+                                    };
+                                }));
+                            } catch (err) { }
+                        }
+                    });
+                },
+                select: function (event, ui) {
+                    if (ui.item.label === 'NoResultsFound') {
+                        event.preventDefault();
+                        return;
+                    }
+                    $("#DealerId").val(ui.item.id);
+                    $("#errorDealerId").remove();
+                },
+                focus: function (event, ui) {
+                    if (ui.item.label === 'NoResultsFound') {
+                        event.preventDefault();
+                    }
+                }
+            });
+
+            $(".Droptxt").click(function () {
+                event.preventDefault();
+                if ($(this).val() == "" || $(this).val() == "...")
+                    $(this).autocomplete("search", "");
+                return;
+            });
+
+            $(".Dropbtn").click(function () {
+                event.preventDefault();
+                $(this).parent().find(".Droptxt").autocomplete("search", "");
+                return;
+            });
+
+            $(".Dropbtn2").click(function () {
+                event.preventDefault();
+                $(this).parent().find(".Droptxt").autocomplete("search", "");
+                return;
+            });
+
+            $(".Droptxt").dblclick(function () {
+                event.preventDefault();
+                if ($(this).val() != "")
+                    $(this).autocomplete("search", "");
+                return;
+            });
+        }
+
+        function AddNewRowUnit(data) {
+            $("#errortblUnit").remove();
+            $(data).find("#errorUnitId").remove();
+            $(data).find("#errorRate").remove();
+            var valied = validUnit(data);
+            if ($(data).find("#RowId").val() < 0 && valied == true) {
+                var Current = $('.trNew');
+                var NewRow = Current.clone();
+                NewRow.find("#Rate").val("");
+                $("#tblUnit").find('tbody').append(NewRow);
+                Current.removeClass("trNew");
+                Current.find("#RowId").val(0);
+                Current.find("#Rate").focus();
+                Current.find("#DefaultUnit").css("display", "block");
+                Current.find("#btDelete").css("display", "block");
+                var defaultUnit = Current.find("#chkUnit");
+                defaultUnit.attr("id", "chkUnit_" + Current.find("#UnitId").val());
+                defaultUnit.next().attr("for", "chkUnit_" + Current.find("#UnitId").val());
+                if ($("#tblUnit").find("input:checked").length == 0)
+                    defaultUnit.prop("checked", true);
+
+                RefreshSomeEventListener();
+            }
+        }
+    });
+
+    function SelectImage(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $("#img").attr("src", e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function validUnit(data) {
+        var countRepeated = 0;
+        var valid = true;
+        var NewRow = $('.trNew');
+        $('#tblUnit > tbody > tr').each(function () {
+            var currentRow = $(this);
+            if (!currentRow.hasClass('trNew')) {
+                currentRow.find("td:eq(0) #errorUnitId").remove();
+                if (!(currentRow.find("td:eq(0) #UnitId").val() > 0)) {
+                    currentRow.find("td:eq(0) #UnitId").focus();
+                    currentRow.find("td:eq(0) #divUnitId").after('<span id="errorUnitId" class="error" style="color:red">@Utility.Resource.Message_Designer.SelectUnit</span>');
+                    NewRow.find("#UnitId").val("");
+                    NewRow.find("#Rate").val("");
+                    valid = false;
+                }
+                currentRow.find("td:eq(1) #errorRate").remove();
+                if (parseFloat("0" + currentRow.find("td:eq(1) #Rate").val()) == 0) {
+                    currentRow.find("td:eq(1) #Rate").focus()
+                    currentRow.find("td:eq(1) #Rate").after('<span id="errorRate" class="error" style="color:red">@Utility.Resource.Message_Designer.EnterRate</span>');
+                    NewRow.find("#UnitId").val("");
+                    NewRow.find("#Rate").val("");
+                    valid = false;
+                }
+            }
+            if (currentRow.find("td:eq(0) #UnitId").val() > 0 && currentRow.find("td:eq(0) #UnitId").val() == $(data).find("#UnitId").val()) {
+                countRepeated++;
+                if (countRepeated == 2) {
+                    $(data).find("#divUnitId").after('<span id="errorUnitId" class="error" style="color:red">@Utility.Resource.Message_Designer.ThisUnitWasSelected</span>');
+                    valid = false;
+                }
+            }
+        });
+        return valid;
+    }
+
+    function RemoveRowUnit(data) {
+        $(data).remove();
+    }
+
+    function CheckDefaultUnit(data) {
+        if (!$(data).find("#chkUnit_" + $(data).find("#UnitId").val()).is(':checked')) {
+            $(data).find("#chkUnit_" + $(data).find("#UnitId").val()).prop("checked", true);
+        }
+        else {
+            $('#tblUnit > tbody > tr').each(function () {
+                var currentRow = $(this);
+                if (!currentRow.hasClass('trNew')) {
+                    if (currentRow.find("td:eq(0) #UnitId").val() != $(data).find("#UnitId").val()) {
+                        currentRow.find("td:eq(2) #chkUnit_" + currentRow.find("td:eq(0) #UnitId").val()).prop("checked", false);
+                    }
+                }
+            });
+        }
+    }
+
+    function Save() {
+        var Valid = true;
+
+        if (CheckRowCount("tblUnit", "divtblUnit", '@Utility.Resource.Message_Designer.ClassificationRequired'))
+            Valid = false;
+
+        if (CheckRage("Description", "divDescription", 5, 500, '@Utility.Resource.Message_Designer.DescriptionRange'))
+            Valid = false;
+
+        @*if (CheckRequired("Barcode", "divBarcode", '@Utility.Resource.Message_Designer.BarcodeRequired'))
+            Valid = false;*@
+
+       else if (CheckRage("Barcode", "divBarcode", 5, 15, '@Utility.Resource.Message_Designer.BarcodeRange'))
+            Valid = false;
+
+        if (CheckRequired("Name", "divName", '@Utility.Resource.Message_Designer.NameRequired'))
+            Valid = false;
+
+        if (CheckRequired("Code", "divCode", '@Utility.Resource.Message_Designer.CodeRequired'))
+            Valid = false;
+
+        if (CheckRequired("ClassificationId", "divClassificationName", '@Utility.Resource.Message_Designer.ClassificationRequired'))
+            Valid = false;
+
+        if (Valid == true) {
+
+            var fileData = new FormData();
+            var files = $("#flImage").get(0).files;
+            for (var i = 0; i < files.length; i++) {
+                fileData.append(files[i].name, files[i]);
+            }
+
+
+            var list = [];
+            $('#tblUnit > tbody > tr').each(function () {
+                var currentRow = $(this);
+                if (!currentRow.hasClass('trNew')) {
+                    list.push({
+                        ProductId: $('#Id').val(),
+                        Id: currentRow.find("td:eq(0) #RowId").val(),
+                        UnitId: currentRow.find("td:eq(0) #UnitId").val(),
+                        Rate: currentRow.find("td:eq(1) #Rate").val(),
+                        DefaultUnit: currentRow.find("td:eq(2) .chkUnit").is(":checked")
+                    });
+                }
+            });
+
+            var data = {
+                Id: $('#Id').val(),
+                Code: $('#Code').val().trim(),
+                Name: $('#Name').val().trim(),
+                Nickname: $('#Nickname').val().trim(),
+                Barcode: $('#Barcode').val(),
+                Description: $('#Description').val(),
+                ClassificationId: $('#ClassificationId').val(),
+                DealerId: $('#DealerId').val(),
+                Price: $('#Price').val(),
+                Cost: $('#Cost').val(),
+                Recipe: $('#Recipe').val(),
+                Status: $('#Status').val(),
+                ParentId: $('#ParentId').val(),
+                TypeId: $('#TypeId').val(),
+                ImgPath: $('#ImgPath').val(),
+                CodeNumber: $('#CodeNumber').val(),
+                ProductUnitList: list
+            };
+
+            $.ajax({
+                type: 'POST',
+                url: "/Setting/Product/Save",
+                data: { ob: data},
+                success: function (res) {
+                    if (res.status == "success") {
+                        window.location.replace(res.url);
+                    }
+                    else {
+                        LogError(data.Error);
+                    }
+                },
+                error: function (xhr) {
+                    if (xhr.status === 400) {
+                        var errors = xhr.responseJSON.errors;
+
+                        $.each(errors, function (index, res) {
+                            var span = $("[data-valmsg-for='" + res.key + "']");
+                            span.text(res.messageError);
+                        });
+                    }
+                }
+            });
+        }
+    }
+</script>

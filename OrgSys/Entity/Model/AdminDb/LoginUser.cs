@@ -1,0 +1,18 @@
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Entity.Model
+{
+    [Table("LoginUser", Schema = "admin")]
+    public class LoginUser : BaseModel
+    {     
+        [Required]
+        public virtual string UserName { get; set; }
+       
+        public virtual string Password { get; set; }
+       
+        public virtual long ClientId { get; set; }
+
+        public virtual Client Client { get; set; }
+    }
+}

@@ -1,0 +1,26 @@
+﻿Add-Migration CreateDb -Context AdminContext -OutputDir Migrations\AdminMigrations
+Add-Migration CreateDb -Context OrgContext -OutputDir Migrations\OrgMigrations
+Add-Migration CreateDb -Context ReportContext -OutputDir Migrations\ReportMigrations
+
+
+
+
+Update-Database -Context AdminContext
+Update-Database -Context OrgContext
+Update-Database -Context ReportContext
+
+
+
+
+
+Remove-Migration -Context AdminContext
+Remove-Migration -Context OrgContext
+Remove-Migration -Context ReportContext
+
+
+
+
+
+public string _Schema { get; set; } = "org";
+public MigrationFile() { }
+public MigrationFile(string Schema) { this._Schema = Schema; }

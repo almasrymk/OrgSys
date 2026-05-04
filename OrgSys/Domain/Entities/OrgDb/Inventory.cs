@@ -1,0 +1,26 @@
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Domain.Entities
+{
+    [Table("Inventory")]
+    public class Inventory : BaseTransactionEntity
+    {      
+        public virtual long? UserId { get; set; }
+
+        public virtual User User { get; set; }
+
+        [ForeignKey("Stock")]
+        public virtual long? StockId { get; set; }
+
+        public virtual Stock Stock { get; set; }
+
+        [StringLength(500)]
+        public virtual string Notes { get; set; }
+         
+        public virtual bool Closed { get; set; }
+
+        public virtual ICollection<InventoryProduct> InventoryProducts { get; set; }
+    }
+}
