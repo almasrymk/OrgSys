@@ -1,0 +1,99 @@
+﻿using Application.Abstraction.Command;
+using Application.Common.Commands;
+using Application.Interfaces.CQRS;
+using AutoMapper;
+using Domain.Abstraction;
+using Domain.Shared;
+using Entity;
+using Entity.Model;
+using Entity.ModelView;
+using MediatR;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.VisualBasic;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.Design;
+using System.Net;
+using System.Security.Cryptography.Xml;
+using System.Text;
+using System.Transactions;
+
+namespace Application.Commands.Org.Financials.Financial.Command
+{
+    public sealed record CreateFinancialPaidInvoiceCommand(long InvoiceId) : ICommand, ICreateCommand<Result>;
+
+
+    public sealed class CreateFinancialPaidInvoiceCommandHandler(IUnitOfWork _UnitOfWork, 
+        IRepository<Entity.Model.Financial> _Repository, IServiceProvider _Provider, IMapper mapper) :
+        CreateCommandHandler<CreateFinancialPaidInvoiceCommand, Entity.Model.Financial>(_UnitOfWork, _Repository, mapper)
+    {
+
+
+        public override async Task<Result> Handle(CreateFinancialPaidInvoiceCommand request, CancellationToken cancellationToken)
+        {
+
+            try
+            {
+                var invoiceRepo = _Provider.GetRequiredService<IRepository<Entity.Model.Invoice>>();
+
+                var invoice = await invoiceRepo.GetByFilterAsync(x => x.Id == request.InvoiceId, "");
+
+                if (invoice is null)
+                    return new Result(HttpStatusCode.InternalServerError, new List<Error> { new Error("Invoice not found") });
+
+                if (invoice.Credit > 0)
+                {
+                    var financial = mapper.Map<Entity.Model.Financial>(invoice);
+                    financial.Id = 0;
+                    financial.Dealer = null;
+                    financial.Amount = invoice.Credit;
+                    financial.Rate = invoice.Rate > 0 ? invoice.Rate : (invoice.Currency?.Rate ?? 0);
+                    financial.AmountByDefaultCurrency = invoice.Credit * financial.Rate;
+                    financial.CreateDate = DateTime.Now;
+                    financial.TypeId = invoice.TypeId == 1 || invoice.TypeId == 4 ? 1 : 2;
+
+                    var prefRepo = _Provider.GetRequiredService<IRepository<Entity.Model.Preference>>();
+
+                    var safePref = await prefRepo.GetByFilterAsync(
+                        e => e.Key == "DefaultSafe"
+                        && (e.TypeId == (invoice.TypeId == 1 || invoice.TypeId == 4 ? 1 : 2)
+                            || (invoice.TypeId == 1 || invoice.TypeId == 4 ? 1 : 2) == 0)
+                        && (e.Reference == "Financial" || "Financial" == ""),
+                        ""
+                    );
+
+                    financial.SafeId = int.Parse(safePref?.Value ?? "0");
+
+                    var codePref = await prefRepo.GetByFilterAsync(
+                        e => e.TypeId == (invoice.TypeId == 1 || invoice.TypeId == 4 ? 1 : 2),
+                        ""
+                    );
+                    invoice.CodeNumber = int.Parse(codePref?.Value ?? "0");
+                    invoice.Code = invoice.CodeNumber.ToString();
+
+                    FinancialInvoice financialInvoice = mapper.Map<Entity.Model.FinancialInvoice>(invoice);
+                    financialInvoice.Id = 0;
+                    financialInvoice.TypeId = invoice.TypeId == 1 || invoice.TypeId == 4 ? 1 : 2;
+                    financialInvoice.Amount = invoice.Credit;
+                    financialInvoice.InvoiceId = invoice.Id;
+                    financial.FinancialInvoices = new List<FinancialInvoice>();
+                    financial.FinancialInvoices.Add(financialInvoice);
+                    invoice.Credit = invoice.Net - invoice.Paid - financial.Amount;
+                    invoice.Paid = invoice.Net - invoice.Credit;
+
+                    await _Repository.CreateAsync(financial);
+                    await _UnitOfWork.SaveChangeAsync();
+
+                }
+            return new Result(HttpStatusCode.OK, new List<Error>());
+            }
+            catch (Exception ex)
+            {
+                return new Result(HttpStatusCode.InternalServerError,new List<Error>{new Error(ex.Message)});
+            }
+           
+
+        }
+    }
+}

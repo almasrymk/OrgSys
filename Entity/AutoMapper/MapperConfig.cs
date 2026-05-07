@@ -401,9 +401,9 @@ namespace Entity
             cfg.CreateMap<Product, ProductModelView>()
             .ForMember(d => d.ClassificationName, o => o.MapFrom(s => s.Classification.Name))
             .ForMember(d => d.DealerName, o => o.MapFrom(s => s.Dealer.Name))
-            .ForMember(d => d.ProductUnitList, o => o.MapFrom(s => s.ProductUnits))
-            .ForMember(d => d.ProductRecipeList, o => o.MapFrom(s => s.ProductRecipes))
-            .ForMember(d => d.ProductPropertyElementList, o => o.MapFrom(s => s.ProductPropertyElements));
+            .ForMember(d => d.ProductUnits, o => o.MapFrom(s => s.ProductUnits))
+            .ForMember(d => d.ProductRecipes, o => o.MapFrom(s => s.ProductRecipes))
+            .ForMember(d => d.ProductPropertyElements, o => o.MapFrom(s => s.ProductPropertyElements));
             //
 
             // Product Property Element

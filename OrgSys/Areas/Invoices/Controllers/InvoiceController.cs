@@ -79,7 +79,8 @@ namespace OrgSys.Areas.Invoices.Controllers
 
             if (ob.Id == 0)
             {
-                ob.CodeNumber = long.Parse("0" + await GetValueApi<InvoiceModelView>($"GetMax?TypeId={ob.TypeId}")) + 1;
+                
+                ob.CodeNumber = long.Parse("0" + await GetValueApi<InvoiceModelView>($"GetMax?ParentId=0&TypeId={ob.TypeId}")) + 1;
                 ob.Code = "" + ob.CodeNumber;
                 ob.StockId = StockId;
                 ob.DealerId = DealerId;
@@ -123,9 +124,12 @@ namespace OrgSys.Areas.Invoices.Controllers
             return Redirect("/Invoices/Invoice/Index?ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" + ResultStatus.success + "&MsgError=Success");
         }
 
-        public ActionResult CreateFinancial(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1, string dir = "Index")
-        {
-            new IntegrationServics(User.GetSchema()).CollectPaidInvoice(new InvoiceService(User.GetSchema()).Get(id));
+        public async Task<ActionResult> CreateFinancial(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1, string dir = "Index")
+        {                   
+            //var invoice = await GetObApi<InvoiceModelView>($"GetById?Id={id}");
+            var response = await ApiMethod(ApiMethodType.Post, $"CollectPaidInvoice?InvoiceId={id}");
+            //var x = new InvoiceService(User.GetSchema()).Get(id);
+            //new IntegrationServics(User.GetSchema()).CollectPaidInvoice(invoice);
             if (dir == "Index")
                 return Redirect("/Invoices/Invoice/Index?ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" + ResultStatus.success + "&MsgError=Success");
             else

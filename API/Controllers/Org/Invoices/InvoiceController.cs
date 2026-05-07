@@ -1,4 +1,5 @@
-﻿using Application.Commands.Org.Invoices.Invoice.Commands;
+﻿using Application.Commands.Org.Financials.Financial.Command;
+using Application.Commands.Org.Invoices.Invoice.Commands;
 using Application.Commands.Org.Invoices.Invoice.Queries;
 using Application.Commands.Org.Setting.Invoice.Queries;
 using Application.Interfaces.CQRS;
@@ -12,7 +13,7 @@ namespace API.Controllers.Org.Invoices
 {
     [ApiController]
     [Route("[controller]")]
-    public class InvoiceController(ISender sender) : BaseController<GetByIdInvoiceQuery, SearchInvoiceQuery, GetListInvoiceQuery, CreateInvoiceCommand, UpdateInvoiceCommand, DeleteInvoiceCommand, DeleteListInvoiceCommand, InvoiceModelView>(sender)
+    public class InvoiceController(ISender sender) : BaseController<GetByIdInvoiceQuery, SearchInvoiceQuery, GetListInvoiceQuery, CreateInvoiceCommand, UpdateInvoiceCommand, DeleteInvoiceCommand, DeleteListInvoiceCommand, GetMaxInvoiceQuery, InvoiceModelView>(sender)
     {
 
         [HttpPut("Cancel")]
@@ -28,10 +29,10 @@ namespace API.Controllers.Org.Invoices
         }
 
 
-        //public async Task<Result> CollectPaidInvoice(long Id, CancellationToken cancellationToken)
-        //{
-        //    // Implement your method logic here
-        //    //return await Task.FromResult(new Result(HttpStatusCode.OK, null));
-        //}
+        [HttpPost("CollectPaidInvoice")]
+        public async Task<Result> CollectPaidInvoice(long InvoiceId, CancellationToken cancellationToken)
+        {
+            return await sender.Send(new CreateFinancialPaidInvoiceCommand(InvoiceId), cancellationToken);
+        }
     }
 }
