@@ -20,5 +20,11 @@ namespace API.Controllers.Org.Invoices
         {
             return await sender.Send(new CancelInvoiceCommand(Id), cancellationToken);
         }
+
+        [HttpPut("Redo")]
+        public async Task<Result> Redo(long Id, CancellationToken cancellationToken)
+        {
+            return await sender.Send(new RedoInvoiceCommand(Id), cancellationToken);
+        }
     }
 }

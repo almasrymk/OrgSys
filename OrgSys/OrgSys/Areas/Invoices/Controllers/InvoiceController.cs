@@ -189,12 +189,16 @@ namespace OrgSys.Areas.Invoices.Controllers
             return Redirect("/Invoices/Invoice/Index?ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" + (res.StatusCode != null ? ResultStatus.success : ResultStatus.error) + "&MsgError=Success");
         }
 
-        public ActionResult Redo(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1)
+        public async Task<ActionResult> Redo(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1)
         {
-            new InvoiceService(User.GetSchema()).Redo(id);
-            return Redirect("/Invoices/Invoice/Index?ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" + ResultStatus.success + "&MsgError=Success");
+            var response = await ApiMethod(ApiMethodType.Put, $"Redo?Id={id}");
+            response.EnsureSuccessStatusCode();
+            var data = await response.Content.ReadAsStringAsync();
+            var res = JsonConvert.DeserializeObject<Domain.Shared.Result>(data);
+
+            return Redirect("/Invoices/Invoice/Index?ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" + (res.StatusCode != null ? ResultStatus.success : ResultStatus.error) + "&MsgError=Success");
         }
-         
+
         public JsonResult GetProductInvoice(int Id)
         {
             var item = new InvoiceService(User.GetSchema()).GetProductInvoicesNotReturn(Id);
