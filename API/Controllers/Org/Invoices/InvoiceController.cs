@@ -5,6 +5,7 @@ using Application.Commands.Org.Setting.Invoice.Queries;
 using Application.Interfaces.CQRS;
 using Azure;
 using Domain.Shared;
+using Entity.Model;
 using Entity.ModelView;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -22,6 +23,13 @@ namespace API.Controllers.Org.Invoices
             return await sender.Send(new CancelInvoiceCommand(Id), cancellationToken);
         }
 
+        [HttpPut("Update")]
+        public override async Task<Result> Update([FromBody] UpdateInvoiceCommand Update, CancellationToken cancellationToken)
+        {
+          await base.Update(Update, cancellationToken);
+          return await sender.Send(new CreateTransactionByInvoiceCommand(Update.Id), cancellationToken);
+        }
+
         [HttpPut("Redo")]
         public async Task<Result> Redo(long Id, CancellationToken cancellationToken)
         {
@@ -33,6 +41,12 @@ namespace API.Controllers.Org.Invoices
         public async Task<Result> CollectPaidInvoice(long InvoiceId, CancellationToken cancellationToken)
         {
             return await sender.Send(new CreateFinancialPaidInvoiceCommand(InvoiceId), cancellationToken);
+        }
+
+        [HttpPost("CreateTransactionInvoice")]
+        public async Task<Result> CreateTransactionInvoice(int InvoiceId, CancellationToken cancellationToken)
+        {
+            return await sender.Send(new CreateTransactionByInvoiceCommand(InvoiceId), cancellationToken);
         }
     }
 }

@@ -118,9 +118,12 @@ namespace OrgSys.Areas.Invoices.Controllers
             return base.FixData(ob);
         }
 
-        public ActionResult CreateTransaction(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1)
+        public async Task<ActionResult> CreateTransaction(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1)
         {
-            new IntegrationServics(User.GetSchema()).CreateTransactionByInvoice(new InvoiceService(User.GetSchema()).Get(id));
+            //new IntegrationServics(User.GetSchema()).CreateTransactionByInvoice(new InvoiceService(User.GetSchema()).Get(id));
+
+            var response = await ApiMethod(ApiMethodType.Post, $"CreateTransactionInvoice?InvoiceId={id}");
+
             return Redirect("/Invoices/Invoice/Index?ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" + ResultStatus.success + "&MsgError=Success");
         }
 

@@ -1380,6 +1380,7 @@
         function CollectData() {
             var list = [];
             var total = $('#AllTotal').val();
+            var transactionId = $("#TransactionId").val();
             var discount = $('#Discount').val();
             if ($("#DiscountType").val() == 2) {
                 discount = total * discount / 100
@@ -1414,6 +1415,7 @@
                             Discount: discountRow,
                             Tax: taxRow,
                             Service: serviceRow,
+                         
                             Net: currentRow.find('#Total').val() - discountRow + taxRow + serviceRow,
                         });
                     }
@@ -1463,6 +1465,7 @@
                 BranchId: $('#BranchId').val(),
                 Cash: $('#Cash').val(),
                 Credit: $('#Credit').val(),
+                TransactionId : transactionId,
                 InvoiceProductList: list
             };
             return data;

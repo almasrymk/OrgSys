@@ -162,9 +162,11 @@
                             <td class="text-center align-middle" style="width:10px;">
                                 @if (Model.Response[i].Transaction == null || "" + Model.Response[i].Transaction.Code == "")
                                 {
-                                    if (Model.Response[i].Status != Utility.Status.Cancel && User.IsAllowed("Addition.Add"))
+                                    if (Model.Response[i].Status != Utility.Status.Cancel && User.IsAllowed("Addition.Add") && Model.Response[i].TransactionId == null)
                                     {
                                         <a href="/@ViewBag.area/@ViewBag.PageTitle/CreateTransaction?id=@Model.Response[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.Page"> <i class="iconsminds-synchronize-2"></i>  </a>
+                                    }else {
+                                         <small><i class="fa fa-check"></i> </small>
                                     }
                                 }
                                 else
@@ -342,10 +344,12 @@
 
                                 @if ("" + Model.Response[i].Transaction?.Code == "")
                                 {
-                                    if (Model.Response[i].Status != Utility.Status.Cancel && AllowAdd)
+                                    if (Model.Response[i].Status != Utility.Status.Cancel && AllowAdd && Model.Response[i].TransactionId == null )
                                     {
 
                                         <a href="/@ViewBag.area/@ViewBag.PageTitle/CreateTransaction?id=@Model.Response[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.Page"> <i class="iconsminds-synchronize-2"></i>  </a>
+                                    } else {
+                                         <small><i class="fa fa-check"></i> </small>
                                     }
                                 }
                                 else
