@@ -69,8 +69,8 @@ namespace OrgSys
             services.AddDbContext<Repository.AdminContext>(options => options.UseSqlServer(Configuration.GetConnectionString("OrgConnection"), x => x.MigrationsHistoryTable("__AdminMigrationsHistory", "admin")));
             services.AddDbContext<Repository.OrgContext>(options => options.UseSqlServer(Configuration.GetConnectionString("OrgConnection"), x => x.MigrationsHistoryTable("__MigrationsHistory", "org")).ReplaceService<IModelCacheKeyFactory, Repository.DbSchemaAwareModelCacheKeyFactory>().ReplaceService<IMigrationsAssembly, Repository.DbSchemaAwareMigrationAssembly>());
             //services.AddDbContext<OrgContext>(options => options.UseSqlServer(Configuration.GetConnectionString("OrgConnection"), x => x.MigrationsAssembly(assemblyName)).ReplaceService<IModelCacheKeyFactory, DbSchemaAwareModelCacheKeyFactory>().ReplaceService<IMigrationsAssembly, DbSchemaAwareMigrationAssembly>());
-            services.AddDbContext<Infrastructure.Persistence.Data.OrgContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("Default")));
+            //services.AddDbContext<Infrastructure.Persistence.Data.OrgContext>(options =>
+            //options.UseSqlServer(Configuration.GetConnectionString("Default")));
 
             services.AddScoped<IOrgContext>(provider => provider.GetRequiredService<Infrastructure.Persistence.Data.OrgContext>());
             services.ConfigureApplicationCookie(options =>

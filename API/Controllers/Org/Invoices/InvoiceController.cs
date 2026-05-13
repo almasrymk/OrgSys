@@ -9,6 +9,7 @@ using Entity.Model;
 using Entity.ModelView;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace API.Controllers.Org.Invoices
 {
@@ -27,7 +28,9 @@ namespace API.Controllers.Org.Invoices
         public override async Task<Result> Update([FromBody] UpdateInvoiceCommand Update, CancellationToken cancellationToken)
         {
           await base.Update(Update, cancellationToken);
-          return await sender.Send(new CreateTransactionByInvoiceCommand(Update.Id), cancellationToken);
+
+            return Update.TransactionId > 0 ? await sender.Send(new CreateTransactionByInvoiceCommand(Update.Id), cancellationToken) : new Result(HttpStatusCode.OK, null);
+
         }
 
         [HttpPut("Redo")]
