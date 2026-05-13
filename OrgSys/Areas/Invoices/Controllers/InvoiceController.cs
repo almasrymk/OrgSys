@@ -145,20 +145,31 @@ namespace OrgSys.Areas.Invoices.Controllers
             return Json("Ok");
         }
 
-        public JsonResult GetInvoicesNotReturn(string txtSearch = "", long TypeId = 0, long InvId = 0, int page = 1, int pageSize = 10)
+        public async Task<JsonResult> GetInvoicesNotReturn(string txtSearch = "", long TypeId = 0, long InvId = 0, int page = 1, int pageSize = 10)
         {
             if (txtSearch != null)
                 txtSearch = txtSearch.Trim().ToLower();
 
-            var itemsList = new InvoiceService(User.GetSchema()).GetInvoicesNotReturn(txtSearch, TypeId, InvId, page, pageSize);
-            var list = itemsList.Distinct().OrderBy(_ => _.Code)
+            //var itemsList = new InvoiceService(User.GetSchema()).GetInvoicesNotReturn(txtSearch, TypeId, InvId, page, pageSize);
+            //var list = itemsList.Distinct().OrderBy(_ => _.Code)
+            //    .Select(_ => new
+            //    {
+            //        _.Id,
+            //        _.Code
+            //    })
+            //    .ToList();
+
+            var items = await GetListApi<InvoiceModelView>($"GetInvoicesNotReturn?KeySearch={txtSearch}&ParentId={InvId}&TypeId={TypeId - 2}&Page={page}&PageSize={pageSize}");
+
+       var lsit = items.Distinct().OrderBy(_ => _.Code)
                 .Select(_ => new
                 {
                     _.Id,
                     _.Code
                 })
                 .ToList();
-            return Json(list);
+
+            return Json(lsit);
         }
 
         public ActionResult SearchInvoices(string txt = "", long dealerId = 0, long currencyId = 0, int page = 1, long typeId = 1, int Type = 1, int index = 0, string ids = "")

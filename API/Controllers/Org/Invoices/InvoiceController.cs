@@ -15,7 +15,9 @@ namespace API.Controllers.Org.Invoices
 {
     [ApiController]
     [Route("[controller]")]
-    public class InvoiceController(ISender sender) : BaseController<GetByIdInvoiceQuery, SearchInvoiceQuery, GetListInvoiceQuery, CreateInvoiceCommand, UpdateInvoiceCommand, DeleteInvoiceCommand, DeleteListInvoiceCommand, GetMaxInvoiceQuery, InvoiceModelView>(sender)
+    public class InvoiceController(ISender sender) : BaseController<GetByIdInvoiceQuery,
+        SearchInvoiceQuery, GetListInvoiceQuery, CreateInvoiceCommand, UpdateInvoiceCommand, DeleteInvoiceCommand, 
+        DeleteListInvoiceCommand, GetMaxInvoiceQuery, InvoiceModelView>(sender)
     {
 
         [HttpPut("Cancel")]
@@ -50,6 +52,13 @@ namespace API.Controllers.Org.Invoices
         public async Task<Result> CreateTransactionInvoice(int InvoiceId, CancellationToken cancellationToken)
         {
             return await sender.Send(new CreateTransactionByInvoiceCommand(InvoiceId), cancellationToken);
+        }
+
+
+        [HttpGet("GetInvoicesNotReturn")]
+        public async Task<ResultPagination<InvoiceModelView>> GetInvoicesNotReturn(string KeySearch = "", long ParentId = 0, long TypeId = 0, int Page = 1, int PageSize = 10, CancellationToken cancellationToken = default)
+        {
+            return await sender.Send(new GetInvoiceNotReturnedQuery(KeySearch, ParentId, TypeId, Page, PageSize), cancellationToken);
         }
     }
 }

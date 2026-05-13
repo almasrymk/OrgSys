@@ -18,6 +18,7 @@ using System.Net;
 using System.Security.Cryptography.Xml;
 using System.Text;
 using System.Transactions;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Application.Commands.Org.Financials.Financial.Command
 {
@@ -65,11 +66,8 @@ namespace Application.Commands.Org.Financials.Financial.Command
 
                     financial.SafeId = int.Parse(safePref?.Value ?? "0");
 
-                    var codePref = await prefRepo.GetByFilterAsync(
-                        e => e.TypeId == (invoice.TypeId == 1 || invoice.TypeId == 4 ? 1 : 2),
-                        ""
-                    );
-                    invoice.CodeNumber = int.Parse(codePref?.Value ?? "0");
+                    invoice.CodeNumber = await _Repository.GetMaxByFilterAsync(e => e.TypeId == invoice.TypeId, e => e.CodeNumber) + 1;
+
                     invoice.Code = invoice.CodeNumber.ToString();
 
                     FinancialInvoice financialInvoice = mapper.Map<Entity.Model.FinancialInvoice>(invoice);
