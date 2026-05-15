@@ -17,7 +17,7 @@
         public override Expression<Func<Entity.Model.Preference, bool>> CreateFilter(GetListPreferenceQuery request)
         {
             Page = request.Page;
-            PageSize = request.PageSize; 
+            PageSize = request.PageSize;
 
             return e =>
              (string.IsNullOrEmpty(request.KeySearch) || e.Reference.Contains(request.KeySearch)) &&

@@ -1,41 +1,44 @@
-﻿using Entity.ModelView;
+﻿using Application.Commands.Org.Setting.Preference.Commands;
+using AutoMapper;
+using Entity.ModelView;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Configuration;
+using OrgSys.Controllers;
 using Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace OrgSys.Areas.Setting.Controllers
 {
     [Area("Setting")]
-    public class PreferenceController : Controller
+    public class PreferenceController(IConfiguration configuration, IMapper mapper)
+        :  MainController<PreferenceModelView, CreatePreferenceCommand , UpdatePreferenceCommand>(configuration, mapper)
     {
-        public PreferenceController()
-        {
 
-        }
 
-        public ActionResult Show(string Resource = "", int type = 0)
+        public async Task<ActionResult> Show(string Resource = "", int type = 0)
         {
             ViewBag.Resource = Resource;
             ViewBag.type = type;
-            var Service = new PreferenceService(User.GetSchema()).GetAll(Resource, 0, type);
+            var Service = await GetListApi<PreferenceModelView>(TypeId:type , TextSearch: Resource);
             if (Resource == "Invoice")
             {
                 List<SelectListItem> selectListItems = new List<SelectListItem>();
                 selectListItems.Add(new SelectListItem { Value = "1", Text = "Amount" });
                 selectListItems.Add(new SelectListItem { Value = "2", Text = "Percentage" });
+                ViewBag.Stocks = new SelectList(await GetListApi<StockModelView>(TypeId: 1), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultStock")?.Value);
 
-                ViewBag.Customers = new SelectList(new DealerService(User.GetSchema()).GetAll(0, 1), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultCustomer")?.Value);
-                ViewBag.Suppliers = new SelectList(new DealerService(User.GetSchema()).GetAll(0, 2), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultSupplier")?.Value);
-                ViewBag.Stocks = new SelectList(new StockService(User.GetSchema()).GetAll(0, 0), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultStock")?.Value);
-                ViewBag.PaymentTypes = new SelectList(new PaymentTypeService(User.GetSchema()).GetAll(0, 0), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultPaymentType")?.Value);
+                ViewBag.Customers = new SelectList(await GetListApi<DealerModelView>(TypeId:1), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultCustomer")?.Value);
+                ViewBag.Suppliers = new SelectList(await GetListApi<DealerModelView>(TypeId: 2), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultSupplier")?.Value);
+                ViewBag.PaymentTypes = new SelectList(await GetListApi<PaymentTypeModelView>(), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultPaymentType")?.Value);
                 ViewBag.DiscountType = new SelectList(selectListItems, "Value", "Text", Service.FirstOrDefault(e => e.Key == "DefaultDiscountType")?.Value);
                 ViewBag.ServiceType = new SelectList(selectListItems, "Value", "Text", Service.FirstOrDefault(e => e.Key == "DefaultServiceType")?.Value);
                 ViewBag.TaxType = new SelectList(selectListItems, "Value", "Text", Service.FirstOrDefault(e => e.Key == "DefaultTaxType")?.Value);
-                ViewBag.Currencys = new SelectList(new CurrencyService(User.GetSchema()).GetAll(0, 0), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultCurrency")?.Value);
+                ViewBag.Currencys = new SelectList(await GetListApi<CurrencyModelView>(), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultCurrency")?.Value);
 
                 ViewBag.DiscountValue = Service.FirstOrDefault(e => e.Key == "DiscountValue")?.Value;
                 ViewBag.ServiceValue = Service.FirstOrDefault(e => e.Key == "ServiceValue")?.Value;
@@ -72,9 +75,9 @@ namespace OrgSys.Areas.Setting.Controllers
 
             if (Resource == "Transaction")
             {
-                ViewBag.Customers = new SelectList(new DealerService(User.GetSchema()).GetAll(0, 1), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultCustomer")?.Value);
-                ViewBag.Suppliers = new SelectList(new DealerService(User.GetSchema()).GetAll(0, 2), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultSupplier")?.Value);
-                ViewBag.Stocks = new SelectList(new StockService(User.GetSchema()).GetAll(0, 0), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultStock")?.Value);
+                ViewBag.Customers = new SelectList(await GetListApi<DealerModelView>(TypeId: 1), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultCustomer")?.Value);
+                ViewBag.Suppliers = new SelectList(await GetListApi<DealerModelView>(TypeId: 2), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultSupplier")?.Value);
+                ViewBag.Stocks = new SelectList(await GetListApi<StockModelView>(), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultStock")?.Value);
 
                 List<SelectListItem> selectListItems = new List<SelectListItem>();
                 selectListItems.Add(new SelectListItem { Value = "1", Text = "Data after product" });
@@ -107,7 +110,7 @@ namespace OrgSys.Areas.Setting.Controllers
 
             if (Resource == "Order")
             {
-                ViewBag.Customers = new SelectList(new DealerService(User.GetSchema()).GetAll(0, 1), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultCustomer")?.Value);
+                ViewBag.Customers = new SelectList(await GetListApi<DealerModelView>(TypeId: 1), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultCustomer")?.Value);
 
                 List<SelectListItem> selectListItems = new List<SelectListItem>();
                 selectListItems.Add(new SelectListItem { Value = "1", Text = "Data after product" });
@@ -147,12 +150,12 @@ namespace OrgSys.Areas.Setting.Controllers
 
             if (Resource == "Financial")
             {
-                ViewBag.Clients = new SelectList(new DealerService(User.GetSchema()).GetAll(0, 1), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultClient")?.Value);
-                ViewBag.Suppliers = new SelectList(new DealerService(User.GetSchema()).GetAll(0, 2), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultSupplier")?.Value);
-                ViewBag.Safes = new SelectList(new SafeService(User.GetSchema()).GetAll(0, 0), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultSafe")?.Value);
-                ViewBag.PaymentTypes = new SelectList(new PaymentTypeService(User.GetSchema()).GetAll(0, 0), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultPaymentType")?.Value);
-                ViewBag.Currencys = new SelectList(new CurrencyService(User.GetSchema()).GetAll(0, 0), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultCurrency")?.Value);
-                ViewBag.Outlays = new SelectList(new OutlayService(User.GetSchema()).GetAll(0, 0), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultOutlay")?.Value);
+                ViewBag.Clients = new SelectList(await GetListApi<DealerModelView>(TypeId: 1), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultClient")?.Value);
+                ViewBag.Suppliers = new SelectList(await GetListApi<DealerModelView>(TypeId: 2), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultSupplier")?.Value);
+                ViewBag.Safes = new SelectList( await GetListApi<SafeModelView>(), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultSafe")?.Value);
+                ViewBag.PaymentTypes = new SelectList(await GetListApi<PaymentTypeModelView>(), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultPaymentType")?.Value);
+                ViewBag.Currencys = new SelectList(await GetListApi<CurrencyModelView>(), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultCurrency")?.Value);
+                ViewBag.Outlays = new SelectList(await GetListApi<OutlayModelView>(), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultOutlay")?.Value);
 
                 List<SelectListItem> selectListItems = new List<SelectListItem>();
                 selectListItems.Add(new SelectListItem { Value = "1", Text = "Data after product" });
@@ -170,7 +173,7 @@ namespace OrgSys.Areas.Setting.Controllers
 
             if (Resource == "Inventory")
             {
-                ViewBag.Stocks = new SelectList(new StockService(User.GetSchema()).GetAll(0, 1), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultStock")?.Value);
+                ViewBag.Stocks = new SelectList( await GetListApi<StockModelView>(TypeId: 1), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultStock")?.Value);
 
                 var selectListItems = new List<SelectListItem>();
                 selectListItems.Add(new SelectListItem { Value = "1", Text = "Allow" });
@@ -183,32 +186,13 @@ namespace OrgSys.Areas.Setting.Controllers
         }
 
         [HttpPost]
-        public JsonResult Save(string list)
+        public async Task<JsonResult> SavePreference([FromBody] PreferenceModelView list)
         {
-            try
-            {
-                var service = new PreferenceService(User.GetSchema());
-                var obList = JsonSerializer.Deserialize<List<PreferenceModelView>>(list);
-                foreach (var ob in obList)
-                {
-                    if ("" + ob.Key != "")
-                    {
-                        var pr = service.GetByKey(ob.Key, ob.Reference, ob.TypeId, 0);
-                        if (pr != null && pr.Id > 0)
-                        {
-                            pr.Value = ob.Value;
-                            service.Save(pr);
-                        }
-                    }
-                }
+          await base.Save(list);
 
-                return Json("Ok");
-            }
-            catch (Exception ex)
-            {
-                var ss = ex.Message;
-            }
-            return Json("Error");
+            return Json("oK");
         }
     }
+
+
 }

@@ -47,5 +47,6 @@ public partial class MappingProfile : Profile
         PaymentTypeMappingProfile();
 
         FinancialMappingProfile();
+        PreferenceMappingProfile();
     }
 }

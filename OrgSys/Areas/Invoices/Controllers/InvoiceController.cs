@@ -50,7 +50,7 @@ namespace OrgSys.Areas.Invoices.Controllers
 
         public override async Task<InvoiceModelView> InitializeData(InvoiceModelView ob)
         {
-            var preferenceList = await GetListApi<PreferenceModelView>(TypeId: ob.TypeId, PageSize: 1000);
+            var preferenceList = await GetListApi<PreferenceModelView>(TypeId: ob.TypeId, TextSearch: "Invoice", PageSize: 1000);
             var StockId = long.Parse("0" + preferenceList.FirstOrDefault(e => e.Key == "DefaultStock")?.Value);
 
             long DealerId = 0;
@@ -147,8 +147,6 @@ namespace OrgSys.Areas.Invoices.Controllers
 
         public async Task<JsonResult> GetInvoicesNotReturn(string txtSearch = "", long TypeId = 0, long InvId = 0, int page = 1, int pageSize = 10)
         {
-            if (txtSearch != null)
-                txtSearch = txtSearch.Trim().ToLower();
 
             //var itemsList = new InvoiceService(User.GetSchema()).GetInvoicesNotReturn(txtSearch, TypeId, InvId, page, pageSize);
             //var list = itemsList.Distinct().OrderBy(_ => _.Code)
@@ -159,15 +157,12 @@ namespace OrgSys.Areas.Invoices.Controllers
             //    })
             //    .ToList();
 
+            if (txtSearch != null)
+                txtSearch = txtSearch.Trim().ToLower();
+
             var items = await GetListApi<InvoiceModelView>($"GetInvoicesNotReturn?KeySearch={txtSearch}&ParentId={InvId}&TypeId={TypeId - 2}&Page={page}&PageSize={pageSize}");
 
-       var lsit = items.Distinct().OrderBy(_ => _.Code)
-                .Select(_ => new
-                {
-                    _.Id,
-                    _.Code
-                })
-                .ToList();
+             var lsit = items.Distinct().OrderBy(_ => _.Code).Select(_ => new {_.Id,_.Code }).ToList();
 
             return Json(lsit);
         }
