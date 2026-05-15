@@ -66,9 +66,9 @@ namespace Application.Commands.Org.Financials.Financial.Command
 
                     financial.SafeId = int.Parse(safePref?.Value ?? "0");
 
-                    invoice.CodeNumber = await _Repository.GetMaxByFilterAsync(e => e.TypeId == invoice.TypeId, e => e.CodeNumber) + 1;
+                    //invoice.CodeNumber = await _Repository.GetMaxByFilterAsync(e => e.TypeId == invoice.TypeId, e => e.CodeNumber) + 1;
 
-                    invoice.Code = invoice.CodeNumber.ToString();
+                    //invoice.Code = invoice.CodeNumber.ToString();
 
                     FinancialInvoice financialInvoice = mapper.Map<Entity.Model.FinancialInvoice>(invoice);
                     financialInvoice.Id = 0;

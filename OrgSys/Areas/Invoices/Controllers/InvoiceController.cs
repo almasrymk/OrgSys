@@ -224,5 +224,36 @@ namespace OrgSys.Areas.Invoices.Controllers
             }).ToList();
             return Json(data);
         }
+
+        [HttpPost]
+        public async Task<ActionResult> AutoSave(InvoiceModelView ob)
+        {
+            await base.Save(ob);
+            if (ob.Id == 0)
+            {
+
+                var key = ob.GetType().GetProperty("Code")?.GetValue(ob, null);
+                var searchResp = await ApiMethod(ApiMethodType.Get, $"Search?KeySearch={key}&ParentId={ob.ParentId}&TypeId={ob.TypeId}&Page=1&PageSize=1");
+                if (searchResp != null && searchResp.IsSuccessStatusCode)
+                {
+                    var searchData = await searchResp.Content.ReadAsStringAsync();
+                    var searchRes = JsonConvert.DeserializeObject<ResultPagination<InvoiceModelView>>(searchData);
+                    if (searchRes != null && searchRes.Response != null && searchRes.Response.Count > 0)
+                    {
+                        ob.Id = searchRes.Response[0].Id;
+                        ob.CreateUserId = searchRes.Response[0].CreateUserId;
+                    }
+
+                    return Ok(new
+                    {
+                        status = "success",
+                        id = ob.Id,
+                        createdUserId = ob.CreateUserId,
+                        url = "/" + "Invoices" + "/" + "Invoice" + "?ParentId=" + ob.ParentId + "&TypeId=" + ob.TypeId + "&status=" + ResultStatus.success + "&MsgError=Success"
+                    });
+                }
+            }
+            return Ok();
+        }
+        }
     }
-}
