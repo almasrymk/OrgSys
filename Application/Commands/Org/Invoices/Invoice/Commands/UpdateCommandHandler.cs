@@ -13,7 +13,7 @@
     public sealed class UpdateInvoiceCommand : Entity.ModelView.InvoiceModelView , ICommand, IUpdateCommand<Result>;
     public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork, 
         IRepository<Entity.Model.Invoice> _Repository ,
-         IRepository<Entity.Model.InvoiceProduct> _ProductUnitRepository,
+         IRepository<Entity.Model.InvoiceProduct> _InvoiceProductRepository,
         IMapper mapper, IServiceProvider _provider) : UpdateCommandHandler<UpdateInvoiceCommand, Entity.Model.Invoice>(_UnitOfWork, _Repository , mapper , _provider)
     {
 
@@ -22,7 +22,7 @@
         {
             #region UpdateProduct
             var ids = request.InvoiceProductList.Select(e => e.Id);
-            var removeList = await _ProductUnitRepository.GetListByFilterAsync(e => e.InvoiceId == request.Id && !ids.Contains(e.Id));
+            var removeList = await _InvoiceProductRepository.GetListByFilterAsync(e => e.InvoiceId == request.Id && !ids.Contains(e.Id));
 
             var res = await RemoveDetails<InvoiceProduct>(removeList!);
             if (!res) return false;

@@ -17,5 +17,21 @@
         {
             return e => request.Ids.Contains(e.Id) && e.Status != Utility.Status.Deleted && e.Hide != true;
         }
+
+        public override async Task<bool> RemoveDetails(DeleteListTransactionCommand request)
+        {
+
+            var transactions = await _Repository.GetListByFilterAsync(t => request.Ids.Contains(t.Id), "TransactionProducts");
+
+            if (transactions == null || !transactions.Any())
+                return false;
+
+
+
+            foreach (var transactionProduct in transactions)
+                transactionProduct.TransactionProducts.Clear();
+            
+            return true;
+        }
     }
 }

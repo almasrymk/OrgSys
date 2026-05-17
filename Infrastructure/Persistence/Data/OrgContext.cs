@@ -79,8 +79,8 @@
         //public virtual DbSet<PropertyElement> PropertyElements { get; set; }
         //public virtual DbSet<ProductPropertyElement> ProductPropertyElements { get; set; }
         public virtual DbSet<Preference> Preferences { get; set; }
-        //public virtual DbSet<TransactionType> TransactionTypes { get; set; }
-        //public virtual DbSet<Transaction> Transactions { get; set; }
+        public virtual DbSet<TransactionType> TransactionTypes { get; set; }
+        public virtual DbSet<Transaction> Transactions { get; set; }
         //public virtual DbSet<TransactionProduct> TransactionProducts { get; set; }
         //public virtual DbSet<Inventory> Inventories { get; set; }
         //public virtual DbSet<InventoryProduct> InventoryProducts { get; set; }

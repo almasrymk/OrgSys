@@ -119,7 +119,9 @@
                                         <tbody>
                                             @foreach (var TransactionProduct in Model.TransactionProductList)
                                             {
+
                                                 <tr class="product-empty ProductRow">
+                                                   <input type="hidden" id="TransactionProductId" class="TransactionProductId" name="Id"  value="@TransactionProduct.Id" />
                                                     <td class="text-center align-middle" style="width:35px;padding:0px;">
                                                         <span id="Index">  </span>
                                                     </td>
@@ -144,7 +146,7 @@
                                                         </div>
                                                     </td>
                                                     <td style="width:150px;padding:0px;">
-                                                        @Html.DropDownList("UnitId", new SelectList(TransactionProduct.UnitList, "Id", "Name", TransactionProduct.UnitId), null, new { @class = "form-control UnitId", @style = BorderAlign })
+                                                        @Html.DropDownList("UnitId", new SelectList(TransactionProduct.Product.ProductUnits.Select(e => e.Unit), "Id", "Name", TransactionProduct.UnitId), null, new { @class = "form-control UnitId", @style = BorderAlign })
                                                     </td>
                                                     <td style="width:100px;padding:0px;">
                                                         <input type="text" id="Cost" name="Cost" class="form-control Cost" value="@TransactionProduct.Cost" style="border-top:none;border-bottom:none;border-right:none;" placeholder="0.0" autocomplete="off" />
@@ -850,7 +852,7 @@
                         var $UnitID = $row.find('#UnitId');
                         $UnitID.find('option').remove();
                         $(data.unitlist).each(function (index, unit) {
-                            $UnitID.append($('<option></option>').val(unit.id).html(unit.name));
+                            $UnitID.append($('<option></option>').val(unit.unitId).text(unit.unitName));
                         });
                         $UnitID.val(data.selectunitid).trigger("change", SkipCallingAction = true);
 
@@ -1017,11 +1019,11 @@
 
             if (Valid == true) {
                 var data = CollectData();
-
+                console.log(data);
                 $.ajax({
                     type: 'POST',
                     url: "/Transactions/Transaction/Save",
-                    data: { model: data },
+                    data: { ob: data },
                     success: function (res) {
                         window.location.replace(res.url);
 
@@ -1062,15 +1064,16 @@
                    setTimeout(function () {
 
                         var data = CollectData();
-
+                            console.log(data);
                         $.ajax({
                             type: 'POST',
-                            url: "/Transactions/Transaction/Save",
-                            data: { model: data },
+                            url: "/Transactions/Transaction/AutoSave",
+                            data: { ob: data },
                             success: function (res) {
                                 if (res != "Error") {
 
                                     $("#Id").val(res.id);
+                                    $("#CreateUserId").val(res.createdUserId);
                                     var obj = { area: "Transactions", Url: "/Transactions/Transaction/Save?Id=" + res.id + "&ParentId=" + $("#ParentId").val() + "&TypeId=" + $("#TypeId").val() };
                                     history.pushState(null, obj.area, obj.Url);
                                 }
@@ -1088,6 +1091,7 @@
                 if (!currentRow.hasClass('trNew')) {
                     if (currentRow.find('#ProductId').val() > 0) {
                         list.push({
+                            Id: currentRow.find('#TransactionProductId').val(),
                             TransactionId: $('#Id').val(),
                             ProductId: currentRow.find('#ProductId').val(),
                             StockId: $('#StockId').val(),
