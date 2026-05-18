@@ -57,7 +57,7 @@ namespace OrgSys.Areas.Transaction.Controllers
         {
             
             //var setting = new PreferenceService(User.GetSchema());
-            var setting = await GetListApi<PreferenceModelView>(TypeId: 2 ,TextSearch: "Transaction");
+            var setting = await GetListApi<PreferenceModelView>(TypeId: ob.TypeId, TextSearch: "Transaction");
             var StockId = long.Parse("0" + setting.FirstOrDefault(e => e.Key == "DefaultStock" && e.Reference == "Transaction" && e.TypeId == ob.TypeId)?.Value);
 
             long DealerId = 0;
