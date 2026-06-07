@@ -60,5 +60,14 @@ namespace API.Controllers.Org.Invoices
         {
             return await sender.Send(new GetInvoiceNotReturnedQuery(KeySearch, ParentId, TypeId, Page, PageSize), cancellationToken);
         }
+
+
+
+        [HttpGet("SearchInvoice")]
+        public async Task<ResultPagination<InvoiceModelView>> SearchInvoice(string KeySearch = "", long dealerId = 0, long currencyId = 0
+           , int typeId = 1, int Page = 1 ,int PageSize = 10 , string Ids = "", CancellationToken cancellationToken = default)
+        {
+            return await sender.Send(new GetCreditAllByDealerIdQuery(KeySearch, typeId, Page, PageSize, 0, dealerId, currencyId , Ids), cancellationToken);
+        }
     }
 }
