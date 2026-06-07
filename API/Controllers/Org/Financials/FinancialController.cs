@@ -1,12 +1,8 @@
 ﻿using Application.Commands.Org.Financials.Financial.Commands;
 using Application.Commands.Org.Financials.Financial.Queries;
-using Application.Commands.Org.Invoices.Invoice.Commands;
-using Application.Commands.Org.Invoices.Invoice.Queries;
-using Application.Commands.Org.Setting.Invoice.Queries;
 using Domain.Shared;
 using Entity.ModelView;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.Org.Financials

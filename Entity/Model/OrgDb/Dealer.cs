@@ -37,5 +37,10 @@ namespace Entity.Model
         public virtual long? DistrictId { get; set; }
 
         public virtual District District { get; set; }
+
+        [ForeignKey("Account")]
+        public virtual long? AccountId { get; set; }
+
+        public virtual Account Account { get; set; }
     }
 }
