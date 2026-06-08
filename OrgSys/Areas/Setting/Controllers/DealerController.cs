@@ -18,11 +18,14 @@
         public override async Task LoadViewBag(DealerModelView model)
         {
             ViewBag.DealersGroupList = new SelectList(await GetListApi<DealerGroupModelView>(TypeId: model.TypeId, Page: 1, PageSize: 20), "Id", "Name", model.DealerGroupId);
+            ViewBag.AccountList = new SelectList(await GetListApi<AccountModelView>(TypeId: model.TypeId, Page: 1, PageSize: 20), "Id", "Name", model.AccountId);
         }
 
         public override async Task<DealerModelView> InitializeData(DealerModelView ob)
         {
             ViewBag.DealersGroupList = new SelectList(await GetListApi<DealerGroupModelView>(TypeId: ob.TypeId , Page: 1, PageSize: 20), "Id", "Name", ob.DealerGroupId);
+            ViewBag.AccountList = new SelectList(await GetListApi<AccountModelView>(TypeId: ob.TypeId, Page: 1, PageSize: 20), "Id", "Name", ob.AccountId);
+
             if (ob == null)
                 ob = new DealerModelView();
             if (ob.Id == 0)
@@ -31,6 +34,7 @@
                 ob.Code = "" + ob.CodeNumber;
             }
             ob.DealerGroupName = (await GetObApi<DealerGroupModelView>($"GetById?Id={ob.DealerGroupId ?? 0}"))?.Name;
+            ob.AccountName = (await GetObApi<AccountModelView>($"GetById?Id={ob.AccountId ?? 0}"))?.Name;
 
             return ob;
         }
