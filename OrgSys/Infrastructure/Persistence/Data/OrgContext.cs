@@ -79,17 +79,17 @@
         //public virtual DbSet<PropertyElement> PropertyElements { get; set; }
         //public virtual DbSet<ProductPropertyElement> ProductPropertyElements { get; set; }
         public virtual DbSet<Preference> Preferences { get; set; }
-        //public virtual DbSet<TransactionType> TransactionTypes { get; set; }
-        //public virtual DbSet<Transaction> Transactions { get; set; }
-        //public virtual DbSet<TransactionProduct> TransactionProducts { get; set; }
-        //public virtual DbSet<Inventory> Inventories { get; set; }
-        //public virtual DbSet<InventoryProduct> InventoryProducts { get; set; }
+        public virtual DbSet<TransactionType> TransactionTypes { get; set; }
+        public virtual DbSet<Transaction> Transactions { get; set; }
+        public virtual DbSet<TransactionProduct> TransactionProducts { get; set; }
+        public virtual DbSet<Inventory> Inventories { get; set; }
+        public virtual DbSet<InventoryProduct> InventoryProducts { get; set; }
         //public virtual DbSet<OrderType> OrderTypes { get; set; }
         public virtual DbSet<Table> Tables { get; set; }
         public virtual DbSet<Safe> Safes { get; set; }
-        //public virtual DbSet<Financial> Financials { get; set; }
-        //public virtual DbSet<FinancialInvoice> FinancialInvoices { get; set; }
-        //public virtual DbSet<FinancialType> FinancialTypes { get; set; }
+        public virtual DbSet<Financial> Financials { get; set; }
+        public virtual DbSet<FinancialInvoice> FinancialInvoices { get; set; }
+        public virtual DbSet<FinancialType> FinancialTypes { get; set; }
         public virtual DbSet<Outlay> Outlays { get; set; }
         public virtual DbSet<Currency> Currencys { get; set; }
         public virtual DbSet<RolePermission> RolePermissions { get; set; }

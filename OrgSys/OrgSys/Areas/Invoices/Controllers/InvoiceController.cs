@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using OrgSys.Controllers;
+using PuppeteerSharp;
 using Service;
 using System;
 using System.Collections.Generic;
@@ -154,15 +155,21 @@ namespace OrgSys.Areas.Invoices.Controllers
             return Json(list);
         }
 
-        public ActionResult SearchInvoices(string txt = "", long dealerId = 0, long currencyId = 0, int page = 1, long typeId = 1, int Type = 1, int index = 0, string ids = "")
+        public async Task<ActionResult> SearchInvoices(string txt = "", long dealerId = 0,
+            long currencyId = 0, int page = 1, long typeId = 1, int Type = 1, int index = 0, string ids = "")
         {
             ViewBag.index = index;
             ViewBag.dealerId = dealerId;
             ViewBag.currencyId = currencyId;
             ViewBag.Type = Type;
             ViewBag.ids = ids;
-            var list = new InvoiceService(User.GetSchema()).GetCreditAllByDealerId(txt, dealerId, currencyId, ids, 0, typeId, page, 10);
-            return Type != 1 ? (ActionResult)PartialView("SearchInvoicesList", list) : View("SearchInvoices", list);
+            //var list1 = new InvoiceService(User.GetSchema()).GetCreditAllByDealerId(txt, dealerId, currencyId, ids, 0, typeId, page, 10);
+            var response = await ApiMethod(ApiMethodType.Get ,$"SearchInvoice?KeySearch={txt}&dealerId={dealerId}&currencyId={currencyId}&typeId={typeId}&Page={page}&PageSize=10&Ids={ids}");
+
+            response.EnsureSuccessStatusCode();
+            var data = await response.Content.ReadAsStringAsync();
+            var dataList = JsonConvert.DeserializeObject<ResultPagination<InvoiceModelView>>(data);
+            return Type != 1 ? (ActionResult)PartialView("SearchInvoicesList", dataList) : View("SearchInvoices", dataList);
         }
 
         public async Task<JsonResult> checkStock(int id)

@@ -52,6 +52,7 @@
                         @Html.HiddenFor(model => model.Id)
                         @Html.HiddenFor(model => model.TypeId)
                         @Html.HiddenFor(model => model.ParentId)
+                        @Html.HiddenFor(model => model.CreateUserId)
                         <div class="m-3 mt-5">
                             <div class="form-row">
                                 @Html.HiddenFor(model => model.CodeNumber)
@@ -555,6 +556,7 @@
             $('.btnDelete').click(function () {
                 $(this).parent().parent().remove();
                 ReIndex();
+                UpdateGrandAmount();
             });
 
             $("#Code").keyup(function () {
@@ -594,6 +596,7 @@
             });
 
             $("#GrandAmount").change(function () {
+                console.log("grand");
                 AutoSave();
             });
 
@@ -678,7 +681,7 @@
                         $row.find("#Net").val(data.net);
                         $row.find("#Amount").val(data.credit);
                         $row.find("#btnDelete").css("display", "block");
-
+                        UpdateGrandAmount();
                         ReIndex();
                     }
                 });
@@ -744,7 +747,7 @@
                 $.ajax({
                     type: 'POST',
                     url: "/Financials/Financial/Save",
-                    data: { model: data },
+                    data: { ob: data },
                     success: function (res) {
                         window.location.replace(res.url);
 
@@ -784,21 +787,23 @@
 
             if (CheckRequiredNoMessage("GrandAmount"))
                 Valid = false;
-
+            console.log(3124412);
             if (Valid == true) {
                 if ('@ViewBag.AutoSave' == 1) {
                     setTimeout(function () {
 
                         var data = CollectData();
-
+                        console.log(123);
                         $.ajax({
                             type: 'POST',
-                            url: "/Financials/Financial/Save",
-                            data: { model: data },
+                            url: "/Financials/Financial/AutoSave",
+                            data: { ob: data },
                             success: function (res) {
                                 if (res != "Error") {
 
                                     $("#Id").val(res.id);
+                                    $("#CreateUserId").val(res.createdUserId);
+
                                     var obj = { area: "Financials", Url: "/Financials/Financial/Save?Id=" + res.id + "&ParentId=" + $("#ParentId").val() + "&TypeId=" + $("#TypeId").val() };
                                     history.pushState(null, obj.area, obj.Url);
                                 }
@@ -832,6 +837,7 @@
                 Date: $('#Date').val(),
                 DealerId: $('#DealerId').val(),
                 SafeId: $('#SafeId').val(),
+                CreateUserId: $('#CreateUserId').val(),
                 PaymentTypeId: $('#PaymentTypeId').val(),
                 Amount: $('#GrandAmount').val(),
                 Notes: $('#Notes').val(),
@@ -861,4 +867,25 @@
 
         ReIndex();
     });
+
+    function UpdateGrandAmount() {
+    var total = 0;
+
+    $('#tbl > tbody > .InvoiceRow').each(function () {
+        var currentRow = $(this);
+
+        if (!currentRow.hasClass('trNew')) {
+
+            var amount = parseFloat(currentRow.find('#Amount').val()) || 0;
+
+            total += amount;
+        }
+    });
+
+    $('#GrandAmount').val(total.toFixed(2));
+}
+
+$(document).on("keyup change", ".Amount", function () {
+    UpdateGrandAmount();
+});
 </script>

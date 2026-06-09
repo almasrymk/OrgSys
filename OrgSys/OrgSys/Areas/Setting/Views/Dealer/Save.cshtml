@@ -142,7 +142,28 @@
                                             @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SellingPriceProduct</small>*@
                                             @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger " })
                                         </div>                                       
-                                    </div>                                       
+                                    </div>    
+                                     <div class="form-row">
+                                     <div class="form-group col-md-6">
+                                            <label>
+                                               @Utility.Resource.Title_Designer.Account
+                                            </label>
+                                            <div id="divAccountName">
+                                                <div class="input-group DropAutoComplete">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i class="simple-icon-people"></i></span>
+                                                    </div>
+                                                    <input type="text" class="form-control Droptxt" id="txtAccountId" value="@Model.AccountName" autocomplete="off" />
+                                                    @Html.HiddenFor(model => model.AccountId)
+                                                    <div class="input-group-prepend Dropbtn">
+                                                        <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
+                                                    </div>
+                                                </div>
+                                                @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                                            </div>
+                                            @Html.ValidationMessageFor(model => model.DealerGroupId, "", new { @class = "text-danger " })
+                                        </div> 
+                                    </div> 
                                 </div>
                                 <div class="col-sm-12 col-md-12 col-lg-3 pt-2 pb-4">
                                     <div class="card mb-4 p-3">

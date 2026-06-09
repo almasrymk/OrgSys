@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repository;
 
+#nullable disable
+
 namespace Repository.Migrations.OrgMigrations
 {
     [DbContext(typeof(OrgContext))]
@@ -13,18 +15,21 @@ namespace Repository.Migrations.OrgMigrations
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
+#pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("org")
-                .UseIdentityColumns()
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.1");
+                .HasAnnotation("ProductVersion", "10.0.1")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("Entity.Model.Account", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<long>("AccountTypeId")
                         .HasColumnType("bigint");
@@ -67,15 +72,16 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasIndex("AccountTypeId");
 
-                    b.ToTable("Account");
+                    b.ToTable("Account", "org");
                 });
 
             modelBuilder.Entity("Entity.Model.AccountBank", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<long?>("AccountId")
                         .HasColumnType("bigint");
@@ -128,15 +134,16 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasIndex("BankId");
 
-                    b.ToTable("AccountBank");
+                    b.ToTable("AccountBank", "org");
                 });
 
             modelBuilder.Entity("Entity.Model.AccountType", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Code")
                         .HasColumnType("nvarchar(max)");
@@ -171,15 +178,16 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AccountType");
+                    b.ToTable("AccountType", "org");
                 });
 
             modelBuilder.Entity("Entity.Model.Bank", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Code")
                         .HasColumnType("nvarchar(max)");
@@ -211,15 +219,16 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Bank");
+                    b.ToTable("Bank", "org");
                 });
 
             modelBuilder.Entity("Entity.Model.BankBranch", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<long>("BankId")
                         .HasColumnType("bigint");
@@ -271,15 +280,16 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasIndex("DistrictId");
 
-                    b.ToTable("BankBranch");
+                    b.ToTable("BankBranch", "org");
                 });
 
             modelBuilder.Entity("Entity.Model.Branch", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Code")
                         .HasColumnType("nvarchar(max)");
@@ -311,15 +321,16 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Branch");
+                    b.ToTable("Branch", "org");
                 });
 
             modelBuilder.Entity("Entity.Model.City", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Code")
                         .HasColumnType("nvarchar(max)");
@@ -356,15 +367,16 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasIndex("CountryId");
 
-                    b.ToTable("City");
+                    b.ToTable("City", "org");
                 });
 
             modelBuilder.Entity("Entity.Model.Classification", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<bool>("BeManufactured")
                         .HasColumnType("bit");
@@ -406,15 +418,16 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Classification");
+                    b.ToTable("Classification", "org");
                 });
 
             modelBuilder.Entity("Entity.Model.CompanyProfile", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Address1")
                         .HasMaxLength(500)
@@ -518,15 +531,16 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CompanyProfile");
+                    b.ToTable("CompanyProfile", "org");
                 });
 
             modelBuilder.Entity("Entity.Model.Country", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Code")
                         .HasColumnType("nvarchar(max)");
@@ -558,15 +572,16 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Country");
+                    b.ToTable("Country", "org");
                 });
 
             modelBuilder.Entity("Entity.Model.Currency", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Code")
                         .HasColumnType("nvarchar(max)");
@@ -604,15 +619,19 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Currency");
+                    b.ToTable("Currency", "org");
                 });
 
             modelBuilder.Entity("Entity.Model.Dealer", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long?>("AccountId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Address")
                         .HasMaxLength(500)
@@ -668,6 +687,8 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AccountId");
+
                     b.HasIndex("CityId");
 
                     b.HasIndex("CountryId");
@@ -676,15 +697,16 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasIndex("DistrictId");
 
-                    b.ToTable("Dealer");
+                    b.ToTable("Dealer", "org");
                 });
 
             modelBuilder.Entity("Entity.Model.DealerGroup", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Code")
                         .HasColumnType("nvarchar(max)");
@@ -716,15 +738,16 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DealerGroup");
+                    b.ToTable("DealerGroup", "org");
                 });
 
             modelBuilder.Entity("Entity.Model.District", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<long?>("CityId")
                         .HasColumnType("bigint");
@@ -766,15 +789,16 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasIndex("CountryId");
 
-                    b.ToTable("District");
+                    b.ToTable("District", "org");
                 });
 
             modelBuilder.Entity("Entity.Model.Financial", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
@@ -878,15 +902,16 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasIndex("ShiftId");
 
-                    b.ToTable("Financial");
+                    b.ToTable("Financial", "org");
                 });
 
             modelBuilder.Entity("Entity.Model.FinancialInvoice", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
@@ -930,7 +955,7 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasIndex("InvoiceId");
 
-                    b.ToTable("FinancialInvoice");
+                    b.ToTable("FinancialInvoice", "org");
                 });
 
             modelBuilder.Entity("Entity.Model.FinancialType", b =>
@@ -974,15 +999,16 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("FinancialType");
+                    b.ToTable("FinancialType", "org");
                 });
 
             modelBuilder.Entity("Entity.Model.Inventory", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<long?>("BranchId")
                         .HasColumnType("bigint");
@@ -1065,15 +1091,16 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Inventory");
+                    b.ToTable("Inventory", "org");
                 });
 
             modelBuilder.Entity("Entity.Model.InventoryProduct", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<decimal>("ActualBalance")
                         .HasColumnType("decimal(18,2)");
@@ -1131,15 +1158,16 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasIndex("UnitId");
 
-                    b.ToTable("InventoryProduct");
+                    b.ToTable("InventoryProduct", "org");
                 });
 
             modelBuilder.Entity("Entity.Model.Invoice", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<long?>("BranchId")
                         .HasColumnType("bigint");
@@ -1276,15 +1304,16 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasIndex("TransactionId");
 
-                    b.ToTable("Invoice");
+                    b.ToTable("Invoice", "org");
                 });
 
             modelBuilder.Entity("Entity.Model.InvoiceProduct", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Code")
                         .HasColumnType("nvarchar(max)");
@@ -1359,7 +1388,7 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasIndex("UnitId");
 
-                    b.ToTable("InvoiceProduct");
+                    b.ToTable("InvoiceProduct", "org");
                 });
 
             modelBuilder.Entity("Entity.Model.InvoiceType", b =>
@@ -1406,15 +1435,16 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("InvoiceType");
+                    b.ToTable("InvoiceType", "org");
                 });
 
             modelBuilder.Entity("Entity.Model.Journal", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<long?>("BranchId")
                         .HasColumnType("bigint");
@@ -1497,15 +1527,16 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasIndex("ShiftId");
 
-                    b.ToTable("Journal");
+                    b.ToTable("Journal", "org");
                 });
 
             modelBuilder.Entity("Entity.Model.JournalItem", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<long>("AccountId")
                         .HasColumnType("bigint");
@@ -1552,15 +1583,16 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasIndex("JournalId");
 
-                    b.ToTable("JournalItem");
+                    b.ToTable("JournalItem", "org");
                 });
 
             modelBuilder.Entity("Entity.Model.LogSys", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Code")
                         .HasColumnType("nvarchar(max)");
@@ -1639,15 +1671,16 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("LogSys");
+                    b.ToTable("LogSys", "org");
                 });
 
             modelBuilder.Entity("Entity.Model.Notification", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Code")
                         .HasColumnType("nvarchar(max)");
@@ -1700,15 +1733,16 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Notification");
+                    b.ToTable("Notification", "org");
                 });
 
             modelBuilder.Entity("Entity.Model.Order", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<long?>("BranchId")
                         .HasColumnType("bigint");
@@ -1820,15 +1854,16 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasIndex("TableId");
 
-                    b.ToTable("Order");
+                    b.ToTable("Order", "org");
                 });
 
             modelBuilder.Entity("Entity.Model.OrderProduct", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Code")
                         .HasColumnType("nvarchar(max)");
@@ -1898,7 +1933,7 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasIndex("UnitId");
 
-                    b.ToTable("OrderProduct");
+                    b.ToTable("OrderProduct", "org");
                 });
 
             modelBuilder.Entity("Entity.Model.OrderType", b =>
@@ -1939,15 +1974,16 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("OrderType");
+                    b.ToTable("OrderType", "org");
                 });
 
             modelBuilder.Entity("Entity.Model.Outlay", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Code")
                         .HasColumnType("nvarchar(max)");
@@ -1979,7 +2015,7 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Outlay");
+                    b.ToTable("Outlay", "org");
                 });
 
             modelBuilder.Entity("Entity.Model.PaymentType", b =>
@@ -2017,7 +2053,7 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PaymentType");
+                    b.ToTable("PaymentType", "org");
                 });
 
             modelBuilder.Entity("Entity.Model.Permission", b =>
@@ -2057,7 +2093,7 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Permission");
+                    b.ToTable("Permission", "org");
                 });
 
             modelBuilder.Entity("Entity.Model.Preference", b =>
@@ -2103,15 +2139,16 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Preference");
+                    b.ToTable("Preference", "org");
                 });
 
             modelBuilder.Entity("Entity.Model.Product", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Barcode")
                         .HasColumnType("nvarchar(max)");
@@ -2171,15 +2208,16 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasIndex("DealerId");
 
-                    b.ToTable("Product");
+                    b.ToTable("Product", "org");
                 });
 
             modelBuilder.Entity("Entity.Model.ProductPropertyElement", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Code")
                         .HasColumnType("nvarchar(max)");
@@ -2225,15 +2263,16 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasIndex("PropertyId");
 
-                    b.ToTable("ProductPropertyElement");
+                    b.ToTable("ProductPropertyElement", "org");
                 });
 
             modelBuilder.Entity("Entity.Model.ProductRecipe", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Code")
                         .HasColumnType("nvarchar(max)");
@@ -2275,15 +2314,16 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductRecipe");
+                    b.ToTable("ProductRecipe", "org");
                 });
 
             modelBuilder.Entity("Entity.Model.ProductUnit", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Code")
                         .HasColumnType("nvarchar(max)");
@@ -2327,15 +2367,16 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasIndex("UnitId");
 
-                    b.ToTable("ProductUnit");
+                    b.ToTable("ProductUnit", "org");
                 });
 
             modelBuilder.Entity("Entity.Model.Property", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Code")
                         .HasColumnType("nvarchar(max)");
@@ -2367,15 +2408,16 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Property");
+                    b.ToTable("Property", "org");
                 });
 
             modelBuilder.Entity("Entity.Model.PropertyElement", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Code")
                         .HasColumnType("nvarchar(max)");
@@ -2413,15 +2455,16 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasIndex("PropertyId");
 
-                    b.ToTable("PropertyElement");
+                    b.ToTable("PropertyElement", "org");
                 });
 
             modelBuilder.Entity("Entity.Model.Role", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Code")
                         .HasColumnType("nvarchar(max)");
@@ -2453,15 +2496,16 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Role");
+                    b.ToTable("Role", "org");
                 });
 
             modelBuilder.Entity("Entity.Model.RolePermission", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Code")
                         .HasColumnType("nvarchar(max)");
@@ -2499,15 +2543,16 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("RolePermission");
+                    b.ToTable("RolePermission", "org");
                 });
 
             modelBuilder.Entity("Entity.Model.Safe", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Code")
                         .HasColumnType("nvarchar(max)");
@@ -2539,15 +2584,16 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Safe");
+                    b.ToTable("Safe", "org");
                 });
 
             modelBuilder.Entity("Entity.Model.Shift", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Code")
                         .HasColumnType("nvarchar(max)");
@@ -2585,15 +2631,16 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Shift");
+                    b.ToTable("Shift", "org");
                 });
 
             modelBuilder.Entity("Entity.Model.Stock", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<long>("BranchId")
                         .HasColumnType("bigint");
@@ -2630,15 +2677,16 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasIndex("BranchId");
 
-                    b.ToTable("Stock");
+                    b.ToTable("Stock", "org");
                 });
 
             modelBuilder.Entity("Entity.Model.Table", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Code")
                         .HasColumnType("nvarchar(max)");
@@ -2676,15 +2724,16 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Table");
+                    b.ToTable("Table", "org");
                 });
 
             modelBuilder.Entity("Entity.Model.Transaction", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<long?>("BranchId")
                         .HasColumnType("bigint");
@@ -2777,15 +2826,16 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasIndex("ToStockId");
 
-                    b.ToTable("Transaction");
+                    b.ToTable("Transaction", "org");
                 });
 
             modelBuilder.Entity("Entity.Model.TransactionProduct", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Code")
                         .HasColumnType("nvarchar(max)");
@@ -2848,7 +2898,7 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasIndex("UnitId");
 
-                    b.ToTable("TransactionProduct");
+                    b.ToTable("TransactionProduct", "org");
                 });
 
             modelBuilder.Entity("Entity.Model.TransactionType", b =>
@@ -2892,15 +2942,16 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TransactionType");
+                    b.ToTable("TransactionType", "org");
                 });
 
             modelBuilder.Entity("Entity.Model.Unit", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Code")
                         .HasColumnType("nvarchar(max)");
@@ -2932,15 +2983,16 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Unit");
+                    b.ToTable("Unit", "org");
                 });
 
             modelBuilder.Entity("Entity.Model.User", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<long?>("BranchId")
                         .HasColumnType("bigint");
@@ -2992,7 +3044,543 @@ namespace Repository.Migrations.OrgMigrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("User");
+                    b.ToTable("User", "org");
+                });
+
+            modelBuilder.Entity("Entity.ModelReport.DealerBalance", b =>
+                {
+                    b.Property<long>("DealerId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("DealerId"));
+
+                    b.Property<decimal>("Balance")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("DealerImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DealerName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("OpenningBalance")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("TotalCreditInvoice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("TotalInvoice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("TotalPaidInvoice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("TotalReturnInvoice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("DealerId");
+
+                    b.ToTable("DealerBalanceReport", "org");
+                });
+
+            modelBuilder.Entity("Entity.ModelReport.DealerList", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("CityId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("CityName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("CountryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("CountryName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("DealerGroupId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("DealerGroupName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("DistrictId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("DistrictName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DealerListReport", "org");
+                });
+
+            modelBuilder.Entity("Entity.ModelReport.DealerStatment", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Balance")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("DealerId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("DealerImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DealerName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("InOut")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OpenningBalance")
+                        .HasColumnType("int");
+
+                    b.Property<long?>("ReferenceId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.Property<long?>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("TypeName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DealerStatmentReport", "org");
+                });
+
+            modelBuilder.Entity("Entity.ModelReport.ProductBalance", b =>
+                {
+                    b.Property<long>("ProductId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ProductId"));
+
+                    b.Property<decimal>("Balance")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long>("ClassificationId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("ClassificationName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProductImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProductName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("StockId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("StockName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ProductId");
+
+                    b.ToTable("ProductBalanceReport", "org");
+                });
+
+            modelBuilder.Entity("Entity.ModelReport.ProductList", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("BarCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ClassificationId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("ClassificationName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ItemCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ItemId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("ItemName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("PurchasePrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("SalesPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ProductListReport", "org");
+                });
+
+            modelBuilder.Entity("Entity.ModelReport.ProductStatment", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("ClassificationId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("ClassificationName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ProductCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("ProductImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProductName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Quantity")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long?>("ReferenceId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("StockId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("StockName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TransactionCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("TypeName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ProductStatmentReport", "org");
+                });
+
+            modelBuilder.Entity("Entity.ModelReport.SafeBalance", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("CurrencyId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("CurrencyName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("DealerId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("DealerName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("SafeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("SafeImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SafeName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SafeBalanceReport", "org");
+                });
+
+            modelBuilder.Entity("Entity.ModelReport.SafeList", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SafeListReport", "org");
+                });
+
+            modelBuilder.Entity("Entity.ModelReport.SafeStatment", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CurrencyId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("CurrencyName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("DealerId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("DealerName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("ReferenceId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("SafeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("SafeName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("TypeName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SafeStatmentReport", "org");
+                });
+
+            modelBuilder.Entity("Entity.ModelReport.SalesBalance", b =>
+                {
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("InAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Net")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("OutAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Date");
+
+                    b.ToTable("SalesBalanceReport", "org");
+                });
+
+            modelBuilder.Entity("Entity.ModelReport.SalesClient", b =>
+                {
+                    b.Property<long>("DealerId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("DealerId"));
+
+                    b.Property<string>("DealerName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("InAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Net")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("OutAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("DealerId");
+
+                    b.ToTable("SalesClientReport", "org");
+                });
+
+            modelBuilder.Entity("Entity.ModelReport.StockBalance", b =>
+                {
+                    b.Property<long>("StockId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("StockId"));
+
+                    b.Property<decimal>("Balance")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long>("ClassificationId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("ClassificationName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("ProductName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StockName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("StockId");
+
+                    b.ToTable("StockBalanceReport", "org");
+                });
+
+            modelBuilder.Entity("Entity.ModelReport.StockList", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("StockListReport", "org");
+                });
+
+            modelBuilder.Entity("Entity.ModelReport.StockStatment", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ProductCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("ProductImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProductName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Quantity")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long?>("ReferenceId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("StockId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("StockImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StockName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TransactionCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("TypeName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("StockStatmentReport", "org");
                 });
 
             modelBuilder.Entity("Entity.Model.Account", b =>
@@ -3075,6 +3663,10 @@ namespace Repository.Migrations.OrgMigrations
 
             modelBuilder.Entity("Entity.Model.Dealer", b =>
                 {
+                    b.HasOne("Entity.Model.Account", "Account")
+                        .WithMany()
+                        .HasForeignKey("AccountId");
+
                     b.HasOne("Entity.Model.City", "City")
                         .WithMany()
                         .HasForeignKey("CityId");
@@ -3090,6 +3682,8 @@ namespace Repository.Migrations.OrgMigrations
                     b.HasOne("Entity.Model.District", "District")
                         .WithMany()
                         .HasForeignKey("DistrictId");
+
+                    b.Navigation("Account");
 
                     b.Navigation("City");
 
@@ -3741,6 +4335,7 @@ namespace Repository.Migrations.OrgMigrations
                 {
                     b.Navigation("TransactionProducts");
                 });
+#pragma warning restore 612, 618
         }
     }
 }

@@ -31,5 +31,8 @@ namespace Entity.ModelView
         public virtual long? DistrictId { get; set; }
 
         public virtual string DistrictName { get; set; }
+        public virtual long? AccountId { get; set; }
+
+        public virtual string AccountName { get; set; }
     }
 }

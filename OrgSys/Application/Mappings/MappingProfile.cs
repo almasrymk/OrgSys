@@ -42,5 +42,13 @@ public partial class MappingProfile : Profile
 
         // 1-Transactions
         TransactionMappingProfile();
+
+
+        PaymentTypeMappingProfile();
+        FinancialMappingProfile();
+        PreferenceMappingProfile();
+        TransactionTypeMappingProfile();
+        InventoryMappingProfile();
+        FinancialTypeMappingProfile();
     }
 }

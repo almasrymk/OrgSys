@@ -2,6 +2,7 @@
 using Entity.Model;
 using Entity.ModelReport;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
@@ -27,16 +28,7 @@ namespace Repository
             if ("" + schema != "")
                 Schema = schema;
         }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            base.OnConfiguring(optionsBuilder);
-            var builder = new ConfigurationBuilder().AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-            IConfigurationRoot config = builder.Build();
-            string assemblyName = typeof(OrgContext).Namespace;
-            optionsBuilder.UseSqlServer(config.GetConnectionString("OrgConnection"), e => e.MigrationsHistoryTable($"__MigrationsHistory", Schema)).ReplaceService<IModelCacheKeyFactory, DbSchemaAwareModelCacheKeyFactory>().ReplaceService<IMigrationsAssembly, DbSchemaAwareMigrationAssembly>();            
-        }
-
+       
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasDefaultSchema(Schema);
@@ -132,6 +124,19 @@ namespace Repository
 
         [NotMapped]
         public virtual DbSet<SafeList> SafeListReport { get; set; }
+    }
+
+    public class OrgContextFactory : IDesignTimeDbContextFactory<OrgContext>
+    {
+        public OrgContext CreateDbContext(string[] args)
+        {           
+            var builder = new ConfigurationBuilder().AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+            IConfigurationRoot config = builder.Build();
+            var optionsBuilder = new DbContextOptionsBuilder<OrgContext>();
+            optionsBuilder.UseSqlServer(config.GetConnectionString("OrgConnection"),
+                x => x.MigrationsHistoryTable("__MigrationsHistory", "org"));
+            return new OrgContext(optionsBuilder.Options);
+        }
     }
 
     public class DbSchemaAwareModelCacheKeyFactory : IModelCacheKeyFactory

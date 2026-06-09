@@ -137,6 +137,8 @@
                                             @foreach (var InventoryProduct in Model.InventoryProductList)
                                             {
                                                 <tr class="product-empty ProductRow">
+                                              <input type="hidden" id="InventoryProductId" class="InventoryProductId" name="Id"  value="@InventoryProduct.Id" />
+
                                                     <td style="width:35px;padding:0px;text-align:center;vertical-align:middle;">
                                                         <span id="Index">  </span>
                                                     </td>
@@ -600,10 +602,11 @@ var ff = '@System.Threading.Thread.CurrentThread.CurrentCulture.DateTimeFormat.S
 
             if (Valid == true) {
                 var data = CollectData();
+                      console.log(data);
                 $.ajax({
                     type: 'POST',
                     url: "/Transactions/Inventory/Save",
-                    data: { model: data },
+                    data: { ob: data },
                     success: function (res) {
                         window.location.replace(res.url);
                     }
@@ -626,13 +629,15 @@ var ff = '@System.Threading.Thread.CurrentThread.CurrentCulture.DateTimeFormat.S
                 if ('@ViewBag.AutoSave' == 1) {
                     setTimeout(function () {
                         var data = CollectData();
+                  
                         $.ajax({
                             type: 'POST',
-                            url: "/Transactions/Inventory/Save",
-                            data: { model: data },
+                            url: "/Transactions/Inventory/AutoSave",
+                            data: { ob: data },
                             success: function (res) {
                                 if (res != "Error") {
                                     $("#Id").val(res.id);
+                                     $("#CreateUserId").val(res.createdUserId);
                                     var obj = { area: "Transactions", Url: "/Transactions/Inventory/Save?Id=" + res.id + "&ParentId=" + $("#ParentId").val() + "&TypeId=" + $("#TypeId").val() };
                                     history.pushState(null, obj.area, obj.Url);
                                 }
@@ -650,6 +655,7 @@ var ff = '@System.Threading.Thread.CurrentThread.CurrentCulture.DateTimeFormat.S
                 if (!currentRow.hasClass('trNew')) {
                     if (currentRow.find('#ProductId').val() > 0) {                       
                         list.push({
+                            Id: currentRow.find('#InventoryProductId').val(),
                             InventoryId: $('#Id').val(),
                             ProductId: currentRow.find('#ProductId').val(),
                             UnitId: currentRow.find('#UnitId').val(),
@@ -673,7 +679,7 @@ var ff = '@System.Threading.Thread.CurrentThread.CurrentCulture.DateTimeFormat.S
                 CreateDate: $('#CreateDate').val(),
                 ModifyUserId: $('#ModifyUserId').val(),
                 ModifyDate: $('#ModifyDate').val(),
-                InventoryProducts: list
+                InventoryProductList: list
             }
 
            return data;
@@ -691,19 +697,21 @@ var ff = '@System.Threading.Thread.CurrentThread.CurrentCulture.DateTimeFormat.S
             return Inv;
         }
 
+
         ReCalc = function () {
-
-            $("#tbl").find('.ProductRow').not(".trNew").each(function (index) {
-                var row = $(this);
-                if (parseFloat(row.find("#ProductId").val()) > 0) {
-                    var CalcBalance = parseFloat(row.find("#CalcBalance").val());
-                    var ActualBalance = parseFloat(row.find("#ActualBalance").val());
-                    row.find("#DiffQuantity").val(ActualBalance - CalcBalance);
-                }
-            });
-
-            AutoSave();
+    $("#tbl").find('.ProductRow').not(".trNew").each(function () {
+        var row = $(this);
+        if (parseFloat(row.find("#ProductId").val()) > 0) {
+            var CalcBalance = parseFloat(row.find("#CalcBalance").val());
+            if (isNaN(CalcBalance)) CalcBalance = 0;
+            var ActualBalance = parseFloat(row.find("#ActualBalance").val());
+            if (isNaN(ActualBalance)) ActualBalance = 0;
+            row.find("#DiffQuantity").val((ActualBalance - CalcBalance).toFixed(2));
         }
+    });
+
+    AutoSave();
+}
 
         RefreshSomeEventListener();
 
