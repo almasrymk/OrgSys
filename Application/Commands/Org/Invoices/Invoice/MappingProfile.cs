@@ -8,7 +8,9 @@ public partial class MappingProfile : Profile
     public void InvoiceMappingProfile()
     {
         #region Invoice
-        CreateMap<Invoice, InvoiceModelView>();
+        CreateMap<Invoice, InvoiceModelView>()
+        .ForMember(dest => dest.InvoiceProductList,
+        opt => opt.MapFrom(src => src.InvoiceProducts));
         CreateMap<InvoiceModelView, Invoice>();
         CreateMap<Invoice, CreateInvoiceCommand>();
         CreateMap<CreateInvoiceCommand, Invoice>();
@@ -28,6 +30,15 @@ public partial class MappingProfile : Profile
         CreateMap<UpdateInvoiceCommand, Invoice>()
        .ForMember(dest => dest.InvoiceProducts,
         opt => opt.MapFrom(src => src.InvoiceProductList));
+
+        CreateMap<InvoiceModelView, UpdateInvoiceCommand>()
+        .ForMember(dest => dest.InvoiceProducts,
+        opt => opt.MapFrom(src => src.InvoiceProductList));
+
+        CreateMap<CreateInvoiceCommand, InvoiceModelView>();
+        CreateMap<InvoiceModelView, CreateInvoiceCommand>()
+        .ForMember(dest => dest.InvoiceProducts,
+        opt => opt.MapFrom(src => src.InvoiceProductList)); 
 
         CreateMap<InvoiceProductModelView, InvoiceProduct>();
 

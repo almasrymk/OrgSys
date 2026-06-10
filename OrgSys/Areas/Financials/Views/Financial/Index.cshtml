@@ -1,4 +1,4 @@
-﻿@model X.PagedList.IPagedList<Entity.ModelView.FinancialModelView>
+﻿@model Domain.Shared.ResultPagination<Entity.ModelView.FinancialModelView>
 @{
     ViewData["Title_Designer"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -93,7 +93,7 @@
             @* <div class="separator mb-3"></div> *@
         </div>
     </div>
-    @if (Model != null && Model.Count > 0)
+    @if (Model != null && Model.Response.Count > 0)
     {
         <div class="row">
             <div id="List" class="col-12" data-check-all="checkAll">

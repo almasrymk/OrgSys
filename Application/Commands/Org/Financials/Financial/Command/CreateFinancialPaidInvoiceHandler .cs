@@ -70,7 +70,8 @@ namespace Application.Commands.Org.Financials.Financial.Command
 
                     //invoice.Code = invoice.CodeNumber.ToString();
 
-                    FinancialInvoice financialInvoice = mapper.Map<Entity.Model.FinancialInvoice>(invoice);
+                    //FinancialInvoice financialInvoice = mapper.Map<Entity.Model.FinancialInvoice>(invoice);
+                    FinancialInvoice financialInvoice = new FinancialInvoice();
                     financialInvoice.Id = 0;
                     financialInvoice.TypeId = invoice.TypeId == 1 || invoice.TypeId == 4 ? 1 : 2;
                     financialInvoice.Amount = invoice.Credit;
