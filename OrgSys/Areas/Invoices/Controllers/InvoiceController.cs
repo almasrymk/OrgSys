@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using OrgSys.Controllers;
+using PuppeteerSharp;
 using Service;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,7 @@ namespace OrgSys.Areas.Invoices.Controllers
             var type = await GetObApi<InvoiceTypeModelView>($"GetById?Id={TypeId}");
             ViewBag.InvoicesType = type.Name;
             ViewBag.InvoicesGroup = type.Group;
-            ViewBag.InvoicesIcon = type.Icon;             
+            ViewBag.InvoicesIcon = type.Icon;
         }
 
         public override async Task LoadViewBag(InvoiceModelView model)
@@ -79,7 +80,7 @@ namespace OrgSys.Areas.Invoices.Controllers
 
             if (ob.Id == 0)
             {
-                
+
                 ob.CodeNumber = long.Parse("0" + await GetValueApi<InvoiceModelView>($"GetMax?ParentId=0&TypeId={ob.TypeId}")) + 1;
                 ob.Code = "" + ob.CodeNumber;
                 ob.StockId = StockId;
@@ -128,7 +129,7 @@ namespace OrgSys.Areas.Invoices.Controllers
         }
 
         public async Task<ActionResult> CreateFinancial(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1, string dir = "Index")
-        {                   
+        {
             //var invoice = await GetObApi<InvoiceModelView>($"GetById?Id={id}");
             var response = await ApiMethod(ApiMethodType.Post, $"CollectPaidInvoice?InvoiceId={id}");
             //var x = new InvoiceService(User.GetSchema()).Get(id);
@@ -162,20 +163,26 @@ namespace OrgSys.Areas.Invoices.Controllers
 
             var items = await GetListApi<InvoiceModelView>($"GetInvoicesNotReturn?KeySearch={txtSearch}&ParentId={InvId}&TypeId={TypeId - 2}&Page={page}&PageSize={pageSize}");
 
-             var lsit = items.Distinct().OrderBy(_ => _.Code).Select(_ => new {_.Id,_.Code }).ToList();
+            var lsit = items.Distinct().OrderBy(_ => _.Code).Select(_ => new { _.Id, _.Code }).ToList();
 
             return Json(lsit);
         }
 
-        public ActionResult SearchInvoices(string txt = "", long dealerId = 0, long currencyId = 0, int page = 1, long typeId = 1, int Type = 1, int index = 0, string ids = "")
+        public async Task<ActionResult> SearchInvoices(string txt = "", long dealerId = 0,
+            long currencyId = 0, int page = 1, long typeId = 1, int Type = 1, int index = 0, string ids = "")
         {
             ViewBag.index = index;
             ViewBag.dealerId = dealerId;
             ViewBag.currencyId = currencyId;
             ViewBag.Type = Type;
             ViewBag.ids = ids;
-            var list = new InvoiceService(User.GetSchema()).GetCreditAllByDealerId(txt, dealerId, currencyId, ids, 0, typeId, page, 10);
-            return Type != 1 ? (ActionResult)PartialView("SearchInvoicesList", list) : View("SearchInvoices", list);
+            //var list1 = new InvoiceService(User.GetSchema()).GetCreditAllByDealerId(txt, dealerId, currencyId, ids, 0, typeId, page, 10);
+            var response = await ApiMethod(ApiMethodType.Get, $"SearchInvoice?KeySearch={txt}&dealerId={dealerId}&currencyId={currencyId}&typeId={typeId}&Page={page}&PageSize=10&Ids={ids}");
+
+            response.EnsureSuccessStatusCode();
+            var data = await response.Content.ReadAsStringAsync();
+            var dataList = JsonConvert.DeserializeObject<ResultPagination<InvoiceModelView>>(data);
+            return Type != 1 ? (ActionResult)PartialView("SearchInvoicesList", dataList) : View("SearchInvoices", dataList);
         }
 
         public async Task<JsonResult> checkStock(int id)
@@ -194,7 +201,7 @@ namespace OrgSys.Areas.Invoices.Controllers
 
         public async Task<ActionResult> Cancel(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1)
         {
-         var response =    await ApiMethod(ApiMethodType.Put , $"Cancel?Id={id}");
+            var response = await ApiMethod(ApiMethodType.Put, $"Cancel?Id={id}");
             response.EnsureSuccessStatusCode();
             var data = await response.Content.ReadAsStringAsync();
             var res = JsonConvert.DeserializeObject<Domain.Shared.Result>(data);
@@ -255,5 +262,5 @@ namespace OrgSys.Areas.Invoices.Controllers
             }
             return Ok();
         }
-        }
     }
+}
