@@ -149,15 +149,6 @@ namespace OrgSys.Areas.Invoices.Controllers
         public async Task<JsonResult> GetInvoicesNotReturn(string txtSearch = "", long TypeId = 0, long InvId = 0, int page = 1, int pageSize = 10)
         {
 
-            //var itemsList = new InvoiceService(User.GetSchema()).GetInvoicesNotReturn(txtSearch, TypeId, InvId, page, pageSize);
-            //var list = itemsList.Distinct().OrderBy(_ => _.Code)
-            //    .Select(_ => new
-            //    {
-            //        _.Id,
-            //        _.Code
-            //    })
-            //    .ToList();
-
             if (txtSearch != null)
                 txtSearch = txtSearch.Trim().ToLower();
 
@@ -176,7 +167,6 @@ namespace OrgSys.Areas.Invoices.Controllers
             ViewBag.currencyId = currencyId;
             ViewBag.Type = Type;
             ViewBag.ids = ids;
-            //var list1 = new InvoiceService(User.GetSchema()).GetCreditAllByDealerId(txt, dealerId, currencyId, ids, 0, typeId, page, 10);
             var response = await ApiMethod(ApiMethodType.Get, $"SearchInvoice?KeySearch={txt}&dealerId={dealerId}&currencyId={currencyId}&typeId={typeId}&Page={page}&PageSize=10&Ids={ids}");
 
             response.EnsureSuccessStatusCode();
@@ -219,12 +209,17 @@ namespace OrgSys.Areas.Invoices.Controllers
             return Redirect("/Invoices/Invoice/Index?ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" + (res.StatusCode != null ? ResultStatus.success : ResultStatus.error) + "&MsgError=Success");
         }
 
-        public JsonResult GetProductInvoice(int Id)
+        public async Task<JsonResult> GetProductInvoice(int Id)
         {
-            var item = new InvoiceService(User.GetSchema()).GetProductInvoicesNotReturn(Id);
-            if (item == null)
-                item = new List<InvoiceProductModelView>();
-            var data = item.Select(e => new
+
+          var responseMessage =  ApiMethod(ApiMethodType.Get, $"GetProductInvoicesNotReturn?Id={Id}").Result.EnsureSuccessStatusCode();
+
+            responseMessage.EnsureSuccessStatusCode();
+            var dataa = await responseMessage.Content.ReadAsStringAsync();
+
+            var item = JsonConvert.DeserializeObject<ResultCollection<InvoiceProductModelView>>(dataa);
+
+            var data = item.Response.Select(e => new
             {
                 productId = e.ProductId,
                 quantity = e.Quantity
