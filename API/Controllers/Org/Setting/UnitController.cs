@@ -2,7 +2,6 @@
 using Application.Commands.Org.Setting.Unit.Commands;
 using Application.Commands.Org.Setting.Unit.Queries;
 using Application.Interfaces.CQRS;
-using Azure;
 using Domain.Shared;
 using Entity.ModelView;
 using MediatR;

@@ -2,7 +2,6 @@
 using Application.Commands.Org.Setting.Shift.Commands;
 using Application.Commands.Org.Setting.Shift.Queries;
 using Application.Interfaces.CQRS;
-using Azure;
 using Domain.Shared;
 using Entity.ModelView;
 using MediatR;

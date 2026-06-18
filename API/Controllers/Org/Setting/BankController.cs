@@ -2,7 +2,6 @@
 using Application.Commands.Org.Setting.Bank.Commands;
 using Application.Commands.Org.Setting.Bank.Queries;
 using Application.Interfaces.CQRS;
-using Azure;
 using Domain.Shared;
 using Entity.ModelView;
 using MediatR;

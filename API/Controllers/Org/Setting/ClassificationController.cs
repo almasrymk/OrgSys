@@ -2,7 +2,6 @@
 using Application.Commands.Org.Setting.Classification.Commands;
 using Application.Commands.Org.Setting.Classification.Queries;
 using Application.Interfaces.CQRS;
-using Azure;
 using Domain.Shared;
 using Entity.ModelView;
 using MediatR;

@@ -4,7 +4,6 @@ using Application.Commands.Org.Setting.Preference.Queries;
 using Application.Commands.Org.Setting.Safe.Commands;
 using Application.Commands.Org.Setting.Safe.Queries;
 using Application.Interfaces.CQRS;
-using Azure;
 using Domain.Shared;
 using Entity.ModelView;
 using MediatR;

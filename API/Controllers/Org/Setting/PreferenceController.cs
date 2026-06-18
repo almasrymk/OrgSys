@@ -2,8 +2,6 @@
 using Application.Commands.Org.Setting.Preference.Commands;
 using Application.Commands.Org.Setting.Preference.Queries;
 using Application.Interfaces.CQRS;
-using Azure;
-using Domain.Shared;
 using Entity.ModelView;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

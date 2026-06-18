@@ -3,7 +3,6 @@ using Application.Commands.Org.Invoices.Invoice.Commands;
 using Application.Commands.Org.Invoices.Invoice.Queries;
 using Application.Commands.Org.Setting.Invoice.Queries;
 using Application.Interfaces.CQRS;
-using Azure;
 using Domain.Shared;
 using Entity.Model;
 using Entity.ModelView;
