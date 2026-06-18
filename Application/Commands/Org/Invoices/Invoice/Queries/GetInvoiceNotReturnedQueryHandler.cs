@@ -1,17 +1,11 @@
 ﻿using Application.Abstraction.Command;
-using Application.Commands.Org.Setting.Invoice.Queries;
-using Application.Commands.Org.Setting.Product.Queries;
 using Application.Common.Queries;
 using Application.Interfaces.CQRS;
 using AutoMapper;
 using Domain.Abstraction;
 using Domain.Shared;
 using Entity.ModelView;
-using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Net;
-using System.Text;
 using Utility;
 
 namespace Application.Commands.Org.Invoices.Invoice.Queries

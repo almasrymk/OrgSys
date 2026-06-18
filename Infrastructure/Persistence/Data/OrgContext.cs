@@ -102,6 +102,8 @@
         public virtual DbSet<City> Cities { get; set; }
         public virtual DbSet<Country> Countries { get; set; }
         public virtual DbSet<District> Districts { get; set; }
+        public virtual DbSet<Journal> Journals { get; set; }
+        public virtual DbSet<JournalItem> JournalItem { get; set; }
 
 
         public void ResetDbContextState()
