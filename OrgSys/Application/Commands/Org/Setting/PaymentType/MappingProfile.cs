@@ -12,4 +12,4 @@ public partial class MappingProfile : Profile
         CreateMap<PaymentTypeModelView, PaymentType>();       
         #endregion
     }
-}
+} 

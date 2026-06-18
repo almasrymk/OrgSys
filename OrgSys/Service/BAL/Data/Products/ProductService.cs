@@ -26,7 +26,7 @@ namespace Service
             ob.ProductUnits = repoAll.productUnitRepo.GetList(e => e.ProductId == Id, e => e.OrderBy(e => e.Id), "Unit", Utility.Status.All).ToList();
             ob.ProductRecipes = repoAll.recipeRepo.GetList(e => e.ProductId == Id, e => e.OrderBy(e => e.Id), "", Utility.Status.All).ToList();
             var obMw = ob.Map<ProductModelView>();
-            obMw.ProductPropertyTree = GetProperties(obMw.Id);
+            obMw.ProductPropertyTrees = GetProperties(obMw.Id);
             return obMw;
         }
 
@@ -38,7 +38,7 @@ namespace Service
                 ob.ProductUnits = repoAll.productUnitRepo.GetList(e => e.ProductId == ob.Id, e => e.OrderBy(e => e.Id), "", Utility.Status.All).ToList();
                 ob.ProductRecipes = repoAll.recipeRepo.GetList(e => e.ProductId == ob.Id, e => e.OrderBy(e => e.Id), "", Utility.Status.All).ToList();
             var obMw = ob.Map<ProductModelView>();
-            obMw.ProductPropertyTree = GetProperties(obMw.Id);
+            obMw.ProductPropertyTrees = GetProperties(obMw.Id);
             return obMw;
         }
 

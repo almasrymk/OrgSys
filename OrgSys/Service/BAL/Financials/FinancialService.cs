@@ -13,7 +13,7 @@ namespace Service
         public override FinancialModelView Save(FinancialModelView ob)
         {
             // Save
-            var Nwob = repo .AddOrUpdate(ob.Map<Financial>());
+            var Nwob = repo.AddOrUpdate(ob.Map<Financial>());
             if (ob.FinancialInvoiceList == null)
                 ob.FinancialInvoiceList = new List<FinancialInvoiceModelView>();
 

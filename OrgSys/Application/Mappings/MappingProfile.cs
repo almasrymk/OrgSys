@@ -36,19 +36,22 @@ public partial class MappingProfile : Profile
         CityMappingProfile();
         DistrictMappingProfile();
 
-        // 1-Invoices
+        // 2-Invoices
         InvoiceTypeMappingProfile();
         InvoiceMappingProfile();
 
-        // 1-Transactions
+        // 3-Transactions
         TransactionMappingProfile();
-
-
-        PaymentTypeMappingProfile();
-        FinancialMappingProfile();
-        PreferenceMappingProfile();
-        TransactionTypeMappingProfile();
         InventoryMappingProfile();
+
+        // 4-Financials
+        JournalMappingProfile();
+        FinancialMappingProfile();
+
+        PreferenceMappingProfile();
+
+        PaymentTypeMappingProfile();      
+        TransactionTypeMappingProfile();
         FinancialTypeMappingProfile();
     }
 }

@@ -28,7 +28,7 @@
 
         public override string CreateInclude()
         {
-            return "Dealer,Stock,PaymentType,Currency";
+            return "Dealer,Stock";
         }
 
         override public Func<IQueryable<Entity.Model.Transaction>, IOrderedQueryable<Entity.Model.Transaction>> CreateOrderBy(SearchTransactionQuery request)

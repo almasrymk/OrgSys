@@ -8,5 +8,10 @@ namespace Entity.Model
     {
         [StringLength(50, MinimumLength = 3)]
         public virtual string Name { get; set; }
+
+        [ForeignKey("Account")]
+        public virtual long? AccountId { get; set; }
+
+        public virtual Account Account { get; set; }
     }
 }

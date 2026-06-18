@@ -17,12 +17,12 @@
         override public async Task<bool> SaveDetials(UpdateProductCommand request)
         {
             #region UpdateProduct
-            var ids = request.ProductUnitList.Select(e => e.Id);
+            var ids = request.ProductUnits.Select(e => e.Id);
             var removeList = await _ProductUnitRepository.GetListByFilterAsync(e => e.ProductId == request.Id && !ids.Contains(e.Id));
 
             var res = await RemoveDetails<ProductUnit>(removeList!);
             if (!res) return false;
-            var ob = mapper.Map<List<ProductUnit>>(request.ProductUnitList);
+            var ob = mapper.Map<List<ProductUnit>>(request.ProductUnits);
             res = await UpdateDetails<ProductUnit>(ob);
             #endregion 
 

@@ -254,6 +254,54 @@
                 }
             });
 
+            $("#txtAccountId").autocomplete({
+                minLength: 0,
+                source: function (request, response) {
+                    var searchPhrase = $("#txtAccountId").val();//request.term.trim().toLowerCase();
+                    var TypeId = $("#TypeId").val()
+                    var noResultsLabel = 'NoResultsFound';
+                    if (searchPhrase == "...")
+                        searchPhrase = "";
+                    $.ajax({
+                        url: "/Setting/Account/GetList",
+                        type: "Get",
+                        dataType: "json",
+                        data: { txtSearch: searchPhrase, TypeId : TypeId, page: 1, pageSize: 7 },
+                        success: function (data) {
+                            try {
+                                if (!data.length) {
+                                    data = [{ name: noResultsLabel }];
+                                }
+
+                                if ("" + $("#txtAccountId").val() == "") {
+                                    $("#AccountId").val("");
+                                    $("#errorAccountId").remove();
+                                }
+
+                                response($.map(data, function (item) {
+                                    return {
+                                        label: item.name, value: item.name, id: item.id
+                                    };
+                                }));
+                            } catch (err) { }
+                        }
+                    });
+                },
+                select: function (event, ui) {
+                    if (ui.item.label === 'NoResultsFound') {
+                        event.preventDefault();
+                        return;
+                    }
+                    $("#AccountId").val(ui.item.id);
+                    $("#errorAccountId").remove();
+                },
+                focus: function (event, ui) {
+                    if (ui.item.label === 'NoResultsFound') {
+                        event.preventDefault();
+                    }
+                }
+            });
+
             $(".Droptxt").click(function () {
                 event.preventDefault();
                 if ($(this).val() == "" || $(this).val() == "...")

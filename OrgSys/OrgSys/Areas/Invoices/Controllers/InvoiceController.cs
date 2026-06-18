@@ -27,7 +27,7 @@ namespace OrgSys.Areas.Invoices.Controllers
             var type = await GetObApi<InvoiceTypeModelView>($"GetById?Id={TypeId}");
             ViewBag.InvoicesType = type.Name;
             ViewBag.InvoicesGroup = type.Group;
-            ViewBag.InvoicesIcon = type.Icon;             
+            ViewBag.InvoicesIcon = type.Icon;
         }
 
         public override async Task LoadViewBag(InvoiceModelView model)
@@ -51,7 +51,7 @@ namespace OrgSys.Areas.Invoices.Controllers
 
         public override async Task<InvoiceModelView> InitializeData(InvoiceModelView ob)
         {
-            var preferenceList = await GetListApi<PreferenceModelView>(TypeId: ob.TypeId, PageSize: 1000);
+            var preferenceList = await GetListApi<PreferenceModelView>(TypeId: ob.TypeId, TextSearch: "Invoice", PageSize: 1000);
             var StockId = long.Parse("0" + preferenceList.FirstOrDefault(e => e.Key == "DefaultStock")?.Value);
 
             long DealerId = 0;
@@ -80,7 +80,8 @@ namespace OrgSys.Areas.Invoices.Controllers
 
             if (ob.Id == 0)
             {
-                ob.CodeNumber = long.Parse("0" + await GetValueApi<InvoiceModelView>($"GetMax?TypeId={ob.TypeId}")) + 1;
+
+                ob.CodeNumber = long.Parse("0" + await GetValueApi<InvoiceModelView>($"GetMax?ParentId=0&TypeId={ob.TypeId}")) + 1;
                 ob.Code = "" + ob.CodeNumber;
                 ob.StockId = StockId;
                 ob.DealerId = DealerId;
@@ -118,15 +119,21 @@ namespace OrgSys.Areas.Invoices.Controllers
             return base.FixData(ob);
         }
 
-        public ActionResult CreateTransaction(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1)
+        public async Task<ActionResult> CreateTransaction(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1)
         {
-            new IntegrationServics(User.GetSchema()).CreateTransactionByInvoice(new InvoiceService(User.GetSchema()).Get(id));
+            //new IntegrationServics(User.GetSchema()).CreateTransactionByInvoice(new InvoiceService(User.GetSchema()).Get(id));
+
+            var response = await ApiMethod(ApiMethodType.Post, $"CreateTransactionInvoice?InvoiceId={id}");
+
             return Redirect("/Invoices/Invoice/Index?ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" + ResultStatus.success + "&MsgError=Success");
         }
 
-        public ActionResult CreateFinancial(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1, string dir = "Index")
+        public async Task<ActionResult> CreateFinancial(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1, string dir = "Index")
         {
-            new IntegrationServics(User.GetSchema()).CollectPaidInvoice(new InvoiceService(User.GetSchema()).Get(id));
+            //var invoice = await GetObApi<InvoiceModelView>($"GetById?Id={id}");
+            var response = await ApiMethod(ApiMethodType.Post, $"CollectPaidInvoice?InvoiceId={id}");
+            //var x = new InvoiceService(User.GetSchema()).Get(id);
+            //new IntegrationServics(User.GetSchema()).CollectPaidInvoice(invoice);
             if (dir == "Index")
                 return Redirect("/Invoices/Invoice/Index?ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" + ResultStatus.success + "&MsgError=Success");
             else
@@ -139,20 +146,17 @@ namespace OrgSys.Areas.Invoices.Controllers
             return Json("Ok");
         }
 
-        public JsonResult GetInvoicesNotReturn(string txtSearch = "", long TypeId = 0, long InvId = 0, int page = 1, int pageSize = 10)
+        public async Task<JsonResult> GetInvoicesNotReturn(string txtSearch = "", long TypeId = 0, long InvId = 0, int page = 1, int pageSize = 10)
         {
+
             if (txtSearch != null)
                 txtSearch = txtSearch.Trim().ToLower();
 
-            var itemsList = new InvoiceService(User.GetSchema()).GetInvoicesNotReturn(txtSearch, TypeId, InvId, page, pageSize);
-            var list = itemsList.Distinct().OrderBy(_ => _.Code)
-                .Select(_ => new
-                {
-                    _.Id,
-                    _.Code
-                })
-                .ToList();
-            return Json(list);
+            var items = await GetListApi<InvoiceModelView>($"GetInvoicesNotReturn?KeySearch={txtSearch}&ParentId={InvId}&TypeId={TypeId - 2}&Page={page}&PageSize={pageSize}");
+
+            var lsit = items.Distinct().OrderBy(_ => _.Code).Select(_ => new { _.Id, _.Code }).ToList();
+
+            return Json(lsit);
         }
 
         public async Task<ActionResult> SearchInvoices(string txt = "", long dealerId = 0,
@@ -163,8 +167,7 @@ namespace OrgSys.Areas.Invoices.Controllers
             ViewBag.currencyId = currencyId;
             ViewBag.Type = Type;
             ViewBag.ids = ids;
-            //var list1 = new InvoiceService(User.GetSchema()).GetCreditAllByDealerId(txt, dealerId, currencyId, ids, 0, typeId, page, 10);
-            var response = await ApiMethod(ApiMethodType.Get ,$"SearchInvoice?KeySearch={txt}&dealerId={dealerId}&currencyId={currencyId}&typeId={typeId}&Page={page}&PageSize=10&Ids={ids}");
+            var response = await ApiMethod(ApiMethodType.Get, $"SearchInvoice?KeySearch={txt}&dealerId={dealerId}&currencyId={currencyId}&typeId={typeId}&Page={page}&PageSize=10&Ids={ids}");
 
             response.EnsureSuccessStatusCode();
             var data = await response.Content.ReadAsStringAsync();
@@ -188,7 +191,7 @@ namespace OrgSys.Areas.Invoices.Controllers
 
         public async Task<ActionResult> Cancel(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1)
         {
-         var response =    await ApiMethod(ApiMethodType.Put , $"Cancel?Id={id}");
+            var response = await ApiMethod(ApiMethodType.Put, $"Cancel?Id={id}");
             response.EnsureSuccessStatusCode();
             var data = await response.Content.ReadAsStringAsync();
             var res = JsonConvert.DeserializeObject<Domain.Shared.Result>(data);
@@ -206,17 +209,53 @@ namespace OrgSys.Areas.Invoices.Controllers
             return Redirect("/Invoices/Invoice/Index?ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" + (res.StatusCode != null ? ResultStatus.success : ResultStatus.error) + "&MsgError=Success");
         }
 
-        public JsonResult GetProductInvoice(int Id)
+        public async Task<JsonResult> GetProductInvoice(int Id)
         {
-            var item = new InvoiceService(User.GetSchema()).GetProductInvoicesNotReturn(Id);
-            if (item == null)
-                item = new List<InvoiceProductModelView>();
-            var data = item.Select(e => new
+
+          var responseMessage =  ApiMethod(ApiMethodType.Get, $"GetProductInvoicesNotReturn?Id={Id}").Result.EnsureSuccessStatusCode();
+
+            responseMessage.EnsureSuccessStatusCode();
+            var dataa = await responseMessage.Content.ReadAsStringAsync();
+
+            var item = JsonConvert.DeserializeObject<ResultCollection<InvoiceProductModelView>>(dataa);
+
+            var data = item.Response.Select(e => new
             {
                 productId = e.ProductId,
                 quantity = e.Quantity
             }).ToList();
             return Json(data);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> AutoSave(InvoiceModelView ob)
+        {
+            await base.Save(ob);
+            if (ob.Id == 0)
+            {
+
+                var key = ob.GetType().GetProperty("Code")?.GetValue(ob, null);
+                var searchResp = await ApiMethod(ApiMethodType.Get, $"Search?KeySearch={key}&ParentId={ob.ParentId}&TypeId={ob.TypeId}&Page=1&PageSize=1");
+                if (searchResp != null && searchResp.IsSuccessStatusCode)
+                {
+                    var searchData = await searchResp.Content.ReadAsStringAsync();
+                    var searchRes = JsonConvert.DeserializeObject<ResultPagination<InvoiceModelView>>(searchData);
+                    if (searchRes != null && searchRes.Response != null && searchRes.Response.Count > 0)
+                    {
+                        ob.Id = searchRes.Response[0].Id;
+                        ob.CreateUserId = searchRes.Response[0].CreateUserId;
+                    }
+
+                    return Ok(new
+                    {
+                        status = "success",
+                        id = ob.Id,
+                        createdUserId = ob.CreateUserId,
+                        url = "/" + "Invoices" + "/" + "Invoice" + "?ParentId=" + ob.ParentId + "&TypeId=" + ob.TypeId + "&status=" + ResultStatus.success + "&MsgError=Success"
+                    });
+                }
+            }
+            return Ok();
         }
     }
 }

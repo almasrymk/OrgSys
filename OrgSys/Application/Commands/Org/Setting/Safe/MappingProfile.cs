@@ -8,7 +8,9 @@ public partial class MappingProfile : Profile
     public void SafeMappingProfile()
     {
         #region Safe
-        CreateMap<Safe, SafeModelView>();
+        CreateMap<Safe, SafeModelView>()
+        .ForMember(dest => dest.AccountName, opt => opt.MapFrom(src => src.Account.Name));
+
         CreateMap<SafeModelView, Safe>();
 
         CreateMap<Safe, CreateSafeCommand>();

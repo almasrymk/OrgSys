@@ -1497,21 +1497,33 @@
 <script src="~/js/jquery-ui.js"></script>
 
 <script>
-    function SavePreference() {
-        var data = CollectDataPreference();
-        $.ajax({
-            type: 'POST',
-            url: "/Setting/Preference/Save",
-            data: { list: JSON.stringify( data) },
-            success: function (res) {
-                if (res != "Error") {
-                    location.reload();
-                   // $(".close").trigger("click");
-                }
-            }
-        });
-    }
+function SavePreference() {
 
+    var preferenceList = CollectDataPreference(); 
+    
+    // Create the outer wrapper with TypeId = 1 & Id = 1 For not recreating
+    var data = {
+        typeId: 1,  // Set TypeId = 1 for the outer object
+        Id: 1, // For updating
+        preferenceList: preferenceList  
+    };
+    
+    $.ajax({
+        type: 'POST',
+        url: "/Setting/Preference/SavePreference",
+        contentType: "application/json",
+        data: JSON.stringify(data),
+        success: function (res) {
+               location.reload();
+        },
+        error: function (res) {
+            console.log(res);
+            if (res.responseJSON && res.responseJSON.Errors) {
+                console.error(res.responseJSON.Errors);
+            }
+        }
+    });
+}
     function CollectDataPreference() {
         var list = [];
 

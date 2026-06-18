@@ -2554,6 +2554,9 @@ namespace Repository.Migrations.OrgMigrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
+                    b.Property<long?>("AccountId")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("Code")
                         .HasColumnType("nvarchar(max)");
 
@@ -2583,6 +2586,8 @@ namespace Repository.Migrations.OrgMigrations
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AccountId");
 
                     b.ToTable("Safe", "org");
                 });
@@ -4181,6 +4186,15 @@ namespace Repository.Migrations.OrgMigrations
                     b.Navigation("Permission");
 
                     b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("Entity.Model.Safe", b =>
+                {
+                    b.HasOne("Entity.Model.Account", "Account")
+                        .WithMany()
+                        .HasForeignKey("AccountId");
+
+                    b.Navigation("Account");
                 });
 
             modelBuilder.Entity("Entity.Model.Stock", b =>

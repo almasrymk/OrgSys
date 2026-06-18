@@ -35,12 +35,12 @@ namespace Entity.ModelView
 
         public decimal Balance { get; set; }
 
-        public ICollection<ProductUnitModelView> ProductUnitList { get; set; }
+        public ICollection<ProductUnitModelView> ProductUnits { get; set; }
 
-        public ICollection<ProductRecipeModelView> ProductRecipeList { get; set; }
+        public ICollection<ProductRecipeModelView> ProductRecipes { get; set; }
 
-        public ICollection<ProductPropertyElementModelView> ProductPropertyElementList { get; set; }
+        public ICollection<ProductPropertyElementModelView> ProductPropertyElements { get; set; }
 
-        public ICollection<TreeView> ProductPropertyTree { get; set; }
+        public ICollection<TreeView> ProductPropertyTrees { get; set; }
     }
 }

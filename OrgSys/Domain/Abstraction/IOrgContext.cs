@@ -37,8 +37,8 @@
         //DbSet<OrderType> OrderTypes { get; set; }
         DbSet<Table> Tables { get; set; }
         DbSet<Safe> Safes { get; set; }
-        //DbSet<Financial> Financials { get; set; }
-        //DbSet<FinancialInvoice> FinancialInvoices { get; set; }
+        DbSet<Financial> Financials { get; set; }
+        DbSet<FinancialInvoice> FinancialInvoices { get; set; }
         //DbSet<FinancialType> FinancialTypes { get; set; }
         DbSet<Outlay> Outlays { get; set; }
         DbSet<Currency> Currencys { get; set; }

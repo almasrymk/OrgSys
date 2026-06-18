@@ -32,6 +32,13 @@ namespace Repository
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasDefaultSchema(Schema);
+
+
+            modelBuilder.Entity<Invoice>()
+                .HasMany(i => i.InvoiceProducts)
+                .WithOne(ip => ip.Invoice)
+                .HasForeignKey(ip => ip.InvoiceId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
 
         public virtual DbSet<Unit> Units { get; set; }

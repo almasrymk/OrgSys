@@ -23,8 +23,8 @@
 
         public override async Task<ProductModelView> InitializeData(ProductModelView ob)
         {
-            if (ob.ProductUnitList == null)
-                ob.ProductUnitList = new List<ProductUnitModelView>();
+            if (ob.ProductUnits == null)
+                ob.ProductUnits = new List<ProductUnitModelView>();
             if (ob.Id == 0)
             {
                 ob.CodeNumber = long.Parse("0" + await GetValueApi<ProductModelView>($"GetMax?TypeId={ob.TypeId}")) + 1;
@@ -60,9 +60,8 @@
             phrase = phrase.Trim().ToLower();
 
             var CodeElectronicScale = setting.FirstOrDefault(e => e.Key == "CodeElectronicScale" && e.Reference == "Invoice")?.Value;
-            var LengthElectronicScale = int.Parse(setting.FirstOrDefault(e => e.Key == "LengthElectronicScale" && e.Reference == "Invoice")?.Value);
-            var LengthQtyElectronicScale = int.Parse(setting.FirstOrDefault(e => e.Key == "LengthQtyElectronicScale" && e.Reference == "Invoice")?.Value);
-
+            int.TryParse(setting.FirstOrDefault(e => e.Key == "LengthElectronicScale" && e.Reference == "Invoice")?.Value, out int LengthElectronicScale); 
+            int.TryParse(setting.FirstOrDefault(e => e.Key == "LengthQtyElectronicScale" && e.Reference == "Invoice")?.Value, out int LengthQtyElectronicScale);
             if (phrase.Length >= LengthElectronicScale && "" + CodeElectronicScale != "" && "" + CodeElectronicScale != "0" && "" + LengthElectronicScale != "" && "" + LengthElectronicScale != "0")
             {
                 if (phrase.StartsWith(CodeElectronicScale))
@@ -134,9 +133,9 @@
                 name = product.Name,
                 price = product.Price,
                 cost = product.Cost,
-                selectunitid = product.ProductUnitList.FirstOrDefault(e => e.DefaultUnit).UnitId,
-                selectunitName = product.ProductUnitList.FirstOrDefault(e => e.DefaultUnit).UnitName,
-                unitlist = product.ProductUnitList,// new UnitService(User.GetSchema()).GetAllByProductId(id)
+                selectunitid = product.ProductUnits.FirstOrDefault(e => e.DefaultUnit).UnitId,
+                selectunitName = product.ProductUnits.FirstOrDefault(e => e.DefaultUnit).UnitName,
+                unitlist = product.ProductUnits,// new UnitService(User.GetSchema()).GetAllByProductId(id)
             };
             return Json(data);
         }
@@ -150,8 +149,8 @@
                 id = e.Id,
                 name = e.Name,
                 price = e.Price,
-                selectunitid = e.ProductUnitList.FirstOrDefault(e => e.DefaultUnit).UnitId,
-                selectunitName = e.ProductUnitList.FirstOrDefault(e => e.DefaultUnit).UnitName,
+                selectunitid = e.ProductUnits.FirstOrDefault(e => e.DefaultUnit).UnitId,
+                selectunitName = e.ProductUnits.FirstOrDefault(e => e.DefaultUnit).UnitName,
                 balance = e.Balance
             }).ToList();
             return Json(data);

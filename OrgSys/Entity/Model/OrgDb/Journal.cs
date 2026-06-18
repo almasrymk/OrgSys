@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entity.Model
 {
@@ -17,5 +18,6 @@ namespace Entity.Model
         public virtual string RefranceTable { get; set; }
 
         public virtual string Note { get; set; }
+        public ICollection<JournalItem> JournalItems { get; set; }
     }
 }

@@ -165,7 +165,7 @@
                                                     </td>
                                                     <td style="width:150px;padding:0px;">
                                                         @Html.DropDownList("UnitId", new SelectList(InvoiceProduct.Product.ProductUnits.Select(e => e.Unit), "Id", "Name", InvoiceProduct.UnitId), null, new { @class = "form-control UnitId", @style = BorderAlign })
-                                                    </td>
+                                                    </td> 
                                                     <td style="width:100px;padding:0px;">
                                                         <input type="text" id="Price" name="Price" class="form-control Price" value="@InvoiceProduct.Price" style="@BorderAlign" placeholder="0.0" autocomplete="off" />
                                                     </td>
@@ -212,7 +212,7 @@
                                                         <td style="width:150px;padding:0px;">
 
                                                             <select type="text" id="UnitId" name="UnitId" class="form-control UnitId" style="@BorderAlign"></select>
-                                                        </td>
+                                                        </td> 
                                                         <td style="width:100px;padding:0px;">
                                                             <input type="text" id="Price" name="Price" class="form-control Price" style="@BorderAlign" placeholder="0.0" autocomplete="off" />
                                                         </td>
@@ -255,7 +255,7 @@
                                                 </td>
                                                 <td class="text-center align-middle" style="width:150px;padding:0px;">
                                                     <select type="text" id="UnitId" name="UnitId" class="form-control UnitId" style="@BorderAlign"></select>
-                                                </td>
+                                                </td> 
                                                 <td class="text-center align-middle" style="width:100px;padding:0px;">
                                                     <input type="text" id="Price" name="Price" class="form-control Price" style="@BorderAlign" placeholder="0.0" autocomplete="off" />
                                                 </td>
@@ -1090,7 +1090,7 @@
                         var $UnitID = $row.find('#UnitId');
                         $UnitID.find('option').remove();
                         $(data.unitlist).each(function (index, unit) {
-                            $UnitID.append($('<option></option>').val(unit.id).html(unit.name));
+                            $UnitID.append($('<option></option>').val(unit.unitId).text(unit.unitName));
                         });
                         $UnitID.val(data.selectunitid).trigger("change", SkipCallingAction = true);
 
@@ -1299,7 +1299,7 @@
                 if (CheckRequired("StockId", "divStockId", '@Utility.Resource.Message_Designer.StockRequired'))
                     Valid = false;
 
-                if (CheckRequired("PaymentTypeId", "divPaymentTypeId", '@Utility.Resource.Message_Designer.PaymentTypeRequired'))
+                if (CheckRequired("PaymentTypeId", "divPaymentTypeId",  '@Utility.Resource.Message_Designer.PaymentTypeRequired'))
                     Valid = false;
 
                 if (!Valid) {
@@ -1310,6 +1310,7 @@
 
             if (Valid == true) {
                 var data = CollectData();
+                console.log(data);
                 $.ajax({
                     type: 'POST',
                     url: "/Invoices/Invoice/Save",
@@ -1327,7 +1328,7 @@
 
         AutoSave = function () {
             var Valid = true;
-
+                
             if (CheckRowCountWithValNoMessage("tbl", "ProductId"))
                 Valid = false;
             else {
@@ -1359,13 +1360,14 @@
 
                         $.ajax({
                             type: 'POST',
-                            url: "/Invoices/Invoice/Save",
+                            url: "/Invoices/Invoice/AutoSave",
                             async: false,
                             data: { ob: data },
                             success: function (res) {
                                 if (res != "Error") {
 
                                     $("#Id").val(res.id);
+                                    $("#CreateUserId").val(res.createdUserId);
                                     var obj = { area: "Invoices", Url: "/Invoices/Invoice/Save?Id=" + res.id + "&ParentId=" + $("#ParentId").val() + "&TypeId=" + $("#TypeId").val() };
                                     history.pushState(null, obj.area, obj.Url);
                                 }
@@ -1379,6 +1381,7 @@
         function CollectData() {
             var list = [];
             var total = $('#AllTotal').val();
+            var transactionId = $("#TransactionId").val();
             var discount = $('#Discount').val();
             if ($("#DiscountType").val() == 2) {
                 discount = total * discount / 100
@@ -1413,6 +1416,7 @@
                             Discount: discountRow,
                             Tax: taxRow,
                             Service: serviceRow,
+                         
                             Net: currentRow.find('#Total').val() - discountRow + taxRow + serviceRow,
                         });
                     }
@@ -1462,6 +1466,7 @@
                 BranchId: $('#BranchId').val(),
                 Cash: $('#Cash').val(),
                 Credit: $('#Credit').val(),
+                TransactionId : transactionId,
                 InvoiceProductList: list
             };
             return data;
