@@ -139,11 +139,12 @@ namespace OrgSys.Areas.Invoices.Controllers
                 return Redirect("/Invoices/Invoice/Save?Id=" + id + "&ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" + ResultStatus.success + "&MsgError=Success");
         }
 
-        public JsonResult CollectInvoice(long id)
-        {
-            new IntegrationServics(User.GetSchema()).CreateFinancialByInvoice(new InvoiceService(User.GetSchema()).Get(id));
-            return Json("Ok");
-        }
+        //This end point is used from reports
+        //public JsonResult CollectInvoice(long id)
+        //{
+        //    new IntegrationServics(User.GetSchema()).CreateFinancialByInvoice(new InvoiceService(User.GetSchema()).Get(id));
+        //    return Json("Ok");
+        //}
 
         public async Task<JsonResult> GetInvoicesNotReturn(string txtSearch = "", long TypeId = 0, long InvId = 0, int page = 1, int pageSize = 10)
         {
