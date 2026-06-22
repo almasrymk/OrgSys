@@ -1,6 +1,6 @@
 ﻿using Application.Commands.Org.Setting.District.Commands;
 using Application.Commands.Org.Setting.District.Queries;
-using Entity.ModelView;
+using Application.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;

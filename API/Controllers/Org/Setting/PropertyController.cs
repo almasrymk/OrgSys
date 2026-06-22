@@ -2,7 +2,7 @@
 using Application.Commands.Org.Setting.Property.Commands;
 using Application.Commands.Org.Setting.Property.Queries;
 using Application.Interfaces.CQRS;
-using Entity.ModelView;
+using Application.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

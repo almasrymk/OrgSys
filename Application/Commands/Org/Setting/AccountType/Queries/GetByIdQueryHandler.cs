@@ -7,16 +7,16 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.ModelView;
+    using Application.DTOs;
     using System.Linq.Expressions;
 
     public sealed record GetByIdAccountTypeQuery(long Id) : ICommand<AccountTypeModelView> , IGetByIdQuery<Result<AccountTypeModelView>>;
 
-    public sealed class GetByIdQueryHandler(IRepository<Entity.Model.AccountType> _Repository, IMapper mapper) : GetCommandHandler<GetByIdAccountTypeQuery, Entity.Model.AccountType, AccountTypeModelView>(_Repository, mapper)
+    public sealed class GetByIdQueryHandler(IRepository<Domain.Entities.AccountType> _Repository, IMapper mapper) : GetCommandHandler<GetByIdAccountTypeQuery, Domain.Entities.AccountType, AccountTypeModelView>(_Repository, mapper)
     {
-        public override Expression<Func<Entity.Model.AccountType, bool>> CreateFilter(GetByIdAccountTypeQuery request)
+        public override Expression<Func<Domain.Entities.AccountType, bool>> CreateFilter(GetByIdAccountTypeQuery request)
         {           
-            return e => e.Id == request.Id && e.Status !=Utility.Status.Deleted && e.Hide != true;
+            return e => e.Id == request.Id && e.Status !=Domain.Enums.Status.Deleted && e.Hide != true;
         }
     }
 }

@@ -2,9 +2,9 @@
 using Repository;
 using X.PagedList;
 using System.Linq;
-using Entity.ModelReport;
+using Domain.EntitiesReport;
 using Utility;
-using Entity.Model;
+using Domain.Entities;
 using X.PagedList.Extensions;
 
 namespace Service

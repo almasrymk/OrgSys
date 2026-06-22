@@ -6,25 +6,25 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.ModelView;
+    using Application.DTOs;
     using System.Linq.Expressions;
     using Utility;
 
     public sealed record GetListOutlayQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandCollection<OutlayModelView> , IListQuery<ResultCollection<OutlayModelView>>;
 
-    public sealed class GetListQueryHandler(IRepository<Entity.Model.Outlay> _Repository, IMapper mapper) : ListCommandHandler<GetListOutlayQuery, Entity.Model.Outlay, OutlayModelView>(_Repository, mapper)
+    public sealed class GetListQueryHandler(IRepository<Domain.Entities.Outlay> _Repository, IMapper mapper) : ListCommandHandler<GetListOutlayQuery, Domain.Entities.Outlay, OutlayModelView>(_Repository, mapper)
     {
-        public override Expression<Func<Entity.Model.Outlay, bool>> CreateFilter(GetListOutlayQuery request)
+        public override Expression<Func<Domain.Entities.Outlay, bool>> CreateFilter(GetListOutlayQuery request)
         {
             Page = request.Page;
             PageSize = request.PageSize;
 
             return e =>
             (string.IsNullOrEmpty(request.KeySearch) || e.Name.Contains(request.KeySearch)) &&
-            e.Status != Status.Deleted && e.Hide != true;
+            e.Status != Domain.Enums.Status.Deleted && e.Hide != true;
         }
          
-        override public Func<IQueryable<Entity.Model.Outlay>, IOrderedQueryable<Entity.Model.Outlay>> CreateOrderBy(GetListOutlayQuery request)
+        override public Func<IQueryable<Domain.Entities.Outlay>, IOrderedQueryable<Domain.Entities.Outlay>> CreateOrderBy(GetListOutlayQuery request)
         {
             return q => q.OrderByDescending(e => e.Id);
         }

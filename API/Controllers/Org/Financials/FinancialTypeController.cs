@@ -1,5 +1,5 @@
 ﻿using Application.Commands.Org.Financials.FinancialType.Commands;
-using Entity.ModelView;
+using Application.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

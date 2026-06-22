@@ -3,7 +3,7 @@ using Application.Commands.Org.Setting.Role.Commands;
 using Application.Commands.Org.Setting.Role.Queries;
 using Application.Interfaces.CQRS;
 using Domain.Shared;
-using Entity.ModelView;
+using Application.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

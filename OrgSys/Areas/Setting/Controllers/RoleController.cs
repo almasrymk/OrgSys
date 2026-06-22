@@ -2,11 +2,11 @@
 {
     using Application.Commands.Org.Setting.Role.Commands;
     using AutoMapper;
-    using Entity.ModelView;
+    using Application.DTOs;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
     using OrgSys.Controllers;
-    using Service;
+    
     using System.Threading.Tasks;
 
     [Area("Setting")]
@@ -17,9 +17,9 @@
             var res = await base.Save(model);
             if (User.IsCurrentUserAndRole(User.GetUserId(), model.Id))
             {
-                var us = new UserService(User.GetSchema()).Get(User.GetUserId());
-                if (us != null)
-                    us.SignIn(HttpContext, User.GetSchema());
+                //var us = new UserService(User.GetSchema()).Get(User.GetUserId());
+                //if (us != null)
+                //    us.SignIn(HttpContext, User.GetSchema());
             }
             return res;
         }

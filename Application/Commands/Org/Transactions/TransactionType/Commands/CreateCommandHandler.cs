@@ -6,11 +6,11 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.ModelView;
+    using Application.DTOs;
 
-    public sealed class CreateTransactionTypeCommand : Entity.ModelView.TransactionTypeModelView, ICommand , ICreateCommand<Result>;
+    public sealed class CreateTransactionTypeCommand : Application.DTOs.TransactionTypeModelView, ICommand , ICreateCommand<Result>;
 
-    public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.TransactionType> _Repository , IMapper mapper) : CreateCommandHandler<CreateTransactionTypeCommand, Entity.Model.TransactionType>(_UnitOfWork, _Repository , mapper)
+    public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Domain.Entities.TransactionType> _Repository , IMapper mapper) : CreateCommandHandler<CreateTransactionTypeCommand, Domain.Entities.TransactionType>(_UnitOfWork, _Repository , mapper)
     {
        
     }

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Domain.Entities
 {
     [Table("LoginUser", Schema = "admin")]
-    public class LoginUser : BaseEntity
+    public class LoginUser : BaseModel
     {     
         [Required]
         public virtual string UserName { get; set; }

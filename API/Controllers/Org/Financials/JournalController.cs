@@ -1,6 +1,6 @@
 ﻿using Application.Commands.Org.Financials.Journal.Commands;
 using Application.Commands.Org.Financials.Journal.Queries;
-using Entity.ModelView;
+using Application.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

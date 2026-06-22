@@ -10,8 +10,8 @@ namespace Application.Commands.Org.Financials.Journal.Commands
 {
     public record CancelJournalCommand(long Id) : ICommand, IUpdateCommand<Result>;
 
-    public class CancelJournalCommandHandler(IUnitOfWork _UnitOfWork,   IRepository<Entity.Model.Journal> _Repository,  IMapper mapper, IServiceProvider _provider) :
-        UpdateCommandHandler<CancelJournalCommand, Entity.Model.Journal>(_UnitOfWork, _Repository, mapper, _provider)
+    public class CancelJournalCommandHandler(IUnitOfWork _UnitOfWork,   IRepository<Domain.Entities.Journal> _Repository,  IMapper mapper, IServiceProvider _provider) :
+        UpdateCommandHandler<CancelJournalCommand, Domain.Entities.Journal>(_UnitOfWork, _Repository, mapper, _provider)
     {
 
         public override async Task<Result> Handle(CancelJournalCommand request, CancellationToken cancellationToken)
@@ -25,7 +25,7 @@ namespace Application.Commands.Org.Financials.Journal.Commands
                 if (journal is null)
                     return new Result(HttpStatusCode.NotFound, new List<Error> { new Error("Invoice not found") });
 
-                journal.Status = Utility.Status.Cancel;
+                journal.Status = Domain.Enums.Status.Cancel;
                 var saved = await _UnitOfWork.SaveChangeAsync();
 
                 return saved > 0 ? new Result(HttpStatusCode.OK, null) : new Result(HttpStatusCode.InternalServerError, new List<Error> { new Error("Error saving changes") });

@@ -1,7 +1,7 @@
 ﻿using Application.Commands.Org.Setting.TransactionType.Queries;
 using Application.Commands.Org.Transactions.TransactionType.Commands;
 using Application.Commands.Org.Transactions.TransactionType.Queries;
-using Entity.ModelView;
+using Application.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

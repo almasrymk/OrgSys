@@ -6,11 +6,11 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.ModelView;
+    using Application.DTOs;
 
     public sealed record UpdateTableCommand(long Id , long? TableId, string Name) : ICommand, IUpdateCommand<Result>;
 
-    public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.Table> _Repository , IMapper mapper, IServiceProvider _provider) : UpdateCommandHandler<UpdateTableCommand, Entity.Model.Table>(_UnitOfWork, _Repository , mapper , _provider)
+    public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Domain.Entities.Table> _Repository , IMapper mapper, IServiceProvider _provider) : UpdateCommandHandler<UpdateTableCommand, Domain.Entities.Table>(_UnitOfWork, _Repository , mapper , _provider)
     {
        
     }

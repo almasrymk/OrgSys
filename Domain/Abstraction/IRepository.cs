@@ -2,8 +2,9 @@
 {
     using System.Linq.Expressions;
     using CorePagination.Paginators.SizeAwarePaginator;
+    using Domain.Entities;
 
-    public interface IRepository<TEntity> where TEntity : Entity.BaseModel //BaseEntity
+    public interface IRepository<TEntity> where TEntity : BaseModel //BaseEntity
     {
         ValueTask<TEntity> CreateAsync(TEntity Ob);
         ValueTask<List<TEntity>> CreateAsync(List<TEntity> Ob);

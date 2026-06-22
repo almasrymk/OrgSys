@@ -1,10 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Domain.Entities
+﻿namespace Domain.Entities
 {    
     [Table("Client" , Schema = "admin")]
-    public class Client : BaseEntity
+    public class Client : BaseModel
     {
         [Required]
         public virtual string Name { get; set; }

@@ -1,7 +1,7 @@
 ﻿using Application.Commands.Org.Dealers.Dealer.Queries;
 using Application.Commands.Org.Setting.Dealer.Commands;
 using Application.Commands.Org.Setting.Dealer.Queries;
-using Entity.ModelView;
+using Application.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

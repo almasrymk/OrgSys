@@ -5,9 +5,9 @@
     using Application.Validators;
     using Application.Commands.Org.Setting.User.Commands;
 
-    public class UpdateUserCommandValidator : Validator<UpdateUserCommand, Entity.Model.User>
+    public class UpdateUserCommandValidator : Validator<UpdateUserCommand, Domain.Entities.User>
     {
-        public UpdateUserCommandValidator(IRepository<Entity.Model.User> _Repository) : base(_Repository)
+        public UpdateUserCommandValidator(IRepository<Domain.Entities.User> _Repository) : base(_Repository)
         {
             RuleFor(c => c.Name)
             .NotEmpty().WithMessage("The name field is required");

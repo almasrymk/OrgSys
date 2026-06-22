@@ -1,11 +1,11 @@
 ﻿using Application.Commands.Org.Setting.Preference.Commands;
 using AutoMapper;
-using Entity.ModelView;
+using Application.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
 using OrgSys.Controllers;
-using Service;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;

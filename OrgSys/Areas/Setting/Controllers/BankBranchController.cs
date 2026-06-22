@@ -2,8 +2,7 @@
 {
     using Application.Commands.Org.Setting.BankBranch.Commands;
     using AutoMapper;
-    using Entity.Model;
-    using Entity.ModelView;
+    using Application.DTOs;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.Extensions.Configuration;

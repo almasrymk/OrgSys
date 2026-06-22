@@ -5,9 +5,9 @@
     using Application.Validators;
     using Application.Commands.Org.Setting.Classification.Commands;
 
-    public class UpdateClassificationCommandValidator : Validator<UpdateClassificationCommand, Entity.Model.Classification>
+    public class UpdateClassificationCommandValidator : Validator<UpdateClassificationCommand, Domain.Entities.Classification>
     {
-        public UpdateClassificationCommandValidator(IRepository<Entity.Model.Classification> _Repository) : base(_Repository)
+        public UpdateClassificationCommandValidator(IRepository<Domain.Entities.Classification> _Repository) : base(_Repository)
         {
             RuleFor(c => c.Name)
             .NotEmpty().WithMessage("The name field is required");

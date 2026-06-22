@@ -1,4 +1,4 @@
-﻿using Entity.Model;
+﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;

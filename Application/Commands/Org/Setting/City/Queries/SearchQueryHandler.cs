@@ -3,7 +3,7 @@
     using Utility;
     using AutoMapper;
     using Domain.Shared;
-    using Entity.ModelView;
+    using Application.DTOs;
     using Domain.Abstraction;
     using System.Linq.Expressions;
     using Application.Common.Queries;
@@ -12,16 +12,16 @@
 
     public sealed record SearchCityQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandPagination<CityModelView> ,ISearchQuery<ResultPagination<CityModelView>>;
 
-    public sealed class SearchQueryHandler(IRepository<Entity.Model.City> _Repository, IMapper mapper) : SearchCommandHandler<SearchCityQuery, Entity.Model.City, CityModelView>(_Repository, mapper)
+    public sealed class SearchQueryHandler(IRepository<Domain.Entities.City> _Repository, IMapper mapper) : SearchCommandHandler<SearchCityQuery, Domain.Entities.City, CityModelView>(_Repository, mapper)
     {
-        public override Expression<Func<Entity.Model.City, bool>> CreateFilter(SearchCityQuery request)
+        public override Expression<Func<Domain.Entities.City, bool>> CreateFilter(SearchCityQuery request)
         {
             Page = request.Page;
             PageSize = request.PageSize;
 
             return e => 
             (string.IsNullOrEmpty(request.KeySearch) || e.Name.Contains(request.KeySearch)) &&
-            e.Status != Status.Deleted && e.Hide != true;
+            e.Status != Domain.Enums.Status.Deleted && e.Hide != true;
         }
 
         public override string CreateInclude()
@@ -29,7 +29,7 @@
             return "Country";
         }
 
-        override public Func<IQueryable<Entity.Model.City>, IOrderedQueryable<Entity.Model.City>> CreateOrderBy(SearchCityQuery request)
+        override public Func<IQueryable<Domain.Entities.City>, IOrderedQueryable<Domain.Entities.City>> CreateOrderBy(SearchCityQuery request)
         {
             return q => q.OrderByDescending(e => e.Id);
         }

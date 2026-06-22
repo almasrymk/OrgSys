@@ -2,7 +2,7 @@
 {
     using Application.Commands.Org.Setting.Classification.Commands;
     using AutoMapper;
-    using Entity.ModelView;
+    using Application.DTOs;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
     using OrgSys.Controllers;

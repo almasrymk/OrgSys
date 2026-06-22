@@ -5,9 +5,9 @@
     using Application.Validators;
     using Application.Commands.Org.Setting.City.Commands;
 
-    public class CreateUserCommandValidator : Validator<CreateCityCommand ,  Entity.Model.City>
+    public class CreateUserCommandValidator : Validator<CreateCityCommand ,  Domain.Entities.City>
     {
-        public CreateUserCommandValidator(IRepository<Entity.Model.City> _Repository , IRepository<Entity.Model.Country> _CountryRepository) : base(_Repository)
+        public CreateUserCommandValidator(IRepository<Domain.Entities.City> _Repository , IRepository<Domain.Entities.Country> _CountryRepository) : base(_Repository)
         {
             RuleFor(c => c.Name)
             .NotEmpty().WithMessage("The name field is required");

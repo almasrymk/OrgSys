@@ -7,16 +7,16 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.ModelView;
+    using Application.DTOs;
     using System.Linq.Expressions;
 
     public sealed record GetByIdCountryQuery(long Id) : ICommand<CountryModelView> , IGetByIdQuery<Result<CountryModelView>>;
 
-    public sealed class GetByIdQueryHandler(IRepository<Entity.Model.Country> _Repository, IMapper mapper) : GetCommandHandler<GetByIdCountryQuery, Entity.Model.Country, CountryModelView>(_Repository, mapper)
+    public sealed class GetByIdQueryHandler(IRepository<Domain.Entities.Country> _Repository, IMapper mapper) : GetCommandHandler<GetByIdCountryQuery, Domain.Entities.Country, CountryModelView>(_Repository, mapper)
     {
-        public override Expression<Func<Entity.Model.Country, bool>> CreateFilter(GetByIdCountryQuery request)
+        public override Expression<Func<Domain.Entities.Country, bool>> CreateFilter(GetByIdCountryQuery request)
         {           
-            return e => e.Id == request.Id && e.Status !=Utility.Status.Deleted && e.Hide != true;
+            return e => e.Id == request.Id && e.Status !=Domain.Enums.Status.Deleted && e.Hide != true;
         }
     }
 }

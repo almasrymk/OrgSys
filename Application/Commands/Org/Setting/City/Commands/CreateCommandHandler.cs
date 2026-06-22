@@ -9,7 +9,7 @@
 
     public sealed record CreateCityCommand (string? Name , long? CountryId) : ICommand , ICreateCommand<Result>;
 
-    public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.City> _Repository , IMapper mapper) : CreateCommandHandler<CreateCityCommand, Entity.Model.City>(_UnitOfWork, _Repository , mapper)
+    public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Domain.Entities.City> _Repository , IMapper mapper) : CreateCommandHandler<CreateCityCommand, Domain.Entities.City>(_UnitOfWork, _Repository , mapper)
     {
        
     }

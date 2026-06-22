@@ -7,14 +7,14 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.Model;
-    using Entity.ModelView;
+    using Domain.Entities;
+    using Application.DTOs;
     using System;
     using System.Linq.Expressions;
 
     public sealed record GetMaxTransactionQuery(long TypeId , long ParentId) : ICommandOb<object> , IGetMaxQuery<object>;
 
-    public sealed class GetMaxQueryHandler(IRepository<Entity.Model.Transaction> _Repository) : GetMaxCommandHandler<GetMaxTransactionQuery, Entity.Model.Transaction>(_Repository)
+    public sealed class GetMaxQueryHandler(IRepository<Domain.Entities.Transaction> _Repository) : GetMaxCommandHandler<GetMaxTransactionQuery, Domain.Entities.Transaction>(_Repository)
     {
         public override Expression<Func<Transaction, bool>> CreateFilter(GetMaxTransactionQuery request)
         {

@@ -6,11 +6,11 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.ModelView;
+    using Application.DTOs;
 
     public sealed class UpdateBankBranchCommand : BankBranchModelView, ICommand, IUpdateCommand<Result>;
 
-    public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.BankBranch> _Repository, IMapper mapper, IServiceProvider _provider) : UpdateCommandHandler<UpdateBankBranchCommand, Entity.Model.BankBranch>(_UnitOfWork, _Repository, mapper, _provider)
+    public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Domain.Entities.BankBranch> _Repository, IMapper mapper, IServiceProvider _provider) : UpdateCommandHandler<UpdateBankBranchCommand, Domain.Entities.BankBranch>(_UnitOfWork, _Repository, mapper, _provider)
     {
 
     }

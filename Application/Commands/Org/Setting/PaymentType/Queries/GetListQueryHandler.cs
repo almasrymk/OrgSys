@@ -6,25 +6,25 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.ModelView;
+    using Application.DTOs;
     using System.Linq.Expressions;
     using Utility;
 
     public sealed record GetListPaymentTypeQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandCollection<PaymentTypeModelView> , IListQuery<ResultCollection<PaymentTypeModelView>>;
 
-    public sealed class GetListQueryHandler(IRepository<Entity.Model.PaymentType> _Repository, IMapper mapper) : ListCommandHandler<GetListPaymentTypeQuery, Entity.Model.PaymentType, PaymentTypeModelView>(_Repository, mapper)
+    public sealed class GetListQueryHandler(IRepository<Domain.Entities.PaymentType> _Repository, IMapper mapper) : ListCommandHandler<GetListPaymentTypeQuery, Domain.Entities.PaymentType, PaymentTypeModelView>(_Repository, mapper)
     {
-        public override Expression<Func<Entity.Model.PaymentType, bool>> CreateFilter(GetListPaymentTypeQuery request)
+        public override Expression<Func<Domain.Entities.PaymentType, bool>> CreateFilter(GetListPaymentTypeQuery request)
         {
             Page = request.Page;
             PageSize = request.PageSize;
 
             return e =>
             (string.IsNullOrEmpty(request.KeySearch) || e.Name.Contains(request.KeySearch)) &&
-            e.Status != Status.Deleted && e.Hide != true;
+            e.Status != Domain.Enums.Status.Deleted && e.Hide != true;
         }
          
-        override public Func<IQueryable<Entity.Model.PaymentType>, IOrderedQueryable<Entity.Model.PaymentType>> CreateOrderBy(GetListPaymentTypeQuery request)
+        override public Func<IQueryable<Domain.Entities.PaymentType>, IOrderedQueryable<Domain.Entities.PaymentType>> CreateOrderBy(GetListPaymentTypeQuery request)
         {
             return q => q.OrderByDescending(e => e.Id);
         }

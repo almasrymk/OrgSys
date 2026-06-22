@@ -9,7 +9,7 @@
 
     public sealed record CreateBranchCommand(string Name) : ICommand , ICreateCommand<Result>;
 
-    public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.Branch> _Repository , IMapper mapper) : CreateCommandHandler<CreateBranchCommand, Entity.Model.Branch>(_UnitOfWork, _Repository , mapper)
+    public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Domain.Entities.Branch> _Repository , IMapper mapper) : CreateCommandHandler<CreateBranchCommand, Domain.Entities.Branch>(_UnitOfWork, _Repository , mapper)
     {
        
     }

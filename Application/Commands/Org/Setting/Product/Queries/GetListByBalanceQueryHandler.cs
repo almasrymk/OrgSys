@@ -4,14 +4,14 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.ModelView;
+    using Application.DTOs;
     using System.Net;
     using System.Threading;
     using System.Threading.Tasks;
 
     public sealed record GetListProductByBalanceQuery(long StockId, DateTime date) : ICommandCollection<ProductModelView>;
 
-    public sealed class GetListByBalanceQueryHandler(IRepository<Entity.Model.TransactionProduct> _trnsRepository, IMapper mapper) : ICommandCollectionHandler<GetListProductByBalanceQuery, ProductModelView>
+    public sealed class GetListByBalanceQueryHandler(IRepository<Domain.Entities.TransactionProduct> _trnsRepository, IMapper mapper) : ICommandCollectionHandler<GetListProductByBalanceQuery, ProductModelView>
     {        
         public async Task<ResultCollection<ProductModelView>> Handle(GetListProductByBalanceQuery request, CancellationToken cancellationToken)
         {

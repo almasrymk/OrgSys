@@ -1,8 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using Entity.Model;
-using Entity.ModelReport;
+using Application.Report;
+using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Repository.DAL.Output

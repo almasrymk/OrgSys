@@ -1,5 +1,5 @@
-﻿using Entity.Model;
-using Entity.ModelView;
+﻿using Domain.Entities;
+using Application.DTOs;
 using System;
 using System.Linq.Expressions;
 

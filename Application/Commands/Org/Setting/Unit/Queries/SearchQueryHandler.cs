@@ -6,25 +6,25 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.ModelView;
+    using Application.DTOs;
     using System.Linq.Expressions;
     using Utility;
 
     public sealed record SearchUnitQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandPagination<UnitModelView> ,ISearchQuery<ResultPagination<UnitModelView>>;
 
-    public sealed class SearchQueryHandler(IRepository<Entity.Model.Unit> _Repository, IMapper mapper) : SearchCommandHandler<SearchUnitQuery, Entity.Model.Unit, UnitModelView>(_Repository, mapper)
+    public sealed class SearchQueryHandler(IRepository<Domain.Entities.Unit> _Repository, IMapper mapper) : SearchCommandHandler<SearchUnitQuery, Domain.Entities.Unit, UnitModelView>(_Repository, mapper)
     {
-        public override Expression<Func<Entity.Model.Unit, bool>> CreateFilter(SearchUnitQuery request)
+        public override Expression<Func<Domain.Entities.Unit, bool>> CreateFilter(SearchUnitQuery request)
         {
             Page = request.Page;
             PageSize = request.PageSize;
 
             return e => 
             (string.IsNullOrEmpty(request.KeySearch) || e.Name.Contains(request.KeySearch)) &&
-            e.Status != Status.Deleted && e.Hide != true;
+            e.Status != Domain.Enums.Status.Deleted && e.Hide != true;
         }
          
-        override public Func<IQueryable<Entity.Model.Unit>, IOrderedQueryable<Entity.Model.Unit>> CreateOrderBy(SearchUnitQuery request)
+        override public Func<IQueryable<Domain.Entities.Unit>, IOrderedQueryable<Domain.Entities.Unit>> CreateOrderBy(SearchUnitQuery request)
         {
             return q => q.OrderByDescending(e => e.Id);
         }

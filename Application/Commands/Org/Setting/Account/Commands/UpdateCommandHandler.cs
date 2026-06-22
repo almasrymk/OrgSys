@@ -6,11 +6,11 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.ModelView;
+    using Application.DTOs;
 
-    public sealed class UpdateAccountCommand : Entity.ModelView.AccountModelView, ICommand, IUpdateCommand<Result>;
+    public sealed class UpdateAccountCommand : Application.DTOs.AccountModelView, ICommand, IUpdateCommand<Result>;
 
-    public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.Account> _Repository , IMapper mapper, IServiceProvider _provider) : UpdateCommandHandler<UpdateAccountCommand, Entity.Model.Account>(_UnitOfWork, _Repository , mapper , _provider)
+    public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Domain.Entities.Account> _Repository , IMapper mapper, IServiceProvider _provider) : UpdateCommandHandler<UpdateAccountCommand, Domain.Entities.Account>(_UnitOfWork, _Repository , mapper , _provider)
     {
        
     }

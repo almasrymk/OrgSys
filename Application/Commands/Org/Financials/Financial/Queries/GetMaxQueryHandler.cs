@@ -7,14 +7,14 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.Model;
-    using Entity.ModelView;
+    using Domain.Entities;
+    using Application.DTOs;
     using System;
     using System.Linq.Expressions;
 
     public sealed record GetMaxFinancialQuery(long TypeId , long ParentId) : ICommandOb<object> , IGetMaxQuery<object>;
 
-    public sealed class GetMaxQueryHandler(IRepository<Entity.Model.Financial> _Repository) : GetMaxCommandHandler<GetMaxFinancialQuery, Entity.Model.Financial>(_Repository)
+    public sealed class GetMaxQueryHandler(IRepository<Financial> _Repository) : GetMaxCommandHandler<GetMaxFinancialQuery, Financial>(_Repository)
     {
         public override Expression<Func<Financial, bool>> CreateFilter(GetMaxFinancialQuery request)
         {

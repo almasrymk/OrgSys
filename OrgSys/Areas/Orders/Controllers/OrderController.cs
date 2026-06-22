@@ -1,5 +1,5 @@
 ﻿using Entity;
-using Entity.ModelView;
+using Application.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using OrgSys.Controllers;

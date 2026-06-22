@@ -1,7 +1,7 @@
 ﻿using Application.Commands.Org.Financials.Journal.Commands;
 using AutoMapper;
-using Entity.Model;
-using Entity.ModelView;
+using Domain.Entities;
+using Application.DTOs;
 
 public partial class MappingProfile : Profile
 {

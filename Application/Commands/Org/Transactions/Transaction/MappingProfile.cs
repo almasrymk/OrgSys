@@ -2,8 +2,8 @@
 using Application.Commands.Org.Transactions.Transaction.Commands;
 using Application.Commands.Org.Transactions.TransactionType.Commands;
 using AutoMapper;
-using Entity.Model;
-using Entity.ModelView;
+using Domain.Entities;
+using Application.DTOs;
 
 public partial class MappingProfile : Profile
 {

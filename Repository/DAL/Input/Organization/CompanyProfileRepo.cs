@@ -1,4 +1,4 @@
-﻿using Entity.Model;
+﻿using Domain.Entities;
 using System.Linq;
 
 namespace Repository

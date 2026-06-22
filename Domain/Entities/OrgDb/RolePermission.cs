@@ -1,9 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Domain.Entities
+﻿namespace Domain.Entities
 {
     [Table("RolePermission")]
-    public class RolePermission : BaseEntity
+    public class RolePermission : BaseModel
     {
         [ForeignKey("Role")]
         public virtual long RoleId { get; set; }

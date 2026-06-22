@@ -1,11 +1,7 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Domain.Entities
+﻿namespace Domain.Entities
 {
     [Table("Order")]
-    public class Order : BaseTransactionEntity
+    public class Order : MovementModel
     {
         [ForeignKey("Table")]
         public virtual long? TableId { get; set; }

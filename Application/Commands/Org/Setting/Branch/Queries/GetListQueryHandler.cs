@@ -6,25 +6,25 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.ModelView;
+    using Application.DTOs;
     using System.Linq.Expressions;
     using Utility;
 
     public sealed record GetListBranchQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandCollection<BranchModelView> , IListQuery<ResultCollection<BranchModelView>>;
 
-    public sealed class GetListQueryHandler(IRepository<Entity.Model.Branch> _Repository, IMapper mapper) : ListCommandHandler<GetListBranchQuery, Entity.Model.Branch, BranchModelView>(_Repository, mapper)
+    public sealed class GetListQueryHandler(IRepository<Domain.Entities.Branch> _Repository, IMapper mapper) : ListCommandHandler<GetListBranchQuery, Domain.Entities.Branch, BranchModelView>(_Repository, mapper)
     {
-        public override Expression<Func<Entity.Model.Branch, bool>> CreateFilter(GetListBranchQuery request)
+        public override Expression<Func<Domain.Entities.Branch, bool>> CreateFilter(GetListBranchQuery request)
         {
             Page = request.Page;
             PageSize = request.PageSize;
 
             return e =>
             (string.IsNullOrEmpty(request.KeySearch) || e.Name.Contains(request.KeySearch)) &&
-            e.Status != Status.Deleted && e.Hide != true;
+            e.Status != Domain.Enums.Status.Deleted && e.Hide != true;
         }
          
-        override public Func<IQueryable<Entity.Model.Branch>, IOrderedQueryable<Entity.Model.Branch>> CreateOrderBy(GetListBranchQuery request)
+        override public Func<IQueryable<Domain.Entities.Branch>, IOrderedQueryable<Domain.Entities.Branch>> CreateOrderBy(GetListBranchQuery request)
         {
             return q => q.OrderByDescending(e => e.Id);
         }

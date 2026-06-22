@@ -1,9 +1,9 @@
 ﻿namespace Domain.Entities
 {
     [Table("Branch")]
-    public class Branch : BaseLockupEntity
+    public class Branch : BaseModel
     {
         [StringLength(50, MinimumLength = 3)]
-        public override string? Name { get; set; }
+        public string Name { get; set; }
     }
 }

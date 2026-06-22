@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Domain.Entities
 {
     [Table("TypeActivity", Schema = "admin")]
-    public class TypeActivity : BaseEntity
+    public class TypeActivity : BaseModel
     {
         [Required]
         public virtual string Name { get; set; }       

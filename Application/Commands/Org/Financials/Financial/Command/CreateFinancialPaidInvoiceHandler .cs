@@ -4,9 +4,8 @@ using Application.Interfaces.CQRS;
 using AutoMapper;
 using Domain.Abstraction;
 using Domain.Shared;
-using Entity;
-using Entity.Model;
-using Entity.ModelView;
+using Domain.Entities;
+using Application.DTOs;
 using MediatR;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,8 +25,8 @@ namespace Application.Commands.Org.Financials.Financial.Command
 
 
     public sealed class CreateFinancialPaidInvoiceCommandHandler(IUnitOfWork _UnitOfWork, 
-        IRepository<Entity.Model.Financial> _Repository, IServiceProvider _Provider, IMapper mapper) :
-        CreateCommandHandler<CreateFinancialPaidInvoiceCommand, Entity.Model.Financial>(_UnitOfWork, _Repository, mapper)
+        IRepository<Domain.Entities.Financial> _Repository, IServiceProvider _Provider, IMapper mapper) :
+        CreateCommandHandler<CreateFinancialPaidInvoiceCommand, Domain.Entities.Financial>(_UnitOfWork, _Repository, mapper)
     {
 
 
@@ -36,7 +35,7 @@ namespace Application.Commands.Org.Financials.Financial.Command
 
             try
             {
-                var invoiceRepo = _Provider.GetRequiredService<IRepository<Entity.Model.Invoice>>();
+                var invoiceRepo = _Provider.GetRequiredService<IRepository<Domain.Entities.Invoice>>();
 
                 var invoice = await invoiceRepo.GetByFilterAsync(x => x.Id == request.InvoiceId, "");
 
@@ -45,7 +44,7 @@ namespace Application.Commands.Org.Financials.Financial.Command
 
                 if (invoice.Credit > 0)
                 {
-                    var financial = mapper.Map<Entity.Model.Financial>(invoice);
+                    var financial = mapper.Map<Domain.Entities.Financial>(invoice);
                     financial.Id = 0;
                     financial.Dealer = null;
                     financial.Amount = invoice.Credit;
@@ -54,7 +53,7 @@ namespace Application.Commands.Org.Financials.Financial.Command
                     financial.CreateDate = DateTime.Now;
                     financial.TypeId = invoice.TypeId == 1 || invoice.TypeId == 4 ? 1 : 2;
 
-                    var prefRepo = _Provider.GetRequiredService<IRepository<Entity.Model.Preference>>();
+                    var prefRepo = _Provider.GetRequiredService<IRepository<Domain.Entities.Preference>>();
 
                     var safePref = await prefRepo.GetByFilterAsync(
                         e => e.Key == "DefaultSafe"
@@ -70,7 +69,7 @@ namespace Application.Commands.Org.Financials.Financial.Command
 
                     //invoice.Code = invoice.CodeNumber.ToString();
 
-                    //FinancialInvoice financialInvoice = mapper.Map<Entity.Model.FinancialInvoice>(invoice);
+                    //FinancialInvoice financialInvoice = mapper.Map<Domain.Entities.FinancialInvoice>(invoice);
                     FinancialInvoice financialInvoice = new FinancialInvoice();
                     financialInvoice.Id = 0;
                     financialInvoice.TypeId = invoice.TypeId == 1 || invoice.TypeId == 4 ? 1 : 2;

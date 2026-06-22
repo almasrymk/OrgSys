@@ -2,7 +2,7 @@
 using Application.Commands.Org.Setting.Product.Commands;
 using Application.Commands.Org.Setting.Product.Queries;
 using Domain.Shared;
-using Entity.ModelView;
+using Application.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

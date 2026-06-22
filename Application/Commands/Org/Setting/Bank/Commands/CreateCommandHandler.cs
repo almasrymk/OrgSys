@@ -6,11 +6,11 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.ModelView;
+    using Application.DTOs;
 
     public sealed class CreateBankCommand : BankModelView, ICommand, ICreateCommand<Result>;
 
-    public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.Bank> _Repository, IMapper mapper) : CreateCommandHandler<CreateBankCommand, Entity.Model.Bank>(_UnitOfWork, _Repository, mapper)
+    public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Domain.Entities.Bank> _Repository, IMapper mapper) : CreateCommandHandler<CreateBankCommand, Domain.Entities.Bank>(_UnitOfWork, _Repository, mapper)
     {
 
     }

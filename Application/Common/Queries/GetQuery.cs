@@ -11,8 +11,8 @@
 
     public class GetCommandHandler<TRequest, TModel, TResponse>(IRepository<TModel> _Repository, IMapper mapper) : ICommandHandler<TRequest, TResponse>
         where TRequest : ICommand<TResponse>
-        where TModel : Entity.BaseModel 
-        where TResponse : Entity.BaseModel
+        where TModel : Domain.Entities.BaseModel 
+        where TResponse : Domain.Entities.BaseModel
     {
         public virtual async Task<Result<TResponse>> Handle(TRequest request, CancellationToken cancellationToken)
         {

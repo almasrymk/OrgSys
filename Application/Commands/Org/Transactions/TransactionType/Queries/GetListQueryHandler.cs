@@ -6,15 +6,15 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.ModelView;
+    using Application.DTOs;
     using System.Linq.Expressions;
     using Utility;
 
     public sealed record GetListTransactionTypeQuery(string KeySearch, long ParentId, long TypeId, int Page, int PageSize) : ICommandCollection<TransactionTypeModelView>, IListQuery<ResultCollection<TransactionTypeModelView>>;
 
-    public sealed class GetListQueryHandler(IRepository<Entity.Model.TransactionType> _Repository, IMapper mapper) : ListCommandHandler<GetListTransactionTypeQuery, Entity.Model.TransactionType, TransactionTypeModelView>(_Repository, mapper)
+    public sealed class GetListQueryHandler(IRepository<Domain.Entities.TransactionType> _Repository, IMapper mapper) : ListCommandHandler<GetListTransactionTypeQuery, Domain.Entities.TransactionType, TransactionTypeModelView>(_Repository, mapper)
     {
-        public override Expression<Func<Entity.Model.TransactionType, bool>> CreateFilter(GetListTransactionTypeQuery request)
+        public override Expression<Func<Domain.Entities.TransactionType, bool>> CreateFilter(GetListTransactionTypeQuery request)
         {
             Page = request.Page;
             PageSize = request.PageSize;
@@ -23,10 +23,10 @@
            (string.IsNullOrEmpty(request.KeySearch) || e.Name.Contains(request.KeySearch)) &&
            (request.ParentId == 0 || e.ParentId == request.ParentId) &&
            (request.TypeId == 0 || e.TypeId == request.TypeId) &&
-           e.Status != Status.Deleted && e.Hide != true;
+           e.Status != Domain.Enums.Status.Deleted && e.Hide != true;
         }
 
-        override public Func<IQueryable<Entity.Model.TransactionType>, IOrderedQueryable<Entity.Model.TransactionType>> CreateOrderBy(GetListTransactionTypeQuery request)
+        override public Func<IQueryable<Domain.Entities.TransactionType>, IOrderedQueryable<Domain.Entities.TransactionType>> CreateOrderBy(GetListTransactionTypeQuery request)
         {
             return q => q.OrderByDescending(e => e.Id);
         }

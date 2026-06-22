@@ -6,25 +6,25 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.ModelView;
+    using Application.DTOs;
     using System.Linq.Expressions;
-    using Utility;
+    using Domain.Enums;
 
     public sealed record GetListAccountQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandCollection<AccountModelView> , IListQuery<ResultCollection<AccountModelView>>;
 
-    public sealed class GetListQueryHandler(IRepository<Entity.Model.Account> _Repository, IMapper mapper) : ListCommandHandler<GetListAccountQuery, Entity.Model.Account, AccountModelView>(_Repository, mapper)
+    public sealed class GetListQueryHandler(IRepository<Domain.Entities.Account> _Repository, IMapper mapper) : ListCommandHandler<GetListAccountQuery, Domain.Entities.Account, AccountModelView>(_Repository, mapper)
     {
-        public override Expression<Func<Entity.Model.Account, bool>> CreateFilter(GetListAccountQuery request)
+        public override Expression<Func<Domain.Entities.Account, bool>> CreateFilter(GetListAccountQuery request)
         {
             Page = request.Page;
             PageSize = request.PageSize;
 
             return e =>
             (string.IsNullOrEmpty(request.KeySearch) || e.Name.Contains(request.KeySearch)) &&
-            e.Status != Status.Deleted && e.Hide != true;
+            e.Status != Domain.Enums.Status.Deleted && e.Hide != true;
         }
          
-        override public Func<IQueryable<Entity.Model.Account>, IOrderedQueryable<Entity.Model.Account>> CreateOrderBy(GetListAccountQuery request)
+        override public Func<IQueryable<Domain.Entities.Account>, IOrderedQueryable<Domain.Entities.Account>> CreateOrderBy(GetListAccountQuery request)
         {
             return q => q.OrderByDescending(e => e.Id);
         }

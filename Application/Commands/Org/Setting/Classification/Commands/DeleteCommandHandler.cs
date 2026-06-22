@@ -6,16 +6,16 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.ModelView;
+    using Application.DTOs;
     using System.Linq.Expressions;
 
     public sealed record DeleteClassificationCommand(long Id) : ICommand , IDeleteCommand<Result>;
 
-    public sealed class DeleteCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.Classification> _Repository, IServiceProvider _provider) : DeleteCommandHandler<DeleteClassificationCommand, Entity.Model.Classification>(_UnitOfWork, _Repository , _provider)
+    public sealed class DeleteCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Domain.Entities.Classification> _Repository, IServiceProvider _provider) : DeleteCommandHandler<DeleteClassificationCommand, Domain.Entities.Classification>(_UnitOfWork, _Repository , _provider)
     {
-        public override Expression<Func<Entity.Model.Classification, bool>> CreateFilter(DeleteClassificationCommand request)
+        public override Expression<Func<Domain.Entities.Classification, bool>> CreateFilter(DeleteClassificationCommand request)
         {
-            return e => e.Id == request.Id && e.Status != Utility.Status.Deleted && e.Hide != true;
+            return e => e.Id == request.Id && e.Status != Domain.Enums.Status.Deleted && e.Hide != true;
         }
     }
 }

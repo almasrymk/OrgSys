@@ -1,11 +1,7 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Domain.Entities
+﻿namespace Domain.Entities
 {
     [Table("GeneralProduct", Schema = "admin")]
-    public class GeneralProduct : BaseEntity
+    public class GeneralProduct : BaseModel
     {       
         [Required]
         public virtual string Name { get; set; }

@@ -12,7 +12,7 @@
 
     public class CreateCommandHandler<TDto, TModel>(IUnitOfWork _UnitOfWork, IRepository<TModel> _Repository, IMapper mapper) : ICommandHandler<TDto>
         where TDto : ICommand
-        where TModel : Entity.BaseModel        
+        where TModel : Domain.Entities.BaseModel        
     {
 
         public virtual async Task<Result> Handle(TDto request, CancellationToken cancellationToken)

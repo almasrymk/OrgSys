@@ -1,11 +1,11 @@
 ﻿namespace Domain.Entities
 {
     [Table("Classification")]
-    public class Classification : LockupTreeEntity
+    public class Classification : BaseModel
     {
         [Required]
         [StringLength(50, MinimumLength = 3)]
-        public override string? Name { get; set; }
+        public virtual string Name { get; set; }
 
         public virtual bool BePurchased { get; set; }
 

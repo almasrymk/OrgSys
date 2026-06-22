@@ -6,16 +6,16 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.ModelView;
+    using Application.DTOs;
     using System.Linq.Expressions;
 
     public sealed record DeleteListSafeCommand(List<long> Ids) : ICommand, IDeleteListCommand<Result>;   
 
-    public sealed class DeleteListCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.Safe> _Repository, IServiceProvider _provider) : DeleteCommandHandler<DeleteListSafeCommand, Entity.Model.Safe>(_UnitOfWork, _Repository , _provider)
+    public sealed class DeleteListCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Domain.Entities.Safe> _Repository, IServiceProvider _provider) : DeleteCommandHandler<DeleteListSafeCommand, Domain.Entities.Safe>(_UnitOfWork, _Repository , _provider)
     {
-        public override Expression<Func<Entity.Model.Safe, bool>> CreateFilter(DeleteListSafeCommand request)
+        public override Expression<Func<Domain.Entities.Safe, bool>> CreateFilter(DeleteListSafeCommand request)
         {
-            return e => request.Ids.Contains(e.Id) && e.Status != Utility.Status.Deleted && e.Hide != true;
+            return e => request.Ids.Contains(e.Id) && e.Status != Domain.Enums.Status.Deleted && e.Hide != true;
         }
     }
 }

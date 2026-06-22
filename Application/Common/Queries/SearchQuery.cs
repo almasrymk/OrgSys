@@ -11,8 +11,8 @@
 
     public class SearchCommandHandler<TRequest, TModel, TResponse>(IRepository<TModel> _Repository, IMapper mapper) : ICommandPaginationHandler<TRequest, TResponse>
         where TRequest : ICommandPagination<TResponse>
-        where TModel : Entity.BaseModel 
-        where TResponse : Entity.BaseModel
+        where TModel : Domain.Entities.BaseModel 
+        where TResponse : Domain.Entities.BaseModel
     {
         public int Page { get; set; }
         public int PageSize { get; set; }

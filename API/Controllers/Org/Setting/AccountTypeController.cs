@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using Entity.ModelView;
+using Application.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Application.Commands.Org.Setting.AccountType.Queries;
 using Application.Commands.Org.Setting.AccountType.Commands;

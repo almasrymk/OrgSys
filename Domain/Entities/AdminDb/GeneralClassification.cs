@@ -1,10 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Domain.Entities
+﻿namespace Domain.Entities
 {
     [Table("GeneralClassification", Schema = "admin")]
-    public class GeneralClassification : BaseEntity
+    public class GeneralClassification : BaseModel
     {
         [Required]
         [StringLength(50, MinimumLength = 3)]

@@ -1,6 +1,6 @@
 ﻿namespace Domain.Abstraction
 {
-    using Entity.Model;
+    using Domain.Entities;
     using Microsoft.EntityFrameworkCore;
 
     public interface IOrgContext : IDisposable

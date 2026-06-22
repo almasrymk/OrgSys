@@ -7,14 +7,14 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.Model;
-    using Entity.ModelView;
+    using Domain.Entities;
+    using Application.DTOs;
     using System;
     using System.Linq.Expressions;
 
     public sealed record GetMaxDealerGroupQuery(long TypeId , long ParentId) : ICommandOb<object> , IGetMaxQuery<object>;
 
-    public sealed class GetMaxQueryHandler(IRepository<Entity.Model.DealerGroup> _Repository) : GetMaxCommandHandler<GetMaxDealerGroupQuery, Entity.Model.DealerGroup>(_Repository)
+    public sealed class GetMaxQueryHandler(IRepository<DealerGroup> _Repository) : GetMaxCommandHandler<GetMaxDealerGroupQuery,DealerGroup>(_Repository)
     {
         public override Expression<Func<DealerGroup, bool>> CreateFilter(GetMaxDealerGroupQuery request)
         {

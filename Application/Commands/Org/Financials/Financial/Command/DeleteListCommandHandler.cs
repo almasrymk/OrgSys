@@ -6,18 +6,18 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.Model;
-    using Entity.ModelView;
+    using Domain.Entities;
+    using Application.DTOs;
     using Microsoft.Extensions.DependencyInjection;
     using System.Linq.Expressions;
 
     public sealed record DeleteListFinancialCommand(List<long> Ids) : ICommand, IDeleteListCommand<Result>;   
 
     public sealed class DeleteListCommandHandler(IUnitOfWork _UnitOfWork, 
-        IRepository<Entity.Model.Financial> _Repository, 
-        IRepository<Entity.Model.FinancialInvoice> _RepositoryFinancialInvoice, 
-        IRepository<Entity.Model.Invoice> _RepositoryInvoice, 
-        IServiceProvider _provider) : DeleteCommandHandler<DeleteListFinancialCommand, Entity.Model.Financial>(_UnitOfWork, _Repository , _provider)
+        IRepository<Domain.Entities.Financial> _Repository, 
+        IRepository<Domain.Entities.FinancialInvoice> _RepositoryFinancialInvoice, 
+        IRepository<Domain.Entities.Invoice> _RepositoryInvoice, 
+        IServiceProvider _provider) : DeleteCommandHandler<DeleteListFinancialCommand, Domain.Entities.Financial>(_UnitOfWork, _Repository , _provider)
     {
 
         public override async Task<bool> RemoveDetails(DeleteListFinancialCommand request)
@@ -38,9 +38,9 @@
 
             return await base.RemoveDetails(request);
         }
-        public override Expression<Func<Entity.Model.Financial, bool>> CreateFilter(DeleteListFinancialCommand request)
+        public override Expression<Func<Domain.Entities.Financial, bool>> CreateFilter(DeleteListFinancialCommand request)
         {
-            return e => request.Ids.Contains(e.Id) && e.Status != Utility.Status.Deleted && e.Hide != true;
+            return e => request.Ids.Contains(e.Id) && e.Status != Domain.Enums.Status.Deleted && e.Hide != true;
         }
 
     }

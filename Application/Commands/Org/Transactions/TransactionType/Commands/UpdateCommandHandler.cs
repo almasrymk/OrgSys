@@ -6,10 +6,10 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.ModelView;
+    using Application.DTOs;
 
-    public sealed class UpdateTransactionTypeCommand : Entity.ModelView.TransactionTypeModelView, ICommand, IUpdateCommand<Result>;
-    public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.TransactionType> _Repository , IMapper mapper, IServiceProvider _provider) : UpdateCommandHandler<UpdateTransactionTypeCommand, Entity.Model.TransactionType>(_UnitOfWork, _Repository , mapper , _provider)
+    public sealed class UpdateTransactionTypeCommand : Application.DTOs.TransactionTypeModelView, ICommand, IUpdateCommand<Result>;
+    public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Domain.Entities.TransactionType> _Repository , IMapper mapper, IServiceProvider _provider) : UpdateCommandHandler<UpdateTransactionTypeCommand, Domain.Entities.TransactionType>(_UnitOfWork, _Repository , mapper , _provider)
     {
        
     }

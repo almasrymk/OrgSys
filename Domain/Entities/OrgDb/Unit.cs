@@ -1,12 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Domain.Entities
+﻿namespace Domain.Entities
 {
     [Table("Unit")]
-    public class Unit : BaseEntity
+    public class Unit : BaseModel
     {
         [StringLength(50, MinimumLength = 2)]
-        public virtual string? Name { get; set; }
+        public virtual string Name { get; set; }
     }
 }

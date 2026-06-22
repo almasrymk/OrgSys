@@ -5,9 +5,9 @@
     using Application.Validators;
     using Application.Commands.Org.Setting.City.Commands;
 
-    public class DeleteListCityCommandValidator : Validator<DeleteListCityCommand, Entity.Model.City>
+    public class DeleteListCityCommandValidator : Validator<DeleteListCityCommand, Domain.Entities.City>
     {
-        public DeleteListCityCommandValidator(IRepository<Entity.Model.City> _Repository) : base(_Repository)
+        public DeleteListCityCommandValidator(IRepository<Domain.Entities.City> _Repository) : base(_Repository)
         {    
             RuleFor(c => c)           
             .MustAsync(async (command, cancellationToken) => await IsAllIdsExist(command.Ids))

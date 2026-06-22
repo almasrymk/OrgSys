@@ -6,9 +6,9 @@
     using Application.Commands.Org.Setting.Currency.Commands;
     using Utility;
 
-    public class UpdateCurrencyCommandValidator : Validator<UpdateCurrencyCommand, Entity.Model.Currency>
+    public class UpdateCurrencyCommandValidator : Validator<UpdateCurrencyCommand, Domain.Entities.Currency>
     {
-        public UpdateCurrencyCommandValidator(IRepository<Entity.Model.Currency> _Repository) : base(_Repository)
+        public UpdateCurrencyCommandValidator(IRepository<Domain.Entities.Currency> _Repository) : base(_Repository)
         {
             RuleFor(c => c.Name)
             .NotEmpty().WithMessage("The name field is required");
@@ -17,7 +17,7 @@
             .MaximumLength(150).WithMessage("The name must not exceed 150 characters");
                          
             RuleFor(c => new { c.Name, c.Id })
-            .MustAsync(async (Ob, cancellationToken) => await NotAnyAsync(c => c.Name == Ob.Name && c.Id != Ob.Id && c.Status != Status.Deleted && c.Hide != true, cancellationToken))
+            .MustAsync(async (Ob, cancellationToken) => await NotAnyAsync(c => c.Name == Ob.Name && c.Id != Ob.Id && c.Status != Domain.Enums.Status.Deleted && c.Hide != true, cancellationToken))
             .WithMessage("The currency name already exists")
             .OverridePropertyName(nameof(CreateCurrencyCommand.Name));
         }

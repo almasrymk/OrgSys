@@ -1,4 +1,4 @@
-﻿using Entity.ModelReport;
+﻿using Application.Report;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

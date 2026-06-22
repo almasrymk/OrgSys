@@ -1,6 +1,6 @@
 ﻿using Entity;
-using Entity.Model;
-using Entity.ModelView;
+using Domain.Entities;
+using Application.DTOs;
 
 namespace Service.BAL.Data.Security
 {

@@ -6,11 +6,11 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.ModelView;
+    using Application.DTOs;
 
     public sealed record CreateOutlayCommand(string Name) : ICommand , ICreateCommand<Result>;
 
-    public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.Outlay> _Repository , IMapper mapper) : CreateCommandHandler<CreateOutlayCommand, Entity.Model.Outlay>(_UnitOfWork, _Repository , mapper)
+    public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Domain.Entities.Outlay> _Repository , IMapper mapper) : CreateCommandHandler<CreateOutlayCommand, Domain.Entities.Outlay>(_UnitOfWork, _Repository , mapper)
     {
        
     }

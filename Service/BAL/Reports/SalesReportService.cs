@@ -2,7 +2,7 @@
 using Repository;
 using X.PagedList;
 using System.Linq;
-using Entity.ModelReport;
+using Domain.EntitiesReport;
 using Utility;
 using X.PagedList.Extensions;
 

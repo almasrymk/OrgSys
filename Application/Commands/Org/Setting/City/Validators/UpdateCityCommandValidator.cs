@@ -5,9 +5,9 @@
     using Application.Validators;
     using Application.Commands.Org.Setting.City.Commands;
 
-    public class UpdateUserCommandValidator : Validator<UpdateCityCommand, Entity.Model.City>
+    public class UpdateUserCommandValidator : Validator<UpdateCityCommand, Domain.Entities.City>
     {
-        public UpdateUserCommandValidator(IRepository<Entity.Model.City> _Repository , IRepository<Entity.Model.Country> _CountryRepository) : base(_Repository)
+        public UpdateUserCommandValidator(IRepository<Domain.Entities.City> _Repository , IRepository<Domain.Entities.Country> _CountryRepository) : base(_Repository)
         {
             RuleFor(c => c.Id)
             .GreaterThan(0).WithMessage("The Id field is required");

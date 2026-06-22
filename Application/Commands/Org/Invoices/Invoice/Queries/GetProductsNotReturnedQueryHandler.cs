@@ -5,9 +5,8 @@ using Application.Interfaces.CQRS;
 using AutoMapper;
 using Domain.Abstraction;
 using Domain.Shared;
-using Entity;
-using Entity.Model;
-using Entity.ModelView;
+using Domain.Entities;
+using Application.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -20,7 +19,7 @@ namespace Application.Commands.Org.Invoices.Invoice.Queries
 
     public sealed record GetProductsNotReturnedQuery(long Id) : ICommandCollection<InvoiceProductModelView>, IGetByIdQuery<ResultCollection<InvoiceProductModelView>>;
 
-    public sealed class GetProductsNotReturnedQueryHandler(IRepository<Entity.Model.Invoice> _Repository, IMapper mapper) : ListCommandHandler<GetProductsNotReturnedQuery, Entity.Model.Invoice, InvoiceProductModelView>(_Repository, mapper)
+    public sealed class GetProductsNotReturnedQueryHandler(IRepository<Domain.Entities.Invoice> _Repository, IMapper mapper) : ListCommandHandler<GetProductsNotReturnedQuery, Domain.Entities.Invoice, InvoiceProductModelView>(_Repository, mapper)
     {
 
         public override async Task<ResultCollection<InvoiceProductModelView>> Handle(GetProductsNotReturnedQuery request, CancellationToken cancellationToken)

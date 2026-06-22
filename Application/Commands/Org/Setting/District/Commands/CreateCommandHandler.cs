@@ -6,11 +6,11 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.ModelView;
+    using Application.DTOs;
 
     public sealed class CreateDistrictCommand: DistrictModelView , ICommand , ICreateCommand<Result>;
 
-    public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.District> _Repository , IMapper mapper) : CreateCommandHandler<CreateDistrictCommand, Entity.Model.District>(_UnitOfWork, _Repository , mapper)
+    public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Domain.Entities.District> _Repository , IMapper mapper) : CreateCommandHandler<CreateDistrictCommand, Domain.Entities.District>(_UnitOfWork, _Repository , mapper)
     {
        
     }

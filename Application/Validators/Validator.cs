@@ -5,7 +5,7 @@
     using System.Linq.Expressions;
 
     public abstract class Validator<TCommand, TEntity>(IRepository<TEntity> _Repository) : AbstractValidator<TCommand>
-        where TEntity : Entity.BaseModel
+        where TEntity : Domain.Entities.BaseModel
     {
         public async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> Predicate, CancellationToken cancellationToken = default)
         {

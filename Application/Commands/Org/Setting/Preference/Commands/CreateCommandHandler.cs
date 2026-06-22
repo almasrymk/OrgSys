@@ -6,11 +6,11 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.ModelView;
+    using Application.DTOs;
 
-    public sealed class CreatePreferenceCommand : Entity.ModelView.PreferenceModelView, ICommand , ICreateCommand<Result>;
+    public sealed class CreatePreferenceCommand : Application.DTOs.PreferenceModelView, ICommand , ICreateCommand<Result>;
 
-    public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.Preference> _Repository , IMapper mapper) : CreateCommandHandler<CreatePreferenceCommand, Entity.Model.Preference>(_UnitOfWork, _Repository , mapper)
+    public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Domain.Entities.Preference> _Repository , IMapper mapper) : CreateCommandHandler<CreatePreferenceCommand, Domain.Entities.Preference>(_UnitOfWork, _Repository , mapper)
     {
        
     }

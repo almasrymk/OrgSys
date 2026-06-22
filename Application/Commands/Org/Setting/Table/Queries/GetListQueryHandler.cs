@@ -6,25 +6,25 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.ModelView;
+    using Application.DTOs;
     using System.Linq.Expressions;
     using Utility;
 
     public sealed record GetListTableQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandCollection<TableModelView> , IListQuery<ResultCollection<TableModelView>>;
 
-    public sealed class GetListQueryHandler(IRepository<Entity.Model.Table> _Repository, IMapper mapper) : ListCommandHandler<GetListTableQuery, Entity.Model.Table, TableModelView>(_Repository, mapper)
+    public sealed class GetListQueryHandler(IRepository<Domain.Entities.Table> _Repository, IMapper mapper) : ListCommandHandler<GetListTableQuery, Domain.Entities.Table, TableModelView>(_Repository, mapper)
     {
-        public override Expression<Func<Entity.Model.Table, bool>> CreateFilter(GetListTableQuery request)
+        public override Expression<Func<Domain.Entities.Table, bool>> CreateFilter(GetListTableQuery request)
         {
             Page = request.Page;
             PageSize = request.PageSize;
 
             return e =>
             (string.IsNullOrEmpty(request.KeySearch) || e.Name.Contains(request.KeySearch)) &&
-            e.Status != Status.Deleted && e.Hide != true;
+            e.Status != Domain.Enums.Status.Deleted && e.Hide != true;
         }
          
-        override public Func<IQueryable<Entity.Model.Table>, IOrderedQueryable<Entity.Model.Table>> CreateOrderBy(GetListTableQuery request)
+        override public Func<IQueryable<Domain.Entities.Table>, IOrderedQueryable<Domain.Entities.Table>> CreateOrderBy(GetListTableQuery request)
         {
             return q => q.OrderByDescending(e => e.Id);
         }

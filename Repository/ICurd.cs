@@ -1,5 +1,6 @@
 ﻿using System;
-using Entity;
+using Domain;
+using Domain.Entities;
 using Utility;
 using System.Linq;
 using System.Linq.Expressions;

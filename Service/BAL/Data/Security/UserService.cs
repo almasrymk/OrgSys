@@ -1,6 +1,6 @@
 ﻿using Entity;
-using Entity.Model;
-using Entity.ModelView;
+using Domain.Entities;
+using Application.DTOs;
 using Repository;
 using System;
 using System.Collections.Generic;

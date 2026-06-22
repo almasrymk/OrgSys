@@ -6,9 +6,9 @@
     using Application.Commands.Org.Setting.Dealer.Commands;
     using Utility;
 
-    public class UpdateDealerCommandValidator : Validator<UpdateDealerCommand, Entity.Model.Dealer>
+    public class UpdateDealerCommandValidator : Validator<UpdateDealerCommand, Domain.Entities.Dealer>
     {
-        public UpdateDealerCommandValidator(IRepository<Entity.Model.Dealer> _Repository) : base(_Repository)
+        public UpdateDealerCommandValidator(IRepository<Domain.Entities.Dealer> _Repository) : base(_Repository)
         {
             RuleFor(c => c.DealerGroupId)
             .NotEmpty().WithMessage("The dealer group field is required");
@@ -26,12 +26,12 @@
            .EmailAddress().WithMessage("This is not email");
 
             RuleFor(c => new { c.Code , c.Id, c.TypeId })
-            .MustAsync(async (Ob, cancellationToken) => await NotAnyAsync(c => c.Code == Ob.Code && c.Id != Ob.Id && c.TypeId == Ob.TypeId && c.Status != Status.Deleted && c.Hide != true, cancellationToken))
+            .MustAsync(async (Ob, cancellationToken) => await NotAnyAsync(c => c.Code == Ob.Code && c.Id != Ob.Id && c.TypeId == Ob.TypeId && c.Status != Domain.Enums.Status.Deleted && c.Hide != true, cancellationToken))
             .WithMessage("The dealer code already exists")
             .OverridePropertyName(nameof(CreateDealerCommand.Code));
 
             RuleFor(c => new { c.Name, c.Id, c.TypeId })
-            .MustAsync(async (Ob, cancellationToken) => await NotAnyAsync(c => c.Name == Ob.Name && c.Id != Ob.Id && c.TypeId == Ob.TypeId && c.Status != Status.Deleted && c.Hide != true, cancellationToken))
+            .MustAsync(async (Ob, cancellationToken) => await NotAnyAsync(c => c.Name == Ob.Name && c.Id != Ob.Id && c.TypeId == Ob.TypeId && c.Status != Domain.Enums.Status.Deleted && c.Hide != true, cancellationToken))
             .WithMessage("The dealer name already exists")
             .OverridePropertyName(nameof(CreateDealerCommand.Name));
         }

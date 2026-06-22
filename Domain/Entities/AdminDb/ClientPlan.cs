@@ -1,10 +1,7 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Domain.Entities
+﻿namespace Domain.Entities
 {
     [Table("ClientPlan", Schema = "admin")]
-    public class ClientPlan : BaseEntity
+    public class ClientPlan : BaseModel
     {
         public virtual DateTime StartDate { get; set; }
         public virtual DateTime EndDate { get; set; }

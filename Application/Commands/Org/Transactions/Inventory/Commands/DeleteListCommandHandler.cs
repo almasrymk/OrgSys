@@ -6,18 +6,18 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.ModelView;
+    using Application.DTOs;
     using System.Linq.Expressions;
 
     public sealed record DeleteListInventoryCommand(List<long> Ids) : ICommand, IDeleteListCommand<Result>;   
 
     public sealed class DeleteListCommandHandler(IUnitOfWork _UnitOfWork,
-        IRepository<Entity.Model.Inventory> _Repository, IServiceProvider _provider)
-        : DeleteCommandHandler<DeleteListInventoryCommand, Entity.Model.Inventory>(_UnitOfWork, _Repository , _provider)
+        IRepository<Domain.Entities.Inventory> _Repository, IServiceProvider _provider)
+        : DeleteCommandHandler<DeleteListInventoryCommand, Domain.Entities.Inventory>(_UnitOfWork, _Repository , _provider)
     {
-        public override Expression<Func<Entity.Model.Inventory, bool>> CreateFilter(DeleteListInventoryCommand request)
+        public override Expression<Func<Domain.Entities.Inventory, bool>> CreateFilter(DeleteListInventoryCommand request)
         {
-            return e => request.Ids.Contains(e.Id) && e.Status != Utility.Status.Deleted && e.Hide != true;
+            return e => request.Ids.Contains(e.Id) && e.Status != Domain.Enums.Status.Deleted && e.Hide != true;
         }
 
         public override async Task<bool> RemoveDetails(DeleteListInventoryCommand request)

@@ -6,25 +6,25 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.ModelView;
+    using Application.DTOs;
     using System.Linq.Expressions;
     using Utility;
 
     public sealed record SearchCurrencyQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandPagination<CurrencyModelView> ,ISearchQuery<ResultPagination<CurrencyModelView>>;
 
-    public sealed class SearchQueryHandler(IRepository<Entity.Model.Currency> _Repository, IMapper mapper) : SearchCommandHandler<SearchCurrencyQuery, Entity.Model.Currency, CurrencyModelView>(_Repository, mapper)
+    public sealed class SearchQueryHandler(IRepository<Domain.Entities.Currency> _Repository, IMapper mapper) : SearchCommandHandler<SearchCurrencyQuery, Domain.Entities.Currency, CurrencyModelView>(_Repository, mapper)
     {
-        public override Expression<Func<Entity.Model.Currency, bool>> CreateFilter(SearchCurrencyQuery request)
+        public override Expression<Func<Domain.Entities.Currency, bool>> CreateFilter(SearchCurrencyQuery request)
         {
             Page = request.Page;
             PageSize = request.PageSize;
 
             return e => 
             (string.IsNullOrEmpty(request.KeySearch) || e.Name.Contains(request.KeySearch)) &&
-            e.Status != Status.Deleted && e.Hide != true;
+            e.Status != Domain.Enums.Status.Deleted && e.Hide != true;
         }
          
-        override public Func<IQueryable<Entity.Model.Currency>, IOrderedQueryable<Entity.Model.Currency>> CreateOrderBy(SearchCurrencyQuery request)
+        override public Func<IQueryable<Domain.Entities.Currency>, IOrderedQueryable<Domain.Entities.Currency>> CreateOrderBy(SearchCurrencyQuery request)
         {
             return q => q.OrderByDescending(e => e.Id);
         }

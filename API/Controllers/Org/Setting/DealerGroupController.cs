@@ -5,7 +5,7 @@ using Application.Commands.Org.Setting.DealerGroup.Queries;
 using Application.Commands.Org.Setting.Preference.Queries;
 using Application.Interfaces.CQRS;
 using Domain.Shared;
-using Entity.ModelView;
+using Application.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

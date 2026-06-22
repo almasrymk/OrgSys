@@ -7,16 +7,16 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.ModelView;
+    using Application.DTOs;
     using System.Linq.Expressions;
 
     public sealed record GetByIdProductQuery(long Id) : ICommand<ProductModelView> , IGetByIdQuery<Result<ProductModelView>>;
 
-    public sealed class GetByIdQueryHandler(IRepository<Entity.Model.Product> _Repository, IMapper mapper) : GetCommandHandler<GetByIdProductQuery, Entity.Model.Product, ProductModelView>(_Repository, mapper)
+    public sealed class GetByIdQueryHandler(IRepository<Domain.Entities.Product> _Repository, IMapper mapper) : GetCommandHandler<GetByIdProductQuery, Domain.Entities.Product, ProductModelView>(_Repository, mapper)
     {
-        public override Expression<Func<Entity.Model.Product, bool>> CreateFilter(GetByIdProductQuery request)
+        public override Expression<Func<Domain.Entities.Product, bool>> CreateFilter(GetByIdProductQuery request)
         {           
-            return e => e.Id == request.Id && e.Status !=Utility.Status.Deleted && e.Hide != true;
+            return e => e.Id == request.Id && e.Status !=Domain.Enums.Status.Deleted && e.Hide != true;
         }
 
         public override string CreateInclude()

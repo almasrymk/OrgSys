@@ -6,19 +6,19 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.ModelView;
+    using Application.DTOs;
     using System.Net;
 
     public sealed class UpdateRoleCommand : RoleModelView, ICommand, IUpdateCommand<Result>;
 
-    public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.Role> _Repository, IRepository<Entity.Model.RolePermission> _rolePermissionRepository, IMapper mapper, IServiceProvider _provider) : UpdateCommandHandler<UpdateRoleCommand, Entity.Model.Role>(_UnitOfWork, _Repository, mapper , _provider)
+    public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Domain.Entities.Role> _Repository, IRepository<Domain.Entities.RolePermission> _rolePermissionRepository, IMapper mapper, IServiceProvider _provider) : UpdateCommandHandler<UpdateRoleCommand, Domain.Entities.Role>(_UnitOfWork, _Repository, mapper , _provider)
     {
 
         public override async Task<Result> Handle(UpdateRoleCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                var ob = mapper.Map<Entity.Model.Role>(request);
+                var ob = mapper.Map<Domain.Entities.Role>(request);
                 var res = await _Repository.UpdateAsync(ob);
 
                 var ids = await GetListIds(ob.Id);
@@ -42,7 +42,7 @@
             }
         }
 
-        private List<Entity.Model.RolePermission> CreateRolePermissions(List<Entity.Model.RolePermission> RolePermissionList, long RoleId)
+        private List<Domain.Entities.RolePermission> CreateRolePermissions(List<Domain.Entities.RolePermission> RolePermissionList, long RoleId)
         {
             foreach (var rolePermissions in RolePermissionList)
                 rolePermissions.RoleId = RoleId;
@@ -54,7 +54,7 @@
         {
             var deleted = await _rolePermissionRepository.GetListByFilterAsync(e => e.RoleId == RoleId);
             if (deleted == null)
-                deleted = new List<Entity.Model.RolePermission>();
+                deleted = new List<Domain.Entities.RolePermission>();
             return deleted.Select(e => e.Id).ToList();
         }
     }

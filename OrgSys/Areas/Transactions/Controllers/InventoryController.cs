@@ -2,12 +2,11 @@
 using AutoMapper;
 using Domain.Enums;
 using Domain.Shared;
-using Entity.ModelView;
+using Application.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using OrgSys.Controllers;
-using Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
