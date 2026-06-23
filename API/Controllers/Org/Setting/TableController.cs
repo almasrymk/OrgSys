@@ -11,7 +11,7 @@ namespace API.Controllers.Org.Setting
 {
     [ApiController]
     [Route("[controller]")]
-    public class TableController(ISender sender) : BaseController<GetByIdTableQuery, SearchTableQuery , GetListTableQuery, CreateTableCommand, UpdateTableCommand, DeleteTableCommand, DeleteListTableCommand, TableModelView>(sender)
+    public class TableController(ISender sender) : BaseController<GetByIdTableQuery, SearchTableQuery , GetListTableQuery, CreateTableCommand, UpdateTableCommand, DeleteTableCommand, DeleteListTableCommand, TableDto>(sender)
     {
 
     }

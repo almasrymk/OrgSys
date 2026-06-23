@@ -10,9 +10,9 @@
     using System.Linq.Expressions;
     using Utility;
 
-    public sealed record SearchBranchQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandPagination<BranchModelView> ,ISearchQuery<ResultPagination<BranchModelView>>;
+    public sealed record SearchBranchQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandPagination<BranchDto> ,ISearchQuery<ResultPagination<BranchDto>>;
 
-    public sealed class SearchQueryHandler(IRepository<Domain.Entities.Branch> _Repository, IMapper mapper) : SearchCommandHandler<SearchBranchQuery, Domain.Entities.Branch, BranchModelView>(_Repository, mapper)
+    public sealed class SearchQueryHandler(IRepository<Domain.Entities.Branch> _Repository, IMapper mapper) : SearchCommandHandler<SearchBranchQuery, Domain.Entities.Branch, BranchDto>(_Repository, mapper)
     {
         public override Expression<Func<Domain.Entities.Branch, bool>> CreateFilter(SearchBranchQuery request)
         {

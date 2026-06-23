@@ -14,32 +14,32 @@
     using System.Threading.Tasks;
 
     [Area("Setting")]
-    public class ProductController(IConfiguration configuration, IMapper mapper) : MainController<ProductModelView, CreateProductCommand, UpdateProductCommand>(configuration, mapper)
+    public class ProductController(IConfiguration configuration, IMapper mapper) : MainController<ProductDto, CreateProductCommand, UpdateProductCommand>(configuration, mapper)
     {
-        public override async Task LoadViewBag(ProductModelView model)
+        public override async Task LoadViewBag(ProductDto model)
         {
-            ViewBag.UnitList = new SelectList(await GetListApi<UnitModelView>(Page: 1, PageSize: 20), "Id", "Name");
+            ViewBag.UnitList = new SelectList(await GetListApi<UnitDto>(Page: 1, PageSize: 20), "Id", "Name");
         }
 
-        public override async Task<ProductModelView> InitializeData(ProductModelView ob)
+        public override async Task<ProductDto> InitializeData(ProductDto ob)
         {
             if (ob.ProductUnits == null)
-                ob.ProductUnits = new List<ProductUnitModelView>();
+                ob.ProductUnits = new List<ProductUnitDto>();
             if (ob.Id == 0)
             {
-                ob.CodeNumber = long.Parse("0" + await GetValueApi<ProductModelView>($"GetMax?TypeId={ob.TypeId}")) + 1;
+                ob.CodeNumber = long.Parse("0" + await GetValueApi<ProductDto>($"GetMax?TypeId={ob.TypeId}")) + 1;
                 ob.Code = "" + ob.CodeNumber;
             }
-            ob.ClassificationName = (await GetObApi<ClassificationModelView>($"GetById?Id={ob.ClassificationId}"))?.Name;
-            ob.DealerName = (await GetObApi<DealerModelView>($"GetById?Id={ob.DealerId ?? 1}"))?.Name;
+            ob.ClassificationName = (await GetObApi<ClassificationDto>($"GetById?Id={ob.ClassificationId}"))?.Name;
+            ob.DealerName = (await GetObApi<DealerDto>($"GetById?Id={ob.DealerId ?? 1}"))?.Name;
             return ob;
         }
 
         public async Task<JsonResult> GetUnitNameListByProductId(int ProductId)
         {
-            var ProductUnitList = await GetListApi<ProductUnitModelView>($"GetByProductId?ProductId={ProductId}&Page=1&PageSize=20");
+            var ProductUnitList = await GetListApi<ProductUnitDto>($"GetByProductId?ProductId={ProductId}&Page=1&PageSize=20");
             if (ProductUnitList == null)
-                ProductUnitList = new List<ProductUnitModelView>();
+                ProductUnitList = new List<ProductUnitDto>();
             var UnitNameList = new SelectList(ProductUnitList.Select(e => e.UnitName));
             return Json(new { success = true, UnitNameList });
         }
@@ -47,14 +47,14 @@
         public async Task<ActionResult> SearchProducts(string txt = "", int page = 1, int Type = 1, int index = 0)
         {
             ViewBag.index = index;
-            var list = await GetListApi<ProductModelView>(TextSearch:txt , Page: page , PageSize:20);
+            var list = await GetListApi<ProductDto>(TextSearch:txt , Page: page , PageSize:20);
             return Type != 1 ? (ActionResult)PartialView("SearchProductsList", list) : View("SearchProducts", list);
         }
 
         public async Task<JsonResult> SearchItems(string phrase = "", int TypeInv = 1)
         {
             decimal Quantity = 1;
-            var setting = await GetListApi<PreferenceModelView>(TypeId: TypeInv, Page: 1, PageSize: 1000);
+            var setting = await GetListApi<PreferenceDto>(TypeId: TypeInv, Page: 1, PageSize: 1000);
             if (phrase == null)
                 phrase = "";
             phrase = phrase.Trim().ToLower();
@@ -73,7 +73,7 @@
                 }
             }
 
-            var itemsList = await GetListApi<ProductModelView>(TextSearch: phrase, Page: 1, PageSize: 20);
+            var itemsList = await GetListApi<ProductDto>(TextSearch: phrase, Page: 1, PageSize: 20);
             var list = itemsList.Distinct().OrderBy(_ => _.Name)
                 .Select(_ => new
                 {
@@ -93,7 +93,7 @@
         public async Task<JsonResult> SearchItemName(string txtSearch = "", int TypeInv = 1)
         {
             decimal Quantity = 1;
-            var setting = await GetListApi<PreferenceModelView>(TypeId: TypeInv, Page: 1, PageSize: 1000);
+            var setting = await GetListApi<PreferenceDto>(TypeId: TypeInv, Page: 1, PageSize: 1000);
             if (txtSearch != null)
                 txtSearch = txtSearch.Trim().ToLower();
 
@@ -112,13 +112,13 @@
                 }
             }
 
-            var list = await GetListApi<ProductModelView>(TextSearch: txtSearch, Page: 1, PageSize: 1);
+            var list = await GetListApi<ProductDto>(TextSearch: txtSearch, Page: 1, PageSize: 1);
             if(list == null)
-                list = new List<ProductModelView>();
+                list = new List<ProductDto>();
 
             var item = list.FirstOrDefault();
             if (item == null)
-                item = new ProductModelView();
+                item = new ProductDto();
 
             item.Quantity = Quantity;
             return Json(item);
@@ -126,7 +126,7 @@
 
         public async Task<JsonResult> checkStock(int id)
         {
-            var product = (await GetObApi<ProductModelView>($"GetById?Id={id}"));
+            var product = (await GetObApi<ProductDto>($"GetById?Id={id}"));
             var data = new
             {
                 id = product.Id,
@@ -143,7 +143,7 @@
         public async Task<JsonResult> LoadProductsByStock(long StockId, DateTime date)
         {
             //var products = new ProductService(User.GetSchema()).GetAllByBalance(StockId, date);
-            var products = await GetListApi<ProductModelView>($"GetAllByBalance?StockId={StockId}&date={date}");
+            var products = await GetListApi<ProductDto>($"GetAllByBalance?StockId={StockId}&date={date}");
             var data = products.Select(e => new
             {
                 id = e.Id,

@@ -10,9 +10,9 @@
     using Application.DTOs;
     using System.Linq.Expressions;
 
-    public sealed record GetByIdUserQuery(long Id) : ICommand<UserModelView> , IGetByIdQuery<Result<UserModelView>>;
+    public sealed record GetByIdUserQuery(long Id) : ICommand<UserDto> , IGetByIdQuery<Result<UserDto>>;
 
-    public sealed class GetByIdQueryHandler(IRepository<Domain.Entities.User> _Repository, IMapper mapper) : GetCommandHandler<GetByIdUserQuery, Domain.Entities.User, UserModelView>(_Repository, mapper)
+    public sealed class GetByIdQueryHandler(IRepository<Domain.Entities.User> _Repository, IMapper mapper) : GetCommandHandler<GetByIdUserQuery, Domain.Entities.User, UserDto>(_Repository, mapper)
     {
         public override Expression<Func<Domain.Entities.User, bool>> CreateFilter(GetByIdUserQuery request)
         {           

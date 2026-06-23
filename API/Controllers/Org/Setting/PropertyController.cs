@@ -10,7 +10,7 @@ namespace API.Controllers.Org.Setting
 {
     [ApiController]
     [Route("[controller]")]
-    public class PropertyController(ISender sender) : BaseController<GetByIdPropertyQuery, SearchPropertyQuery , GetListPropertyQuery, CreatePropertyCommand, UpdatePropertyCommand, DeletePropertyCommand, DeleteListPropertyCommand, PropertyModelView>(sender)
+    public class PropertyController(ISender sender) : BaseController<GetByIdPropertyQuery, SearchPropertyQuery , GetListPropertyQuery, CreatePropertyCommand, UpdatePropertyCommand, DeletePropertyCommand, DeleteListPropertyCommand, PropertyDto>(sender)
     {
 
     }

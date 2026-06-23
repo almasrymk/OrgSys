@@ -10,9 +10,9 @@
     using Application.DTOs;
     using System.Linq.Expressions;
 
-    public sealed record GetByIdShiftQuery(long Id) : ICommand<ShiftModelView> , IGetByIdQuery<Result<ShiftModelView>>;
+    public sealed record GetByIdShiftQuery(long Id) : ICommand<ShiftDto> , IGetByIdQuery<Result<ShiftDto>>;
 
-    public sealed class GetByIdQueryHandler(IRepository<Domain.Entities.Shift> _Repository, IMapper mapper) : GetCommandHandler<GetByIdShiftQuery, Domain.Entities.Shift, ShiftModelView>(_Repository, mapper)
+    public sealed class GetByIdQueryHandler(IRepository<Domain.Entities.Shift> _Repository, IMapper mapper) : GetCommandHandler<GetByIdShiftQuery, Domain.Entities.Shift, ShiftDto>(_Repository, mapper)
     {
         public override Expression<Func<Domain.Entities.Shift, bool>> CreateFilter(GetByIdShiftQuery request)
         {           

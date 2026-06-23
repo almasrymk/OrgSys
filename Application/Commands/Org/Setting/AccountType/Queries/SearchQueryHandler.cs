@@ -10,9 +10,9 @@
     using System.Linq.Expressions;
     using Utility;
 
-    public sealed record SearchAccountTypeQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandPagination<AccountTypeModelView> ,ISearchQuery<ResultPagination<AccountTypeModelView>>;
+    public sealed record SearchAccountTypeQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandPagination<AccountTypeDto> ,ISearchQuery<ResultPagination<AccountTypeDto>>;
 
-    public sealed class SearchQueryHandler(IRepository<Domain.Entities.AccountType> _Repository, IMapper mapper) : SearchCommandHandler<SearchAccountTypeQuery, Domain.Entities.AccountType, AccountTypeModelView>(_Repository, mapper)
+    public sealed class SearchQueryHandler(IRepository<Domain.Entities.AccountType> _Repository, IMapper mapper) : SearchCommandHandler<SearchAccountTypeQuery, Domain.Entities.AccountType, AccountTypeDto>(_Repository, mapper)
     {
         public override Expression<Func<Domain.Entities.AccountType, bool>> CreateFilter(SearchAccountTypeQuery request)
         {

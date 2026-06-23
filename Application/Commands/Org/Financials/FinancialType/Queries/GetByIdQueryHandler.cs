@@ -10,10 +10,10 @@
     using Application.DTOs;
     using System.Linq.Expressions;
 
-    public sealed record GetByIdFinancialTypeQuery(long Id) : ICommand<FinancialTypeModelView> , IGetByIdQuery<Result<FinancialTypeModelView>>;
+    public sealed record GetByIdFinancialTypeQuery(long Id) : ICommand<FinancialTypeDto> , IGetByIdQuery<Result<FinancialTypeDto>>;
 
     public sealed class GetByIdQueryHandler(IRepository<Domain.Entities.FinancialType> _Repository, IMapper mapper) : 
-        GetCommandHandler<GetByIdFinancialTypeQuery, Domain.Entities.FinancialType, FinancialTypeModelView>(_Repository, mapper)
+        GetCommandHandler<GetByIdFinancialTypeQuery, Domain.Entities.FinancialType, FinancialTypeDto>(_Repository, mapper)
     {
         public override string CreateInclude()
         {

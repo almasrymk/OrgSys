@@ -10,9 +10,9 @@
     using System.Linq.Expressions;
     using Utility;
 
-    public sealed record SearchShiftQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandPagination<ShiftModelView> ,ISearchQuery<ResultPagination<ShiftModelView>>;
+    public sealed record SearchShiftQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandPagination<ShiftDto> ,ISearchQuery<ResultPagination<ShiftDto>>;
 
-    public sealed class SearchQueryHandler(IRepository<Domain.Entities.Shift> _Repository, IMapper mapper) : SearchCommandHandler<SearchShiftQuery, Domain.Entities.Shift, ShiftModelView>(_Repository, mapper)
+    public sealed class SearchQueryHandler(IRepository<Domain.Entities.Shift> _Repository, IMapper mapper) : SearchCommandHandler<SearchShiftQuery, Domain.Entities.Shift, ShiftDto>(_Repository, mapper)
     {
         public override Expression<Func<Domain.Entities.Shift, bool>> CreateFilter(SearchShiftQuery request)
         {

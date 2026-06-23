@@ -10,7 +10,7 @@ using Domain.Entities;
 using Application.DTOs;
 using System.Net;
 
-public sealed class CreateFinancialCommand : Application.DTOs.FinancialModelView, ICommand , ICreateCommand<Result>;
+public sealed class CreateFinancialCommand : Application.DTOs.FinancialDto, ICommand , ICreateCommand<Result>;
 
 public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork, 
     IRepository<Domain.Entities.Financial> _Repository, 

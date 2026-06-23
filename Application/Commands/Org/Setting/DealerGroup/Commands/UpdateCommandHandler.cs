@@ -8,7 +8,7 @@
     using Domain.Shared;
     using Application.DTOs;
 
-    public sealed class UpdateDealerGroupCommand : DealerGroupModelView, ICommand, IUpdateCommand<Result>;
+    public sealed class UpdateDealerGroupCommand : DealerGroupDto, ICommand, IUpdateCommand<Result>;
 
     public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Domain.Entities.DealerGroup> _Repository , IMapper mapper, IServiceProvider _provider) : UpdateCommandHandler<UpdateDealerGroupCommand, Domain.Entities.DealerGroup>(_UnitOfWork, _Repository , mapper , _provider)
     {

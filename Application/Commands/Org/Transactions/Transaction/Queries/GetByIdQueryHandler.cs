@@ -10,9 +10,9 @@
     using Application.DTOs;
     using System.Linq.Expressions;
 
-    public sealed record GetByIdTransactionQuery(long Id) : ICommand<TransactionModelView> , IGetByIdQuery<Result<TransactionModelView>>;
+    public sealed record GetByIdTransactionQuery(long Id) : ICommand<TransactionDto> , IGetByIdQuery<Result<TransactionDto>>;
 
-    public sealed class GetByIdQueryHandler(IRepository<Domain.Entities.Transaction> _Repository, IMapper mapper) : GetCommandHandler<GetByIdTransactionQuery, Domain.Entities.Transaction, TransactionModelView>(_Repository, mapper)
+    public sealed class GetByIdQueryHandler(IRepository<Domain.Entities.Transaction> _Repository, IMapper mapper) : GetCommandHandler<GetByIdTransactionQuery, Domain.Entities.Transaction, TransactionDto>(_Repository, mapper)
     {
         public override string CreateInclude()
         {

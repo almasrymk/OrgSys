@@ -8,7 +8,7 @@
     using Domain.Shared;
     using Application.DTOs;
 
-    public sealed class CreateTransactionTypeCommand : Application.DTOs.TransactionTypeModelView, ICommand , ICreateCommand<Result>;
+    public sealed class CreateTransactionTypeCommand : Application.DTOs.TransactionTypeDto, ICommand , ICreateCommand<Result>;
 
     public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Domain.Entities.TransactionType> _Repository , IMapper mapper) : CreateCommandHandler<CreateTransactionTypeCommand, Domain.Entities.TransactionType>(_UnitOfWork, _Repository , mapper)
     {

@@ -9,10 +9,10 @@
     using Application.DTOs;
     using System.Linq.Expressions;
 
-    public sealed record GetByIdJournalQuery(long Id) : ICommand<JournalModelView> , IGetByIdQuery<Result<JournalModelView>>;
+    public sealed record GetByIdJournalQuery(long Id) : ICommand<JournalDto> , IGetByIdQuery<Result<JournalDto>>;
 
     public sealed class GetByIdQueryHandler(IRepository<Domain.Entities.Journal> _Repository, IMapper mapper) :
-        GetCommandHandler<GetByIdJournalQuery, Domain.Entities.Journal, JournalModelView>(_Repository, mapper)
+        GetCommandHandler<GetByIdJournalQuery, Domain.Entities.Journal, JournalDto>(_Repository, mapper)
     {
         public override string CreateInclude()
         {

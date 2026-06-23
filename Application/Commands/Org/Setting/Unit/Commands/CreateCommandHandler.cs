@@ -8,7 +8,7 @@
     using Domain.Shared;
     using Application.DTOs;
 
-    public sealed class CreateUnitCommand: UnitModelView , ICommand , ICreateCommand<Result>;
+    public sealed class CreateUnitCommand: UnitDto , ICommand , ICreateCommand<Result>;
 
     public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Domain.Entities.Unit> _Repository , IMapper mapper) : CreateCommandHandler<CreateUnitCommand, Domain.Entities.Unit>(_UnitOfWork, _Repository , mapper)
     {

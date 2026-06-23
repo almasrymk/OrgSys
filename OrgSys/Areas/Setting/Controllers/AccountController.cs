@@ -11,25 +11,25 @@
     using System.Threading.Tasks;
 
     [Area("Setting")]
-    public class AccountController(IConfiguration configuration, IMapper mapper) : MainController<AccountModelView, CreateAccountCommand, UpdateAccountCommand>(configuration, mapper)
+    public class AccountController(IConfiguration configuration, IMapper mapper) : MainController<AccountDto, CreateAccountCommand, UpdateAccountCommand>(configuration, mapper)
     {
-        public override async Task LoadViewBag(AccountModelView model)
+        public override async Task LoadViewBag(AccountDto model)
         {
-            ViewBag.AccountType = new SelectList(await GetListApi<AccountTypeModelView>(Page: 1, PageSize: 20), "Id", "Name", model.AccountTypeId);
-            ViewBag.AccountList = new SelectList(await GetListApi<AccountModelView>( Page: 1, PageSize: 20), "Id", "Name", model.ParentId);
+            ViewBag.AccountType = new SelectList(await GetListApi<AccountTypeDto>(Page: 1, PageSize: 20), "Id", "Name", model.AccountTypeId);
+            ViewBag.AccountList = new SelectList(await GetListApi<AccountDto>( Page: 1, PageSize: 20), "Id", "Name", model.ParentId);
         }
 
-        public override async Task<AccountModelView> InitializeData(AccountModelView ob)
+        public override async Task<AccountDto> InitializeData(AccountDto ob)
         {
-            ViewBag.AccountList = new SelectList(await GetListApi<AccountModelView>(Page: 1, PageSize: 20), "Id", "Name", ob.ParentId);
+            ViewBag.AccountList = new SelectList(await GetListApi<AccountDto>(Page: 1, PageSize: 20), "Id", "Name", ob.ParentId);
             if (ob == null)
-                ob = new AccountModelView();
+                ob = new AccountDto();
             if (ob.Id == 0)
             {
-                ob.CodeNumber = long.Parse("0" + await GetValueApi<AccountModelView>($"GetMax")) + 1;
+                ob.CodeNumber = long.Parse("0" + await GetValueApi<AccountDto>($"GetMax")) + 1;
                 ob.Code = "" + ob.CodeNumber;
             }
-            ob.ParentName = (await GetObApi<AccountModelView>($"GetById?Id={ob.ParentId}"))?.Name;
+            ob.ParentName = (await GetObApi<AccountDto>($"GetById?Id={ob.ParentId}"))?.Name;
             return ob;
         }
 
@@ -38,7 +38,7 @@
             if (txtSearch != null)
                 txtSearch = txtSearch.Trim().ToLower();
 
-            var itemsList = await GetListApi<AccountModelView>(TextSearch:txtSearch , Page: page, PageSize: pageSize);
+            var itemsList = await GetListApi<AccountDto>(TextSearch:txtSearch , Page: page, PageSize: pageSize);
             var list = itemsList.Distinct().OrderBy(_ => _.Name)
                 .Select(_ => new
                 {

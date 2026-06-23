@@ -10,7 +10,7 @@ namespace API.Controllers.Org.Financials
     [ApiController]
     public class FinancialTypeController(ISender sender) : BaseController<GetByIdFinancialTypeQuery, SearchFinancialTypeQuery, GetListFinancialTypeQuery,
         CreateFinancialTypeCommand, UpdateFinancialTypeCommand, DeleteFinancialTypeCommand, DeleteListFinancialTypeCommand,
-        GetMaxFinancialTypeQuery, FinancialTypeModelView>(sender)
+        GetMaxFinancialTypeQuery, FinancialTypeDto>(sender)
     {
     }
 }

@@ -8,8 +8,8 @@ public partial class MappingProfile : Profile
     public void PropertyMappingProfile()
     {
         #region Property
-        CreateMap<Property, PropertyModelView>();
-        CreateMap<PropertyModelView, Property>();       
+        CreateMap<Property, PropertyDto>();
+        CreateMap<PropertyDto, Property>();       
         #endregion
     }
 }

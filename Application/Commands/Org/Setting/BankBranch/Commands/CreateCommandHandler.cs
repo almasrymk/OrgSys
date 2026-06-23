@@ -8,7 +8,7 @@
     using Domain.Shared;
     using Application.DTOs;
 
-    public sealed class CreateBankBranchCommand : BankBranchModelView , ICommand , ICreateCommand<Result>;
+    public sealed class CreateBankBranchCommand : BankBranchDto , ICommand , ICreateCommand<Result>;
 
     public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Domain.Entities.BankBranch> _Repository , IMapper mapper) : CreateCommandHandler<CreateBankBranchCommand, Domain.Entities.BankBranch>(_UnitOfWork, _Repository , mapper)
     {

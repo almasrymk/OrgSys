@@ -10,9 +10,9 @@
     using System.Linq.Expressions;
     using Utility;
 
-    public sealed record SearchJournalQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandPagination<JournalModelView> ,ISearchQuery<ResultPagination<JournalModelView>>;
+    public sealed record SearchJournalQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandPagination<JournalDto> ,ISearchQuery<ResultPagination<JournalDto>>;
 
-    public sealed class SearchQueryHandler(IRepository<Domain.Entities.Journal> _Repository, IMapper mapper) : SearchCommandHandler<SearchJournalQuery, Domain.Entities.Journal, JournalModelView>(_Repository, mapper)
+    public sealed class SearchQueryHandler(IRepository<Domain.Entities.Journal> _Repository, IMapper mapper) : SearchCommandHandler<SearchJournalQuery, Domain.Entities.Journal, JournalDto>(_Repository, mapper)
     {
         public override Expression<Func<Domain.Entities.Journal, bool>> CreateFilter(SearchJournalQuery request)
         {

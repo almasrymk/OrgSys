@@ -8,8 +8,8 @@ public partial class MappingProfile : Profile
     public void ClassificationMappingProfile()
     {
         #region Classification
-        CreateMap<Classification, ClassificationModelView>();
-        CreateMap<ClassificationModelView, Classification>();
+        CreateMap<Classification, ClassificationDto>();
+        CreateMap<ClassificationDto, Classification>();
 
 
         CreateMap<Classification, CreateClassificationCommand>();
@@ -19,10 +19,10 @@ public partial class MappingProfile : Profile
         CreateMap<Classification, DeleteClassificationCommand>();
         CreateMap<DeleteClassificationCommand, Classification>();
 
-        CreateMap<ClassificationModelView, CreateClassificationCommand>();
-        CreateMap<CreateClassificationCommand, ClassificationModelView>();
-        CreateMap<ClassificationModelView, UpdateClassificationCommand>();
-        CreateMap<UpdateClassificationCommand, ClassificationModelView>();
+        CreateMap<ClassificationDto, CreateClassificationCommand>();
+        CreateMap<CreateClassificationCommand, ClassificationDto>();
+        CreateMap<ClassificationDto, UpdateClassificationCommand>();
+        CreateMap<UpdateClassificationCommand, ClassificationDto>();
         #endregion
     }
 }

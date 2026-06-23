@@ -10,9 +10,9 @@
     using System.Linq.Expressions;
     using Utility;
 
-    public sealed record SearchPaymentTypeQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandPagination<PaymentTypeModelView> ,ISearchQuery<ResultPagination<PaymentTypeModelView>>;
+    public sealed record SearchPaymentTypeQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandPagination<PaymentTypeDto> ,ISearchQuery<ResultPagination<PaymentTypeDto>>;
 
-    public sealed class SearchQueryHandler(IRepository<Domain.Entities.PaymentType> _Repository, IMapper mapper) : SearchCommandHandler<SearchPaymentTypeQuery, Domain.Entities.PaymentType, PaymentTypeModelView>(_Repository, mapper)
+    public sealed class SearchQueryHandler(IRepository<Domain.Entities.PaymentType> _Repository, IMapper mapper) : SearchCommandHandler<SearchPaymentTypeQuery, Domain.Entities.PaymentType, PaymentTypeDto>(_Repository, mapper)
     {
         public override Expression<Func<Domain.Entities.PaymentType, bool>> CreateFilter(SearchPaymentTypeQuery request)
         {

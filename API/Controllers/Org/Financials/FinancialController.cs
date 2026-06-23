@@ -11,7 +11,7 @@ namespace API.Controllers.Org.Financials
     [ApiController]
     public class FinancialController(ISender sender) : BaseController<GetByIdFinancialQuery, SearchFinancialQuery, GetListFinancialQuery,
         CreateFinancialCommand, UpdateFinancialCommand, DeleteFinancialCommand, DeleteListFinancialCommand,
-        GetMaxFinancialQuery, FinancialModelView>(sender)
+        GetMaxFinancialQuery, FinancialDto>(sender)
     {
 
         [HttpPut("Redo")]

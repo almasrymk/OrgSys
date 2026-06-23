@@ -10,9 +10,9 @@
     using Application.DTOs;
     using System.Linq.Expressions;
 
-    public sealed record GetByIdOutlayQuery(long Id) : ICommand<OutlayModelView> , IGetByIdQuery<Result<OutlayModelView>>;
+    public sealed record GetByIdOutlayQuery(long Id) : ICommand<OutlayDto> , IGetByIdQuery<Result<OutlayDto>>;
 
-    public sealed class GetByIdQueryHandler(IRepository<Domain.Entities.Outlay> _Repository, IMapper mapper) : GetCommandHandler<GetByIdOutlayQuery, Domain.Entities.Outlay, OutlayModelView>(_Repository, mapper)
+    public sealed class GetByIdQueryHandler(IRepository<Domain.Entities.Outlay> _Repository, IMapper mapper) : GetCommandHandler<GetByIdOutlayQuery, Domain.Entities.Outlay, OutlayDto>(_Repository, mapper)
     {
         public override Expression<Func<Domain.Entities.Outlay, bool>> CreateFilter(GetByIdOutlayQuery request)
         {           

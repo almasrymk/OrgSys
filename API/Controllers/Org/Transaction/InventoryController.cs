@@ -10,7 +10,7 @@ namespace API.Controllers.Org.Transaction
 {
     [Route("[controller]")]
     [ApiController]
-    public class InventoryController(ISender sender) : BaseController<GetByIdInventoryQuery ,SearchInventoryQuery, GetListInventoryQuery,CreateInventoryCommand,UpdateInventoryCommand,DeleteInventoryCommand, DeleteListInventoryCommand, GetMaxInventoryQuery,InventoryModelView>(sender)
+    public class InventoryController(ISender sender) : BaseController<GetByIdInventoryQuery ,SearchInventoryQuery, GetListInventoryQuery,CreateInventoryCommand,UpdateInventoryCommand,DeleteInventoryCommand, DeleteListInventoryCommand, GetMaxInventoryQuery,InventoryDto>(sender)
     {
 
     }

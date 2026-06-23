@@ -7,7 +7,7 @@ namespace API.Controllers.Org.Setting
 {
     [ApiController]
     [Route("[controller]")]
-    public class ProductUnitModelViewController(ISender sender) : CoreController<GetByIdProductUnitQuery, SearchProductUnitQuery, GetListProductUnitQuery, ProductUnitModelView>(sender)
+    public class ProductUnitModelViewController(ISender sender) : CoreController<GetByIdProductUnitQuery, SearchProductUnitQuery, GetListProductUnitQuery, ProductUnitDto>(sender)
     {
         
     }

@@ -8,7 +8,7 @@
     using Domain.Shared;
     using Application.DTOs;
 
-    public sealed class CreateInvoiceCommand : Application.DTOs.InvoiceModelView, ICommand , ICreateCommand<Result>;
+    public sealed class CreateInvoiceCommand : Application.DTOs.InvoiceDto, ICommand , ICreateCommand<Result>;
 
     public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Domain.Entities.Invoice> _Repository , IMapper mapper) : CreateCommandHandler<CreateInvoiceCommand, Domain.Entities.Invoice>(_UnitOfWork, _Repository , mapper)
     {

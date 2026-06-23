@@ -10,10 +10,10 @@
     using System.Linq.Expressions;
     using Utility;
 
-    public sealed record GetListInventoryQuery(string KeySearch, long ParentId, long TypeId, int Page, int PageSize) : ICommandCollection<InventoryModelView>, IListQuery<ResultCollection<InventoryModelView>>;
+    public sealed record GetListInventoryQuery(string KeySearch, long ParentId, long TypeId, int Page, int PageSize) : ICommandCollection<InventoryDto>, IListQuery<ResultCollection<InventoryDto>>;
 
     public sealed class GetListQueryHandler(IRepository<Domain.Entities.Inventory> _Repository
-        , IMapper mapper) : ListCommandHandler<GetListInventoryQuery, Domain.Entities.Inventory, InventoryModelView>(_Repository, mapper)
+        , IMapper mapper) : ListCommandHandler<GetListInventoryQuery, Domain.Entities.Inventory, InventoryDto>(_Repository, mapper)
     {
         public override Expression<Func<Domain.Entities.Inventory, bool>> CreateFilter(GetListInventoryQuery request)
         {

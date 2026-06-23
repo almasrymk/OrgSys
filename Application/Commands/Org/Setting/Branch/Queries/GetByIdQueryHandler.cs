@@ -10,9 +10,9 @@
     using Application.DTOs;
     using System.Linq.Expressions;
 
-    public sealed record GetByIdBranchQuery(long Id) : ICommand<BranchModelView> , IGetByIdQuery<Result<BranchModelView>>;
+    public sealed record GetByIdBranchQuery(long Id) : ICommand<BranchDto> , IGetByIdQuery<Result<BranchDto>>;
 
-    public sealed class GetByIdQueryHandler(IRepository<Domain.Entities.Branch> _Repository, IMapper mapper) : GetCommandHandler<GetByIdBranchQuery, Domain.Entities.Branch, BranchModelView>(_Repository, mapper)
+    public sealed class GetByIdQueryHandler(IRepository<Domain.Entities.Branch> _Repository, IMapper mapper) : GetCommandHandler<GetByIdBranchQuery, Domain.Entities.Branch, BranchDto>(_Repository, mapper)
     {
         public override Expression<Func<Domain.Entities.Branch, bool>> CreateFilter(GetByIdBranchQuery request)
         {           

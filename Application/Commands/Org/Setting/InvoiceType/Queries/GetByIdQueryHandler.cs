@@ -10,9 +10,9 @@
     using Application.DTOs;
     using System.Linq.Expressions;
 
-    public sealed record GetByIdInvoiceTypeQuery(long Id) : ICommand<InvoiceTypeModelView> , IGetByIdQuery<Result<InvoiceTypeModelView>>;
+    public sealed record GetByIdInvoiceTypeQuery(long Id) : ICommand<InvoiceTypeDto> , IGetByIdQuery<Result<InvoiceTypeDto>>;
 
-    public sealed class GetByIdQueryHandler(IRepository<Domain.Entities.InvoiceType> _Repository, IMapper mapper) : GetCommandHandler<GetByIdInvoiceTypeQuery, Domain.Entities.InvoiceType, InvoiceTypeModelView>(_Repository, mapper)
+    public sealed class GetByIdQueryHandler(IRepository<Domain.Entities.InvoiceType> _Repository, IMapper mapper) : GetCommandHandler<GetByIdInvoiceTypeQuery, Domain.Entities.InvoiceType, InvoiceTypeDto>(_Repository, mapper)
     {
         public override Expression<Func<Domain.Entities.InvoiceType, bool>> CreateFilter(GetByIdInvoiceTypeQuery request)
         {           

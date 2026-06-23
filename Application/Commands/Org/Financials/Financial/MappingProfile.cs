@@ -13,10 +13,10 @@ public partial class MappingProfile : Profile
 
     public void FinancialMappingProfile()
     {
-        CreateMap<Financial, FinancialModelView>()
+        CreateMap<Financial, FinancialDto>()
             .ForMember(dest => dest.FinancialInvoiceList, opt => opt.MapFrom(src => src.FinancialInvoices))
             ;
-        CreateMap<FinancialModelView, Financial>();
+        CreateMap<FinancialDto, Financial>();
 
         CreateMap<Financial, CreateFinancialCommand>();
         CreateMap<CreateFinancialCommand, Financial>();
@@ -30,9 +30,9 @@ public partial class MappingProfile : Profile
         CreateMap<Invoice, Financial>();
         CreateMap<Financial, Invoice>();
 
-        CreateMap<FinancialInvoice, FinancialInvoiceModelView>()
+        CreateMap<FinancialInvoice, FinancialInvoiceDto>()
             .ForMember(dest => dest.Net , src => src.MapFrom(s => s.Invoice.Net));
-        CreateMap<FinancialInvoiceModelView, FinancialInvoice>();
+        CreateMap<FinancialInvoiceDto, FinancialInvoice>();
 
 
         CreateMap<CreateFinancialCommand, Financial>().ForMember(dest => dest.FinancialInvoices,            

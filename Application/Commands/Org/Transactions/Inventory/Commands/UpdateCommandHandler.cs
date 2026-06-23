@@ -10,7 +10,7 @@
     using Domain.Entities;
     using Application.DTOs;
 
-    public sealed class UpdateInventoryCommand : Application.DTOs.InventoryModelView, ICommand, IUpdateCommand<Result>;
+    public sealed class UpdateInventoryCommand : Application.DTOs.InventoryDto, ICommand, IUpdateCommand<Result>;
     public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork,
         IRepository<Domain.Entities.Inventory> _Repository , 
         IRepository<InventoryProduct> _InventoryProductRepository,

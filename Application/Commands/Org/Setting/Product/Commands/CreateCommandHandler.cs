@@ -8,7 +8,7 @@
     using Domain.Shared;
     using Application.DTOs;
 
-    public sealed class CreateProductCommand : ProductModelView , ICommand , ICreateCommand<Result>;
+    public sealed class CreateProductCommand : ProductDto , ICommand , ICreateCommand<Result>;
 
     public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Domain.Entities.Product> _Repository , IMapper mapper) : CreateCommandHandler<CreateProductCommand, Domain.Entities.Product>(_UnitOfWork, _Repository , mapper)
     {

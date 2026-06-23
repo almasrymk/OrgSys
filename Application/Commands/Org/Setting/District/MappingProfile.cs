@@ -8,10 +8,10 @@ public partial class MappingProfile : Profile
     public void DistrictMappingProfile()
     {
         #region District
-        CreateMap<District, DistrictModelView>()
+        CreateMap<District, DistrictDto>()
            .ForMember(dest => dest.CountryName, opt => opt.MapFrom(src => src.Country.Name))
            .ForMember(dest => dest.CityName, opt => opt.MapFrom(src => src.City.Name));
-        CreateMap<DistrictModelView, District>();
+        CreateMap<DistrictDto, District>();
 
         CreateMap<District, CreateDistrictCommand>();
         CreateMap<CreateDistrictCommand, District>();
@@ -20,10 +20,10 @@ public partial class MappingProfile : Profile
         CreateMap<District, DeleteDistrictCommand>();
         CreateMap<DeleteDistrictCommand, District>();
 
-        CreateMap<DistrictModelView, CreateDistrictCommand>();
-        CreateMap<CreateDistrictCommand, DistrictModelView>();
-        CreateMap<DistrictModelView, UpdateDistrictCommand>();
-        CreateMap<UpdateDistrictCommand, DistrictModelView>();
+        CreateMap<DistrictDto, CreateDistrictCommand>();
+        CreateMap<CreateDistrictCommand, DistrictDto>();
+        CreateMap<DistrictDto, UpdateDistrictCommand>();
+        CreateMap<UpdateDistrictCommand, DistrictDto>();
         #endregion
     }
 }

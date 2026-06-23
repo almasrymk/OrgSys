@@ -15,8 +15,8 @@ public partial class MappingProfile : Profile
 
     public void FinancialTypeMappingProfile()
     {
-        CreateMap<FinancialType, FinancialTypeModelView>();
-        CreateMap<FinancialTypeModelView, FinancialType>();
+        CreateMap<FinancialType, FinancialTypeDto>();
+        CreateMap<FinancialTypeDto, FinancialType>();
         CreateMap<FinancialType, CreateFinancialTypeCommand>();
         CreateMap<CreateFinancialTypeCommand, FinancialType>();
 

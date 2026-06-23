@@ -8,8 +8,8 @@ public partial class MappingProfile : Profile
     public void CountryMappingProfile()
     {
         #region Country
-        CreateMap<Country, CountryModelView>();
-        CreateMap<CountryModelView, Country>();
+        CreateMap<Country, CountryDto>();
+        CreateMap<CountryDto, Country>();
         CreateMap<Country, CreateCountryCommand>();
         CreateMap<CreateCountryCommand, Country>();
         CreateMap<Country, UpdateCountryCommand>();

@@ -10,7 +10,7 @@
     using Application.DTOs;
     using System.Net;
 
-    public sealed class UpdatePreferenceCommand : Application.DTOs.PreferenceModelView, ICommand, IUpdateCommand<Result>;
+    public sealed class UpdatePreferenceCommand : Application.DTOs.PreferenceDto, ICommand, IUpdateCommand<Result>;
 
     public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Domain.Entities.Preference> _Repository , IMapper mapper, IServiceProvider _provider) : UpdateCommandHandler<UpdatePreferenceCommand, Domain.Entities.Preference>(_UnitOfWork, _Repository , mapper , _provider)
     {

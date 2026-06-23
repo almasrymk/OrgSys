@@ -8,8 +8,8 @@ public partial class MappingProfile : Profile
     public void BranchMappingProfile()
     {
         #region Branch
-        CreateMap<Branch, BranchModelView>();
-        CreateMap<BranchModelView, Branch>();
+        CreateMap<Branch, BranchDto>();
+        CreateMap<BranchDto, Branch>();
 
         CreateMap<Branch, CreateBranchCommand>();
         CreateMap<CreateBranchCommand, Branch>();
@@ -18,10 +18,10 @@ public partial class MappingProfile : Profile
         CreateMap<Branch, DeleteBranchCommand>();
         CreateMap<DeleteBranchCommand, Branch>();
 
-        CreateMap<BranchModelView, CreateBranchCommand>();
-        CreateMap<CreateBranchCommand, BranchModelView>();
-        CreateMap<BranchModelView, UpdateBranchCommand>();
-        CreateMap<UpdateBranchCommand, BranchModelView>();
+        CreateMap<BranchDto, CreateBranchCommand>();
+        CreateMap<CreateBranchCommand, BranchDto>();
+        CreateMap<BranchDto, UpdateBranchCommand>();
+        CreateMap<UpdateBranchCommand, BranchDto>();
         #endregion
     }
 }

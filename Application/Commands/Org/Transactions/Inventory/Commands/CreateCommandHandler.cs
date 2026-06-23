@@ -8,7 +8,7 @@
     using Domain.Shared;
     using Application.DTOs;
 
-    public sealed class CreateInventoryCommand : Application.DTOs.InventoryModelView, ICommand , ICreateCommand<Result>;
+    public sealed class CreateInventoryCommand : Application.DTOs.InventoryDto, ICommand , ICreateCommand<Result>;
 
     public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Domain.Entities.Inventory> _Repository , IMapper mapper) : CreateCommandHandler<CreateInventoryCommand, Domain.Entities.Inventory>(_UnitOfWork, _Repository , mapper)
     {

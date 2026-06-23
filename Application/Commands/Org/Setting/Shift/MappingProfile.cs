@@ -8,8 +8,8 @@ public partial class MappingProfile : Profile
     public void ShiftMappingProfile()
     {
         #region Shift
-        CreateMap<Shift, ShiftModelView>();
-        CreateMap<ShiftModelView, Shift>();       
+        CreateMap<Shift, ShiftDto>();
+        CreateMap<ShiftDto, Shift>();       
         #endregion
     }
 }

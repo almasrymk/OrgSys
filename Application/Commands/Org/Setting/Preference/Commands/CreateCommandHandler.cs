@@ -8,7 +8,7 @@
     using Domain.Shared;
     using Application.DTOs;
 
-    public sealed class CreatePreferenceCommand : Application.DTOs.PreferenceModelView, ICommand , ICreateCommand<Result>;
+    public sealed class CreatePreferenceCommand : Application.DTOs.PreferenceDto, ICommand , ICreateCommand<Result>;
 
     public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Domain.Entities.Preference> _Repository , IMapper mapper) : CreateCommandHandler<CreatePreferenceCommand, Domain.Entities.Preference>(_UnitOfWork, _Repository , mapper)
     {

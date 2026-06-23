@@ -10,7 +10,7 @@
     using Domain.Entities;
     using Application.DTOs;
 
-    public sealed class UpdateInvoiceCommand : Application.DTOs.InvoiceModelView , ICommand, IUpdateCommand<Result>;
+    public sealed class UpdateInvoiceCommand : Application.DTOs.InvoiceDto , ICommand, IUpdateCommand<Result>;
     public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork, 
         IRepository<Domain.Entities.Invoice> _Repository ,
          IRepository<Domain.Entities.InvoiceProduct> _InvoiceProductRepository,

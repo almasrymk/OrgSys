@@ -12,14 +12,14 @@
     using System.Threading.Tasks;
 
     [Area("Setting")]
-    public class ShiftController(IConfiguration configuration, IMapper mapper) : MainController<ShiftModelView, CreateShiftCommand, UpdateShiftCommand>(configuration, mapper)
+    public class ShiftController(IConfiguration configuration, IMapper mapper) : MainController<ShiftDto, CreateShiftCommand, UpdateShiftCommand>(configuration, mapper)
     {
         public async Task<JsonResult> GetList(string txtSearch = "", int page = 1, int pageSize = 20)
         {
             if (txtSearch != null)
                 txtSearch = txtSearch.Trim().ToLower();
 
-            var itemsList = await GetListApi<ShiftModelView>(TextSearch: txtSearch, Page: page, PageSize: pageSize);
+            var itemsList = await GetListApi<ShiftDto>(TextSearch: txtSearch, Page: page, PageSize: pageSize);
             var list = itemsList.Distinct().OrderBy(_ => _.Name)
                 .Select(_ => new
                 {

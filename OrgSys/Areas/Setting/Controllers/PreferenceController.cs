@@ -16,7 +16,7 @@ namespace OrgSys.Areas.Setting.Controllers
 {
     [Area("Setting")]
     public class PreferenceController(IConfiguration configuration, IMapper mapper)
-        :  MainController<PreferenceModelView, CreatePreferenceCommand , UpdatePreferenceCommand>(configuration, mapper)
+        :  MainController<PreferenceDto, CreatePreferenceCommand , UpdatePreferenceCommand>(configuration, mapper)
     {
 
 
@@ -24,21 +24,21 @@ namespace OrgSys.Areas.Setting.Controllers
         {
             ViewBag.Resource = Resource;
             ViewBag.type = type;
-            var Service = await GetListApi<PreferenceModelView>(TypeId:type , TextSearch: Resource);
+            var Service = await GetListApi<PreferenceDto>(TypeId:type , TextSearch: Resource);
             if (Resource == "Invoice")
             {
                 List<SelectListItem> selectListItems = new List<SelectListItem>();
                 selectListItems.Add(new SelectListItem { Value = "1", Text = "Amount" });
                 selectListItems.Add(new SelectListItem { Value = "2", Text = "Percentage" });
-                ViewBag.Stocks = new SelectList(await GetListApi<StockModelView>(TypeId: 1), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultStock")?.Value);
+                ViewBag.Stocks = new SelectList(await GetListApi<StockDto>(TypeId: 1), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultStock")?.Value);
 
-                ViewBag.Customers = new SelectList(await GetListApi<DealerModelView>(TypeId:1), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultCustomer")?.Value);
-                ViewBag.Suppliers = new SelectList(await GetListApi<DealerModelView>(TypeId: 2), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultSupplier")?.Value);
-                ViewBag.PaymentTypes = new SelectList(await GetListApi<PaymentTypeModelView>(), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultPaymentType")?.Value);
+                ViewBag.Customers = new SelectList(await GetListApi<DealerDto>(TypeId:1), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultCustomer")?.Value);
+                ViewBag.Suppliers = new SelectList(await GetListApi<DealerDto>(TypeId: 2), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultSupplier")?.Value);
+                ViewBag.PaymentTypes = new SelectList(await GetListApi<PaymentTypeDto>(), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultPaymentType")?.Value);
                 ViewBag.DiscountType = new SelectList(selectListItems, "Value", "Text", Service.FirstOrDefault(e => e.Key == "DefaultDiscountType")?.Value);
                 ViewBag.ServiceType = new SelectList(selectListItems, "Value", "Text", Service.FirstOrDefault(e => e.Key == "DefaultServiceType")?.Value);
                 ViewBag.TaxType = new SelectList(selectListItems, "Value", "Text", Service.FirstOrDefault(e => e.Key == "DefaultTaxType")?.Value);
-                ViewBag.Currencys = new SelectList(await GetListApi<CurrencyModelView>(), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultCurrency")?.Value);
+                ViewBag.Currencys = new SelectList(await GetListApi<CurrencyDto>(), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultCurrency")?.Value);
 
                 ViewBag.DiscountValue = Service.FirstOrDefault(e => e.Key == "DiscountValue")?.Value;
                 ViewBag.ServiceValue = Service.FirstOrDefault(e => e.Key == "ServiceValue")?.Value;
@@ -75,9 +75,9 @@ namespace OrgSys.Areas.Setting.Controllers
 
             if (Resource == "Transaction")
             {
-                ViewBag.Customers = new SelectList(await GetListApi<DealerModelView>(TypeId: 1), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultCustomer")?.Value);
-                ViewBag.Suppliers = new SelectList(await GetListApi<DealerModelView>(TypeId: 2), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultSupplier")?.Value);
-                ViewBag.Stocks = new SelectList(await GetListApi<StockModelView>(), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultStock")?.Value);
+                ViewBag.Customers = new SelectList(await GetListApi<DealerDto>(TypeId: 1), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultCustomer")?.Value);
+                ViewBag.Suppliers = new SelectList(await GetListApi<DealerDto>(TypeId: 2), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultSupplier")?.Value);
+                ViewBag.Stocks = new SelectList(await GetListApi<StockDto>(), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultStock")?.Value);
 
                 List<SelectListItem> selectListItems = new List<SelectListItem>();
                 selectListItems.Add(new SelectListItem { Value = "1", Text = "Data after product" });
@@ -110,7 +110,7 @@ namespace OrgSys.Areas.Setting.Controllers
 
             if (Resource == "Order")
             {
-                ViewBag.Customers = new SelectList(await GetListApi<DealerModelView>(TypeId: 1), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultCustomer")?.Value);
+                ViewBag.Customers = new SelectList(await GetListApi<DealerDto>(TypeId: 1), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultCustomer")?.Value);
 
                 List<SelectListItem> selectListItems = new List<SelectListItem>();
                 selectListItems.Add(new SelectListItem { Value = "1", Text = "Data after product" });
@@ -150,12 +150,12 @@ namespace OrgSys.Areas.Setting.Controllers
 
             if (Resource == "Financial")
             {
-                ViewBag.Clients = new SelectList(await GetListApi<DealerModelView>(TypeId: 1), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultClient")?.Value);
-                ViewBag.Suppliers = new SelectList(await GetListApi<DealerModelView>(TypeId: 2), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultSupplier")?.Value);
-                ViewBag.Safes = new SelectList( await GetListApi<SafeModelView>(), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultSafe")?.Value);
-                ViewBag.PaymentTypes = new SelectList(await GetListApi<PaymentTypeModelView>(), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultPaymentType")?.Value);
-                ViewBag.Currencys = new SelectList(await GetListApi<CurrencyModelView>(), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultCurrency")?.Value);
-                ViewBag.Outlays = new SelectList(await GetListApi<OutlayModelView>(), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultOutlay")?.Value);
+                ViewBag.Clients = new SelectList(await GetListApi<DealerDto>(TypeId: 1), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultClient")?.Value);
+                ViewBag.Suppliers = new SelectList(await GetListApi<DealerDto>(TypeId: 2), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultSupplier")?.Value);
+                ViewBag.Safes = new SelectList( await GetListApi<SafeDto>(), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultSafe")?.Value);
+                ViewBag.PaymentTypes = new SelectList(await GetListApi<PaymentTypeDto>(), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultPaymentType")?.Value);
+                ViewBag.Currencys = new SelectList(await GetListApi<CurrencyDto>(), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultCurrency")?.Value);
+                ViewBag.Outlays = new SelectList(await GetListApi<OutlayDto>(), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultOutlay")?.Value);
 
                 List<SelectListItem> selectListItems = new List<SelectListItem>();
                 selectListItems.Add(new SelectListItem { Value = "1", Text = "Data after product" });
@@ -173,7 +173,7 @@ namespace OrgSys.Areas.Setting.Controllers
 
             if (Resource == "Inventory")
             {
-                ViewBag.Stocks = new SelectList( await GetListApi<StockModelView>(TypeId: 1), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultStock")?.Value);
+                ViewBag.Stocks = new SelectList( await GetListApi<StockDto>(TypeId: 1), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultStock")?.Value);
 
                 var selectListItems = new List<SelectListItem>();
                 selectListItems.Add(new SelectListItem { Value = "1", Text = "Allow" });
@@ -186,7 +186,7 @@ namespace OrgSys.Areas.Setting.Controllers
         }
 
         [HttpPost]
-        public async Task<JsonResult> SavePreference([FromBody] PreferenceModelView list)
+        public async Task<JsonResult> SavePreference([FromBody] PreferenceDto list)
         {
           await base.Save(list);
 

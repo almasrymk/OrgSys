@@ -8,7 +8,7 @@
     using OrgSys.Controllers;
 
     [Area("Setting")]
-    public class OutlayController(IConfiguration configuration, IMapper mapper) : MainController<OutlayModelView, CreateOutlayCommand, UpdateOutlayCommand>(configuration, mapper)
+    public class OutlayController(IConfiguration configuration, IMapper mapper) : MainController<OutlayDto, CreateOutlayCommand, UpdateOutlayCommand>(configuration, mapper)
     {
 
     }

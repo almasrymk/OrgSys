@@ -7,22 +7,22 @@ public partial class MappingProfile : Profile
 {
     public void InventoryMappingProfile()
     {
-        CreateMap<InventoryProduct, InventoryProductModelView>();
+        CreateMap<InventoryProduct, InventoryProductDto>();
 
-        CreateMap<InventoryProductModelView, InventoryProduct>();
+        CreateMap<InventoryProductDto, InventoryProduct>();
 
-        CreateMap<InventoryProductModelView, TransactionProductModelView>();
+        CreateMap<InventoryProductDto, TransactionProductDto>();
 
-        CreateMap<TransactionProductModelView, InventoryProduct>();
+        CreateMap<TransactionProductDto, InventoryProduct>();
 
 
-        CreateMap<Domain.Entities.Inventory, InventoryModelView>()
+        CreateMap<Domain.Entities.Inventory, InventoryDto>()
             .ForMember(
                 dest => dest.InventoryProductList,
                 opt => opt.MapFrom(src => src.InventoryProducts)
             );
 
-        CreateMap<InventoryModelView, Domain.Entities.Inventory>()
+        CreateMap<InventoryDto, Domain.Entities.Inventory>()
             .ForMember(
                 dest => dest.InventoryProducts,
                 opt => opt.MapFrom(src => src.InventoryProducts)
@@ -51,21 +51,21 @@ public partial class MappingProfile : Profile
 
         CreateMap<DeleteInventoryCommand, Domain.Entities.Inventory>();
 
-        CreateMap<CreateInventoryCommand, InventoryModelView>();
+        CreateMap<CreateInventoryCommand, InventoryDto>();
 
-        CreateMap<InventoryModelView, CreateInventoryCommand>()
+        CreateMap<InventoryDto, CreateInventoryCommand>()
             .ForMember(
                 dest => dest.InventoryProducts,
                 opt => opt.MapFrom(src => src.InventoryProducts)
             );
 
 
-        CreateMap<UpdateInventoryCommand, InventoryModelView>();
+        CreateMap<UpdateInventoryCommand, InventoryDto>();
 
-        CreateMap<InventoryModelView, UpdateInventoryCommand>();
+        CreateMap<InventoryDto, UpdateInventoryCommand>();
 
-        CreateMap<DeleteInventoryCommand, InventoryModelView>();
+        CreateMap<DeleteInventoryCommand, InventoryDto>();
 
-        CreateMap<InventoryModelView, DeleteInventoryCommand>();
+        CreateMap<InventoryDto, DeleteInventoryCommand>();
     }
 }

@@ -10,9 +10,9 @@
     using Application.DTOs;
     using System.Linq.Expressions;
 
-    public sealed record GetByIdInventoryQuery(long Id) : ICommand<InventoryModelView> , IGetByIdQuery<Result<InventoryModelView>>;
+    public sealed record GetByIdInventoryQuery(long Id) : ICommand<InventoryDto> , IGetByIdQuery<Result<InventoryDto>>;
 
-    public sealed class GetByIdQueryHandler(IRepository<Domain.Entities.Inventory> _Repository, IMapper mapper) : GetCommandHandler<GetByIdInventoryQuery, Domain.Entities.Inventory, InventoryModelView>(_Repository, mapper)
+    public sealed class GetByIdQueryHandler(IRepository<Domain.Entities.Inventory> _Repository, IMapper mapper) : GetCommandHandler<GetByIdInventoryQuery, Domain.Entities.Inventory, InventoryDto>(_Repository, mapper)
     {
         public override string CreateInclude()
         {

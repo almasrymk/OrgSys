@@ -11,15 +11,15 @@
     using System.Threading.Tasks;
 
     [Area("Setting")]
-    public class DealerGroupController(IConfiguration configuration, IMapper mapper) : MainController<DealerGroupModelView, CreateDealerGroupCommand, UpdateDealerGroupCommand>(configuration, mapper)
+    public class DealerGroupController(IConfiguration configuration, IMapper mapper) : MainController<DealerGroupDto, CreateDealerGroupCommand, UpdateDealerGroupCommand>(configuration, mapper)
     {
-        public override async Task<DealerGroupModelView> InitializeData(DealerGroupModelView ob)
+        public override async Task<DealerGroupDto> InitializeData(DealerGroupDto ob)
         {
             if (ob == null)
-                ob = new DealerGroupModelView();
+                ob = new DealerGroupDto();
             if (ob.Id == 0)
             {
-                ob.CodeNumber = long.Parse("0" + await GetValueApi<DealerGroupModelView>($"GetMax?TypeId={ob.TypeId}")) + 1;
+                ob.CodeNumber = long.Parse("0" + await GetValueApi<DealerGroupDto>($"GetMax?TypeId={ob.TypeId}")) + 1;
                 ob.Code = "" + ob.CodeNumber;
             }
             return ob;
@@ -31,7 +31,7 @@
                 txtSearch = txtSearch.Trim().ToLower();
             long TypeDealerId = TypeId == 1 || TypeId == 3 ? 1 : 2;
 
-            var itemsList = await GetListApi<DealerGroupModelView>(TypeId: TypeDealerId , TextSearch: txtSearch, Page: page, PageSize: pageSize);
+            var itemsList = await GetListApi<DealerGroupDto>(TypeId: TypeDealerId , TextSearch: txtSearch, Page: page, PageSize: pageSize);
             var list = itemsList.Distinct().OrderBy(_ => _.Name)
                 .Select(_ => new
                 {

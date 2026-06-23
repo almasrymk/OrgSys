@@ -10,9 +10,9 @@
     using Application.DTOs;
     using System.Linq.Expressions;
 
-    public sealed record GetByIdTransactionTypeQuery(long Id) : ICommand<TransactionTypeModelView> , IGetByIdQuery<Result<TransactionTypeModelView>>;
+    public sealed record GetByIdTransactionTypeQuery(long Id) : ICommand<TransactionTypeDto> , IGetByIdQuery<Result<TransactionTypeDto>>;
 
-    public sealed class GetByIdQueryHandler(IRepository<Domain.Entities.TransactionType> _Repository, IMapper mapper) : GetCommandHandler<GetByIdTransactionTypeQuery, Domain.Entities.TransactionType, TransactionTypeModelView>(_Repository, mapper)
+    public sealed class GetByIdQueryHandler(IRepository<Domain.Entities.TransactionType> _Repository, IMapper mapper) : GetCommandHandler<GetByIdTransactionTypeQuery, Domain.Entities.TransactionType, TransactionTypeDto>(_Repository, mapper)
     {
 
         public override Expression<Func<Domain.Entities.TransactionType, bool>> CreateFilter(GetByIdTransactionTypeQuery request)

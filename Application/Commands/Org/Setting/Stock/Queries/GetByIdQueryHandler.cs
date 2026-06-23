@@ -10,9 +10,9 @@
     using Application.DTOs;
     using System.Linq.Expressions;
 
-    public sealed record GetByIdStockQuery(long Id) : ICommand<StockModelView> , IGetByIdQuery<Result<StockModelView>>;
+    public sealed record GetByIdStockQuery(long Id) : ICommand<StockDto> , IGetByIdQuery<Result<StockDto>>;
 
-    public sealed class GetByIdQueryHandler(IRepository<Domain.Entities.Stock> _Repository, IMapper mapper) : GetCommandHandler<GetByIdStockQuery, Domain.Entities.Stock, StockModelView>(_Repository, mapper)
+    public sealed class GetByIdQueryHandler(IRepository<Domain.Entities.Stock> _Repository, IMapper mapper) : GetCommandHandler<GetByIdStockQuery, Domain.Entities.Stock, StockDto>(_Repository, mapper)
     {
         public override Expression<Func<Domain.Entities.Stock, bool>> CreateFilter(GetByIdStockQuery request)
         {           

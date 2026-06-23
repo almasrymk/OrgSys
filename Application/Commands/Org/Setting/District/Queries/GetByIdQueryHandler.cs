@@ -10,9 +10,9 @@
     using Application.DTOs;
     using System.Linq.Expressions;
 
-    public sealed record GetByIdDistrictQuery(long Id) : ICommand<DistrictModelView> , IGetByIdQuery<Result<DistrictModelView>>;
+    public sealed record GetByIdDistrictQuery(long Id) : ICommand<DistrictDto> , IGetByIdQuery<Result<DistrictDto>>;
 
-    public sealed class GetByIdQueryHandler(IRepository<Domain.Entities.District> _Repository, IMapper mapper) : GetCommandHandler<GetByIdDistrictQuery, Domain.Entities.District, DistrictModelView>(_Repository, mapper)
+    public sealed class GetByIdQueryHandler(IRepository<Domain.Entities.District> _Repository, IMapper mapper) : GetCommandHandler<GetByIdDistrictQuery, Domain.Entities.District, DistrictDto>(_Repository, mapper)
     {
         public override Expression<Func<Domain.Entities.District, bool>> CreateFilter(GetByIdDistrictQuery request)
         {           

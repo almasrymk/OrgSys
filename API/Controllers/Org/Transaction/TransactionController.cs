@@ -11,7 +11,7 @@ namespace API.Controllers.Org.Transaction
 {
     [ApiController]
     [Route("[controller]")]
-    public class TransactionController(ISender sender) : BaseController<GetByIdTransactionQuery, SearchTransactionQuery ,GetListTransactionQuery,CreateTransactionCommand,UpdateTransactionCommand ,DeleteTransactionCommand, DeleteListTransactionCommand ,GetMaxTransactionQuery, TransactionModelView>(sender)
+    public class TransactionController(ISender sender) : BaseController<GetByIdTransactionQuery, SearchTransactionQuery ,GetListTransactionQuery,CreateTransactionCommand,UpdateTransactionCommand ,DeleteTransactionCommand, DeleteListTransactionCommand ,GetMaxTransactionQuery, TransactionDto>(sender)
     {
 
 

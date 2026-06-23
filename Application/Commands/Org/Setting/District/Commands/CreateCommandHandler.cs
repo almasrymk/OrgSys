@@ -8,7 +8,7 @@
     using Domain.Shared;
     using Application.DTOs;
 
-    public sealed class CreateDistrictCommand: DistrictModelView , ICommand , ICreateCommand<Result>;
+    public sealed class CreateDistrictCommand: DistrictDto , ICommand , ICreateCommand<Result>;
 
     public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Domain.Entities.District> _Repository , IMapper mapper) : CreateCommandHandler<CreateDistrictCommand, Domain.Entities.District>(_UnitOfWork, _Repository , mapper)
     {

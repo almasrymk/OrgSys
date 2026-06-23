@@ -11,10 +11,10 @@
     using Utility;
 
     public sealed record SearchFinancialTypeQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) 
-        : ICommandPagination<FinancialTypeModelView> ,ISearchQuery<ResultPagination<FinancialTypeModelView>>;
+        : ICommandPagination<FinancialTypeDto> ,ISearchQuery<ResultPagination<FinancialTypeDto>>;
 
     public sealed class SearchQueryHandler(IRepository<Domain.Entities.FinancialType> _Repository, IMapper mapper) : 
-        SearchCommandHandler<SearchFinancialTypeQuery, Domain.Entities.FinancialType, FinancialTypeModelView>(_Repository, mapper)
+        SearchCommandHandler<SearchFinancialTypeQuery, Domain.Entities.FinancialType, FinancialTypeDto>(_Repository, mapper)
     {
         public override Expression<Func<Domain.Entities.FinancialType, bool>> CreateFilter(SearchFinancialTypeQuery request)
         {

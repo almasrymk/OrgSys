@@ -11,7 +11,7 @@ namespace API.Controllers.Org.Setting
 {
     [ApiController]
     [Route("[controller]")]
-    public class UnitController(ISender sender) : BaseController<GetByIdUnitQuery, SearchUnitQuery , GetListUnitQuery, CreateUnitCommand, UpdateUnitCommand, DeleteUnitCommand, DeleteListUnitCommand, UnitModelView>(sender)
+    public class UnitController(ISender sender) : BaseController<GetByIdUnitQuery, SearchUnitQuery , GetListUnitQuery, CreateUnitCommand, UpdateUnitCommand, DeleteUnitCommand, DeleteListUnitCommand, UnitDto>(sender)
     {
 
     }

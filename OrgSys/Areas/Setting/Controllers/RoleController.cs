@@ -10,9 +10,9 @@
     using System.Threading.Tasks;
 
     [Area("Setting")]
-    public class RoleController(IConfiguration configuration, IMapper mapper) : MainController<RoleModelView, CreateRoleCommand, UpdateRoleCommand>(configuration, mapper)
+    public class RoleController(IConfiguration configuration, IMapper mapper) : MainController<RoleDto, CreateRoleCommand, UpdateRoleCommand>(configuration, mapper)
     {
-        public override async Task<ActionResult> Save(RoleModelView model)
+        public override async Task<ActionResult> Save(RoleDto model)
         {
             var res = await base.Save(model);
             if (User.IsCurrentUserAndRole(User.GetUserId(), model.Id))

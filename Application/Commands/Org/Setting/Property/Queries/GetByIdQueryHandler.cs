@@ -10,9 +10,9 @@
     using Application.DTOs;
     using System.Linq.Expressions;
 
-    public sealed record GetByIdPropertyQuery(long Id) : ICommand<PropertyModelView> , IGetByIdQuery<Result<PropertyModelView>>;
+    public sealed record GetByIdPropertyQuery(long Id) : ICommand<PropertyDto> , IGetByIdQuery<Result<PropertyDto>>;
 
-    public sealed class GetByIdQueryHandler(IRepository<Domain.Entities.Property> _Repository, IMapper mapper) : GetCommandHandler<GetByIdPropertyQuery, Domain.Entities.Property, PropertyModelView>(_Repository, mapper)
+    public sealed class GetByIdQueryHandler(IRepository<Domain.Entities.Property> _Repository, IMapper mapper) : GetCommandHandler<GetByIdPropertyQuery, Domain.Entities.Property, PropertyDto>(_Repository, mapper)
     {
         public override Expression<Func<Domain.Entities.Property, bool>> CreateFilter(GetByIdPropertyQuery request)
         {           

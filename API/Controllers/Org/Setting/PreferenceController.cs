@@ -10,7 +10,7 @@ namespace API.Controllers.Org.Setting
 {
     [ApiController]
     [Route("[controller]")]
-    public class PreferenceController(ISender sender) : BaseController<GetByIdPreferenceQuery, SearchPreferenceQuery , GetListPreferenceQuery, CreatePreferenceCommand, UpdatePreferenceCommand, DeletePreferenceCommand, DeleteListPreferenceCommand, PreferenceModelView>(sender)
+    public class PreferenceController(ISender sender) : BaseController<GetByIdPreferenceQuery, SearchPreferenceQuery , GetListPreferenceQuery, CreatePreferenceCommand, UpdatePreferenceCommand, DeletePreferenceCommand, DeleteListPreferenceCommand, PreferenceDto>(sender)
     {
 
     }

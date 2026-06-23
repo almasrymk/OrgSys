@@ -155,7 +155,7 @@ namespace OrgSys.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public IActionResult LogIn(LoginUserModelView _user, string ReturnUrl)
+        public IActionResult LogIn(LoginUserDto _user, string ReturnUrl)
         {
             try
             {
@@ -199,7 +199,7 @@ namespace OrgSys.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult RequestReg(RequestModelView _request)
+        public ActionResult RequestReg(RequestDto _request)
         {
             //var Key = string.Format("{0:000000000}", new Random().Next(0, 999999999));
             //_request.Key = Key;
@@ -268,7 +268,7 @@ namespace OrgSys.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult Register(ClientModelView _client, string Password)
+        public ActionResult Register(ClientDto _client, string Password)
         {
             //if (ModelState.IsValid)
             //{
@@ -370,7 +370,7 @@ namespace OrgSys.Controllers
         }
 
         [HttpPost]
-        public ActionResult Profile(UserModelView _profile)
+        public ActionResult Profile(UserDto _profile)
         {
             try
             {

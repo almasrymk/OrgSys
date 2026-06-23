@@ -8,7 +8,7 @@
     using OrgSys.Controllers;
 
     [Area("Setting")]
-    public class TableController(IConfiguration configuration, IMapper mapper) : MainController<TableModelView, CreateTableCommand, UpdateTableCommand>(configuration, mapper)
+    public class TableController(IConfiguration configuration, IMapper mapper) : MainController<TableDto, CreateTableCommand, UpdateTableCommand>(configuration, mapper)
     {
 
     }

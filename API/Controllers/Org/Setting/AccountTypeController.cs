@@ -8,7 +8,7 @@ namespace API.Controllers.Org.Setting
 {
     [ApiController]
     [Route("[controller]")]
-    public class AccountTypeController(ISender sender) : BaseController<GetByIdAccountTypeQuery, SearchAccountTypeQuery , GetListAccountTypeQuery, CreateAccountTypeCommand, UpdateAccountTypeCommand, DeleteAccountTypeCommand, DeleteListAccountTypeCommand, AccountTypeModelView>(sender)
+    public class AccountTypeController(ISender sender) : BaseController<GetByIdAccountTypeQuery, SearchAccountTypeQuery , GetListAccountTypeQuery, CreateAccountTypeCommand, UpdateAccountTypeCommand, DeleteAccountTypeCommand, DeleteListAccountTypeCommand, AccountTypeDto>(sender)
     {
 
     }

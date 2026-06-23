@@ -8,8 +8,8 @@ public partial class MappingProfile : Profile
     public void PaymentTypeMappingProfile()
     {
         #region PaymentType
-        CreateMap<PaymentType, PaymentTypeModelView>();
-        CreateMap<PaymentTypeModelView, PaymentType>();       
+        CreateMap<PaymentType, PaymentTypeDto>();
+        CreateMap<PaymentTypeDto, PaymentType>();       
         #endregion
     }
 } 

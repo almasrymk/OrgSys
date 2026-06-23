@@ -10,9 +10,9 @@
     using Application.DTOs;
     using System.Linq.Expressions;
 
-    public sealed record GetByIdCurrencyQuery(long Id) : ICommand<CurrencyModelView> , IGetByIdQuery<Result<CurrencyModelView>>;
+    public sealed record GetByIdCurrencyQuery(long Id) : ICommand<CurrencyDto> , IGetByIdQuery<Result<CurrencyDto>>;
 
-    public sealed class GetByIdQueryHandler(IRepository<Domain.Entities.Currency> _Repository, IMapper mapper) : GetCommandHandler<GetByIdCurrencyQuery, Domain.Entities.Currency, CurrencyModelView>(_Repository, mapper)
+    public sealed class GetByIdQueryHandler(IRepository<Domain.Entities.Currency> _Repository, IMapper mapper) : GetCommandHandler<GetByIdCurrencyQuery, Domain.Entities.Currency, CurrencyDto>(_Repository, mapper)
     {
         public override Expression<Func<Domain.Entities.Currency, bool>> CreateFilter(GetByIdCurrencyQuery request)
         {           

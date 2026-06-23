@@ -10,12 +10,12 @@ using Utility;
 
 namespace Application.Commands.Org.Invoices.Invoice.Queries
 {
-    public sealed record GetInvoiceNotReturnedQuery(string KeySearch, long ParentId, long TypeId, int Page, int PageSize) : ICommandPagination<InvoiceModelView>, ISearchQuery<ResultPagination<InvoiceModelView>>;
+    public sealed record GetInvoiceNotReturnedQuery(string KeySearch, long ParentId, long TypeId, int Page, int PageSize) : ICommandPagination<InvoiceDto>, ISearchQuery<ResultPagination<InvoiceDto>>;
 
-    public sealed class GetInvoiceNotReturnedQueryHandler(IRepository<Domain.Entities.Invoice> _Repository, IMapper mapper) : SearchCommandHandler<GetInvoiceNotReturnedQuery, Domain.Entities.Invoice, InvoiceModelView>(_Repository, mapper)
+    public sealed class GetInvoiceNotReturnedQueryHandler(IRepository<Domain.Entities.Invoice> _Repository, IMapper mapper) : SearchCommandHandler<GetInvoiceNotReturnedQuery, Domain.Entities.Invoice, InvoiceDto>(_Repository, mapper)
     {
 
-        public override async Task<ResultPagination<InvoiceModelView>> Handle(GetInvoiceNotReturnedQuery request, CancellationToken cancellationToken)
+        public override async Task<ResultPagination<InvoiceDto>> Handle(GetInvoiceNotReturnedQuery request, CancellationToken cancellationToken)
         {
             Page = request.Page;
             PageSize = request.PageSize;
@@ -37,9 +37,9 @@ namespace Application.Commands.Org.Invoices.Invoice.Queries
                 request.PageSize);
 
 
-            return new ResultPagination<InvoiceModelView>(
+            return new ResultPagination<InvoiceDto>(
              HttpStatusCode.OK,
-             result!.Items.Select(mapper.Map<InvoiceModelView>).ToList(),
+             result!.Items.Select(mapper.Map<InvoiceDto>).ToList(),
              result.Page,
              result.PageSize,
              result.TotalPages,

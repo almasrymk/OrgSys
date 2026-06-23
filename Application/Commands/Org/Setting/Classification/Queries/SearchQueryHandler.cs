@@ -10,9 +10,9 @@
     using System.Linq.Expressions;
     using Utility;
 
-    public sealed record SearchClassificationQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandPagination<ClassificationModelView> ,ISearchQuery<ResultPagination<ClassificationModelView>>;
+    public sealed record SearchClassificationQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandPagination<ClassificationDto> ,ISearchQuery<ResultPagination<ClassificationDto>>;
 
-    public sealed class SearchQueryHandler(IRepository<Domain.Entities.Classification> _Repository, IMapper mapper) : SearchCommandHandler<SearchClassificationQuery, Domain.Entities.Classification, ClassificationModelView>(_Repository, mapper)
+    public sealed class SearchQueryHandler(IRepository<Domain.Entities.Classification> _Repository, IMapper mapper) : SearchCommandHandler<SearchClassificationQuery, Domain.Entities.Classification, ClassificationDto>(_Repository, mapper)
     {
         public override Expression<Func<Domain.Entities.Classification, bool>> CreateFilter(SearchClassificationQuery request)
         {

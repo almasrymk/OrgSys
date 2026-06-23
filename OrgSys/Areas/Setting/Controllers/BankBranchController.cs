@@ -11,21 +11,21 @@
     using System.Threading.Tasks;
 
     [Area("Setting")]
-    public class BankBranchController(IConfiguration configuration, IMapper mapper) : MainController<BankBranchModelView, CreateBankBranchCommand, UpdateBankBranchCommand>(configuration, mapper)
+    public class BankBranchController(IConfiguration configuration, IMapper mapper) : MainController<BankBranchDto, CreateBankBranchCommand, UpdateBankBranchCommand>(configuration, mapper)
     {
-        public override async Task LoadViewBag(BankBranchModelView model)
+        public override async Task LoadViewBag(BankBranchDto model)
         {
-            ViewBag.BankList = new SelectList(await GetListApi<BankModelView>( Page: 1, PageSize: 20), "Id", "Name", model.BankId);
-            ViewBag.CountryList = new SelectList(await GetListApi<CountryModelView>(Page: 1, PageSize: 20), "Id", "Name", model.CountryId);
-            ViewBag.CityList = new SelectList(await GetListApi<CityModelView>($"GetListByCountryId?CountryId={model.CountryId}&Page=1&PageSize=20"), "Id", "Name", model.CityId);
-            ViewBag.DistrictList = new SelectList(await GetListApi<DistrictModelView>($"GetListByCityId?CityId={model.CityId}&Page=1&PageSize=20"), "Id", "Name", model.DistrictId);
+            ViewBag.BankList = new SelectList(await GetListApi<BankDto>( Page: 1, PageSize: 20), "Id", "Name", model.BankId);
+            ViewBag.CountryList = new SelectList(await GetListApi<CountryDto>(Page: 1, PageSize: 20), "Id", "Name", model.CountryId);
+            ViewBag.CityList = new SelectList(await GetListApi<CityDto>($"GetListByCountryId?CountryId={model.CountryId}&Page=1&PageSize=20"), "Id", "Name", model.CityId);
+            ViewBag.DistrictList = new SelectList(await GetListApi<DistrictDto>($"GetListByCityId?CityId={model.CityId}&Page=1&PageSize=20"), "Id", "Name", model.DistrictId);
         }
 
         public async Task<JsonResult> GetList(string txtSearch = "", int page = 1, int pageSize = 20)
         {
             if (txtSearch != null)
                 txtSearch = txtSearch.Trim().ToLower();
-            var itemsList = await GetListApi<BankModelView>(TextSearch: txtSearch, Page: page, PageSize: pageSize);
+            var itemsList = await GetListApi<BankDto>(TextSearch: txtSearch, Page: page, PageSize: pageSize);
             var list = itemsList.Distinct().OrderBy(_ => _.Name)
                 .Select(_ => new
                 {

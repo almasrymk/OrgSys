@@ -15,11 +15,11 @@
     using System.Threading.Tasks;
     using Utility;
 
-    public sealed record GetByIdRoleQuery(long Id) : ICommand<RoleModelView> , IGetByIdQuery<Result<RoleModelView>>;
+    public sealed record GetByIdRoleQuery(long Id) : ICommand<RoleDto> , IGetByIdQuery<Result<RoleDto>>;
 
-    public sealed class GetByIdQueryHandler(IRepository<Domain.Entities.Role> _Repository, IRepository<Domain.Entities.RolePermission> _RolePermissionRepository, IRepository<Domain.Entities.Permission> _PermissionRepository, IMapper mapper) : GetCommandHandler<GetByIdRoleQuery, Domain.Entities.Role, RoleModelView>(_Repository, mapper)
+    public sealed class GetByIdQueryHandler(IRepository<Domain.Entities.Role> _Repository, IRepository<Domain.Entities.RolePermission> _RolePermissionRepository, IRepository<Domain.Entities.Permission> _PermissionRepository, IMapper mapper) : GetCommandHandler<GetByIdRoleQuery, Domain.Entities.Role, RoleDto>(_Repository, mapper)
     {
-        public override async Task<Result<RoleModelView>> Handle(GetByIdRoleQuery request, CancellationToken cancellationToken)
+        public override async Task<Result<RoleDto>> Handle(GetByIdRoleQuery request, CancellationToken cancellationToken)
         {
             var ob = await _Repository.GetByFilterAsync(e => e.Id == request.Id, CreateInclude());
             if (ob == null)
@@ -29,7 +29,7 @@
             var RolePermissionList = await GetRolePermissions(request.Id);
             var obModel = Map(ob, RolePermissionList, PermissionList);
 
-            return new Result<RoleModelView>(
+            return new Result<RoleDto>(
                     HttpStatusCode.OK,
                     obModel,
                     null);
@@ -57,9 +57,9 @@
             return List!;
         }
 
-        private RoleModelView Map(Role ob , IEnumerable<RolePermission> rolePermissions , IEnumerable<Permission> permissions)
+        private RoleDto Map(Role ob , IEnumerable<RolePermission> rolePermissions , IEnumerable<Permission> permissions)
         {
-            var obModel = mapper.Map<RoleModelView>(ob);
+            var obModel = mapper.Map<RoleDto>(ob);
             obModel.PermissionsTree = permissions.Select(e => new TreeView { Id = e.Id, Key = e.Key, Value = Translate.GetTranslate(e.Name), ParentId = e.ParentId }).ToList();
             foreach (var item in obModel.PermissionsTree)
             {

@@ -9,11 +9,11 @@
     using System.Threading.Tasks;
 
     [Area("Setting")]
-    public class CurrencyController(IConfiguration configuration, IMapper mapper) : MainController<CurrencyModelView, CreateCurrencyCommand, UpdateCurrencyCommand>(configuration, mapper)
+    public class CurrencyController(IConfiguration configuration, IMapper mapper) : MainController<CurrencyDto, CreateCurrencyCommand, UpdateCurrencyCommand>(configuration, mapper)
     {
         public async Task<JsonResult> GetRate(int id)
         {
-            var ob = await GetObApi<CurrencyModelView>($"GetById?Id={id}");
+            var ob = await GetObApi<CurrencyDto>($"GetById?Id={id}");
             var data = new
             {
                 rate = ob.Rate

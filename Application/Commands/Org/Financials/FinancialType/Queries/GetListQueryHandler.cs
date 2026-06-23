@@ -11,10 +11,10 @@
     using Utility;
 
     public sealed record GetListFinancialTypeQuery(string KeySearch, long ParentId, long TypeId, int Page, int PageSize) :
-        ICommandCollection<FinancialTypeModelView>, IListQuery<ResultCollection<FinancialTypeModelView>>;
+        ICommandCollection<FinancialTypeDto>, IListQuery<ResultCollection<FinancialTypeDto>>;
 
     public sealed class GetListQueryHandler(IRepository<Domain.Entities.FinancialType> _Repository, IMapper mapper) : 
-        ListCommandHandler<GetListFinancialTypeQuery, Domain.Entities.FinancialType, FinancialTypeModelView>(_Repository, mapper)
+        ListCommandHandler<GetListFinancialTypeQuery, Domain.Entities.FinancialType, FinancialTypeDto>(_Repository, mapper)
     {
         public override Expression<Func<Domain.Entities.FinancialType, bool>> CreateFilter(GetListFinancialTypeQuery request)
         {

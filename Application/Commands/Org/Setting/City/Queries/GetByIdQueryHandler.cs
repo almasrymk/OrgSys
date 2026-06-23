@@ -9,9 +9,9 @@
     using Application.Common.Commands;
     using Application.Abstraction.Command;
 
-    public sealed record GetByIdCityQuery(long Id) : ICommand<CityModelView> , IGetByIdQuery<Result<CityModelView>>;
+    public sealed record GetByIdCityQuery(long Id) : ICommand<CityDto> , IGetByIdQuery<Result<CityDto>>;
 
-    public sealed class GetByIdQueryHandler(IRepository<Domain.Entities.City> _Repository, IMapper mapper) : GetCommandHandler<GetByIdCityQuery, Domain.Entities.City, CityModelView>(_Repository, mapper)
+    public sealed class GetByIdQueryHandler(IRepository<Domain.Entities.City> _Repository, IMapper mapper) : GetCommandHandler<GetByIdCityQuery, Domain.Entities.City, CityDto>(_Repository, mapper)
     {
         public override Expression<Func<Domain.Entities.City, bool>> CreateFilter(GetByIdCityQuery request)
         {           

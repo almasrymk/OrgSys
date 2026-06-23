@@ -10,8 +10,8 @@ public partial class MappingProfile : Profile
     public void TransactionTypeMappingProfile()
     {
         #region Transaction
-        CreateMap<TransactionType, TransactionTypeModelView>();
-        CreateMap<TransactionTypeModelView, TransactionType>();
+        CreateMap<TransactionType, TransactionTypeDto>();
+        CreateMap<TransactionTypeDto, TransactionType>();
         CreateMap<TransactionType, CreateTransactionTypeCommand>();
         CreateMap<CreateTransactionTypeCommand, TransactionType>();
 

@@ -10,9 +10,9 @@
     using System.Linq.Expressions;
     using Utility;
 
-    public sealed record GetListTableQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandCollection<TableModelView> , IListQuery<ResultCollection<TableModelView>>;
+    public sealed record GetListTableQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandCollection<TableDto> , IListQuery<ResultCollection<TableDto>>;
 
-    public sealed class GetListQueryHandler(IRepository<Domain.Entities.Table> _Repository, IMapper mapper) : ListCommandHandler<GetListTableQuery, Domain.Entities.Table, TableModelView>(_Repository, mapper)
+    public sealed class GetListQueryHandler(IRepository<Domain.Entities.Table> _Repository, IMapper mapper) : ListCommandHandler<GetListTableQuery, Domain.Entities.Table, TableDto>(_Repository, mapper)
     {
         public override Expression<Func<Domain.Entities.Table, bool>> CreateFilter(GetListTableQuery request)
         {

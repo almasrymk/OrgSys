@@ -10,9 +10,9 @@
     using System.Linq.Expressions;
     using Utility;
 
-    public sealed record GetListInvoiceTypeQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandCollection<InvoiceTypeModelView> , IListQuery<ResultCollection<InvoiceTypeModelView>>;
+    public sealed record GetListInvoiceTypeQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandCollection<InvoiceTypeDto> , IListQuery<ResultCollection<InvoiceTypeDto>>;
 
-    public sealed class GetListQueryHandler(IRepository<Domain.Entities.InvoiceType> _Repository, IMapper mapper) : ListCommandHandler<GetListInvoiceTypeQuery, Domain.Entities.InvoiceType, InvoiceTypeModelView>(_Repository, mapper)
+    public sealed class GetListQueryHandler(IRepository<Domain.Entities.InvoiceType> _Repository, IMapper mapper) : ListCommandHandler<GetListInvoiceTypeQuery, Domain.Entities.InvoiceType, InvoiceTypeDto>(_Repository, mapper)
     {
         public override Expression<Func<Domain.Entities.InvoiceType, bool>> CreateFilter(GetListInvoiceTypeQuery request)
         {

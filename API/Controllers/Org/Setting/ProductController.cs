@@ -10,10 +10,10 @@ namespace API.Controllers.Org.Setting
 {
     [ApiController]
     [Route("[controller]")]
-    public class ProductController(ISender sender) : BaseController<GetByIdProductQuery, SearchProductQuery , GetListProductQuery, CreateProductCommand, UpdateProductCommand, DeleteProductCommand, DeleteListProductCommand , GetMaxAccountQuery , ProductModelView>(sender)
+    public class ProductController(ISender sender) : BaseController<GetByIdProductQuery, SearchProductQuery , GetListProductQuery, CreateProductCommand, UpdateProductCommand, DeleteProductCommand, DeleteListProductCommand , GetMaxAccountQuery , ProductDto>(sender)
     {
         [HttpGet("GetAllByBalance")]
-        public virtual async Task<ResultCollection<ProductModelView>> GetAllByBalance(long StockId, DateTime date, CancellationToken cancellationToken)
+        public virtual async Task<ResultCollection<ProductDto>> GetAllByBalance(long StockId, DateTime date, CancellationToken cancellationToken)
         {
             return await sender.Send(new GetListProductByBalanceQuery(StockId, date), cancellationToken);
         }

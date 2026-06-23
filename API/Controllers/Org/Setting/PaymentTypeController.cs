@@ -10,7 +10,7 @@ namespace API.Controllers.Org.Setting
 {
     [ApiController]
     [Route("[controller]")]
-    public class PaymentTypeController(ISender sender) : BaseController<GetByIdPaymentTypeQuery, SearchPaymentTypeQuery , GetListPaymentTypeQuery, CreatePaymentTypeCommand, UpdatePaymentTypeCommand, DeletePaymentTypeCommand, DeleteListPaymentTypeCommand, PaymentTypeModelView>(sender)
+    public class PaymentTypeController(ISender sender) : BaseController<GetByIdPaymentTypeQuery, SearchPaymentTypeQuery , GetListPaymentTypeQuery, CreatePaymentTypeCommand, UpdatePaymentTypeCommand, DeletePaymentTypeCommand, DeleteListPaymentTypeCommand, PaymentTypeDto>(sender)
     {
 
     }

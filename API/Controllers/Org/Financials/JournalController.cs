@@ -8,7 +8,7 @@ namespace API.Controllers.Org.Journals
 {
     [ApiController]
     [Route("[controller]")]
-    public class JournalController(ISender sender) : BaseController<GetByIdJournalQuery,SearchJournalQuery, GetListJournalQuery, CreateJournalCommand, UpdateJournalCommand, DeleteJournalCommand, DeleteListJournalCommand, GetMaxJournalQuery, JournalModelView>(sender)
+    public class JournalController(ISender sender) : BaseController<GetByIdJournalQuery,SearchJournalQuery, GetListJournalQuery, CreateJournalCommand, UpdateJournalCommand, DeleteJournalCommand, DeleteListJournalCommand, GetMaxJournalQuery, JournalDto>(sender)
     {
      
 

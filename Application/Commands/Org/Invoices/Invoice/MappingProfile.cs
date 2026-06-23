@@ -8,10 +8,10 @@ public partial class MappingProfile : Profile
     public void InvoiceMappingProfile()
     {
         #region Invoice
-        CreateMap<Invoice, InvoiceModelView>()
+        CreateMap<Invoice, InvoiceDto>()
         .ForMember(dest => dest.InvoiceProductList,
         opt => opt.MapFrom(src => src.InvoiceProducts));
-        CreateMap<InvoiceModelView, Invoice>();
+        CreateMap<InvoiceDto, Invoice>();
         CreateMap<Invoice, CreateInvoiceCommand>();
         CreateMap<CreateInvoiceCommand, Invoice>();
         CreateMap<Invoice, UpdateInvoiceCommand>();
@@ -19,8 +19,8 @@ public partial class MappingProfile : Profile
         CreateMap<Invoice, DeleteInvoiceCommand>();
         CreateMap<DeleteInvoiceCommand, Invoice>();
 
-        CreateMap<InvoiceProduct, InvoiceProductModelView>();
-        CreateMap<InvoiceProductModelView, InvoiceProduct>();
+        CreateMap<InvoiceProduct, InvoiceProductDto>();
+        CreateMap<InvoiceProductDto, InvoiceProduct>();
 
         CreateMap<CreateInvoiceCommand, Invoice>()
         .ForMember(dest => dest.InvoiceProducts,
@@ -31,26 +31,26 @@ public partial class MappingProfile : Profile
        .ForMember(dest => dest.InvoiceProducts,
         opt => opt.MapFrom(src => src.InvoiceProductList));
 
-        CreateMap<InvoiceModelView, UpdateInvoiceCommand>()
+        CreateMap<InvoiceDto, UpdateInvoiceCommand>()
         .ForMember(dest => dest.InvoiceProducts,
         opt => opt.MapFrom(src => src.InvoiceProductList));
 
-        CreateMap<CreateInvoiceCommand, InvoiceModelView>();
-        CreateMap<InvoiceModelView, CreateInvoiceCommand>()
+        CreateMap<CreateInvoiceCommand, InvoiceDto>();
+        CreateMap<InvoiceDto, CreateInvoiceCommand>()
         .ForMember(dest => dest.InvoiceProducts,
         opt => opt.MapFrom(src => src.InvoiceProductList)); 
 
-        CreateMap<InvoiceProductModelView, InvoiceProduct>();
+        CreateMap<InvoiceProductDto, InvoiceProduct>();
 
 
-        CreateMap<Product, ProductModelView>();
-        CreateMap<ProductModelView, Product>();
+        CreateMap<Product, ProductDto>();
+        CreateMap<ProductDto, Product>();
 
-        CreateMap<ProductUnit, ProductUnitModelView>();
-        CreateMap<ProductUnitModelView, ProductUnit>();
+        CreateMap<ProductUnit, ProductUnitDto>();
+        CreateMap<ProductUnitDto, ProductUnit>();
 
-        CreateMap<Unit, UnitModelView>();           
-        CreateMap<UnitModelView, Unit>();           
+        CreateMap<Unit, UnitDto>();           
+        CreateMap<UnitDto, Unit>();           
         #endregion
     }
 }

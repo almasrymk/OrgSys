@@ -11,7 +11,7 @@ namespace API.Controllers.Org.Setting
 {
     [ApiController]
     [Route("[controller]")]
-    public class RoleController(ISender sender) : BaseController<GetByIdRoleQuery, SearchRoleQuery , GetListRoleQuery, CreateRoleCommand, UpdateRoleCommand, DeleteRoleCommand, DeleteListRoleCommand, RoleModelView>(sender)
+    public class RoleController(ISender sender) : BaseController<GetByIdRoleQuery, SearchRoleQuery , GetListRoleQuery, CreateRoleCommand, UpdateRoleCommand, DeleteRoleCommand, DeleteListRoleCommand, RoleDto>(sender)
     {
 
     }

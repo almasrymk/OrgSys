@@ -18,20 +18,20 @@ using Utility;
 namespace OrgSys.Areas.Invoices.Controllers
 {
     [Area("Invoices")]
-    public class InvoiceController(IConfiguration configuration, IMapper mapper) : MainController<InvoiceModelView, CreateInvoiceCommand, UpdateInvoiceCommand>(configuration, mapper)
+    public class InvoiceController(IConfiguration configuration, IMapper mapper) : MainController<InvoiceDto, CreateInvoiceCommand, UpdateInvoiceCommand>(configuration, mapper)
     {
         public override async Task LoadViewBagIndex(long ParentId = 0, long TypeId = 0)
         {
-            var type = await GetObApi<InvoiceTypeModelView>($"GetById?Id={TypeId}");
+            var type = await GetObApi<InvoiceTypeDto>($"GetById?Id={TypeId}");
             ViewBag.InvoicesType = type.Name;
             ViewBag.InvoicesGroup = type.Group;
             ViewBag.InvoicesIcon = type.Icon;
         }
 
-        public override async Task LoadViewBag(InvoiceModelView model)
+        public override async Task LoadViewBag(InvoiceDto model)
         {
-            ViewBag.CurrencyId = new SelectList(await GetListApi<CurrencyModelView>(), "Id", "Name", model.CurrencyId);
-            ViewBag.PaymentTypeId = new SelectList(await GetListApi<PaymentTypeModelView>(), "Id", "Name", model.PaymentTypeId);
+            ViewBag.CurrencyId = new SelectList(await GetListApi<CurrencyDto>(), "Id", "Name", model.CurrencyId);
+            ViewBag.PaymentTypeId = new SelectList(await GetListApi<PaymentTypeDto>(), "Id", "Name", model.PaymentTypeId);
 
             List<SelectListItem> selectListItems = new List<SelectListItem>();
             selectListItems.Add(new SelectListItem { Value = "1", Text = Translate.GetTranslate("Amount") });
@@ -41,15 +41,15 @@ namespace OrgSys.Areas.Invoices.Controllers
             ViewBag.ServiceType = new SelectList(selectListItems, "Value", "Text");
             ViewBag.TaxType = new SelectList(selectListItems, "Value", "Text");
 
-            var type = await GetObApi<InvoiceTypeModelView>($"GetById?Id={model.TypeId}");
+            var type = await GetObApi<InvoiceTypeDto>($"GetById?Id={model.TypeId}");
             ViewBag.InvoicesType = type.Name;
             ViewBag.InvoicesGroup = type.Group;
             ViewBag.InvoicesIcon = type.Icon;
         }
 
-        public override async Task<InvoiceModelView> InitializeData(InvoiceModelView ob)
+        public override async Task<InvoiceDto> InitializeData(InvoiceDto ob)
         {
-            var preferenceList = await GetListApi<PreferenceModelView>(TypeId: ob.TypeId, TextSearch: "Invoice", PageSize: 1000);
+            var preferenceList = await GetListApi<PreferenceDto>(TypeId: ob.TypeId, TextSearch: "Invoice", PageSize: 1000);
             var StockId = long.Parse("0" + preferenceList.FirstOrDefault(e => e.Key == "DefaultStock")?.Value);
 
             long DealerId = 0;
@@ -74,12 +74,12 @@ namespace OrgSys.Areas.Invoices.Controllers
             ViewBag.AllowRepeated = int.Parse("0" + preferenceList.FirstOrDefault(e => e.Key == "AllowRepeated")?.Value);
 
             if (ob == null)
-                ob = new InvoiceModelView();
+                ob = new InvoiceDto();
 
             if (ob.Id == 0)
             {
 
-                ob.CodeNumber = long.Parse("0" + await GetValueApi<InvoiceModelView>($"GetMax?ParentId=0&TypeId={ob.TypeId}")) + 1;
+                ob.CodeNumber = long.Parse("0" + await GetValueApi<InvoiceDto>($"GetMax?ParentId=0&TypeId={ob.TypeId}")) + 1;
                 ob.Code = "" + ob.CodeNumber;
                 ob.StockId = StockId;
                 ob.DealerId = DealerId;
@@ -92,17 +92,17 @@ namespace OrgSys.Areas.Invoices.Controllers
                 ob.Discount = DiscountValue;
                 ob.Service = ServiceValue;
                 ob.Tax = TaxValue;
-                ob.InvoiceProductList = new List<InvoiceProductModelView>();
+                ob.InvoiceProductList = new List<InvoiceProductDto>();
             }
 
-            ob.StockName = (await GetObApi<StockModelView>($"GetById?Id={ob.StockId ?? 0}"))?.Name;
-            ob.DealerName = (await GetObApi<DealerModelView>($"GetById?Id={ob.DealerId}"))?.Name;
-            ob.ParentCode = (await GetObApi<InvoiceModelView>($"GetById?Id={ob.StockId ?? 0}"))?.Code;
-            ob.Rate = (await GetObApi<CurrencyModelView>($"GetById?Id={ob.StockId ?? 0}"))?.Rate ?? 0;
+            ob.StockName = (await GetObApi<StockDto>($"GetById?Id={ob.StockId ?? 0}"))?.Name;
+            ob.DealerName = (await GetObApi<DealerDto>($"GetById?Id={ob.DealerId}"))?.Name;
+            ob.ParentCode = (await GetObApi<InvoiceDto>($"GetById?Id={ob.StockId ?? 0}"))?.Code;
+            ob.Rate = (await GetObApi<CurrencyDto>($"GetById?Id={ob.StockId ?? 0}"))?.Rate ?? 0;
             return ob;
         }
 
-        public override Task<InvoiceModelView> FixData(InvoiceModelView ob)
+        public override Task<InvoiceDto> FixData(InvoiceDto ob)
         {
             if (ob.Id == 0)
             {
@@ -151,7 +151,7 @@ namespace OrgSys.Areas.Invoices.Controllers
             if (txtSearch != null)
                 txtSearch = txtSearch.Trim().ToLower();
 
-            var items = await GetListApi<InvoiceModelView>($"GetInvoicesNotReturn?KeySearch={txtSearch}&ParentId={InvId}&TypeId={TypeId - 2}&Page={page}&PageSize={pageSize}");
+            var items = await GetListApi<InvoiceDto>($"GetInvoicesNotReturn?KeySearch={txtSearch}&ParentId={InvId}&TypeId={TypeId - 2}&Page={page}&PageSize={pageSize}");
 
             var lsit = items.Distinct().OrderBy(_ => _.Code).Select(_ => new { _.Id, _.Code }).ToList();
 
@@ -170,13 +170,13 @@ namespace OrgSys.Areas.Invoices.Controllers
 
             response.EnsureSuccessStatusCode();
             var data = await response.Content.ReadAsStringAsync();
-            var dataList = JsonConvert.DeserializeObject<ResultPagination<InvoiceModelView>>(data);
+            var dataList = JsonConvert.DeserializeObject<ResultPagination<InvoiceDto>>(data);
             return Type != 1 ? (ActionResult)PartialView("SearchInvoicesList", dataList) : View("SearchInvoices", dataList);
         }
 
         public async Task<JsonResult> checkStock(int id)
         {
-            var invoice = await GetObApi<InvoiceModelView>($"GetById?Id={id}");
+            var invoice = await GetObApi<InvoiceDto>($"GetById?Id={id}");
             var data = new
             {
                 code = invoice.Code,
@@ -216,7 +216,7 @@ namespace OrgSys.Areas.Invoices.Controllers
             responseMessage.EnsureSuccessStatusCode();
             var dataa = await responseMessage.Content.ReadAsStringAsync();
 
-            var item = JsonConvert.DeserializeObject<ResultCollection<InvoiceProductModelView>>(dataa);
+            var item = JsonConvert.DeserializeObject<ResultCollection<InvoiceProductDto>>(dataa);
 
             var data = item.Response.Select(e => new
             {
@@ -227,7 +227,7 @@ namespace OrgSys.Areas.Invoices.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> AutoSave(InvoiceModelView ob)
+        public async Task<ActionResult> AutoSave(InvoiceDto ob)
         {
             await base.Save(ob);
             if (ob.Id == 0)
@@ -238,7 +238,7 @@ namespace OrgSys.Areas.Invoices.Controllers
                 if (searchResp != null && searchResp.IsSuccessStatusCode)
                 {
                     var searchData = await searchResp.Content.ReadAsStringAsync();
-                    var searchRes = JsonConvert.DeserializeObject<ResultPagination<InvoiceModelView>>(searchData);
+                    var searchRes = JsonConvert.DeserializeObject<ResultPagination<InvoiceDto>>(searchData);
                     if (searchRes != null && searchRes.Response != null && searchRes.Response.Count > 0)
                     {
                         ob.Id = searchRes.Response[0].Id;

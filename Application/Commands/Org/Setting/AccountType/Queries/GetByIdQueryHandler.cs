@@ -10,9 +10,9 @@
     using Application.DTOs;
     using System.Linq.Expressions;
 
-    public sealed record GetByIdAccountTypeQuery(long Id) : ICommand<AccountTypeModelView> , IGetByIdQuery<Result<AccountTypeModelView>>;
+    public sealed record GetByIdAccountTypeQuery(long Id) : ICommand<AccountTypeDto> , IGetByIdQuery<Result<AccountTypeDto>>;
 
-    public sealed class GetByIdQueryHandler(IRepository<Domain.Entities.AccountType> _Repository, IMapper mapper) : GetCommandHandler<GetByIdAccountTypeQuery, Domain.Entities.AccountType, AccountTypeModelView>(_Repository, mapper)
+    public sealed class GetByIdQueryHandler(IRepository<Domain.Entities.AccountType> _Repository, IMapper mapper) : GetCommandHandler<GetByIdAccountTypeQuery, Domain.Entities.AccountType, AccountTypeDto>(_Repository, mapper)
     {
         public override Expression<Func<Domain.Entities.AccountType, bool>> CreateFilter(GetByIdAccountTypeQuery request)
         {           

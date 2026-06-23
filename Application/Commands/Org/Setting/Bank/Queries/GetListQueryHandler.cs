@@ -10,9 +10,9 @@
     using System.Linq.Expressions;
     using Utility;
 
-    public sealed record GetListBankQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandCollection<BankModelView> , IListQuery<ResultCollection<BankModelView>>;
+    public sealed record GetListBankQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandCollection<BankDto> , IListQuery<ResultCollection<BankDto>>;
 
-    public sealed class GetListQueryHandler(IRepository<Domain.Entities.Bank> _Repository, IMapper mapper) : ListCommandHandler<GetListBankQuery, Domain.Entities.Bank, BankModelView>(_Repository, mapper)
+    public sealed class GetListQueryHandler(IRepository<Domain.Entities.Bank> _Repository, IMapper mapper) : ListCommandHandler<GetListBankQuery, Domain.Entities.Bank, BankDto>(_Repository, mapper)
     {
         public override Expression<Func<Domain.Entities.Bank, bool>> CreateFilter(GetListBankQuery request)
         {

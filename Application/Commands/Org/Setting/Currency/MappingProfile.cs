@@ -8,8 +8,8 @@ public partial class MappingProfile : Profile
     public void CurrencyMappingProfile()
     {
         #region Currency
-        CreateMap<Currency, CurrencyModelView>();
-        CreateMap<CurrencyModelView, Currency>();
+        CreateMap<Currency, CurrencyDto>();
+        CreateMap<CurrencyDto, Currency>();
 
         CreateMap<Currency, CreateCurrencyCommand>();
         CreateMap<CreateCurrencyCommand, Currency>();
@@ -18,10 +18,10 @@ public partial class MappingProfile : Profile
         CreateMap<Currency, DeleteCurrencyCommand>();
         CreateMap<DeleteCurrencyCommand, Currency>();
 
-        CreateMap<CurrencyModelView, CreateCurrencyCommand>();
-        CreateMap<CreateCurrencyCommand, CurrencyModelView>();
-        CreateMap<CurrencyModelView, UpdateCurrencyCommand>();
-        CreateMap<UpdateCurrencyCommand, CurrencyModelView>();
+        CreateMap<CurrencyDto, CreateCurrencyCommand>();
+        CreateMap<CreateCurrencyCommand, CurrencyDto>();
+        CreateMap<CurrencyDto, UpdateCurrencyCommand>();
+        CreateMap<UpdateCurrencyCommand, CurrencyDto>();
         #endregion
     }
 }

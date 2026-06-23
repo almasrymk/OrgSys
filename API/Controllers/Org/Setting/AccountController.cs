@@ -10,7 +10,7 @@ namespace API.Controllers.Org.Setting
 {
     [ApiController]
     [Route("[controller]")]
-    public class AccountController(ISender sender) : BaseController<GetByIdAccountQuery, SearchAccountQuery , GetListAccountQuery, CreateAccountCommand, UpdateAccountCommand, DeleteAccountCommand, DeleteListAccountCommand , GetMaxAccountQuery, AccountModelView>(sender)
+    public class AccountController(ISender sender) : BaseController<GetByIdAccountQuery, SearchAccountQuery , GetListAccountQuery, CreateAccountCommand, UpdateAccountCommand, DeleteAccountCommand, DeleteListAccountCommand , GetMaxAccountQuery, AccountDto>(sender)
     {
 
     }

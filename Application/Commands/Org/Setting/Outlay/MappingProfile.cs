@@ -8,8 +8,8 @@ public partial class MappingProfile : Profile
     public void OutlayMappingProfile()
     {
         #region Outlay
-        CreateMap<Outlay, OutlayModelView>();
-        CreateMap<OutlayModelView, Outlay>();       
+        CreateMap<Outlay, OutlayDto>();
+        CreateMap<OutlayDto, Outlay>();       
         #endregion
     }
 }

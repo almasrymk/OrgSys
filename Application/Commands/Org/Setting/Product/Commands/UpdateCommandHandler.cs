@@ -10,7 +10,7 @@
     using Application.DTOs;
     using System.Threading.Tasks;
 
-    public sealed class UpdateProductCommand : ProductModelView, ICommand, IUpdateCommand<Result>;
+    public sealed class UpdateProductCommand : ProductDto, ICommand, IUpdateCommand<Result>;
 
     public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Domain.Entities.Product> _Repository, IRepository<Domain.Entities.ProductUnit> _ProductUnitRepository, IMapper mapper, IServiceProvider _provider) : UpdateCommandHandler<UpdateProductCommand, Domain.Entities.Product>(_UnitOfWork, _Repository, mapper , _provider)
     {

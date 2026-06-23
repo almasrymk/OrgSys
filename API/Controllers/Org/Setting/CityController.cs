@@ -11,7 +11,7 @@ namespace API.Controllers.Org.Setting
 {
     [ApiController]
     [Route("[controller]")]
-    public class CityController(ISender sender) : BaseController<GetByIdCityQuery, SearchCityQuery , GetListCityQuery , CreateCityCommand, UpdateCityCommand, DeleteCityCommand , DeleteListCityCommand, CityModelView>(sender)
+    public class CityController(ISender sender) : BaseController<GetByIdCityQuery, SearchCityQuery , GetListCityQuery , CreateCityCommand, UpdateCityCommand, DeleteCityCommand , DeleteListCityCommand, CityDto>(sender)
     {
         [HttpGet("GetListByCountryId")]
         public virtual async Task<IActionResult> GetListByCountryId(string? KeySearch , long? CountryId, long ParentId, long TypeId, int Page, int PageSize, CancellationToken cancellationToken)

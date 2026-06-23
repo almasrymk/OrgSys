@@ -11,7 +11,7 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-    public sealed class CreateRoleCommand : RoleModelView, ICommand, ICreateCommand<Result>;
+    public sealed class CreateRoleCommand : RoleDto, ICommand, ICreateCommand<Result>;
 
     public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Domain.Entities.Role> _Repository, IRepository<Domain.Entities.RolePermission> _rolePermissionRepository, IMapper mapper) : CreateCommandHandler<CreateRoleCommand, Domain.Entities.Role>(_UnitOfWork, _Repository, mapper)
     {

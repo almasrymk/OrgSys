@@ -11,7 +11,7 @@ namespace API.Controllers.Org.Setting
 {
     [ApiController]
     [Route("[controller]")]
-    public class ShiftController(ISender sender) : BaseController<GetByIdShiftQuery, SearchShiftQuery , GetListShiftQuery, CreateShiftCommand, UpdateShiftCommand, DeleteShiftCommand, DeleteListShiftCommand, ShiftModelView>(sender)
+    public class ShiftController(ISender sender) : BaseController<GetByIdShiftQuery, SearchShiftQuery , GetListShiftQuery, CreateShiftCommand, UpdateShiftCommand, DeleteShiftCommand, DeleteListShiftCommand, ShiftDto>(sender)
     {
 
     }

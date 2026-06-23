@@ -10,9 +10,9 @@
     using System.Linq.Expressions;
     using Domain.Enums;
 
-    public sealed record GetListAccountQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandCollection<AccountModelView> , IListQuery<ResultCollection<AccountModelView>>;
+    public sealed record GetListAccountQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandCollection<AccountDto> , IListQuery<ResultCollection<AccountDto>>;
 
-    public sealed class GetListQueryHandler(IRepository<Domain.Entities.Account> _Repository, IMapper mapper) : ListCommandHandler<GetListAccountQuery, Domain.Entities.Account, AccountModelView>(_Repository, mapper)
+    public sealed class GetListQueryHandler(IRepository<Domain.Entities.Account> _Repository, IMapper mapper) : ListCommandHandler<GetListAccountQuery, Domain.Entities.Account, AccountDto>(_Repository, mapper)
     {
         public override Expression<Func<Domain.Entities.Account, bool>> CreateFilter(GetListAccountQuery request)
         {

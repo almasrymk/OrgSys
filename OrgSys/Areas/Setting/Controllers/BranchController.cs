@@ -11,14 +11,14 @@
     using System.Threading.Tasks;
 
     [Area("Setting")]
-    public class BranchController(IConfiguration configuration, IMapper mapper) : MainController<BranchModelView, CreateBranchCommand, UpdateBranchCommand>(configuration, mapper)
+    public class BranchController(IConfiguration configuration, IMapper mapper) : MainController<BranchDto, CreateBranchCommand, UpdateBranchCommand>(configuration, mapper)
     {
         public async Task<JsonResult> GetList(string txtSearch = "", int page = 1, int pageSize = 20)
         {
             if (txtSearch != null)
                 txtSearch = txtSearch.Trim().ToLower();
 
-            var itemsList = await GetListApi<BranchModelView>(TextSearch: txtSearch, Page: page, PageSize: pageSize);
+            var itemsList = await GetListApi<BranchDto>(TextSearch: txtSearch, Page: page, PageSize: pageSize);
             var list = itemsList.Distinct().OrderBy(_ => _.Name)
                 .Select(_ => new
                 {

@@ -11,7 +11,7 @@ namespace API.Controllers.Org.Setting
 {
     [ApiController]
     [Route("[controller]")]
-    public class BankController(ISender sender) : BaseController<GetByIdBankQuery, SearchBankQuery , GetListBankQuery, CreateBankCommand, UpdateBankCommand, DeleteBankCommand, DeleteListBankCommand, BankModelView>(sender)
+    public class BankController(ISender sender) : BaseController<GetByIdBankQuery, SearchBankQuery , GetListBankQuery, CreateBankCommand, UpdateBankCommand, DeleteBankCommand, DeleteListBankCommand, BankDto>(sender)
     {
 
     }

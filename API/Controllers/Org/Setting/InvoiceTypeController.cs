@@ -11,7 +11,7 @@ namespace API.Controllers.Org.Setting
 {
     [ApiController]
     [Route("[controller]")]
-    public class InvoiceTypeController(ISender sender) : BaseController<GetByIdInvoiceTypeQuery, SearchInvoiceTypeQuery , GetListInvoiceTypeQuery, CreateInvoiceTypeCommand, UpdateInvoiceTypeCommand, DeleteInvoiceTypeCommand, DeleteListInvoiceTypeCommand, InvoiceTypeModelView>(sender)
+    public class InvoiceTypeController(ISender sender) : BaseController<GetByIdInvoiceTypeQuery, SearchInvoiceTypeQuery , GetListInvoiceTypeQuery, CreateInvoiceTypeCommand, UpdateInvoiceTypeCommand, DeleteInvoiceTypeCommand, DeleteListInvoiceTypeCommand, InvoiceTypeDto>(sender)
     {
 
     }

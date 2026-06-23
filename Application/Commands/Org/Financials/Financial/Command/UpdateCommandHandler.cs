@@ -10,7 +10,7 @@
     using Domain.Entities;
     using Application.DTOs;
 
-    public sealed class UpdateFinancialCommand : Application.DTOs.FinancialModelView, ICommand, IUpdateCommand<Result>;
+    public sealed class UpdateFinancialCommand : Application.DTOs.FinancialDto, ICommand, IUpdateCommand<Result>;
     public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork, 
         IRepository<Domain.Entities.Financial> _Repository ,
         IRepository<Domain.Entities.FinancialInvoice> _RepositoryFinancialInvoice,

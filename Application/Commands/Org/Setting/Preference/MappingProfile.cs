@@ -9,9 +9,9 @@ public partial class MappingProfile : Profile
     public void PreferenceMappingProfile()
     {
         #region Preference
-        CreateMap<Preference, PreferenceModelView>();
-        CreateMap<PreferenceModelView, Preference>();
-        CreateMap<PreferenceModelView, UpdatePreferenceCommand>();
+        CreateMap<Preference, PreferenceDto>();
+        CreateMap<PreferenceDto, Preference>();
+        CreateMap<PreferenceDto, UpdatePreferenceCommand>();
         #endregion
     }
 }

@@ -37,4 +37,8 @@
     <Folder Include="Commands\Org\Financials\Financial\Queries\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="DTOs\OrgDb\AccountBankDto.cs" />
+  </ItemGroup>
+
 </Project>

@@ -10,9 +10,9 @@
     using Application.Interfaces.CQRS;
     using Application.Abstraction.Command;
 
-    public sealed record SearchCityQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandPagination<CityModelView> ,ISearchQuery<ResultPagination<CityModelView>>;
+    public sealed record SearchCityQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandPagination<CityDto> ,ISearchQuery<ResultPagination<CityDto>>;
 
-    public sealed class SearchQueryHandler(IRepository<Domain.Entities.City> _Repository, IMapper mapper) : SearchCommandHandler<SearchCityQuery, Domain.Entities.City, CityModelView>(_Repository, mapper)
+    public sealed class SearchQueryHandler(IRepository<Domain.Entities.City> _Repository, IMapper mapper) : SearchCommandHandler<SearchCityQuery, Domain.Entities.City, CityDto>(_Repository, mapper)
     {
         public override Expression<Func<Domain.Entities.City, bool>> CreateFilter(SearchCityQuery request)
         {

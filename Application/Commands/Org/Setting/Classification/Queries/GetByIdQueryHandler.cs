@@ -10,9 +10,9 @@
     using Application.DTOs;
     using System.Linq.Expressions;
 
-    public sealed record GetByIdClassificationQuery(long Id) : ICommand<ClassificationModelView> , IGetByIdQuery<Result<ClassificationModelView>>;
+    public sealed record GetByIdClassificationQuery(long Id) : ICommand<ClassificationDto> , IGetByIdQuery<Result<ClassificationDto>>;
 
-    public sealed class GetByIdQueryHandler(IRepository<Domain.Entities.Classification> _Repository, IMapper mapper) : GetCommandHandler<GetByIdClassificationQuery, Domain.Entities.Classification, ClassificationModelView>(_Repository, mapper)
+    public sealed class GetByIdQueryHandler(IRepository<Domain.Entities.Classification> _Repository, IMapper mapper) : GetCommandHandler<GetByIdClassificationQuery, Domain.Entities.Classification, ClassificationDto>(_Repository, mapper)
     {
         public override Expression<Func<Domain.Entities.Classification, bool>> CreateFilter(GetByIdClassificationQuery request)
         {           

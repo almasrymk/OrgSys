@@ -10,9 +10,9 @@
     using System.Linq.Expressions;
     using Utility;
 
-    public sealed record SearchRoleQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandPagination<RoleModelView> ,ISearchQuery<ResultPagination<RoleModelView>>;
+    public sealed record SearchRoleQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandPagination<RoleDto> ,ISearchQuery<ResultPagination<RoleDto>>;
 
-    public sealed class SearchQueryHandler(IRepository<Domain.Entities.Role> _Repository, IMapper mapper) : SearchCommandHandler<SearchRoleQuery, Domain.Entities.Role, RoleModelView>(_Repository, mapper)
+    public sealed class SearchQueryHandler(IRepository<Domain.Entities.Role> _Repository, IMapper mapper) : SearchCommandHandler<SearchRoleQuery, Domain.Entities.Role, RoleDto>(_Repository, mapper)
     {
         public override Expression<Func<Domain.Entities.Role, bool>> CreateFilter(SearchRoleQuery request)
         {

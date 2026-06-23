@@ -8,7 +8,7 @@
     using Domain.Shared;
     using Domain.Entities;
 
-    public sealed class UpdateJournalCommand : Application.DTOs.JournalModelView, ICommand, IUpdateCommand<Result>;
+    public sealed class UpdateJournalCommand : Application.DTOs.JournalDto, ICommand, IUpdateCommand<Result>;
     public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork,
         IRepository<Domain.Entities.Journal> _Repository,
         IRepository<Domain.Entities.JournalItem> _RepositoryJournalInvoice,

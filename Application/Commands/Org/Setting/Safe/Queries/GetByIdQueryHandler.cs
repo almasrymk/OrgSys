@@ -10,9 +10,9 @@
     using Application.DTOs;
     using System.Linq.Expressions;
 
-    public sealed record GetByIdSafeQuery(long Id) : ICommand<SafeModelView> , IGetByIdQuery<Result<SafeModelView>>;
+    public sealed record GetByIdSafeQuery(long Id) : ICommand<SafeDto> , IGetByIdQuery<Result<SafeDto>>;
 
-    public sealed class GetByIdQueryHandler(IRepository<Domain.Entities.Safe> _Repository, IMapper mapper) : GetCommandHandler<GetByIdSafeQuery, Domain.Entities.Safe, SafeModelView>(_Repository, mapper)
+    public sealed class GetByIdQueryHandler(IRepository<Domain.Entities.Safe> _Repository, IMapper mapper) : GetCommandHandler<GetByIdSafeQuery, Domain.Entities.Safe, SafeDto>(_Repository, mapper)
     {
         public override Expression<Func<Domain.Entities.Safe, bool>> CreateFilter(GetByIdSafeQuery request)
         {           

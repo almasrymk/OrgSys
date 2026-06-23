@@ -11,7 +11,7 @@ namespace API.Controllers.Org.Setting
 {
     [ApiController]
     [Route("[controller]")]
-    public class OutlayController(ISender sender) : BaseController<GetByIdOutlayQuery, SearchOutlayQuery , GetListOutlayQuery, CreateOutlayCommand, UpdateOutlayCommand, DeleteOutlayCommand, DeleteListOutlayCommand, OutlayModelView>(sender)
+    public class OutlayController(ISender sender) : BaseController<GetByIdOutlayQuery, SearchOutlayQuery , GetListOutlayQuery, CreateOutlayCommand, UpdateOutlayCommand, DeleteOutlayCommand, DeleteListOutlayCommand, OutlayDto>(sender)
     {
 
     }

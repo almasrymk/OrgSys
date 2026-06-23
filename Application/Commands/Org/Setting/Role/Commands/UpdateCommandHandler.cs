@@ -9,7 +9,7 @@
     using Application.DTOs;
     using System.Net;
 
-    public sealed class UpdateRoleCommand : RoleModelView, ICommand, IUpdateCommand<Result>;
+    public sealed class UpdateRoleCommand : RoleDto, ICommand, IUpdateCommand<Result>;
 
     public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Domain.Entities.Role> _Repository, IRepository<Domain.Entities.RolePermission> _rolePermissionRepository, IMapper mapper, IServiceProvider _provider) : UpdateCommandHandler<UpdateRoleCommand, Domain.Entities.Role>(_UnitOfWork, _Repository, mapper , _provider)
     {

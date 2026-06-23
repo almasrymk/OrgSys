@@ -8,7 +8,7 @@ using Domain.Abstraction;
 using Domain.Shared;
 using Application.DTOs;
 
-public sealed class CreateFinancialTypeCommand : Application.DTOs.FinancialTypeModelView, ICommand , ICreateCommand<Result>;
+public sealed class CreateFinancialTypeCommand : Application.DTOs.FinancialTypeDto, ICommand , ICreateCommand<Result>;
 
 public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork, 
     IRepository<Domain.Entities.FinancialType> _Repository, 

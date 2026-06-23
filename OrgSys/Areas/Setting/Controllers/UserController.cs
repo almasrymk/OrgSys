@@ -13,20 +13,20 @@
     using System.Threading.Tasks;
 
     [Area("Setting")]
-    public class UserController(IConfiguration configuration, IMapper mapper) : MainController<UserModelView, CreateUserCommand, UpdateUserCommand>(configuration, mapper)
+    public class UserController(IConfiguration configuration, IMapper mapper) : MainController<UserDto, CreateUserCommand, UpdateUserCommand>(configuration, mapper)
     {
-        public override async Task LoadViewBag(UserModelView model)
+        public override async Task LoadViewBag(UserDto model)
         {
-            ViewBag.BranchList = new SelectList(await GetListApi<BranchModelView>(Page: 1, PageSize: 20), "Id", "Name", model.BranchId);
-            ViewBag.RoleList = new SelectList(await GetListApi<RoleModelView>(Page: 1, PageSize: 20), "Id", "Name", model.RoleId);
+            ViewBag.BranchList = new SelectList(await GetListApi<BranchDto>(Page: 1, PageSize: 20), "Id", "Name", model.BranchId);
+            ViewBag.RoleList = new SelectList(await GetListApi<RoleDto>(Page: 1, PageSize: 20), "Id", "Name", model.RoleId);
         } 
 
-        public override async Task<ActionResult> Save(UserModelView model)
+        public override async Task<ActionResult> Save(UserDto model)
         {
             var res = await base.Save(model);
             if (User.IsCurrentUserAndRole(model.Id, model.RoleId))
             {
-                var us = (await GetObApi<UserModelView>($"GetById?Id={model.Id}"));
+                var us = (await GetObApi<UserDto>($"GetById?Id={model.Id}"));
                 if (us != null)
                     us.SignIn(HttpContext, User.GetSchema());
             }
@@ -38,7 +38,7 @@
             if (txtSearch != null)
                 txtSearch = txtSearch.Trim().ToLower();
 
-            var itemsList = await GetListApi<UserModelView>(TextSearch: txtSearch, Page: page, PageSize: pageSize);
+            var itemsList = await GetListApi<UserDto>(TextSearch: txtSearch, Page: page, PageSize: pageSize);
             var list = itemsList.Distinct().OrderBy(_ => _.Name)
                 .Select(_ => new
                 {

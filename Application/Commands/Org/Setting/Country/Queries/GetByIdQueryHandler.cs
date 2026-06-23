@@ -10,9 +10,9 @@
     using Application.DTOs;
     using System.Linq.Expressions;
 
-    public sealed record GetByIdCountryQuery(long Id) : ICommand<CountryModelView> , IGetByIdQuery<Result<CountryModelView>>;
+    public sealed record GetByIdCountryQuery(long Id) : ICommand<CountryDto> , IGetByIdQuery<Result<CountryDto>>;
 
-    public sealed class GetByIdQueryHandler(IRepository<Domain.Entities.Country> _Repository, IMapper mapper) : GetCommandHandler<GetByIdCountryQuery, Domain.Entities.Country, CountryModelView>(_Repository, mapper)
+    public sealed class GetByIdQueryHandler(IRepository<Domain.Entities.Country> _Repository, IMapper mapper) : GetCommandHandler<GetByIdCountryQuery, Domain.Entities.Country, CountryDto>(_Repository, mapper)
     {
         public override Expression<Func<Domain.Entities.Country, bool>> CreateFilter(GetByIdCountryQuery request)
         {           

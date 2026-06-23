@@ -10,9 +10,9 @@
     using System.Linq.Expressions;
     using Utility;
 
-    public sealed record SearchCountryQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandPagination<CountryModelView> ,ISearchQuery<ResultPagination<CountryModelView>>;
+    public sealed record SearchCountryQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandPagination<CountryDto> ,ISearchQuery<ResultPagination<CountryDto>>;
 
-    public sealed class SearchQueryHandler(IRepository<Domain.Entities.Country> _Repository, IMapper mapper) : SearchCommandHandler<SearchCountryQuery, Domain.Entities.Country, CountryModelView>(_Repository, mapper)
+    public sealed class SearchQueryHandler(IRepository<Domain.Entities.Country> _Repository, IMapper mapper) : SearchCommandHandler<SearchCountryQuery, Domain.Entities.Country, CountryDto>(_Repository, mapper)
     {
         public override Expression<Func<Domain.Entities.Country, bool>> CreateFilter(SearchCountryQuery request)
         {

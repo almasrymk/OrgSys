@@ -10,9 +10,9 @@
     using System.Linq.Expressions;
     using Utility;
 
-    public sealed record GetListJournalQuery(string KeySearch, long ParentId, long TypeId, int Page, int PageSize) : ICommandCollection<JournalModelView>, IListQuery<ResultCollection<JournalModelView>>;
+    public sealed record GetListJournalQuery(string KeySearch, long ParentId, long TypeId, int Page, int PageSize) : ICommandCollection<JournalDto>, IListQuery<ResultCollection<JournalDto>>;
 
-    public sealed class GetListQueryHandler(IRepository<Domain.Entities.Journal> _Repository, IMapper mapper) : ListCommandHandler<GetListJournalQuery, Domain.Entities.Journal, JournalModelView>(_Repository, mapper)
+    public sealed class GetListQueryHandler(IRepository<Domain.Entities.Journal> _Repository, IMapper mapper) : ListCommandHandler<GetListJournalQuery, Domain.Entities.Journal, JournalDto>(_Repository, mapper)
     {
         public override Expression<Func<Domain.Entities.Journal, bool>> CreateFilter(GetListJournalQuery request)
         {

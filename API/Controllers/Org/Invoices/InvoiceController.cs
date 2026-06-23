@@ -15,7 +15,7 @@ namespace API.Controllers.Org.Invoices
     [Route("[controller]")]
     public class InvoiceController(ISender sender) : BaseController<GetByIdInvoiceQuery,
         SearchInvoiceQuery, GetListInvoiceQuery, CreateInvoiceCommand, UpdateInvoiceCommand, DeleteInvoiceCommand, 
-        DeleteListInvoiceCommand, GetMaxInvoiceQuery, InvoiceModelView>(sender)
+        DeleteListInvoiceCommand, GetMaxInvoiceQuery, InvoiceDto>(sender)
     {
 
         [HttpPut("Cancel")]
@@ -54,20 +54,20 @@ namespace API.Controllers.Org.Invoices
 
 
         [HttpGet("GetInvoicesNotReturn")]
-        public async Task<ResultPagination<InvoiceModelView>> GetInvoicesNotReturn(string KeySearch = "", long ParentId = 0, long TypeId = 0, int Page = 1, int PageSize = 10, CancellationToken cancellationToken = default)
+        public async Task<ResultPagination<InvoiceDto>> GetInvoicesNotReturn(string KeySearch = "", long ParentId = 0, long TypeId = 0, int Page = 1, int PageSize = 10, CancellationToken cancellationToken = default)
         {
             return await sender.Send(new GetInvoiceNotReturnedQuery(KeySearch, ParentId, TypeId, Page, PageSize), cancellationToken);
         }
 
         [HttpGet("SearchInvoice")]
-        public async Task<ResultPagination<InvoiceModelView>> SearchInvoice(string KeySearch = "", long dealerId = 0, long currencyId = 0
+        public async Task<ResultPagination<InvoiceDto>> SearchInvoice(string KeySearch = "", long dealerId = 0, long currencyId = 0
            , int typeId = 1, int Page = 1 ,int PageSize = 10 , string Ids = "", CancellationToken cancellationToken = default)
         {
             return await sender.Send(new GetCreditAllByDealerIdQuery(KeySearch, typeId, Page, PageSize, 0, dealerId, currencyId , Ids), cancellationToken);
         }
 
         [HttpGet("GetProductInvoicesNotReturn")]
-        public async Task<ResultCollection<InvoiceProductModelView>> GetProductInvoicesNotReturn(long Id, CancellationToken cancellationToken = default)
+        public async Task<ResultCollection<InvoiceProductDto>> GetProductInvoicesNotReturn(long Id, CancellationToken cancellationToken = default)
         {
             return await sender.Send(new GetProductsNotReturnedQuery(Id), cancellationToken);
         }

@@ -8,7 +8,7 @@
     using Domain.Shared;
     using Application.DTOs;
 
-    public sealed class UpdateCurrencyCommand : CurrencyModelView , ICommand, IUpdateCommand<Result>;
+    public sealed class UpdateCurrencyCommand : CurrencyDto , ICommand, IUpdateCommand<Result>;
 
     public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Domain.Entities.Currency> _Repository , IMapper mapper, IServiceProvider _provider) : UpdateCommandHandler<UpdateCurrencyCommand, Domain.Entities.Currency>(_UnitOfWork, _Repository , mapper , _provider)
     {
