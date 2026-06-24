@@ -1,9 +1,78 @@
-﻿@model Domain.Shared.ResultPagination<Entity.ModelView.AccountModelView>
+﻿@using Entity.ModelView
+@model Domain.Shared.ResultPagination<Entity.ModelView.AccountModelView>
 @{
     ViewData["Title_Designer"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<style>
+    .account-tree,
+.account-tree ul {
+    list-style: none;
+    margin: 0;
+    padding-left: 20px;
+}
 
+.account-tree li {
+    position: relative;
+    margin: 4px 0;
+}
+
+.account-tree ul {
+    border-left: 1px solid #d6d6d6;
+    margin-left: 10px;
+}
+
+.tree-node {
+    display: flex;
+    align-items: center;
+    min-height: 38px;
+    padding: 6px 10px;
+    border-radius: 8px;
+    transition: all .2s ease;
+    cursor: pointer;
+}
+
+.tree-node:hover {
+    background: #f3f7ff;
+    transform: translateX(2px);
+}
+
+.tree-toggle,
+.tree-empty {
+    width: 22px;
+    text-align: center;
+    margin-right: 5px;
+}
+
+.tree-toggle {
+    transition: transform .2s ease;
+}
+
+.tree-toggle.open {
+    transform: rotate(90deg);
+}
+
+.tree-icon {
+    color: #f4b400;
+    margin-right: 8px;
+    font-size: 16px;
+}
+
+.tree-text {
+    font-size: 14px;
+    color: #333;
+}
+
+.tree-code {
+    font-weight: 700;
+    color: #0d6efd;
+    margin-right: 6px;
+}
+
+.tree-children {
+    display: none;
+}
+    </style>
 <div class="container-fluid disable-text-selection">
     <div class="row">
         <div class="col-12">
@@ -55,6 +124,9 @@
                                     <path class="view-icon-svg" d="M17.5,17H6.5a.5.5,0,0,1,0-1h11a.5.5,0,0,1,0,1Z"></path>
                                 </svg>
                             </a>
+                            <a href="javascript:;" class="mr-2 view-icon mode-tree">
+                             <i class="simple-icon-organization"></i>
+                            </a>
                         </span>
                     </div>
                     <div class="float-md-right">
@@ -82,4 +154,65 @@
             </div>
         </div>
     }
+<div id="TreeView" class="col-12" style="display:none">
+    <div class="card">
+        <div class="card-body">
+
+            <h5 class="mb-4">
+                <i class="simple-icon-organization"></i>
+                Account Tree
+            </h5>
+
+            <ul class="account-tree">
+                @foreach (var node in (List<AccountTreeNodeModelView>)ViewBag.AccountTree)
+                {
+                    @Html.Partial("_AccountTreeNode", node)
+                }
+            </ul>
+
+        </div>
+    </div>
 </div>
+</div>
+
+ <script src="~/lib/jquery/dist/jquery.min.js"></script>
+   <script>
+        var currentView = "table";
+        $(document).ready(function () {
+            $(".mode-table").click(function () {
+                currentView = "table";
+                $("#List").show();
+                $("#TreeView").hide();
+            });
+            $(".mode-list").click(function () {
+                currentView = "list";
+                $("#List").show();
+                $("#TreeView").hide();
+            });
+            $(".mode-tree").click(function () {
+                currentView = "tree";
+                $("#List").hide();
+                $("#TreeView").show();
+            });
+        });
+       $(document).on("click", ".tree-toggle", function () {
+
+    const children = $(this)
+        .closest("li")
+        .children(".tree-children");
+
+    children.stop(true, true).slideToggle(200);
+
+    $(this).toggleClass("open");
+});
+
+$(".mode-tree").click(function () {
+    currentView = "tree";
+
+    $("#List").hide();
+    $("#TreeView").show();
+
+    $("#TreeView > ul > li > .tree-children").show();
+    $("#TreeView > ul > li > .tree-node > .tree-toggle").text("▼");
+});
+        </script>

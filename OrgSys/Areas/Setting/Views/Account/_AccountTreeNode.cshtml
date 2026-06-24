@@ -1,0 +1,32 @@
+﻿@model Entity.ModelView.AccountTreeNodeModelView
+<li>
+    <div class="tree-node">
+
+        @if (Model.Children.Any())
+        {
+            <span class="tree-toggle">▶</span>
+        }
+        else
+        {
+            <span class="tree-empty"></span>
+        }
+
+        <i class="simple-icon-folder tree-icon"></i>
+
+        <span class="tree-text">
+            <span class="tree-code">@Model.Code</span>
+            @Model.Name
+        </span>
+
+    </div>
+
+    @if (Model.Children.Any())
+    {
+        <ul class="tree-children">
+            @foreach (var child in Model.Children)
+            {
+                @Html.Partial("_AccountTreeNode", child)
+            }
+        </ul>
+    }
+</li>
