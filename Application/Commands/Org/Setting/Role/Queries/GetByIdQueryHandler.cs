@@ -7,19 +7,19 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.Model;
-    using Entity.ModelView;
+    using Domain.Entities;
+    using Application.DTOs;
     using System.Linq.Expressions;
     using System.Net;
     using System.Threading;
     using System.Threading.Tasks;
     using Utility;
 
-    public sealed record GetByIdRoleQuery(long Id) : ICommand<RoleModelView> , IGetByIdQuery<Result<RoleModelView>>;
+    public sealed record GetByIdRoleQuery(long Id) : ICommand<RoleDto> , IGetByIdQuery<Result<RoleDto>>;
 
-    public sealed class GetByIdQueryHandler(IRepository<Entity.Model.Role> _Repository, IRepository<Entity.Model.RolePermission> _RolePermissionRepository, IRepository<Entity.Model.Permission> _PermissionRepository, IMapper mapper) : GetCommandHandler<GetByIdRoleQuery, Entity.Model.Role, RoleModelView>(_Repository, mapper)
+    public sealed class GetByIdQueryHandler(IRepository<Domain.Entities.Role> _Repository, IRepository<Domain.Entities.RolePermission> _RolePermissionRepository, IRepository<Domain.Entities.Permission> _PermissionRepository, IMapper mapper) : GetCommandHandler<GetByIdRoleQuery, Domain.Entities.Role, RoleDto>(_Repository, mapper)
     {
-        public override async Task<Result<RoleModelView>> Handle(GetByIdRoleQuery request, CancellationToken cancellationToken)
+        public override async Task<Result<RoleDto>> Handle(GetByIdRoleQuery request, CancellationToken cancellationToken)
         {
             var ob = await _Repository.GetByFilterAsync(e => e.Id == request.Id, CreateInclude());
             if (ob == null)
@@ -29,15 +29,15 @@
             var RolePermissionList = await GetRolePermissions(request.Id);
             var obModel = Map(ob, RolePermissionList, PermissionList);
 
-            return new Result<RoleModelView>(
+            return new Result<RoleDto>(
                     HttpStatusCode.OK,
                     obModel,
                     null);
         }
 
-        public override Expression<Func<Entity.Model.Role, bool>> CreateFilter(GetByIdRoleQuery request)
+        public override Expression<Func<Domain.Entities.Role, bool>> CreateFilter(GetByIdRoleQuery request)
         {           
-            return e => e.Id == request.Id && e.Status !=Utility.Status.Deleted && e.Hide != true;
+            return e => e.Id == request.Id && e.Status !=Domain.Enums.Status.Deleted && e.Hide != true;
         }
 
         public override string CreateInclude()
@@ -57,9 +57,9 @@
             return List!;
         }
 
-        private RoleModelView Map(Role ob , IEnumerable<RolePermission> rolePermissions , IEnumerable<Permission> permissions)
+        private RoleDto Map(Role ob , IEnumerable<RolePermission> rolePermissions , IEnumerable<Permission> permissions)
         {
-            var obModel = mapper.Map<RoleModelView>(ob);
+            var obModel = mapper.Map<RoleDto>(ob);
             obModel.PermissionsTree = permissions.Select(e => new TreeView { Id = e.Id, Key = e.Key, Value = Translate.GetTranslate(e.Name), ParentId = e.ParentId }).ToList();
             foreach (var item in obModel.PermissionsTree)
             {

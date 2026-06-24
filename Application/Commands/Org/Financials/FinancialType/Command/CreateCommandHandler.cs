@@ -6,13 +6,13 @@ using Application.Interfaces.CQRS;
 using AutoMapper;
 using Domain.Abstraction;
 using Domain.Shared;
-using Entity.ModelView;
+using Application.DTOs;
 
-public sealed class CreateFinancialTypeCommand : Entity.ModelView.FinancialTypeModelView, ICommand , ICreateCommand<Result>;
+public sealed class CreateFinancialTypeCommand : Application.DTOs.FinancialTypeDto, ICommand , ICreateCommand<Result>;
 
 public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork, 
-    IRepository<Entity.Model.FinancialType> _Repository, 
-    IMapper mapper) : CreateCommandHandler<CreateFinancialTypeCommand, Entity.Model.FinancialType>(_UnitOfWork, _Repository , mapper)
+    IRepository<Domain.Entities.FinancialType> _Repository, 
+    IMapper mapper) : CreateCommandHandler<CreateFinancialTypeCommand, Domain.Entities.FinancialType>(_UnitOfWork, _Repository , mapper)
 {
    
 }

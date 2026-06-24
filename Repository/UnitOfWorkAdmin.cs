@@ -1,6 +1,4 @@
-﻿using Entity;
-
-namespace Repository
+﻿namespace Repository
 {
     public class UnitOfWorkAdmin
     {

@@ -7,21 +7,21 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.Model;
-    using Entity.ModelView;
+    using Domain.Entities;
+    using Application.DTOs;
     using Microsoft.Extensions.DependencyInjection;
     using System.Linq.Expressions;
 
     public sealed record DeleteTransactionCommand(long Id) : ICommand, IDeleteCommand<Result>;
 
     public sealed class DeleteCommandHandler(IUnitOfWork _UnitOfWork,
-        IRepository<Entity.Model.Transaction> _Repository,
+        IRepository<Domain.Entities.Transaction> _Repository,
         IRepository<TransactionProduct> _TransactionProductRepository,
-        IServiceProvider _provider) : DeleteCommandHandler<DeleteTransactionCommand, Entity.Model.Transaction>(_UnitOfWork, _Repository, _provider)
+        IServiceProvider _provider) : DeleteCommandHandler<DeleteTransactionCommand, Domain.Entities.Transaction>(_UnitOfWork, _Repository, _provider)
     {
-        public override Expression<Func<Entity.Model.Transaction, bool>> CreateFilter(DeleteTransactionCommand request)
+        public override Expression<Func<Domain.Entities.Transaction, bool>> CreateFilter(DeleteTransactionCommand request)
         {
-            return e => e.Id == request.Id && e.Status != Utility.Status.Deleted && e.Hide != true;
+            return e => e.Id == request.Id && e.Status != Domain.Enums.Status.Deleted && e.Hide != true;
         }
 
         public override async Task<bool> RemoveDetails(DeleteTransactionCommand request)

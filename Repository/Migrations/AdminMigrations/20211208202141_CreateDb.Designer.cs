@@ -20,7 +20,7 @@ namespace Repository.Migrations.AdminMigrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.1");
 
-            modelBuilder.Entity("Entity.Model.Client", b =>
+            modelBuilder.Entity("Domain.Entities.Client", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -126,7 +126,7 @@ namespace Repository.Migrations.AdminMigrations
                         });
                 });
 
-            modelBuilder.Entity("Entity.Model.ClientPlan", b =>
+            modelBuilder.Entity("Domain.Entities.ClientPlan", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -194,7 +194,7 @@ namespace Repository.Migrations.AdminMigrations
                         });
                 });
 
-            modelBuilder.Entity("Entity.Model.GeneralCity", b =>
+            modelBuilder.Entity("Domain.Entities.GeneralCity", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -239,7 +239,7 @@ namespace Repository.Migrations.AdminMigrations
                     b.ToTable("GeneralCity", "admin");
                 });
 
-            modelBuilder.Entity("Entity.Model.GeneralClassification", b =>
+            modelBuilder.Entity("Domain.Entities.GeneralClassification", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -289,7 +289,7 @@ namespace Repository.Migrations.AdminMigrations
                     b.ToTable("GeneralClassification", "admin");
                 });
 
-            modelBuilder.Entity("Entity.Model.GeneralCountry", b =>
+            modelBuilder.Entity("Domain.Entities.GeneralCountry", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -329,7 +329,7 @@ namespace Repository.Migrations.AdminMigrations
                     b.ToTable("GeneralCountry", "admin");
                 });
 
-            modelBuilder.Entity("Entity.Model.GeneralDistrict", b =>
+            modelBuilder.Entity("Domain.Entities.GeneralDistrict", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -379,7 +379,7 @@ namespace Repository.Migrations.AdminMigrations
                     b.ToTable("GeneralDistrict", "admin");
                 });
 
-            modelBuilder.Entity("Entity.Model.GeneralProduct", b =>
+            modelBuilder.Entity("Domain.Entities.GeneralProduct", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -443,7 +443,7 @@ namespace Repository.Migrations.AdminMigrations
                     b.ToTable("GeneralProduct", "admin");
                 });
 
-            modelBuilder.Entity("Entity.Model.GeneralProductPropertyElement", b =>
+            modelBuilder.Entity("Domain.Entities.GeneralProductPropertyElement", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -497,7 +497,7 @@ namespace Repository.Migrations.AdminMigrations
                     b.ToTable("GeneralProductPropertyElement", "admin");
                 });
 
-            modelBuilder.Entity("Entity.Model.GeneralProductRecipe", b =>
+            modelBuilder.Entity("Domain.Entities.GeneralProductRecipe", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -550,7 +550,7 @@ namespace Repository.Migrations.AdminMigrations
                     b.ToTable("GeneralProductRecipe", "admin");
                 });
 
-            modelBuilder.Entity("Entity.Model.GeneralProductUnit", b =>
+            modelBuilder.Entity("Domain.Entities.GeneralProductUnit", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -602,7 +602,7 @@ namespace Repository.Migrations.AdminMigrations
                     b.ToTable("GeneralProductUnit", "admin");
                 });
 
-            modelBuilder.Entity("Entity.Model.GeneralProperty", b =>
+            modelBuilder.Entity("Domain.Entities.GeneralProperty", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -642,7 +642,7 @@ namespace Repository.Migrations.AdminMigrations
                     b.ToTable("GeneralProperty", "admin");
                 });
 
-            modelBuilder.Entity("Entity.Model.GeneralPropertyElement", b =>
+            modelBuilder.Entity("Domain.Entities.GeneralPropertyElement", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -688,7 +688,7 @@ namespace Repository.Migrations.AdminMigrations
                     b.ToTable("GeneralPropertyElement", "admin");
                 });
 
-            modelBuilder.Entity("Entity.Model.GeneralUnit", b =>
+            modelBuilder.Entity("Domain.Entities.GeneralUnit", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -728,7 +728,7 @@ namespace Repository.Migrations.AdminMigrations
                     b.ToTable("GeneralUnit", "admin");
                 });
 
-            modelBuilder.Entity("Entity.Model.LoginUser", b =>
+            modelBuilder.Entity("Domain.Entities.LoginUser", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -804,7 +804,7 @@ namespace Repository.Migrations.AdminMigrations
                         });
                 });
 
-            modelBuilder.Entity("Entity.Model.Nationality", b =>
+            modelBuilder.Entity("Domain.Entities.Nationality", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -3466,7 +3466,7 @@ namespace Repository.Migrations.AdminMigrations
                         });
                 });
 
-            modelBuilder.Entity("Entity.Model.Plan", b =>
+            modelBuilder.Entity("Domain.Entities.Plan", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -3563,7 +3563,7 @@ namespace Repository.Migrations.AdminMigrations
                         });
                 });
 
-            modelBuilder.Entity("Entity.Model.PlanElement", b =>
+            modelBuilder.Entity("Domain.Entities.PlanElement", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -3611,7 +3611,7 @@ namespace Repository.Migrations.AdminMigrations
                     b.ToTable("PlanElement", "admin");
                 });
 
-            modelBuilder.Entity("Entity.Model.PlanType", b =>
+            modelBuilder.Entity("Domain.Entities.PlanType", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -3673,7 +3673,7 @@ namespace Repository.Migrations.AdminMigrations
                         });
                 });
 
-            modelBuilder.Entity("Entity.Model.Request", b =>
+            modelBuilder.Entity("Domain.Entities.Request", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -3748,7 +3748,7 @@ namespace Repository.Migrations.AdminMigrations
                         });
                 });
 
-            modelBuilder.Entity("Entity.Model.TypeActivity", b =>
+            modelBuilder.Entity("Domain.Entities.TypeActivity", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -3800,15 +3800,15 @@ namespace Repository.Migrations.AdminMigrations
                         });
                 });
 
-            modelBuilder.Entity("Entity.Model.Client", b =>
+            modelBuilder.Entity("Domain.Entities.Client", b =>
                 {
-                    b.HasOne("Entity.Model.Nationality", "Nationality")
+                    b.HasOne("Domain.Entities.Nationality", "Nationality")
                         .WithMany()
                         .HasForeignKey("NationalityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Entity.Model.TypeActivity", "TypeActivity")
+                    b.HasOne("Domain.Entities.TypeActivity", "TypeActivity")
                         .WithMany()
                         .HasForeignKey("TypeActivityId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3819,15 +3819,15 @@ namespace Repository.Migrations.AdminMigrations
                     b.Navigation("TypeActivity");
                 });
 
-            modelBuilder.Entity("Entity.Model.ClientPlan", b =>
+            modelBuilder.Entity("Domain.Entities.ClientPlan", b =>
                 {
-                    b.HasOne("Entity.Model.Client", "Client")
+                    b.HasOne("Domain.Entities.Client", "Client")
                         .WithMany()
                         .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Entity.Model.Plan", "Plan")
+                    b.HasOne("Domain.Entities.Plan", "Plan")
                         .WithMany()
                         .HasForeignKey("PlanId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3838,9 +3838,9 @@ namespace Repository.Migrations.AdminMigrations
                     b.Navigation("Plan");
                 });
 
-            modelBuilder.Entity("Entity.Model.GeneralCity", b =>
+            modelBuilder.Entity("Domain.Entities.GeneralCity", b =>
                 {
-                    b.HasOne("Entity.Model.GeneralCountry", "GeneralCountry")
+                    b.HasOne("Domain.Entities.GeneralCountry", "GeneralCountry")
                         .WithMany()
                         .HasForeignKey("GeneralCountryId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3849,15 +3849,15 @@ namespace Repository.Migrations.AdminMigrations
                     b.Navigation("GeneralCountry");
                 });
 
-            modelBuilder.Entity("Entity.Model.GeneralDistrict", b =>
+            modelBuilder.Entity("Domain.Entities.GeneralDistrict", b =>
                 {
-                    b.HasOne("Entity.Model.GeneralCity", "GeneralCity")
+                    b.HasOne("Domain.Entities.GeneralCity", "GeneralCity")
                         .WithMany()
                         .HasForeignKey("GeneralCityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Entity.Model.GeneralCountry", "GeneralCountry")
+                    b.HasOne("Domain.Entities.GeneralCountry", "GeneralCountry")
                         .WithMany()
                         .HasForeignKey("GeneralCountryId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3868,9 +3868,9 @@ namespace Repository.Migrations.AdminMigrations
                     b.Navigation("GeneralCountry");
                 });
 
-            modelBuilder.Entity("Entity.Model.GeneralProduct", b =>
+            modelBuilder.Entity("Domain.Entities.GeneralProduct", b =>
                 {
-                    b.HasOne("Entity.Model.GeneralClassification", "GeneralClassification")
+                    b.HasOne("Domain.Entities.GeneralClassification", "GeneralClassification")
                         .WithMany()
                         .HasForeignKey("GeneralClassificationId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3879,17 +3879,17 @@ namespace Repository.Migrations.AdminMigrations
                     b.Navigation("GeneralClassification");
                 });
 
-            modelBuilder.Entity("Entity.Model.GeneralProductPropertyElement", b =>
+            modelBuilder.Entity("Domain.Entities.GeneralProductPropertyElement", b =>
                 {
-                    b.HasOne("Entity.Model.GeneralProduct", "GeneralProduct")
+                    b.HasOne("Domain.Entities.GeneralProduct", "GeneralProduct")
                         .WithMany("GeneralProductPropertyElements")
                         .HasForeignKey("GeneralProductId");
 
-                    b.HasOne("Entity.Model.GeneralPropertyElement", "GeneralPropertyElement")
+                    b.HasOne("Domain.Entities.GeneralPropertyElement", "GeneralPropertyElement")
                         .WithMany()
                         .HasForeignKey("GeneralPropertyElementId");
 
-                    b.HasOne("Entity.Model.GeneralProperty", "GeneralProperty")
+                    b.HasOne("Domain.Entities.GeneralProperty", "GeneralProperty")
                         .WithMany()
                         .HasForeignKey("GeneralPropertyId");
 
@@ -3900,22 +3900,22 @@ namespace Repository.Migrations.AdminMigrations
                     b.Navigation("GeneralPropertyElement");
                 });
 
-            modelBuilder.Entity("Entity.Model.GeneralProductRecipe", b =>
+            modelBuilder.Entity("Domain.Entities.GeneralProductRecipe", b =>
                 {
-                    b.HasOne("Entity.Model.GeneralProduct", null)
+                    b.HasOne("Domain.Entities.GeneralProduct", null)
                         .WithMany("GeneralProductRecipes")
                         .HasForeignKey("GeneralProductId");
                 });
 
-            modelBuilder.Entity("Entity.Model.GeneralProductUnit", b =>
+            modelBuilder.Entity("Domain.Entities.GeneralProductUnit", b =>
                 {
-                    b.HasOne("Entity.Model.GeneralProduct", "GeneralProduct")
+                    b.HasOne("Domain.Entities.GeneralProduct", "GeneralProduct")
                         .WithMany("GeneralProductUnits")
                         .HasForeignKey("GeneralProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Entity.Model.GeneralUnit", "GeneralUnit")
+                    b.HasOne("Domain.Entities.GeneralUnit", "GeneralUnit")
                         .WithMany()
                         .HasForeignKey("GeneralUnitId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3926,9 +3926,9 @@ namespace Repository.Migrations.AdminMigrations
                     b.Navigation("GeneralUnit");
                 });
 
-            modelBuilder.Entity("Entity.Model.GeneralPropertyElement", b =>
+            modelBuilder.Entity("Domain.Entities.GeneralPropertyElement", b =>
                 {
-                    b.HasOne("Entity.Model.GeneralProperty", "GeneralProperty")
+                    b.HasOne("Domain.Entities.GeneralProperty", "GeneralProperty")
                         .WithMany("GeneralPropertyElements")
                         .HasForeignKey("GeneralPropertyId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3937,9 +3937,9 @@ namespace Repository.Migrations.AdminMigrations
                     b.Navigation("GeneralProperty");
                 });
 
-            modelBuilder.Entity("Entity.Model.LoginUser", b =>
+            modelBuilder.Entity("Domain.Entities.LoginUser", b =>
                 {
-                    b.HasOne("Entity.Model.Client", "Client")
+                    b.HasOne("Domain.Entities.Client", "Client")
                         .WithMany()
                         .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3948,9 +3948,9 @@ namespace Repository.Migrations.AdminMigrations
                     b.Navigation("Client");
                 });
 
-            modelBuilder.Entity("Entity.Model.Plan", b =>
+            modelBuilder.Entity("Domain.Entities.Plan", b =>
                 {
-                    b.HasOne("Entity.Model.PlanType", "PlanType")
+                    b.HasOne("Domain.Entities.PlanType", "PlanType")
                         .WithMany()
                         .HasForeignKey("PlanTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3959,9 +3959,9 @@ namespace Repository.Migrations.AdminMigrations
                     b.Navigation("PlanType");
                 });
 
-            modelBuilder.Entity("Entity.Model.PlanElement", b =>
+            modelBuilder.Entity("Domain.Entities.PlanElement", b =>
                 {
-                    b.HasOne("Entity.Model.Plan", "Plan")
+                    b.HasOne("Domain.Entities.Plan", "Plan")
                         .WithMany("PlanElements")
                         .HasForeignKey("PlanId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3970,7 +3970,7 @@ namespace Repository.Migrations.AdminMigrations
                     b.Navigation("Plan");
                 });
 
-            modelBuilder.Entity("Entity.Model.GeneralProduct", b =>
+            modelBuilder.Entity("Domain.Entities.GeneralProduct", b =>
                 {
                     b.Navigation("GeneralProductPropertyElements");
 
@@ -3979,12 +3979,12 @@ namespace Repository.Migrations.AdminMigrations
                     b.Navigation("GeneralProductUnits");
                 });
 
-            modelBuilder.Entity("Entity.Model.GeneralProperty", b =>
+            modelBuilder.Entity("Domain.Entities.GeneralProperty", b =>
                 {
                     b.Navigation("GeneralPropertyElements");
                 });
 
-            modelBuilder.Entity("Entity.Model.Plan", b =>
+            modelBuilder.Entity("Domain.Entities.Plan", b =>
                 {
                     b.Navigation("PlanElements");
                 });

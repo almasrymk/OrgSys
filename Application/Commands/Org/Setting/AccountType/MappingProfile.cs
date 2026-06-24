@@ -1,15 +1,15 @@
 ﻿using Application.Commands.Org.Setting.AccountType.Commands;
 using AutoMapper;
-using Entity.Model;
-using Entity.ModelView;
+using Domain.Entities;
+using Application.DTOs;
 
 public partial class MappingProfile : Profile
 {
     public void AccountTypeMappingProfile()
     {
         #region AccountType
-        CreateMap<AccountType, AccountTypeModelView>();
-        CreateMap<AccountTypeModelView, AccountType>();
+        CreateMap<AccountType, AccountTypeDto>();
+        CreateMap<AccountTypeDto, AccountType>();
 
         CreateMap<AccountType, CreateAccountTypeCommand>();
         CreateMap<CreateAccountTypeCommand, AccountType>();
@@ -18,10 +18,10 @@ public partial class MappingProfile : Profile
         CreateMap<AccountType, DeleteAccountTypeCommand>();
         CreateMap<DeleteAccountTypeCommand, AccountType>();
 
-        CreateMap<AccountTypeModelView, CreateAccountTypeCommand>();
-        CreateMap<CreateAccountTypeCommand, AccountTypeModelView>();
-        CreateMap<AccountTypeModelView, UpdateAccountTypeCommand>();
-        CreateMap<UpdateAccountTypeCommand, AccountTypeModelView>();
+        CreateMap<AccountTypeDto, CreateAccountTypeCommand>();
+        CreateMap<CreateAccountTypeCommand, AccountTypeDto>();
+        CreateMap<AccountTypeDto, UpdateAccountTypeCommand>();
+        CreateMap<UpdateAccountTypeCommand, AccountTypeDto>();
         #endregion
     }
 }

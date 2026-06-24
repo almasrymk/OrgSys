@@ -1,8 +1,8 @@
 ﻿using Entity;
 using System.Linq;
 using X.PagedList;
-using Entity.Model;
-using Entity.ModelView;
+using Domain.Entities;
+using Application.DTOs;
 using System.Collections.Generic;
 using System;
 using System.Linq.Expressions;

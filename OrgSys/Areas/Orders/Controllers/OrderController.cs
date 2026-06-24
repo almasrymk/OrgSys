@@ -1,5 +1,5 @@
 ﻿using Entity;
-using Entity.ModelView;
+using Application.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using OrgSys.Controllers;
@@ -15,9 +15,9 @@ namespace OrgSys.Areas.Orders.Controllers
     {
         public override void LoadViewBagIndex(long ParentId = 0, long TypeId = 0)
         {
-            var type = new OrderTypeService(User.GetSchema()).Get(TypeId);
-            ViewBag.OrdersType = type.Name;
-            ViewBag.OrdersIcon = type.Icon;
+            //var type = new OrderTypeService(User.GetSchema()).Get(TypeId);
+            //ViewBag.OrdersType = type.Name;
+            //ViewBag.OrdersIcon = type.Icon;
 
             base.LoadViewBagIndex();
         }
@@ -34,9 +34,9 @@ namespace OrgSys.Areas.Orders.Controllers
             ViewBag.ServiceType = new SelectList(selectListItems, "Value", "Text");
             ViewBag.TaxType = new SelectList(selectListItems, "Value", "Text");
 
-            var type = new OrderTypeService(User.GetSchema()).Get(model.TypeId);
-            ViewBag.OrdersType = type.Name;
-            ViewBag.OrdersIcon = type.Icon;
+            //var type = new OrderTypeService(User.GetSchema()).Get(model.TypeId);
+            //ViewBag.OrdersType = type.Name;
+            //ViewBag.OrdersIcon = type.Icon;
         }
 
         public override OrderModelView InitializeData(OrderModelView ob)
@@ -67,7 +67,7 @@ namespace OrgSys.Areas.Orders.Controllers
 
             if (ob.Id == 0)
             {
-                ob.CodeNumber = new OrderService(User.GetSchema()).GetMaxCode(ob.TypeId);
+               // ob.CodeNumber = new OrderService(User.GetSchema()).GetMaxCode(ob.TypeId);
                 ob.Code = "" + ob.CodeNumber;
                 ob.DealerId = DealerId;
                 ob.Date = DateTime.Now;
@@ -86,24 +86,24 @@ namespace OrgSys.Areas.Orders.Controllers
 
         public ActionResult CreateInvoice(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1)
         {
-            var order = new OrderService(User.GetSchema()).Get(id);
-            if (order != null)
-            {
-                new IntegrationServics(User.GetSchema()).CreateInvoiceByOrder(order.Map<OrderModelView>());
-                return Redirect("/Orders/Order/Index?ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" + ResultStatus.success + "&MsgError=Success");
-            }
+            //var order = new OrderService(User.GetSchema()).Get(id);
+            //if (order != null)
+            //{
+            //    new IntegrationServics(User.GetSchema()).CreateInvoiceByOrder(order.Map<OrderModelView>());
+            //    return Redirect("/Orders/Order/Index?ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" + ResultStatus.success + "&MsgError=Success");
+            //}
             return Redirect("/Orders/Order/Index?ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" + ResultStatus.error + "&MsgError=Not find order");
         }
 
         public ActionResult Cancel(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1)
         {
-            new OrderService(User.GetSchema()).Cancel(id);
+            //new OrderService(User.GetSchema()).Cancel(id);
             return Redirect("/Orders/Order/Index?ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" + ResultStatus.success + "&MsgError=Success");
         }
 
         public ActionResult Redo(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1)
         {
-            new OrderService(User.GetSchema()).Redo(id);
+            //new OrderService(User.GetSchema()).Redo(id);
             return Redirect("/Orders/Order/Index?ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" + ResultStatus.success + "&MsgError=Success");
         }
     }

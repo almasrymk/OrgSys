@@ -7,16 +7,15 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity;
-    using Entity.Model;
-    using Entity.ModelView;
+    using Domain.Entities;
+    using Application.DTOs;
 
-    public sealed class UpdateFinancialCommand : Entity.ModelView.FinancialModelView, ICommand, IUpdateCommand<Result>;
+    public sealed class UpdateFinancialCommand : Application.DTOs.FinancialDto, ICommand, IUpdateCommand<Result>;
     public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork, 
-        IRepository<Entity.Model.Financial> _Repository ,
-        IRepository<Entity.Model.FinancialInvoice> _RepositoryFinancialInvoice,
-        IRepository<Entity.Model.Invoice> _RepositoryInvoice,
-        IMapper mapper, IServiceProvider _provider) : UpdateCommandHandler<UpdateFinancialCommand, Entity.Model.Financial>(_UnitOfWork, _Repository , mapper , _provider)
+        IRepository<Domain.Entities.Financial> _Repository ,
+        IRepository<Domain.Entities.FinancialInvoice> _RepositoryFinancialInvoice,
+        IRepository<Domain.Entities.Invoice> _RepositoryInvoice,
+        IMapper mapper, IServiceProvider _provider) : UpdateCommandHandler<UpdateFinancialCommand, Domain.Entities.Financial>(_UnitOfWork, _Repository , mapper , _provider)
     {
 
         public override async Task<Result> Handle(UpdateFinancialCommand request, CancellationToken cancellationToken)

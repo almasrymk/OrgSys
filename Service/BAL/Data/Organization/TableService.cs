@@ -1,7 +1,7 @@
 ﻿using Entity;
 using System.Linq;
-using Entity.Model;
-using Entity.ModelView;
+using Domain.Entities;
+using Application.DTOs;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System;

@@ -1,9 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Domain.Entities
+﻿namespace Domain.Entities
 {
     [Table("JournalItem")]
-    public class JournalItem : BaseEntity
+    public class JournalItem : BaseModel
     {        
         [ForeignKey("Journal")]
         public virtual long JournalId { get; set; }

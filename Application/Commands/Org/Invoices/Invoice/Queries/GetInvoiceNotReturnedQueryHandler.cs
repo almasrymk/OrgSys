@@ -4,18 +4,18 @@ using Application.Interfaces.CQRS;
 using AutoMapper;
 using Domain.Abstraction;
 using Domain.Shared;
-using Entity.ModelView;
+using Application.DTOs;
 using System.Net;
 using Utility;
 
 namespace Application.Commands.Org.Invoices.Invoice.Queries
 {
-    public sealed record GetInvoiceNotReturnedQuery(string KeySearch, long ParentId, long TypeId, int Page, int PageSize) : ICommandPagination<InvoiceModelView>, ISearchQuery<ResultPagination<InvoiceModelView>>;
+    public sealed record GetInvoiceNotReturnedQuery(string KeySearch, long ParentId, long TypeId, int Page, int PageSize) : ICommandPagination<InvoiceDto>, ISearchQuery<ResultPagination<InvoiceDto>>;
 
-    public sealed class GetInvoiceNotReturnedQueryHandler(IRepository<Entity.Model.Invoice> _Repository, IMapper mapper) : SearchCommandHandler<GetInvoiceNotReturnedQuery, Entity.Model.Invoice, InvoiceModelView>(_Repository, mapper)
+    public sealed class GetInvoiceNotReturnedQueryHandler(IRepository<Domain.Entities.Invoice> _Repository, IMapper mapper) : SearchCommandHandler<GetInvoiceNotReturnedQuery, Domain.Entities.Invoice, InvoiceDto>(_Repository, mapper)
     {
 
-        public override async Task<ResultPagination<InvoiceModelView>> Handle(GetInvoiceNotReturnedQuery request, CancellationToken cancellationToken)
+        public override async Task<ResultPagination<InvoiceDto>> Handle(GetInvoiceNotReturnedQuery request, CancellationToken cancellationToken)
         {
             Page = request.Page;
             PageSize = request.PageSize;
@@ -29,7 +29,7 @@ namespace Application.Commands.Org.Invoices.Invoice.Queries
                     (string.IsNullOrEmpty(request.KeySearch) ||
                      e.Code.Contains(request.KeySearch)) &&
                     e.Id != e.ParentId &&
-                    e.Status != Status.Deleted &&
+                    e.Status != Domain.Enums.Status.Deleted &&
                     e.Hide != true,
                 CreateOrderBy(request),
                 "",
@@ -37,16 +37,16 @@ namespace Application.Commands.Org.Invoices.Invoice.Queries
                 request.PageSize);
 
 
-            return new ResultPagination<InvoiceModelView>(
+            return new ResultPagination<InvoiceDto>(
              HttpStatusCode.OK,
-             result!.Items.Select(mapper.Map<InvoiceModelView>).ToList(),
+             result!.Items.Select(mapper.Map<InvoiceDto>).ToList(),
              result.Page,
              result.PageSize,
              result.TotalPages,
              null);
         }
 
-        override public Func<IQueryable<Entity.Model.Invoice>, IOrderedQueryable<Entity.Model.Invoice>> CreateOrderBy(GetInvoiceNotReturnedQuery request)
+        override public Func<IQueryable<Domain.Entities.Invoice>, IOrderedQueryable<Domain.Entities.Invoice>> CreateOrderBy(GetInvoiceNotReturnedQuery request)
         {
             return q => q.OrderByDescending(e => e.Id);
         }

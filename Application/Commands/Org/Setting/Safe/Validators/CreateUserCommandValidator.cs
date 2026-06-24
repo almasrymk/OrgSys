@@ -6,9 +6,9 @@
     using FluentValidation;
     using Utility;
 
-    public class CreateSafeCommandValidator : Validator<CreateSafeCommand,  Entity.Model.Safe>
+    public class CreateSafeCommandValidator : Validator<CreateSafeCommand,  Domain.Entities.Safe>
     {
-        public CreateSafeCommandValidator(IRepository<Entity.Model.Safe> _Repository) : base(_Repository)
+        public CreateSafeCommandValidator(IRepository<Domain.Entities.Safe> _Repository) : base(_Repository)
         {           
             RuleFor(c => c.Name)
             .NotEmpty().WithMessage("The name field is required");
@@ -17,7 +17,7 @@
             .MaximumLength(150).WithMessage("The name must not exceed 150 characters");
 
             RuleFor(c => new { c.Name})           
-            .MustAsync(async (Ob, cancellationToken) => await NotAnyAsync(c => c.Name == Ob.Name && c.Status != Status.Deleted && c.Hide != true, cancellationToken))
+            .MustAsync(async (Ob, cancellationToken) => await NotAnyAsync(c => c.Name == Ob.Name && c.Status != Domain.Enums.Status.Deleted && c.Hide != true, cancellationToken))
             .WithMessage("The safe name already exists")
             .OverridePropertyName(nameof(CreateSafeCommand.Name));
         }

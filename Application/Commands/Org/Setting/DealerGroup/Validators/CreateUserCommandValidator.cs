@@ -7,9 +7,9 @@
     using System.Xml.Linq;
     using Utility;
 
-    public class CreateDealerGroupCommandValidator : Validator<CreateDealerGroupCommand,  Entity.Model.DealerGroup>
+    public class CreateDealerGroupCommandValidator : Validator<CreateDealerGroupCommand,  Domain.Entities.DealerGroup>
     {
-        public CreateDealerGroupCommandValidator(IRepository<Entity.Model.DealerGroup> _Repository) : base(_Repository)
+        public CreateDealerGroupCommandValidator(IRepository<Domain.Entities.DealerGroup> _Repository) : base(_Repository)
         {
             RuleFor(c => c.Code)
            .NotEmpty().WithMessage("The code field is required");
@@ -21,12 +21,12 @@
             .MaximumLength(150).WithMessage("The name must not exceed 150 characters");
 
             RuleFor(c => new { c.Code, c.TypeId })
-            .MustAsync(async (Ob, cancellationToken) => await NotAnyAsync(c => c.Code == Ob.Code && c.TypeId == Ob.TypeId && c.Status != Status.Deleted && c.Hide != true, cancellationToken))
+            .MustAsync(async (Ob, cancellationToken) => await NotAnyAsync(c => c.Code == Ob.Code && c.TypeId == Ob.TypeId && c.Status != Domain.Enums.Status.Deleted && c.Hide != true, cancellationToken))
             .WithMessage("The dealer group code already exists")
             .OverridePropertyName(nameof(CreateDealerGroupCommand.Code));
 
             RuleFor(c => new { c.Name, c.TypeId })           
-            .MustAsync(async (Ob, cancellationToken) => await NotAnyAsync(c => c.Name == Ob.Name && c.TypeId == Ob.TypeId && c.Status != Status.Deleted && c.Hide != true, cancellationToken))
+            .MustAsync(async (Ob, cancellationToken) => await NotAnyAsync(c => c.Name == Ob.Name && c.TypeId == Ob.TypeId && c.Status != Domain.Enums.Status.Deleted && c.Hide != true, cancellationToken))
             .WithMessage("The dealer group name already exists")
             .OverridePropertyName(nameof(CreateDealerGroupCommand.Name));
         }

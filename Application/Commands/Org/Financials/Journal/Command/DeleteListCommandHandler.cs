@@ -10,8 +10,8 @@
     public sealed record DeleteListJournalCommand(List<long> Ids) : ICommand, IDeleteListCommand<Result>;   
 
     public sealed class DeleteListCommandHandler(IUnitOfWork _UnitOfWork, 
-        IRepository<Entity.Model.Journal> _Repository,  
-        IServiceProvider _provider) : DeleteCommandHandler<DeleteListJournalCommand, Entity.Model.Journal>(_UnitOfWork, _Repository , _provider)
+        IRepository<Domain.Entities.Journal> _Repository,  
+        IServiceProvider _provider) : DeleteCommandHandler<DeleteListJournalCommand, Domain.Entities.Journal>(_UnitOfWork, _Repository , _provider)
     {
 
         public override async Task<bool> RemoveDetails(DeleteListJournalCommand request)
@@ -29,9 +29,9 @@
             return await _UnitOfWork.SaveChangeAsync() > 0;
         }
 
-        public override Expression<Func<Entity.Model.Journal, bool>> CreateFilter(DeleteListJournalCommand request)
+        public override Expression<Func<Domain.Entities.Journal, bool>> CreateFilter(DeleteListJournalCommand request)
         {
-            return e => request.Ids.Contains(e.Id) && e.Status != Utility.Status.Deleted && e.Hide != true;
+            return e => request.Ids.Contains(e.Id) && e.Status != Domain.Enums.Status.Deleted && e.Hide != true;
         }
 
     }

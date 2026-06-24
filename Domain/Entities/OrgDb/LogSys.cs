@@ -1,11 +1,9 @@
-﻿using System;
-using Utility;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using Utility;
 
 namespace Domain.Entities
 {
     [Table("LogSys")]
-    public class LogSys : BaseEntity    
+    public class LogSys : BaseModel
     {
         public virtual long UserId { get; set; }
 

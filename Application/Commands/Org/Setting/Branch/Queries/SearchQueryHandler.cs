@@ -6,25 +6,25 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.ModelView;
+    using Application.DTOs;
     using System.Linq.Expressions;
     using Utility;
 
-    public sealed record SearchBranchQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandPagination<BranchModelView> ,ISearchQuery<ResultPagination<BranchModelView>>;
+    public sealed record SearchBranchQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandPagination<BranchDto> ,ISearchQuery<ResultPagination<BranchDto>>;
 
-    public sealed class SearchQueryHandler(IRepository<Entity.Model.Branch> _Repository, IMapper mapper) : SearchCommandHandler<SearchBranchQuery, Entity.Model.Branch, BranchModelView>(_Repository, mapper)
+    public sealed class SearchQueryHandler(IRepository<Domain.Entities.Branch> _Repository, IMapper mapper) : SearchCommandHandler<SearchBranchQuery, Domain.Entities.Branch, BranchDto>(_Repository, mapper)
     {
-        public override Expression<Func<Entity.Model.Branch, bool>> CreateFilter(SearchBranchQuery request)
+        public override Expression<Func<Domain.Entities.Branch, bool>> CreateFilter(SearchBranchQuery request)
         {
             Page = request.Page;
             PageSize = request.PageSize;
 
             return e => 
             (string.IsNullOrEmpty(request.KeySearch) || e.Name.Contains(request.KeySearch)) &&
-            e.Status != Status.Deleted && e.Hide != true;
+            e.Status != Domain.Enums.Status.Deleted && e.Hide != true;
         }
          
-        override public Func<IQueryable<Entity.Model.Branch>, IOrderedQueryable<Entity.Model.Branch>> CreateOrderBy(SearchBranchQuery request)
+        override public Func<IQueryable<Domain.Entities.Branch>, IOrderedQueryable<Domain.Entities.Branch>> CreateOrderBy(SearchBranchQuery request)
         {
             return q => q.OrderByDescending(e => e.Id);
         }

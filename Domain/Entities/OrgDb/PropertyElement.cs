@@ -1,10 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Domain.Entities
+﻿namespace Domain.Entities
 {
     [Table("PropertyElement")]
-    public class PropertyElement : BaseEntity
+    public class PropertyElement : BaseModel
     {
         [ForeignKey("Property")]
         public virtual long PropertyId { get; set; }

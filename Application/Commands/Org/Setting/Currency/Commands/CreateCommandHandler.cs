@@ -6,11 +6,11 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.ModelView;
+    using Application.DTOs;
 
-    public sealed class CreateCurrencyCommand : CurrencyModelView , ICommand , ICreateCommand<Result>;
+    public sealed class CreateCurrencyCommand : CurrencyDto , ICommand , ICreateCommand<Result>;
 
-    public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.Currency> _Repository , IMapper mapper) : CreateCommandHandler<CreateCurrencyCommand, Entity.Model.Currency>(_UnitOfWork, _Repository , mapper)
+    public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Domain.Entities.Currency> _Repository , IMapper mapper) : CreateCommandHandler<CreateCurrencyCommand, Domain.Entities.Currency>(_UnitOfWork, _Repository , mapper)
     {
        
     }

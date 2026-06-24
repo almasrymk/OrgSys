@@ -7,16 +7,16 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.ModelView;
+    using Application.DTOs;
     using System.Linq.Expressions;
 
-    public sealed record GetByIdOutlayQuery(long Id) : ICommand<OutlayModelView> , IGetByIdQuery<Result<OutlayModelView>>;
+    public sealed record GetByIdOutlayQuery(long Id) : ICommand<OutlayDto> , IGetByIdQuery<Result<OutlayDto>>;
 
-    public sealed class GetByIdQueryHandler(IRepository<Entity.Model.Outlay> _Repository, IMapper mapper) : GetCommandHandler<GetByIdOutlayQuery, Entity.Model.Outlay, OutlayModelView>(_Repository, mapper)
+    public sealed class GetByIdQueryHandler(IRepository<Domain.Entities.Outlay> _Repository, IMapper mapper) : GetCommandHandler<GetByIdOutlayQuery, Domain.Entities.Outlay, OutlayDto>(_Repository, mapper)
     {
-        public override Expression<Func<Entity.Model.Outlay, bool>> CreateFilter(GetByIdOutlayQuery request)
+        public override Expression<Func<Domain.Entities.Outlay, bool>> CreateFilter(GetByIdOutlayQuery request)
         {           
-            return e => e.Id == request.Id && e.Status !=Utility.Status.Deleted && e.Hide != true;
+            return e => e.Id == request.Id && e.Status !=Domain.Enums.Status.Deleted && e.Hide != true;
         }
     }
 }

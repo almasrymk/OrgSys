@@ -1,7 +1,7 @@
 ﻿namespace Application.Abstraction.Command
 {
     using Domain.Shared;
-    using Entity.Model;
+    using Domain.Entities;
     using MediatR;
 
     public interface ICommandHandler<TCommand> : IRequestHandler<TCommand , Result> where TCommand : ICommand

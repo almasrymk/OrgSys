@@ -1,13 +1,9 @@
 ﻿using API.Middlewares;
 using Application.Validators;
-using AutoMapper;
 using Domain.Abstraction;
-using Entity;
 using FluentValidation;
-using FluentValidation.AspNetCore;
 using Infrastructure.Persistence.UnitOfWork;
 using MediatR;
-using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,13 +26,9 @@ builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
 builder.Services.AddAutoMapper(cfg => { cfg.AddProfile<MappingProfile>(); });
 
-//builder.Services.AddAutoMapper(cfg => { cfg.AddProfile<MapperConfig>(); });
-
 builder.Services.AddSwaggerGen(c => { c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First()); });
 
 builder.Services.AddControllers().AddJsonOptions(options => { options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles; });
-
-//builder.Services.AddFluentValidationAutoValidation();
 
 builder.Services.AddValidatorsFromAssembly(typeof(MappingProfile).Assembly);
 
@@ -63,8 +55,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.UseMiddleware<GlobalExceptionMiddleware>();
-
-//var mapper = app.Services.GetRequiredService<IMapper>();
-//mapper.ConfigurationProvider.AssertConfigurationIsValid();
 
 app.Run();

@@ -4,15 +4,15 @@ using Application.Interfaces.CQRS;
 using AutoMapper;
 using Domain.Abstraction;
 using Domain.Shared;
-using Entity.ModelView;
+using Application.DTOs;
 
 namespace Application.Commands.Org.Setting.ProductUnit.Queries
 {
-    public sealed record SearchProductUnitQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandPagination<ProductUnitModelView> ,ISearchQuery<ResultPagination<ProductUnitModelView>>;
+    public sealed record SearchProductUnitQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandPagination<ProductUnitDto> ,ISearchQuery<ResultPagination<ProductUnitDto>>;
 
-    public sealed class SearchQueryHandler(IRepository<Entity.Model.ProductUnit> _Repository, IMapper mapper) : SearchCommandHandler<SearchProductUnitQuery, Entity.Model.ProductUnit, ProductUnitModelView>(_Repository, mapper)
+    public sealed class SearchQueryHandler(IRepository<Domain.Entities.ProductUnit> _Repository, IMapper mapper) : SearchCommandHandler<SearchProductUnitQuery, Domain.Entities.ProductUnit, ProductUnitDto>(_Repository, mapper)
     {        
-        override public Func<IQueryable<Entity.Model.ProductUnit>, IOrderedQueryable<Entity.Model.ProductUnit>> CreateOrderBy(SearchProductUnitQuery request)
+        override public Func<IQueryable<Domain.Entities.ProductUnit>, IOrderedQueryable<Domain.Entities.ProductUnit>> CreateOrderBy(SearchProductUnitQuery request)
         {
             return q => q.OrderByDescending(e => e.Id);
         }

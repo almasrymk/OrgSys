@@ -6,11 +6,11 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.ModelView;
+    using Application.DTOs;
 
-    public sealed class UpdateClassificationCommand: ClassificationModelView, ICommand, IUpdateCommand<Result>;
+    public sealed class UpdateClassificationCommand: ClassificationDto, ICommand, IUpdateCommand<Result>;
 
-    public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.Classification> _Repository , IMapper mapper, IServiceProvider _provider) : UpdateCommandHandler<UpdateClassificationCommand, Entity.Model.Classification>(_UnitOfWork, _Repository , mapper , _provider)
+    public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Domain.Entities.Classification> _Repository , IMapper mapper, IServiceProvider _provider) : UpdateCommandHandler<UpdateClassificationCommand, Domain.Entities.Classification>(_UnitOfWork, _Repository , mapper , _provider)
     {
        
     }

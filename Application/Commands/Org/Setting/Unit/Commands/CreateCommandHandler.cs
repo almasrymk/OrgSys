@@ -6,11 +6,11 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.ModelView;
+    using Application.DTOs;
 
-    public sealed class CreateUnitCommand: UnitModelView , ICommand , ICreateCommand<Result>;
+    public sealed class CreateUnitCommand: UnitDto , ICommand , ICreateCommand<Result>;
 
-    public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.Unit> _Repository , IMapper mapper) : CreateCommandHandler<CreateUnitCommand, Entity.Model.Unit>(_UnitOfWork, _Repository , mapper)
+    public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Domain.Entities.Unit> _Repository , IMapper mapper) : CreateCommandHandler<CreateUnitCommand, Domain.Entities.Unit>(_UnitOfWork, _Repository , mapper)
     {
        
     }

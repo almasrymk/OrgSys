@@ -1,11 +1,11 @@
 ﻿namespace Domain.Entities
 {
     [Table("AccountType")]
-    public class AccountType : BaseLockupEntity
+    public class AccountType : BaseModel
     {
         [StringLength(50, MinimumLength = 3)]
-        public override string? Name { get; set; }
+        public virtual string Name { get; set; }
 
-        public  int DebitOrCredit { get; set; }
+        public virtual int DebitOrCredit { get; set; }
     }
 }

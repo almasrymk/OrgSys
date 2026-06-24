@@ -6,25 +6,25 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.ModelView;
+    using Application.DTOs;
     using System.Linq.Expressions;
     using Utility;
 
-    public sealed record GetListBankBranchQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandCollection<BankBranchModelView> , IListQuery<ResultCollection<BankBranchModelView>>;
+    public sealed record GetListBankBranchQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandCollection<BankBranchDto> , IListQuery<ResultCollection<BankBranchDto>>;
 
-    public sealed class GetListQueryHandler(IRepository<Entity.Model.BankBranch> _Repository, IMapper mapper) : ListCommandHandler<GetListBankBranchQuery, Entity.Model.BankBranch, BankBranchModelView>(_Repository, mapper)
+    public sealed class GetListQueryHandler(IRepository<Domain.Entities.BankBranch> _Repository, IMapper mapper) : ListCommandHandler<GetListBankBranchQuery, Domain.Entities.BankBranch, BankBranchDto>(_Repository, mapper)
     {
-        public override Expression<Func<Entity.Model.BankBranch, bool>> CreateFilter(GetListBankBranchQuery request)
+        public override Expression<Func<Domain.Entities.BankBranch, bool>> CreateFilter(GetListBankBranchQuery request)
         {
             Page = request.Page;
             PageSize = request.PageSize;
 
             return e =>
             (string.IsNullOrEmpty(request.KeySearch) || e.Name.Contains(request.KeySearch)) &&
-            e.Status != Status.Deleted && e.Hide != true;
+            e.Status != Domain.Enums.Status.Deleted && e.Hide != true;
         }
          
-        override public Func<IQueryable<Entity.Model.BankBranch>, IOrderedQueryable<Entity.Model.BankBranch>> CreateOrderBy(GetListBankBranchQuery request)
+        override public Func<IQueryable<Domain.Entities.BankBranch>, IOrderedQueryable<Domain.Entities.BankBranch>> CreateOrderBy(GetListBankBranchQuery request)
         {
             return q => q.OrderByDescending(e => e.Id);
         }

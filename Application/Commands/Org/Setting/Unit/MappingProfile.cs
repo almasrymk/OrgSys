@@ -1,15 +1,15 @@
 ﻿using Application.Commands.Org.Setting.Unit.Commands;
 using AutoMapper;
-using Entity.Model;
-using Entity.ModelView;
+using Domain.Entities;
+using Application.DTOs;
 
 public partial class MappingProfile : Profile
 {
     public void UnitMappingProfile()
     {
         #region Unit
-        CreateMap<Unit, UnitModelView>();
-        CreateMap<UnitModelView, Unit>();
+        CreateMap<Unit, UnitDto>();
+        CreateMap<UnitDto, Unit>();
 
         CreateMap<Unit, CreateUnitCommand>();
         CreateMap<CreateUnitCommand, Unit>();
@@ -18,10 +18,10 @@ public partial class MappingProfile : Profile
         CreateMap<Unit, DeleteUnitCommand>();
         CreateMap<DeleteUnitCommand, Unit>();
 
-        CreateMap<UnitModelView, CreateUnitCommand>();
-        CreateMap<CreateUnitCommand, UnitModelView>();
-        CreateMap<UnitModelView, UpdateUnitCommand>();
-        CreateMap<UpdateUnitCommand, UnitModelView>();
+        CreateMap<UnitDto, CreateUnitCommand>();
+        CreateMap<CreateUnitCommand, UnitDto>();
+        CreateMap<UnitDto, UpdateUnitCommand>();
+        CreateMap<UpdateUnitCommand, UnitDto>();
         #endregion
     }
 }

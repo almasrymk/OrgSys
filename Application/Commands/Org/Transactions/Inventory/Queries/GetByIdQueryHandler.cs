@@ -7,21 +7,21 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.ModelView;
+    using Application.DTOs;
     using System.Linq.Expressions;
 
-    public sealed record GetByIdInventoryQuery(long Id) : ICommand<InventoryModelView> , IGetByIdQuery<Result<InventoryModelView>>;
+    public sealed record GetByIdInventoryQuery(long Id) : ICommand<InventoryDto> , IGetByIdQuery<Result<InventoryDto>>;
 
-    public sealed class GetByIdQueryHandler(IRepository<Entity.Model.Inventory> _Repository, IMapper mapper) : GetCommandHandler<GetByIdInventoryQuery, Entity.Model.Inventory, InventoryModelView>(_Repository, mapper)
+    public sealed class GetByIdQueryHandler(IRepository<Domain.Entities.Inventory> _Repository, IMapper mapper) : GetCommandHandler<GetByIdInventoryQuery, Domain.Entities.Inventory, InventoryDto>(_Repository, mapper)
     {
         public override string CreateInclude()
         {
             return "InventoryProducts,InventoryProducts.Unit,InventoryProducts.Product";
         }
 
-        public override Expression<Func<Entity.Model.Inventory, bool>> CreateFilter(GetByIdInventoryQuery request)
+        public override Expression<Func<Domain.Entities.Inventory, bool>> CreateFilter(GetByIdInventoryQuery request)
         {           
-            return e => e.Id == request.Id && e.Status !=Utility.Status.Deleted && e.Hide != true;
+            return e => e.Id == request.Id && e.Status !=Domain.Enums.Status.Deleted && e.Hide != true;
         }
     }
 }

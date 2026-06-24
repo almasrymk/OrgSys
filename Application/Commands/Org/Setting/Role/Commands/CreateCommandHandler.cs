@@ -6,20 +6,20 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.ModelView;
+    using Application.DTOs;
     using System.Net;
     using System.Threading;
     using System.Threading.Tasks;
 
-    public sealed class CreateRoleCommand : RoleModelView, ICommand, ICreateCommand<Result>;
+    public sealed class CreateRoleCommand : RoleDto, ICommand, ICreateCommand<Result>;
 
-    public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.Role> _Repository, IRepository<Entity.Model.RolePermission> _rolePermissionRepository, IMapper mapper) : CreateCommandHandler<CreateRoleCommand, Entity.Model.Role>(_UnitOfWork, _Repository, mapper)
+    public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Domain.Entities.Role> _Repository, IRepository<Domain.Entities.RolePermission> _rolePermissionRepository, IMapper mapper) : CreateCommandHandler<CreateRoleCommand, Domain.Entities.Role>(_UnitOfWork, _Repository, mapper)
     {
         public override async Task<Result> Handle(CreateRoleCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                var ob = mapper.Map<Entity.Model.Role>(request);
+                var ob = mapper.Map<Domain.Entities.Role>(request);
                 var res = await _Repository.CreateAsync(ob);
 
                 if (_UnitOfWork.SaveChangeAsync().Result > 0)
@@ -44,7 +44,7 @@
             }
         }
 
-        private List<Entity.Model.RolePermission> CreateRolePermissions(List<Entity.Model.RolePermission> RolePermissionList, long RoleId)
+        private List<Domain.Entities.RolePermission> CreateRolePermissions(List<Domain.Entities.RolePermission> RolePermissionList, long RoleId)
         {
             foreach (var rolePermissions in RolePermissionList)
                 rolePermissions.RoleId = RoleId;

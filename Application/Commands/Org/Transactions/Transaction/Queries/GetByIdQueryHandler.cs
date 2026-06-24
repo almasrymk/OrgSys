@@ -7,21 +7,21 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.ModelView;
+    using Application.DTOs;
     using System.Linq.Expressions;
 
-    public sealed record GetByIdTransactionQuery(long Id) : ICommand<TransactionModelView> , IGetByIdQuery<Result<TransactionModelView>>;
+    public sealed record GetByIdTransactionQuery(long Id) : ICommand<TransactionDto> , IGetByIdQuery<Result<TransactionDto>>;
 
-    public sealed class GetByIdQueryHandler(IRepository<Entity.Model.Transaction> _Repository, IMapper mapper) : GetCommandHandler<GetByIdTransactionQuery, Entity.Model.Transaction, TransactionModelView>(_Repository, mapper)
+    public sealed class GetByIdQueryHandler(IRepository<Domain.Entities.Transaction> _Repository, IMapper mapper) : GetCommandHandler<GetByIdTransactionQuery, Domain.Entities.Transaction, TransactionDto>(_Repository, mapper)
     {
         public override string CreateInclude()
         {
             return "TransactionProducts,TransactionProducts.Product.ProductUnits.Unit,TransactionProducts.Product.ProductUnits";
         }
 
-        public override Expression<Func<Entity.Model.Transaction, bool>> CreateFilter(GetByIdTransactionQuery request)
+        public override Expression<Func<Domain.Entities.Transaction, bool>> CreateFilter(GetByIdTransactionQuery request)
         {           
-            return e => e.Id == request.Id && e.Status !=Utility.Status.Deleted && e.Hide != true;
+            return e => e.Id == request.Id && e.Status !=Domain.Enums.Status.Deleted && e.Hide != true;
         }
     }
 }

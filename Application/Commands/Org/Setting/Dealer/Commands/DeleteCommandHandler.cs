@@ -6,16 +6,16 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.ModelView;
+    using Application.DTOs;
     using System.Linq.Expressions;
 
     public sealed record DeleteDealerCommand(long Id) : ICommand , IDeleteCommand<Result>;
 
-    public sealed class DeleteCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.Dealer> _Repository, IServiceProvider _provider) : DeleteCommandHandler<DeleteDealerCommand, Entity.Model.Dealer>(_UnitOfWork, _Repository , _provider)
+    public sealed class DeleteCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Domain.Entities.Dealer> _Repository, IServiceProvider _provider) : DeleteCommandHandler<DeleteDealerCommand, Domain.Entities.Dealer>(_UnitOfWork, _Repository , _provider)
     {
-        public override Expression<Func<Entity.Model.Dealer, bool>> CreateFilter(DeleteDealerCommand request)
+        public override Expression<Func<Domain.Entities.Dealer, bool>> CreateFilter(DeleteDealerCommand request)
         {
-            return e => e.Id == request.Id && e.Status != Utility.Status.Deleted && e.Hide != true;
+            return e => e.Id == request.Id && e.Status != Domain.Enums.Status.Deleted && e.Hide != true;
         }
     }
 }

@@ -1,16 +1,16 @@
 ﻿using Application.Commands.Org.Financials.Journal.Commands;
 using AutoMapper;
-using Entity.Model;
-using Entity.ModelView;
+using Domain.Entities;
+using Application.DTOs;
 
 public partial class MappingProfile : Profile
 {
 
     public void JournalMappingProfile()
     {
-        CreateMap<Journal, JournalModelView>()
+        CreateMap<Journal, JournalDto>()
             .ForMember(dest => dest.JournalItems, opt => opt.MapFrom(src => src.JournalItems));
-        CreateMap<JournalModelView, Journal>();
+        CreateMap<JournalDto, Journal>();
 
         CreateMap<Journal, CreateJournalCommand>();
         CreateMap<CreateJournalCommand, Journal>();
@@ -24,8 +24,8 @@ public partial class MappingProfile : Profile
         CreateMap<Invoice, Journal>();
         CreateMap<Journal, Invoice>();
 
-        CreateMap<JournalItem, JournalItemModelView>();
-        CreateMap<JournalItemModelView, JournalItem>();
+        CreateMap<JournalItem, JournalItemDto>();
+        CreateMap<JournalItemDto, JournalItem>();
 
         CreateMap<CreateJournalCommand, Journal>().ForMember(dest => dest.JournalItems,opt => opt.MapFrom(src => src.JournalItems));  
         CreateMap<UpdateJournalCommand, Journal>().ForMember(dest => dest.JournalItems, opt => opt.MapFrom(src => src.JournalItems));

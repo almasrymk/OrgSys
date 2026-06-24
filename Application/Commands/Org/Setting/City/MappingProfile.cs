@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using Entity.Model;
-using Entity.ModelView;
+using Domain.Entities;
+using Application.DTOs;
 using Application.Commands.Org.Setting.City.Commands;
 
 public partial class MappingProfile : Profile
@@ -8,9 +8,9 @@ public partial class MappingProfile : Profile
     public void CityMappingProfile()
     {
         #region City
-        CreateMap<City, CityModelView>()
+        CreateMap<City, CityDto>()
         .ForMember(dest => dest.CountryName,opt => opt.MapFrom(src => src.Country.Name));
-        CreateMap<CityModelView, City>();
+        CreateMap<CityDto, City>();
 
         CreateMap<City, CreateCityCommand>();
         CreateMap<CreateCityCommand, City>();
@@ -19,10 +19,10 @@ public partial class MappingProfile : Profile
         CreateMap<City, DeleteCityCommand>();
         CreateMap<DeleteCityCommand, City>();
 
-        CreateMap<CityModelView, CreateCityCommand>();
-        CreateMap<CreateCityCommand, CityModelView>();
-        CreateMap<CityModelView, UpdateCityCommand>();
-        CreateMap<UpdateCityCommand, CityModelView>();
+        CreateMap<CityDto, CreateCityCommand>();
+        CreateMap<CreateCityCommand, CityDto>();
+        CreateMap<CityDto, UpdateCityCommand>();
+        CreateMap<UpdateCityCommand, CityDto>();
         #endregion
     }
 }

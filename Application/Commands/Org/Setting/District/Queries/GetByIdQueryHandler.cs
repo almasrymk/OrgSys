@@ -7,16 +7,16 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.ModelView;
+    using Application.DTOs;
     using System.Linq.Expressions;
 
-    public sealed record GetByIdDistrictQuery(long Id) : ICommand<DistrictModelView> , IGetByIdQuery<Result<DistrictModelView>>;
+    public sealed record GetByIdDistrictQuery(long Id) : ICommand<DistrictDto> , IGetByIdQuery<Result<DistrictDto>>;
 
-    public sealed class GetByIdQueryHandler(IRepository<Entity.Model.District> _Repository, IMapper mapper) : GetCommandHandler<GetByIdDistrictQuery, Entity.Model.District, DistrictModelView>(_Repository, mapper)
+    public sealed class GetByIdQueryHandler(IRepository<Domain.Entities.District> _Repository, IMapper mapper) : GetCommandHandler<GetByIdDistrictQuery, Domain.Entities.District, DistrictDto>(_Repository, mapper)
     {
-        public override Expression<Func<Entity.Model.District, bool>> CreateFilter(GetByIdDistrictQuery request)
+        public override Expression<Func<Domain.Entities.District, bool>> CreateFilter(GetByIdDistrictQuery request)
         {           
-            return e => e.Id == request.Id && e.Status !=Utility.Status.Deleted && e.Hide != true;
+            return e => e.Id == request.Id && e.Status !=Domain.Enums.Status.Deleted && e.Hide != true;
         }
     }
 }

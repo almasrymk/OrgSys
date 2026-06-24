@@ -13,7 +13,7 @@
 
     public class DeleteCommandHandler<TDto, TModel>(IUnitOfWork _UnitOfWork, IRepository<TModel> _Repository , IServiceProvider _provider) : ICommandHandler<TDto>
         where TDto : ICommand
-        where TModel : Entity.BaseModel
+        where TModel : Domain.Entities.BaseModel
     {
 
         public async Task<Result> Handle(TDto request, CancellationToken cancellationToken)
@@ -77,7 +77,7 @@
         }
          
         protected async Task<bool> RemoveDetails<TModelDetails>(Expression<Func<TModelDetails , bool>> Filter)
-          where TModelDetails : Entity.BaseModel
+          where TModelDetails : Domain.Entities.BaseModel
         {
             try
             {

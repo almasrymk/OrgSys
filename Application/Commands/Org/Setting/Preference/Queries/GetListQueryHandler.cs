@@ -6,15 +6,15 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.ModelView;
+    using Application.DTOs;
     using System.Linq.Expressions;
     using Utility;
 
-    public sealed record GetListPreferenceQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandCollection<PreferenceModelView> , IListQuery<ResultCollection<PreferenceModelView>>;
+    public sealed record GetListPreferenceQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandCollection<PreferenceDto> , IListQuery<ResultCollection<PreferenceDto>>;
 
-    public sealed class GetListQueryHandler(IRepository<Entity.Model.Preference> _Repository, IMapper mapper) : ListCommandHandler<GetListPreferenceQuery, Entity.Model.Preference, PreferenceModelView>(_Repository, mapper)
+    public sealed class GetListQueryHandler(IRepository<Domain.Entities.Preference> _Repository, IMapper mapper) : ListCommandHandler<GetListPreferenceQuery, Domain.Entities.Preference, PreferenceDto>(_Repository, mapper)
     {
-        public override Expression<Func<Entity.Model.Preference, bool>> CreateFilter(GetListPreferenceQuery request)
+        public override Expression<Func<Domain.Entities.Preference, bool>> CreateFilter(GetListPreferenceQuery request)
         {
             Page = request.Page;
             PageSize = request.PageSize;
@@ -23,10 +23,10 @@
              (string.IsNullOrEmpty(request.KeySearch) || e.Reference.Contains(request.KeySearch)) &&
             (request.ParentId == 0 || e.ParentId == request.ParentId) &&
             (request.TypeId == 0 || e.TypeId == request.TypeId) &&
-            e.Status != Status.Deleted && e.Hide != true;
+            e.Status != Domain.Enums.Status.Deleted && e.Hide != true;
         }
          
-        override public Func<IQueryable<Entity.Model.Preference>, IOrderedQueryable<Entity.Model.Preference>> CreateOrderBy(GetListPreferenceQuery request)
+        override public Func<IQueryable<Domain.Entities.Preference>, IOrderedQueryable<Domain.Entities.Preference>> CreateOrderBy(GetListPreferenceQuery request)
         {
             return q => q.OrderByDescending(e => e.Id);
         }

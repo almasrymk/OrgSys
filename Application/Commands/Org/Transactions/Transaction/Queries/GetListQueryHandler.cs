@@ -6,15 +6,15 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.ModelView;
+    using Application.DTOs;
     using System.Linq.Expressions;
     using Utility;
 
-    public sealed record GetListTransactionQuery(string KeySearch, long ParentId, long TypeId, int Page, int PageSize) : ICommandCollection<TransactionModelView>, IListQuery<ResultCollection<TransactionModelView>>;
+    public sealed record GetListTransactionQuery(string KeySearch, long ParentId, long TypeId, int Page, int PageSize) : ICommandCollection<TransactionDto>, IListQuery<ResultCollection<TransactionDto>>;
 
-    public sealed class GetListQueryHandler(IRepository<Entity.Model.Transaction> _Repository, IMapper mapper) : ListCommandHandler<GetListTransactionQuery, Entity.Model.Transaction, TransactionModelView>(_Repository, mapper)
+    public sealed class GetListQueryHandler(IRepository<Domain.Entities.Transaction> _Repository, IMapper mapper) : ListCommandHandler<GetListTransactionQuery, Domain.Entities.Transaction, TransactionDto>(_Repository, mapper)
     {
-        public override Expression<Func<Entity.Model.Transaction, bool>> CreateFilter(GetListTransactionQuery request)
+        public override Expression<Func<Domain.Entities.Transaction, bool>> CreateFilter(GetListTransactionQuery request)
         {
             Page = request.Page;
             PageSize = request.PageSize;
@@ -23,10 +23,10 @@
            (string.IsNullOrEmpty(request.KeySearch) || e.Code.Contains(request.KeySearch)) &&
            (request.ParentId == 0 || e.ParentId == request.ParentId) &&
            (request.TypeId == 0 || e.TypeId == request.TypeId) &&
-           e.Status != Status.Deleted && e.Hide != true;
+           e.Status != Domain.Enums.Status.Deleted && e.Hide != true;
         }
 
-        override public Func<IQueryable<Entity.Model.Transaction>, IOrderedQueryable<Entity.Model.Transaction>> CreateOrderBy(GetListTransactionQuery request)
+        override public Func<IQueryable<Domain.Entities.Transaction>, IOrderedQueryable<Domain.Entities.Transaction>> CreateOrderBy(GetListTransactionQuery request)
         {
             return q => q.OrderByDescending(e => e.Id);
         }

@@ -1,9 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Domain.Entities
+﻿namespace Domain.Entities
 {
     [Table("ProductRecipe")]
-    public class ProductRecipe : BaseEntity
+    public class ProductRecipe : BaseModel
     {            
         public virtual long ProductId { get; set; } 
         

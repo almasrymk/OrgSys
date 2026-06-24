@@ -6,19 +6,19 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.Model;
-    using Entity.ModelView;
+    using Domain.Entities;
+    using Application.DTOs;
     using Microsoft.Extensions.DependencyInjection;
     using System.Linq.Expressions;
 
     public sealed record DeleteListFinancialTypeCommand(List<long> Ids) : ICommand, IDeleteListCommand<Result>;   
 
-    public sealed class DeleteListCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.FinancialType> _Repository, IServiceProvider _provider) :
-        DeleteCommandHandler<DeleteListFinancialTypeCommand, Entity.Model.FinancialType>(_UnitOfWork, _Repository , _provider)
+    public sealed class DeleteListCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Domain.Entities.FinancialType> _Repository, IServiceProvider _provider) :
+        DeleteCommandHandler<DeleteListFinancialTypeCommand, Domain.Entities.FinancialType>(_UnitOfWork, _Repository , _provider)
     {
-        public override Expression<Func<Entity.Model.FinancialType, bool>> CreateFilter(DeleteListFinancialTypeCommand request)
+        public override Expression<Func<Domain.Entities.FinancialType, bool>> CreateFilter(DeleteListFinancialTypeCommand request)
         {
-            return e => request.Ids.Contains(e.Id) && e.Status != Utility.Status.Deleted && e.Hide != true;
+            return e => request.Ids.Contains(e.Id) && e.Status != Domain.Enums.Status.Deleted && e.Hide != true;
         }
 
     }

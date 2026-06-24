@@ -7,13 +7,13 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.Model;
-    using Entity.ModelView;
+    using Domain.Entities;
+    using Application.DTOs;
 
-    public sealed class UpdateFinancialTypeCommand : Entity.ModelView.FinancialTypeModelView, ICommand, IUpdateCommand<Result>;
+    public sealed class UpdateFinancialTypeCommand : Application.DTOs.FinancialTypeDto, ICommand, IUpdateCommand<Result>;
     public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork, 
-        IRepository<Entity.Model.FinancialType> _Repository ,
-        IMapper mapper, IServiceProvider _provider) : UpdateCommandHandler<UpdateFinancialTypeCommand, Entity.Model.FinancialType>(_UnitOfWork, _Repository , mapper , _provider)
+        IRepository<Domain.Entities.FinancialType> _Repository ,
+        IMapper mapper, IServiceProvider _provider) : UpdateCommandHandler<UpdateFinancialTypeCommand, Domain.Entities.FinancialType>(_UnitOfWork, _Repository , mapper , _provider)
     {
     }
 }

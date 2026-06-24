@@ -4,7 +4,7 @@ using Application.Interfaces.CQRS;
 using AutoMapper;
 using Domain.Abstraction;
 using Domain.Shared;
-using Entity.Model;
+using Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,11 +19,11 @@ namespace Application.Commands.Org.Financials.Financial.Commands
     public record RedoFinancialCommand(long Id) : ICommand, IUpdateCommand<Result>;
 
     public class RedoFinancialCommandHandler(IUnitOfWork _UnitOfWork,
-        IRepository<Entity.Model.Financial> _Repository, 
-        IRepository<Entity.Model.Invoice> _RepositoryInvoice, 
+        IRepository<Domain.Entities.Financial> _Repository, 
+        IRepository<Domain.Entities.Invoice> _RepositoryInvoice, 
         IMapper mapper, IServiceProvider _provider
         ) 
-        : UpdateCommandHandler<RedoFinancialCommand, Entity.Model.Financial>(_UnitOfWork, _Repository, mapper, _provider)
+        : UpdateCommandHandler<RedoFinancialCommand, Domain.Entities.Financial>(_UnitOfWork, _Repository, mapper, _provider)
     {
         public override async Task<Result> Handle(RedoFinancialCommand request, CancellationToken cancellationToken)
         {
@@ -44,12 +44,12 @@ namespace Application.Commands.Org.Financials.Financial.Commands
                     invoice.Credit -= item.Amount;
                     invoice.Paid += item.Amount;
 
-                    item.Status = Utility.Status.All;
+                    item.Status = Domain.Enums.Status.New;
 
                     await _RepositoryInvoice.UpdateAsync(invoice);
                 }
 
-                finanicial.Status = Utility.Status.All;
+                finanicial.Status = Domain.Enums.Status.New;
 
                 await _UnitOfWork.SaveChangeAsync();
 

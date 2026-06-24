@@ -6,25 +6,25 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.ModelView;
+    using Application.DTOs;
     using System.Linq.Expressions;
     using Utility;
 
-    public sealed record SearchCountryQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandPagination<CountryModelView> ,ISearchQuery<ResultPagination<CountryModelView>>;
+    public sealed record SearchCountryQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandPagination<CountryDto> ,ISearchQuery<ResultPagination<CountryDto>>;
 
-    public sealed class SearchQueryHandler(IRepository<Entity.Model.Country> _Repository, IMapper mapper) : SearchCommandHandler<SearchCountryQuery, Entity.Model.Country, CountryModelView>(_Repository, mapper)
+    public sealed class SearchQueryHandler(IRepository<Domain.Entities.Country> _Repository, IMapper mapper) : SearchCommandHandler<SearchCountryQuery, Domain.Entities.Country, CountryDto>(_Repository, mapper)
     {
-        public override Expression<Func<Entity.Model.Country, bool>> CreateFilter(SearchCountryQuery request)
+        public override Expression<Func<Domain.Entities.Country, bool>> CreateFilter(SearchCountryQuery request)
         {
             Page = request.Page;
             PageSize = request.PageSize;
 
             return e => 
             (string.IsNullOrEmpty(request.KeySearch) || e.Name.Contains(request.KeySearch)) &&
-            e.Status != Status.Deleted && e.Hide != true;
+            e.Status != Domain.Enums.Status.Deleted && e.Hide != true;
         }
          
-        override public Func<IQueryable<Entity.Model.Country>, IOrderedQueryable<Entity.Model.Country>> CreateOrderBy(SearchCountryQuery request)
+        override public Func<IQueryable<Domain.Entities.Country>, IOrderedQueryable<Domain.Entities.Country>> CreateOrderBy(SearchCountryQuery request)
         {
             return q => q.OrderByDescending(e => e.Id);
         }

@@ -1,15 +1,15 @@
 ﻿using Application.Commands.Org.Setting.Role.Commands;
 using AutoMapper;
-using Entity.Model;
-using Entity.ModelView;
+using Domain.Entities;
+using Application.DTOs;
 
 public partial class MappingProfile : Profile
 {
     public void RoleMappingProfile()
     {
         #region Role
-        CreateMap<Role, RoleModelView>();
-        CreateMap<RoleModelView, Role>();
+        CreateMap<Role, RoleDto>();
+        CreateMap<RoleDto, Role>();
 
         CreateMap<Role, CreateRoleCommand>();
         CreateMap<CreateRoleCommand, Role>();
@@ -18,10 +18,10 @@ public partial class MappingProfile : Profile
         CreateMap<Role, DeleteRoleCommand>();
         CreateMap<DeleteRoleCommand, Role>();
 
-        CreateMap<RoleModelView, CreateRoleCommand>();
-        CreateMap<CreateRoleCommand, RoleModelView>();
-        CreateMap<RoleModelView, UpdateRoleCommand>();
-        CreateMap<UpdateRoleCommand, RoleModelView>();
+        CreateMap<RoleDto, CreateRoleCommand>();
+        CreateMap<CreateRoleCommand, RoleDto>();
+        CreateMap<RoleDto, UpdateRoleCommand>();
+        CreateMap<UpdateRoleCommand, RoleDto>();
         #endregion
     }
 }

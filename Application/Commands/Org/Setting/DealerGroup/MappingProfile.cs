@@ -1,15 +1,15 @@
 ﻿using Application.Commands.Org.Setting.DealerGroup.Commands;
 using AutoMapper;
-using Entity.Model;
-using Entity.ModelView;
+using Domain.Entities;
+using Application.DTOs;
 
 public partial class MappingProfile : Profile
 {
     public void DealerGroupMappingProfile()
     {
         #region DealerGroup
-        CreateMap<DealerGroup, DealerGroupModelView>();
-        CreateMap<DealerGroupModelView, DealerGroup>();
+        CreateMap<DealerGroup, DealerGroupDto>();
+        CreateMap<DealerGroupDto, DealerGroup>();
 
         CreateMap<DealerGroup, CreateDealerGroupCommand>();
         CreateMap<CreateDealerGroupCommand, DealerGroup>();
@@ -18,10 +18,10 @@ public partial class MappingProfile : Profile
         CreateMap<DealerGroup, DeleteDealerGroupCommand>();
         CreateMap<DeleteDealerGroupCommand, DealerGroup>();
 
-        CreateMap<DealerGroupModelView, CreateDealerGroupCommand>();
-        CreateMap<CreateDealerGroupCommand, DealerGroupModelView>();
-        CreateMap<DealerGroupModelView, UpdateDealerGroupCommand>();
-        CreateMap<UpdateDealerGroupCommand, DealerGroupModelView>();
+        CreateMap<DealerGroupDto, CreateDealerGroupCommand>();
+        CreateMap<CreateDealerGroupCommand, DealerGroupDto>();
+        CreateMap<DealerGroupDto, UpdateDealerGroupCommand>();
+        CreateMap<UpdateDealerGroupCommand, DealerGroupDto>();
         #endregion
     }
 }

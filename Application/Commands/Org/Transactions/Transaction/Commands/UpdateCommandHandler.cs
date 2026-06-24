@@ -7,14 +7,14 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.Model;
-    using Entity.ModelView;
+    using Domain.Entities;
+    using Application.DTOs;
 
-    public sealed class UpdateTransactionCommand : Entity.ModelView.TransactionModelView , ICommand, IUpdateCommand<Result>;
+    public sealed class UpdateTransactionCommand : Application.DTOs.TransactionDto , ICommand, IUpdateCommand<Result>;
     public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork,
-        IRepository<Entity.Model.Transaction> _Repository , 
+        IRepository<Domain.Entities.Transaction> _Repository , 
         IRepository<TransactionProduct> _TransactionRepository,
-        IMapper mapper, IServiceProvider _provider) : UpdateCommandHandler<UpdateTransactionCommand, Entity.Model.Transaction>(_UnitOfWork, _Repository , mapper , _provider)
+        IMapper mapper, IServiceProvider _provider) : UpdateCommandHandler<UpdateTransactionCommand, Domain.Entities.Transaction>(_UnitOfWork, _Repository , mapper , _provider)
     {
         override public async Task<bool> SaveDetials(UpdateTransactionCommand request)
         {

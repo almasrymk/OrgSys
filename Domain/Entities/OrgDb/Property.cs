@@ -1,11 +1,7 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Domain.Entities
+﻿namespace Domain.Entities
 {
     [Table("Property")]
-   public class Property : BaseEntity
+   public class Property : BaseModel
     {       
         [StringLength(50, MinimumLength = 3)]
         public virtual string Name { get; set; }

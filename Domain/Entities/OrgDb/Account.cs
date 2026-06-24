@@ -1,10 +1,10 @@
 ﻿namespace Domain.Entities
 {
     [Table("Account")]
-    public class Account : LockupTypeTreeEntity
+    public class Account : BaseModel
     {
         [StringLength(50, MinimumLength = 3)]
-        public override string? Name { get; set; }
+        public virtual string Name { get; set; }
 
         [Column(TypeName = "decimal(18,2)")]
         public virtual decimal Debit { get; set; }
@@ -13,8 +13,8 @@
         public virtual decimal Credit { get; set; }
 
         [ForeignKey("AccountType")]
-        public override string? TypeId { get; set; }
+        public long AccountTypeId { get; set; }
        
-        public virtual AccountType? AccountType { get; set; }
+        public virtual AccountType AccountType { get; set; }
     }
 }

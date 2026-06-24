@@ -6,25 +6,25 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.ModelView;
+    using Application.DTOs;
     using System.Linq.Expressions;
     using Utility;
 
-    public sealed record GetListStockQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandCollection<StockModelView> , IListQuery<ResultCollection<StockModelView>>;
+    public sealed record GetListStockQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandCollection<StockDto> , IListQuery<ResultCollection<StockDto>>;
 
-    public sealed class GetListQueryHandler(IRepository<Entity.Model.Stock> _Repository, IMapper mapper) : ListCommandHandler<GetListStockQuery, Entity.Model.Stock, StockModelView>(_Repository, mapper)
+    public sealed class GetListQueryHandler(IRepository<Domain.Entities.Stock> _Repository, IMapper mapper) : ListCommandHandler<GetListStockQuery, Domain.Entities.Stock, StockDto>(_Repository, mapper)
     {
-        public override Expression<Func<Entity.Model.Stock, bool>> CreateFilter(GetListStockQuery request)
+        public override Expression<Func<Domain.Entities.Stock, bool>> CreateFilter(GetListStockQuery request)
         {
             Page = request.Page;
             PageSize = request.PageSize;
 
             return e =>
             (string.IsNullOrEmpty(request.KeySearch) || e.Name.Contains(request.KeySearch)) &&
-            e.Status != Status.Deleted && e.Hide != true;
+            e.Status != Domain.Enums.Status.Deleted && e.Hide != true;
         }
          
-        override public Func<IQueryable<Entity.Model.Stock>, IOrderedQueryable<Entity.Model.Stock>> CreateOrderBy(GetListStockQuery request)
+        override public Func<IQueryable<Domain.Entities.Stock>, IOrderedQueryable<Domain.Entities.Stock>> CreateOrderBy(GetListStockQuery request)
         {
             return q => q.OrderByDescending(e => e.Id);
         }

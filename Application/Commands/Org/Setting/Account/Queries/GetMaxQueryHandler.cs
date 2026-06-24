@@ -7,21 +7,20 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.Model;
-    using Entity.ModelView;
+    using Application.DTOs;
     using System;
     using System.Linq.Expressions;
 
     public sealed record GetMaxAccountQuery(long TypeId , long ParentId) : ICommandOb<object> , IGetMaxQuery<object>;
 
-    public sealed class GetMaxQueryHandler(IRepository<Entity.Model.Account> _Repository) : GetMaxCommandHandler<GetMaxAccountQuery, Entity.Model.Account>(_Repository)
+    public sealed class GetMaxQueryHandler(IRepository<Domain.Entities.Account> _Repository) : GetMaxCommandHandler<GetMaxAccountQuery, Domain.Entities.Account>(_Repository)
     {
-        public override Expression<Func<Account, bool>> CreateFilter(GetMaxAccountQuery request)
+        public override Expression<Func<Domain.Entities.Account, bool>> CreateFilter(GetMaxAccountQuery request)
         {
             return e=>e.TypeId == request.TypeId;
         }
 
-        public override Expression<Func<Account, object>> CreateSelector()
+        public override Expression<Func<Domain.Entities.Account, object>> CreateSelector()
         {
             return e => e.CodeNumber;
         }

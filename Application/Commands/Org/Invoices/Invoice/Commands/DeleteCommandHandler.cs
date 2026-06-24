@@ -6,10 +6,11 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.Model;
-    using Entity.ModelView;
+    using Domain.Entities;
+    using Application.DTOs;
     using Microsoft.Extensions.DependencyInjection;
     using System.Linq.Expressions;
+    using Domain.Enums;
 
     public sealed record DeleteInvoiceCommand(long Id) : ICommand, IDeleteCommand<Result>;
 
@@ -17,9 +18,9 @@
         IRepository<Invoice> _Repository,
         IServiceProvider _provider) : DeleteCommandHandler<DeleteInvoiceCommand,Invoice>(_UnitOfWork, _Repository, _provider)
     {
-        public override Expression<Func<Entity.Model.Invoice, bool>> CreateFilter(DeleteInvoiceCommand request)
+        public override Expression<Func<Domain.Entities.Invoice, bool>> CreateFilter(DeleteInvoiceCommand request)
         {
-            return e => e.Id == request.Id && e.Status != Utility.Status.Deleted && e.Hide != true;
+            return e => e.Id == request.Id && e.Status != Domain.Enums.Status.Deleted && e.Hide != true;
         }
 
         public override async Task<bool> RemoveDetails(DeleteInvoiceCommand request)

@@ -6,11 +6,11 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.ModelView;
+    using Application.DTOs;
 
     public sealed record CreateShiftCommand(string Name) : ICommand , ICreateCommand<Result>;
 
-    public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.Shift> _Repository , IMapper mapper) : CreateCommandHandler<CreateShiftCommand, Entity.Model.Shift>(_UnitOfWork, _Repository , mapper)
+    public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Domain.Entities.Shift> _Repository , IMapper mapper) : CreateCommandHandler<CreateShiftCommand, Domain.Entities.Shift>(_UnitOfWork, _Repository , mapper)
     {
        
     }

@@ -1,16 +1,16 @@
 ﻿using Application.Commands.Org.Setting.Account.Commands;
 using AutoMapper;
-using Entity.Model;
-using Entity.ModelView;
+using Domain.Entities;
+using Application.DTOs;
 
 public partial class MappingProfile : Profile
 {
     public void AccountMappingProfile()
     {
         #region Account
-        CreateMap<Account, AccountModelView>()
+        CreateMap<Account, AccountDto>()
         .ForMember(dest => dest.AccountTypeName, opt => opt.MapFrom(src => src.AccountType.Name));
-        CreateMap<AccountModelView, Account>();
+        CreateMap<AccountDto, Account>();
 
         CreateMap<Account, CreateAccountCommand>();
         CreateMap<CreateAccountCommand, Account>();
@@ -19,10 +19,10 @@ public partial class MappingProfile : Profile
         CreateMap<Account, DeleteAccountCommand>();
         CreateMap<DeleteAccountCommand, Account>();
 
-        CreateMap<AccountModelView, CreateAccountCommand>();
-        CreateMap<CreateAccountCommand, AccountModelView>();
-        CreateMap<AccountModelView, UpdateAccountCommand>();
-        CreateMap<UpdateAccountCommand, AccountModelView>();
+        CreateMap<AccountDto, CreateAccountCommand>();
+        CreateMap<CreateAccountCommand, AccountDto>();
+        CreateMap<AccountDto, UpdateAccountCommand>();
+        CreateMap<UpdateAccountCommand, AccountDto>();
         #endregion
     }
 }

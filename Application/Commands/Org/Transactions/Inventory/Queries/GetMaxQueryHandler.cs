@@ -7,14 +7,14 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.Model;
-    using Entity.ModelView;
+    using Domain.Entities;
+    using Application.DTOs;
     using System;
     using System.Linq.Expressions;
 
     public sealed record GetMaxInventoryQuery(long TypeId , long ParentId) : ICommandOb<object> , IGetMaxQuery<object>;
 
-    public sealed class GetMaxQueryHandler(IRepository<Entity.Model.Inventory> _Repository) : GetMaxCommandHandler<GetMaxInventoryQuery, Entity.Model.Inventory>(_Repository)
+    public sealed class GetMaxQueryHandler(IRepository<Inventory> _Repository) : GetMaxCommandHandler<GetMaxInventoryQuery, Inventory>(_Repository)
     {
         public override Expression<Func<Inventory, bool>> CreateFilter(GetMaxInventoryQuery request)
         {

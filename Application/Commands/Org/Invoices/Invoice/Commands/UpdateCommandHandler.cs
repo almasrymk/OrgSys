@@ -7,14 +7,14 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.Model;
-    using Entity.ModelView;
+    using Domain.Entities;
+    using Application.DTOs;
 
-    public sealed class UpdateInvoiceCommand : Entity.ModelView.InvoiceModelView , ICommand, IUpdateCommand<Result>;
+    public sealed class UpdateInvoiceCommand : Application.DTOs.InvoiceDto , ICommand, IUpdateCommand<Result>;
     public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork, 
-        IRepository<Entity.Model.Invoice> _Repository ,
-         IRepository<Entity.Model.InvoiceProduct> _InvoiceProductRepository,
-        IMapper mapper, IServiceProvider _provider) : UpdateCommandHandler<UpdateInvoiceCommand, Entity.Model.Invoice>(_UnitOfWork, _Repository , mapper , _provider)
+        IRepository<Domain.Entities.Invoice> _Repository ,
+         IRepository<Domain.Entities.InvoiceProduct> _InvoiceProductRepository,
+        IMapper mapper, IServiceProvider _provider) : UpdateCommandHandler<UpdateInvoiceCommand, Domain.Entities.Invoice>(_UnitOfWork, _Repository , mapper , _provider)
     {
 
 

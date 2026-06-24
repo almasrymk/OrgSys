@@ -13,10 +13,10 @@ namespace Application.Commands.Org.Invoices.Invoice.Commands
     public record RedoInvoiceCommand(long Id) : ICommand, IUpdateCommand<Result>;
 
     public class RedoInvoiceCommandHandler(IUnitOfWork _UnitOfWork,
-        IRepository<Entity.Model.Invoice> _Repository, 
+        IRepository<Domain.Entities.Invoice> _Repository, 
         IMapper mapper, IServiceProvider _provider
         ) 
-        : UpdateCommandHandler<RedoInvoiceCommand, Entity.Model.Invoice>(_UnitOfWork, _Repository, mapper, _provider)
+        : UpdateCommandHandler<RedoInvoiceCommand, Domain.Entities.Invoice>(_UnitOfWork, _Repository, mapper, _provider)
     {
 
         public override async Task<Result> Handle(RedoInvoiceCommand request, CancellationToken cancellationToken)
@@ -29,18 +29,18 @@ namespace Application.Commands.Org.Invoices.Invoice.Commands
                 if (invoice is null)
                     return new Result(HttpStatusCode.NotFound, new List<Error> { new Error("Invoice not found") });
 
-                invoice.Status = Utility.Status.All;
+                invoice.Status = Domain.Enums.Status.New;
 
                 if (invoice.TransactionId > 0)
                 {
-                    var transactionRepo = _provider.GetRequiredService<IRepository<Entity.Model.Transaction>>();
+                    var transactionRepo = _provider.GetRequiredService<IRepository<Domain.Entities.Transaction>>();
 
                     var transaction = await transactionRepo.GetByFilterAsync(x => x.Id == invoice.TransactionId, await CreateInclude());
 
                     if (transaction == null)
                         return new Result(HttpStatusCode.InternalServerError, new List<Error> { new Error("Transaction not found") });
 
-                    transaction.Status = Utility.Status.All;
+                    transaction.Status = Domain.Enums.Status.New;
                 }
 
                 var saved = await _UnitOfWork.SaveChangeAsync();

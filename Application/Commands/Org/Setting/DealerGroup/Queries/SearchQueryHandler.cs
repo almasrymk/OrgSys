@@ -6,15 +6,15 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.ModelView;
+    using Application.DTOs;
     using System.Linq.Expressions;
     using Utility;
 
-    public sealed record SearchDealerGroupQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandPagination<DealerGroupModelView> ,ISearchQuery<ResultPagination<DealerGroupModelView>>;
+    public sealed record SearchDealerGroupQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandPagination<DealerGroupDto> ,ISearchQuery<ResultPagination<DealerGroupDto>>;
 
-    public sealed class SearchQueryHandler(IRepository<Entity.Model.DealerGroup> _Repository, IMapper mapper) : SearchCommandHandler<SearchDealerGroupQuery, Entity.Model.DealerGroup, DealerGroupModelView>(_Repository, mapper)
+    public sealed class SearchQueryHandler(IRepository<Domain.Entities.DealerGroup> _Repository, IMapper mapper) : SearchCommandHandler<SearchDealerGroupQuery, Domain.Entities.DealerGroup, DealerGroupDto>(_Repository, mapper)
     {
-        public override Expression<Func<Entity.Model.DealerGroup, bool>> CreateFilter(SearchDealerGroupQuery request)
+        public override Expression<Func<Domain.Entities.DealerGroup, bool>> CreateFilter(SearchDealerGroupQuery request)
         {
             Page = request.Page;
             PageSize = request.PageSize;
@@ -22,10 +22,10 @@
             return e => 
             (string.IsNullOrEmpty(request.KeySearch) || e.Name.Contains(request.KeySearch)) &&
             e.TypeId == request.TypeId &&
-            e.Status != Status.Deleted && e.Hide != true;
+            e.Status != Domain.Enums.Status.Deleted && e.Hide != true;
         }
          
-        override public Func<IQueryable<Entity.Model.DealerGroup>, IOrderedQueryable<Entity.Model.DealerGroup>> CreateOrderBy(SearchDealerGroupQuery request)
+        override public Func<IQueryable<Domain.Entities.DealerGroup>, IOrderedQueryable<Domain.Entities.DealerGroup>> CreateOrderBy(SearchDealerGroupQuery request)
         {
             return q => q.OrderByDescending(e => e.Id);
         }

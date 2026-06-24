@@ -4,7 +4,7 @@ using Application.Interfaces.CQRS;
 using AutoMapper;
 using Domain.Abstraction;
 using Domain.Shared;
-using Entity.ModelView;
+using Application.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -15,13 +15,13 @@ namespace Application.Commands.Org.Invoices.Invoice.Queries
 {
     public sealed record GetCreditAllByDealerIdQuery(string KeySearch, long TypeId, int Page, int PageSize, long ParentId
         , long DealerId, long CurrencyId, string Ids) :
-        ICommandPagination<InvoiceModelView>, ISearchQuery<ResultPagination<InvoiceModelView>>;
+        ICommandPagination<InvoiceDto>, ISearchQuery<ResultPagination<InvoiceDto>>;
 
-    public sealed class GetCreditAllByDealerIdQueryHandler(IRepository<Entity.Model.Invoice> _Repository, IMapper mapper) :
-        SearchCommandHandler<GetCreditAllByDealerIdQuery, Entity.Model.Invoice, InvoiceModelView>(_Repository, mapper)
+    public sealed class GetCreditAllByDealerIdQueryHandler(IRepository<Domain.Entities.Invoice> _Repository, IMapper mapper) :
+        SearchCommandHandler<GetCreditAllByDealerIdQuery, Domain.Entities.Invoice, InvoiceDto>(_Repository, mapper)
     {
 
-        public override async Task<ResultPagination<InvoiceModelView>> Handle(GetCreditAllByDealerIdQuery request, CancellationToken cancellationToken)
+        public override async Task<ResultPagination<InvoiceDto>> Handle(GetCreditAllByDealerIdQuery request, CancellationToken cancellationToken)
         {
 
             if (request.Ids != null)
@@ -32,25 +32,25 @@ namespace Application.Commands.Org.Invoices.Invoice.Queries
 
                 var result = await _Repository.GetPaginationByFilterAsync(CreateFilter(request), CreateOrderBy(request), "", request.Page, request.PageSize);
 
-                return new ResultPagination<InvoiceModelView>( HttpStatusCode.OK,
-                result.Items.Select(e => mapper.Map<InvoiceModelView>(e)).ToList(),
+                return new ResultPagination<InvoiceDto>( HttpStatusCode.OK,
+                result.Items.Select(e => mapper.Map<InvoiceDto>(e)).ToList(),
                 result.Page, result.PageSize, result.TotalPages, null);
 
             }
 
 
-            return new ResultPagination<InvoiceModelView>(
+            return new ResultPagination<InvoiceDto>(
                     HttpStatusCode.InternalServerError,
-                    new List<InvoiceModelView>(), 0, 0, 0,
+                    new List<InvoiceDto>(), 0, 0, 0,
                     new List<Error> { new Error("Error") });
         }
 
-        public override Func<IQueryable<Entity.Model.Invoice>, IOrderedQueryable<Entity.Model.Invoice>> CreateOrderBy(GetCreditAllByDealerIdQuery request)
+        public override Func<IQueryable<Domain.Entities.Invoice>, IOrderedQueryable<Domain.Entities.Invoice>> CreateOrderBy(GetCreditAllByDealerIdQuery request)
         {
             return e => e.OrderByDescending(e => e.Id);
         }
 
-        public override Expression<Func<Entity.Model.Invoice, bool>> CreateFilter(GetCreditAllByDealerIdQuery request)
+        public override Expression<Func<Domain.Entities.Invoice, bool>> CreateFilter(GetCreditAllByDealerIdQuery request)
         {
             //return repo.GetList(e => !ids.Contains(e.Id.ToString()) && e.TypeId == TypeId && e.DealerId == dealerId && e.CurrencyId == currencyId && e.Credit > 0 && ("" + textSearch == "" || e.Code.Contains("" + textSearch) || e.Dealer.Name.Contains("" + textSearch)), e => e.OrderByDescending(e => e.Id), Includes, Utility.Status.New).Select(e => e.Map<InvoiceModelView>()).ToPagedList(page, pageSize);
 

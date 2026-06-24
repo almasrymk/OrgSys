@@ -6,8 +6,8 @@ using System.Net.Http;
 using System.Net.Mail;
 using System.Net.Mime;
 using System.Threading.Tasks;
-using Entity.Model;
-using Entity.ModelView;
+using Domain.Entities;
+using Application.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
@@ -24,8 +24,6 @@ using Microsoft.Extensions.Logging;
 using OrgSys.Models;
 using Repository;
 using Repository.Seed;
-using Service;
-using Service.BAL.Data.Security;
 using Utility;
 
 namespace OrgSys.Controllers
@@ -34,27 +32,27 @@ namespace OrgSys.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        LoginUserService _loginUserService;
-        UserService _userService;
+        //LoginUserService _loginUserService;
+        //UserService _userService;
         DbContextOptions<OrgContext> _option;
-        ClientService _clientService;
+        //ClientService _clientService;
 
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
             _option = new DbContextOptions<OrgContext>();
 
-            if (_loginUserService == null)
-                _loginUserService = new LoginUserService();
+            //if (_loginUserService == null)
+            //    _loginUserService = new LoginUserService();
 
-            if (_clientService == null)
-                _clientService = new ClientService();
+            //if (_clientService == null)
+            //    _clientService = new ClientService();
 
             if (User != null && User.Identity != null && User.Identity.IsAuthenticated)
             {
                 new InitialData(User.GetSchema()).Run().Wait();
-                if (_userService == null)
-                    _userService = new UserService(User.GetSchema());
+                //if (_userService == null)
+                //    _userService = new UserService(User.GetSchema());
             }
         }
 
@@ -157,24 +155,24 @@ namespace OrgSys.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public IActionResult LogIn(LoginUserModelView _user, string ReturnUrl)
+        public IActionResult LogIn(LoginUserDto _user, string ReturnUrl)
         {
             try
             {
-                var us = _loginUserService.GetLoginUserName(_user.UserName);
-                if (!string.IsNullOrEmpty(_user.NewPassword))
-                {
-                    us.Password = Utility.Security.Encrypt(_user.NewPassword);
-                    _loginUserService.Save(us);
-                }
+                //var us = _loginUserService.GetLoginUserName(_user.UserName);
+                //if (!string.IsNullOrEmpty(_user.NewPassword))
+                //{
+                //    us.Password = Utility.Security.Encrypt(_user.NewPassword);
+                //    _loginUserService.Save(us);
+                //}
 
-                OrgContext _orgContext = new OrgContext(_option, us.Schema);
-                //_orgContext.Database.Migrate();
-                //new InitialData(us.Schema).Run().Wait();
+                //OrgContext _orgContext = new OrgContext(_option, us.Schema);
+                ////_orgContext.Database.Migrate();
+                ////new InitialData(us.Schema).Run().Wait();
 
-                _userService = new UserService(us.Schema);
-                var usSys = _userService.GetByLoginUserId(us.Id);
-                usSys.SignIn(HttpContext, us.Schema, _user.KeepLoggedIn);
+                //_userService = new UserService(us.Schema);
+                //var usSys = _userService.GetByLoginUserId(us.Id);
+                //usSys.SignIn(HttpContext, us.Schema, _user.KeepLoggedIn);
                 return RedirectToAction("Dashboard");
             }
             catch
@@ -187,8 +185,8 @@ namespace OrgSys.Controllers
         [HttpGet]
         public IActionResult LogOut()
         {
-            var us = _loginUserService.Get(User.GetUserName());
-            us.SignOut(HttpContext);
+            //var us = _loginUserService.Get(User.GetUserName());
+            //us.SignOut(HttpContext);
             return RedirectToAction("LogIn");
         }
 
@@ -201,26 +199,26 @@ namespace OrgSys.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult RequestReg(RequestModelView _request)
+        public ActionResult RequestReg(RequestDto _request)
         {
-            var Key = string.Format("{0:000000000}", new Random().Next(0, 999999999));
-            _request.Key = Key;
-            _request.URL = $"{Request.Scheme}://{Request.Host}{Request.PathBase}/Home/Register?Key=" + Utility.Security.Encrypt(Key);
-            var LoginURL = $"{Request.Scheme}://{Request.Host}{Request.PathBase}/Home/Login";
-            var BaseUrl = $"{Request.Scheme}://{Request.Host}{Request.PathBase}";
-            var SupploerURL = $"{Request.Scheme}://{Request.Host}{Request.PathBase}/Home/Login";
-            _request.ExpireDate = DateTime.Now.AddDays(2);
+            //var Key = string.Format("{0:000000000}", new Random().Next(0, 999999999));
+            //_request.Key = Key;
+            //_request.URL = $"{Request.Scheme}://{Request.Host}{Request.PathBase}/Home/Register?Key=" + Utility.Security.Encrypt(Key);
+            //var LoginURL = $"{Request.Scheme}://{Request.Host}{Request.PathBase}/Home/Login";
+            //var BaseUrl = $"{Request.Scheme}://{Request.Host}{Request.PathBase}";
+            //var SupploerURL = $"{Request.Scheme}://{Request.Host}{Request.PathBase}/Home/Login";
+            //_request.ExpireDate = DateTime.Now.AddDays(2);
 
-            var old = new RequestService().GetEmail(_request.Email);
-            if (old != null && old.Id > 0)
-                new RequestService().Delete(old.Id);
+            //var old = new RequestService().GetEmail(_request.Email);
+            //if (old != null && old.Id > 0)
+            //    new RequestService().Delete(old.Id);
 
-            new RequestService().Save(_request);
+            //new RequestService().Save(_request);
 
-            var Body = General.RenderViewAsync<MailViewModel>(this, "MailTemplate", new MailViewModel { Date = DateTime.Now.ToString("dd MMM yyyy"), Sender = "Organizer", Receiver = _request.Name, LoginUrl = LoginURL, TechnicalSupportUrl = SupploerURL, Url = _request.URL, BaseUrl = BaseUrl }).Result;
-            Utility.General.SendEmail(_request.Email, "Organizer", "Wellcom", Body);
-            ViewBag.Name = _request.Name;
-            ViewBag.Email = _request.Email;
+            //var Body = General.RenderViewAsync<MailViewModel>(this, "MailTemplate", new MailViewModel { Date = DateTime.Now.ToString("dd MMM yyyy"), Sender = "Organizer", Receiver = _request.Name, LoginUrl = LoginURL, TechnicalSupportUrl = SupploerURL, Url = _request.URL, BaseUrl = BaseUrl }).Result;
+            //Utility.General.SendEmail(_request.Email, "Organizer", "Wellcom", Body);
+            //ViewBag.Name = _request.Name;
+            //ViewBag.Email = _request.Email;
             return RedirectToAction("RegDone");
         }
 
@@ -235,127 +233,129 @@ namespace OrgSys.Controllers
         [AllowAnonymous]
         public IActionResult Register(string Key)
         {
-            Key = Key.Replace(" ", "+");
-            var keyNumber = Utility.Security.Decrypt(Key);
-            var request = new RequestService().GetByKey(keyNumber);
-            if (request == null || request.Id == 0 || request.ExpireDate < DateTime.Now)
-                return RedirectToAction("Notfound");
+            //Key = Key.Replace(" ", "+");
+            //var keyNumber = Utility.Security.Decrypt(Key);
+            //var request = new RequestService().GetByKey(keyNumber);
+            //if (request == null || request.Id == 0 || request.ExpireDate < DateTime.Now)
+            //    return RedirectToAction("Notfound");
 
-            var client = new ClientService().GetRequstId(request.Id);
-            if (client != null && client.Id > 0)
-                return RedirectToAction("Notfound");
+            //var client = new ClientService().GetRequstId(request.Id);
+            //if (client != null && client.Id > 0)
+            //    return RedirectToAction("Notfound");
 
-            if (client == null)
-                client = new ClientModelView();
+            //if (client == null)
+            //    client = new ClientModelView();
 
-            client.Name = request.Name;
-            client.CompanyName = request.CompanyName;
-            client.Email = request.Email;
-            client.Mobile = request.Phone;
-            client.CodeNumber = new ClientService().GetMaxCode();
-            client.Code = "" + client.CodeNumber;
-            ViewBag.TypeActivityId = new SelectList(new TypeActivityService().GetAll(0, 0, 1, 10000), "Id", "Name");
-            ViewBag.NationalityId = new SelectList(new NationalityService().GetAll(0, 0, 1, 10000), "Id", "Name");
-            List<SelectListItem> items = new List<SelectListItem>();
-            items.Add(new SelectListItem { Value = "1", Text = Utility.Resource.Title_Designer.From + " 1 " + Utility.Resource.Title_Designer.To + " 5 " + Utility.Resource.Title_Designer.Employees });
-            items.Add(new SelectListItem { Value = "2", Text = Utility.Resource.Title_Designer.From + " 5 " + Utility.Resource.Title_Designer.To + " 50 " + Utility.Resource.Title_Designer.Employees });
-            items.Add(new SelectListItem { Value = "3", Text = Utility.Resource.Title_Designer.From + " 50 " + Utility.Resource.Title_Designer.To + " 150 " + Utility.Resource.Title_Designer.Employees });
-            items.Add(new SelectListItem { Value = "4", Text = Utility.Resource.Title_Designer.From + " 150 " + Utility.Resource.Title_Designer.To + " 1500 " + Utility.Resource.Title_Designer.Employees });
-            items.Add(new SelectListItem { Value = "5", Text = Utility.Resource.Title_Designer.MoreThen + " 1500 " + Utility.Resource.Title_Designer.Employees });
-            ViewBag.SizeOfCompany = new SelectList(items, "Value", "Text");
-            return View(client);
+            //client.Name = request.Name;
+            //client.CompanyName = request.CompanyName;
+            //client.Email = request.Email;
+            //client.Mobile = request.Phone;
+            //client.CodeNumber = new ClientService().GetMaxCode();
+            //client.Code = "" + client.CodeNumber;
+            //ViewBag.TypeActivityId = new SelectList(new TypeActivityService().GetAll(0, 0, 1, 10000), "Id", "Name");
+            //ViewBag.NationalityId = new SelectList(new NationalityService().GetAll(0, 0, 1, 10000), "Id", "Name");
+            //List<SelectListItem> items = new List<SelectListItem>();
+            //items.Add(new SelectListItem { Value = "1", Text = Utility.Resource.Title_Designer.From + " 1 " + Utility.Resource.Title_Designer.To + " 5 " + Utility.Resource.Title_Designer.Employees });
+            //items.Add(new SelectListItem { Value = "2", Text = Utility.Resource.Title_Designer.From + " 5 " + Utility.Resource.Title_Designer.To + " 50 " + Utility.Resource.Title_Designer.Employees });
+            //items.Add(new SelectListItem { Value = "3", Text = Utility.Resource.Title_Designer.From + " 50 " + Utility.Resource.Title_Designer.To + " 150 " + Utility.Resource.Title_Designer.Employees });
+            //items.Add(new SelectListItem { Value = "4", Text = Utility.Resource.Title_Designer.From + " 150 " + Utility.Resource.Title_Designer.To + " 1500 " + Utility.Resource.Title_Designer.Employees });
+            //items.Add(new SelectListItem { Value = "5", Text = Utility.Resource.Title_Designer.MoreThen + " 1500 " + Utility.Resource.Title_Designer.Employees });
+            //ViewBag.SizeOfCompany = new SelectList(items, "Value", "Text");
+            //return View(client);
+            return View();
         }
 
 
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult Register(ClientModelView _client, string Password)
+        public ActionResult Register(ClientDto _client, string Password)
         {
-            if (ModelState.IsValid)
-            {
-                _client.DbSchema = _client.Email.Replace("@", "").Replace(".", "").ToUpper();
-                var client = new ClientService().Save(_client);
-                if (client.Id > 0)
-                {
-                    var loginUser = new LoginUserModelView();
-                    loginUser.ClientId = client.Id;
-                    loginUser.UserName = client.Email;
-                    loginUser.Password = Utility.Security.Encrypt(Password);
-                    if (loginUser != null)
-                        loginUser = new LoginUserService().Save(loginUser);
+            //if (ModelState.IsValid)
+            //{
+            //    _client.DbSchema = _client.Email.Replace("@", "").Replace(".", "").ToUpper();
+            //    var client = new ClientService().Save(_client);
+            //    if (client.Id > 0)
+            //    {
+            //        var loginUser = new LoginUserModelView();
+            //        loginUser.ClientId = client.Id;
+            //        loginUser.UserName = client.Email;
+            //        loginUser.Password = Utility.Security.Encrypt(Password);
+            //        if (loginUser != null)
+            //            loginUser = new LoginUserService().Save(loginUser);
 
-                    OrgContext _orgContext = new OrgContext(_option, client.DbSchema);
-                    _orgContext.Database.EnsureCreated();
-                    _orgContext.Database.Migrate();
-                    //RelationalDatabaseCreator creator = (RelationalDatabaseCreator)_orgContext.Database.GetService<IRelationalDatabaseCreator>();
+            //        OrgContext _orgContext = new OrgContext(_option, client.DbSchema);
+            //        _orgContext.Database.EnsureCreated();
+            //        _orgContext.Database.Migrate();
+            //        //RelationalDatabaseCreator creator = (RelationalDatabaseCreator)_orgContext.Database.GetService<IRelationalDatabaseCreator>();
 
-                    //creator.CreateTables();
-                    //string createEFMigrationsHistoryCommand = $@"
-                    //    USE [{_orgContext.Database.GetDbConnection().Database}];
-                    //    SET ANSI_NULLS ON;
-                    //    SET QUOTED_IDENTIFIER ON;
-                    //    CREATE TABLE [{client.DbSchema}].[__MigrationsHistory](
-                    //    [MigrationId] [nvarchar](150) NOT NULL,
-                    //    [ProductVersion] [nvarchar](32) NOT NULL,
-                    //    CONSTRAINT [PK__MigrationsHistory] PRIMARY KEY CLUSTERED 
-                    //    (
-                    //    [MigrationId] ASC
-                    //    )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-                    //    ) ON [PRIMARY];
-                    //    ";
-                    //_orgContext.Database.ExecuteSqlRaw(createEFMigrationsHistoryCommand);
-                    //_orgContext.Database.ExecuteSqlRaw($"INSERT INTO [{client.DbSchema}].[__MigrationsHistory](MigrationId,ProductVersion) SELECT MigrationId,ProductVersion FROM org.__MigrationsHistory");
-                    new InitialData(client.DbSchema).Run().Wait();
-                    //var usSys = new UserModelView { BranchId = 1, RoleId = 1, Code = "1", CodeNumber = 1, UserName = loginUser.UserName, LoginUserId = loginUser.Id, Name = client.Name };
-                    //_userService = new UserService(client.DbSchema);
-                    //usSys = _userService.Save(usSys);
+            //        //creator.CreateTables();
+            //        //string createEFMigrationsHistoryCommand = $@"
+            //        //    USE [{_orgContext.Database.GetDbConnection().Database}];
+            //        //    SET ANSI_NULLS ON;
+            //        //    SET QUOTED_IDENTIFIER ON;
+            //        //    CREATE TABLE [{client.DbSchema}].[__MigrationsHistory](
+            //        //    [MigrationId] [nvarchar](150) NOT NULL,
+            //        //    [ProductVersion] [nvarchar](32) NOT NULL,
+            //        //    CONSTRAINT [PK__MigrationsHistory] PRIMARY KEY CLUSTERED 
+            //        //    (
+            //        //    [MigrationId] ASC
+            //        //    )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+            //        //    ) ON [PRIMARY];
+            //        //    ";
+            //        //_orgContext.Database.ExecuteSqlRaw(createEFMigrationsHistoryCommand);
+            //        //_orgContext.Database.ExecuteSqlRaw($"INSERT INTO [{client.DbSchema}].[__MigrationsHistory](MigrationId,ProductVersion) SELECT MigrationId,ProductVersion FROM org.__MigrationsHistory");
+            //        new InitialData(client.DbSchema).Run().Wait();
+            //        //var usSys = new UserModelView { BranchId = 1, RoleId = 1, Code = "1", CodeNumber = 1, UserName = loginUser.UserName, LoginUserId = loginUser.Id, Name = client.Name };
+            //        //_userService = new UserService(client.DbSchema);
+            //        //usSys = _userService.Save(usSys);
 
-                    // Save Company Profile from Client Data
+            //        // Save Company Profile from Client Data
 
-                    //usSys.SignIn(HttpContext, client.DbSchema);
-                    return RedirectToAction("Dashboard");
-                }
-            }
-            return View(_client);
+            //        //usSys.SignIn(HttpContext, client.DbSchema);
+            //        return RedirectToAction("Dashboard");
+            //    }
+            //}
+            //return View(_client);
 
+            return View();
         }
-        //--------------- Check For Client -------------------
-        [AllowAnonymous]
-        public ActionResult CheckEmailToClient(string Email)
-        {
-            return Json(_clientService.CheckEmailToClient(Email));
-        }
+        ////--------------- Check For Client -------------------
+        //[AllowAnonymous]
+        //public ActionResult CheckEmailToClient(string Email)
+        //{
+        //    return Json(_clientService.CheckEmailToClient(Email));
+        //}
 
-        [AllowAnonymous]
-        public ActionResult CheckPhoneToClient(string Phone)
-        {
-            return Json(_clientService.CheckPhoneToClient(Phone));
-        }
+        //[AllowAnonymous]
+        //public ActionResult CheckPhoneToClient(string Phone)
+        //{
+        //    return Json(_clientService.CheckPhoneToClient(Phone));
+        //}
 
 
-        //--------------- Check For User -------------------
-        [AllowAnonymous]
-        public ActionResult CheckEmail(string Email)
-        {
-            return Json(_loginUserService.CheckEmail(Email));
-        }
+        ////--------------- Check For User -------------------
+        //[AllowAnonymous]
+        //public ActionResult CheckEmail(string Email)
+        //{
+        //    return Json(_loginUserService.CheckEmail(Email));
+        //}
 
-        [AllowAnonymous]
-        public ActionResult HavePassword(string Email)
-        {
-            return Json(_loginUserService.HavePassword(Email));
-        }
+        //[AllowAnonymous]
+        //public ActionResult HavePassword(string Email)
+        //{
+        //    return Json(_loginUserService.HavePassword(Email));
+        //}
 
-        [AllowAnonymous]
-        public ActionResult CheckPassword(string Email, string Password)
-        {
-            return Json(_loginUserService.CheckEmailAndPassword(Email, Utility.Security.Encrypt(Password)));
-        }
+        //[AllowAnonymous]
+        //public ActionResult CheckPassword(string Email, string Password)
+        //{
+        //    return Json(_loginUserService.CheckEmailAndPassword(Email, Utility.Security.Encrypt(Password)));
+        //}
 
-        public ActionResult CheckCurrentPassword(long Id, string CurrentPassword)
-        {
-            return Json(_loginUserService.CheckCurrentPassword(Id, Utility.Security.Encrypt(CurrentPassword)));
-        }
+        //public ActionResult CheckCurrentPassword(long Id, string CurrentPassword)
+        //{
+        //    return Json(_loginUserService.CheckCurrentPassword(Id, Utility.Security.Encrypt(CurrentPassword)));
+        //}
 
         [HttpGet]
         public ActionResult Profile(ResultStatus Status = ResultStatus.nothing, string MsgError = "")
@@ -370,7 +370,7 @@ namespace OrgSys.Controllers
         }
 
         [HttpPost]
-        public ActionResult Profile(UserModelView _profile)
+        public ActionResult Profile(UserDto _profile)
         {
             try
             {

@@ -1,6 +1,6 @@
 ﻿namespace Infrastructure.Persistence.Data
 {
-    using Entity.Model;
+    using Domain.Entities;
     using System.Reflection;
     using Domain.Abstraction;
     using System.Threading.Tasks;

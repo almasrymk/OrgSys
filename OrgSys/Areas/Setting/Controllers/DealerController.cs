@@ -2,7 +2,7 @@
 {
     using Application.Commands.Org.Setting.Dealer.Commands;
     using AutoMapper;
-    using Entity.ModelView;
+    using Application.DTOs;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.Extensions.Configuration;
@@ -12,29 +12,29 @@
     using System.Threading.Tasks;
 
     [Area("Setting")]
-    public class DealerController(IConfiguration configuration, IMapper mapper) : MainController<DealerModelView, CreateDealerCommand, UpdateDealerCommand>(configuration, mapper)
+    public class DealerController(IConfiguration configuration, IMapper mapper) : MainController<DealerDto, CreateDealerCommand, UpdateDealerCommand>(configuration, mapper)
     {
 
-        public override async Task LoadViewBag(DealerModelView model)
+        public override async Task LoadViewBag(DealerDto model)
         {
-            ViewBag.DealersGroupList = new SelectList(await GetListApi<DealerGroupModelView>(TypeId: model.TypeId, Page: 1, PageSize: 20), "Id", "Name", model.DealerGroupId);
-            ViewBag.AccountList = new SelectList(await GetListApi<AccountModelView>(TypeId: model.TypeId, Page: 1, PageSize: 20), "Id", "Name", model.AccountId);
+            ViewBag.DealersGroupList = new SelectList(await GetListApi<DealerGroupDto>(TypeId: model.TypeId, Page: 1, PageSize: 20), "Id", "Name", model.DealerGroupId);
+            ViewBag.AccountList = new SelectList(await GetListApi<AccountDto>(TypeId: model.TypeId, Page: 1, PageSize: 20), "Id", "Name", model.AccountId);
         }
 
-        public override async Task<DealerModelView> InitializeData(DealerModelView ob)
+        public override async Task<DealerDto> InitializeData(DealerDto ob)
         {
-            ViewBag.DealersGroupList = new SelectList(await GetListApi<DealerGroupModelView>(TypeId: ob.TypeId , Page: 1, PageSize: 20), "Id", "Name", ob.DealerGroupId);
-            ViewBag.AccountList = new SelectList(await GetListApi<AccountModelView>(TypeId: ob.TypeId, Page: 1, PageSize: 20), "Id", "Name", ob.AccountId);
+            ViewBag.DealersGroupList = new SelectList(await GetListApi<DealerGroupDto>(TypeId: ob.TypeId , Page: 1, PageSize: 20), "Id", "Name", ob.DealerGroupId);
+            ViewBag.AccountList = new SelectList(await GetListApi<AccountDto>(TypeId: ob.TypeId, Page: 1, PageSize: 20), "Id", "Name", ob.AccountId);
 
             if (ob == null)
-                ob = new DealerModelView();
+                ob = new DealerDto();
             if (ob.Id == 0)
             {
-                ob.CodeNumber = long.Parse("0" + await GetValueApi<DealerModelView>($"GetMax?TypeId={ob.TypeId}")) + 1;
+                ob.CodeNumber = long.Parse("0" + await GetValueApi<DealerDto>($"GetMax?TypeId={ob.TypeId}")) + 1;
                 ob.Code = "" + ob.CodeNumber;
             }
-            ob.DealerGroupName = (await GetObApi<DealerGroupModelView>($"GetById?Id={ob.DealerGroupId ?? 0}"))?.Name;
-            ob.AccountName = (await GetObApi<AccountModelView>($"GetById?Id={ob.AccountId ?? 0}"))?.Name;
+            ob.DealerGroupName = (await GetObApi<DealerGroupDto>($"GetById?Id={ob.DealerGroupId ?? 0}"))?.Name;
+            ob.AccountName = (await GetObApi<AccountDto>($"GetById?Id={ob.AccountId ?? 0}"))?.Name;
 
             return ob;
         }
@@ -45,7 +45,7 @@
                 txtSearch = txtSearch.Trim().ToLower();
             long TypeDealerId = TypeId == 1 || TypeId == 3 ? 1 : 2;
 
-            var itemsList = await GetListApi<DealerModelView>(TypeId: TypeDealerId , TextSearch: txtSearch, Page: page, PageSize: pageSize);
+            var itemsList = await GetListApi<DealerDto>(TypeId: TypeDealerId , TextSearch: txtSearch, Page: page, PageSize: pageSize);
             var list = itemsList.Distinct().OrderBy(_ => _.Name)
                 .Select(_ => new
                 {

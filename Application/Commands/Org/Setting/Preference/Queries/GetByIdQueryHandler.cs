@@ -7,16 +7,16 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.ModelView;
+    using Application.DTOs;
     using System.Linq.Expressions;
 
-    public sealed record GetByIdPreferenceQuery(long Id) : ICommand<PreferenceModelView> , IGetByIdQuery<Result<PreferenceModelView>>;
+    public sealed record GetByIdPreferenceQuery(long Id) : ICommand<PreferenceDto> , IGetByIdQuery<Result<PreferenceDto>>;
 
-    public sealed class GetByIdQueryHandler(IRepository<Entity.Model.Preference> _Repository, IMapper mapper) : GetCommandHandler<GetByIdPreferenceQuery, Entity.Model.Preference, PreferenceModelView>(_Repository, mapper)
+    public sealed class GetByIdQueryHandler(IRepository<Domain.Entities.Preference> _Repository, IMapper mapper) : GetCommandHandler<GetByIdPreferenceQuery, Domain.Entities.Preference, PreferenceDto>(_Repository, mapper)
     {
-        public override Expression<Func<Entity.Model.Preference, bool>> CreateFilter(GetByIdPreferenceQuery request)
+        public override Expression<Func<Domain.Entities.Preference, bool>> CreateFilter(GetByIdPreferenceQuery request)
         {           
-            return e => e.Id == request.Id && e.Status !=Utility.Status.Deleted && e.Hide != true;
+            return e => e.Id == request.Id && e.Status !=Domain.Enums.Status.Deleted && e.Hide != true;
         }
     }
 }

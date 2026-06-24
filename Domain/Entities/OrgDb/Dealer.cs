@@ -1,10 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Domain.Entities
+﻿namespace Domain.Entities
 {
     [Table("Dealer")]
-    public class Dealer : BaseEntity
+    public class Dealer : BaseModel
     {
         [Required]
         public virtual string Name { get; set; }
@@ -37,5 +34,10 @@ namespace Domain.Entities
         public virtual long? DistrictId { get; set; }
 
         public virtual District District { get; set; }
+
+        [ForeignKey("Account")]
+        public virtual long? AccountId { get; set; }
+
+        public virtual Account Account { get; set; }
     }
 }

@@ -1,6 +1,5 @@
 using AutoMapper;
 using Domain.Abstraction;
-using Entity;
 using Infrastructure.Persistence.Data;
 using Infrastructure.Persistence.UnitOfWork;
 using Microsoft.AspNetCore.Authentication.Cookies;

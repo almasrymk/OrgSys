@@ -1,6 +1,6 @@
-﻿using Domain.Abstraction;
-using Entity.Model;
-using Entity.ModelReport;
+﻿using Application.Report;
+using Domain.Abstraction;
+using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore.Diagnostics;

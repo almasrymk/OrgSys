@@ -4,12 +4,11 @@ using Application.Commands.Org.Transactions.TransactionType.Commands;
 using AutoMapper;
 using Domain.Enums;
 using Domain.Shared;
-using Entity.ModelView;
+using Application.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using OrgSys.Controllers;
-using Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,26 +18,26 @@ using Utility;
 namespace OrgSys.Areas.Transaction.Controllers
 {
     [Area("Transactions")]
-    public class TransactionController(IConfiguration configuration, IMapper mapper) : MainController<TransactionModelView, CreateTransactionCommand, UpdateTransactionCommand>(configuration, mapper)
+    public class TransactionController(IConfiguration configuration, IMapper mapper) : MainController<TransactionDto, CreateTransactionCommand, UpdateTransactionCommand>(configuration, mapper)
     {
         public override async Task LoadViewBagIndex(long ParentId = 0, long TypeId = 0)   
         {
             //var type = new TransactionTypeService(User.GetSchema()).Get(TypeId);
-            var type = await GetObApi<TransactionTypeModelView>($"GetById?Id={TypeId}");
+            var type = await GetObApi<TransactionTypeDto>($"GetById?Id={TypeId}");
             ViewBag.TransactionsType = type.MaskText;            
             ViewBag.TransactionsIcon = type.Icon;
         }
 
-        public override async Task LoadViewBag(TransactionModelView model)
+        public override async Task LoadViewBag(TransactionDto model)
         {
 
             //var type = new TransactionTypeService(User.GetSchema()).Get(model.TypeId);
-            var type = await GetObApi<TransactionTypeModelView>($"GetById?Id={model.TypeId}");
+            var type = await GetObApi<TransactionTypeDto>($"GetById?Id={model.TypeId}");
             ViewBag.TransactionsType = type.Name;
             ViewBag.TransactionsType = type.Icon;
         }
 
-        public override Task<TransactionModelView> FixData(TransactionModelView ob)
+        public override Task<TransactionDto> FixData(TransactionDto ob)
         {
             if (ob.Id == 0)
             {
@@ -53,11 +52,11 @@ namespace OrgSys.Areas.Transaction.Controllers
             return base.FixData(ob);
         }
 
-        public override async Task<TransactionModelView> InitializeData(TransactionModelView ob)
+        public override async Task<TransactionDto> InitializeData(TransactionDto ob)
         {
             
             //var setting = new PreferenceService(User.GetSchema());
-            var setting = await GetListApi<PreferenceModelView>(TypeId: ob.TypeId, TextSearch: "Transaction");
+            var setting = await GetListApi<PreferenceDto>(TypeId: ob.TypeId, TextSearch: "Transaction");
             var StockId = long.Parse("0" + setting.FirstOrDefault(e => e.Key == "DefaultStock" && e.Reference == "Transaction" && e.TypeId == ob.TypeId)?.Value);
 
             long DealerId = 0;
@@ -74,29 +73,29 @@ namespace OrgSys.Areas.Transaction.Controllers
             ViewBag.AllowRepeated = int.Parse("0" + setting.FirstOrDefault(e => e.Key == "AllowRepeated" && e.Reference == "Transaction" && e.TypeId == ob.TypeId)?.Value);
 
             if (ob == null)
-                ob = new TransactionModelView();
+                ob = new TransactionDto();
 
             if (ob.Id == 0)
             {
 
-                ob.CodeNumber = long.Parse("0" + await GetValueApi<TransactionModelView>($"GetMax?ParentId=0&TypeId={ob.TypeId}")) + 1;      
+                ob.CodeNumber = long.Parse("0" + await GetValueApi<TransactionDto>($"GetMax?ParentId=0&TypeId={ob.TypeId}")) + 1;      
                 ob.Code = "" + ob.CodeNumber;
                 ob.StockId = StockId;
                 ob.DealerId = DealerId;
                 ob.Date = DateTime.Now;
-                ob.TransactionProductList = new List<TransactionProductModelView>();
+                ob.TransactionProductList = new List<TransactionProductDto>();
             }
 
-            ob.StockName = (await GetObApi<StockModelView>($"GetById?Id={ob.StockId}"))?.Name;
-            ob.ToStockName = (await GetObApi<StockModelView>($"GetById?Id={ob.StockId}"))?.Name;
-            ob.DealerName = (await GetObApi<DealerModelView>($"GetById?Id={ob.DealerId?? 0 }"))?.Name;
+            ob.StockName = (await GetObApi<StockDto>($"GetById?Id={ob.StockId}"))?.Name;
+            ob.ToStockName = (await GetObApi<StockDto>($"GetById?Id={ob.StockId}"))?.Name;
+            ob.DealerName = (await GetObApi<DealerDto>($"GetById?Id={ob.DealerId?? 0 }"))?.Name;
             return ob;
         }
 
 
 
         [HttpPost]
-        public async Task<ActionResult> AutoSave(TransactionModelView ob)
+        public async Task<ActionResult> AutoSave(TransactionDto ob)
         {
             await base.Save(ob);
             if (ob.Id == 0)
@@ -107,7 +106,7 @@ namespace OrgSys.Areas.Transaction.Controllers
                 if (searchResp != null && searchResp.IsSuccessStatusCode)
                 {
                     var searchData = await searchResp.Content.ReadAsStringAsync();
-                    var searchRes = JsonConvert.DeserializeObject<ResultPagination<TransactionModelView>>(searchData);
+                    var searchRes = JsonConvert.DeserializeObject<ResultPagination<TransactionDto>>(searchData);
                     if (searchRes != null && searchRes.Response != null && searchRes.Response.Count > 0)
                     {
                         ob.Id = searchRes.Response[0].Id;

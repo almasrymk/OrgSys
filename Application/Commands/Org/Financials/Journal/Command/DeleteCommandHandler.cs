@@ -5,7 +5,7 @@
     using Application.Interfaces.CQRS;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.Model;
+    using Domain.Entities;
     using System.Linq.Expressions;
 
     public sealed record DeleteJournalCommand(long Id) : ICommand, IDeleteCommand<Result>;
@@ -13,9 +13,9 @@
     public sealed class DeleteCommandHandler(IUnitOfWork _UnitOfWork,IRepository<Journal> _Repository, IServiceProvider _provider) : DeleteCommandHandler<DeleteJournalCommand, Journal>(_UnitOfWork, _Repository, _provider)
     {
 
-        public override Expression<Func<Entity.Model.Journal, bool>> CreateFilter(DeleteJournalCommand request)
+        public override Expression<Func<Domain.Entities.Journal, bool>> CreateFilter(DeleteJournalCommand request)
         {
-            return e => e.Id == request.Id && e.Status != Utility.Status.Deleted && e.Hide != true;
+            return e => e.Id == request.Id && e.Status != Domain.Enums.Status.Deleted && e.Hide != true;
         }
 
         public override async Task<bool> RemoveDetails(DeleteJournalCommand request)

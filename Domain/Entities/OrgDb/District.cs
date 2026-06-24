@@ -1,10 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Domain.Entities
+﻿namespace Domain.Entities
 {
     [Table("District")]
-    public class District : BaseEntity
+    public class District : BaseModel
     {
         [StringLength(50, MinimumLength = 3)]
         public virtual string Name { get; set; }

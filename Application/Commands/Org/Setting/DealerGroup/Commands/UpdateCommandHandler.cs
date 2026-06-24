@@ -6,11 +6,11 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.ModelView;
+    using Application.DTOs;
 
-    public sealed class UpdateDealerGroupCommand : DealerGroupModelView, ICommand, IUpdateCommand<Result>;
+    public sealed class UpdateDealerGroupCommand : DealerGroupDto, ICommand, IUpdateCommand<Result>;
 
-    public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.DealerGroup> _Repository , IMapper mapper, IServiceProvider _provider) : UpdateCommandHandler<UpdateDealerGroupCommand, Entity.Model.DealerGroup>(_UnitOfWork, _Repository , mapper , _provider)
+    public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Domain.Entities.DealerGroup> _Repository , IMapper mapper, IServiceProvider _provider) : UpdateCommandHandler<UpdateDealerGroupCommand, Domain.Entities.DealerGroup>(_UnitOfWork, _Repository , mapper , _provider)
     {
        
     }

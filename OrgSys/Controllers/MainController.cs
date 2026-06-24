@@ -4,7 +4,7 @@
     using AutoMapper;
     using Domain.Enums;
     using Domain.Shared; 
-    using Entity;
+    using Domain.Entities;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Filters;

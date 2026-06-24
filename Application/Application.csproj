@@ -30,13 +30,15 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Domain\Domain.csproj" />
-    <ProjectReference Include="..\Entity\Entity.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Commands\Admin\" />
     <Folder Include="Commands\Org\Financials\Financial\Queries\" />
-    <Folder Include="DTOs\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="DTOs\OrgDb\AccountBankDto.cs" />
   </ItemGroup>
 
 </Project>

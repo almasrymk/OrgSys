@@ -11,7 +11,7 @@
 
     public class GetMaxCommandHandler<TRequest, TModel>(IRepository<TModel> _Repository) : ICommandObHandler<TRequest, object>
         where TRequest : ICommandOb<object>
-        where TModel : Entity.BaseModel 
+        where TModel : Domain.Entities.BaseModel 
     {
         public virtual async Task<object> Handle(TRequest request, CancellationToken cancellationToken)
         {

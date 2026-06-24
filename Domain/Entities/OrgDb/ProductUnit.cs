@@ -1,11 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Domain.Entities
+﻿namespace Domain.Entities
 {
     [Table("ProductUnit")]
-    public class ProductUnit : BaseEntity
+    public class ProductUnit : BaseModel
     {
+        public ProductUnit() { }
+
         [ForeignKey("Product")]
         public virtual long ProductId { get; set; }
 

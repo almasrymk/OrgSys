@@ -6,25 +6,25 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.ModelView;
+    using Application.DTOs;
     using System.Linq.Expressions;
     using Utility;
 
-    public sealed record SearchSafeQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandPagination<SafeModelView> ,ISearchQuery<ResultPagination<SafeModelView>>;
+    public sealed record SearchSafeQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandPagination<SafeDto> ,ISearchQuery<ResultPagination<SafeDto>>;
 
-    public sealed class SearchQueryHandler(IRepository<Entity.Model.Safe> _Repository, IMapper mapper) : SearchCommandHandler<SearchSafeQuery, Entity.Model.Safe, SafeModelView>(_Repository, mapper)
+    public sealed class SearchQueryHandler(IRepository<Domain.Entities.Safe> _Repository, IMapper mapper) : SearchCommandHandler<SearchSafeQuery, Domain.Entities.Safe, SafeDto>(_Repository, mapper)
     {
-        public override Expression<Func<Entity.Model.Safe, bool>> CreateFilter(SearchSafeQuery request)
+        public override Expression<Func<Domain.Entities.Safe, bool>> CreateFilter(SearchSafeQuery request)
         {
             Page = request.Page;
             PageSize = request.PageSize;
 
             return e => 
             (string.IsNullOrEmpty(request.KeySearch) || e.Name.Contains(request.KeySearch)) &&
-            e.Status != Status.Deleted && e.Hide != true;
+            e.Status != Domain.Enums.Status.Deleted && e.Hide != true;
         }
          
-        override public Func<IQueryable<Entity.Model.Safe>, IOrderedQueryable<Entity.Model.Safe>> CreateOrderBy(SearchSafeQuery request)
+        override public Func<IQueryable<Domain.Entities.Safe>, IOrderedQueryable<Domain.Entities.Safe>> CreateOrderBy(SearchSafeQuery request)
         {
             return q => q.OrderByDescending(e => e.Id);
         }

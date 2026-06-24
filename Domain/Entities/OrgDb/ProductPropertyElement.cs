@@ -1,9 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Domain.Entities
+﻿namespace Domain.Entities
 {
     [Table("ProductPropertyElement")]
-   public class ProductPropertyElement : BaseEntity
+   public class ProductPropertyElement :BaseModel
     {
         [ForeignKey("Product")]
         public virtual long? ProductId { get; set; }

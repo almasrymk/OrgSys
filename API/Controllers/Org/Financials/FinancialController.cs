@@ -1,7 +1,7 @@
 ﻿using Application.Commands.Org.Financials.Financial.Commands;
 using Application.Commands.Org.Financials.Financial.Queries;
 using Domain.Shared;
-using Entity.ModelView;
+using Application.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,7 +11,7 @@ namespace API.Controllers.Org.Financials
     [ApiController]
     public class FinancialController(ISender sender) : BaseController<GetByIdFinancialQuery, SearchFinancialQuery, GetListFinancialQuery,
         CreateFinancialCommand, UpdateFinancialCommand, DeleteFinancialCommand, DeleteListFinancialCommand,
-        GetMaxFinancialQuery, FinancialModelView>(sender)
+        GetMaxFinancialQuery, FinancialDto>(sender)
     {
 
         [HttpPut("Redo")]

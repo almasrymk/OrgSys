@@ -6,9 +6,9 @@
     using FluentValidation;
     using Utility;
 
-    public class CreateBankBranchCommandValidator : Validator<CreateBankBranchCommand,  Entity.Model.BankBranch>
+    public class CreateBankBranchCommandValidator : Validator<CreateBankBranchCommand,  Domain.Entities.BankBranch>
     {
-        public CreateBankBranchCommandValidator(IRepository<Entity.Model.BankBranch> _Repository) : base(_Repository)
+        public CreateBankBranchCommandValidator(IRepository<Domain.Entities.BankBranch> _Repository) : base(_Repository)
         {
             RuleFor(c => c.BankId)
             .NotEmpty().GreaterThanOrEqualTo(0).WithMessage("The bank field is required");
@@ -20,7 +20,7 @@
             .MaximumLength(150).WithMessage("The name must not exceed 150 characters");
              
             RuleFor(c => new { c.Name, c.BankId })           
-            .MustAsync(async (Ob, cancellationToken) => await NotAnyAsync(c => c.Name == Ob.Name && c.BankId == Ob.BankId && c.Status != Status.Deleted && c.Hide != true, cancellationToken))
+            .MustAsync(async (Ob, cancellationToken) => await NotAnyAsync(c => c.Name == Ob.Name && c.BankId == Ob.BankId && c.Status != Domain.Enums.Status.Deleted && c.Hide != true, cancellationToken))
             .WithMessage("The bank branch name already exists")
             .OverridePropertyName(nameof(CreateBankBranchCommand.Name));
         }

@@ -6,11 +6,11 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.ModelView;
+    using Application.DTOs;
 
     public sealed record CreateTableCommand(string Name) : ICommand , ICreateCommand<Result>;
 
-    public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.Table> _Repository , IMapper mapper) : CreateCommandHandler<CreateTableCommand, Entity.Model.Table>(_UnitOfWork, _Repository , mapper)
+    public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Domain.Entities.Table> _Repository , IMapper mapper) : CreateCommandHandler<CreateTableCommand, Domain.Entities.Table>(_UnitOfWork, _Repository , mapper)
     {
        
     }

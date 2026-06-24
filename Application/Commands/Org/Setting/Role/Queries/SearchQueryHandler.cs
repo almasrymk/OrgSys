@@ -6,25 +6,25 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.ModelView;
+    using Application.DTOs;
     using System.Linq.Expressions;
     using Utility;
 
-    public sealed record SearchRoleQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandPagination<RoleModelView> ,ISearchQuery<ResultPagination<RoleModelView>>;
+    public sealed record SearchRoleQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandPagination<RoleDto> ,ISearchQuery<ResultPagination<RoleDto>>;
 
-    public sealed class SearchQueryHandler(IRepository<Entity.Model.Role> _Repository, IMapper mapper) : SearchCommandHandler<SearchRoleQuery, Entity.Model.Role, RoleModelView>(_Repository, mapper)
+    public sealed class SearchQueryHandler(IRepository<Domain.Entities.Role> _Repository, IMapper mapper) : SearchCommandHandler<SearchRoleQuery, Domain.Entities.Role, RoleDto>(_Repository, mapper)
     {
-        public override Expression<Func<Entity.Model.Role, bool>> CreateFilter(SearchRoleQuery request)
+        public override Expression<Func<Domain.Entities.Role, bool>> CreateFilter(SearchRoleQuery request)
         {
             Page = request.Page;
             PageSize = request.PageSize;
 
             return e => 
             (string.IsNullOrEmpty(request.KeySearch) || e.Name.Contains(request.KeySearch)) &&
-            e.Status != Status.Deleted && e.Hide != true;
+            e.Status != Domain.Enums.Status.Deleted && e.Hide != true;
         }
          
-        override public Func<IQueryable<Entity.Model.Role>, IOrderedQueryable<Entity.Model.Role>> CreateOrderBy(SearchRoleQuery request)
+        override public Func<IQueryable<Domain.Entities.Role>, IOrderedQueryable<Domain.Entities.Role>> CreateOrderBy(SearchRoleQuery request)
         {
             return q => q.OrderByDescending(e => e.Id);
         }

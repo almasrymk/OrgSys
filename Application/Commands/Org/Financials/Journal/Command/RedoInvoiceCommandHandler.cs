@@ -10,8 +10,8 @@ namespace Application.Commands.Org.Financials.Journal.Commands
 {
     public record RedoJournalCommand(long Id) : ICommand, IUpdateCommand<Result>;
 
-    public class RedoJournalCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.Journal> _Repository,   IMapper mapper, IServiceProvider _provider
-        ) : UpdateCommandHandler<RedoJournalCommand, Entity.Model.Journal>(_UnitOfWork, _Repository, mapper, _provider)
+    public class RedoJournalCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Domain.Entities.Journal> _Repository,   IMapper mapper, IServiceProvider _provider
+        ) : UpdateCommandHandler<RedoJournalCommand, Domain.Entities.Journal>(_UnitOfWork, _Repository, mapper, _provider)
     {
         public override async Task<Result> Handle(RedoJournalCommand request, CancellationToken cancellationToken)
         {
@@ -23,7 +23,7 @@ namespace Application.Commands.Org.Financials.Journal.Commands
                 if (journal is null)
                     return new Result(HttpStatusCode.NotFound, new List<Error> { new Error("Journal not found") });
 
-                journal.Status = Utility.Status.All;               
+                journal.Status = Domain.Enums.Status.New;               
 
                 var saved = await _UnitOfWork.SaveChangeAsync();
 

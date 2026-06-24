@@ -6,25 +6,25 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.ModelView;
+    using Application.DTOs;
     using System.Linq.Expressions;
     using Utility;
 
-    public sealed record SearchUserQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandPagination<UserModelView> ,ISearchQuery<ResultPagination<UserModelView>>;
+    public sealed record SearchUserQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandPagination<UserDto> ,ISearchQuery<ResultPagination<UserDto>>;
 
-    public sealed class SearchQueryHandler(IRepository<Entity.Model.User> _Repository, IMapper mapper) : SearchCommandHandler<SearchUserQuery, Entity.Model.User, UserModelView>(_Repository, mapper)
+    public sealed class SearchQueryHandler(IRepository<Domain.Entities.User> _Repository, IMapper mapper) : SearchCommandHandler<SearchUserQuery, Domain.Entities.User, UserDto>(_Repository, mapper)
     {
-        public override Expression<Func<Entity.Model.User, bool>> CreateFilter(SearchUserQuery request)
+        public override Expression<Func<Domain.Entities.User, bool>> CreateFilter(SearchUserQuery request)
         {
             Page = request.Page;
             PageSize = request.PageSize;
 
             return e => 
             (string.IsNullOrEmpty(request.KeySearch) || e.Name.Contains(request.KeySearch)) &&
-            e.Status != Status.Deleted && e.Hide != true;
+            e.Status != Domain.Enums.Status.Deleted && e.Hide != true;
         }
          
-        override public Func<IQueryable<Entity.Model.User>, IOrderedQueryable<Entity.Model.User>> CreateOrderBy(SearchUserQuery request)
+        override public Func<IQueryable<Domain.Entities.User>, IOrderedQueryable<Domain.Entities.User>> CreateOrderBy(SearchUserQuery request)
         {
             return q => q.OrderByDescending(e => e.Id);
         }

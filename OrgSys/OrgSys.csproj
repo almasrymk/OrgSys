@@ -14,6 +14,8 @@
     <Compile Remove="Areas\Invoices\Models\**" />
     <Compile Remove="Areas\Orders\Data\**" />
     <Compile Remove="Areas\Orders\Models\**" />
+    <Compile Remove="Areas\Reports\Controllers\**" />
+    <Compile Remove="Areas\Reports\Views\**" />
     <Compile Remove="Areas\Setting\Data\**" />
     <Compile Remove="Areas\Setting\Models\**" />
     <Compile Remove="Areas\Transactions\Data\**" />
@@ -27,6 +29,8 @@
     <Content Remove="Areas\Invoices\Models\**" />
     <Content Remove="Areas\Orders\Data\**" />
     <Content Remove="Areas\Orders\Models\**" />
+    <Content Remove="Areas\Reports\Controllers\**" />
+    <Content Remove="Areas\Reports\Views\**" />
     <Content Remove="Areas\Setting\Data\**" />
     <Content Remove="Areas\Setting\Models\**" />
     <Content Remove="Areas\Transactions\Data\**" />
@@ -63,25 +67,6 @@
     <Content Remove="Areas\Orders\Views\Order\List.cshtml" />
     <Content Remove="Areas\Orders\Views\Order\Products.cshtml" />
     <Content Remove="Areas\Orders\Views\Order\Save.cshtml" />
-    <Content Remove="Areas\Reports\Views\Finances\SafeMovementList.cshtml" />
-    <Content Remove="Areas\Reports\Views\Lookups\Clients.cshtml" />
-    <Content Remove="Areas\Reports\Views\Lookups\ClientsList.cshtml" />
-    <Content Remove="Areas\Reports\Views\Lookups\Suppliers.cshtml" />
-    <Content Remove="Areas\Reports\Views\Lookups\SuppliersList.cshtml" />
-    <Content Remove="Areas\Reports\Views\Purchases\SuppliersBalance.cshtml" />
-    <Content Remove="Areas\Reports\Views\Purchases\SuppliersBalanceList.cshtml" />
-    <Content Remove="Areas\Reports\Views\Purchases\SuppliersStatment.cshtml" />
-    <Content Remove="Areas\Reports\Views\Purchases\SuppliersStatmentList.cshtml" />
-    <Content Remove="Areas\Reports\Views\Sales\ClientsBalancePDF.cshtml" />
-    <Content Remove="Areas\Reports\Views\Warehouses\ClientsBalance.cshtml" />
-    <Content Remove="Areas\Reports\Views\Warehouses\ClientsBalanceList.cshtml" />
-    <Content Remove="Areas\Reports\Views\Sales\ClientsBalance.cshtml" />
-    <Content Remove="Areas\Reports\Views\Sales\ClientsBalanceList.cshtml" />
-    <Content Remove="Areas\Reports\Views\Sales\ClientsStatment.cshtml" />
-    <Content Remove="Areas\Reports\Views\Sales\ClientsStatmentList.cshtml" />
-    <Content Remove="Areas\Reports\Views\Warehouses\ProductMovementList.cshtml" />
-    <Content Remove="Areas\Reports\Views\Warehouses\StockMovement.cshtml" />
-    <Content Remove="Areas\Reports\Views\Warehouses\StockMovementList.cshtml" />
     <Content Remove="Areas\Setting\Views\Account\Index.cshtml" />
     <Content Remove="Areas\Setting\Views\Account\List.cshtml" />
     <Content Remove="Areas\Setting\Views\Account\Save.cshtml" />
@@ -184,6 +169,8 @@
     <EmbeddedResource Remove="Areas\Invoices\Models\**" />
     <EmbeddedResource Remove="Areas\Orders\Data\**" />
     <EmbeddedResource Remove="Areas\Orders\Models\**" />
+    <EmbeddedResource Remove="Areas\Reports\Controllers\**" />
+    <EmbeddedResource Remove="Areas\Reports\Views\**" />
     <EmbeddedResource Remove="Areas\Setting\Data\**" />
     <EmbeddedResource Remove="Areas\Setting\Models\**" />
     <EmbeddedResource Remove="Areas\Transactions\Data\**" />
@@ -197,6 +184,8 @@
     <None Remove="Areas\Invoices\Models\**" />
     <None Remove="Areas\Orders\Data\**" />
     <None Remove="Areas\Orders\Models\**" />
+    <None Remove="Areas\Reports\Controllers\**" />
+    <None Remove="Areas\Reports\Views\**" />
     <None Remove="Areas\Setting\Data\**" />
     <None Remove="Areas\Setting\Models\**" />
     <None Remove="Areas\Transactions\Data\**" />
@@ -207,7 +196,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Areas\Reports\Views\Finances\SafeMovement.cshtml~RF945302.TMP" />
+    <Compile Remove="Areas\Orders\Controllers\OrderController.cs" />
+    <Compile Remove="Controllers\BaseController.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="SQLFiles\DealerListSql.sql" />
     <None Remove="SQLFiles\DealersBalance1Sql.sql" />
     <None Remove="SQLFiles\DealersBalanceSql.sql" />
@@ -299,25 +292,6 @@
     <EmbeddedResource Include="Areas\Orders\Views\Order\List.cshtml" />
     <EmbeddedResource Include="Areas\Orders\Views\Order\Products.cshtml" />
     <EmbeddedResource Include="Areas\Orders\Views\Order\Save.cshtml" />
-    <EmbeddedResource Include="Areas\Reports\Views\Finances\SafeMovementList.cshtml" />
-    <EmbeddedResource Include="Areas\Reports\Views\Lookups\Clients.cshtml" />
-    <EmbeddedResource Include="Areas\Reports\Views\Lookups\ClientsList.cshtml" />
-    <EmbeddedResource Include="Areas\Reports\Views\Lookups\Suppliers.cshtml" />
-    <EmbeddedResource Include="Areas\Reports\Views\Lookups\SuppliersList.cshtml" />
-    <EmbeddedResource Include="Areas\Reports\Views\Purchases\SuppliersBalance.cshtml" />
-    <EmbeddedResource Include="Areas\Reports\Views\Purchases\SuppliersBalanceList.cshtml" />
-    <EmbeddedResource Include="Areas\Reports\Views\Purchases\SuppliersStatment.cshtml" />
-    <EmbeddedResource Include="Areas\Reports\Views\Purchases\SuppliersStatmentList.cshtml" />
-    <EmbeddedResource Include="Areas\Reports\Views\Sales\ClientsBalancePDF.cshtml" />
-    <EmbeddedResource Include="Areas\Reports\Views\Warehouses\ClientsBalance.cshtml" />
-    <EmbeddedResource Include="Areas\Reports\Views\Warehouses\ClientsBalanceList.cshtml" />
-    <EmbeddedResource Include="Areas\Reports\Views\Warehouses\StockMovement.cshtml" />
-    <EmbeddedResource Include="Areas\Reports\Views\Warehouses\ProductMovementList.cshtml" />
-    <EmbeddedResource Include="Areas\Reports\Views\Warehouses\StockMovementList.cshtml" />
-    <EmbeddedResource Include="Areas\Reports\Views\Sales\ClientsBalance.cshtml" />
-    <EmbeddedResource Include="Areas\Reports\Views\Sales\ClientsStatment.cshtml" />
-    <EmbeddedResource Include="Areas\Reports\Views\Sales\ClientsBalanceList.cshtml" />
-    <EmbeddedResource Include="Areas\Reports\Views\Sales\ClientsStatmentList.cshtml" />
     <EmbeddedResource Include="Areas\Setting\Views\Account\Index.cshtml" />
     <EmbeddedResource Include="Areas\Setting\Views\Account\List.cshtml" />
     <EmbeddedResource Include="Areas\Setting\Views\Account\Save.cshtml" />
@@ -441,11 +415,12 @@
   <ItemGroup>
     <ProjectReference Include="..\Application\Application.csproj" />
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
-    <ProjectReference Include="..\Service\Service.csproj" />
     <ProjectReference Include="..\Utility\Utility.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Orders\Controllers\" />
+    <Folder Include="Areas\Reports\" />
     <Folder Include="PrintOut\" />
     <Folder Include="Properties\PublishProfiles\" />
     <Folder Include="wwwroot\Files\" />    

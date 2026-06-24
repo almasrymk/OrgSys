@@ -1,16 +1,16 @@
 ﻿using Application.Commands.Org.Setting.Stock.Commands;
 using AutoMapper;
-using Entity.Model;
-using Entity.ModelView;
+using Domain.Entities;
+using Application.DTOs;
 
 public partial class MappingProfile : Profile
 {
     public void StockMappingProfile()
     {
         #region Stock
-        CreateMap<Stock, StockModelView>()
+        CreateMap<Stock, StockDto>()
         .ForMember(dest => dest.BranchName, opt => opt.MapFrom(src => src.Branch.Name));
-        CreateMap<StockModelView, Stock>();
+        CreateMap<StockDto, Stock>();
 
         CreateMap<Stock, CreateStockCommand>();
         CreateMap<CreateStockCommand, Stock>();
@@ -19,10 +19,10 @@ public partial class MappingProfile : Profile
         CreateMap<Stock, DeleteStockCommand>();
         CreateMap<DeleteStockCommand, Stock>();
 
-        CreateMap<StockModelView, CreateStockCommand>();
-        CreateMap<CreateStockCommand, StockModelView>();
-        CreateMap<StockModelView, UpdateStockCommand>();
-        CreateMap<UpdateStockCommand, StockModelView>();
+        CreateMap<StockDto, CreateStockCommand>();
+        CreateMap<CreateStockCommand, StockDto>();
+        CreateMap<StockDto, UpdateStockCommand>();
+        CreateMap<UpdateStockCommand, StockDto>();
         #endregion
     }
 }

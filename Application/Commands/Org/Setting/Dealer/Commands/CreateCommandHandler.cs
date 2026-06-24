@@ -6,11 +6,11 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.ModelView;
+    using Application.DTOs;
 
-    public sealed class CreateDealerCommand : DealerModelView, ICommand , ICreateCommand<Result>;
+    public sealed class CreateDealerCommand : DealerDto, ICommand , ICreateCommand<Result>;
 
-    public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.Dealer> _Repository , IMapper mapper) : CreateCommandHandler<CreateDealerCommand, Entity.Model.Dealer>(_UnitOfWork, _Repository , mapper)
+    public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Domain.Entities.Dealer> _Repository , IMapper mapper) : CreateCommandHandler<CreateDealerCommand, Domain.Entities.Dealer>(_UnitOfWork, _Repository , mapper)
     {
        
     }

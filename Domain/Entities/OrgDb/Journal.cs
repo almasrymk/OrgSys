@@ -1,9 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Domain.Entities
+﻿namespace Domain.Entities
 {
     [Table("Journal")]
-    public class Journal : BaseTransactionEntity
+    public class Journal : MovementModel
     {       
         [ForeignKey("Currency")]
         public virtual long CurrencyId { get; set; }
@@ -17,5 +15,6 @@ namespace Domain.Entities
         public virtual string RefranceTable { get; set; }
 
         public virtual string Note { get; set; }
+        public ICollection<JournalItem> JournalItems { get; set; }
     }
 }

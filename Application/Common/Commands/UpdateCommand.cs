@@ -4,7 +4,7 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.Model;
+    using Domain.Entities;
     using Microsoft.Extensions.DependencyInjection;
     using System.Net;
     using System.Text;
@@ -13,7 +13,7 @@
 
     public partial class UpdateCommandHandler<TDto, TModel>(IUnitOfWork _UnitOfWork, IRepository<TModel> _Repository, IMapper mapper, IServiceProvider _provider) : ICommandHandler<TDto>
         where TDto : ICommand
-        where TModel : Entity.BaseModel
+        where TModel : Domain.Entities.BaseModel
     {
 
         public virtual async Task<Result> Handle(TDto request, CancellationToken cancellationToken)
@@ -46,7 +46,7 @@
             return true;
         }
         protected async Task<bool> UpdateDetails<TModelDetails>(IEnumerable<TModelDetails> Details)
-          where TModelDetails : Entity.BaseModel
+          where TModelDetails : Domain.Entities.BaseModel
         {
             try
             {
@@ -66,7 +66,7 @@
             }
         }
         protected async Task<bool> RemoveDetails<TModelDetails>(IEnumerable<TModelDetails> RemovedList)
-          where TModelDetails : Entity.BaseModel
+          where TModelDetails : Domain.Entities.BaseModel
         {
             try
             {

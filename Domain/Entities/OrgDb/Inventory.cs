@@ -1,11 +1,7 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Domain.Entities
+﻿namespace Domain.Entities
 {
     [Table("Inventory")]
-    public class Inventory : BaseTransactionEntity
+    public class Inventory : MovementModel
     {      
         public virtual long? UserId { get; set; }
 

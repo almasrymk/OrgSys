@@ -4,7 +4,7 @@ using Application.Interfaces.CQRS;
 using AutoMapper;
 using Domain.Abstraction;
 using Domain.Shared;
-using Entity.Model;
+using Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,10 +19,10 @@ namespace Application.Commands.Org.Financials.Financial.Commands
     public record CancelFinancialCommand(long Id) : ICommand, IUpdateCommand<Result>;
 
     public class CancelFinancialCommandHandler(IUnitOfWork _UnitOfWork, 
-        IRepository<Entity.Model.Financial> _Repository,
-        IRepository<Entity.Model.Invoice> _RepositoryInvoice,
+        IRepository<Domain.Entities.Financial> _Repository,
+        IRepository<Domain.Entities.Invoice> _RepositoryInvoice,
         IMapper mapper, IServiceProvider _provider) :
-        UpdateCommandHandler<CancelFinancialCommand, Entity.Model.Financial>(_UnitOfWork, _Repository, mapper, _provider)
+        UpdateCommandHandler<CancelFinancialCommand, Domain.Entities.Financial>(_UnitOfWork, _Repository, mapper, _provider)
     {
 
         public override async Task<Result> Handle(CancelFinancialCommand request, CancellationToken cancellationToken)
@@ -37,11 +37,11 @@ namespace Application.Commands.Org.Financials.Financial.Commands
                     var invoice = await _RepositoryInvoice.GetByFilterAsync(e => e.Id == item.InvoiceId, "");
                     invoice!.Credit += item.Amount;
                     invoice.Paid -= item.Amount;
-                    item.Status = Utility.Status.Cancel;
+                    item.Status = Domain.Enums.Status.Cancel;
 
                     await _RepositoryInvoice.UpdateAsync(invoice);
                 }
-                finanicial.Status = Utility.Status.Cancel;
+                finanicial.Status = Domain.Enums.Status.Cancel;
 
                 await _UnitOfWork.SaveChangeAsync();
 

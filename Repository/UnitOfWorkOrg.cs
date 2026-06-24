@@ -1,5 +1,4 @@
-﻿using Entity;
-using System;
+﻿using System;
 using System.Reflection;
 using System.Collections.Generic;
 using Repository.DAL.Output;

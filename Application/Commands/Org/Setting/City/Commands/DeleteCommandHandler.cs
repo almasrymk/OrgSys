@@ -10,11 +10,11 @@
 
     public sealed record DeleteCityCommand(long Id) : ICommand , IDeleteCommand<Result>;
 
-    public sealed class DeleteCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.City> _Repository, IServiceProvider _provider) : DeleteCommandHandler<DeleteCityCommand, Entity.Model.City>(_UnitOfWork, _Repository , _provider)
+    public sealed class DeleteCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Domain.Entities.City> _Repository, IServiceProvider _provider) : DeleteCommandHandler<DeleteCityCommand, Domain.Entities.City>(_UnitOfWork, _Repository , _provider)
     {
-        public override Expression<Func<Entity.Model.City, bool>> CreateFilter(DeleteCityCommand request)
+        public override Expression<Func<Domain.Entities.City, bool>> CreateFilter(DeleteCityCommand request)
         {
-            return e => e.Id == request.Id && e.Status != Utility.Status.Deleted && e.Hide != true;
+            return e => e.Id == request.Id && e.Status != Domain.Enums.Status.Deleted && e.Hide != true;
         }
     }
 }

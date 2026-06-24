@@ -1,6 +1,6 @@
 ﻿using System;
 using Service;
-using Entity.ModelView;
+using Application.DTOs;
 using Entity.ModelReport;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;

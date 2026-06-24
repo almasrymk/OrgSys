@@ -6,13 +6,13 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.Model;
-    using Entity.ModelView;
+    using Domain.Entities;
+    using Application.DTOs;
     using System.Net;
 
-    public sealed class UpdatePreferenceCommand : Entity.ModelView.PreferenceModelView, ICommand, IUpdateCommand<Result>;
+    public sealed class UpdatePreferenceCommand : Application.DTOs.PreferenceDto, ICommand, IUpdateCommand<Result>;
 
-    public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.Preference> _Repository , IMapper mapper, IServiceProvider _provider) : UpdateCommandHandler<UpdatePreferenceCommand, Entity.Model.Preference>(_UnitOfWork, _Repository , mapper , _provider)
+    public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Domain.Entities.Preference> _Repository , IMapper mapper, IServiceProvider _provider) : UpdateCommandHandler<UpdatePreferenceCommand, Domain.Entities.Preference>(_UnitOfWork, _Repository , mapper , _provider)
     {
 
         public override async Task<Result> Handle(UpdatePreferenceCommand request, CancellationToken cancellationToken)

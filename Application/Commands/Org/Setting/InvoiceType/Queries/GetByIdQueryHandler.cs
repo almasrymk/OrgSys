@@ -7,16 +7,16 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.ModelView;
+    using Application.DTOs;
     using System.Linq.Expressions;
 
-    public sealed record GetByIdInvoiceTypeQuery(long Id) : ICommand<InvoiceTypeModelView> , IGetByIdQuery<Result<InvoiceTypeModelView>>;
+    public sealed record GetByIdInvoiceTypeQuery(long Id) : ICommand<InvoiceTypeDto> , IGetByIdQuery<Result<InvoiceTypeDto>>;
 
-    public sealed class GetByIdQueryHandler(IRepository<Entity.Model.InvoiceType> _Repository, IMapper mapper) : GetCommandHandler<GetByIdInvoiceTypeQuery, Entity.Model.InvoiceType, InvoiceTypeModelView>(_Repository, mapper)
+    public sealed class GetByIdQueryHandler(IRepository<Domain.Entities.InvoiceType> _Repository, IMapper mapper) : GetCommandHandler<GetByIdInvoiceTypeQuery, Domain.Entities.InvoiceType, InvoiceTypeDto>(_Repository, mapper)
     {
-        public override Expression<Func<Entity.Model.InvoiceType, bool>> CreateFilter(GetByIdInvoiceTypeQuery request)
+        public override Expression<Func<Domain.Entities.InvoiceType, bool>> CreateFilter(GetByIdInvoiceTypeQuery request)
         {           
-            return e => e.Id == request.Id && e.Status !=Utility.Status.Deleted && e.Hide != true;
+            return e => e.Id == request.Id && e.Status !=Domain.Enums.Status.Deleted && e.Hide != true;
         }
     }
 }

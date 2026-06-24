@@ -5,9 +5,8 @@ using Application.Interfaces.CQRS;
 using AutoMapper;
 using Domain.Abstraction;
 using Domain.Shared;
-using Entity;
-using Entity.Model;
-using Entity.ModelView;
+using Domain.Entities;
+using Application.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -18,12 +17,12 @@ namespace Application.Commands.Org.Invoices.Invoice.Queries
 {
 
 
-    public sealed record GetProductsNotReturnedQuery(long Id) : ICommandCollection<InvoiceProductModelView>, IGetByIdQuery<ResultCollection<InvoiceProductModelView>>;
+    public sealed record GetProductsNotReturnedQuery(long Id) : ICommandCollection<InvoiceProductDto>, IGetByIdQuery<ResultCollection<InvoiceProductDto>>;
 
-    public sealed class GetProductsNotReturnedQueryHandler(IRepository<Entity.Model.Invoice> _Repository, IMapper mapper) : ListCommandHandler<GetProductsNotReturnedQuery, Entity.Model.Invoice, InvoiceProductModelView>(_Repository, mapper)
+    public sealed class GetProductsNotReturnedQueryHandler(IRepository<Domain.Entities.Invoice> _Repository, IMapper mapper) : ListCommandHandler<GetProductsNotReturnedQuery, Domain.Entities.Invoice, InvoiceProductDto>(_Repository, mapper)
     {
 
-        public override async Task<ResultCollection<InvoiceProductModelView>> Handle(GetProductsNotReturnedQuery request, CancellationToken cancellationToken)
+        public override async Task<ResultCollection<InvoiceProductDto>> Handle(GetProductsNotReturnedQuery request, CancellationToken cancellationToken)
         {
 
             var Invlist = await _Repository.GetListByFilterAsync(e => e.ParentId == request.Id, "InvoiceProducts");
@@ -37,9 +36,9 @@ namespace Application.Commands.Org.Invoices.Invoice.Queries
             foreach (var item in ob.InvoiceProducts)
                 item.Quantity -= proList.Where(e => e.ProductId == item.ProductId)?.Sum(e => e.Quantity) ?? 0;
 
-            return new ResultCollection<InvoiceProductModelView>(
+            return new ResultCollection<InvoiceProductDto>(
                           HttpStatusCode.OK,
-                          ob.InvoiceProducts.Select(e => mapper.Map<InvoiceProductModelView>(e)).ToList(),
+                          ob.InvoiceProducts.Select(e => mapper.Map<InvoiceProductDto>(e)).ToList(),
                           null);
         }
 

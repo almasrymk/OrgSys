@@ -6,11 +6,11 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.ModelView;
+    using Application.DTOs;
 
-    public sealed class CreateInventoryCommand : Entity.ModelView.InventoryModelView, ICommand , ICreateCommand<Result>;
+    public sealed class CreateInventoryCommand : Application.DTOs.InventoryDto, ICommand , ICreateCommand<Result>;
 
-    public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.Inventory> _Repository , IMapper mapper) : CreateCommandHandler<CreateInventoryCommand, Entity.Model.Inventory>(_UnitOfWork, _Repository , mapper)
+    public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Domain.Entities.Inventory> _Repository , IMapper mapper) : CreateCommandHandler<CreateInventoryCommand, Domain.Entities.Inventory>(_UnitOfWork, _Repository , mapper)
     {
        
     }

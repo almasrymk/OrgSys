@@ -6,11 +6,11 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.ModelView;
+    using Application.DTOs;
 
     public sealed record CreateInvoiceTypeCommand(string Name) : ICommand , ICreateCommand<Result>;
 
-    public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.InvoiceType> _Repository , IMapper mapper) : CreateCommandHandler<CreateInvoiceTypeCommand, Entity.Model.InvoiceType>(_UnitOfWork, _Repository , mapper)
+    public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Domain.Entities.InvoiceType> _Repository , IMapper mapper) : CreateCommandHandler<CreateInvoiceTypeCommand, Domain.Entities.InvoiceType>(_UnitOfWork, _Repository , mapper)
     {
        
     }

@@ -1,10 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Domain.Entities
+﻿namespace Domain.Entities
 {
     [Table("InvoiceProduct")]
-    public class InvoiceProduct : BaseEntity
+    public class InvoiceProduct : BaseModel
     {
         [Required]
         public virtual long RowNumber { get; set; }

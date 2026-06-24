@@ -1,8 +1,6 @@
-﻿using Entity;
-using System;
+﻿using System;
 using System.Linq;
-using Entity.Model;
-using Entity.ModelView;
+using Domain.Entities;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 

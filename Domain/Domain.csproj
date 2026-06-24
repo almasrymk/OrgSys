@@ -7,21 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Entities\AdminDb\**" />
-    <Compile Remove="Entities\OrgDb\**" />
-    <EmbeddedResource Remove="Entities\AdminDb\**" />
-    <EmbeddedResource Remove="Entities\OrgDb\**" />
-    <None Remove="Entities\AdminDb\**" />
-    <None Remove="Entities\OrgDb\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Remove="Abstraction\IAdminContext.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Aggregate\" />
-    <Folder Include="Entities\" />
     <Folder Include="Interfaces\" />
     <Folder Include="Events\" />
     <Folder Include="Exceptions\" />
@@ -36,7 +26,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Entity\Entity.csproj" />
     <ProjectReference Include="..\Utility\Utility.csproj" />
   </ItemGroup>
 

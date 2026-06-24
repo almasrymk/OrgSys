@@ -5,14 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="BAL\Data\AccountsType\AccountTypeService.cs" />
-    <Compile Remove="BAL\Data\Accounts\AccountService.cs" />
-    <Compile Remove="BAL\Data\Bank\BankBranchService.cs" />
-    <Compile Remove="BAL\Data\Bank\BankService.cs" />
-    <Compile Remove="BAL\Data\Counties\CityService.cs" />
-    <Compile Remove="BAL\Data\Counties\CountryService.cs" />
-    <Compile Remove="BAL\Data\Counties\DistrictService.cs" />
-    <Compile Remove="BAL\Data\DealrsGroup\DealerGroupService.cs" />
     <Compile Remove="BAL\Data\Organization\BranchService.cs" />
     <Compile Remove="BAL\Data\Organization\CompanyProfileService.cs" />
     <Compile Remove="BAL\Data\Products\ProductPropertyElementService.cs" />
@@ -23,14 +15,6 @@
     <Compile Remove="BAL\Data\Products\UnitService.cs" />
     <Compile Remove="BAL\Data\Security\RoleService.cs" />
     <Compile Remove="BAL\Data\Security\ShiftService.cs" />
-    <Compile Remove="BAL\Financials\FinancialInvoiceService.cs" />
-    <Compile Remove="BAL\Financials\FinancialTypeService.cs" />
-    <Compile Remove="BAL\Invoices\InvoiceProductService.cs" />
-    <Compile Remove="BAL\Invoices\InvoiceTypeService.cs" />
-    <Compile Remove="BAL\Orders\OrderProductService.cs" />
-    <Compile Remove="BAL\Transactions\InventoryProductService.cs" />
-    <Compile Remove="BAL\Transactions\InventoryService.cs" />
-    <Compile Remove="BAL\Transactions\TransactionProductService.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -42,14 +26,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Repository\Repository.csproj" />
     <ProjectReference Include="..\Utility\Utility.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="BAL\Data\AccountsType\" />
-    <Folder Include="BAL\Data\Accounts\" />
-    <Folder Include="BAL\Data\Bank\" />
-    <Folder Include="BAL\Data\Counties\" />
-    <Folder Include="BAL\Data\DealrsGroup\" />
   </ItemGroup>
 
 </Project>

@@ -2,8 +2,8 @@
 using Application.Commands.Org.Transactions.Transaction.Commands;
 using Application.Commands.Org.Transactions.TransactionType.Commands;
 using AutoMapper;
-using Entity.Model;
-using Entity.ModelView;
+using Domain.Entities;
+using Application.DTOs;
 
 public partial class MappingProfile : Profile
 {
@@ -12,16 +12,16 @@ public partial class MappingProfile : Profile
         #region Transaction
         CreateMap<Transaction, DeleteTransactionCommand>();
         CreateMap<DeleteTransactionCommand, Transaction>();
-        CreateMap<TransactionProduct, TransactionProductModelView>();
-        CreateMap<TransactionProductModelView, TransactionProduct>();
-        CreateMap<Product, ProductModelView>();
-        CreateMap<ProductModelView, Product>();
+        CreateMap<TransactionProduct, TransactionProductDto>();
+        CreateMap<TransactionProductDto, TransactionProduct>();
+        CreateMap<Product, ProductDto>();
+        CreateMap<ProductDto, Product>();
 
-        CreateMap<ProductUnit, ProductUnitModelView>();
-        CreateMap<ProductUnitModelView, ProductUnit>();
+        CreateMap<ProductUnit, ProductUnitDto>();
+        CreateMap<ProductUnitDto, ProductUnit>();
 
-        CreateMap<Unit, UnitModelView>();
-        CreateMap<UnitModelView, Unit>();
+        CreateMap<Unit, UnitDto>();
+        CreateMap<UnitDto, Unit>();
 
         CreateMap<Transaction, CreateTransactionByInvoiceCommand>();
         CreateMap<CreateTransactionByInvoiceCommand, Transaction>();
@@ -44,21 +44,21 @@ public partial class MappingProfile : Profile
             .ForMember(des => des.TransactionProducts, src => src.MapFrom(s => s.TransactionProductList));
 
 
-        CreateMap<TransactionModelView, CreateTransactionCommand>()
+        CreateMap<TransactionDto, CreateTransactionCommand>()
         .ForMember(des => des.TransactionProductList, src => src.MapFrom(s => s.TransactionProductList));
-        CreateMap<CreateTransactionCommand, TransactionModelView>();
+        CreateMap<CreateTransactionCommand, TransactionDto>();
 
 
-        CreateMap<Transaction, TransactionModelView>()
+        CreateMap<Transaction, TransactionDto>()
         .ForMember(dest => dest.TransactionProductList, src => src.MapFrom(s => s.TransactionProducts));
-        CreateMap<TransactionModelView, Transaction>();
+        CreateMap<TransactionDto, Transaction>();
 
         CreateMap<Transaction, UpdateTransactionCommand>();
         CreateMap<UpdateTransactionCommand, Transaction>();
 
-        CreateMap<TransactionModelView, UpdateTransactionCommand>()
+        CreateMap<TransactionDto, UpdateTransactionCommand>()
         .ForMember(des => des.TransactionProductList, src => src.MapFrom(s => s.TransactionProductList));
-        CreateMap<UpdateTransactionCommand, TransactionModelView>();
+        CreateMap<UpdateTransactionCommand, TransactionDto>();
 
 
         CreateMap<UpdateTransactionCommand, Transaction>()

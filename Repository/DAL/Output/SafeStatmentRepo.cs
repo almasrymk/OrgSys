@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using Entity.ModelReport;
+using Application.Report;
 using Microsoft.EntityFrameworkCore;
 
 namespace Repository.DAL.Output

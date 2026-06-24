@@ -6,13 +6,13 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.Model;
+    using Domain.Entities;
 
-    public sealed class UpdateJournalCommand : Entity.ModelView.JournalModelView, ICommand, IUpdateCommand<Result>;
+    public sealed class UpdateJournalCommand : Application.DTOs.JournalDto, ICommand, IUpdateCommand<Result>;
     public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork,
-        IRepository<Entity.Model.Journal> _Repository,
-        IRepository<Entity.Model.JournalItem> _RepositoryJournalInvoice,
-        IMapper mapper, IServiceProvider _provider) : UpdateCommandHandler<UpdateJournalCommand, Entity.Model.Journal>(_UnitOfWork, _Repository, mapper, _provider)
+        IRepository<Domain.Entities.Journal> _Repository,
+        IRepository<Domain.Entities.JournalItem> _RepositoryJournalInvoice,
+        IMapper mapper, IServiceProvider _provider) : UpdateCommandHandler<UpdateJournalCommand, Domain.Entities.Journal>(_UnitOfWork, _Repository, mapper, _provider)
     {
 
         override public async Task<bool> SaveDetials(UpdateJournalCommand request)

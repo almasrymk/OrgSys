@@ -1,8 +1,7 @@
 ﻿using System;
-using Entity;
 using Utility;
 using System.Linq;
-using Entity.Model;
+using Domain.Entities;
 using System.Linq.Expressions;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
@@ -55,11 +54,11 @@ namespace Repository
 
             if (orderBy != null)
             {
-                return orderBy(query.Where(e => (e.Status != Status.Deleted || status == Status.All) && e.Hide != true));
+                return orderBy(query.Where(e => (e.Status != Domain.Enums.Status.Deleted || status == Status.All) && e.Hide != true));
             }
             else
             {
-                return query.Where(e => (e.Status != Status.Deleted || status == Status.All) && e.Hide != true);
+                return query.Where(e => (e.Status != Domain.Enums.Status.Deleted || status == Status.All) && e.Hide != true);
             }
         }
 
@@ -79,11 +78,11 @@ namespace Repository
 
             if (orderBy != null)
             {
-                return orderBy(query.Where(e => (e.Status != Status.Deleted || status == Status.All) && e.Hide != true));
+                return orderBy(query.Where(e => (e.Status != Domain.Enums.Status.Deleted || status == Status.All) && e.Hide != true));
             }
             else
             {
-                return query.Where(e => (e.Status != Status.Deleted || status == Status.All) && e.Hide != true);
+                return query.Where(e => (e.Status != Domain.Enums.Status.Deleted || status == Status.All) && e.Hide != true);
             }
         }
 
@@ -101,7 +100,7 @@ namespace Repository
                 query = query.Include(includeProperty);
             }
 
-            return query.Where(e => (e.Status != Status.Deleted || status == Status.All) && e.Hide != true);
+            return query.Where(e => (e.Status != Domain.Enums.Status.Deleted || status == Status.All) && e.Hide != true);
         }
      
         public virtual Tentity AddOrUpdate(Tentity ob)
@@ -134,7 +133,7 @@ namespace Repository
             if (ob == null || ob.Id == 0)
                 return false;
             ob.ImgPath = null;
-            ob.Status = Status.Deleted;
+            ob.Status = Domain.Enums.Status.Deleted;
             db.Entry<Tentity>(db.Set<Tentity>().Find(ob.Id)).CurrentValues.SetValues(ob);
             db.SaveChanges();
             return true;
@@ -156,7 +155,7 @@ namespace Repository
             foreach (var ob in obs)
             {
                 ob.ImgPath = null;
-                ob.Status = Status.Deleted;
+                ob.Status = Domain.Enums.Status.Deleted;
                 db.Entry<Tentity>(db.Set<Tentity>().Find(ob.Id)).CurrentValues.SetValues(ob);
             }
             db.SaveChanges();

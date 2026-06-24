@@ -9,7 +9,7 @@
 
     public sealed record CreateStockCommand(string Name , long BranchId) : ICommand , ICreateCommand<Result>;
 
-    public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Entity.Model.Stock> _Repository , IMapper mapper) : CreateCommandHandler<CreateStockCommand, Entity.Model.Stock>(_UnitOfWork, _Repository , mapper)
+    public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Domain.Entities.Stock> _Repository , IMapper mapper) : CreateCommandHandler<CreateStockCommand, Domain.Entities.Stock>(_UnitOfWork, _Repository , mapper)
     {
        
     }

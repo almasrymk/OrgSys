@@ -1,11 +1,7 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Domain.Entities
+﻿namespace Domain.Entities
 {
     [Table("Notification")]
-    public class Notification : BaseEntity
+    public class Notification : BaseModel
     {
         [StringLength(50, MinimumLength = 3)]
         public string Subject { get; set; }

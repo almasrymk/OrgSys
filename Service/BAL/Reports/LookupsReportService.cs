@@ -1,6 +1,6 @@
 ﻿using Repository;
 using X.PagedList;
-using Entity.ModelReport;
+using Domain.EntitiesReport;
 using X.PagedList.Extensions;
 
 namespace Service

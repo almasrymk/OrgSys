@@ -1,45 +1,45 @@
 ﻿using Application.Commands.Org.Transactions.Inventory.Commands;
 using AutoMapper;
-using Entity.Model;
-using Entity.ModelView;
+using Domain.Entities;
+using Application.DTOs;
 
 public partial class MappingProfile : Profile
 {
     public void InventoryMappingProfile()
     {
-        CreateMap<InventoryProduct, InventoryProductModelView>();
+        CreateMap<InventoryProduct, InventoryProductDto>();
 
-        CreateMap<InventoryProductModelView, InventoryProduct>();
+        CreateMap<InventoryProductDto, InventoryProduct>();
 
-        CreateMap<InventoryProductModelView, TransactionProductModelView>();
+        CreateMap<InventoryProductDto, TransactionProductDto>();
 
-        CreateMap<TransactionProductModelView, InventoryProduct>();
+        CreateMap<TransactionProductDto, InventoryProduct>();
 
 
-        CreateMap<Entity.Model.Inventory, InventoryModelView>()
+        CreateMap<Domain.Entities.Inventory, InventoryDto>()
             .ForMember(
                 dest => dest.InventoryProductList,
                 opt => opt.MapFrom(src => src.InventoryProducts)
             );
 
-        CreateMap<InventoryModelView, Entity.Model.Inventory>()
+        CreateMap<InventoryDto, Domain.Entities.Inventory>()
             .ForMember(
                 dest => dest.InventoryProducts,
                 opt => opt.MapFrom(src => src.InventoryProducts)
             );
 
-        CreateMap<Entity.Model.Inventory, CreateInventoryCommand>();
+        CreateMap<Domain.Entities.Inventory, CreateInventoryCommand>();
 
-        CreateMap<CreateInventoryCommand, Entity.Model.Inventory>()
+        CreateMap<CreateInventoryCommand, Domain.Entities.Inventory>()
             .ForMember(dest => dest.Stock, opt => opt.Ignore())
             .ForMember(
                 dest => dest.InventoryProducts,
                 opt => opt.MapFrom(src => src.InventoryProductList)
             );
 
-        CreateMap<Entity.Model.Inventory, UpdateInventoryCommand>();
+        CreateMap<Domain.Entities.Inventory, UpdateInventoryCommand>();
 
-        CreateMap<UpdateInventoryCommand, Entity.Model.Inventory>()
+        CreateMap<UpdateInventoryCommand, Domain.Entities.Inventory>()
             .ForMember(dest => dest.Stock, opt => opt.Ignore())
             .ForMember(
                 dest => dest.InventoryProducts,
@@ -47,25 +47,25 @@ public partial class MappingProfile : Profile
             );
 
 
-        CreateMap<Entity.Model.Inventory, DeleteInventoryCommand>();
+        CreateMap<Domain.Entities.Inventory, DeleteInventoryCommand>();
 
-        CreateMap<DeleteInventoryCommand, Entity.Model.Inventory>();
+        CreateMap<DeleteInventoryCommand, Domain.Entities.Inventory>();
 
-        CreateMap<CreateInventoryCommand, InventoryModelView>();
+        CreateMap<CreateInventoryCommand, InventoryDto>();
 
-        CreateMap<InventoryModelView, CreateInventoryCommand>()
+        CreateMap<InventoryDto, CreateInventoryCommand>()
             .ForMember(
                 dest => dest.InventoryProducts,
                 opt => opt.MapFrom(src => src.InventoryProducts)
             );
 
 
-        CreateMap<UpdateInventoryCommand, InventoryModelView>();
+        CreateMap<UpdateInventoryCommand, InventoryDto>();
 
-        CreateMap<InventoryModelView, UpdateInventoryCommand>();
+        CreateMap<InventoryDto, UpdateInventoryCommand>();
 
-        CreateMap<DeleteInventoryCommand, InventoryModelView>();
+        CreateMap<DeleteInventoryCommand, InventoryDto>();
 
-        CreateMap<InventoryModelView, DeleteInventoryCommand>();
+        CreateMap<InventoryDto, DeleteInventoryCommand>();
     }
 }

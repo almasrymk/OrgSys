@@ -7,14 +7,14 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.Model;
-    using Entity.ModelView;
+    using Domain.Entities;
+    using Application.DTOs;
 
-    public sealed class UpdateInventoryCommand : Entity.ModelView.InventoryModelView, ICommand, IUpdateCommand<Result>;
+    public sealed class UpdateInventoryCommand : Application.DTOs.InventoryDto, ICommand, IUpdateCommand<Result>;
     public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork,
-        IRepository<Entity.Model.Inventory> _Repository , 
+        IRepository<Domain.Entities.Inventory> _Repository , 
         IRepository<InventoryProduct> _InventoryProductRepository,
-        IMapper mapper, IServiceProvider _provider) : UpdateCommandHandler<UpdateInventoryCommand, Entity.Model.Inventory>(_UnitOfWork, _Repository , mapper , _provider)
+        IMapper mapper, IServiceProvider _provider) : UpdateCommandHandler<UpdateInventoryCommand, Domain.Entities.Inventory>(_UnitOfWork, _Repository , mapper , _provider)
     {
         override public async Task<bool> SaveDetials(UpdateInventoryCommand request)
         {

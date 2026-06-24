@@ -7,9 +7,9 @@
     using System.Xml.Linq;
     using Utility;
 
-    public class CreateAccountCommandValidator : Validator<CreateAccountCommand,  Entity.Model.Account>
+    public class CreateAccountCommandValidator : Validator<CreateAccountCommand,  Domain.Entities.Account>
     {
-        public CreateAccountCommandValidator(IRepository<Entity.Model.Account> _Repository) : base(_Repository)
+        public CreateAccountCommandValidator(IRepository<Domain.Entities.Account> _Repository) : base(_Repository)
         {
             RuleFor(c => c.AccountTypeId)
             .NotEmpty().GreaterThanOrEqualTo(0).WithMessage("The account type field is required");
@@ -24,12 +24,12 @@
             .MaximumLength(150).WithMessage("The name must not exceed 150 characters");
              
             RuleFor(c => new { c.Code , c.TypeId })
-            .MustAsync(async (Ob, cancellationToken) => await NotAnyAsync(c => c.Code == Ob.Code && c.TypeId == Ob.TypeId && c.Status != Status.Deleted && c.Hide != true, cancellationToken))
+            .MustAsync(async (Ob, cancellationToken) => await NotAnyAsync(c => c.Code == Ob.Code && c.TypeId == Ob.TypeId && c.Status != Domain.Enums.Status.Deleted && c.Hide != true, cancellationToken))
             .WithMessage("The account code already exists")
             .OverridePropertyName(nameof(CreateAccountCommand.Code));
 
             RuleFor(c => new { c.Name, c.TypeId })           
-            .MustAsync(async (Ob, cancellationToken) => await NotAnyAsync(c => c.Name == Ob.Name && c.TypeId == Ob.TypeId && c.Status != Status.Deleted && c.Hide != true, cancellationToken))
+            .MustAsync(async (Ob, cancellationToken) => await NotAnyAsync(c => c.Name == Ob.Name && c.TypeId == Ob.TypeId && c.Status != Domain.Enums.Status.Deleted && c.Hide != true, cancellationToken))
             .WithMessage("The account name already exists")
             .OverridePropertyName(nameof(CreateAccountCommand.Name));
         }

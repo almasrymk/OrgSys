@@ -6,7 +6,7 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.Model;
+    using Domain.Entities;
     using System.Net;
     using System.Threading;
     using System.Threading.Tasks;

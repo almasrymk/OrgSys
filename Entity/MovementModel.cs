@@ -1,6 +1,4 @@
 ﻿using System;
-using Utility;
-using Entity.Model;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entity

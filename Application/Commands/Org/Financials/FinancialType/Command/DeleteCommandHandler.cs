@@ -6,10 +6,11 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.Model;
-    using Entity.ModelView;
+    using Domain.Entities;
+    using Application.DTOs;
     using Microsoft.Extensions.DependencyInjection;
     using System.Linq.Expressions;
+    using Domain.Enums;
 
     public sealed record DeleteFinancialTypeCommand(long Id) : ICommand, IDeleteCommand<Result>;
 
@@ -17,9 +18,9 @@
         IRepository<FinancialType> _Repository,
         IServiceProvider _provider) : DeleteCommandHandler<DeleteFinancialTypeCommand, FinancialType>(_UnitOfWork, _Repository, _provider)
     {
-        public override Expression<Func<Entity.Model.FinancialType, bool>> CreateFilter(DeleteFinancialTypeCommand request)
+        public override Expression<Func<FinancialType, bool>> CreateFilter(DeleteFinancialTypeCommand request)
         {
-            return e => e.Id == request.Id && e.Status != Utility.Status.Deleted && e.Hide != true;
+            return e => e.Id == request.Id && e.Status != Domain.Enums.Status.Deleted && e.Hide != true;
         }
 
     }

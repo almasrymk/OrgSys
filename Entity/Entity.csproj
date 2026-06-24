@@ -5,9 +5,57 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="ModelView\AdminDb\**" />
+    <Compile Remove="ModelView\OrgDb\**" />
+    <Compile Remove="Model\AdminDb\**" />
+    <Compile Remove="Model\OrgDb\**" />
     <Compile Remove="Model\TrmplateDb\**" />
+    <EmbeddedResource Remove="ModelView\AdminDb\**" />
+    <EmbeddedResource Remove="ModelView\OrgDb\**" />
+    <EmbeddedResource Remove="Model\AdminDb\**" />
+    <EmbeddedResource Remove="Model\OrgDb\**" />
     <EmbeddedResource Remove="Model\TrmplateDb\**" />
+    <None Remove="ModelView\AdminDb\**" />
+    <None Remove="ModelView\OrgDb\**" />
+    <None Remove="Model\AdminDb\**" />
+    <None Remove="Model\OrgDb\**" />
     <None Remove="Model\TrmplateDb\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="AutoMapper\MapperConfig.cs" />
+    <Compile Remove="AutoMapper\MapperExtension.cs" />
+    <Compile Remove="BaseModel.cs" />
+    <Compile Remove="DataModel.cs" />
+    <Compile Remove="DateModel.cs" />
+    <Compile Remove="ModelReport\CategoryList.cs" />
+    <Compile Remove="ModelReport\DealerBalance.cs" />
+    <Compile Remove="ModelReport\DealerList.cs" />
+    <Compile Remove="ModelReport\DealerStatment.cs" />
+    <Compile Remove="ModelReport\DetailedInvoiceMovement.cs" />
+    <Compile Remove="ModelReport\DetailedSafe.cs" />
+    <Compile Remove="ModelReport\DetailingInvoiceMovementProduct.cs" />
+    <Compile Remove="ModelReport\OutlayList.cs" />
+    <Compile Remove="ModelReport\ProductBalance.cs" />
+    <Compile Remove="ModelReport\ProductCost.cs" />
+    <Compile Remove="ModelReport\ProductInventoryDetection.cs" />
+    <Compile Remove="ModelReport\ProductList.cs" />
+    <Compile Remove="ModelReport\ProductStatment.cs" />
+    <Compile Remove="ModelReport\ProductTransaction.cs" />
+    <Compile Remove="ModelReport\SafeBalance.cs" />
+    <Compile Remove="ModelReport\SafeList.cs" />
+    <Compile Remove="ModelReport\SafeStatment.cs" />
+    <Compile Remove="ModelReport\SalesBalance.cs" />
+    <Compile Remove="ModelReport\SalesClient.cs" />
+    <Compile Remove="ModelReport\StockBalance.cs" />
+    <Compile Remove="ModelReport\StockList.cs" />
+    <Compile Remove="ModelReport\StockStatment.cs" />
+    <Compile Remove="ModelReport\TotalInvoiceMovement.cs" />
+    <Compile Remove="ModelReport\TotalInvoiceMovementProduct.cs" />
+    <Compile Remove="ModelReport\UnitList.cs" />
+    <Compile Remove="ModelReport\UnreceivedTransfer.cs" />
+    <Compile Remove="MovementModel.cs" />
+    <Compile Remove="MovementModelModelView.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,6 +68,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Utility\Utility.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="AutoMapper\" />
+    <Folder Include="ModelReport\" />
+    <Folder Include="ModelView\" />
+    <Folder Include="Model\" />
   </ItemGroup>
 
 </Project>

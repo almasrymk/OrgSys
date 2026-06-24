@@ -1,11 +1,7 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Domain.Entities
+﻿namespace Domain.Entities
 {
     [Table("Invoice")]
-    public class Invoice : BaseTransactionEntity
+    public class Invoice : MovementModel
     {
         [ForeignKey("Dealer")]
         public virtual long DealerId { get; set; }

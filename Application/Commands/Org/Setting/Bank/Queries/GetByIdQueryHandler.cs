@@ -7,16 +7,16 @@
     using AutoMapper;
     using Domain.Abstraction;
     using Domain.Shared;
-    using Entity.ModelView;
+    using Application.DTOs;
     using System.Linq.Expressions;
 
-    public sealed record GetByIdBankQuery(long Id) : ICommand<BankModelView> , IGetByIdQuery<Result<BankModelView>>;
+    public sealed record GetByIdBankQuery(long Id) : ICommand<BankDto> , IGetByIdQuery<Result<BankDto>>;
 
-    public sealed class GetByIdQueryHandler(IRepository<Entity.Model.Bank> _Repository, IMapper mapper) : GetCommandHandler<GetByIdBankQuery, Entity.Model.Bank, BankModelView>(_Repository, mapper)
+    public sealed class GetByIdQueryHandler(IRepository<Domain.Entities.Bank> _Repository, IMapper mapper) : GetCommandHandler<GetByIdBankQuery, Domain.Entities.Bank, BankDto>(_Repository, mapper)
     {
-        public override Expression<Func<Entity.Model.Bank, bool>> CreateFilter(GetByIdBankQuery request)
+        public override Expression<Func<Domain.Entities.Bank, bool>> CreateFilter(GetByIdBankQuery request)
         {           
-            return e => e.Id == request.Id && e.Status !=Utility.Status.Deleted && e.Hide != true;
+            return e => e.Id == request.Id && e.Status !=Domain.Enums.Status.Deleted && e.Hide != true;
         }
     }
 }
