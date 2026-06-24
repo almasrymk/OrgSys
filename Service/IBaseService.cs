@@ -1,6 +1,7 @@
-﻿using Entity;
+﻿//using Entity;
 using X.PagedList;
 using System.Collections.Generic;
+using Domain.Entities;
 
 namespace Service
 {

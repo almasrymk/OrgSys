@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace Service
 {
-    public class ClassificationService : BaseOrgService<ClassificationModelView, Classification>
+    public class ClassificationService : BaseOrgService<ClassificationDto, Classification>
     {
         public ClassificationService(string Schema) : base(Schema) { }
 

@@ -5,7 +5,7 @@ using System;
 
 namespace Service
 {
-    public class StockService : BaseOrgService<StockModelView, Stock>
+    public class StockService : BaseOrgService<StockDto, Stock>
     {
         public StockService(string Schema) : base(Schema , "Branch") { }
 

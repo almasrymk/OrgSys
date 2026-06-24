@@ -6,7 +6,7 @@ using System.Net.Http.Headers;
 
 namespace Service
 {
-    public class DealerService : BaseOrgService<DealerModelView, Dealer>
+    public class DealerService : BaseOrgService<DealerDto, Dealer>
     {
         public DealerService(string Schema) : base(Schema , "DealerGroup,Country,City,District") { }
 

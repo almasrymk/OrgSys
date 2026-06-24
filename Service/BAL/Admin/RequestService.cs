@@ -1,22 +1,21 @@
-﻿using Entity;
-using Domain.Entities;
+﻿using Domain.Entities;
 using Application.DTOs;
 
 namespace Service.BAL.Data.Security
 {
-    public class RequestService : BaseAdminService<RequestModelView, Request>
+    public class RequestService : BaseAdminService<RequestDto, Request>
     {
         public RequestService() { }
 
         #region Gets       
-        public RequestModelView GetEmail(string Email)
+        public RequestDto GetEmail(string Email)
         {
-            return repo.Get(e => e.Email.Contains("" + Email), Includes).Map<RequestModelView>();
+            return repo.Get(e => e.Email.Contains("" + Email), Includes).Map<RequestDto>();
 
         }
-        public RequestModelView GetByKey(string Key)
+        public RequestDto GetByKey(string Key)
         {
-            return repo.Get(e => e.Key == Key, Includes).Map<RequestModelView>();
+            return repo.Get(e => e.Key == Key, Includes).Map<RequestDto>();
         }
         #endregion
     }

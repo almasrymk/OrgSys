@@ -10,15 +10,16 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Application.DTOs.OrgDb;
 
     [Area("Setting")]
     public class AccountController(IConfiguration configuration, IMapper mapper) : MainController<AccountDto, CreateAccountCommand, UpdateAccountCommand>(configuration, mapper)
     {
-        private static List<AccountTreeNodeModelView> BuildTree(List<AccountModelView> accounts, long parentId = 0)
+        private static List<AccountTreeNodeDto> BuildTree(List<AccountDto> accounts, long parentId = 0)
         {
             return accounts
                 .Where(x => x.ParentId == parentId)
-                .Select(x => new AccountTreeNodeModelView
+                .Select(x => new AccountTreeNodeDto
                 {
                     Id = x.Id,
                     Name = x.Name,
@@ -28,15 +29,15 @@
                 .ToList();
         }
 
-        public override async Task LoadViewBag(AccountModelView model)
+        public override async Task LoadViewBag(AccountDto model)
         {
-            ViewBag.AccountType = new SelectList(await GetListApi<AccountTypeModelView>(Page: 1, PageSize: 20), "Id", "Name", model.AccountTypeId);
-            ViewBag.AccountList = new SelectList(await GetListApi<AccountModelView>( Page: 1, PageSize: 20), "Id", "Name", model.ParentId);
+            ViewBag.AccountType = new SelectList(await GetListApi<AccountTypeDto>(Page: 1, PageSize: 20), "Id", "Name", model.AccountTypeId);
+            ViewBag.AccountList = new SelectList(await GetListApi<AccountDto>( Page: 1, PageSize: 20), "Id", "Name", model.ParentId);
     
         }
         public override async Task LoadViewBagIndex(long ParentId = 0, long TypeId = 0)
         {
-            var accounts = await GetListApi<AccountModelView>(Page: 1, PageSize: 100000);
+            var accounts = await GetListApi<AccountDto>(Page: 1, PageSize: 100000);
             ViewBag.AccountTree = BuildTree(accounts);
         }
 

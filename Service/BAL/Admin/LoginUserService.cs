@@ -1,25 +1,24 @@
-﻿using Entity;
-using Domain.Entities;
+﻿using Domain.Entities;
 using Application.DTOs;
 
 namespace Service
 {
-    public class LoginUserService : BaseAdminService<LoginUserModelView, LoginUser>
+    public class LoginUserService : BaseAdminService<LoginUserDto, LoginUser>
     {
         public LoginUserService() : base("Client") { }
 
         #region Gets 
-        public LoginUserModelView GetLoginUserName(string textSearch)
+        public LoginUserDto GetLoginUserName(string textSearch)
         {
-            var ob = repo.Get(e => e.UserName.ToLower().Trim().Equals("" + textSearch.ToLower().Trim()), Includes).Map<LoginUserModelView>();
+            var ob = repo.Get(e => e.UserName.ToLower().Trim().Equals("" + textSearch.ToLower().Trim()), Includes).Map<LoginUserDto>();
             if (ob == null)
-                ob = new LoginUserModelView();
+                ob = new LoginUserDto();
             return ob;
         }
 
         public bool CheckDoublicat(string LoginUserName, long id)
         {
-            var ob = repo.Get(e => e.UserName.Equals("" + LoginUserName) && (id == 0 || e.Id != id)).Map<LoginUserModelView>();
+            var ob = repo.Get(e => e.UserName.Equals("" + LoginUserName) && (id == 0 || e.Id != id)).Map<LoginUserDto>();
             return ob != null && ob.Id > 0;
         }
 
@@ -43,9 +42,9 @@ namespace Service
             return repo.Any(e => e.UserName.ToLower().Trim() == Email.ToLower().Trim() && e.Password == Passord);
         }
 
-        public LoginUserModelView GetUserByUserName(string Email)
+        public LoginUserDto GetUserByUserName(string Email)
         {
-            return  repo.Get(e => e.UserName.ToLower().Trim() == Email.ToLower().Trim()).Map<LoginUserModelView>();
+            return  repo.Get(e => e.UserName.ToLower().Trim() == Email.ToLower().Trim()).Map<LoginUserDto>();
         }
         #endregion
     }

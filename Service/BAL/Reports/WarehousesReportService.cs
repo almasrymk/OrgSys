@@ -2,10 +2,10 @@
 using Repository;
 using X.PagedList;
 using System.Linq;
-using Domain.EntitiesReport;
 using Utility;
 using Domain.Entities;
 using X.PagedList.Extensions;
+using Application.Report;
 
 namespace Service
 {

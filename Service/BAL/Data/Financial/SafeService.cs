@@ -5,7 +5,7 @@ using System;
 
 namespace Service
 {
-    public class SafeService : BaseOrgService<SafeModelView, Safe>
+    public class SafeService : BaseOrgService<SafeDto, Safe>
     {
         public SafeService(string Schema) : base(Schema) { }
 

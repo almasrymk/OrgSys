@@ -1,5 +1,4 @@
-﻿using Entity;
-using Domain.Entities;
+﻿using Domain.Entities;
 using Application.DTOs;
 using Repository;
 using System;
@@ -11,7 +10,7 @@ using X.PagedList.Extensions;
 
 namespace Service
 {
-    public class UserService : BaseOrgService<UserModelView, User>
+    public class UserService : BaseOrgService<UserDto, User>
     {
         public UnitOfWorkAdmin repoAdminAll;
         public UserService(string Schema) : base(Schema , "Role") {
@@ -32,7 +31,7 @@ namespace Service
         //}
 
         #region Save / Delete
-        public override UserModelView Save(UserModelView ob)
+        public override UserDto Save(UserDto ob)
         {
             var comp = repoAll.companyProfileRepo.GetMyCompanyProfile();
             var usLogin = repoAdminAll.loginUserRepo.Get(e => e.Id == ob.LoginUserId);
@@ -42,7 +41,7 @@ namespace Service
             usLogin.ClientId = comp.ClientId;           
             usLogin = repoAdminAll.loginUserRepo.AddOrUpdate(usLogin);
             ob.LoginUserId = usLogin.Id;
-            var us = repo.AddOrUpdate(ob.Map<User>()).Map<UserModelView>();
+            var us = repo.AddOrUpdate(ob.Map<User>()).Map<UserDto>();
             ob.Id = us.Id;
             return ob;
         }
@@ -59,11 +58,11 @@ namespace Service
         #endregion
 
         #region Gets
-        public override UserModelView Get(long Id)
+        public override UserDto Get(long Id)
         {
-            var ob = repo.Get(e => e.Id == Id, Includes).Map<UserModelView>();
+            var ob = repo.Get(e => e.Id == Id, Includes).Map<UserDto    >();
             if (ob == null)
-                ob = new UserModelView();
+                ob = new UserDto();
 
             var ids = repoAll.rolePermissionRepo.GetList(e => e.RoleId == ob.RoleId, null, "", Utility.Status.New).Select(e => e.PermissionId).Distinct().ToList();
             if (ids == null)
@@ -73,11 +72,11 @@ namespace Service
             return ob;
         }
 
-        public UserModelView GetByLoginUserId(long LoginUserId)
+        public UserDto GetByLoginUserId(long LoginUserId)
         {
-            var ob = repo.Get(e => e.LoginUserId == LoginUserId, Includes).Map<UserModelView>();
+            var ob = repo.Get(e => e.LoginUserId == LoginUserId, Includes).Map<UserDto>();
             if (ob == null)
-                ob = new UserModelView();
+                ob = new UserDto();
 
             var ids = repoAll.rolePermissionRepo.GetList(e => e.RoleId == ob.RoleId, null, "", Utility.Status.New).Select(e => e.PermissionId).Distinct().ToList();
             if (ids == null)
@@ -87,26 +86,11 @@ namespace Service
             return ob;
         }
 
-        public override UserModelView Get(string textSearch)
+        public override UserDto Get(string textSearch)
         {
-            var ob = repo.Get(e => e.Name.ToLower().Trim().Equals("" + textSearch.ToLower().Trim()) || e.UserName.ToLower().Trim().Equals("" + textSearch.ToLower().Trim()), Includes).Map<UserModelView>();
+            var ob = repo.Get(e => e.Name.ToLower().Trim().Equals("" + textSearch.ToLower().Trim()) || e.UserName.ToLower().Trim().Equals("" + textSearch.ToLower().Trim()), Includes).Map<UserDto>();
             if (ob == null)
-                ob = new UserModelView();
-
-            var ids = repoAll.rolePermissionRepo.GetList(e => e.RoleId == ob.RoleId, null, "", Utility.Status.New).Select(e => e.PermissionId).Distinct().ToList();
-            if (ids == null)
-                ids = new List<long>();
-
-            ob.Permissions = repoAll.permissionRepo.GetList(e => ids.Contains(e.Id), null, "", Utility.Status.New).ToList();
-
-            return ob;
-        }
-
-        public UserModelView GetUserName(string textSearch)
-        {
-            var ob = repo.Get(e => e.UserName.ToLower().Trim().Equals("" + textSearch.ToLower().Trim()), Includes).Map<UserModelView>();
-            if (ob == null)
-                ob = new UserModelView();
+                ob = new UserDto();
 
             var ids = repoAll.rolePermissionRepo.GetList(e => e.RoleId == ob.RoleId, null, "", Utility.Status.New).Select(e => e.PermissionId).Distinct().ToList();
             if (ids == null)
@@ -117,24 +101,39 @@ namespace Service
             return ob;
         }
 
-        public override List<UserModelView> GetAll(long parentId = 0, long TypeId = 0)
+        public UserDto GetUserName(string textSearch)
         {
-            return repo.GetList(e => e.OrderBy(e => e.Id), Includes, Utility.Status.New).Select(e => e.Map<UserModelView>()).ToList();
+            var ob = repo.Get(e => e.UserName.ToLower().Trim().Equals("" + textSearch.ToLower().Trim()), Includes).Map<UserDto>();
+            if (ob == null)
+                ob = new UserDto();
+
+            var ids = repoAll.rolePermissionRepo.GetList(e => e.RoleId == ob.RoleId, null, "", Utility.Status.New).Select(e => e.PermissionId).Distinct().ToList();
+            if (ids == null)
+                ids = new List<long>();
+
+            ob.Permissions = repoAll.permissionRepo.GetList(e => ids.Contains(e.Id), null, "", Utility.Status.New).ToList();
+
+            return ob;
         }
 
-        public override List<UserModelView> GetAll(string textSearch, long parentId = 0, long TypeId = 0)
+        public override List<UserDto> GetAll(long parentId = 0, long TypeId = 0)
         {
-            return repo.GetList(e => e.Name.Contains("" + textSearch), e => e.OrderBy(e => e.Id), Includes, Utility.Status.New).Select(e => e.Map<UserModelView>()).ToList();
+            return repo.GetList(e => e.OrderBy(e => e.Id), Includes, Utility.Status.New).Select(e => e.Map<UserDto>()).ToList();
         }
 
-        public override IPagedList<UserModelView> GetAll(long parentId = 0, long TypeId = 0, int page = 1, int pageSize = 20)
+        public override List<UserDto> GetAll(string textSearch, long parentId = 0, long TypeId = 0)
         {
-            return repo.GetList(e => e.OrderBy(e => e.Id), Includes, Utility.Status.New).Select(e => e.Map<UserModelView>()).ToPagedList(page, pageSize);
+            return repo.GetList(e => e.Name.Contains("" + textSearch), e => e.OrderBy(e => e.Id), Includes, Utility.Status.New).Select(e => e.Map<UserDto>()).ToList();
         }
 
-        public override IPagedList<UserModelView> GetAll(string textSearch, long parentId = 0, long TypeId = 0, int page = 1, int pageSize = 20)
+        public override IPagedList<UserDto> GetAll(long parentId = 0, long TypeId = 0, int page = 1, int pageSize = 20)
         {
-            return repo.GetList(e => "" + textSearch == "" || e.Name.Contains("" + textSearch), e => e.OrderBy(e => e.Id), Includes, Utility.Status.New).Select(e => e.Map<UserModelView>()).ToPagedList(page, pageSize);
+            return repo.GetList(e => e.OrderBy(e => e.Id), Includes, Utility.Status.New).Select(e => e.Map<UserDto>()).ToPagedList(page, pageSize);
+        }
+
+        public override IPagedList<UserDto> GetAll(string textSearch, long parentId = 0, long TypeId = 0, int page = 1, int pageSize = 20)
+        {
+            return repo.GetList(e => "" + textSearch == "" || e.Name.Contains("" + textSearch), e => e.OrderBy(e => e.Id), Includes, Utility.Status.New).Select(e => e.Map<UserDto>()).ToPagedList(page, pageSize);
         }
 
         public bool CheckDoublicat(string userName, long id)
@@ -143,9 +142,9 @@ namespace Service
             return ob != null && ob.Id > 0;
         }
 
-        public override List<UserModelView> GetAll(List<long> ids, long TypeId = 0)
+        public override List<UserDto> GetAll(List<long> ids, long TypeId = 0)
         {
-            return repo.GetList(e => ids.Contains(e.Id), e => e.OrderBy(e => e.Id), Includes, Utility.Status.New).Select(e => e.Map<UserModelView>()).ToList();
+            return repo.GetList(e => ids.Contains(e.Id), e => e.OrderBy(e => e.Id), Includes, Utility.Status.New).Select(e => e.Map<UserDto>()).ToList();
         }
 
         public override long GetMaxCode(long type = 0)

@@ -1,7 +1,7 @@
 ﻿using Repository;
 using X.PagedList;
-using Domain.EntitiesReport;
 using X.PagedList.Extensions;
+using Application.Report;
 
 namespace Service
 {

@@ -1,5 +1,4 @@
-﻿using Entity;
-using Repository;
+﻿using Repository;
 using X.PagedList;
 using System.Linq;
 using System.Collections.Generic;
@@ -7,6 +6,7 @@ using System.Reflection;
 using System;
 using System.Linq.Expressions;
 using X.PagedList.Extensions;
+using Domain.Entities;
 
 namespace Service
 {

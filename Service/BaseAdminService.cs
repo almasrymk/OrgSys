@@ -1,11 +1,12 @@
 ﻿using System;
-using Entity;
 using Repository;
 using X.PagedList;
 using System.Linq;
 using System.Collections.Generic;
 using System.Reflection;
 using X.PagedList.Extensions;
+using Application.DTOs.OrgDb;
+using Domain.Entities;
 
 namespace Service
 {
