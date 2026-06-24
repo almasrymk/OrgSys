@@ -6,9 +6,9 @@
 
         public virtual long CodeNumber { get; set; }
 
-        public virtual string Code { get; set; }
+        public virtual string? Code { get; set; }
 
-        public string MaskText { get; set; }
+        public string? MaskText { get; set; }
 
         public long ParentId { get; set; }
 
@@ -16,7 +16,7 @@
 
         public bool Hide { get; set; }
 
-        public string ImgPath { get; set; }
+        public string? ImgPath { get; set; }
 
         public Status Status { get; set; }
 

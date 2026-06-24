@@ -1,5 +1,5 @@
 ﻿@using Application.DTOs.OrgDb
-@model Domain.Shared.ResultPagination<Application.DTOs.OrgDb.AccountTreeNodeDto>
+@model Domain.Shared.ResultPagination<Application.DTOs.AccountDto>
 @{
     ViewData["Title_Designer"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -164,10 +164,10 @@
             </h5>
 
             <ul class="account-tree">
-                @foreach (var node in (List<AccountTreeNodeModelView>)ViewBag.AccountTree)
-                {
-                    @Html.Partial("_AccountTreeNode", node)
-                }
+         @foreach (var node in (List<AccountTreeNodeDto>)ViewBag.AccountTree)
+{
+    @Html.Partial("_AccountTreeNode", node)
+}
             </ul>
 
         </div>
