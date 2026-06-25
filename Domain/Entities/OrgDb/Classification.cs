@@ -5,7 +5,7 @@
     {
         [Required]
         [StringLength(50, MinimumLength = 3)]
-        public virtual string Name { get; set; }
+        public virtual string Name { get; set; } = null!;
 
         public virtual bool BePurchased { get; set; }
 

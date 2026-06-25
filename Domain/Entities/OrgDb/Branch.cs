@@ -4,6 +4,6 @@
     public class Branch : BaseModel
     {
         [StringLength(50, MinimumLength = 3)]
-        public string Name { get; set; }
+        public string? Name { get; set; }
     }
 }

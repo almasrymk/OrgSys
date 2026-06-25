@@ -7,13 +7,13 @@ namespace Domain.Entities
     {
         public virtual long UserId { get; set; }
 
-        public virtual string ResourceId { get; set; }
+        public virtual string? ResourceId { get; set; }
 
-        public virtual string ResourceType { get; set; }
+        public virtual string? ResourceType { get; set; }
 
-        public virtual string TableName { get; set; }
+        public virtual string? TableName { get; set; }
 
-        public virtual string ScreenName { get; set; }
+        public virtual string? ScreenName { get; set; }
 
         public virtual DateTime Date { get; set; }
 
@@ -21,15 +21,15 @@ namespace Domain.Entities
 
         public virtual long EstimateBySecond { get; set; }
 
-        public virtual string Title { get; set; }
+        public virtual string? Title { get; set; }
 
-        public virtual string Message { get; set; }
+        public virtual string? Message { get; set; }
 
-        public virtual string Path { get; set; }
+        public virtual string? Path { get; set; }
 
-        public virtual string Line { get; set; }
+        public virtual string? Line { get; set; }
 
-        public virtual string Icon { get; set; }
+        public virtual string? Icon { get; set; }
 
         public virtual LogType LogType { get; set; }
 
