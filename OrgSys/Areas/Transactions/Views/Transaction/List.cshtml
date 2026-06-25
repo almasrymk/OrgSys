@@ -1,6 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
 @using System.Globalization
-@model Domain.Shared.ResultPagination<Application.DTOs.TransactionModelView>
+@model Domain.Shared.ResultPagination<Application.DTOs.TransactionDto>
 @using OrgSys
 @{
     Layout = null;
@@ -403,12 +403,12 @@
 
             <div href="#" class="card m-2 p-1">
                 <label class="custom-control custom-checkbox mr-1 ml-1">
-                    @if (Model.Response[i].Status == Domain.Enums.Status.All)
+                    @* @if (Model.Response[i].Status == Domain.Enums.Status.All)
                     {
                         <input id="chk_@@Model.Response[i].Id" type="checkbox" class="custom-control-input chk">
                         <input type="hidden" value="@Model.Response[i].Id" />
                         <span class="custom-control-label">&nbsp;</span>
-                    }
+                    } *@
                 </label>
                 <div class="position-absolute card-top-buttons m-0 p-2">
                     <h3 class="card-text badge badge-pill badge-theme-1 text-small">@x</h3>
