@@ -7,9 +7,9 @@ namespace Domain.Entities
     public class PlanElement : BaseModel
     {
         [Required]
-        public virtual string Name { get; set; }
-        public virtual string Description { get; set; }
+        public virtual string Name { get; set; } = null!;
+        public virtual string? Description { get; set; }
         public virtual long PlanId { get; set; }
-        public virtual Plan Plan { get; set; }
+        public virtual Plan? Plan { get; set; }
     }
 }

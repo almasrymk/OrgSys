@@ -6,7 +6,7 @@
         [ForeignKey("Dealer")]
         public virtual long DealerId { get; set; }
 
-        public virtual Dealer? Dealer { get; set; }
+        public virtual Dealer? Dealer { get; set; } 
 
         [ForeignKey("PaymentType")]
         public virtual long PaymentTypeId { get; set; }

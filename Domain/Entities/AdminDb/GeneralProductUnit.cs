@@ -9,12 +9,12 @@ namespace Domain.Entities
         [ForeignKey("GeneralProduct")]
         public virtual long GeneralProductId { get; set; }
 
-        public virtual GeneralProduct GeneralProduct { get; set; }
+        public virtual GeneralProduct? GeneralProduct { get; set; }
 
         [ForeignKey("GeneralUnit")]
         public virtual long GeneralUnitId { get; set; }
 
-        public virtual GeneralUnit GeneralUnit { get; set; }
+        public virtual GeneralUnit? GeneralUnit { get; set; }
 
         [Required]
         [Column(TypeName = "decimal(18,2)")]

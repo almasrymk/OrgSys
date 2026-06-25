@@ -2,16 +2,16 @@
 {
     [Table("GeneralProduct", Schema = "admin")]
     public class GeneralProduct : BaseModel
-    {       
+    {
         [Required]
-        public virtual string Name { get; set; }
+        public virtual string Name { get; set; } = null!;
 
-        public virtual string Nickname { get; set; }
+        public virtual string? Nickname { get; set; }
 
         [Required]
-        public virtual string Barcode { get; set; }
+        public virtual string Barcode { get; set; } = null!;
 
-        public virtual string Description { get; set; }
+        public virtual string? Description { get; set; }
 
         [Column(TypeName = "decimal(18,2)")]
         public virtual decimal Price { get; set; }
@@ -22,14 +22,14 @@
         [ForeignKey("GeneralClassification")]
         public virtual long GeneralClassificationId { get; set; }
 
-        public virtual GeneralClassification GeneralClassification { get; set; }      
+        public virtual GeneralClassification? GeneralClassification { get; set; }      
 
-        public virtual string Recipe { get; set; }
+        public virtual string? Recipe { get; set; }
 
-        public virtual ICollection<GeneralProductUnit> GeneralProductUnits { get; set; }
+        public virtual ICollection<GeneralProductUnit>? GeneralProductUnits { get; set; }
 
-        public virtual ICollection<GeneralProductRecipe> GeneralProductRecipes { get; set; }
+        public virtual ICollection<GeneralProductRecipe>? GeneralProductRecipes { get; set; }
 
-        public virtual ICollection<GeneralProductPropertyElement> GeneralProductPropertyElements { get; set; }
+        public virtual ICollection<GeneralProductPropertyElement>? GeneralProductPropertyElements { get; set; }
     }
 }

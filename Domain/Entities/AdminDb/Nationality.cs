@@ -7,6 +7,6 @@ namespace Domain.Entities
     public class Nationality : BaseModel
     {
         [Required]
-        public virtual string Name { get; set; }       
+        public virtual string Name { get; set; } = null!;
     }
 }

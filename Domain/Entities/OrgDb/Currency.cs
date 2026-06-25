@@ -4,7 +4,7 @@
     public class Currency : BaseModel
     {
         [StringLength(50, MinimumLength = 3)]
-        public virtual string Name { get; set; }
+        public virtual string? Name { get; set; }
 
         [Column(TypeName = "decimal(18,2)")]
         public virtual decimal Rate { get; set; }

@@ -21,6 +21,6 @@
         public Status Status { get; set; }
 
         [NotMapped]
-        public List<string> CssFiles { get; set; }
+        public List<string>? CssFiles { get; set; }
     }
 }

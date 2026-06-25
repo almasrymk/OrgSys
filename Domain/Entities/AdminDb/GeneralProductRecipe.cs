@@ -11,5 +11,8 @@
 
         [Column(TypeName = "decimal(18,2)")]
         public virtual decimal Quantity { get; set; }
+
+        public virtual long? GeneralProductId { get; set; }
+        public virtual GeneralProduct? GeneralProduct { get; set; }
     }
 }

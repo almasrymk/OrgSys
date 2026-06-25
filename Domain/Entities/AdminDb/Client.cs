@@ -4,25 +4,25 @@
     public class Client : BaseModel
     {
         [Required]
-        public virtual string Name { get; set; }
+        public virtual string Name { get; set; } = null!;
 
-        public virtual string CompanyName { get; set; }
+        public virtual string? CompanyName { get; set; }
 
-        public virtual string Description { get; set; }
+        public virtual string? Description { get; set; }
 
         [StringLength(25, MinimumLength = 8)]        
-        public virtual string Phone { get; set; }
+        public virtual string? Phone { get; set; }
       
         [StringLength(25, MinimumLength = 8)]
-        public virtual string Mobile { get; set; }       
+        public virtual string? Mobile { get; set; }       
 
         [StringLength(25, MinimumLength = 8)]
-        public virtual string Fax { get; set; }
+        public virtual string? Fax { get; set; }
       
         [StringLength(30, MinimumLength = 3)]        
-        public virtual string Email { get; set; }
+        public virtual string? Email { get; set; }
 
-        public virtual string DbSchema { get; set; }
+        public virtual string? DbSchema { get; set; }
 
         public virtual long TypeActivityId { get; set; }
 
