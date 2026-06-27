@@ -12,7 +12,7 @@
                         <span>@Utility.Resource.Title_Designer.Home</span>
                     </a>
                 </li>
-                @if (User.IsAllowed("Branchs.All,Stocks.All,Tables.All,Roles.All,Users.All,Shifts.All,Products.All,Classifications.All,UnitsMeasure.All,Clients.All,Suppliers.All,Safes.All,OutlayTerms.All,Currencies.All"))
+                @if (User.IsAllowed("Branchs.All,Stocks.All,Tables.All,Roles.All,Users.All,Shifts.All,Products.All,Classifications.All,UnitsMeasure.All,Clients.All,Suppliers.All,Safes.All,OutlayTerms.All,Currencies.All,Accounts.All,"))
                 {
                     <li>
                         <a href="#setting">
@@ -60,7 +60,7 @@
     </div>
     <div class="sub-menu">
         <div class="scroll">
-            @if (User.IsAllowed("Branchs.All,Stocks.All,Tables.All,Roles.All,Users.All,Shifts.All,Products.All,Classifications.All,UnitsMeasure.All,Clients.All,Suppliers.All,Safes.All,OutlayTerms.All,Currencies.All"))
+            @if (User.IsAllowed("Branchs.All,Stocks.All,Tables.All,Roles.All,Users.All,Shifts.All,Products.All,Classifications.All,UnitsMeasure.All,Clients.All,Suppliers.All,Safes.All,OutlayTerms.All,Currencies.All,Accounts.All,"))
             {
                 <ul class="list-unstyled" data-link="setting">
                     @if (User.IsAllowed("Branchs.All,Stocks.All,Tables.All"))
