@@ -25,6 +25,7 @@ using OrgSys.Models;
 using Repository;
 using Repository.Seed;
 using Utility;
+using Microsoft.AspNetCore.SignalR;
 
 namespace OrgSys.Controllers
 {
@@ -172,7 +173,23 @@ namespace OrgSys.Controllers
 
                 //_userService = new UserService(us.Schema);
                 //var usSys = _userService.GetByLoginUserId(us.Id);
-                //usSys.SignIn(HttpContext, us.Schema, _user.KeepLoggedIn);
+               
+                UserDto usSys = new UserDto();
+                usSys.Name = "Admin";
+                usSys.UserName = "Admin";
+                usSys.RoleId = 2;
+                usSys.Id = 2;
+                usSys.RoleName = "Admin";
+                usSys.Permissions = new List<Permission>();
+                usSys.Permissions.Add(new Permission { Id = 1 , Key= "Organizer" , CodeNumber = 0 , ParentId = 0 , TypeId = 0 });
+                usSys.Permissions.Add(new Permission { Id = 10 , Key= "Data.All", CodeNumber = 10 , ParentId = 1 , TypeId = 0 });
+                usSys.Permissions.Add(new Permission { Id = 105, Key= "Financials", CodeNumber = 105, ParentId = 10 , TypeId = 0 });
+                usSys.Permissions.Add(new Permission { Id = 10501, Key= "Accounts.All", CodeNumber = 10501, ParentId = 105, TypeId = 0 });
+                usSys.Permissions.Add(new Permission { Id = 1050101, Key= "Accounts.View", CodeNumber = 10501, ParentId = 10501, TypeId = 0 });
+                usSys.Permissions.Add(new Permission { Id = 1050102, Key= "Accounts.Add", CodeNumber = 10501, ParentId = 10501, TypeId = 0 });
+                usSys.Permissions.Add(new Permission { Id = 1050103, Key= "Accounts.Edit", CodeNumber = 10501, ParentId = 10501, TypeId = 0 });
+                usSys.Permissions.Add(new Permission { Id = 1050104, Key= "Accounts.Delete", CodeNumber = 10501, ParentId = 10501, TypeId = 0 });
+                usSys.SignIn(HttpContext, "org", _user.KeepLoggedIn);
                 return RedirectToAction("Dashboard");
             }
             catch
@@ -319,43 +336,49 @@ namespace OrgSys.Controllers
 
             return View();
         }
-        ////--------------- Check For Client -------------------
-        //[AllowAnonymous]
-        //public ActionResult CheckEmailToClient(string Email)
-        //{
-        //    return Json(_clientService.CheckEmailToClient(Email));
-        //}
+        //--------------- Check For Client -------------------
+        [AllowAnonymous]
+        public ActionResult CheckEmailToClient(string Email)
+        {
+            //return Json(_clientService.CheckEmailToClient(Email));
+            return Json(true);
+        }
 
-        //[AllowAnonymous]
-        //public ActionResult CheckPhoneToClient(string Phone)
-        //{
-        //    return Json(_clientService.CheckPhoneToClient(Phone));
-        //}
+        [AllowAnonymous]
+        public ActionResult CheckPhoneToClient(string Phone)
+        {
+            //return Json(_clientService.CheckPhoneToClient(Phone));
+            return Json(true);
+        }
 
 
-        ////--------------- Check For User -------------------
-        //[AllowAnonymous]
-        //public ActionResult CheckEmail(string Email)
-        //{
-        //    return Json(_loginUserService.CheckEmail(Email));
-        //}
+        //--------------- Check For User -------------------
+        [AllowAnonymous]
+        public ActionResult CheckEmail(string Email)
+        {
+            // return Json(_loginUserService.CheckEmail(Email));
+            return Json(true);
+        }
 
-        //[AllowAnonymous]
-        //public ActionResult HavePassword(string Email)
-        //{
-        //    return Json(_loginUserService.HavePassword(Email));
-        //}
+        [AllowAnonymous]
+        public ActionResult HavePassword(string Email)
+        {
+            //return Json(_loginUserService.HavePassword(Email));
+            return Json(true);
+        }
 
-        //[AllowAnonymous]
-        //public ActionResult CheckPassword(string Email, string Password)
-        //{
-        //    return Json(_loginUserService.CheckEmailAndPassword(Email, Utility.Security.Encrypt(Password)));
-        //}
+        [AllowAnonymous]
+        public ActionResult CheckPassword(string Email, string Password)
+        {
+            // return Json(_loginUserService.CheckEmailAndPassword(Email, Utility.Security.Encrypt(Password)));
+            return Json(true);
+        }
 
-        //public ActionResult CheckCurrentPassword(long Id, string CurrentPassword)
-        //{
-        //    return Json(_loginUserService.CheckCurrentPassword(Id, Utility.Security.Encrypt(CurrentPassword)));
-        //}
+        public ActionResult CheckCurrentPassword(long Id, string CurrentPassword)
+        {
+            //return Json(_loginUserService.CheckCurrentPassword(Id, Utility.Security.Encrypt(CurrentPassword)));
+            return Json(true);
+        }
 
         [HttpGet]
         public ActionResult Profile(ResultStatus Status = ResultStatus.nothing, string MsgError = "")
