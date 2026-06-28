@@ -6,12 +6,12 @@ namespace Application.DTOs
     public class UserDto : BaseModel
     {
         [Required]
-        public virtual string Name { get; set; }
+        public virtual string Name { get; set; } = null!;
 
         [Required]
-        public virtual string UserName { get; set; }
+        public virtual string UserName { get; set; } = null!;
 
-        public virtual string Password { get; set; }
+        public virtual string? Password { get; set; }
 
         public virtual long RoleId { get; set; }
  
@@ -19,18 +19,18 @@ namespace Application.DTOs
          
         public virtual long LoginUserId { get; set; }
 
-        public string RoleName { get; set; }
+        public string? RoleName { get; set; }
 
-        public string BranchName { get; set; }
+        public string? BranchName { get; set; }
 
         public bool KeepLoggedIn { get; set; }
 
         [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,15}$")]
-        public string NewPassword { get; set; }
+        public string? NewPassword { get; set; }
        
         [Compare("NewPassword")]
-        public string ConfirmPassword { get; set; }
+        public string? ConfirmPassword { get; set; }
 
-        public List<Permission> Permissions { get; set; }
+        public List<Permission>? Permissions { get; set; }
     }
 }

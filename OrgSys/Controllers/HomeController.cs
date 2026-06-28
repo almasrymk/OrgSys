@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Net.Http;
-using System.Net.Mail;
-using System.Net.Mime;
-using System.Threading.Tasks;
-using Domain.Entities;
+﻿using Application.Commands.Authentication.Commands;
+using Application.Commands.Org.Auth.Queries;
 using Application.DTOs;
+using Application.DTOs.OrgDb;
+using Domain.Entities;
+using Domain.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
@@ -15,17 +11,29 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.AspNetCore.SignalR;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using OrgSys.Models;
 using Repository;
 using Repository.Seed;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Net.Http;
+using System.Net.Http.Json;
+using System.Net.Mail;
+using System.Net.Mime;
+using System.Threading.Tasks;
 using Utility;
-using Microsoft.AspNetCore.SignalR;
+using static Microsoft.CodeAnalysis.CSharp.SyntaxTokenParser;
 
 namespace OrgSys.Controllers
 {
@@ -35,7 +43,9 @@ namespace OrgSys.Controllers
         private readonly ILogger<HomeController> _logger;
         //LoginUserService _loginUserService;
         //UserService _userService;
+        //private readonly HttpClient _httpClient;
         DbContextOptions<OrgContext> _option;
+        private readonly string LocalHost = "https://localhost:44300/";
         //ClientService _clientService;
 
         public HomeController(ILogger<HomeController> logger)
@@ -55,6 +65,8 @@ namespace OrgSys.Controllers
                 //if (_userService == null)
                 //    _userService = new UserService(User.GetSchema());
             }
+
+            //_httpClient = httpClient;
         }
 
         public IActionResult Dashboard()
@@ -156,46 +168,64 @@ namespace OrgSys.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public IActionResult LogIn(LoginUserDto _user, string ReturnUrl)
+        public async Task<IActionResult> LogIn(LoginUserDto _user, string ReturnUrl)
         {
-            try
-            {
-                //var us = _loginUserService.GetLoginUserName(_user.UserName);
-                //if (!string.IsNullOrEmpty(_user.NewPassword))
-                //{
-                //    us.Password = Utility.Security.Encrypt(_user.NewPassword);
-                //    _loginUserService.Save(us);
-                //}
+            using var httpClient = new HttpClient();
+            httpClient.BaseAddress = new Uri(LocalHost); 
+            var response = await httpClient.PostAsJsonAsync("api/auth/login",new LoginCommand(_user.UserName, _user.Password));
 
-                //OrgContext _orgContext = new OrgContext(_option, us.Schema);
-                ////_orgContext.Database.Migrate();
-                ////new InitialData(us.Schema).Run().Wait();
-
-                //_userService = new UserService(us.Schema);
-                //var usSys = _userService.GetByLoginUserId(us.Id);
-               
-                UserDto usSys = new UserDto();
-                usSys.Name = "Admin";
-                usSys.UserName = "Admin";
-                usSys.RoleId = 2;
-                usSys.Id = 2;
-                usSys.RoleName = "Admin";
-                usSys.Permissions = new List<Permission>();
-                usSys.Permissions.Add(new Permission { Id = 1 , Key= "Organizer" , CodeNumber = 0 , ParentId = 0 , TypeId = 0 });
-                usSys.Permissions.Add(new Permission { Id = 10 , Key= "Data.All", CodeNumber = 10 , ParentId = 1 , TypeId = 0 });
-                usSys.Permissions.Add(new Permission { Id = 105, Key= "Financials", CodeNumber = 105, ParentId = 10 , TypeId = 0 });
-                usSys.Permissions.Add(new Permission { Id = 10501, Key= "Accounts.All", CodeNumber = 10501, ParentId = 105, TypeId = 0 });
-                usSys.Permissions.Add(new Permission { Id = 1050101, Key= "Accounts.View", CodeNumber = 10501, ParentId = 10501, TypeId = 0 });
-                usSys.Permissions.Add(new Permission { Id = 1050102, Key= "Accounts.Add", CodeNumber = 10501, ParentId = 10501, TypeId = 0 });
-                usSys.Permissions.Add(new Permission { Id = 1050103, Key= "Accounts.Edit", CodeNumber = 10501, ParentId = 10501, TypeId = 0 });
-                usSys.Permissions.Add(new Permission { Id = 1050104, Key= "Accounts.Delete", CodeNumber = 10501, ParentId = 10501, TypeId = 0 });
-                usSys.SignIn(HttpContext, "org", _user.KeepLoggedIn);
-                return RedirectToAction("Dashboard");
-            }
-            catch
+            if (!response.IsSuccessStatusCode)
             {
-                throw;
+                ModelState.AddModelError("", "Invalid username or password.");
+                return View(_user);
             }
+
+            var user =  response.Content.ReadFromJsonAsync<Result<UserDto>>().Result.Response;
+            user!.SignIn(HttpContext, "org", _user.KeepLoggedIn);
+
+            if (!string.IsNullOrWhiteSpace(ReturnUrl))
+                return LocalRedirect(ReturnUrl);
+
+            return RedirectToAction(nameof(Dashboard));
+
+            //try
+            //{
+            //    //var us = _loginUserService.GetLoginUserName(_user.UserName);
+            //    //if (!string.IsNullOrEmpty(_user.NewPassword))
+            //    //{
+            //    //    us.Password = Utility.Security.Encrypt(_user.NewPassword);
+            //    //    _loginUserService.Save(us);
+            //    //}
+
+            //    //OrgContext _orgContext = new OrgContext(_option, us.Schema);
+            //    ////_orgContext.Database.Migrate();
+            //    ////new InitialData(us.Schema).Run().Wait();
+
+            //    //_userService = new UserService(us.Schema);
+            //    //var usSys = _userService.GetByLoginUserId(us.Id);
+
+            //    UserDto usSys = new UserDto();
+            //    usSys.Name = "Admin";
+            //    usSys.UserName = "Admin";
+            //    usSys.RoleId = 2;
+            //    usSys.Id = 2;
+            //    usSys.RoleName = "Admin";
+            //    usSys.Permissions = new List<Permission>();
+            //    usSys.Permissions.Add(new Permission { Id = 1, Key = "Organizer", CodeNumber = 0, ParentId = 0, TypeId = 0 });
+            //    usSys.Permissions.Add(new Permission { Id = 10, Key = "Data.All", CodeNumber = 10, ParentId = 1, TypeId = 0 });
+            //    usSys.Permissions.Add(new Permission { Id = 105, Key = "Financials", CodeNumber = 105, ParentId = 10, TypeId = 0 });
+            //    usSys.Permissions.Add(new Permission { Id = 10501, Key = "Accounts.All", CodeNumber = 10501, ParentId = 105, TypeId = 0 });
+            //    usSys.Permissions.Add(new Permission { Id = 1050101, Key = "Accounts.View", CodeNumber = 10501, ParentId = 10501, TypeId = 0 });
+            //    usSys.Permissions.Add(new Permission { Id = 1050102, Key = "Accounts.Add", CodeNumber = 10501, ParentId = 10501, TypeId = 0 });
+            //    usSys.Permissions.Add(new Permission { Id = 1050103, Key = "Accounts.Edit", CodeNumber = 10501, ParentId = 10501, TypeId = 0 });
+            //    usSys.Permissions.Add(new Permission { Id = 1050104, Key = "Accounts.Delete", CodeNumber = 10501, ParentId = 10501, TypeId = 0 });
+            //    usSys.SignIn(HttpContext, "org", _user.KeepLoggedIn);
+            //    return RedirectToAction("Dashboard");
+            //}
+            //catch
+            //{
+            //    throw;
+            //}
 
         }
 
@@ -354,24 +384,54 @@ namespace OrgSys.Controllers
 
         //--------------- Check For User -------------------
         [AllowAnonymous]
-        public ActionResult CheckEmail(string Email)
+        public async Task<ActionResult> CheckEmail(string Email)
         {
-            // return Json(_loginUserService.CheckEmail(Email));
-            return Json(true);
+            using var httpClient = new HttpClient();
+            httpClient.BaseAddress = new Uri(LocalHost);
+
+            var response = await httpClient.GetAsync(
+                $"api/auth/CheckEmail?email={Uri.EscapeDataString(Email)}");
+
+            if (!response.IsSuccessStatusCode)
+                return Json(false);
+
+
+            var exists = await response.Content.ReadFromJsonAsync<Domain.Shared.Result<bool>>();
+
+            return Json(exists.Response);
         }
 
         [AllowAnonymous]
-        public ActionResult HavePassword(string Email)
+        public async Task<ActionResult> HavePassword(string Email)
         {
-            //return Json(_loginUserService.HavePassword(Email));
-            return Json(true);
+            using var httpClient = new HttpClient();
+            httpClient.BaseAddress = new Uri(LocalHost);
+
+            var response = await httpClient.GetAsync($"api/auth/HavePassword?email={Uri.EscapeDataString(Email)}");
+
+            if (!response.IsSuccessStatusCode)
+                return Json(false);
+
+            var exists = await response.Content.ReadFromJsonAsync<Domain.Shared.Result<bool>>();
+
+            return Json(exists.Response);
         }
 
         [AllowAnonymous]
-        public ActionResult CheckPassword(string Email, string Password)
+        public async Task<ActionResult> CheckPassword([FromBody] CheckEmailAndPasswordDto model)
         {
-            // return Json(_loginUserService.CheckEmailAndPassword(Email, Utility.Security.Encrypt(Password)));
-            return Json(true);
+
+            using var httpClient = new HttpClient();
+            httpClient.BaseAddress = new Uri(LocalHost);
+
+            var response = await httpClient.PostAsJsonAsync($"api/auth/CheckPassword", model);
+
+            if (!response.IsSuccessStatusCode)
+                return Json(false);
+
+            var exists = await response.Content.ReadFromJsonAsync<Domain.Shared.Result<bool>>();
+
+            return Json(exists.Response);
         }
 
         public ActionResult CheckCurrentPassword(long Id, string CurrentPassword)

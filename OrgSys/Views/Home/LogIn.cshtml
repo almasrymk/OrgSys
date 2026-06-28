@@ -279,35 +279,33 @@
             });
         }
 
-        function Login() {
-            var valid = true;
-            var passw = /^[A-Za-z]\w{7,14}$/;
+function Login() {
+    var valid = true;
+    var passw = /^[A-Za-z]\w{7,14}$/;
 
-            if ($("#Password").val().match(passw)) {
-                $("#PasswordError").show();
-                valid = false;
-            }
+if ($("#Password").val().match(passw)) { $("#PasswordError").show(); valid = false; } 
 
-            if ($("#Password").val() == "") {
-                $("#PasswordRequired").show();
-                valid = false;
-            }
+if ($("#Password").val() == "") { $("#PasswordRequired").show(); valid = false; }
 
-            if (valid == true) {
-                $.ajax({
-                    type: 'Get',
-                    url: "/Home/CheckPassword?Email=" + $("#Email").val() + "&Password=" + $("#Password").val(),
-                    success: function (res) {
-                        if (res == true) {
-                            $("form").submit();
-                        }
-                        else {
-                            $("#PasswordError").show();
-                        }
-                    }
-                });
+    if (valid) {
+        $.ajax({
+            type: "POST",
+            url: "/Home/CheckPassword",
+            contentType: "application/json",
+            data: JSON.stringify({
+                email: $("#Email").val(),
+                password: $("#Password").val()
+            }),
+            success: function (res) {
+                if (res === true) {
+                    $("form").submit();
+                } else {
+                    $("#PasswordError").show();
+                }
             }
-        }
+        });
+    }
+}
 
         function LoginByNewPassword() {
             var valid = true;
