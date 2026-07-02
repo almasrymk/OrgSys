@@ -424,10 +424,11 @@ namespace OrgSys.Controllers
                     //        //_userService = new UserService(User.GetSchema());
                     //}
                     //_userService.Save(_profile);
+                    var user = GetAsync<UserDto>($"User/GetById?Id={_profile.Id}").Result.Response;
+                    _profile.Password = user.Password;
 
                     await PutAsync<UserDto>("User/Update", _profile);
       
-                    var user = GetAsync<UserDto>($"User/GetById?Id={_profile.Id}").Result.Response;
 
                     if (user != null)
                         user.SignIn(HttpContext, User.GetSchema());
