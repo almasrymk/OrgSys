@@ -1,6 +1,5 @@
 ﻿namespace Infrastructure.Persistence.UnitOfWork
 {
-    using Utility;
     using Domain.Abstraction;   
     using System.Linq.Expressions;
     using CorePagination.Extensions;

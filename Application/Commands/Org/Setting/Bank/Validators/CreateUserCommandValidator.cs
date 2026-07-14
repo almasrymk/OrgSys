@@ -4,7 +4,6 @@
     using Application.Validators;
     using Domain.Abstraction;
     using FluentValidation;
-    using Utility;
 
     public class CreateBankCommandValidator : Validator<CreateBankCommand,  Domain.Entities.Bank>
     {

@@ -8,7 +8,6 @@
     using Domain.Shared;
     using Application.DTOs;
     using System.Linq.Expressions;
-    using Utility;
 
     public sealed record SearchCountryQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandPagination<CountryDto> ,ISearchQuery<ResultPagination<CountryDto>>;
 

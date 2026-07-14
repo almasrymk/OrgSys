@@ -47,27 +47,27 @@
                         <th class="text-center">#</th>
                         <th style="text-align:center"></th>
                         <th class="text-center align-middle">
-                            @Utility.Resource.Title_Designer.Code
+                            @Domain.Resource.Title_Designer.Code
                         </th>
                         <th class="@TextAlign align-middle">
                             @if (ViewBag.TypeId == 1)
                             {
-                                <span> @Utility.Resource.Title_Designer.Table </span>
+                                <span> @Domain.Resource.Title_Designer.Table </span>
                             }
                             else
                             {
-                                @Utility.Resource.Title_Designer.Client
+                                @Domain.Resource.Title_Designer.Client
                             }
 
                         </th>
                         <th class="text-center">
-                            @Utility.Resource.Title_Designer.Date
+                            @Domain.Resource.Title_Designer.Date
                         </th>
                         <th class="text-center">
-                            @Utility.Resource.Title_Designer.Time
+                            @Domain.Resource.Title_Designer.Time
                         </th>
                         <th class="text-center align-middle">
-                            @Utility.Resource.Title_Designer.Invoice
+                            @Domain.Resource.Title_Designer.Invoice
                         </th>
                         @if (AllowEdit || AllowCancel || AllowDelete)
                         {
@@ -152,7 +152,7 @@
                                 if (AllowDelete)
                                 {
 
-                                    <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
+                                    <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Domain.Resource.Message_Designer.DeleteConfirmation' , '@Domain.Resource.Message_Designer.DoYouWantDeleteFile' , '@Domain.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
                                 }
                             }
                             else
@@ -180,7 +180,7 @@
                                     }
                                     if (AllowDelete)
                                     {
-                                        <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
+                                        <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Domain.Resource.Message_Designer.DeleteConfirmation' , '@Domain.Resource.Message_Designer.DoYouWantDeleteFile' , '@Domain.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
                                     }
                                 }
                             }
@@ -272,7 +272,7 @@
                                     if (AllowDelete)
                                     {
 
-                                        <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
+                                        <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Domain.Resource.Message_Designer.DeleteConfirmation' , '@Domain.Resource.Message_Designer.DoYouWantDeleteFile' , '@Domain.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
                                     }
                                 }
                                 else
@@ -300,7 +300,7 @@
                                         }
                                         if (AllowDelete)
                                         {
-                                            <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
+                                            <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Domain.Resource.Message_Designer.DeleteConfirmation' , '@Domain.Resource.Message_Designer.DoYouWantDeleteFile' , '@Domain.Resource.Title_Designer.Ok' , @Model[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
                                         }
                                     }
                                 }

@@ -5,7 +5,6 @@
     using Domain.Abstraction;
     using FluentValidation;
     using System.Xml.Linq;
-    using Utility;
 
     public class CreateDealerCommandValidator : Validator<CreateDealerCommand,  Domain.Entities.Dealer>
     {

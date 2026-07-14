@@ -1,9 +1,9 @@
 ﻿using Domain.Entities;
+using Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using Utility;
 
 namespace Repository
 {
@@ -11,12 +11,12 @@ namespace Repository
     {
         public InvoiceRepo(string Schema) : base(Schema) { }
 
-        public override IQueryable<Invoice> GetList(System.Func<IQueryable<Invoice>, IOrderedQueryable<Invoice>> orderBy, string includeProperties = "", Status status = Status.All)
+        public override IQueryable<Invoice> GetList(System.Func<IQueryable<Invoice>, IOrderedQueryable<Invoice>> orderBy, string includeProperties = "", Status status = Status.New)
         {
             return base.GetList(a=>a.OrderByDescending(e=>e.Id), includeProperties, status);
         }
 
-        public override IQueryable<Invoice> GetList(Expression<System.Func<Invoice, bool>> filter, System.Func<IQueryable<Invoice>, IOrderedQueryable<Invoice>> orderBy, string includeProperties = "", Status status = Status.All)
+        public override IQueryable<Invoice> GetList(Expression<System.Func<Invoice, bool>> filter, System.Func<IQueryable<Invoice>, IOrderedQueryable<Invoice>> orderBy, string includeProperties = "", Status status = Status.New)
         {
             return base.GetList(filter, a => a.OrderByDescending(e => e.Id), includeProperties, status);
         }

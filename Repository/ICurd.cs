@@ -1,10 +1,10 @@
 ﻿using System;
 using Domain;
 using Domain.Entities;
-using Utility;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Collections.Generic;
+using Domain.Enums;
 
 namespace Repository
 {
@@ -14,11 +14,11 @@ namespace Repository
 
         public Tentity Get(Func<Tentity, bool> filter = null, string includeProperties = "");
 
-        public IQueryable<Tentity> GetList(Func<IQueryable<Tentity>, IOrderedQueryable<Tentity>> orderBy, string includeProperties = "", Status status = Status.All);
+        public IQueryable<Tentity> GetList(Func<IQueryable<Tentity>, IOrderedQueryable<Tentity>> orderBy, string includeProperties = "", Status status = Status.New );
 
-        public IQueryable<Tentity> GetList(Expression<Func<Tentity, bool>> filter, Func<IQueryable<Tentity>, IOrderedQueryable<Tentity>> orderBy, string includeProperties = "", Status status = Status.All);
+        public IQueryable<Tentity> GetList(Expression<Func<Tentity, bool>> filter, Func<IQueryable<Tentity>, IOrderedQueryable<Tentity>> orderBy, string includeProperties = "", Status status = Status.New);
 
-        public IQueryable<Tentity> GetList(Expression<Func<Tentity, bool>> filter, string includeProperties = "", Status status = Status.All);
+        public IQueryable<Tentity> GetList(Expression<Func<Tentity, bool>> filter, string includeProperties = "", Status status = Status.New);
 
         public Tentity AddOrUpdate(Tentity ob);
 

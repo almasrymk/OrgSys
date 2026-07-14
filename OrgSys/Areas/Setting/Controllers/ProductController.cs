@@ -79,11 +79,11 @@
                 {
                     _.Id,
                     _.Name,
-                    Barcode = phrase == _.Barcode ? Utility.Resource.Title_Designer.Barcode + " " + _.Barcode : "",
+                    Barcode = phrase == _.Barcode ? Domain.Resource.Title_Designer.Barcode + " " + _.Barcode : "",
                     _.Price,
                     _.Cost,
                     quantity = Quantity,
-                    Code = phrase == _.Code ? Utility.Resource.Title_Designer.Code + " " + _.Code : "",
+                    Code = phrase == _.Code ? Domain.Resource.Title_Designer.Code + " " + _.Code : "",
                     ClassificationName = "" + phrase != "" && _.ClassificationName.ToLower().Contains("" + phrase) ? _.ClassificationName : ""
                 })
                 .ToList();

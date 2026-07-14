@@ -20,7 +20,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
-using Repository;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -65,13 +64,13 @@ namespace OrgSys
             services.AddRazorPages().AddViewLocalization();
 
             //string assemblyName = typeof(Repository.OrgContext).Namespace;
-            services.AddDbContext<Repository.AdminContext>(options => options.UseSqlServer(Configuration.GetConnectionString("OrgConnection"), x => x.MigrationsHistoryTable("__AdminMigrationsHistory", "admin")));
-            services.AddDbContext<Repository.OrgContext>(options =>
-    options.UseSqlServer(
-        Configuration.GetConnectionString("OrgConnection"),
-        x => x.MigrationsHistoryTable("__MigrationsHistory", "org"))
-    .ReplaceService<IModelCacheKeyFactory, Repository.DbSchemaAwareModelCacheKeyFactory>()
-    .ReplaceService<IMigrationsAssembly, Repository.DbSchemaAwareMigrationAssembly>());
+            //services.AddDbContext<Repository.AdminContext>(options => options.UseSqlServer(Configuration.GetConnectionString("OrgConnection"), x => x.MigrationsHistoryTable("__AdminMigrationsHistory", "admin")));
+            //services.AddDbContext<Repository.OrgContext>(options =>
+            //options.UseSqlServer(
+            //Configuration.GetConnectionString("OrgConnection"),
+            //x => x.MigrationsHistoryTable("__MigrationsHistory", "org"))
+            //.ReplaceService<IModelCacheKeyFactory, Repository.DbSchemaAwareModelCacheKeyFactory>()
+            //.ReplaceService<IMigrationsAssembly, Repository.DbSchemaAwareMigrationAssembly>());
 
 
             //services.AddDbContext<Repository.OrgContext>(options => options.UseSqlServer(Configuration.GetConnectionString("OrgConnection"), x => x.MigrationsHistoryTable("__MigrationsHistory", "org")).ReplaceService<IModelCacheKeyFactory, Repository.DbSchemaAwareModelCacheKeyFactory>().ReplaceService<IMigrationsAssembly, Repository.DbSchemaAwareMigrationAssembly>());

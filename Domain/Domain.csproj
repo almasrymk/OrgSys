@@ -26,7 +26,33 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Utility\Utility.csproj" />
+    <Compile Update="Resource\Message.Designer.Designer.cs">
+      <DependentUpon>Message.Designer.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Resource\Title.Designer.Designer.cs">
+      <DependentUpon>Title.Designer.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resource\Message.Designer.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resource\Message.Designer.resx">
+      <LastGenOutput>Message.Designer.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resource\Title.Designer.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resource\Title.Designer.resx">
+      <LastGenOutput>Title.Designer.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

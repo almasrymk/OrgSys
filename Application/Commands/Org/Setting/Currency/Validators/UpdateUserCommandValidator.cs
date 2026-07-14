@@ -4,7 +4,6 @@
     using Domain.Abstraction;
     using Application.Validators;
     using Application.Commands.Org.Setting.Currency.Commands;
-    using Utility;
 
     public class UpdateCurrencyCommandValidator : Validator<UpdateCurrencyCommand, Domain.Entities.Currency>
     {

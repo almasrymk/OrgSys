@@ -9,17 +9,17 @@
     <div class="row">
         <div class="col-12">
             <div class="mb-2">
-                <h1> @Utility.Resource.Title_Designer.Countries</h1>
+                <h1> @Domain.Resource.Title_Designer.Countries</h1>
                 <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
                     <ol class="breadcrumb pt-0">
                         <li class="breadcrumb-item">
-                            <a href="/">@Utility.Resource.Title_Designer.Home</a>
+                            <a href="/">@Domain.Resource.Title_Designer.Home</a>
                         </li>
                         <li class="breadcrumb-item">
-                            <span>@Utility.Resource.Title_Designer.Settings</span>
+                            <span>@Domain.Resource.Title_Designer.Settings</span>
                         </li>
                         <li class="breadcrumb-item">
-                            @Utility.Resource.Title_Designer.Area
+                            @Domain.Resource.Title_Designer.Area
                         </li>
                     </ol>
                 </nav>
@@ -27,16 +27,16 @@
             <div class="">
                 <a class="btn pt-0 pl-0 d-inline-block d-md-none" data-toggle="collapse" href="#displayOptions"
                    role="button" aria-expanded="true" aria-controls="displayOptions">
-                    @Utility.Resource.Title_Designer.DisplayOptions
+                    @Domain.Resource.Title_Designer.DisplayOptions
                     <i class="simple-icon-arrow-down align-middle"></i>
                 </a>
                 <div class="collapse d-md-block" id="displayOptions">
                     <div class="d-block d-md-inline-block mb-2">
                         <span class="mr-3 mb-2 d-inline-block float-md-left">
-                            <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId" class="btn btn-outline-primary btn-add"><i class="iconsminds-folder-add--"></i> @Utility.Resource.Title_Designer.Add </a>
+                            <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId" class="btn btn-outline-primary btn-add"><i class="iconsminds-folder-add--"></i> @Domain.Resource.Title_Designer.Add </a>
                             <span class="btn-group group-add" role="group" aria-label="Basic example" style="display:none">
-                                <button onclick="location.href='/@ViewBag.area/@ViewBag.PageTitle/Save?ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId'" class="btn  btn-outline-primary"><i class="iconsminds-folder-add--"></i> @Utility.Resource.Title_Designer.Add</button>
-                                <button data-toggle="modal" data-target="#MsgModel" type="button" class="btn  btn-outline-danger btn-deleteList"><i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete</button>
+                                <button onclick="location.href='/@ViewBag.area/@ViewBag.PageTitle/Save?ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId'" class="btn  btn-outline-primary"><i class="iconsminds-folder-add--"></i> @Domain.Resource.Title_Designer.Add</button>
+                                <button data-toggle="modal" data-target="#MsgModel" type="button" class="btn  btn-outline-danger btn-deleteList"><i class="simple-icon-trash"></i> @Domain.Resource.Title_Designer.Delete</button>
                             </span>
                             &nbsp; &nbsp; &nbsp;
                             <a href="javascript:;" class="mr-2 view-icon  mode-table">
@@ -69,7 +69,7 @@
                     <div class="float-md-right">
                         <div class="navbar p-0 m-0" style="height:50px;background-color:transparent;box-shadow:none;">
                             <div class="search-text  m-0 p-0" style="box-shadow: 0 1px 15px rgba(0,0,0,.04), 0 1px 6px rgba(0,0,0,.04);">
-                                <input id="txtSearch" placeholder='@Utility.Resource.Title_Designer.TextSearch...' onkeyup="change(event , 1)">
+                                <input id="txtSearch" placeholder='@Domain.Resource.Title_Designer.TextSearch...' onkeyup="change(event , 1)">
                                 <span class="search-icon" onclick="search(1)">
                                     <i class="simple-icon-magnifier"></i>
                                 </span>

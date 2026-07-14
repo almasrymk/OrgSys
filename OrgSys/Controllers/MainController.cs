@@ -2,9 +2,9 @@
 {
     using Application.Interfaces.CQRS;
     using AutoMapper;
+    using Domain.Entities;
     using Domain.Enums;
     using Domain.Shared; 
-    using Domain.Entities;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Filters;
@@ -18,8 +18,7 @@
     using System.Net.Http;
     using System.Net.Http.Json;
     using System.Threading.Tasks;
-    using Utility;
-
+    
     [Authorize]
     public class MainController<TDto, TCreate, TUpdate>(IConfiguration configuration, IMapper mapper) : Controller
         where TCreate : ICreateCommand<Domain.Shared.Result>
@@ -191,7 +190,7 @@
             return View(ob);
         }
 
-        public virtual async Task<Utility.Result> Delete(long id)
+        public virtual async Task<Result> Delete(long id)
         {
             var ob = await ApiMethod(ApiMethodType.Get, $"GetById?Id={id}");
             ob.EnsureSuccessStatusCode();
@@ -204,19 +203,19 @@
                     var response = await ApiMethod(ApiMethodType.Delete, $"Delete?Id={id}");
 
                     if (response.IsSuccessStatusCode)
-                        return new Utility.Result();
+                        return new Result(HttpStatusCode.OK , null);
 
                 }
             }
             catch (Exception ex)
             {
-                return new Utility.Result(HttpStatusCode.InternalServerError, ex.Message);
+                return new Result(HttpStatusCode.InternalServerError, new List<Error> { new Error(ex.Message, "") });
             }
-            return new Utility.Result(HttpStatusCode.BadRequest, "Error");
+            return new Result(HttpStatusCode.BadRequest, new List<Error> { new Error("Error", "") } );
         }
 
         [HttpPost]
-        public virtual async Task<Utility.Result> DeleteList(long[] ids, long ParentId = 0, long TypeId = 0)
+        public virtual async Task<Result> DeleteList(long[] ids, long ParentId = 0, long TypeId = 0)
         {
             try
             {
@@ -226,14 +225,14 @@
                     var response = await ApiMethod(ApiMethodType.Delete, $"DeleteList?{query}");
 
                     if (response.IsSuccessStatusCode)
-                        return new Utility.Result();
+                        return new Domain.Shared.Result(HttpStatusCode.OK , null);
                 }
             }
             catch (Exception ex)
             {
-                return new Utility.Result(HttpStatusCode.InternalServerError, ex.Message);
+                return new Domain.Shared.Result(HttpStatusCode.InternalServerError, new List<Error> { new Error (ex.Message , "")  } );
             }
-            return new Utility.Result(HttpStatusCode.BadRequest, "Error");
+            return new Domain.Shared.Result(HttpStatusCode.BadRequest, new List<Error> { new Error("Error", "") } );
         }
 
         public virtual async Task LoadViewBag(TDto model)

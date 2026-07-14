@@ -2,7 +2,6 @@
 {
     using Application.Abstraction.Command;
     using Application.Common.Commands;
-    using Application.Common.Queries;
     using Application.Interfaces.CQRS;
     using AutoMapper;
     using Domain.Abstraction;
@@ -13,7 +12,6 @@
     using System.Net;
     using System.Threading;
     using System.Threading.Tasks;
-    using Utility;
 
     public sealed record GetByIdRoleQuery(long Id) : ICommand<RoleDto> , IGetByIdQuery<Result<RoleDto>>;
 
@@ -60,7 +58,7 @@
         private RoleDto Map(Role ob , IEnumerable<RolePermission> rolePermissions , IEnumerable<Permission> permissions)
         {
             var obModel = mapper.Map<RoleDto>(ob);
-            obModel.PermissionsTree = permissions.Select(e => new TreeView { Id = e.Id, Key = e.Key, Value = Translate.GetTranslate(e.Name), ParentId = e.ParentId }).ToList();
+            obModel.PermissionsTree = permissions.Select(e => new TreeView { Id = e.Id, Key = e.Key, Value = Domain.Resource.Translate.GetTranslate(e.Name), ParentId = e.ParentId }).ToList();
             foreach (var item in obModel.PermissionsTree)
             {
                 if (rolePermissions.Any(e => e.PermissionId == item.Id))

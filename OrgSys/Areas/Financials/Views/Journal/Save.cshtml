@@ -1,0 +1,203 @@
+@model Application.DTOs.JournalDto
+@using System.Globalization
+@using OrgSys
+@{
+    ViewData["Title_Designer"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var dateFormat = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "yyyy-MM-dd" : "dd-MM-yyyy";
+    var items = Model.JournalItems?.ToList() ?? new List<Application.DTOs.JournalItemDto>();
+}
+
+<div id="HPage" class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="mb-3">
+                <h1>Journal</h1>
+                <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
+                    <ol class="breadcrumb pt-0">
+                        <li class="breadcrumb-item"><a href="/">@Domain.Resource.Title_Designer.Home</a></li>
+                        <li class="breadcrumb-item">@Domain.Resource.Title_Designer.Financial</li>
+                        <li class="breadcrumb-item">Journal</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <div class="card p-3">
+        <div class="card-header m-0">
+            <h3 class="mt-3">
+                @if (Model.Id == 0)
+                {
+                    <span>@Domain.Resource.Title_Designer.New ...</span>
+                }
+                else
+                {
+                    <span>@Domain.Resource.Title_Designer.Edit ...</span>
+                }
+            </h3>
+            <div class="position-absolute card-top-buttons">
+                <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId" class="btn btn-primary">
+                    <i class="simple-icon-action-undo"></i> @Domain.Resource.Title_Designer.Back
+                </a>
+            </div>
+        </div>
+
+        <form action="Save" method="post" enctype="multipart/form-data" novalidate>
+            @Html.HiddenFor(model => model.Id)
+            @Html.HiddenFor(model => model.TypeId)
+            @Html.HiddenFor(model => model.ParentId)
+            @Html.HiddenFor(model => model.CreateUserId)
+            @Html.HiddenFor(model => model.CreateDate)
+
+            <div class="card-body">
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label>@Domain.Resource.Title_Designer.Code</label>
+                        @Html.TextBoxFor(model => model.Code, new { @class = "form-control", @placeholder = Domain.Resource.Title_Designer.Code })
+                        @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>@Domain.Resource.Title_Designer.Date</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend"><span class="input-group-text"><i class="simple-icon-calendar"></i></span></div>
+                            <input type="text" name="Date" value="@Model.Date.ToString(dateFormat, new CultureInfo("en-US"))" class="form-control datepicker" />
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>@Domain.Resource.Title_Designer.Currency</label>
+                        @Html.DropDownListFor(model => model.CurrencyId, null, null, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.CurrencyId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label>Reference ID</label>
+                        @Html.TextBoxFor(model => model.RefranceId, new { @class = "form-control", type = "number" })
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>Reference Type</label>
+                        @Html.TextBoxFor(model => model.RefranceTypeId, new { @class = "form-control", type = "number" })
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>Reference Table</label>
+                        @Html.TextBoxFor(model => model.RefranceTable, new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-8">
+                        <label>@Domain.Resource.Title_Designer.Notes</label>
+                        @Html.TextBoxFor(model => model.Note, new { @class = "form-control", @placeholder = Domain.Resource.Title_Designer.Notes })
+                    </div>
+                    <div class="form-group col-md-2 pt-4">
+                        <label class="custom-control custom-checkbox">
+                            @Html.CheckBoxFor(model => model.Review, new { @class = "custom-control-input" })
+                            <span class="custom-control-label">Review</span>
+                        </label>
+                    </div>
+                    <div class="form-group col-md-2 pt-4">
+                        <label class="custom-control custom-checkbox">
+                            @Html.CheckBoxFor(model => model.Posted, new { @class = "custom-control-input" })
+                            <span class="custom-control-label">Posted</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="card mt-3">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h4 class="mb-0">Journal Items</h4>
+                        <button id="addJournalItem" type="button" class="btn btn-outline-primary"><i class="simple-icon-plus"></i> @Domain.Resource.Title_Designer.Add</button>
+                    </div>
+                    <div class="table-responsive">
+                        <table id="journalItems" class="table table-hover mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Account ID</th>
+                                    <th>Account</th>
+                                    <th>Debit</th>
+                                    <th>Credit</th>
+                                    <th>@Domain.Resource.Title_Designer.Notes</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (var i = 0; i < items.Count; i++)
+                                {
+                                    <tr class="journal-item">
+                                        <td>
+                                            <input type="hidden" name="JournalItems[@i].Id" value="@items[i].Id" />
+                                            <input type="hidden" name="JournalItems[@i].JournalId" value="@items[i].JournalId" />
+                                            <input type="number" name="JournalItems[@i].AccountId" value="@items[i].AccountId" class="form-control" required />
+                                        </td>
+                                        <td><input type="text" name="JournalItems[@i].AccountName" value="@items[i].AccountName" class="form-control" readonly /></td>
+                                        <td><input type="number" step="0.01" name="JournalItems[@i].Debit" value="@items[i].Debit" class="form-control debit" /></td>
+                                        <td><input type="number" step="0.01" name="JournalItems[@i].Credit" value="@items[i].Credit" class="form-control credit" /></td>
+                                        <td><input type="text" name="JournalItems[@i].Note" value="@items[i].Note" class="form-control" /></td>
+                                        <td class="text-center align-middle"><button type="button" class="btn btn-link text-danger remove-item"><i class="simple-icon-trash"></i></button></td>
+                                    </tr>
+                                }
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th colspan="2" class="text-right">Total</th>
+                                    <th id="debitTotal">0.00</th>
+                                    <th id="creditTotal">0.00</th>
+                                    <th colspan="2"></th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-footer" style="background-color:transparent;">
+                <button type="submit" class="btn btn-primary">@Domain.Resource.Title_Designer.Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="~/js/vendor/jquery-3.3.1.min.js"></script>
+<script>
+    (function ($) {
+        function reindex() {
+            $('#journalItems tbody tr').each(function (index) {
+                $(this).find('[name]').each(function () {
+                    this.name = this.name.replace(/JournalItems\[\d+\]/, 'JournalItems[' + index + ']');
+                });
+            });
+        }
+
+        function calculateTotals() {
+            var debit = 0;
+            var credit = 0;
+            $('.debit').each(function () { debit += parseFloat(this.value) || 0; });
+            $('.credit').each(function () { credit += parseFloat(this.value) || 0; });
+            $('#debitTotal').text(debit.toFixed(2));
+            $('#creditTotal').text(credit.toFixed(2));
+        }
+
+        $('#addJournalItem').on('click', function () {
+            var index = $('#journalItems tbody tr').length;
+            $('#journalItems tbody').append(
+                '<tr class="journal-item">' +
+                '<td><input type="hidden" name="JournalItems[' + index + '].Id" value="0" /><input type="hidden" name="JournalItems[' + index + '].JournalId" value="@Model.Id" /><input type="number" name="JournalItems[' + index + '].AccountId" class="form-control" required /></td>' +
+                '<td><input type="text" name="JournalItems[' + index + '].AccountName" class="form-control" readonly /></td>' +
+                '<td><input type="number" step="0.01" name="JournalItems[' + index + '].Debit" value="0" class="form-control debit" /></td>' +
+                '<td><input type="number" step="0.01" name="JournalItems[' + index + '].Credit" value="0" class="form-control credit" /></td>' +
+                '<td><input type="text" name="JournalItems[' + index + '].Note" class="form-control" /></td>' +
+                '<td class="text-center align-middle"><button type="button" class="btn btn-link text-danger remove-item"><i class="simple-icon-trash"></i></button></td>' +
+                '</tr>');
+        });
+
+        $('#journalItems').on('click', '.remove-item', function () {
+            $(this).closest('tr').remove();
+            reindex();
+            calculateTotals();
+        }).on('input', '.debit, .credit', calculateTotals);
+
+        calculateTotals();
+    })(jQuery);
+</script>

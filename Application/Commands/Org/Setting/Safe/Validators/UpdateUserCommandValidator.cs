@@ -4,7 +4,6 @@
     using Domain.Abstraction;
     using Application.Validators;
     using Application.Commands.Org.Setting.Safe.Commands;
-    using Utility;
 
     public class UpdateSafeCommandValidator : Validator<UpdateSafeCommand, Domain.Entities.Safe>
     {

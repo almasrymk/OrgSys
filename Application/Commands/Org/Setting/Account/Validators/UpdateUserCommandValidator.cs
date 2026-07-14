@@ -4,7 +4,6 @@
     using Domain.Abstraction;
     using Application.Validators;
     using Application.Commands.Org.Setting.Account.Commands;
-    using Utility;
 
     public class UpdateAccountCommandValidator : Validator<UpdateAccountCommand, Domain.Entities.Account>
     {

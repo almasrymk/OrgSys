@@ -2,8 +2,10 @@
 using Application.Commands.Org.Auth.Queries;
 using Application.DTOs;
 using Application.DTOs.OrgDb;
+using Domain.Enums;
 using Domain.Entities;
 using Domain.Shared;
+using Infrastructure.Persistence.Data;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -15,13 +17,10 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using OrgSys.Models;
-using Repository;
-using Repository.Seed;
 using System;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
-using Utility;
 
 namespace OrgSys.Controllers
 {
@@ -48,7 +47,7 @@ namespace OrgSys.Controllers
 
             if (User != null && User.Identity != null && User.Identity.IsAuthenticated)
             {
-                new InitialData(User.GetSchema()).Run().Wait();
+                //new InitialData(User.GetSchema()).Run().Wait();
                 //if (_userService == null)
                 //    _userService = new UserService(User.GetSchema());
             }
@@ -286,11 +285,11 @@ namespace OrgSys.Controllers
             //ViewBag.TypeActivityId = new SelectList(new TypeActivityService().GetAll(0, 0, 1, 10000), "Id", "Name");
             //ViewBag.NationalityId = new SelectList(new NationalityService().GetAll(0, 0, 1, 10000), "Id", "Name");
             //List<SelectListItem> items = new List<SelectListItem>();
-            //items.Add(new SelectListItem { Value = "1", Text = Utility.Resource.Title_Designer.From + " 1 " + Utility.Resource.Title_Designer.To + " 5 " + Utility.Resource.Title_Designer.Employees });
-            //items.Add(new SelectListItem { Value = "2", Text = Utility.Resource.Title_Designer.From + " 5 " + Utility.Resource.Title_Designer.To + " 50 " + Utility.Resource.Title_Designer.Employees });
-            //items.Add(new SelectListItem { Value = "3", Text = Utility.Resource.Title_Designer.From + " 50 " + Utility.Resource.Title_Designer.To + " 150 " + Utility.Resource.Title_Designer.Employees });
-            //items.Add(new SelectListItem { Value = "4", Text = Utility.Resource.Title_Designer.From + " 150 " + Utility.Resource.Title_Designer.To + " 1500 " + Utility.Resource.Title_Designer.Employees });
-            //items.Add(new SelectListItem { Value = "5", Text = Utility.Resource.Title_Designer.MoreThen + " 1500 " + Utility.Resource.Title_Designer.Employees });
+            //items.Add(new SelectListItem { Value = "1", Text = Domain.Resource.Title_Designer.From + " 1 " + Domain.Resource.Title_Designer.To + " 5 " + Domain.Resource.Title_Designer.Employees });
+            //items.Add(new SelectListItem { Value = "2", Text = Domain.Resource.Title_Designer.From + " 5 " + Domain.Resource.Title_Designer.To + " 50 " + Domain.Resource.Title_Designer.Employees });
+            //items.Add(new SelectListItem { Value = "3", Text = Domain.Resource.Title_Designer.From + " 50 " + Domain.Resource.Title_Designer.To + " 150 " + Domain.Resource.Title_Designer.Employees });
+            //items.Add(new SelectListItem { Value = "4", Text = Domain.Resource.Title_Designer.From + " 150 " + Domain.Resource.Title_Designer.To + " 1500 " + Domain.Resource.Title_Designer.Employees });
+            //items.Add(new SelectListItem { Value = "5", Text = Domain.Resource.Title_Designer.MoreThen + " 1500 " + Domain.Resource.Title_Designer.Employees });
             //ViewBag.SizeOfCompany = new SelectList(items, "Value", "Text");
             //return View(client);
             return View();

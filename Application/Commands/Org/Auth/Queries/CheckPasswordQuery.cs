@@ -1,14 +1,9 @@
 ﻿using Application.Abstraction.Query;
-using AutoMapper;
 using Domain.Abstraction;
 using Domain.Entities;
 using Domain.Shared;
 using MediatR;
-using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
 using System.Net;
-using System.Text;
 
 namespace Application.Commands.Org.Auth.Queries
 {
@@ -20,7 +15,7 @@ namespace Application.Commands.Org.Auth.Queries
     {
         public async Task<Result<bool>> Handle(CheckPasswordQuery request, CancellationToken cancellationToken)
         {
-            var password = Utility.Security.Encrypt(request.passwoed);
+            var password = Domain.Shared.Security.Encrypt(request.passwoed);
             password = "fTxWMjHA5MbUktJph2vqIlc9Gu1cU5MrbdYztkd5yec=";
 
          bool exist = await   Repository.AnyAsync(u => u.UserName == request.email && u.Password == password);

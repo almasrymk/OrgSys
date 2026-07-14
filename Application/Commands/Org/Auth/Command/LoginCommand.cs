@@ -19,7 +19,7 @@ namespace Application.Commands.Authentication.Commands
             LoginCommand request,
             CancellationToken cancellationToken)
         {
-            var p = Utility.Security.Encrypt(request.Password);
+            var p = Security.Encrypt(request.Password);
             p = "fTxWMjHA5MbUktJph2vqIlc9Gu1cU5MrbdYztkd5yec=";
             var user = await repository.GetByFilterAsync(u => u.UserName ==request.UserName && u.Password == p, "Role");
 

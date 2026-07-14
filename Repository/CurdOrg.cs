@@ -1,10 +1,10 @@
 ﻿using System;
-using Utility;
 using System.Linq;
 using Domain.Entities;
 using System.Linq.Expressions;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using Domain.Enums;
 
 namespace Repository
 {
@@ -43,7 +43,7 @@ namespace Repository
             return query.FirstOrDefault(filter);
         }
 
-        public virtual IQueryable<Tentity> GetList(Func<IQueryable<Tentity>, IOrderedQueryable<Tentity>> orderBy, string includeProperties = "", Status status = Status.All)
+        public virtual IQueryable<Tentity> GetList(Func<IQueryable<Tentity>, IOrderedQueryable<Tentity>> orderBy, string includeProperties = "", Status status = Status.New)
         {
             IQueryable<Tentity> query = db.Set<Tentity>();
 
@@ -54,15 +54,15 @@ namespace Repository
 
             if (orderBy != null)
             {
-                return orderBy(query.Where(e => (e.Status != Domain.Enums.Status.Deleted || status == Status.All) && e.Hide != true));
+                return orderBy(query.Where(e => (e.Status != Domain.Enums.Status.Deleted || status == Status.New) && e.Hide != true));
             }
             else
             {
-                return query.Where(e => (e.Status != Domain.Enums.Status.Deleted || status == Status.All) && e.Hide != true);
+                return query.Where(e => (e.Status != Domain.Enums.Status.Deleted || status == Status.New) && e.Hide != true);
             }
         }
 
-        public virtual IQueryable<Tentity> GetList(Expression<Func<Tentity, bool>> filter, Func<IQueryable<Tentity>, IOrderedQueryable<Tentity>> orderBy, string includeProperties = "", Status status = Status.All)
+        public virtual IQueryable<Tentity> GetList(Expression<Func<Tentity, bool>> filter, Func<IQueryable<Tentity>, IOrderedQueryable<Tentity>> orderBy, string includeProperties = "", Status status = Status.New)
         {
             IQueryable<Tentity> query = db.Set<Tentity>();
 
@@ -78,15 +78,15 @@ namespace Repository
 
             if (orderBy != null)
             {
-                return orderBy(query.Where(e => (e.Status != Domain.Enums.Status.Deleted || status == Status.All) && e.Hide != true));
+                return orderBy(query.Where(e => (e.Status != Domain.Enums.Status.Deleted || status == Status.New) && e.Hide != true));
             }
             else
             {
-                return query.Where(e => (e.Status != Domain.Enums.Status.Deleted || status == Status.All) && e.Hide != true);
+                return query.Where(e => (e.Status != Domain.Enums.Status.Deleted || status == Status.New) && e.Hide != true);
             }
         }
 
-        public virtual IQueryable<Tentity> GetList(Expression<Func<Tentity, bool>> filter, string includeProperties = "", Status status = Status.All)
+        public virtual IQueryable<Tentity> GetList(Expression<Func<Tentity, bool>> filter, string includeProperties = "", Status status = Status.New)
         {
             IQueryable<Tentity> query = db.Set<Tentity>();
 
@@ -100,7 +100,7 @@ namespace Repository
                 query = query.Include(includeProperty);
             }
 
-            return query.Where(e => (e.Status != Domain.Enums.Status.Deleted || status == Status.All) && e.Hide != true);
+            return query.Where(e => (e.Status != Domain.Enums.Status.Deleted || status == Status.New) && e.Hide != true);
         }
      
         public virtual Tentity AddOrUpdate(Tentity ob)

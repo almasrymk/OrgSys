@@ -5,7 +5,6 @@
     using Domain.Abstraction;
     using FluentValidation;
     using System.Xml.Linq;
-    using Utility;
 
     public class CreateAccountCommandValidator : Validator<CreateAccountCommand,  Domain.Entities.Account>
     {

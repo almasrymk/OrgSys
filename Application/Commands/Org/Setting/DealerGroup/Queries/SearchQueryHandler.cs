@@ -8,7 +8,6 @@
     using Domain.Shared;
     using Application.DTOs;
     using System.Linq.Expressions;
-    using Utility;
 
     public sealed record SearchDealerGroupQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandPagination<DealerGroupDto> ,ISearchQuery<ResultPagination<DealerGroupDto>>;
 

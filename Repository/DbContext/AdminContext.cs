@@ -1,7 +1,7 @@
 ﻿using Domain.Entities;
+using Domain.Shared;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Utility;
 
 namespace Repository
 {

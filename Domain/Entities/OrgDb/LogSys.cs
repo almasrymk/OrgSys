@@ -1,5 +1,4 @@
-﻿using Utility;
-
+﻿
 namespace Domain.Entities
 {
     [Table("LogSys")]

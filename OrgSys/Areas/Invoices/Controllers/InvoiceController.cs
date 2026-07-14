@@ -13,7 +13,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Utility;
 
 namespace OrgSys.Areas.Invoices.Controllers
 {
@@ -34,8 +33,8 @@ namespace OrgSys.Areas.Invoices.Controllers
             ViewBag.PaymentTypeId = new SelectList(await GetListApi<PaymentTypeDto>(), "Id", "Name", model.PaymentTypeId);
 
             List<SelectListItem> selectListItems = new List<SelectListItem>();
-            selectListItems.Add(new SelectListItem { Value = "1", Text = Translate.GetTranslate("Amount") });
-            selectListItems.Add(new SelectListItem { Value = "2", Text = Translate.GetTranslate("Ratio") });
+            selectListItems.Add(new SelectListItem { Value = "1", Text = Domain.Resource.Translate.GetTranslate("Amount") });
+            selectListItems.Add(new SelectListItem { Value = "2", Text = Domain.Resource.Translate.GetTranslate("Ratio") });
 
             ViewBag.DiscountType = new SelectList(selectListItems, "Value", "Text");
             ViewBag.ServiceType = new SelectList(selectListItems, "Value", "Text");

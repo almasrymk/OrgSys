@@ -6,7 +6,6 @@ using Domain.Abstraction;
 using Domain.Shared;
 using Application.DTOs;
 using System.Net;
-using Utility;
 
 namespace Application.Commands.Org.Invoices.Invoice.Queries
 {

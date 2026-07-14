@@ -69,26 +69,26 @@
                         <th class="text-center">#</th>
                         <th style="text-align:center"></th>
                         <th class="text-center align-middle">
-                            @Utility.Resource.Title_Designer.Code
+                            @Domain.Resource.Title_Designer.Code
                         </th>
                         @if (ViewBag.TypeId == 3)
                         {
-                            <th class="@TextAlign align-middle">@Utility.Resource.Title_Designer.FromStock</th>
-                            <th class="@TextAlign align-middle">@Utility.Resource.Title_Designer.ToStock</th>
+                            <th class="@TextAlign align-middle">@Domain.Resource.Title_Designer.FromStock</th>
+                            <th class="@TextAlign align-middle">@Domain.Resource.Title_Designer.ToStock</th>
                         }
                         else
                         {
-                            <th class="@TextAlign align-middle">@Utility.Resource.Title_Designer.Stock</th>
+                            <th class="@TextAlign align-middle">@Domain.Resource.Title_Designer.Stock</th>
                         }
-                        <th class="text-center">@Utility.Resource.Title_Designer.Date</th>
-                        <th class="text-center">@Utility.Resource.Title_Designer.Amount</th>
+                        <th class="text-center">@Domain.Resource.Title_Designer.Date</th>
+                        <th class="text-center">@Domain.Resource.Title_Designer.Amount</th>
                         @if (ViewBag.TypeId == 3)
                         {
-                            <th class="text-center"> @Utility.Resource.Title_Designer.Received </th>
+                            <th class="text-center"> @Domain.Resource.Title_Designer.Received </th>
                         }
                         @if (ViewBag.TypeId == 4)
                         {
-                            <th class="text-center">@Utility.Resource.Title_Designer.Transfer</th>
+                            <th class="text-center">@Domain.Resource.Title_Designer.Transfer</th>
                         }
                         @if (AllowEdit || AllowCancel || AllowDelete)
                         {
@@ -175,7 +175,7 @@
                                         if (AllowDelete)
                                         {
                                             <span>&nbsp; | &nbsp;</span>
-                                            <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
+                                            <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Domain.Resource.Message_Designer.DeleteConfirmation' , '@Domain.Resource.Message_Designer.DoYouWantDeleteFile' , '@Domain.Resource.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
                                         }
                                     }
                                     else
@@ -198,7 +198,7 @@
                                         }
                                         if (AllowDelete)
                                         {
-                                            <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
+                                            <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Domain.Resource.Message_Designer.DeleteConfirmation' , '@Domain.Resource.Message_Designer.DoYouWantDeleteFile' , '@Domain.Resource.Title_Designer.Ok' , Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
                                         }
                                         <span>&nbsp; | &nbsp;</span>
                                         <a href="/@ViewBag.area/@ViewBag.PageTitle/Print?id=@Model.Response[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.PageCount" target="_blank"> <i class="fa fa-print text-info"></i> </a>
@@ -234,39 +234,39 @@
                     </div>
                     <div class="card-body align-self-center d-flex flex-column flex-md-row  align-items-md-center">
                         <div class="list-item-heading mb-0  w-10">
-                            <small>@Utility.Resource.Title_Designer.Code</small>
+                            <small>@Domain.Resource.Title_Designer.Code</small>
                         </div>
                         @if (ViewBag.TypeId == 3)
                         {
                             <div class="list-item-heading mb-0  w-30">
-                                <small>@Utility.Resource.Title_Designer.Stock</small>
+                                <small>@Domain.Resource.Title_Designer.Stock</small>
                             </div>
                             <div class="list-item-heading mb-0  w-30">
-                                <small>@Utility.Resource.Title_Designer.ToStock</small>
+                                <small>@Domain.Resource.Title_Designer.ToStock</small>
                             </div>
                         }
                         else
                         {
                             <div class="list-item-heading mb-0  w-60">
-                                <small>@Utility.Resource.Title_Designer.Stock</small>
+                                <small>@Domain.Resource.Title_Designer.Stock</small>
                             </div>
                         }
                         <div class="list-item-heading mb-0 truncate w-10 ">
-                            <small>@Utility.Resource.Title_Designer.Date</small>
+                            <small>@Domain.Resource.Title_Designer.Date</small>
                         </div>
                         <div class="w-10">
-                            <small>@Utility.Resource.Title_Designer.Amount</small>
+                            <small>@Domain.Resource.Title_Designer.Amount</small>
                         </div>
                         @if (ViewBag.TypeId == 3)
                         {
                             <div class="w-10">
-                                @Utility.Resource.Title_Designer.Received
+                                @Domain.Resource.Title_Designer.Received
                             </div>
                         }
                         @if (ViewBag.TypeId == 4)
                         {
                             <div class="w-10">
-                                @Utility.Resource.Title_Designer.Transfer
+                                @Domain.Resource.Title_Designer.Transfer
                             </div>
                         }
                         <div class="w-20 @TextAlign2">
@@ -345,7 +345,7 @@
                                     if (AllowDelete)
                                     {
                                         <span>&nbsp; | &nbsp;</span>
-                                        <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
+                                        <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Domain.Resource.Message_Designer.DeleteConfirmation' , '@Domain.Resource.Message_Designer.DoYouWantDeleteFile' , '@Domain.Resource.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
                                     }
                                 }
                                 else
@@ -368,7 +368,7 @@
                                     }
                                     if (AllowDelete)
                                     {
-                                        <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
+                                        <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Domain.Resource.Message_Designer.DeleteConfirmation' , '@Domain.Resource.Message_Designer.DoYouWantDeleteFile' , '@Domain.Resource.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
                                     }
 
                                     <span>&nbsp; | &nbsp;</span>
@@ -425,9 +425,9 @@
                         </p>
                     </div>
                     <div class="m-0 p-0">
-                        <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit"></i> @Utility.Resource.Title_Designer.Edit</a>
+                        <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit"></i> @Domain.Resource.Title_Designer.Edit</a>
                         <span> &nbsp; | &nbsp; </span>
-                        <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Utility.Resource.Message_Designer.DeleteConfirmation' , '@Utility.Resource.Message_Designer.DoYouWantDeleteFile' , '@Utility.Resource.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete</a>
+                        <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Domain.Resource.Message_Designer.DeleteConfirmation' , '@Domain.Resource.Message_Designer.DoYouWantDeleteFile' , '@Domain.Resource.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash"></i> @Domain.Resource.Title_Designer.Delete</a>
                     </div>
                 </div>
             </div>

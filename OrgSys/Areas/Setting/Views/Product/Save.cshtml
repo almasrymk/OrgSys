@@ -8,17 +8,17 @@
     <div class="row">
         <div class="col-12">
             <div class="mb-1">
-                <h1>@Utility.Resource.Title_Designer.Product</h1>
+                <h1>@Domain.Resource.Title_Designer.Product</h1>
                 <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
                     <ol class="breadcrumb pt-0">
                         <li class="breadcrumb-item">
-                            <a href="/">@Utility.Resource.Title_Designer.Home</a>
+                            <a href="/">@Domain.Resource.Title_Designer.Home</a>
                         </li>
                         <li class="breadcrumb-item">
-                            @Utility.Resource.Title_Designer.Setting
+                            @Domain.Resource.Title_Designer.Setting
                         </li>
                         <li class="breadcrumb-item">
-                            @Utility.Resource.Title_Designer.Product
+                            @Domain.Resource.Title_Designer.Product
                         </li>
                     </ol>
                 </nav>
@@ -35,15 +35,15 @@
                         <h2 class="mr-4 mb-2 ml-4 d-inline-block float-md-left">
                             @if (Model != null || Model.Id == 0)
                             {
-                                <span class="mb-4"> @Utility.Resource.Title_Designer.New ...</span>
+                                <span class="mb-4"> @Domain.Resource.Title_Designer.New ...</span>
                             }
                             else
                             {
-                                <span class="mb-4"> @Utility.Resource.Title_Designer.Edit ...</span>
+                                <span class="mb-4"> @Domain.Resource.Title_Designer.Edit ...</span>
                             }
                         </h2>
                         <div class="position-absolute card-top-buttons">
-                            <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId" class="btn btn-primary"><i class="simple-icon-action-undo"></i>  @Utility.Resource.Title_Designer.Back</a>
+                            <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId" class="btn btn-primary"><i class="simple-icon-action-undo"></i>  @Domain.Resource.Title_Designer.Back</a>
                         </div>
                     </div>
 
@@ -61,7 +61,7 @@
                                     @Html.HiddenFor(model => model.ImgPath)
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
-                                            <label>@Utility.Resource.Title_Designer.Classification</label>
+                                            <label>@Domain.Resource.Title_Designer.Classification</label>
                                             <div id="divClassificationName">
                                                 <div class="input-group DropAutoComplete">
                                                     <div class="input-group-prepend">
@@ -73,81 +73,81 @@
                                                         <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
                                                     </div>
                                                 </div>
-                                                @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                                                @* <small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                                             </div>
                                             @Html.ValidationMessageFor(model => model.ClassificationId, "", new { @class = "text-danger " })
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <label>@Utility.Resource.Title_Designer.Code</label>
+                                            <label>@Domain.Resource.Title_Designer.Code</label>
                                             <div id="divCode">
-                                                @Html.TextBoxFor(model => model.Code, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Code })
-                                                @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.CodeIncreasedAutomaticallyCanBechanged</small>*@
+                                                @Html.TextBoxFor(model => model.Code, new { @class = "form-control", @placeholder = @Domain.Resource.Title_Designer.Code })
+                                                @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.CodeIncreasedAutomaticallyCanBechanged</small>*@
                                             </div>
                                             @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger " })
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
-                                            <label>@Utility.Resource.Title_Designer.Name</label>
+                                            <label>@Domain.Resource.Title_Designer.Name</label>
                                             <div id="divName">
-                                                @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Name })
-                                                @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.NameRequired</small>*@
+                                                @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @placeholder = @Domain.Resource.Title_Designer.Name })
+                                                @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.NameRequired</small>*@
                                             </div>
                                             @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <label>@Utility.Resource.Title_Designer.Nickname</label>
+                                            <label>@Domain.Resource.Title_Designer.Nickname</label>
                                             <div id="divNickname">
-                                                @Html.TextBoxFor(model => model.Nickname, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Nickname })
-                                                @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.AbbreviatedNameProduct</small>*@
+                                                @Html.TextBoxFor(model => model.Nickname, new { @class = "form-control", @placeholder = @Domain.Resource.Title_Designer.Nickname })
+                                                @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.AbbreviatedNameProduct</small>*@
                                             </div>
                                             @Html.ValidationMessageFor(model => model.Nickname, "", new { @class = "text-danger " })
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
-                                            <label>@Utility.Resource.Title_Designer.Barcode</label>
+                                            <label>@Domain.Resource.Title_Designer.Barcode</label>
                                             <div id="divBarcode">
                                                 <div class="input-group">
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text"><i class="iconsminds-qr-code"></i></span>
                                                     </div>
-                                                    @Html.TextBoxFor(model => model.Barcode, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Barcode })
+                                                    @Html.TextBoxFor(model => model.Barcode, new { @class = "form-control", @placeholder = @Domain.Resource.Title_Designer.Barcode })
                                                 </div>
-                                                @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.ItConsists13Numbers</small>*@
+                                                @* <small class="form-text text-muted"> @Domain.Resource.Message_Designer.ItConsists13Numbers</small>*@
                                             </div>
                                             @Html.ValidationMessageFor(model => model.Barcode, "", new { @class = "text-danger " })
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <label>@Utility.Resource.Title_Designer.Price</label>
+                                            <label>@Domain.Resource.Title_Designer.Price</label>
                                             <div id="divPrice">
                                                 <div class="input-group">
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text">$</span>
                                                     </div>
-                                                    @Html.TextBoxFor(model => model.Price, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Price })
+                                                    @Html.TextBoxFor(model => model.Price, new { @class = "form-control", @placeholder = @Domain.Resource.Title_Designer.Price })
                                                 </div>
-                                                @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SellingPriceProduct</small>*@
+                                                @* <small class="form-text text-muted"> @Domain.Resource.Message_Designer.SellingPriceProduct</small>*@
                                             </div>
                                             @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger " })
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
-                                            <label>@Utility.Resource.Title_Designer.Cost</label>
+                                            <label>@Domain.Resource.Title_Designer.Cost</label>
                                             <div id="divCost">
                                                 <div class="input-group">
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text">$</span>
                                                     </div>
-                                                    @Html.TextBoxFor(model => model.Cost, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Cost })
+                                                    @Html.TextBoxFor(model => model.Cost, new { @class = "form-control", @placeholder = @Domain.Resource.Title_Designer.Cost })
                                                 </div>
-                                                @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.PurchasePriceFromSuppliers</small>*@
+                                                @* <small class="form-text text-muted"> @Domain.Resource.Message_Designer.PurchasePriceFromSuppliers</small>*@
                                             </div>
                                             @Html.ValidationMessageFor(model => model.Cost, "", new { @class = "text-danger " })
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <label>@Utility.Resource.Title_Designer.Supplier</label>
+                                            <label>@Domain.Resource.Title_Designer.Supplier</label>
                                             <div id="divDealerId">
                                                 <div class="input-group DropAutoComplete">
                                                     <div class="input-group-prepend">
@@ -159,16 +159,16 @@
                                                         <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
                                                     </div>
                                                 </div>
-                                                @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                                                @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                                             </div>
                                             @Html.ValidationMessageFor(model => model.DealerId, "", new { @class = "text-danger " })
                                         </div>
                                     </div>
                                     <div class="form-group position-relative error-l-50">
-                                        <label>@Utility.Resource.Title_Designer.Description</label>
+                                        <label>@Domain.Resource.Title_Designer.Description</label>
                                         <div id="divDescription">
-                                            @Html.TextBoxFor(model => model.Description, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Description })
-                                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.PutYourNotesProduc</small>*@
+                                            @Html.TextBoxFor(model => model.Description, new { @class = "form-control", @placeholder = @Domain.Resource.Title_Designer.Description })
+                                            @* <small class="form-text text-muted"> @Domain.Resource.Message_Designer.PutYourNotesProduc</small>*@
                                         </div>
                                         @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger mt-3 m-1" })
                                     </div>
@@ -179,15 +179,15 @@
                                                 <ul class="card-header">
                                                     <li>
                                                         <a href="#checkStep1">
-                                                            @Utility.Resource.Title_Designer.UnitsMeasure<br />
-                                                            <small>@Utility.Resource.Message_Designer.UnitsWhichProductMeasured</small>
+                                                            @Domain.Resource.Title_Designer.UnitsMeasure<br />
+                                                            <small>@Domain.Resource.Message_Designer.UnitsWhichProductMeasured</small>
                                                             <div id="divtblUnit"></div>
                                                         </a>
                                                     </li>
                                                     <li>
                                                         <a href="#checkStep2">
-                                                            @Utility.Resource.Title_Designer.ProductRecipe<br />
-                                                            <small>@Utility.Resource.Message_Designer.IngredientsThatProductMadeOf</small>
+                                                            @Domain.Resource.Title_Designer.ProductRecipe<br />
+                                                            <small>@Domain.Resource.Message_Designer.IngredientsThatProductMadeOf</small>
                                                         </a>
                                                     </li>
                                                 </ul>
@@ -197,9 +197,9 @@
                                                         <table id="tblUnit" class="table table-hover">
                                                             <thead>
                                                                 <tr>
-                                                                    <th scope="col">@Utility.Resource.Title_Designer.Unit</th>
-                                                                    <th scope="col">@Utility.Resource.Title_Designer.Rate</th>
-                                                                    <th scope="col" style="width:100px;text-align:center;">@Utility.Resource.Title_Designer.Default</th>
+                                                                    <th scope="col">@Domain.Resource.Title_Designer.Unit</th>
+                                                                    <th scope="col">@Domain.Resource.Title_Designer.Rate</th>
+                                                                    <th scope="col" style="width:100px;text-align:center;">@Domain.Resource.Title_Designer.Default</th>
                                                                     <th scope="col"></th>
                                                                 </tr>
                                                             </thead>
@@ -244,11 +244,11 @@
                                                                         <td style="width:100px;vertical-align:middle;">
                                                                             @if (ob != null && ob.Id >= 0)
                                                                             {
-                                                                                <a id="btDelete" href="javascript:;" onclick="RemoveRowUnit($(this).parent().parent())">  <i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete  </a>
+                                                                                <a id="btDelete" href="javascript:;" onclick="RemoveRowUnit($(this).parent().parent())">  <i class="simple-icon-trash"></i> @Domain.Resource.Title_Designer.Delete  </a>
                                                                             }
                                                                             else
                                                                             {
-                                                                                <a id="btDelete" href="javascript:;" onclick="RemoveRowUnit($(this).parent().parent())" style="display:none">  <i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete </a>
+                                                                                <a id="btDelete" href="javascript:;" onclick="RemoveRowUnit($(this).parent().parent())" style="display:none">  <i class="simple-icon-trash"></i> @Domain.Resource.Title_Designer.Delete </a>
                                                                             }
                                                                         </td>
                                                                     </tr>
@@ -280,14 +280,14 @@
                                                                         </div>
                                                                     </td>
                                                                     <td style="width:100px;vertical-align:middle;">
-                                                                        <a id="btDelete" href="javascript:;" onclick="RemoveRowUnit($(this).parent().parent())" style="display:none">  <i class="simple-icon-trash"></i> @Utility.Resource.Title_Designer.Delete </a>
+                                                                        <a id="btDelete" href="javascript:;" onclick="RemoveRowUnit($(this).parent().parent())" style="display:none">  <i class="simple-icon-trash"></i> @Domain.Resource.Title_Designer.Delete </a>
                                                                     </td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
                                                     </div>
                                                     <div id="checkStep2">
-                                                        @Html.TextAreaFor(model => model.Recipe, new { @class = "form-control", @rows = "5", @placeholder = @Utility.Resource.Title_Designer.ProductRecipe })
+                                                        @Html.TextAreaFor(model => model.Recipe, new { @class = "form-control", @rows = "5", @placeholder = @Domain.Resource.Title_Designer.ProductRecipe })
                                                     </div>
                                                 </div>
                                             </div>
@@ -318,7 +318,7 @@
                             </div>
                             <hr />
                             <div class="pl-2 pr-2">
-                                <button type="button" onclick="Save()" class="btn btn-primary mb-0">@Utility.Resource.Title_Designer.Save</button>
+                                <button type="button" onclick="Save()" class="btn btn-primary mb-0">@Domain.Resource.Title_Designer.Save</button>
                             </div>
                         </form>
                     </div>
@@ -561,7 +561,7 @@
                 currentRow.find("td:eq(0) #errorUnitId").remove();
                 if (!(currentRow.find("td:eq(0) #UnitId").val() > 0)) {
                     currentRow.find("td:eq(0) #UnitId").focus();
-                    currentRow.find("td:eq(0) #divUnitId").after('<span id="errorUnitId" class="error" style="color:red">@Utility.Resource.Message_Designer.SelectUnit</span>');
+                    currentRow.find("td:eq(0) #divUnitId").after('<span id="errorUnitId" class="error" style="color:red">@Domain.Resource.Message_Designer.SelectUnit</span>');
                     NewRow.find("#UnitId").val("");
                     NewRow.find("#Rate").val("");
                     valid = false;
@@ -569,7 +569,7 @@
                 currentRow.find("td:eq(1) #errorRate").remove();
                 if (parseFloat("0" + currentRow.find("td:eq(1) #Rate").val()) == 0) {
                     currentRow.find("td:eq(1) #Rate").focus()
-                    currentRow.find("td:eq(1) #Rate").after('<span id="errorRate" class="error" style="color:red">@Utility.Resource.Message_Designer.EnterRate</span>');
+                    currentRow.find("td:eq(1) #Rate").after('<span id="errorRate" class="error" style="color:red">@Domain.Resource.Message_Designer.EnterRate</span>');
                     NewRow.find("#UnitId").val("");
                     NewRow.find("#Rate").val("");
                     valid = false;
@@ -578,7 +578,7 @@
             if (currentRow.find("td:eq(0) #UnitId").val() > 0 && currentRow.find("td:eq(0) #UnitId").val() == $(data).find("#UnitId").val()) {
                 countRepeated++;
                 if (countRepeated == 2) {
-                    $(data).find("#divUnitId").after('<span id="errorUnitId" class="error" style="color:red">@Utility.Resource.Message_Designer.ThisUnitWasSelected</span>');
+                    $(data).find("#divUnitId").after('<span id="errorUnitId" class="error" style="color:red">@Domain.Resource.Message_Designer.ThisUnitWasSelected</span>');
                     valid = false;
                 }
             }
@@ -609,25 +609,25 @@
     function Save() {
         var Valid = true;
 
-        if (CheckRowCount("tblUnit", "divtblUnit", '@Utility.Resource.Message_Designer.ClassificationRequired'))
+        if (CheckRowCount("tblUnit", "divtblUnit", '@Domain.Resource.Message_Designer.ClassificationRequired'))
             Valid = false;
 
-        if (CheckRage("Description", "divDescription", 5, 500, '@Utility.Resource.Message_Designer.DescriptionRange'))
+        if (CheckRage("Description", "divDescription", 5, 500, '@Domain.Resource.Message_Designer.DescriptionRange'))
             Valid = false;
 
-        @*if (CheckRequired("Barcode", "divBarcode", '@Utility.Resource.Message_Designer.BarcodeRequired'))
+        @*if (CheckRequired("Barcode", "divBarcode", '@Domain.Resource.Message_Designer.BarcodeRequired'))
             Valid = false;*@
 
-       else if (CheckRage("Barcode", "divBarcode", 5, 15, '@Utility.Resource.Message_Designer.BarcodeRange'))
+       else if (CheckRage("Barcode", "divBarcode", 5, 15, '@Domain.Resource.Message_Designer.BarcodeRange'))
             Valid = false;
 
-        if (CheckRequired("Name", "divName", '@Utility.Resource.Message_Designer.NameRequired'))
+        if (CheckRequired("Name", "divName", '@Domain.Resource.Message_Designer.NameRequired'))
             Valid = false;
 
-        if (CheckRequired("Code", "divCode", '@Utility.Resource.Message_Designer.CodeRequired'))
+        if (CheckRequired("Code", "divCode", '@Domain.Resource.Message_Designer.CodeRequired'))
             Valid = false;
 
-        if (CheckRequired("ClassificationId", "divClassificationName", '@Utility.Resource.Message_Designer.ClassificationRequired'))
+        if (CheckRequired("ClassificationId", "divClassificationName", '@Domain.Resource.Message_Designer.ClassificationRequired'))
             Valid = false;
 
         if (Valid == true) {

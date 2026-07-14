@@ -8,7 +8,6 @@
     using Domain.Shared;
     using Application.DTOs;
     using System.Linq.Expressions;
-    using Utility;
 
     public sealed record SearchTableQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandPagination<TableDto> ,ISearchQuery<ResultPagination<TableDto>>;
 

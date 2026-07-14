@@ -184,14 +184,14 @@
             {
                 _schemaName = dataContext.Schema;
             }
-            return new MultiTenantModelCacheKey(_schemaName, context);
+            return new MultiTenantModelCacheKey(_schemaName, context, designTime);
         }
     }
 
     public class MultiTenantModelCacheKey : ModelCacheKey
     {
         private readonly string _schemaName;
-        public MultiTenantModelCacheKey(string schemaName, DbContext context) : base(context)
+        public MultiTenantModelCacheKey(string schemaName, DbContext context, bool designTime) : base(context, designTime)
         {
             _schemaName = schemaName;
         }

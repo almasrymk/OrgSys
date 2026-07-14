@@ -4,7 +4,6 @@
     using Domain.Abstraction;
     using Application.Validators;
     using Application.Commands.Org.Setting.Bank.Commands;
-    using Utility;
 
     public class UpdateBankCommandValidator : Validator<UpdateBankCommand, Domain.Entities.Bank>
     {

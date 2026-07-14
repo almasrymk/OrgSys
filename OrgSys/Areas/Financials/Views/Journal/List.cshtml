@@ -1,0 +1,123 @@
+@using System.Globalization
+@model Domain.Shared.ResultPagination<Application.DTOs.JournalDto>
+@using OrgSys
+@{
+    Layout = null;
+    var TextAlign = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "text-right" : "text-left";
+    var TextAlign2 = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "text-left" : "text-right";
+    var DateFormat = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "yyyy-MM-dd" : "dd-MM-yyyy";
+    var AllowEdit = User.IsAllowed("Journal.Edit");
+    var AllowDelete = User.IsAllowed("Journal.Delete");
+}
+
+@if (Model != null && Model.Response.Count > 0)
+{
+    <div id="tbList" class="card" style="display:none;">
+        <div class="card-body pl-0 pr-0 pb-2 pt-0">
+            <table class="table table-hover responsive nowrap m-0" data-order="[[ 1, &quot;desc&quot; ]]">
+                <thead>
+                    <tr>
+                        <th class="text-center">#</th>
+                        <th class="text-center">@Domain.Resource.Title_Designer.Code</th>
+                        <th class="text-center">@Domain.Resource.Title_Designer.Date</th>
+                        <th class="@TextAlign">@Domain.Resource.Title_Designer.Currency</th>
+                        <th class="text-center">Reference</th>
+                        <th class="@TextAlign">@Domain.Resource.Title_Designer.Notes</th>
+                        <th class="text-center">Review</th>
+                        <th class="text-center">Posted</th>
+                        @if (AllowEdit || AllowDelete)
+                        {
+                            <th></th>
+                        }
+                        @if (AllowDelete)
+                        {
+                            <th></th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0, x = ((Model.Page - 1) * Model.PageSize) + 1; i < Model.Response.Count; i++, x++)
+                    {
+                        <tr>
+                            <td class="text-center align-middle">@x</td>
+                            <td class="text-center align-middle">@Model.Response[i].Code</td>
+                            <td class="text-center align-middle">@Model.Response[i].Date.ToString(DateFormat, new CultureInfo("en-US"))</td>
+                            <td class="@TextAlign align-middle">@Model.Response[i].CurrencyName</td>
+                            <td class="text-center align-middle">@Model.Response[i].RefranceId</td>
+                            <td class="@TextAlign align-middle">@Model.Response[i].Note</td>
+                            <td class="text-center align-middle">@(Model.Response[i].Review ? "✓" : "")</td>
+                            <td class="text-center align-middle">@(Model.Response[i].Posted ? "✓" : "")</td>
+                            @if (AllowEdit || AllowDelete)
+                            {
+                                <td class="@TextAlign2 align-middle">
+                                    @if (AllowEdit)
+                                    {
+                                        <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"><i class="iconsminds-folder-edit" style="color:green"></i></a>
+                                    }
+                                    @if (AllowEdit && AllowDelete)
+                                    {
+                                        <span>&nbsp; | &nbsp;</span>
+                                    }
+                                    @if (AllowDelete)
+                                    {
+                                        <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash', '@Domain.Resource.Message_Designer.DeleteConfirmation', '@Domain.Resource.Message_Designer.DoYouWantDeleteFile', '@Domain.Resource.Title_Designer.Ok', @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i></a>
+                                    }
+                                </td>
+                            }
+                            @if (AllowDelete)
+                            {
+                                <td class="align-middle @TextAlign2" style="width:30px">
+                                    <label class="custom-control custom-checkbox pt-2">
+                                        <input id="chk_@Model.Response[i].Id" type="checkbox" class="custom-control-input chk">
+                                        <input type="hidden" value="@Model.Response[i].Id" />
+                                        <span class="custom-control-label">&nbsp;</span>
+                                    </label>
+                                </td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="rowList" style="display:none;">
+        @for (int i = 0, x = ((Model.Page - 1) * Model.PageSize) + 1; i < Model.Response.Count; i++, x++)
+        {
+            <div class="card d-flex flex-row mb-2">
+                <div class="list-thumbnail border-0 card-img-left badge-theme-1" style="height:60px;width:60px;font-size:x-large;text-align:center;padding:14px;">
+                    @x
+                </div>
+                <div class="card-body align-self-center d-flex flex-column flex-md-row align-items-md-center">
+                    <div class="list-item-heading mb-0 w-10">@Model.Response[i].Code</div>
+                    <div class="list-item-heading mb-0 truncate w-15">@Model.Response[i].Date.ToString(DateFormat, new CultureInfo("en-US"))</div>
+                    <div class="list-item-heading mb-0 w-20">@Model.Response[i].CurrencyName</div>
+                    <div class="list-item-heading mb-0 w-30">@Model.Response[i].Note</div>
+                    <div class="w-20 @TextAlign2">
+                        @if (AllowEdit)
+                        {
+                            <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"><i class="iconsminds-folder-edit" style="color:green"></i></a>
+                        }
+                        @if (AllowDelete)
+                        {
+                            <span>&nbsp; | &nbsp;</span>
+                            <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash', '@Domain.Resource.Message_Designer.DeleteConfirmation', '@Domain.Resource.Message_Designer.DoYouWantDeleteFile', '@Domain.Resource.Title_Designer.Ok', @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i></a>
+                        }
+                    </div>
+                </div>
+                @if (AllowDelete)
+                {
+                    <div style="width:30px;">
+                        <label class="custom-control custom-checkbox pt-3">
+                            <input id="chk_card_@Model.Response[i].Id" type="checkbox" class="custom-control-input chk">
+                            <input type="hidden" value="@Model.Response[i].Id" />
+                            <span class="custom-control-label">&nbsp;</span>
+                        </label>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+}
+
+@Html.Partial("ToPagedList", new Domain.Shared.Pagination(Model.Page, Model.PageSize, Model.PageCount))

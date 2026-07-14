@@ -1,6 +1,5 @@
 ﻿namespace Application.Commands.Org.Setting.City.Queries
 {
-    using Utility;
     using AutoMapper;
     using Domain.Shared;
     using Application.DTOs;

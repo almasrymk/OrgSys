@@ -5,7 +5,7 @@
 
 <div class="modal-content" style="border-radius:12px;">
     <div class="modal-header" style="padding:15px;">
-        <h5 class="modal-title">@Utility.Resource.Title_Designer.Preference</h5>
+        <h5 class="modal-title">@Domain.Resource.Title_Designer.Preference</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -16,7 +16,7 @@
             {
                 <div class="form-row">
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.Customers</label>
+                        <label>@Domain.Resource.Title_Designer.Customers</label>
                         <div id="divStockId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -24,11 +24,11 @@
                                 </div>
                                 @Html.DropDownList("Customers", null, null, new { @class = "form-control" })
                             </div>
-                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.Stocks</label>
+                        <label>@Domain.Resource.Title_Designer.Stocks</label>
                         <div id="divPaymentTypeId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -36,11 +36,11 @@
                                 </div>
                                 @Html.DropDownList("Stocks", null, null, new { @class = "form-control" })
                             </div>
-                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label> @Utility.Resource.Title_Designer.PaymentTypes</label>
+                        <label> @Domain.Resource.Title_Designer.PaymentTypes</label>
                         <div id="divPaymentTypeId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -48,47 +48,47 @@
                                 </div>
                                 @Html.DropDownList("PaymentTypes", null, null, new { @class = "form-control" })
                             </div>
-                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.Discount</label>
+                        <label>@Domain.Resource.Title_Designer.Discount</label>
                         <div id="divStockId">
                             <div class="input-group">
                                 @Html.DropDownList("DiscountType", null, null, new { @class = "form-control" })
                                 <input type="text" id="DiscountValue" name="DiscountValue" value="@ViewBag.DiscountValue" class="form-control" />
                             </div>
-                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.Service</label>
+                        <label>@Domain.Resource.Title_Designer.Service</label>
                         <div id="divStockId">
                             <div class="input-group">
                                 @Html.DropDownList("ServiceType", null, null, new { @class = "form-control" })
                                 <input type="text" id="ServiceValue" name="ServiceValue" value="@ViewBag.ServiceValue" class="form-control" />
                             </div>
-                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.Tax</label>
+                        <label>@Domain.Resource.Title_Designer.Tax</label>
                         <div id="divStockId">
                             <div class="input-group">
                                 @Html.DropDownList("TaxType", null, null, new { @class = "form-control" })
                                 <input type="text" id="TaxValue" name="TaxValue" value="@ViewBag.TaxValue" class="form-control" />
                             </div>
-                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.OrderTabe</label>
+                        <label>@Domain.Resource.Title_Designer.OrderTabe</label>
                         <div id="divStockId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -96,11 +96,11 @@
                                 </div>
                                 @Html.DropDownList("OrderTabe", null, null, new { @class = "form-control" })
                             </div>
-                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.Repeated</label>
+                        <label>@Domain.Resource.Title_Designer.Repeated</label>
                         <div id="divPaymentTypeId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -108,11 +108,11 @@
                                 </div>
                                 @Html.DropDownList("AllowRepeated", null, null, new { @class = "form-control" })
                             </div>
-                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.TypeSerial</label>
+                        <label>@Domain.Resource.Title_Designer.TypeSerial</label>
                         <div id="divPaymentTypeId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -120,7 +120,7 @@
                                 </div>
                                 @Html.DropDownList("TypeSerial", null, null, new { @class = "form-control" })
                             </div>
-                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                 </div>
@@ -128,7 +128,7 @@
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         <label>
-                            @Utility.Resource.Title_Designer.DefaultCurrency
+                            @Domain.Resource.Title_Designer.DefaultCurrency
                         </label>
                         <div id="divPaymentTypeId">
                             <div class="input-group">
@@ -137,11 +137,11 @@
                                 </div>
                                 @Html.DropDownList("Currencys", null, null, new { @class = "form-control" })
                             </div>
-                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.EmptyLineCount</label>
+                        <label>@Domain.Resource.Title_Designer.EmptyLineCount</label>
                         <div id="divStockId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -149,11 +149,11 @@
                                 </div>
                                 <input type="text" id="NumberLine" name="NumberLine" value="@ViewBag.NumberLine" class="form-control" />
                             </div>
-                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.CodeElectronicScale</label>
+                        <label>@Domain.Resource.Title_Designer.CodeElectronicScale</label>
                         <div id="divStockId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -161,7 +161,7 @@
                                 </div>
                                 <input type="text" id="CodeElectronicScale" name="CodeElectronicScale" value="@ViewBag.CodeElectronicScale" class="form-control" />
                             </div>
-                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
 
@@ -169,7 +169,7 @@
 
                 <div class="form-row">
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.LengthElectronicScale</label>
+                        <label>@Domain.Resource.Title_Designer.LengthElectronicScale</label>
                         <div id="divStockId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -177,11 +177,11 @@
                                 </div>
                                 <input type="text" id="LengthElectronicScale" name="LengthElectronicScale" value="@ViewBag.LengthElectronicScale" class="form-control" />
                             </div>
-                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label> @Utility.Resource.Title_Designer.AutoSave</label>
+                        <label> @Domain.Resource.Title_Designer.AutoSave</label>
                         <div id="divPaymentTypeId">
                             <div class="input-group mt-2">
                                 <div id="divAutoSave" class="custom-switch custom-switch-primary-inverse custom-switch-small">
@@ -189,11 +189,11 @@
                                     <label class="custom-switch-btn" for="AutoSave"></label>
                                 </div>
                             </div>
-                            @* <small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted" style="margin-top:12px;"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.SaveLastStatusPreference</label>
+                        <label>@Domain.Resource.Title_Designer.SaveLastStatusPreference</label>
                         <div id="divPaymentTypeId">
                             <div class="input-group mt-2">
                                 <div id="divSaveLastStatusSetting" class="custom-switch custom-switch-primary-inverse custom-switch-small">
@@ -201,13 +201,13 @@
                                     <label class="custom-switch-btn" for="SaveLastStatusSetting"></label>
                                 </div>
                             </div>
-                            @* <small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted" style="margin-top:12px;"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.AutoCreateTransaction</label>
+                        <label>@Domain.Resource.Title_Designer.AutoCreateTransaction</label>
                         <div id="divPaymentTypeId">
                             <div class="input-group mt-2">
                                 <div id="divAutoSave" class="custom-switch custom-switch-primary-inverse custom-switch-small">
@@ -215,7 +215,7 @@
                                     <label class="custom-switch-btn" for="AutoCreateTransaction"></label>
                                 </div>
                             </div>
-                            @*<small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted" style="margin-top:12px;"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                 </div>
@@ -225,7 +225,7 @@
             {
                 <div class="form-row">
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.Suppliers</label>
+                        <label>@Domain.Resource.Title_Designer.Suppliers</label>
                         <div id="divStockId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -233,11 +233,11 @@
                                 </div>
                                 @Html.DropDownList("Suppliers", null, null, new { @class = "form-control" })
                             </div>
-                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.Stocks</label>
+                        <label>@Domain.Resource.Title_Designer.Stocks</label>
                         <div id="divPaymentTypeId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -245,11 +245,11 @@
                                 </div>
                                 @Html.DropDownList("Stocks", null, null, new { @class = "form-control" })
                             </div>
-                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.PaymentTypes</label>
+                        <label>@Domain.Resource.Title_Designer.PaymentTypes</label>
                         <div id="divPaymentTypeId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -257,47 +257,47 @@
                                 </div>
                                 @Html.DropDownList("PaymentTypes", null, null, new { @class = "form-control" })
                             </div>
-                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.Discount</label>
+                        <label>@Domain.Resource.Title_Designer.Discount</label>
                         <div id="divStockId">
                             <div class="input-group">
                                 @Html.DropDownList("DiscountType", null, null, new { @class = "form-control" })
                                 <input type="text" id="DiscountValue" name="DiscountValue" value="@ViewBag.DiscountValue" class="form-control" />
                             </div>
-                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.Service</label>
+                        <label>@Domain.Resource.Title_Designer.Service</label>
                         <div id="divStockId">
                             <div class="input-group">
                                 @Html.DropDownList("ServiceType", null, null, new { @class = "form-control" })
                                 <input type="text" id="ServiceValue" name="ServiceValue" value="@ViewBag.ServiceValue" class="form-control" />
                             </div>
-                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.Tax</label>
+                        <label>@Domain.Resource.Title_Designer.Tax</label>
                         <div id="divStockId">
                             <div class="input-group">
                                 @Html.DropDownList("TaxType", null, null, new { @class = "form-control" })
                                 <input type="text" id="TaxValue" name="TaxValue" value="@ViewBag.TaxValue" class="form-control" />
                             </div>
-                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.OrderTabe</label>
+                        <label>@Domain.Resource.Title_Designer.OrderTabe</label>
                         <div id="divStockId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -305,11 +305,11 @@
                                 </div>
                                 @Html.DropDownList("OrderTabe", null, null, new { @class = "form-control" })
                             </div>
-                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label> @Utility.Resource.Title_Designer.Repeated</label>
+                        <label> @Domain.Resource.Title_Designer.Repeated</label>
                         <div id="divPaymentTypeId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -317,11 +317,11 @@
                                 </div>
                                 @Html.DropDownList("AllowRepeated", null, null, new { @class = "form-control" })
                             </div>
-                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.TypeSerial</label>
+                        <label>@Domain.Resource.Title_Designer.TypeSerial</label>
                         <div id="divPaymentTypeId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -329,14 +329,14 @@
                                 </div>
                                 @Html.DropDownList("TypeSerial", null, null, new { @class = "form-control" })
                             </div>
-                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.EmptyLineCount</label>
+                        <label>@Domain.Resource.Title_Designer.EmptyLineCount</label>
                         <div id="divStockId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -344,11 +344,11 @@
                                 </div>
                                 <input type="text" id="NumberLine" name="NumberLine" value="@ViewBag.NumberLine" class="form-control" />
                             </div>
-                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.AutoSave</label>
+                        <label>@Domain.Resource.Title_Designer.AutoSave</label>
                         <div id="divPaymentTypeId">
                             <div class="input-group mt-2">
                                 <div id="divAutoSave" class="custom-switch custom-switch-primary-inverse custom-switch-small">
@@ -356,11 +356,11 @@
                                     <label class="custom-switch-btn" for="AutoSave"></label>
                                 </div>
                             </div>
-                            @*<small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted" style="margin-top:12px;"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.SaveLastStatusPreference</label>
+                        <label>@Domain.Resource.Title_Designer.SaveLastStatusPreference</label>
                         <div id="divPaymentTypeId">
                             <div class="input-group mt-2">
                                 <div id="divSaveLastStatusSetting" class="custom-switch custom-switch-primary-inverse custom-switch-small">
@@ -368,14 +368,14 @@
                                     <label class="custom-switch-btn" for="SaveLastStatusSetting"></label>
                                 </div>
                             </div>
-                            @* <small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted" style="margin-top:12px;"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.AutoCreateTransaction</label>
+                        <label>@Domain.Resource.Title_Designer.AutoCreateTransaction</label>
                         <div id="divPaymentTypeId">
                             <div class="input-group mt-2">
                                 <div id="divAutoSave" class="custom-switch custom-switch-primary-inverse custom-switch-small">
@@ -383,11 +383,11 @@
                                     <label class="custom-switch-btn" for="AutoCreateTransaction"></label>
                                 </div>
                             </div>
-                            @*  <small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*  <small class="form-text text-muted" style="margin-top:12px;"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        @Utility.Resource.Title_Designer.DefaultCurrency
+                        @Domain.Resource.Title_Designer.DefaultCurrency
                         <div id="divPaymentTypeId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -395,7 +395,7 @@
                                 </div>
                                 @Html.DropDownList("Currencys", null, null, new { @class = "form-control" })
                             </div>
-                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                 </div>
@@ -405,7 +405,7 @@
             {
                 <div class="form-row">
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.Customers</label>
+                        <label>@Domain.Resource.Title_Designer.Customers</label>
                         <div id="divStockId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -413,11 +413,11 @@
                                 </div>
                                 @Html.DropDownList("Customers", null, null, new { @class = "form-control" })
                             </div>
-                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.Stocks</label>
+                        <label>@Domain.Resource.Title_Designer.Stocks</label>
                         <div id="divPaymentTypeId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -425,11 +425,11 @@
                                 </div>
                                 @Html.DropDownList("Stocks", null, null, new { @class = "form-control" })
                             </div>
-                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.PaymentTypes</label>
+                        <label>@Domain.Resource.Title_Designer.PaymentTypes</label>
                         <div id="divPaymentTypeId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -437,47 +437,47 @@
                                 </div>
                                 @Html.DropDownList("PaymentTypes", null, null, new { @class = "form-control" })
                             </div>
-                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.Discount</label>
+                        <label>@Domain.Resource.Title_Designer.Discount</label>
                         <div id="divStockId">
                             <div class="input-group">
                                 @Html.DropDownList("DiscountType", null, null, new { @class = "form-control" })
                                 <input type="text" id="DiscountValue" name="DiscountValue" value="@ViewBag.DiscountValue" class="form-control" />
                             </div>
-                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.Service</label>
+                        <label>@Domain.Resource.Title_Designer.Service</label>
                         <div id="divStockId">
                             <div class="input-group">
                                 @Html.DropDownList("ServiceType", null, null, new { @class = "form-control" })
                                 <input type="text" id="ServiceValue" name="ServiceValue" value="@ViewBag.ServiceValue" class="form-control" />
                             </div>
-                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.Tax</label>
+                        <label>@Domain.Resource.Title_Designer.Tax</label>
                         <div id="divStockId">
                             <div class="input-group">
                                 @Html.DropDownList("TaxType", null, null, new { @class = "form-control" })
                                 <input type="text" id="TaxValue" name="TaxValue" value="@ViewBag.TaxValue" class="form-control" />
                             </div>
-                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.OrderTabe</label>
+                        <label>@Domain.Resource.Title_Designer.OrderTabe</label>
                         <div id="divStockId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -485,11 +485,11 @@
                                 </div>
                                 @Html.DropDownList("OrderTabe", null, null, new { @class = "form-control" })
                             </div>
-                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.Repeated</label>
+                        <label>@Domain.Resource.Title_Designer.Repeated</label>
                         <div id="divPaymentTypeId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -497,11 +497,11 @@
                                 </div>
                                 @Html.DropDownList("AllowRepeated", null, null, new { @class = "form-control" })
                             </div>
-                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.TypeSerial</label>
+                        <label>@Domain.Resource.Title_Designer.TypeSerial</label>
                         <div id="divPaymentTypeId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -509,14 +509,14 @@
                                 </div>
                                 @Html.DropDownList("TypeSerial", null, null, new { @class = "form-control" })
                             </div>
-                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.EmptyLineCount</label>
+                        <label>@Domain.Resource.Title_Designer.EmptyLineCount</label>
                         <div id="divStockId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -524,11 +524,11 @@
                                 </div>
                                 <input type="text" id="NumberLine" name="NumberLine" value="@ViewBag.NumberLine" class="form-control" />
                             </div>
-                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.AutoSave</label>
+                        <label>@Domain.Resource.Title_Designer.AutoSave</label>
                         <div id="divPaymentTypeId">
                             <div class="input-group mt-2">
                                 <div id="divAutoSave" class="custom-switch custom-switch-primary-inverse custom-switch-small">
@@ -536,11 +536,11 @@
                                     <label class="custom-switch-btn" for="AutoSave"></label>
                                 </div>
                             </div>
-                            @* <small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted" style="margin-top:12px;"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.SaveLastStatusPreference</label>
+                        <label>@Domain.Resource.Title_Designer.SaveLastStatusPreference</label>
                         <div id="divPaymentTypeId">
                             <div class="input-group mt-2">
                                 <div id="divSaveLastStatusSetting" class="custom-switch custom-switch-primary-inverse custom-switch-small">
@@ -548,14 +548,14 @@
                                     <label class="custom-switch-btn" for="SaveLastStatusSetting"></label>
                                 </div>
                             </div>
-                            @*<small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted" style="margin-top:12px;"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.AutoCreateTransaction</label>
+                        <label>@Domain.Resource.Title_Designer.AutoCreateTransaction</label>
                         <div id="divPaymentTypeId">
                             <div class="input-group mt-2">
                                 <div id="divAutoSave" class="custom-switch custom-switch-primary-inverse custom-switch-small">
@@ -563,11 +563,11 @@
                                     <label class="custom-switch-btn" for="AutoCreateTransaction"></label>
                                 </div>
                             </div>
-                            @*<small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted" style="margin-top:12px;"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        @Utility.Resource.Title_Designer.DefaultCurrency
+                        @Domain.Resource.Title_Designer.DefaultCurrency
                         <div id="divPaymentTypeId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -575,7 +575,7 @@
                                 </div>
                                 @Html.DropDownList("Currencys", null, null, new { @class = "form-control" })
                             </div>
-                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                 </div>
@@ -585,7 +585,7 @@
             {
                 <div class="form-row">
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.Suppliers</label>
+                        <label>@Domain.Resource.Title_Designer.Suppliers</label>
                         <div id="divStockId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -593,11 +593,11 @@
                                 </div>
                                 @Html.DropDownList("Suppliers", null, null, new { @class = "form-control" })
                             </div>
-                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.Stocks</label>
+                        <label>@Domain.Resource.Title_Designer.Stocks</label>
                         <div id="divPaymentTypeId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -605,11 +605,11 @@
                                 </div>
                                 @Html.DropDownList("Stocks", null, null, new { @class = "form-control" })
                             </div>
-                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.PaymentTypes</label>
+                        <label>@Domain.Resource.Title_Designer.PaymentTypes</label>
                         <div id="divPaymentTypeId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -617,47 +617,47 @@
                                 </div>
                                 @Html.DropDownList("PaymentTypes", null, null, new { @class = "form-control" })
                             </div>
-                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.Discount</label>
+                        <label>@Domain.Resource.Title_Designer.Discount</label>
                         <div id="divStockId">
                             <div class="input-group">
                                 @Html.DropDownList("DiscountType", null, null, new { @class = "form-control" })
                                 <input type="text" id="DiscountValue" name="DiscountValue" value="@ViewBag.DiscountValue" class="form-control" />
                             </div>
-                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.Service</label>
+                        <label>@Domain.Resource.Title_Designer.Service</label>
                         <div id="divStockId">
                             <div class="input-group">
                                 @Html.DropDownList("ServiceType", null, null, new { @class = "form-control" })
                                 <input type="text" id="ServiceValue" name="ServiceValue" value="@ViewBag.ServiceValue" class="form-control" />
                             </div>
-                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.Tax</label>
+                        <label>@Domain.Resource.Title_Designer.Tax</label>
                         <div id="divStockId">
                             <div class="input-group">
                                 @Html.DropDownList("TaxType", null, null, new { @class = "form-control" })
                                 <input type="text" id="TaxValue" name="TaxValue" value="@ViewBag.TaxValue" class="form-control" />
                             </div>
-                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.OrderTabe</label>
+                        <label>@Domain.Resource.Title_Designer.OrderTabe</label>
                         <div id="divStockId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -665,11 +665,11 @@
                                 </div>
                                 @Html.DropDownList("OrderTabe", null, null, new { @class = "form-control" })
                             </div>
-                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.Repeated</label>
+                        <label>@Domain.Resource.Title_Designer.Repeated</label>
                         <div id="divPaymentTypeId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -677,11 +677,11 @@
                                 </div>
                                 @Html.DropDownList("AllowRepeated", null, null, new { @class = "form-control" })
                             </div>
-                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.TypeSerial</label>
+                        <label>@Domain.Resource.Title_Designer.TypeSerial</label>
                         <div id="divPaymentTypeId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -689,14 +689,14 @@
                                 </div>
                                 @Html.DropDownList("TypeSerial", null, null, new { @class = "form-control" })
                             </div>
-                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.EmptyLineCount</label>
+                        <label>@Domain.Resource.Title_Designer.EmptyLineCount</label>
                         <div id="divStockId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -704,11 +704,11 @@
                                 </div>
                                 <input type="text" id="NumberLine" name="NumberLine" value="@ViewBag.NumberLine" class="form-control" />
                             </div>
-                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.AutoSave</label>
+                        <label>@Domain.Resource.Title_Designer.AutoSave</label>
                         <div id="divPaymentTypeId">
                             <div class="input-group mt-2">
                                 <div id="divAutoSave" class="custom-switch custom-switch-primary-inverse custom-switch-small">
@@ -716,11 +716,11 @@
                                     <label class="custom-switch-btn" for="AutoSave"></label>
                                 </div>
                             </div>
-                            @*<small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted" style="margin-top:12px;"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.SaveLastStatusPreference</label>
+                        <label>@Domain.Resource.Title_Designer.SaveLastStatusPreference</label>
                         <div id="divPaymentTypeId">
                             <div class="input-group mt-2">
                                 <div id="divSaveLastStatusSetting" class="custom-switch custom-switch-primary-inverse custom-switch-small">
@@ -728,14 +728,14 @@
                                     <label class="custom-switch-btn" for="SaveLastStatusSetting"></label>
                                 </div>
                             </div>
-                            @*<small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted" style="margin-top:12px;"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.AutoCreateTransaction</label>
+                        <label>@Domain.Resource.Title_Designer.AutoCreateTransaction</label>
                         <div id="divPaymentTypeId">
                             <div class="input-group mt-2">
                                 <div id="divAutoSave" class="custom-switch custom-switch-primary-inverse custom-switch-small">
@@ -743,11 +743,11 @@
                                     <label class="custom-switch-btn" for="AutoCreateTransaction"></label>
                                 </div>
                             </div>
-                            @*<small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted" style="margin-top:12px;"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        @Utility.Resource.Title_Designer.DefaultCurrency
+                        @Domain.Resource.Title_Designer.DefaultCurrency
                         <div id="divPaymentTypeId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -755,7 +755,7 @@
                                 </div>
                                 @Html.DropDownList("Currencys", null, null, new { @class = "form-control" })
                             </div>
-                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                 </div>
@@ -765,7 +765,7 @@
             {
                 <div class="form-row">
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.Supplier</label>
+                        <label>@Domain.Resource.Title_Designer.Supplier</label>
                         <div id="divStockId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -773,11 +773,11 @@
                                 </div>
                                 @Html.DropDownList("Suppliers", null, null, new { @class = "form-control" })
                             </div>
-                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.Stocks</label>
+                        <label>@Domain.Resource.Title_Designer.Stocks</label>
                         <div id="divPaymentTypeId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -785,11 +785,11 @@
                                 </div>
                                 @Html.DropDownList("Stocks", null, null, new { @class = "form-control" })
                             </div>
-                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.OrderTabe</label>
+                        <label>@Domain.Resource.Title_Designer.OrderTabe</label>
                         <div id="divStockId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -797,14 +797,14 @@
                                 </div>
                                 @Html.DropDownList("OrderTabe", null, null, new { @class = "form-control" })
                             </div>
-                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.Repeated</label>
+                        <label>@Domain.Resource.Title_Designer.Repeated</label>
                         <div id="divPaymentTypeId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -812,11 +812,11 @@
                                 </div>
                                 @Html.DropDownList("AllowRepeated", null, null, new { @class = "form-control" })
                             </div>
-                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.TypeSerial</label>
+                        <label>@Domain.Resource.Title_Designer.TypeSerial</label>
                         <div id="divPaymentTypeId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -824,11 +824,11 @@
                                 </div>
                                 @Html.DropDownList("TypeSerial", null, null, new { @class = "form-control" })
                             </div>
-                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.EmptyLineCount</label>
+                        <label>@Domain.Resource.Title_Designer.EmptyLineCount</label>
                         <div id="divStockId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -836,7 +836,7 @@
                                 </div>
                                 <input type="text" id="NumberLine" name="NumberLine" value="@ViewBag.NumberLine" class="form-control" />
                             </div>
-                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                 </div>
@@ -844,7 +844,7 @@
                 <div class="form-row">
 
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.AutoSave</label>
+                        <label>@Domain.Resource.Title_Designer.AutoSave</label>
                         <div id="divPaymentTypeId">
                             <div class="input-group mt-2">
                                 <div id="divAutoSave" class="custom-switch custom-switch-primary-inverse custom-switch-small">
@@ -852,11 +852,11 @@
                                     <label class="custom-switch-btn" for="AutoSave"></label>
                                 </div>
                             </div>
-                            @*<small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted" style="margin-top:12px;"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.SaveLastStatusPreference</label>
+                        <label>@Domain.Resource.Title_Designer.SaveLastStatusPreference</label>
                         <div id="divPaymentTypeId">
                             <div class="input-group mt-2">
                                 <div id="divSaveLastStatusSetting" class="custom-switch custom-switch-primary-inverse custom-switch-small">
@@ -864,7 +864,7 @@
                                     <label class="custom-switch-btn" for="SaveLastStatusSetting"></label>
                                 </div>
                             </div>
-                            @* <small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted" style="margin-top:12px;"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                 </div>
@@ -874,7 +874,7 @@
             {
                 <div class="form-row">
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.Customers</label>
+                        <label>@Domain.Resource.Title_Designer.Customers</label>
                         <div id="divStockId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -882,11 +882,11 @@
                                 </div>
                                 @Html.DropDownList("Customers", null, null, new { @class = "form-control" })
                             </div>
-                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.Stocks</label>
+                        <label>@Domain.Resource.Title_Designer.Stocks</label>
                         <div id="divPaymentTypeId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -894,11 +894,11 @@
                                 </div>
                                 @Html.DropDownList("Stocks", null, null, new { @class = "form-control" })
                             </div>
-                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.OrderTabe</label>
+                        <label>@Domain.Resource.Title_Designer.OrderTabe</label>
                         <div id="divStockId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -906,14 +906,14 @@
                                 </div>
                                 @Html.DropDownList("OrderTabe", null, null, new { @class = "form-control" })
                             </div>
-                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.Repeated</label>
+                        <label>@Domain.Resource.Title_Designer.Repeated</label>
                         <div id="divPaymentTypeId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -921,11 +921,11 @@
                                 </div>
                                 @Html.DropDownList("AllowRepeated", null, null, new { @class = "form-control" })
                             </div>
-                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label> @Utility.Resource.Title_Designer.TypeSerial</label>
+                        <label> @Domain.Resource.Title_Designer.TypeSerial</label>
                         <div id="divPaymentTypeId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -933,11 +933,11 @@
                                 </div>
                                 @Html.DropDownList("TypeSerial", null, null, new { @class = "form-control" })
                             </div>
-                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.EmptyLineCount</label>
+                        <label>@Domain.Resource.Title_Designer.EmptyLineCount</label>
                         <div id="divStockId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -945,7 +945,7 @@
                                 </div>
                                 <input type="text" id="NumberLine" name="NumberLine" value="@ViewBag.NumberLine" class="form-control" />
                             </div>
-                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                 </div>
@@ -953,7 +953,7 @@
                 <div class="form-row">
 
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.AutoSave</label>
+                        <label>@Domain.Resource.Title_Designer.AutoSave</label>
                         <div id="divPaymentTypeId">
                             <div class="input-group mt-2">
                                 <div id="divAutoSave" class="custom-switch custom-switch-primary-inverse custom-switch-small">
@@ -961,11 +961,11 @@
                                     <label class="custom-switch-btn" for="AutoSave"></label>
                                 </div>
                             </div>
-                            @*<small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted" style="margin-top:12px;"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.SaveLastStatusPreference</label>
+                        <label>@Domain.Resource.Title_Designer.SaveLastStatusPreference</label>
                         <div id="divPaymentTypeId">
                             <div class="input-group mt-2">
                                 <div id="divSaveLastStatusSetting" class="custom-switch custom-switch-primary-inverse custom-switch-small">
@@ -973,7 +973,7 @@
                                     <label class="custom-switch-btn" for="SaveLastStatusSetting"></label>
                                 </div>
                             </div>
-                            @*<small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted" style="margin-top:12px;"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                 </div>
@@ -983,7 +983,7 @@
             {
                 <div class="form-row">
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.Stocks</label>
+                        <label>@Domain.Resource.Title_Designer.Stocks</label>
                         <div id="divPaymentTypeId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -991,11 +991,11 @@
                                 </div>
                                 @Html.DropDownList("Stocks", null, null, new { @class = "form-control" })
                             </div>
-                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.OrderTabe</label>
+                        <label>@Domain.Resource.Title_Designer.OrderTabe</label>
                         <div id="divStockId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -1003,11 +1003,11 @@
                                 </div>
                                 @Html.DropDownList("OrderTabe", null, null, new { @class = "form-control" })
                             </div>
-                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.Repeated</label>
+                        <label>@Domain.Resource.Title_Designer.Repeated</label>
                         <div id="divPaymentTypeId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -1015,13 +1015,13 @@
                                 </div>
                                 @Html.DropDownList("AllowRepeated", null, null, new { @class = "form-control" })
                             </div>
-                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.TypeSerial</label>
+                        <label>@Domain.Resource.Title_Designer.TypeSerial</label>
                         <div id="divPaymentTypeId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -1029,11 +1029,11 @@
                                 </div>
                                 @Html.DropDownList("TypeSerial", null, null, new { @class = "form-control" })
                             </div>
-                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.EmptyLineCount</label>
+                        <label>@Domain.Resource.Title_Designer.EmptyLineCount</label>
                         <div id="divStockId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -1041,11 +1041,11 @@
                                 </div>
                                 <input type="text" id="NumberLine" name="NumberLine" value="@ViewBag.NumberLine" class="form-control" />
                             </div>
-                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label> @Utility.Resource.Title_Designer.AutoSave</label>
+                        <label> @Domain.Resource.Title_Designer.AutoSave</label>
                         <div id="divPaymentTypeId">
                             <div class="input-group mt-2">
                                 <div id="divAutoSave" class="custom-switch custom-switch-primary-inverse custom-switch-small">
@@ -1053,14 +1053,14 @@
                                     <label class="custom-switch-btn" for="AutoSave"></label>
                                 </div>
                             </div>
-                            @* <small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted" style="margin-top:12px;"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.SaveLastStatusPreference</label>
+                        <label>@Domain.Resource.Title_Designer.SaveLastStatusPreference</label>
                         <div id="divPaymentTypeId">
                             <div class="input-group mt-2">
                                 <div id="divSaveLastStatusSetting" class="custom-switch custom-switch-primary-inverse custom-switch-small">
@@ -1068,11 +1068,11 @@
                                     <label class="custom-switch-btn" for="SaveLastStatusSetting"></label>
                                 </div>
                             </div>
-                            @* <small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted" style="margin-top:12px;"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.AutoReceived</label>
+                        <label>@Domain.Resource.Title_Designer.AutoReceived</label>
                         <div id="divPaymentTypeId">
                             <div class="input-group mt-2">
                                 <div id="divAutoReceived" class="custom-switch custom-switch-primary-inverse custom-switch-small">
@@ -1080,7 +1080,7 @@
                                     <label class="custom-switch-btn" for="AutoReceived"></label>
                                 </div>
                             </div>
-                            @*<small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted" style="margin-top:12px;"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                 </div>
@@ -1090,7 +1090,7 @@
             {
                 <div class="form-row">
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.Stocks</label>
+                        <label>@Domain.Resource.Title_Designer.Stocks</label>
                         <div id="divPaymentTypeId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -1098,11 +1098,11 @@
                                 </div>
                                 @Html.DropDownList("Stocks", null, null, new { @class = "form-control" })
                             </div>
-                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.OrderTabe</label>
+                        <label>@Domain.Resource.Title_Designer.OrderTabe</label>
                         <div id="divStockId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -1110,11 +1110,11 @@
                                 </div>
                                 @Html.DropDownList("OrderTabe", null, null, new { @class = "form-control" })
                             </div>
-                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.Repeated</label>
+                        <label>@Domain.Resource.Title_Designer.Repeated</label>
                         <div id="divPaymentTypeId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -1122,13 +1122,13 @@
                                 </div>
                                 @Html.DropDownList("AllowRepeated", null, null, new { @class = "form-control" })
                             </div>
-                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.TypeSerial</label>
+                        <label>@Domain.Resource.Title_Designer.TypeSerial</label>
                         <div id="divPaymentTypeId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -1136,11 +1136,11 @@
                                 </div>
                                 @Html.DropDownList("TypeSerial", null, null, new { @class = "form-control" })
                             </div>
-                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.EmptyLineCount</label>
+                        <label>@Domain.Resource.Title_Designer.EmptyLineCount</label>
                         <div id="divStockId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -1148,11 +1148,11 @@
                                 </div>
                                 <input type="text" id="NumberLine" name="NumberLine" value="@ViewBag.NumberLine" class="form-control" />
                             </div>
-                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.AutoSave</label>
+                        <label>@Domain.Resource.Title_Designer.AutoSave</label>
                         <div id="divPaymentTypeId">
                             <div class="input-group mt-2">
                                 <div id="divAutoSave" class="custom-switch custom-switch-primary-inverse custom-switch-small">
@@ -1160,14 +1160,14 @@
                                     <label class="custom-switch-btn" for="AutoSave"></label>
                                 </div>
                             </div>
-                            @*<small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted" style="margin-top:12px;"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.SaveLastStatusPreference</label>
+                        <label>@Domain.Resource.Title_Designer.SaveLastStatusPreference</label>
                         <div id="divPaymentTypeId">
                             <div class="input-group mt-2">
                                 <div id="divSaveLastStatusSetting" class="custom-switch custom-switch-primary-inverse custom-switch-small">
@@ -1175,7 +1175,7 @@
                                     <label class="custom-switch-btn" for="SaveLastStatusSetting"></label>
                                 </div>
                             </div>
-                            @* <small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted" style="margin-top:12px;"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                 </div>
@@ -1185,7 +1185,7 @@
             {
                 <div class="form-row">
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.Client</label>
+                        <label>@Domain.Resource.Title_Designer.Client</label>
                         <div id="divStockId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -1193,11 +1193,11 @@
                                 </div>
                                 @Html.DropDownList("Customers", null, null, new { @class = "form-control" })
                             </div>
-                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.OrderTabe</label>
+                        <label>@Domain.Resource.Title_Designer.OrderTabe</label>
                         <div id="divStockId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -1205,11 +1205,11 @@
                                 </div>
                                 @Html.DropDownList("OrderTabe", null, null, new { @class = "form-control" })
                             </div>
-                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.Repeated</label>
+                        <label>@Domain.Resource.Title_Designer.Repeated</label>
                         <div id="divPaymentTypeId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -1217,45 +1217,45 @@
                                 </div>
                                 @Html.DropDownList("AllowRepeated", null, null, new { @class = "form-control" })
                             </div>
-                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.Discount</label>
+                        <label>@Domain.Resource.Title_Designer.Discount</label>
                         <div id="divStockId">
                             <div class="input-group">
                                 @Html.DropDownList("DiscountType", null, null, new { @class = "form-control" })
                                 <input type="text" id="DiscountValue" name="DiscountValue" value="@ViewBag.DiscountValue" class="form-control" />
                             </div>
-                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.Service</label>
+                        <label>@Domain.Resource.Title_Designer.Service</label>
                         <div id="divStockId">
                             <div class="input-group">
                                 @Html.DropDownList("ServiceType", null, null, new { @class = "form-control" })
                                 <input type="text" id="ServiceValue" name="ServiceValue" value="@ViewBag.ServiceValue" class="form-control" />
                             </div>
-                            @*  <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*  <small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.Tax</label>
+                        <label>@Domain.Resource.Title_Designer.Tax</label>
                         <div id="divStockId">
                             <div class="input-group">
                                 @Html.DropDownList("TaxType", null, null, new { @class = "form-control" })
                                 <input type="text" id="TaxValue" name="TaxValue" value="@ViewBag.TaxValue" class="form-control" />
                             </div>
-                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.TypeSerial</label>
+                        <label>@Domain.Resource.Title_Designer.TypeSerial</label>
                         <div id="divPaymentTypeId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -1263,11 +1263,11 @@
                                 </div>
                                 @Html.DropDownList("TypeSerial", null, null, new { @class = "form-control" })
                             </div>
-                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.EmptyLineCount</label>
+                        <label>@Domain.Resource.Title_Designer.EmptyLineCount</label>
                         <div id="divStockId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -1275,11 +1275,11 @@
                                 </div>
                                 <input type="text" id="NumberLine" name="NumberLine" value="@ViewBag.NumberLine" class="form-control" />
                             </div>
-                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.AutoSave</label>
+                        <label>@Domain.Resource.Title_Designer.AutoSave</label>
                         <div id="divPaymentTypeId">
                             <div class="input-group mt-2">
                                 <div id="divAutoSave" class="custom-switch custom-switch-primary-inverse custom-switch-small">
@@ -1287,7 +1287,7 @@
                                     <label class="custom-switch-btn" for="AutoSave"></label>
                                 </div>
                             </div>
-                            @* <small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted" style="margin-top:12px;"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                 </div>
@@ -1301,11 +1301,11 @@
                                         <label class="custom-switch-btn" for="SaveLastStatusSetting"></label>
                                     </div>
                                 </div>
-                                <small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
+                                <small class="form-text text-muted" style="margin-top:12px;"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>
                             </div>
                         </div>*@
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.AutoCreateInvoice</label>
+                        <label>@Domain.Resource.Title_Designer.AutoCreateInvoice</label>
                         <div id="divPaymentTypeId">
                             <div class="input-group mt-2">
                                 <div id="divAutoSave" class="custom-switch custom-switch-primary-inverse custom-switch-small">
@@ -1313,7 +1313,7 @@
                                     <label class="custom-switch-btn" for="AutoCreateInvoice"></label>
                                 </div>
                             </div>
-                            @* <small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted" style="margin-top:12px;"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                 </div>
@@ -1325,7 +1325,7 @@
                     @if (ViewBag.type == 1)
                     {
                         <div class="form-group col-md-4">
-                            <label>@Utility.Resource.Title_Designer.DefaultClient</label>
+                            <label>@Domain.Resource.Title_Designer.DefaultClient</label>
                             <div id="divStockId">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -1333,14 +1333,14 @@
                                     </div>
                                     @Html.DropDownList("Clients", null, null, new { @class = "form-control" })
                                 </div>
-                                @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                                @* <small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                             </div>
                         </div>
                     }
                     else if (ViewBag.type == 2)
                     {
                         <div class="form-group col-md-4">
-                            <label>@Utility.Resource.Title_Designer.DefaultSupplier</label>
+                            <label>@Domain.Resource.Title_Designer.DefaultSupplier</label>
                             <div id="divStockId">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -1348,14 +1348,14 @@
                                     </div>
                                     @Html.DropDownList("Suppliers", null, null, new { @class = "form-control" })
                                 </div>
-                                @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                                @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                             </div>
                         </div>
                     }
                     else
                     {
                         <div class="form-group col-md-4">
-                            <label>@Utility.Resource.Title_Designer.DefaultOutlay</label>
+                            <label>@Domain.Resource.Title_Designer.DefaultOutlay</label>
                             <div id="divStockId">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -1363,12 +1363,12 @@
                                     </div>
                                     @Html.DropDownList("Outlays", null, null, new { @class = "form-control" })
                                 </div>
-                                @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                                @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                             </div>
                         </div>
                     }
                     <div class="form-group col-md-4">
-                        <label> @Utility.Resource.Title_Designer.DefaultSafe</label>
+                        <label> @Domain.Resource.Title_Designer.DefaultSafe</label>
                         <div id="divPaymentTypeId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -1376,11 +1376,11 @@
                                 </div>
                                 @Html.DropDownList("Safes", null, null, new { @class = "form-control" })
                             </div>
-                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.DefaultCurrency</label>
+                        <label>@Domain.Resource.Title_Designer.DefaultCurrency</label>
                         <div id="divPaymentTypeId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -1388,14 +1388,14 @@
                                 </div>
                                 @Html.DropDownList("Currencys", null, null, new { @class = "form-control" })
                             </div>
-                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.DefaultPaymentType</label>
+                        <label>@Domain.Resource.Title_Designer.DefaultPaymentType</label>
                         <div id="divStockId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -1403,12 +1403,12 @@
                                 </div>
                                 @Html.DropDownList("PaymentTypes", null, null, new { @class = "form-control" })
                             </div>
-                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.TypeSerial</label>
+                        <label>@Domain.Resource.Title_Designer.TypeSerial</label>
                         <div id="divPaymentTypeId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -1416,12 +1416,12 @@
                                 </div>
                                 @Html.DropDownList("TypeSerial", null, null, new { @class = "form-control" })
                             </div>
-                            @* <small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.AutoSave</label>
+                        <label>@Domain.Resource.Title_Designer.AutoSave</label>
                         <div id="divPaymentTypeId">
                             <div class="input-group mt-2">
                                 <div id="divAutoSave" class="custom-switch custom-switch-primary-inverse custom-switch-small">
@@ -1429,7 +1429,7 @@
                                     <label class="custom-switch-btn" for="AutoSave"></label>
                                 </div>
                             </div>
-                            @* <small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @* <small class="form-text text-muted" style="margin-top:12px;"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                 </div>
@@ -1439,7 +1439,7 @@
             {
                 <div class="form-row">
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.Stocks</label>
+                        <label>@Domain.Resource.Title_Designer.Stocks</label>
                         <div id="divPaymentTypeId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -1447,11 +1447,11 @@
                                 </div>
                                 @Html.DropDownList("Stocks", null, null, new { @class = "form-control" })
                             </div>
-                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.TypeSerial</label>
+                        <label>@Domain.Resource.Title_Designer.TypeSerial</label>
                         <div id="divPaymentTypeId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -1459,11 +1459,11 @@
                                 </div>
                                 @Html.DropDownList("TypeSerial", null, null, new { @class = "form-control" })
                             </div>
-                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>@Utility.Resource.Title_Designer.AutoSave</label>
+                        <label>@Domain.Resource.Title_Designer.AutoSave</label>
                         <div id="divPaymentTypeId">
                             <div class="input-group mt-2">
                                 <div id="divAutoSave" class="custom-switch custom-switch-primary-inverse custom-switch-small">
@@ -1471,7 +1471,7 @@
                                     <label class="custom-switch-btn" for="AutoSave"></label>
                                 </div>
                             </div>
-                            @*<small class="form-text text-muted" style="margin-top:12px;"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                            @*<small class="form-text text-muted" style="margin-top:12px;"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
                 </div>
@@ -1482,11 +1482,11 @@
         <span class="btn-group group-add" role="group" aria-label="Basic example">
             <button class="btn btn-primary" onclick="SavePreference()">
                 <i class="fa fa-check"></i>
-                @Utility.Resource.Title_Designer.Ok
+                @Domain.Resource.Title_Designer.Ok
             </button>
             <button class="btn btn-primary" onclick="Close()">
                 <i class="simple-icon-action-undo"> </i>
-                @Utility.Resource.Title_Designer.Back
+                @Domain.Resource.Title_Designer.Back
             </button>
         </span>
     </div>

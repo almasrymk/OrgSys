@@ -4,7 +4,6 @@
     using Domain.Abstraction;
     using Application.Validators;
     using Application.Commands.Org.Setting.DealerGroup.Commands;
-    using Utility;
 
     public class UpdateDealerGroupCommandValidator : Validator<UpdateDealerGroupCommand, Domain.Entities.DealerGroup>
     {

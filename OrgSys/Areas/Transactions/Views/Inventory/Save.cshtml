@@ -10,22 +10,22 @@
     <div class="row">
         <div class="col-12">
             <div class="mb-0">
-                <h1>@Utility.Resource.Title_Designer.Inventory </h1>
+                <h1>@Domain.Resource.Title_Designer.Inventory </h1>
                 <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
                     <ol class="breadcrumb pt-0">
                         <li class="breadcrumb-item">
-                            <a href="/">@Utility.Resource.Title_Designer.Home</a>
+                            <a href="/">@Domain.Resource.Title_Designer.Home</a>
                         </li>
                         <li class="breadcrumb-item">
-                            @Utility.Resource.Title_Designer.Setting
+                            @Domain.Resource.Title_Designer.Setting
                         </li>
                         <li class="breadcrumb-item">
-                            @Utility.Resource.Title_Designer.InventoryNotices
+                            @Domain.Resource.Title_Designer.InventoryNotices
                         </li>
                         @if (Model.TypeId == 0)
                          {
                            <li class="breadcrumb-item active" aria-current="page"> 
-                               <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId">@Utility.Resource.Title_Designer.Inventory</a></li>
+                               <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId">@Domain.Resource.Title_Designer.Inventory</a></li>
                          }
                     </ol>
                 </nav>
@@ -52,23 +52,23 @@
                                 <div class="form-row">
                                     @Html.HiddenFor(model => model.CodeNumber)
                                     <div class="form-group col-md-3">
-                                        <label>@Utility.Resource.Title_Designer.Code</label>
+                                        <label>@Domain.Resource.Title_Designer.Code</label>
 
                                         <div id="divCode">
                                             @if (ViewBag.TypeSerial == 1)
                                             {
-                                                @Html.TextBoxFor(model => model.Code, new { @class = "form-control", @placeholder = @Utility.Resource.Title_Designer.Code })
+                                                @Html.TextBoxFor(model => model.Code, new { @class = "form-control", @placeholder = @Domain.Resource.Title_Designer.Code })
                                             }
                                             else
                                             {
-                                                @Html.TextBoxFor(model => model.Code, new { @class = "form-control", @readonly = "true", @style = "background-color:transparent", @placeholder = @Utility.Resource.Title_Designer.Code })
+                                                @Html.TextBoxFor(model => model.Code, new { @class = "form-control", @readonly = "true", @style = "background-color:transparent", @placeholder = @Domain.Resource.Title_Designer.Code })
                                             }
-                                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.CodeIncreasedAutomaticallyCanBechanged</small>*@
+                                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.CodeIncreasedAutomaticallyCanBechanged</small>*@
                                         </div>
                                         @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger " })
                                     </div>
                                     <div class="form-group col-md-3">
-                                        <label>@Utility.Resource.Title_Designer.Date</label>
+                                        <label>@Domain.Resource.Title_Designer.Date</label>
                                         <div id="divDate">
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
@@ -76,11 +76,11 @@
                                                 </div>
                                                 @Html.TextBoxFor(model => model.Date, new { @class = "form-control datepicker" })
                                             </div>
-                                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                                         </div>
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label>@Utility.Resource.Title_Designer.Stock</label>
+                                        <label>@Domain.Resource.Title_Designer.Stock</label>
                                         <div id="divStockId">
                                             <div class="input-group">
                                                 <div class="input-group DropAutoComplete">
@@ -99,7 +99,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                                         </div>
                                         @Html.ValidationMessageFor(model => model.StockId, "", new { @class = "text-danger " })
                                     </div>
@@ -107,15 +107,15 @@
 
                                 <div class="form-row">
                                     <div class="form-group col-md-12">
-                                        <label>@Utility.Resource.Title_Designer.Notes</label>
+                                        <label>@Domain.Resource.Title_Designer.Notes</label>
                                         <div id="divNotes">
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="simple-icon-notebook"></i></span>
                                                 </div>
-                                                @Html.TextBoxFor(model => model.Notes, new { @class = "form-control", @placeholder = Utility.Resource.Title_Designer.Notes })
+                                                @Html.TextBoxFor(model => model.Notes, new { @class = "form-control", @placeholder = Domain.Resource.Title_Designer.Notes })
                                             </div>
-                                            @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                                         </div>
                                         @Html.ValidationMessageFor(model => model.Notes, "", new { @class = "text-danger " })
                                     </div>
@@ -126,11 +126,11 @@
                                         <thead>
                                             <tr>
                                                 <th scope="col">#</th>
-                                                <th scope="col">@Utility.Resource.Title_Designer.Product</th>
-                                                <th scope="col">@Utility.Resource.Title_Designer.Unit</th>
-                                                <th scope="col">@Utility.Resource.Title_Designer.Balance</th>
-                                                <th scope="col">@Utility.Resource.Title_Designer.ActualBalance</th>
-                                                <th scope="col">@Utility.Resource.Title_Designer.DiffQuantity</th>
+                                                <th scope="col">@Domain.Resource.Title_Designer.Product</th>
+                                                <th scope="col">@Domain.Resource.Title_Designer.Unit</th>
+                                                <th scope="col">@Domain.Resource.Title_Designer.Balance</th>
+                                                <th scope="col">@Domain.Resource.Title_Designer.ActualBalance</th>
+                                                <th scope="col">@Domain.Resource.Title_Designer.DiffQuantity</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -150,11 +150,11 @@
                                                                 </button>
                                                             </div>
                                                             <input type="text" class="form-control search-box Droptxt" name="query" id="query"
-                                                                   placeholder="@Utility.Resource.Message_Designer.StartSearch"
+                                                                   placeholder="@Domain.Resource.Message_Designer.StartSearch"
                                                                    autocomplete="off" style="border-top:none;border-bottom:none;border-right:none;" value="@InventoryProduct.ProductName">
                                                             <input type="hidden" id="ProductId" name="ProductId" class="ProductId" value="@InventoryProduct.ProductId" />
                                                             <div style="text-align: center; vertical-align: middle;">
-                                                                <i id="RepeatedDanger" class="badge badge-danger mb-1" style="width: 60px; text-align: center; vertical-align: middle; height: 25px; display: none; margin: 6px;">@Utility.Resource.Title_Designer.Repeated</i>
+                                                                <i id="RepeatedDanger" class="badge badge-danger mb-1" style="width: 60px; text-align: center; vertical-align: middle; height: 25px; display: none; margin: 6px;">@Domain.Resource.Title_Designer.Repeated</i>
                                                             </div>
                                                             <div class="input-group-prepend Dropbtn2  ">
                                                                 <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
@@ -189,11 +189,11 @@
                                                             </button>
                                                         </div>
                                                         <input type="text" class="form-control search-box Droptxt" name="query" id="query"
-                                                               placeholder="@Utility.Resource.Message_Designer.StartSearch"
+                                                               placeholder="@Domain.Resource.Message_Designer.StartSearch"
                                                                autocomplete="off" style="border-top:none;border-bottom:none;border-right:none;">
                                                         <input type="hidden" id="ProductId" name="ProductId" class="ProductId" />
                                                         <div style="text-align: center; vertical-align: middle;">
-                                                            <i id="RepeatedDanger" class="badge badge-danger mb-1" style="width: 60px; text-align: center; vertical-align: middle; height: 25px; display: none; margin: 6px;">@Utility.Resource.Title_Designer.Repeated</i>
+                                                            <i id="RepeatedDanger" class="badge badge-danger mb-1" style="width: 60px; text-align: center; vertical-align: middle; height: 25px; display: none; margin: 6px;">@Domain.Resource.Title_Designer.Repeated</i>
                                                         </div>
                                                         <div class="input-group-prepend Dropbtn2  ">
                                                             <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
@@ -225,17 +225,17 @@
                     <span class="btn-group group-add">
                         <a id="ShowPreference" href="javascript::" class="btn btn-primary .ShowPreference" data-toggle="modal" data-target=".Preference">
                             <i class="iconsminds-gear-2"></i>
-                            @Utility.Resource.Title_Designer.Preference
+                            @Domain.Resource.Title_Designer.Preference
                         </a>
                         <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId" class="btn btn-primary ">
                             <i class="simple-icon-action-undo"> </i>
-                            @Utility.Resource.Title_Designer.Back
+                            @Domain.Resource.Title_Designer.Back
                         </a>
                     </span>
                 </div>
                 <div class="row">
                     <div class="col-12">
-                        <button id="btn" type="button" class="btn btn-primary ml-4 mr-4 mb-4">@Utility.Resource.Title_Designer.Save</button>
+                        <button id="btn" type="button" class="btn btn-primary ml-4 mr-4 mb-4">@Domain.Resource.Title_Designer.Save</button>
                     </div>
                 </div>
 
@@ -586,13 +586,13 @@ var ff = '@System.Threading.Thread.CurrentThread.CurrentCulture.DateTimeFormat.S
         Save = function () {
             var Valid = true;
 
-            if (CheckRequired("Code", "divCode", '@Utility.Resource.Message_Designer.CodeRequired'))
+            if (CheckRequired("Code", "divCode", '@Domain.Resource.Message_Designer.CodeRequired'))
                 Valid = false;
 
-            if (CheckRequired("Date", "divDate", '@Utility.Resource.Message_Designer.DateRequired'))
+            if (CheckRequired("Date", "divDate", '@Domain.Resource.Message_Designer.DateRequired'))
                 Valid = false;
 
-            if (CheckRequired("StockId", "divStockId", '@Utility.Resource.Message_Designer.StockRequired'))
+            if (CheckRequired("StockId", "divStockId", '@Domain.Resource.Message_Designer.StockRequired'))
                 Valid = false;
 
             if (!Valid) {

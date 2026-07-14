@@ -8,7 +8,6 @@
     using Domain.Shared;
     using Application.DTOs;
     using System.Linq.Expressions;
-    using Utility;
 
     public sealed record GetListUserQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandCollection<UserDto> , IListQuery<ResultCollection<UserDto>>;
 

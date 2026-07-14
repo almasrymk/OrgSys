@@ -14,7 +14,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <Title>@ViewData["Title"] - @Utility.Resource.Title_Designer.OrgSys</Title>
+    <Title>@ViewData["Title"] - @Domain.Resource.Title_Designer.OrgSys</Title>
 
     <link rel="stylesheet" href="~/font/AllFonts.css" />
 
@@ -471,9 +471,9 @@
                 event.preventDefault();
                 ShowConfirmMsg(
                     'simple-icon-trash',
-                    '@Utility.Resource.Message_Designer.DeleteConfirmation',
-                    '@Utility.Resource.Message_Designer.DoYouWantDeleteFile',
-                    '@Utility.Resource.Title_Designer.Ok');
+                    '@Domain.Resource.Message_Designer.DeleteConfirmation',
+                    '@Domain.Resource.Message_Designer.DoYouWantDeleteFile',
+                    '@Domain.Resource.Title_Designer.Ok');
             });
 
             if ('@ViewBag.message' != '') {

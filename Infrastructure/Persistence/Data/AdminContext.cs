@@ -1,6 +1,5 @@
 ﻿namespace Infrastructure.Persistence.Data
 {
-    using Utility;
     using Domain.Entities;
     using Domain.Abstraction;
     using Microsoft.EntityFrameworkCore;

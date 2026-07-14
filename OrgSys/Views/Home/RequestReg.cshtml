@@ -101,38 +101,38 @@
             <div class="fadeIn first">
                 <img src="~/logos/Logo.png" style="width:150px !important" id="icon" alt="User Icon" />
             </div>
-            <h2 class="active"> @Utility.Resource.Title_Designer.Request </h2>
+            <h2 class="active"> @Domain.Resource.Title_Designer.Request </h2>
             <form action="/Home/RequestReg" id="RequestForm" method="post" style="margin:10px;">
                 <div class="row ml-3 mr-3">
                     <div class="col-md-6" style="padding:0px !important;">
-                        <input type="text" name="Name" id="Name" placeholder="@Utility.Resource.Title_Designer.Name" class="fadeIn second">
+                        <input type="text" name="Name" id="Name" placeholder="@Domain.Resource.Title_Designer.Name" class="fadeIn second">
                         <div id="NameRequerd" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                            <span>@Utility.Resource.Message_Designer.NameRequired</span>
+                            <span>@Domain.Resource.Message_Designer.NameRequired</span>
                         </div>
                     </div>
                     <div class="col-md-6" style="padding:0px !important;">
-                        <input type="text" name="CompanyName" id="CompanyName" placeholder="@Utility.Resource.Title_Designer.Company" class="fadeIn second">
+                        <input type="text" name="CompanyName" id="CompanyName" placeholder="@Domain.Resource.Title_Designer.Company" class="fadeIn second">
                         <div id="CompanyNameRequerd" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                            <span>@Utility.Resource.Message_Designer.CompanyNameRequired</span>
+                            <span>@Domain.Resource.Message_Designer.CompanyNameRequired</span>
                         </div>
                     </div>
 
                     <div class="col-md-6" style="padding:0px !important;">
-                        <input type="email" name="Email" id="Email" placeholder="@Utility.Resource.Title_Designer.Email" class="fadeIn second">
+                        <input type="email" name="Email" id="Email" placeholder="@Domain.Resource.Title_Designer.Email" class="fadeIn second">
                         <div id="EmailRequerd" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                            <span>@Utility.Resource.Message_Designer.EmailRequired</span>
+                            <span>@Domain.Resource.Message_Designer.EmailRequired</span>
                         </div>
                         <div id="EmailError" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                            <span>@Utility.Resource.Message_Designer.EmailNotValid</span>
+                            <span>@Domain.Resource.Message_Designer.EmailNotValid</span>
                         </div>
                     </div>
                     <div class="col-md-6" style="padding:0px !important;">
-                        <input type="text" name="Phone" id="Phone" placeholder="@Utility.Resource.Title_Designer.Phone" class="fadeIn second">
+                        <input type="text" name="Phone" id="Phone" placeholder="@Domain.Resource.Title_Designer.Phone" class="fadeIn second">
                         <div id="PhoneRequerd" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                            <span>@Utility.Resource.Message_Designer.PhoneRequired</span>
+                            <span>@Domain.Resource.Message_Designer.PhoneRequired</span>
                         </div>
                         <div id="PhoneError" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                            <span>@Utility.Resource.Message_Designer.PhoneNotValid</span>
+                            <span>@Domain.Resource.Message_Designer.PhoneNotValid</span>
                         </div>
                     </div>
                 </div>
@@ -140,16 +140,16 @@
                 <div class="">
                     <div>
                         <small>
-                            <input id="chkAgree" type="checkbox" class="fadeIn" name="KeepLoggedIn" onchange="Agree()" /> &nbsp;  @Utility.Resource.Title_Designer.IAgreeToThe   <a class="underlineHover" href="javascript::" onclick="Back()"> @Utility.Resource.Title_Designer.TermsConditions</a>
+                            <input id="chkAgree" type="checkbox" class="fadeIn" name="KeepLoggedIn" onchange="Agree()" /> &nbsp;  @Domain.Resource.Title_Designer.IAgreeToThe   <a class="underlineHover" href="javascript::" onclick="Back()"> @Domain.Resource.Title_Designer.TermsConditions</a>
                         </small>
                     </div>
                     <div style="padding-top:10px;">
-                        <input id="btnSave" type="button" class="fadeIn fourth" onclick="Save()" style="color:gray;" value="@Utility.Resource.Title_Designer.SendRequest" disabled>
+                        <input id="btnSave" type="button" class="fadeIn fourth" onclick="Save()" style="color:gray;" value="@Domain.Resource.Title_Designer.SendRequest" disabled>
                     </div>
                 </div>
             </form>
             <div id="formFooter" style="padding:10px;">
-                <a class="underlineHover" href="/Home/Login">@Utility.Resource.Title_Designer.Login</a>
+                <a class="underlineHover" href="/Home/Login">@Domain.Resource.Title_Designer.Login</a>
             </div>
         </div>
     </div>

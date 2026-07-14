@@ -9,17 +9,17 @@
     <div class="row">
         <div class="col-12">
             <div class="mb-3">
-                <h1>@Utility.Resource.Title_Designer.City</h1>
+                <h1>@Domain.Resource.Title_Designer.City</h1>
                 <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
                     <ol class="breadcrumb pt-0">
                         <li class="breadcrumb-item">
-                            <a href="/">@Utility.Resource.Title_Designer.Home</a>
+                            <a href="/">@Domain.Resource.Title_Designer.Home</a>
                         </li>
                         <li class="breadcrumb-item">
-                            <span>@Utility.Resource.Title_Designer.Settings</span>
+                            <span>@Domain.Resource.Title_Designer.Settings</span>
                         </li>
                         <li class="breadcrumb-item">
-                            @Utility.Resource.Title_Designer.Areas
+                            @Domain.Resource.Title_Designer.Areas
                         </li>
                     </ol>
                 </nav>
@@ -36,15 +36,15 @@
                         <h3 class="mr-4 mb-2 ml-4 d-inline-block float-md-left">                         
                             @if (Model == null || Model.Id == 0)
                             {
-                                <span class="mb-4"> @Utility.Resource.Title_Designer.New ...</span>
+                                <span class="mb-4"> @Domain.Resource.Title_Designer.New ...</span>
                             }
                             else
                             {
-                                <span class="mb-4"> @Utility.Resource.Title_Designer.Edit ...</span>
+                                <span class="mb-4"> @Domain.Resource.Title_Designer.Edit ...</span>
                             }
                         </h3>
                         <div class="position-absolute card-top-buttons">
-                            <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId" class="btn btn-primary"><i class="simple-icon-action-undo"></i>  @Utility.Resource.Title_Designer.Back</a>
+                            <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId" class="btn btn-primary"><i class="simple-icon-action-undo"></i>  @Domain.Resource.Title_Designer.Back</a>
                         </div>
                     </div>
                     <hr />
@@ -56,7 +56,7 @@
 
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <label>@Utility.Resource.Title_Designer.Country</label>
+                                    <label>@Domain.Resource.Title_Designer.Country</label>
                                     <div id="divCountry" class="input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" style="background-color:whitesmoke";><i class="simple-icon-share"></i></span>
@@ -65,18 +65,18 @@
                                             <option value=""> ... </option>
                                         </select>
                                     </div>
-                                    @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.BranchRequired</small>*@
+                                    @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.BranchRequired</small>*@
                                     @Html.ValidationMessageFor(model => model.CountryId, "", new { @class = "text-danger " })
                                 </div>
                                 <div class="form-group col-md-6">
-                                   <label>@Utility.Resource.Title_Designer.Name</label>
-                                    <input asp-for="Name" class="form-control" placeholder="@Utility.Resource.Title_Designer.Name" />
-                                    @*<small class="form-text text-muted"> @Utility.Resource.Message_Designer.NameRequired</small>*@
+                                   <label>@Domain.Resource.Title_Designer.Name</label>
+                                    <input asp-for="Name" class="form-control" placeholder="@Domain.Resource.Title_Designer.Name" />
+                                    @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.NameRequired</small>*@
                                     @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger " })
                                 </div>
                             </div>
                             <hr />
-                            <button type="button" onclick="Save()" class="btn btn-primary mb-0">@Utility.Resource.Title_Designer.Save</button>
+                            <button type="button" onclick="Save()" class="btn btn-primary mb-0">@Domain.Resource.Title_Designer.Save</button>
                         </form>
                     </div>
 
@@ -92,13 +92,13 @@
     function Save() {
         var Valid = true;
 
-        if (CheckRequired("CountryId", "divCountry", '@Utility.Resource.Message_Designer.CountryRequired'))
+        if (CheckRequired("CountryId", "divCountry", '@Domain.Resource.Message_Designer.CountryRequired'))
             Valid = false;
 
-        if (CheckRequired("Name", "Name", '@Utility.Resource.Message_Designer.NameRequired'))
+        if (CheckRequired("Name", "Name", '@Domain.Resource.Message_Designer.NameRequired'))
             Valid = false;
 
-        else if (CheckRage("Name", "Name", 3, 50, '@Utility.Resource.Message_Designer.NameRange'))
+        else if (CheckRage("Name", "Name", 3, 50, '@Domain.Resource.Message_Designer.NameRange'))
             Valid = false;
 
         if (Valid == true) {

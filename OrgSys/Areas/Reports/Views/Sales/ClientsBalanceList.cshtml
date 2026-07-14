@@ -31,7 +31,7 @@
             </div> *@
 
          @*    <button class="btn btn-primary @pull_dir" onclick="excelSearch(1 , 'Excel')">
-                <i class="glyph-icon iconsminds-magnifi-glass">  </i> @Utility.Resource.Title_Designer.Search zz
+                <i class="glyph-icon iconsminds-magnifi-glass">  </i> @Domain.Resource.Title_Designer.Search zz
             </button> *@
 @*             <a href="" id="printData" class="btn rounded-circle badge-theme-1 fa fa-print" style="height:30px;width:30px;font-size:10px;text-align:center;padding:5px;cursor:pointer;">
             </a> *@
@@ -47,7 +47,7 @@
         </div>
     </div>
 }
-<h5 class="mb-4">@Utility.Resource.Title_Designer.SearchResults</h5>
+<h5 class="mb-4">@Domain.Resource.Title_Designer.SearchResults</h5>
 <div class="col-12 m-0 p-0" data-check-all="checkAll" id="all">
     @if (Model != null && Model.Count > 0)
     {
@@ -56,8 +56,8 @@
                 <tr>
                     <th class="text-center">#</th>
                     <th style="text-align:center"></th>
-                    <th class="@TextAlign align-middle">@Utility.Resource.Title_Designer.Client</th>
-                    <th class="text-center align-middle">@Utility.Resource.Title_Designer.Amount</th>
+                    <th class="@TextAlign align-middle">@Domain.Resource.Title_Designer.Client</th>
+                    <th class="text-center align-middle">@Domain.Resource.Title_Designer.Amount</th>
                 </tr>
             </thead>
             <tbody>

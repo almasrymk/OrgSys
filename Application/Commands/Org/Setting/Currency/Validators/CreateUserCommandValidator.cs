@@ -5,7 +5,6 @@
     using Domain.Abstraction;
     using FluentValidation;
     using System.Xml.Linq;
-    using Utility;
 
     public class CreateCurrencyCommandValidator : Validator<CreateCurrencyCommand,  Domain.Entities.Currency>
     {

@@ -1,0 +1,31 @@
+@model Application.DTOs.JournalItemDto
+@{
+    ViewData["Title_Designer"] = "Index";
+    Layout = null;
+}
+
+<td class="text-center align-middle" style="width:35px;padding:0;">
+    <span class="item-index">1</span>
+    @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.JournalId)
+</td>
+<td style="min-width:100px;padding:0;">
+    @Html.TextBoxFor(model => model.AccountId, new { @class = "form-control account-id", @type = "number", @style = "border-top:none;border-bottom:none;border-right:none;", @placeholder = "Account ID" })
+</td>
+<td style="min-width:150px;padding:0;">
+    @Html.TextBoxFor(model => model.AccountName, new { @class = "form-control account-name", @style = "border-top:none;border-bottom:none;border-right:none;background-color:transparent;", @readonly = "readonly", @placeholder = "Account" })
+</td>
+<td style="width:120px;padding:0;">
+    @Html.TextBoxFor(model => model.Debit, new { @class = "form-control debit", @type = "number", @step = "0.01", @style = "border-top:none;border-bottom:none;", @placeholder = "0.00" })
+</td>
+<td style="width:120px;padding:0;">
+    @Html.TextBoxFor(model => model.Credit, new { @class = "form-control credit", @type = "number", @step = "0.01", @style = "border-top:none;border-bottom:none;", @placeholder = "0.00" })
+</td>
+<td style="min-width:150px;padding:0;">
+    @Html.TextBoxFor(model => model.Note, new { @class = "form-control", @style = "border-top:none;border-bottom:none;", @placeholder = Domain.Resource.Title_Designer.Notes })
+</td>
+<td class="text-center align-middle" style="width:100px;padding:0;">
+    <a class="remove-item" href="javascript:;" data-toggle="modal" data-target="#MsgModelId">
+        <i class="simple-icon-trash"></i> @Domain.Resource.Title_Designer.Delete
+    </a>
+</td>
