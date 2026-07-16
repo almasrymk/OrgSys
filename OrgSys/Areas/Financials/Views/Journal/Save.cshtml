@@ -24,94 +24,113 @@
         </div>
     </div>
 
-    <div class="card p-3">
-        <div class="card-header m-0">
-            <h3 class="mt-3">
-                @if (Model.Id == 0)
-                {
-                    <span>@Domain.Resource.Title_Designer.New ...</span>
-                }
-                else
-                {
-                    <span>@Domain.Resource.Title_Designer.Edit ...</span>
-                }
-            </h3>
-            <div class="position-absolute card-top-buttons">
-                <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId" class="btn btn-primary">
-                    <i class="simple-icon-action-undo"></i> @Domain.Resource.Title_Designer.Back
-                </a>
-            </div>
-        </div>
+    <div class="card">
+        <div class="card pl-1 pr-1">
+            <form action="Save" method="post" enctype="multipart/form-data" class="tooltip-label-right" novalidate autocomplete="off">
+                <div class="d-md-block">
+                    <div id="smartWizardClickable">
+                        <ul class="card-header">
+                            <li>
+                                <a id="tbHeader" href="#checkStep1">
+                                    Journal Details<br />
+                                    <div id="divHeader"></div>
+                                </a>
+                            </li>
+                            <li>
+                                <a id="tbItems" href="#checkStep2">
+                                    Journal Items<br />
+                                    <div id="divItems"></div>
+                                </a>
+                            </li>
+                        </ul>
 
-        <form action="Save" method="post" enctype="multipart/form-data" novalidate>
-            @Html.HiddenFor(model => model.Id)
-            @Html.HiddenFor(model => model.TypeId)
-            @Html.HiddenFor(model => model.ParentId)
-            @Html.HiddenFor(model => model.CreateUserId)
-            @Html.HiddenFor(model => model.CreateDate)
+                        <div class="card-body pt-4">
+                            @Html.HiddenFor(model => model.Id)
+                            @Html.HiddenFor(model => model.TypeId)
+                            @Html.HiddenFor(model => model.ParentId)
+                            @Html.HiddenFor(model => model.CreateUserId)
+                            @Html.HiddenFor(model => model.CreateDate)
 
-            <div class="card-body">
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label>@Domain.Resource.Title_Designer.Code</label>
-                        @Html.TextBoxFor(model => model.Code, new { @class = "form-control", @placeholder = Domain.Resource.Title_Designer.Code })
-                        @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label>@Domain.Resource.Title_Designer.Date</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend"><span class="input-group-text"><i class="simple-icon-calendar"></i></span></div>
-                            <input type="text" name="Date" value="@Model.Date.ToString(dateFormat, new CultureInfo("en-US"))" class="form-control datepicker" />
+                            <div id="checkStep1">
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label>@Domain.Resource.Title_Designer.Code</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="simple-icon-doc"></i></span>
+                                    </div>
+                                    @Html.TextBoxFor(model => model.Code, new { @class = "form-control", @placeholder = Domain.Resource.Title_Designer.Code })
+                                </div>
+                                @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>@Domain.Resource.Title_Designer.Date</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend"><span class="input-group-text"><i class="simple-icon-calendar"></i></span></div>
+                                    <input type="text" name="Date" value="@Model.Date.ToString(dateFormat, new CultureInfo("en-US"))" class="form-control datepicker" />
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>@Domain.Resource.Title_Designer.Currency</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="iconsminds-financial"></i></span>
+                                    </div>
+                                    @Html.DropDownListFor(model => model.CurrencyId, null, " ... ", new { @class = "form-control" })
+                                </div>
+                                @Html.ValidationMessageFor(model => model.CurrencyId, "", new { @class = "text-danger" })
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label>@Domain.Resource.Title_Designer.Currency</label>
-                        @Html.DropDownListFor(model => model.CurrencyId, null, null, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.CurrencyId, "", new { @class = "text-danger" })
-                    </div>
-                </div>
 
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label>Reference ID</label>
-                        @Html.TextBoxFor(model => model.RefranceId, new { @class = "form-control", type = "number" })
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label>Reference Type</label>
-                        @Html.TextBoxFor(model => model.RefranceTypeId, new { @class = "form-control", type = "number" })
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label>Reference Table</label>
-                        @Html.TextBoxFor(model => model.RefranceTable, new { @class = "form-control" })
-                    </div>
-                </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label>Reference ID</label>
+                                @Html.TextBoxFor(model => model.RefranceId, new { @class = "form-control", type = "number" })
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>Reference Type</label>
+                                @Html.TextBoxFor(model => model.RefranceTypeId, new { @class = "form-control", type = "number" })
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>Reference Table</label>
+                                @Html.TextBoxFor(model => model.RefranceTable, new { @class = "form-control" })
+                            </div>
+                        </div>
 
-                <div class="form-row">
-                    <div class="form-group col-md-8">
-                        <label>@Domain.Resource.Title_Designer.Notes</label>
-                        @Html.TextBoxFor(model => model.Note, new { @class = "form-control", @placeholder = Domain.Resource.Title_Designer.Notes })
-                    </div>
-                    <div class="form-group col-md-2 pt-4">
-                        <label class="custom-control custom-checkbox">
-                            @Html.CheckBoxFor(model => model.Review, new { @class = "custom-control-input" })
-                            <span class="custom-control-label">Review</span>
-                        </label>
-                    </div>
-                    <div class="form-group col-md-2 pt-4">
-                        <label class="custom-control custom-checkbox">
-                            @Html.CheckBoxFor(model => model.Posted, new { @class = "custom-control-input" })
-                            <span class="custom-control-label">Posted</span>
-                        </label>
-                    </div>
-                </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-8">
+                                <label>@Domain.Resource.Title_Designer.Notes</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="simple-icon-notebook"></i></span>
+                                    </div>
+                                    @Html.TextBoxFor(model => model.Note, new { @class = "form-control", @placeholder = Domain.Resource.Title_Designer.Notes })
+                                </div>
+                            </div>
+                            <div class="form-group col-md-2 pt-4">
+                                <label class="custom-control custom-checkbox">
+                                    @Html.CheckBoxFor(model => model.Review, new { @class = "custom-control-input" })
+                                    <span class="custom-control-label">Review</span>
+                                </label>
+                            </div>
+                            <div class="form-group col-md-2 pt-4">
+                                <label class="custom-control custom-checkbox">
+                                    @Html.CheckBoxFor(model => model.Posted, new { @class = "custom-control-input" })
+                                    <span class="custom-control-label">Posted</span>
+                                </label>
+                            </div>
+                        </div>
+                            </div>
 
-                <div class="card mt-3">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <h4 class="mb-0">Journal Items</h4>
-                        <button id="addJournalItem" type="button" class="btn btn-outline-primary"><i class="simple-icon-plus"></i> @Domain.Resource.Title_Designer.Add</button>
-                    </div>
-                    <div class="table-responsive">
-                        <table id="journalItems" class="table table-hover mb-0">
+                            <div id="checkStep2">
+                                <div class="d-flex justify-content-end mb-3">
+                                    <button id="addJournalItem" type="button" class="btn btn-primary">
+                                        <i class="simple-icon-plus"></i> @Domain.Resource.Title_Designer.Add
+                                    </button>
+                                </div>
+                                <div class="card">
+                                    <div class="table-responsive">
+                                        <table id="journalItems" class="table table-hover mb-0">
                             <thead>
                                 <tr>
                                     <th>Account ID</th>
@@ -147,21 +166,38 @@
                                     <th colspan="2"></th>
                                 </tr>
                             </tfoot>
-                        </table>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="position-absolute card-top-buttons">
+                            <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId" class="btn btn-primary">
+                                <i class="simple-icon-action-undo"></i>
+                                @Domain.Resource.Title_Designer.Back
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="card-footer" style="background-color:transparent;">
-                <button type="submit" class="btn btn-primary">@Domain.Resource.Title_Designer.Save</button>
-            </div>
-        </form>
+                <div class="row">
+                    <div class="col-12">
+                        <button id="btn" type="submit" class="btn btn-primary ml-4 mr-4 mb-4">
+                            @Domain.Resource.Title_Designer.Save
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
 <script src="~/js/vendor/jquery-3.3.1.min.js"></script>
 <script>
     (function ($) {
+        $(".sw-toolbar-bottom").css("display", "none");
+
         function reindex() {
             $('#journalItems tbody tr').each(function (index) {
                 $(this).find('[name]').each(function () {

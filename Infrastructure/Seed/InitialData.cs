@@ -538,13 +538,13 @@ namespace Infrastructure.Seed
                    new OrderType { Id = 2, Name = "External", Hide = false, Icon = "iconsminds-left-1" }
             };
 
-            foreach (var ob in list)
-            {
-                if (!orgContext.OrderTypes.Any(e => e.Id == ob.Id))
-                    orgContext.Set<OrderType>().Add(ob);
-                else
-                    orgContext.Entry<OrderType>(orgContext.Set<OrderType>().Find(ob.Id)).CurrentValues.SetValues(ob);
-            }
+            //foreach (var ob in list)
+            //{
+            //    if (!orgContext.OrderTypes.Any(e => e.Id == ob.Id))
+            //        orgContext.Set<OrderType>().Add(ob);
+            //    else
+            //        orgContext.Entry<OrderType>(orgContext.Set<OrderType>().Find(ob.Id)).CurrentValues.SetValues(ob);
+            //}
             orgContext.SaveChanges();
         }
 
@@ -695,14 +695,14 @@ namespace Infrastructure.Seed
                  new CompanyProfile {ClientId = 1, Name = "Owner", Code = "1", CodeNumber = 1, Email1 = "info@org.com", Mobile1 = "0201111105784", Phone1 = "0201111105784", NationalityId = 68, SizeOfCompany = 1, Hide = true }
             };
 
-            foreach (var ob in list)
-            {
-                ob.Id = orgContext.CompanyProfiles.FirstOrDefault(e => e.Name == ob.Name)?.Id ?? 0;
-                if (ob.Id == 0)
-                    orgContext.Set<CompanyProfile>().AddRange(ob);
-                else
-                    orgContext.Entry<CompanyProfile>(orgContext.Set<CompanyProfile>().Find(ob.Id)).CurrentValues.SetValues(ob);
-            }
+            //foreach (var ob in list)
+            //{
+            //    ob.Id = orgContext.CompanyProfiles.FirstOrDefault(e => e.Name == ob.Name)?.Id ?? 0;
+            //    if (ob.Id == 0)
+            //        orgContext.Set<CompanyProfile>().AddRange(ob);
+            //    else
+            //        orgContext.Entry<CompanyProfile>(orgContext.Set<CompanyProfile>().Find(ob.Id)).CurrentValues.SetValues(ob);
+            //}
             orgContext.SaveChanges();
         }
 

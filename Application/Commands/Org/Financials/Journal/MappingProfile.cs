@@ -29,5 +29,12 @@ public partial class MappingProfile : Profile
 
         CreateMap<CreateJournalCommand, Journal>().ForMember(dest => dest.JournalItems,opt => opt.MapFrom(src => src.JournalItems));  
         CreateMap<UpdateJournalCommand, Journal>().ForMember(dest => dest.JournalItems, opt => opt.MapFrom(src => src.JournalItems));
+
+        CreateMap<JournalDto, UpdateJournalCommand>()
+            .ForMember(dest => dest.JournalItems, opt => opt.MapFrom(src => src.JournalItems));
+
+        CreateMap<CreateJournalCommand, JournalDto>();
+        CreateMap<JournalDto, CreateJournalCommand>()
+            .ForMember(dest => dest.JournalItems, opt => opt.MapFrom(src => src.JournalItems));
     }
 }
