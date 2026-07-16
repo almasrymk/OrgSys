@@ -10,6 +10,7 @@
     using Microsoft.EntityFrameworkCore.Diagnostics;
     using Microsoft.EntityFrameworkCore.Infrastructure;
     using Microsoft.EntityFrameworkCore.Migrations.Internal;
+    using Infrastructure.Seed;
 
     public class OrgContext : DbContext , IOrgContext
     {
@@ -32,7 +33,23 @@
             var builder = new ConfigurationBuilder().AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
             IConfigurationRoot config = builder.Build();
             string assemblyName = typeof(OrgContext).Namespace;
-            optionsBuilder.UseSqlServer(config.GetConnectionString("OrgConnection"), e => e.MigrationsHistoryTable($"__MigrationsHistory", Schema)).ReplaceService<IModelCacheKeyFactory, DbSchemaAwareModelCacheKeyFactory>().ReplaceService<IMigrationsAssembly, DbSchemaAwareMigrationAssembly>();
+            optionsBuilder
+                .UseSqlServer(
+                    config.GetConnectionString("OrgConnection"),
+                    e => e.MigrationsHistoryTable("__MigrationsHistory", Schema))
+                .ReplaceService<IModelCacheKeyFactory, DbSchemaAwareModelCacheKeyFactory>()
+                .ReplaceService<IMigrationsAssembly, DbSchemaAwareMigrationAssembly>()
+                .UseSeeding((context, _) =>
+                {
+                    var orgContext = (OrgContext)context;
+                    new InitialData(orgContext.Schema).Seed(orgContext);
+                })
+                .UseAsyncSeeding((context, _, _) =>
+                {
+                    var orgContext = (OrgContext)context;
+                    new InitialData(orgContext.Schema).Seed(orgContext);
+                    return Task.CompletedTask;
+                });
         }
          
         protected override void OnModelCreating(ModelBuilder modelBuilder)

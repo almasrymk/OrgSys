@@ -17,37 +17,29 @@ namespace Infrastructure.Seed
 
         public async Task Run()
         {
-            var builder = new ConfigurationBuilder().AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-            IConfigurationRoot config = builder.Build();
-            var DatabaseVersion = config.GetSection("DatabaseVersion")?.Value ?? "0";
-            //AdminContext adminContext = new AdminContext(new DbContextOptions<AdminContext>());
-            //var admin = adminContext.Clients.FirstOrDefault(e => e.DbSchema == _Schema);
-            //if (admin != null && admin.Id > 0 /*&& "" + (admin?.VersionDb ?? 0) != DatabaseVersion*/)
-            //{
-            //    admin.VersionDb = long.Parse("0" + DatabaseVersion);
-                OrgContext orgContext = new OrgContext(new DbContextOptions<OrgContext>(), _Schema);
-                await orgContext.Database.EnsureCreatedAsync().ConfigureAwait(false);
-                await orgContext.Database.MigrateAsync().ConfigureAwait(false);
+            await using var orgContext = new OrgContext(new DbContextOptions<OrgContext>(), _Schema);
+            await orgContext.Database.MigrateAsync().ConfigureAwait(false);
+        }
 
-                InitialPermission(orgContext);
-                InitialPreference(orgContext);
-                InitialOrderType(orgContext);
-                InitialInvoiceType(orgContext);
-                InitialTransactionType(orgContext);
-                InitialFinancialType(orgContext);
-                InitialPaymentType(orgContext);
-                InitialRole(orgContext);
-                InitialRolePermission(orgContext);
-                InitialUser(orgContext);
-                InitialCompanyProfile(orgContext);
-                InitialBranch(orgContext);
-                InitialStock(orgContext);
-                InitialDealerGroup(orgContext);
-                InitialDealer(orgContext);
-                InitialSafe(orgContext);
-                InitialCurrency(orgContext);
-            //    adminContext.SaveChanges();
-            //}
+        public void Seed(OrgContext orgContext)
+        {
+            InitialPermission(orgContext);
+            InitialPreference(orgContext);
+            InitialOrderType(orgContext);
+            InitialInvoiceType(orgContext);
+            InitialTransactionType(orgContext);
+            InitialFinancialType(orgContext);
+            InitialPaymentType(orgContext);
+            InitialRole(orgContext);
+            InitialRolePermission(orgContext);
+            InitialUser(orgContext);
+            InitialCompanyProfile(orgContext);
+            InitialBranch(orgContext);
+            InitialStock(orgContext);
+            InitialDealerGroup(orgContext);
+            InitialDealer(orgContext);
+            InitialSafe(orgContext);
+            InitialCurrency(orgContext);
         }
 
         public void InitialPermission(OrgContext orgContext)
@@ -335,12 +327,12 @@ namespace Infrastructure.Seed
                                    new Permission { Id = 5010504, Name = "Delete", Key = "CreateJournalAccounts.Delete", ParentId = 50105, TypeId = 1 },
                                    new Permission { Id = 5010505, Name = "Preference", Key = "CreateJournalAccounts.Preference", ParentId = 50105, TypeId = 1 },
 
-                               new Permission { Id = 50106, Name = "Journals", Key = "Journals.All", ParentId = 501 },
-                                   new Permission { Id = 5010601, Name = "View", Key = "Journals.View", ParentId = 50106, TypeId = 1 },
-                                   new Permission { Id = 5010602, Name = "Add", Key = "Journals.Add", ParentId = 50106, TypeId = 1 },
-                                   new Permission { Id = 5010603, Name = "Edit", Key = "Journals.Edit", ParentId = 50106, TypeId = 1 },
-                                   new Permission { Id = 5010604, Name = "Delete", Key = "Journals.Delete", ParentId = 50106, TypeId = 1 },
-                                   new Permission { Id = 5010605, Name = "Preference", Key = "Journals.Preference", ParentId = 50106, TypeId = 1 }
+                               new Permission { Id = 50106, Name = "Journal", Key = "Journal.All", ParentId = 501 },
+                                   new Permission { Id = 5010601, Name = "View", Key = "Journal.View", ParentId = 50106, TypeId = 1 },
+                                   new Permission { Id = 5010602, Name = "Add", Key = "Journal.Add", ParentId = 50106, TypeId = 1 },
+                                   new Permission { Id = 5010603, Name = "Edit", Key = "Journal.Edit", ParentId = 50106, TypeId = 1 },
+                                   new Permission { Id = 5010604, Name = "Delete", Key = "Journal.Delete", ParentId = 50106, TypeId = 1 },
+                                   new Permission { Id = 5010605, Name = "Preference", Key = "Journal.Preference", ParentId = 50106, TypeId = 1 }
                };
             foreach (var ob in list)
             {

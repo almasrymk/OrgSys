@@ -6,6 +6,12 @@
 
   <ItemGroup>
     <Compile Remove="AuthProvider.cs" />
+    <Compile Remove="Resource\**" />
+    <EmbeddedResource Remove="Resource\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>

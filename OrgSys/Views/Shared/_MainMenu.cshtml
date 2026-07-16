@@ -542,7 +542,7 @@
                     </li>
                 </ul>
             }
-            @if (User.IsAllowed("Collection.All,Payment.All,Outlay.All"))
+            @if (User.IsAllowed("Collection.All,Payment.All,Outlay.All,Journal.All"))
             {
                 <ul class="list-unstyled" data-link="Financial" id="Financial">
                     <li>
@@ -582,6 +582,8 @@
                                         </a>
                                     </li>
                                 }
+                                @if (User.IsAllowed("Journal.All"))
+                                {
                                   <li>
                                         <a href="/Financials/Journal">
                                             <i class="iconsminds-wallet"></i> <span class="d-inline-block">
@@ -589,6 +591,7 @@
                                             </span>
                                         </a>
                                     </li>
+                                }
                             </ul>
                         </div>
                     </li>
