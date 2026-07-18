@@ -8,6 +8,8 @@
 
         public virtual Currency? Currency { get; set; }
 
+        public virtual decimal Rate { get; set; }
+
         public virtual long RefranceId { get; set; }
 
         public virtual long RefranceTypeId { get; set; }

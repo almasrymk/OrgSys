@@ -26,7 +26,6 @@
     {
         AllowPreference = User.IsAllowed("Journal.Preference");
     }
-    var items = Model.JournalItems?.ToList() ?? new List<Application.DTOs.JournalItemDto>();
 }
 
 <div id="HPage" class="container-fluid">
@@ -111,30 +110,135 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @for (var i = 0; i < items.Count; i++)
+                                            @foreach (var JournalItem in Model.JournalItems)
                                             {
-                                                <tr class="journal-item">
-                                                    <td>
-                                                        <input type="hidden" name="JournalItems[@i].Id" value="@items[i].Id" />
-                                                        <input type="hidden" name="JournalItems[@i].JournalId" value="@items[i].JournalId" />
-                                                        <input type="number" name="JournalItems[@i].AccountId" value="@items[i].AccountId" class="form-control" required />
+                                                <tr class="account-empty AccountRow">
+                                                    <td class="text-center align-middle" style="width:35px;padding:0px;">
+                                                        <span id="Index">  </span>
                                                     </td>
-                                                    <td><input type="text" name="JournalItems[@i].AccountName" value="@items[i].AccountName" class="form-control" readonly /></td>
-                                                    <td><input type="number" step="0.01" name="JournalItems[@i].Debit" value="@items[i].Debit" class="form-control debit" /></td>
-                                                    <td><input type="number" step="0.01" name="JournalItems[@i].Credit" value="@items[i].Credit" class="form-control credit" /></td>
-                                                    <td><input type="text" name="JournalItems[@i].Note" value="@items[i].Note" class="form-control" /></td>
-                                                    <td class="text-center align-middle"><button type="button" class="btn btn-link text-danger remove-item"><i class="simple-icon-trash"></i></button></td>
+                                                    <td class="input-group typeahead-container" style="min-width:100px;padding:0px;">
+                                                        <div class="input-group typeahead-container DropAutoComplete">
+                                                            <div class="input-group-append " style="border:none;">
+                                                                <button id="SearchAccount" type="button" class="btn btn-primary SearchAccount text-center align-middle" data-toggle="modal" data-target=".bd-example-modal-lg" style="width:30px;padding:0px;color:white;">
+                                                                    <i class="simple-icon-magnifier"></i>
+                                                                </button>
+                                                            </div>
+                                                            <input type="text" class="form-control search-box Droptxt" name="query" id="query"
+                                                                   autocomplete="off" style="@BorderAlign" value="@JournalItem.AccountName">
+                                                            <input type="hidden" id="AccountId" name="AccountId" class="AccountId" value="@JournalItem.AccountId" />
+                                                            <div class="text-center align-middle">
+                                                                <i id="RepeatedDanger" class="badge badge-danger mb-1 text-center align-middle" style="width: 60px;  height: 25px; display: none; margin: 6px;">@Domain.Resource.Title_Designer.Repeated</i>
+                                                                <i id="RepeatedWarning" class="badge badge-warning mb-1 text-center align-middle" style="width: 60px;  height: 25px; display: none; margin: 6px; ">@Domain.Resource.Title_Designer.Repeated</i>
+                                                                <i id="RepeatedPrimary" class="badge badge-primary mb-1 text-center align-middle" style="width: 60px; height: 25px; display: none; margin: 6px; ">@Domain.Resource.Title_Designer.Repeated</i>
+                                                            </div>
+                                                            <div class="input-group-prepend Dropbtn2  ">
+                                                                <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td style="width:120px;padding:0px;">
+                                                        <input type="text" id="Debit" name="Debit" class="form-control Debit" value="@JournalItem.Debit" style="@BorderAlign" placeholder="0.0" autocomplete="off" />
+                                                    </td>
+                                                    <td style="width:120px;padding:0px;">
+                                                        <input type="text" id="Credit" name="Credit" class="form-control Credit" value="@JournalItem.Credit" style="@BorderAlign" placeholder="0.0" autocomplete="off" />
+                                                    </td>
+                                                    <td style="min-width:100px;padding:0px;">
+                                                        <input type="text" id="Note" name="Note" class="form-control Note" value="@JournalItem.Note" style="@BorderAlign" autocomplete="off" />
+                                                    </td>
+                                                    <td class="text-center align-middle" style="width:100px;padding:0px;">
+                                                        <a id="btnDelete" class="btnDelete" href="javascript:;" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash"></i> </a>
+                                                    </td>
                                                 </tr>
                                             }
-                                        </tbody>
-                                        <tfoot>
+                                            @if (Model.JournalItems == null || (Model.JournalItems.Count < int.Parse("0" + ViewBag.NumberLine) && int.Parse("0" + ViewBag.NumberLine) > 0))
+                                            {
+
+                                                @for (int i = 0, index = 1; i < int.Parse("0" + ViewBag.NumberLine) - Model.JournalItems.Count; i++, index++)
+                                                {
+                                                    <tr class="account-empty AccountRow">
+                                                        <td class="text-center align-middle" style="width:35px;padding:0px;">
+                                                            <span id="Index">  </span>
+                                                        </td>
+                                                        <td class="input-group typeahead-container" style="min-width:120px;padding:0px;">
+                                                            <div class="input-group typeahead-container DropAutoComplete">
+                                                                <div class="input-group-append " style="border:none;">
+                                                                    <button id="SearchAccount" type="button" class="btn btn-primary SearchAccount text-center align-middle" data-toggle="modal" data-target=".bd-example-modal-lg" style="width:30px;padding:0px;color:white;">
+                                                                        <i class="simple-icon-magnifier"></i>
+                                                                    </button>
+                                                                </div>
+                                                                <input type="text" class="form-control search-box Droptxt" name="query" id="query"
+                                                                       autocomplete="off" style="@BorderAlign">
+                                                                <input type="hidden" id="AccountId" name="AccountId" class="AccountId" />
+                                                                <div class="text-center align-middle">
+                                                                    <i id="RepeatedDanger" class="badge badge-danger mb-1 text-center align-middle" style="width: 60px;  height: 25px; display: none; margin: 6px;">@Domain.Resource.Title_Designer.Repeated</i>
+                                                                    <i id="RepeatedWarning" class="badge badge-warning mb-1 text-center align-middle" style="width: 60px;  height: 25px; display: none; margin: 6px; ">@Domain.Resource.Title_Designer.Repeated</i>
+                                                                    <i id="RepeatedPrimary" class="badge badge-primary mb-1 text-center align-middle" style="width: 60px; height: 25px; display: none; margin: 6px; ">@Domain.Resource.Title_Designer.Repeated</i>
+                                                                </div>
+                                                                <div class="input-group-prepend Dropbtn2  ">
+                                                                    <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td style="width:120px;padding:0px;">
+                                                            <input type="text" id="Debit" name="Debit" class="form-control Debit" style="@BorderAlign" placeholder="0.0" autocomplete="off" />
+                                                        </td>
+                                                        <td style="width:120px;padding:0px;">
+                                                            <input type="text" id="Credit" name="Credit" class="form-control Credit" style="@BorderAlign" placeholder="0.0" autocomplete="off" />
+                                                        </td>
+                                                        <td style="min-width:100px;padding:0px;">
+                                                            <input type="text" id="Note" name="Note" class="form-control Note" style="@BorderAlign" autocomplete="off" />
+                                                        </td>
+                                                        <td class="text-center align-middle" style="width:100px;padding:0px;">
+                                                            <a id="btnDelete" class="btnDelete" href="javascript:;" data-toggle="modal" data-target="#MsgModelId" style="display:none"><i class="simple-icon-trash"></i> </a>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            }
+
+                                            <tr class="account-empty AccountRow trNew">
+                                                <td class="text-center align-middle" style="width:35px;padding:0px;">
+                                                    <span id="Index">  </span>
+                                                </td>
+                                                <td class="input-group typeahead-container" style="min-width:120px;padding:0px;">
+                                                    <div class="input-group typeahead-container DropAutoComplete">
+                                                        <div class="input-group-append " style="border:none;">
+                                                            <button id="SearchAccount" type="button" class="btn btn-primary SearchAccount text-center align-middle" data-toggle="modal" data-target=".bd-example-modal-lg" style="width:30px;padding:0px;color:white;">
+                                                                <i class="simple-icon-magnifier"></i>
+                                                            </button>
+                                                        </div>
+                                                        <input type="text" class="form-control search-box Droptxt" name="query" id="query"
+                                                               autocomplete="off" style="@BorderAlign">
+                                                        <input type="hidden" id="AccountId" name="AccountId" class="AccountId" />
+                                                        <div class="text-center align-middle">
+                                                            <i id="RepeatedDanger" class="badge badge-danger mb-1 text-center align-middle" style="width: 60px; height: 25px; display: none; margin: 6px;">@Domain.Resource.Title_Designer.Repeated</i>
+                                                            <i id="RepeatedWarning" class="badge badge-warning mb-1 text-center align-middle" style="width: 60px; height: 25px; display: none; margin: 6px; ">@Domain.Resource.Title_Designer.Repeated</i>
+                                                            <i id="RepeatedPrimary" class="badge badge-primary mb-1 text-center align-middle" style="width: 60px;  height: 25px; display: none; margin: 6px; ">@Domain.Resource.Title_Designer.Repeated</i>
+                                                        </div>
+                                                        <div class="input-group-prepend Dropbtn2  ">
+                                                            <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="text-center align-middle" style="width:120px;padding:0px;">
+                                                    <input type="text" id="Debit" name="Debit" class="form-control Debit" style="@BorderAlign" placeholder="0.0" autocomplete="off" />
+                                                </td>
+                                                <td class="text-center align-middle" style="width:120px;padding:0px;">
+                                                    <input type="text" id="Credit" name="Credit" class="form-control Credit" style="@BorderAlign" placeholder="0.0" autocomplete="off" />
+                                                </td>
+                                                <td class="text-center align-middle" style="min-width:100px;padding:0px;">
+                                                    <input type="text" id="Note" name="Note" class="form-control Note" style="@BorderAlign" autocomplete="off" />
+                                                </td>
+                                                <td class="text-center align-middle" style="width:100px;padding:0px;">
+                                                    <a id="btnDelete" class="btnDelete" href="javascript:;" data-toggle="modal" data-target="#MsgModelId" style="display:none"><i class="simple-icon-trash"></i> </a>
+                                                </td>
+                                            </tr>
                                             <tr>
-                                                <th colspan="2" class="text-right">Total</th>
+                                                <th colspan="2" class="text-right"></th>
                                                 <th id="debitTotal">0.00</th>
                                                 <th id="creditTotal">0.00</th>
                                                 <th colspan="2"></th>
                                             </tr>
-                                        </tfoot>
+                                        </tbody>
                                     </table>
                                 </div>
                             </div>
@@ -178,58 +282,72 @@
                                         </div>
                                         @Html.ValidationMessageFor(model => model.CurrencyId, "", new { @class = "text-danger " })
                                     </div>
-                                </div>
-
-                                <div class="form-row">
-                                    <div class="form-group col-md-12">
-                                        <label>@Domain.Resource.Title_Designer.Notes</label>
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><i class="simple-icon-notebook"></i></span>
+                                    <div class="form-group col-md-4">
+                                        <label>@Domain.Resource.Title_Designer.Rate</label>
+                                        <div id="divPaymentTypeId">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="iconsminds-financial"></i></span>
+                                                </div>
+                                                @Html.TextBoxFor(model => model.Rate, new { @class = "form-control", @placeholder = @Domain.Resource.Title_Designer.Rate })
                                             </div>
-                                            @Html.TextBoxFor(model => model.Note, new { @class = "form-control", @placeholder = Domain.Resource.Title_Designer.Notes })
                                         </div>
+                                        @Html.ValidationMessageFor(model => model.Rate, "", new { @class = "text-danger " })
+                                    </div>
+                                </div>
+                               
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label>@Domain.Resource.Title_Designer.Notes</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="simple-icon-notebook"></i></span>
+                                        </div>
+                                        @Html.TextBoxFor(model => model.Note, new { @class = "form-control", @placeholder = Domain.Resource.Title_Designer.Notes })
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="position-absolute card-top-buttons">
-                        <span class="btn-group group-add">
-                            @if (AllowPreference)
-                            {
-                                <a id="ShowPreference" href="javascript::" class="btn btn-primary .ShowPreference" data-toggle="modal" data-target=".Preference">
-                                    <i class="iconsminds-gear-2"></i>
-                                    @Domain.Resource.Title_Designer.Preference
-                                </a>
-                            }
-                            <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId" class="btn btn-primary ">
-                                <i class="simple-icon-action-undo"> </i>
-                                @Domain.Resource.Title_Designer.Back
+                </div>
+                <div class="position-absolute card-top-buttons">
+                    <span class="btn-group group-add">
+                        @if (AllowPreference)
+                        {
+                            <a id="ShowPreference" href="javascript::" class="btn btn-primary .ShowPreference" data-toggle="modal" data-target=".Preference">
+                                <i class="iconsminds-gear-2"></i>
+                                @Domain.Resource.Title_Designer.Preference
                             </a>
-                        </span>
-                    </div>
+                        }
+                        <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId" class="btn btn-primary ">
+                            <i class="simple-icon-action-undo"> </i>
+                            @Domain.Resource.Title_Designer.Back
+                        </a>
+                    </span>
                 </div>
+            </div>
 
-                <div class="row">
-                    <div class="col-7">
-                        <button id="btn" type="button" class="btn btn-primary ml-4 mr-4 mb-4">@Domain.Resource.Title_Designer.Save</button>
-                    </div>
-                    <div class="col-5">
-                        <span class="btn-group group-add mb-4" style="width:92%">
-                            @if (User.IsAllowed("Account.Add"))
-                            {
-                                <a href="/Setting/Product/Save" class="btn btn-primary ">
-                                    <i class="iconsminds-shopping-basket"></i>
-                                    New Account
-                                </a>
-                            }
-                        </span>
-                    </div>
+            <div class="row">
+                <div class="col-7">
+                    <button id="btn" type="button" class="btn btn-primary ml-4 mr-4 mb-4">@Domain.Resource.Title_Designer.Save</button>
                 </div>
-            </form>
-        </div>
+                <div class="col-5">
+                    <span class="btn-group group-add mb-4" style="width:92%">
+                        @if (User.IsAllowed("Account.Add"))
+                        {
+                            <a href="/Setting/Product/Save" class="btn btn-primary ">
+                                <i class="iconsminds-shopping-basket"></i>
+                                New Account
+                            </a>
+                        }
+                    </span>
+                </div>
+            </div>
+        </form>
     </div>
+</div>
 </div>
 
 <script src="~/js/vendor/jquery-3.3.1.min.js"></script>
