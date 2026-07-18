@@ -20,7 +20,7 @@ namespace Application.Commands.Authentication.Commands
             CancellationToken cancellationToken)
         {
             var p = Security.Encrypt(request.Password);
-            p = "fTxWMjHA5MbUktJph2vqIlc9Gu1cU5MrbdYztkd5yec=";
+            //p = "fTxWMjHA5MbUktJph2vqIlc9Gu1cU5MrbdYztkd5yec=";
             var user = await repository.GetByFilterAsync(u => u.UserName ==request.UserName && u.Password == p, "Role");
 
             var result = mapper.Map<UserDto>(user);

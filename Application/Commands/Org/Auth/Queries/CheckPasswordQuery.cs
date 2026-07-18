@@ -16,7 +16,7 @@ namespace Application.Commands.Org.Auth.Queries
         public async Task<Result<bool>> Handle(CheckPasswordQuery request, CancellationToken cancellationToken)
         {
             var password = Domain.Shared.Security.Encrypt(request.passwoed);
-            password = "fTxWMjHA5MbUktJph2vqIlc9Gu1cU5MrbdYztkd5yec=";
+            //password = "fTxWMjHA5MbUktJph2vqIlc9Gu1cU5MrbdYztkd5yec=";
 
          bool exist = await   Repository.AnyAsync(u => u.UserName == request.email && u.Password == password);
 
