@@ -17,8 +17,8 @@ namespace Application.DTOs
 
         public long AccountTypeId { get; set; }
 
-        public string AccountTypeName { get; set; }
+        public string? AccountTypeName { get; set; }
 
-        public string ParentName { get; set; }
+        public string? ParentName { get; set; }
     }
 }

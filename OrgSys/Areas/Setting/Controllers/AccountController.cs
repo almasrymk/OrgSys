@@ -70,5 +70,53 @@
                 .ToList();
             return Json(list);
         }
+
+        public async Task<JsonResult> SearchAccounts(string phrase = "")
+        {          
+            var setting = await GetListApi<PreferenceDto>(Page: 1, PageSize: 1000);
+            if (phrase == null)
+                phrase = "";
+            phrase = phrase.Trim().ToLower();
+
+            var CodeElectronicScale = setting.FirstOrDefault(e => e.Key == "CodeElectronicScale" && e.Reference == "Journal")?.Value;
+            int.TryParse(setting.FirstOrDefault(e => e.Key == "LengthElectronicScale" && e.Reference == "Journal")?.Value, out int LengthElectronicScale);
+            if (phrase.Length >= LengthElectronicScale && "" + CodeElectronicScale != "" && "" + CodeElectronicScale != "0" && "" + LengthElectronicScale != "" && "" + LengthElectronicScale != "0")
+            {
+                if (phrase.StartsWith(CodeElectronicScale))
+                {
+                    var code = phrase.Substring(0, LengthElectronicScale);                   
+                    phrase = code;
+                }
+            }
+
+            var accountsList = await GetListApi<AccountDto>(TextSearch: phrase, Page: 1, PageSize: 20);
+            var list = accountsList.Distinct().OrderBy(_ => _.Name)
+                .Select(_ => new
+                {
+                    _.Id,
+                    _.Name,
+                    _.Debit,
+                    _.Credit,                   
+                    Code = phrase == _.Code ? Domain.Resource.Title_Designer.Code + " " + _.Code : "",
+                    ParentName = "" + phrase != "" && _.ParentName.ToLower().Contains("" + phrase) ? _.ParentName : ""
+                })
+                .ToList();
+            return Json(list);
+        }
+
+        public async Task<JsonResult> checkStock(int id)
+        {
+            var product = (await GetObApi<AccountDto>($"GetById?Id={id}"));
+            var data = new
+            {
+                id = product.Id,
+                code = product.Code,
+                CodeNumber = product.CodeNumber,
+                name = product.Name,
+                Debit = product.Debit,
+                Credit = product.Credit,                
+            };
+            return Json(data);
+        }
     }
 }

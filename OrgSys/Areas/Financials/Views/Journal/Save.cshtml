@@ -90,6 +90,8 @@
                             @Html.HiddenFor(model => model.ParentId)
                             @Html.HiddenFor(model => model.CreateUserId)
                             @Html.HiddenFor(model => model.CreateDate)
+                            @Html.HiddenFor(model => model.ModifyUserId)
+                            @Html.HiddenFor(model => model.ModifyDate)
                             @Html.HiddenFor(model => model.RefranceId)
                             @Html.HiddenFor(model => model.RefranceTable)
                             @Html.HiddenFor(model => model.RefranceTypeId)
@@ -357,6 +359,7 @@
 <script src="~/js/PopupScript.js"></script>
 
 <script>
+    var AddAccount;
     (function ($) {
         setTimeout(function () {
             $("html, body").scrollTop($("#query").offset().top - 300);
@@ -365,42 +368,439 @@
             $(".datepicker").val('@string.Format(formateDate, Model.Date)');
         }, 600);
 
-        function reindex() {
-            $('#journalItems tbody tr').each(function (index) {
-                $(this).find('[name]').each(function () {
-                    this.name = this.name.replace(/JournalItems\[\d+\]/, 'JournalItems[' + index + ']');
+        $('#btn').click(function () {
+            Save();
+        });
+
+        $('.SearchAccount').on("click", function () {
+            var index = $(this).parents("tr").find("#Index").html();
+            $.ajax({
+                type: 'GET',
+                url: "/Setting/Account/SearchAccounts",
+                data: { txt: "", page: 1, index: index },
+                success: function (res) {
+                    $("#SearchAccountBody").html(res);
+                }
+            });
+        });
+
+        $('#ShowPreference').on("click", function () {
+            $.ajax({
+                type: 'GET',
+                url: "/Setting/Preference/Show",
+                data: { Resource: 'Journal', type: '@Model.TypeId' },
+                success: function (res) {
+                    $("#ShowPreferenceBody").html(res);
+                }
+            });
+
+        });
+
+        AddNewRow = function () {
+            var Current = $('.trNew');
+            var NewRow = Current.clone();
+            NewRow.insertAfter(".trNew")
+            Current.removeClass("trNew");
+            Current.addClass("AccountRow")
+            NewRow.find("#query").val("");
+            NewRow.find("#Index").empty();
+            NewRow.find("#Index").append();
+            NewRow.find(".Debit").val("");
+            NewRow.find(".Credit").val("");
+            NewRow.find(".Note").val("");
+            NewRow.find("#btnDelete").css("display", "none");
+            RefreshSomeEventListener();
+        }
+
+        RefreshSomeEventListener = function () {
+            $(document).on('keyup keypress', 'input', function (e) {
+                if (e.which == 13) {
+                    e.preventDefault();
+
+                    var isAccount = $(document.activeElement).hasClass("search-box");
+                    var isDebit = $(document.activeElement).hasClass("Debit");
+                    var isCredit = $(document.activeElement).hasClass("Credit");
+                    var isNote = $(document.activeElement).hasClass("Note");
+                    var row = $(document.activeElement).parents("tr");
+
+                    // if (isAccount) {
+                    //     if (row.find(".Quantity").val() > 0) {
+                    //         isProduct = false;
+                    //         isQuantity = true;
+                    //     }
+                    // }
+
+                    if (isProduct) {
+                        setTimeout(function () {
+                            if (row.find(".search-box").val() != "") {
+                                $.ajax({
+                                    type: 'GET',
+                                    url: "/Setting/Journal/SearchAccountName?txtSearch=" + row.find(".search-box").val() + "&TypeInv=" + $("#TypeId").val(),
+                                    async: false,
+                                    success: function (res) {
+                                        if (res.id > 0) {
+                                            AddAccount(row, res.id);
+                                            row.find(".Debit").focus();
+                                            row.find(".Debit").select();
+                                        }
+                                        else {
+                                            row.find(".search-box").val("");
+                                        }
+                                    }
+                                });
+                                if (row.find("#AccountId").val() == "0" || row.find("#AccountId").val() == "" || row.find("#AccountId").val() == null || row.find("#AccountId").val() == undefined) {
+                                    row.find(".search-box").val("");
+                                }
+                            }
+                        }, 200);
+                    }
+                    else if (isQuantity) {
+                        var NextRow = row.next();
+                        if (NextRow.find(".search-box").hasClass("trNew"))
+                            AddNewRow();
+                        setTimeout(function () {
+                            NextRow.find(".search-box").focus();
+                            NextRow.find(".search-box").select();
+                            NextRow.find(".search-box").autocomplete("search", "");
+                            $("html, body").scrollTop(NextRow.find(".search-box").offset().top - 300);
+                        }, 200);
+                    }
+                    return false;
+                }
+            });
+
+             $(".search-box").autocomplete({
+                minLength: 0,
+                source: function (request, response) {
+
+                    var searchPhrase = request.term.trim().toLowerCase();
+                    var noResultsLabel = 'NoResultsFound';
+                    $.ajax({
+                        url: "/Setting/Account/SearchAccounts",
+                        type: "Get",
+                        dataType: "json",
+                        data: { phrase: searchPhrase },
+                        success: function (data) {
+                            try {
+                                if (!data.length) {
+                                    data = [{ name: noResultsLabel }];
+                                }
+
+                                response($.map(data, function (Account) {
+                                    return {
+                                        label: Account.name +
+                                            (Account.code && Account.code != "" ? " / " + Account.code : "") , value: Account.name, id: Account.id                                    };
+                                }));
+                            } catch (err) { }
+                        }
+                    });
+                },
+                select: function (event, ui) {
+                    if (ui.item.label === 'NoResultsFound') {
+                        event.preventDefault();
+                        return;
+                    }
+                    var $row = $(event.target).parents('tr');
+                    AddAccount($row, ui.item.id);
+                },
+                focus: function (event, ui) {
+                    if (ui.item.label === 'NoResultsFound') {
+                        event.preventDefault();
+                    }
+                },
+            });
+
+             $(".Droptxt").click(function () {
+                event.preventDefault();
+                if ($(this).val() == "" || $(this).val() == "...")
+                    $(this).autocomplete("search", "");
+                return;
+            });
+
+            $(".Dropbtn").click(function () {
+                event.preventDefault();
+                $(this).parent().find(".Droptxt").autocomplete("search", "");
+                return;
+            });
+
+            $(".Dropbtn2").click(function () {
+                event.preventDefault();
+                $(this).parent().find(".Droptxt").autocomplete("search", "");
+                return;
+            });
+
+            $(".Droptxt").dblclick(function () {
+                event.preventDefault();
+                if ($(this).val() != "")
+                    $(this).autocomplete("search", "");
+                return;
+            });
+
+            $('.btnDelete').click(function () {
+                $(this).parent().parent().remove();
+                if ($("#tbl").find('.AccountRow').length <= '@ViewBag.NumberLine') {
+                    AddNewRow();
+                }
+                ReIndex();
+                ReCalc();
+                AutoSave();
+            });
+
+            $("#Debit").keyup(function () {
+                ReCalc();
+                AutoSave();
+            });
+
+            $("#Credit").keyup(function () {
+                ReCalc();
+                AutoSave();
+            });
+
+            $("#Code").keyup(function () {
+                AutoSave();
+            });
+
+            $("#CurrencyId").change(function () {
+                $.ajax({
+                    url: "/Setting/Currency/GetRate",
+                    type: "Get",
+                    data: { id: $("#CurrencyId").val() },
+                    success: function (data) {
+                        $("#Rate").val(data.rate);
+                        AutoSave();
+                    }
                 });
+            });
+
+            $("#Rate").change(function () {
+                AutoSave();
+            });
+
+            $("#Date").change(function () {
+                AutoSave();
+            });
+
+            $("#Notes").keyup(function () {
+                AutoSave();
             });
         }
 
-        function calculateTotals() {
-            var debit = 0;
-            var credit = 0;
-            $('.debit').each(function () { debit += parseFloat(this.value) || 0; });
-            $('.credit').each(function () { credit += parseFloat(this.value) || 0; });
-            $('#debitTotal').text(debit.toFixed(2));
-            $('#creditTotal').text(credit.toFixed(2));
+        AddAccount = function ($row, accountId) {
+            $.ajax({
+                url: "/Setting/Account/checkStock",
+                type: "Get",
+                data: { id: accountId },
+                success: function (data) {
+                    $row.find("#AccountId").val(accountId);
+                    $row.find("#query").val(data.name);                   
+                    $row.find("#btnDelete").css("display", "block");
+
+                    if ($row.hasClass("trNew") == true) {
+                        $row.find("#Index").append($("#tbl").find('.AccountRow').length);
+                        AddNewRow();
+                    }
+                    ReIndex();
+                    ReCalc();
+                    AutoSave();
+                }
+            });
         }
 
-        $('#addJournalItem').on('click', function () {
-            var index = $('#journalItems tbody tr').length;
-            $('#journalItems tbody').append(
-                '<tr class="journal-item">' +
-                '<td><input type="hidden" name="JournalItems[' + index + '].Id" value="0" /><input type="hidden" name="JournalItems[' + index + '].JournalId" value="@Model.Id" /><input type="number" name="JournalItems[' + index + '].AccountId" class="form-control" required /></td>' +
-                '<td><input type="text" name="JournalItems[' + index + '].AccountName" class="form-control" readonly /></td>' +
-                '<td><input type="number" step="0.01" name="JournalItems[' + index + '].Debit" value="0" class="form-control debit" /></td>' +
-                '<td><input type="number" step="0.01" name="JournalItems[' + index + '].Credit" value="0" class="form-control credit" /></td>' +
-                '<td><input type="text" name="JournalItems[' + index + '].Note" class="form-control" /></td>' +
-                '<td class="text-center align-middle"><button type="button" class="btn btn-link text-danger remove-item"><i class="simple-icon-trash"></i></button></td>' +
-                '</tr>');
-        });
+        AddNewAccount = function (accountId) {            
+            $.ajax({
+                url: "/Setting/Account/checkStock",
+                type: "Get",
+                data: { id: itemId },
+                success: function (data) {
+                    var $row = $('.trNew');
+                    $row.find("#AccountId").val(itemId);
+                    $row.find("#query").val(data.name);                   
+                    $row.find("#btnDelete").css("display", "block");
+                    if ($row.hasClass("trNew") == true) {
+                        $row.find("#Index").append($("#tbl").find('.AccountRow').length);
+                        AddNewRow();
+                    }
+                     
+                    ReIndex();
+                    ReCalc();
+                    AutoSave();
+                }
+            });
+        }
 
-        $('#journalItems').on('click', '.remove-item', function () {
-            $(this).closest('tr').remove();
-            reindex();
-            calculateTotals();
-        }).on('input', '.debit, .credit', calculateTotals);
+        ReIndex = function () {
+            $("#tbl").find('.AccountRow').not(".trNew").each(function (index) {
+                $(this).find("#Index").empty();
+                $(this).find("#Index").append(index + 1);
+            });
+        }
 
-        calculateTotals();
+        ReCalc = function () {
+            var totalDebit = parseFloat(0);
+            var totalCredit = parseFloat(0);
+
+            $("#tbl").find('.AccountRow').not(".trNew").each(function (index) {
+                var row = $(this);
+                if (parseFloat($(this).find("#Debit").val()) > 0) {
+                    var Debit = parseFloat($(this).find("#Debit").val());                   
+                    totalDebit += Debit;
+                }
+
+                if (parseFloat($(this).find("#Credit").val()) > 0) {
+                    var Credit = parseFloat($(this).find("#Credit").val());
+                    totalCredit += Credit;
+                }
+            });
+
+            $("#debitTotal").val(totalDebit);
+            $("#creditTotal").val(totalCredit);
+        }
+
+        Save = function () {
+            var Valid = true;
+           
+            if (CheckRowCountWithVal("tbl", "AccountId", "divAccount", 'Select Account'))
+                Valid = false;
+            else {
+                if (CheckRequired("Code", "divCode", '@Domain.Resource.Message_Designer.CodeRequired'))
+                    Valid = false;
+             
+                if (CheckRequired("Date", "divDate", '@Domain.Resource.Message_Designer.DateRequired'))
+                    Valid = false;
+
+                if (CheckRequired("CurrencyId", "divCurrencyId", '@Domain.Resource.Message_Designer.CustomerRequired'))
+                    Valid = false;
+
+                if (!Valid) {
+                    $("#tbHeader").trigger("Click", SkipCallingAction = true)
+                    window.location.replace("#checkStep2");
+                }
+            }
+
+            if (Valid == true) {
+                var data = CollectData();
+                console.log(data);
+                $.ajax({
+                    type: 'POST',
+                    url: "/Financials/Journal/Save",
+                    async: false,
+                    data: { ob: data },
+                    success: function (res) {
+                        window.location.replace(res.url);
+                    },
+                    error: function (request, status, error) {
+                        alert("Error");
+                    }
+                });
+            }
+        }
+
+        AutoSave = function () {
+            var Valid = true;
+                
+            if (CheckRowCountWithValNoMessage("tbl", "AccountId"))
+                Valid = false;
+            else {
+                if (CheckRequiredNoMessage("Code"))
+                    Valid = false;
+
+                if (CheckRequiredNoMessage("CurrencyId"))
+                    Valid = false;
+
+                if (CheckRequiredNoMessage("Date"))
+                    Valid = false;
+            }
+
+            if (Valid == true) {
+                if ('@ViewBag.AutoSave' == 1) {
+                    setTimeout(function () {
+
+                        var data = CollectData();
+
+                        $.ajax({
+                            type: 'POST',
+                            url: "/Financials/Journal/AutoSave",
+                            async: false,
+                            data: { ob: data },
+                            success: function (res) {
+                                if (res != "Error") {
+
+                                    $("#Id").val(res.id);
+                                    $("#CreateUserId").val(res.createdUserId);
+                                    var obj = { area: "Financials", Url: "/Financials/Journal/Save?Id=" + res.id + "&ParentId=" + $("#ParentId").val() + "&TypeId=" + $("#TypeId").val() };
+                                    history.pushState(null, obj.area, obj.Url);
+                                }
+                            }
+                        });
+                    }, 500);
+                }
+            }
+        }
+
+        function CollectData() {
+            var list = [];            
+            $('#tbl > tbody > .AccountRow').each(function () {
+                var currentRow = $(this);
+                if (!currentRow.hasClass('trNew')) {
+                    if (currentRow.find('#AccountId').val() > 0) {                    
+                        list.push({
+                            JournalId: $('#Id').val(),
+                            AccountId: currentRow.find('#AccountId').val(),
+                            Debit: currentRow.find('#Debit').val() | 0,
+                            Credit: currentRow.find('#Credit').val() | 0,
+                            Note: currentRow.find('#Note').val()
+                        });
+                    }
+                }
+            });
+            var TxtDate = $("#Date").val();
+            if ('@CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft') {
+                var arr = TxtDate.split("/");
+                TxtDate = arr[2] + "/" + arr[1] + "/" + arr[0]
+            }
+
+            var data = {
+                Id: $('#Id').val(),
+                TypeId: $('#TypeId').val(),
+                InvoiceId: $('#InvoiceId').val(),
+                ParentId: $('#ParentId').val(),
+                Code: $('#Code').val(),
+                CodeNumber: $('#CodeNumber').val(),
+                MaskText: $('#MaskText').val(),
+                Date:TxtDate ,
+                CurrencyId: $('#CurrencyId').val(),
+                Rate: $('#Rate').val(),
+                RefranceId: $('#RefranceId').val(),
+                RefranceTypeId: $('#RefranceTypeId').val(),
+                RefranceTable: $('#RefranceTable').val(),
+                Note: $('#Note').val(),               
+                Review: $('#Review').val(),
+                Posted: $('#Posted').val(),
+                CreateUserId: $('#CreateUserId').val(),
+                CreateDate: $('#CreateDate').val(),
+                ModifyUserId: $('#ModifyUserId').val(),
+                ModifyDate: $('#ModifyDate').val(),
+                Hide: $('#Hide').val(),
+                ImgPath: $('#ImgPath').val(),
+                Status: $('#Status').val(),
+                ShiftId: $('#ShiftId').val(),
+                BranchId: $('#BranchId').val(),               
+                JournalItems: list
+            };
+            return data;
+        }
+
+        RefreshSomeEventListener();
+
+        ReIndex();
+
+        ReCalc();
+
+        function ToJavaScriptDate(value) {
+            var pattern = /Date\(([^)]+)\)/;
+            var results = pattern.exec(value);
+            var dt = new Date(parseFloat(results));
+            return dt.getFullYear() + "/" + (dt.getMonth() + 1) + "/" + dt.getDate();
+        }
     })(jQuery);
 </script>

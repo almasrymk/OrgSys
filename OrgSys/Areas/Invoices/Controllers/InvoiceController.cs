@@ -97,7 +97,7 @@ namespace OrgSys.Areas.Invoices.Controllers
             ob.StockName = (await GetObApi<StockDto>($"GetById?Id={ob.StockId ?? 0}"))?.Name;
             ob.DealerName = (await GetObApi<DealerDto>($"GetById?Id={ob.DealerId}"))?.Name;
             ob.ParentCode = (await GetObApi<InvoiceDto>($"GetById?Id={ob.StockId ?? 0}"))?.Code;
-            ob.Rate = (await GetObApi<CurrencyDto>($"GetById?Id={ob.StockId ?? 0}"))?.Rate ?? 0;
+            ob.Rate = (await GetObApi<CurrencyDto>($"GetById?Id={ob.CurrencyId}"))?.Rate ?? 0;
             return ob;
         }
 

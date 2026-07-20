@@ -3,9 +3,12 @@ namespace OrgSys.Areas.Financial.Controllers
     using Application.Commands.Org.Financials.Journal.Commands;
     using Application.DTOs;
     using AutoMapper;
+    using Domain.Enums;
+    using Domain.Shared;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.Extensions.Configuration;
+    using Newtonsoft.Json;
     using OrgSys.Controllers;
     using System;
     using System.Collections.Generic;
@@ -20,19 +23,83 @@ namespace OrgSys.Areas.Financial.Controllers
             ViewBag.CurrencyId = new SelectList(await GetListApi<CurrencyDto>(), "Id", "Name", model.CurrencyId);
         }
 
-        public override Task<JournalDto> InitializeData(JournalDto model)
+        public override async Task<JournalDto> InitializeData(JournalDto ob)
         {
-            if (model.Id == 0)
+            var preferenceList = await GetListApi<PreferenceDto>(TypeId: ob.TypeId, TextSearch: "Journal", PageSize: 1000);
+
+            var DefaultCurrencyId = long.Parse("0" + preferenceList.FirstOrDefault(e => e.Key == "DefaultCurrency")?.Value);
+            ViewBag.NumberLine = int.Parse("0" + preferenceList.FirstOrDefault(e => e.Key == "NumberLine")?.Value);
+            ViewBag.OrderTabe = int.Parse("0" + preferenceList.FirstOrDefault(e => e.Key == "OrderTabe")?.Value);
+            ViewBag.AutoSave = int.Parse("0" + preferenceList.FirstOrDefault(e => e.Key == "AutoSave")?.Value);
+            var TypeCode = int.Parse("0" + preferenceList.FirstOrDefault(e => e.Key == "TypeSerial")?.Value);
+            ViewBag.TypeSerial = TypeCode;
+
+            if (ob == null)
+                ob = new JournalDto();
+
+            if (ob.Id == 0)
             {
-                model.Date = DateTime.Now;
-                model.JournalItems = new List<JournalItemDto>();
+
+                ob.CodeNumber = long.Parse("0" + await GetValueApi<JournalDto>($"GetMax?ParentId=0&TypeId={ob.TypeId}")) + 1;
+                ob.Code = "" + ob.CodeNumber;               
+                ob.CurrencyId = DefaultCurrencyId;
+                ob.Date = DateTime.Now;
+
+                ob.JournalItems = new List<JournalItemDto>();
+            }
+
+            if (ob.JournalItems == null)
+                ob.JournalItems = new List<JournalItemDto>();
+
+            ob.Rate = (await GetObApi<CurrencyDto>($"GetById?Id={ob.CurrencyId}"))?.Rate ?? 0;
+
+            return ob;
+        }
+
+        public override Task<JournalDto> FixData(JournalDto ob)
+        {
+            if (ob.Id == 0)
+            {
+                ob.CreateUserId = User.GetUserId();
+                ob.CreateDate = DateTime.Now;
             }
             else
             {
-                model.JournalItems ??= new List<JournalItemDto>();
+                ob.ModifyUserId = User.GetUserId();
+                ob.ModifyDate = DateTime.Now;
             }
+            return base.FixData(ob);
+        }
 
-            return Task.FromResult(model);
+        [HttpPost]
+        public async Task<ActionResult> AutoSave(JournalDto ob)
+        {
+            await base.Save(ob);
+            if (ob.Id == 0)
+            {
+
+                var key = ob.GetType().GetProperty("Code")?.GetValue(ob, null);
+                var searchResp = await ApiMethod(ApiMethodType.Get, $"Search?KeySearch={key}&ParentId={ob.ParentId}&TypeId={ob.TypeId}&Page=1&PageSize=1");
+                if (searchResp != null && searchResp.IsSuccessStatusCode)
+                {
+                    var searchData = await searchResp.Content.ReadAsStringAsync();
+                    var searchRes = JsonConvert.DeserializeObject<ResultPagination<InvoiceDto>>(searchData);
+                    if (searchRes != null && searchRes.Response != null && searchRes.Response.Count > 0)
+                    {
+                        ob.Id = searchRes.Response[0].Id;
+                        ob.CreateUserId = searchRes.Response[0].CreateUserId;
+                    }
+
+                    return Ok(new
+                    {
+                        status = "success",
+                        id = ob.Id,
+                        createdUserId = ob.CreateUserId,
+                        url = "/" + "Financials" + "/" + "Journal" + "?ParentId=" + ob.ParentId + "&TypeId=" + ob.TypeId + "&status=" + ResultStatus.success + "&MsgError=Success"
+                    });
+                }
+            }
+            return Ok();
         }
 
         public async Task<JsonResult> GetList(string txtSearch = "", int page = 1, int pageSize = 20)
