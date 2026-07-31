@@ -7,17 +7,10 @@ using Microsoft.Extensions.Configuration;
 namespace Infrastructure.Seed
 {
     public class InitialData
-    {
-        string _Schema = "org";
-
-        public InitialData(string Schema)
-        {
-            this._Schema = Schema;
-        }
-
+    {        
         public async Task Run()
         {
-            await using var orgContext = new OrgContext(new DbContextOptions<OrgContext>(), _Schema);
+            await using var orgContext = new OrgContext(new DbContextOptions<OrgContext>());
             await orgContext.Database.MigrateAsync().ConfigureAwait(false);
         }
 
@@ -26,6 +19,7 @@ namespace Infrastructure.Seed
             InitialPermission(orgContext);
             InitialPreference(orgContext);
             InitialOrderType(orgContext);
+            InitialJournalType(orgContext);
             InitialInvoiceType(orgContext);
             InitialTransactionType(orgContext);
             InitialFinancialType(orgContext);
@@ -510,7 +504,15 @@ namespace Infrastructure.Seed
 
                new Preference { Id = 1300, Key = "DefaultStock", Value = "1", Reference = "Inventory", TypeId = 0, Hide = false },
                new Preference { Id = 1301, Key = "AutoSave", Value = "0", Reference = "Inventory", TypeId = 0, Hide = false },
-               new Preference { Id = 1302, Key = "TypeSerial", Value = "1", Reference = "Inventory", TypeId = 0, Hide = false }
+               new Preference { Id = 1302, Key = "TypeSerial", Value = "1", Reference = "Inventory", TypeId = 0, Hide = false },
+               
+               new Preference { Id = 1400, Key = "NumberLine", Value = "2", Reference = "Journal", TypeId = 0, Hide = false },
+               new Preference { Id = 1401, Key = "OrderTabe", Value = "1", Reference = "Journal", TypeId = 0, Hide = false },
+               new Preference { Id = 1402, Key = "AutoSave", Value = "0", Reference = "Journal", TypeId = 0, Hide = false },
+               new Preference { Id = 1403, Key = "TypeSerial", Value = "1", Reference = "Journal", TypeId = 0, Hide = false },
+               new Preference { Id = 1404, Key = "SaveLastStatusSetting", Value = "1", Reference = "Journal", TypeId = 0, Hide = false },
+               new Preference { Id = 1405, Key = "DefaultCurrency", Value = "1", Reference = "Journal", TypeId = 0, Hide = false },
+               new Preference { Id = 1406, Key = "DefaultJournalType", Value = "2", Reference = "Journal", TypeId = 0, Hide = false }
             };
 
             foreach (var ob in list)
@@ -555,6 +557,23 @@ namespace Infrastructure.Seed
                     orgContext.Set<InvoiceType>().Add(ob);
                 else
                     orgContext.Entry<InvoiceType>(orgContext.Set<InvoiceType>().Find(ob.Id)).CurrentValues.SetValues(ob);
+            }
+            orgContext.SaveChanges();
+        }
+
+        public void InitialJournalType(OrgContext orgContext)
+        {
+            List<JournalType> list = new List<JournalType> {
+                    new JournalType { Id = 1, Group = "Journal", Name = "Openning Balance", Hide = false, IsOpeningBlance = true, Icon = "simple-icon-basket-loaded" },
+                    new JournalType { Id = 2, Group = "Journal", Name = "Journal", Hide = false, IsOpeningBlance = false, Icon = "simple-icon-basket-loaded" }
+            };
+
+            foreach (var ob in list)
+            {
+                if (!orgContext.JournalTypes.Any(e => e.Id == ob.Id))
+                    orgContext.Set<JournalType>().Add(ob);
+                else
+                    orgContext.Entry<JournalType>(orgContext.Set<JournalType>().Find(ob.Id)).CurrentValues.SetValues(ob);
             }
             orgContext.SaveChanges();
         }

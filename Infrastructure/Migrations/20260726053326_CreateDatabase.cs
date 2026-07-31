@@ -6,17 +6,13 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateDb : Migration
+    public partial class CreateDatabase : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.EnsureSchema(
-                name: "org");
-
             migrationBuilder.CreateTable(
                 name: "AccountType",
-                schema: "org",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -39,7 +35,6 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Bank",
-                schema: "org",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -61,7 +56,6 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Branch",
-                schema: "org",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -83,7 +77,6 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Classification",
-                schema: "org",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -108,7 +101,6 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Country",
-                schema: "org",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -130,7 +122,6 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Currency",
-                schema: "org",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -154,7 +145,6 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "DealerGroup",
-                schema: "org",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -176,7 +166,6 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "FinancialType",
-                schema: "org",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false),
@@ -199,7 +188,6 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "InvoiceType",
-                schema: "org",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false),
@@ -223,7 +211,6 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Outlay",
-                schema: "org",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -245,7 +232,6 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "PaymentType",
-                schema: "org",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false),
@@ -266,7 +252,6 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Permission",
-                schema: "org",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false),
@@ -288,7 +273,6 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Preference",
-                schema: "org",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false),
@@ -312,7 +296,6 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Property",
-                schema: "org",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -334,7 +317,6 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Role",
-                schema: "org",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -356,7 +338,6 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Shift",
-                schema: "org",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -380,7 +361,6 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Table",
-                schema: "org",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -404,7 +384,6 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "TransactionType",
-                schema: "org",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false),
@@ -427,7 +406,6 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Unit",
-                schema: "org",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -449,7 +427,6 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Account",
-                schema: "org",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -473,7 +450,6 @@ namespace Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_Account_AccountType_AccountTypeId",
                         column: x => x.AccountTypeId,
-                        principalSchema: "org",
                         principalTable: "AccountType",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -481,7 +457,6 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Stock",
-                schema: "org",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -503,7 +478,6 @@ namespace Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_Stock_Branch_BranchId",
                         column: x => x.BranchId,
-                        principalSchema: "org",
                         principalTable: "Branch",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -511,7 +485,6 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "City",
-                schema: "org",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -533,14 +506,12 @@ namespace Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_City_Country_CountryId",
                         column: x => x.CountryId,
-                        principalSchema: "org",
                         principalTable: "Country",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "PropertyElement",
-                schema: "org",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -562,7 +533,6 @@ namespace Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_PropertyElement_Property_PropertyId",
                         column: x => x.PropertyId,
-                        principalSchema: "org",
                         principalTable: "Property",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -570,7 +540,6 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "RolePermission",
-                schema: "org",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -592,14 +561,12 @@ namespace Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_RolePermission_Permission_PermissionId",
                         column: x => x.PermissionId,
-                        principalSchema: "org",
                         principalTable: "Permission",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_RolePermission_Role_RoleId",
                         column: x => x.RoleId,
-                        principalSchema: "org",
                         principalTable: "Role",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -607,7 +574,6 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "User",
-                schema: "org",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -633,13 +599,11 @@ namespace Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_User_Branch_BranchId",
                         column: x => x.BranchId,
-                        principalSchema: "org",
                         principalTable: "Branch",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_User_Role_RoleId",
                         column: x => x.RoleId,
-                        principalSchema: "org",
                         principalTable: "Role",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -647,7 +611,6 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Safe",
-                schema: "org",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -669,14 +632,12 @@ namespace Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_Safe_Account_AccountId",
                         column: x => x.AccountId,
-                        principalSchema: "org",
                         principalTable: "Account",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "District",
-                schema: "org",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -699,20 +660,17 @@ namespace Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_District_City_CityId",
                         column: x => x.CityId,
-                        principalSchema: "org",
                         principalTable: "City",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_District_Country_CountryId",
                         column: x => x.CountryId,
-                        principalSchema: "org",
                         principalTable: "Country",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "Inventory",
-                schema: "org",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -746,51 +704,46 @@ namespace Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_Inventory_Branch_BranchId",
                         column: x => x.BranchId,
-                        principalSchema: "org",
                         principalTable: "Branch",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Inventory_Shift_ShiftId",
                         column: x => x.ShiftId,
-                        principalSchema: "org",
                         principalTable: "Shift",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Inventory_Stock_StockId",
                         column: x => x.StockId,
-                        principalSchema: "org",
                         principalTable: "Stock",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Inventory_User_CreateUserId",
                         column: x => x.CreateUserId,
-                        principalSchema: "org",
                         principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Inventory_User_ModifyUserId",
                         column: x => x.ModifyUserId,
-                        principalSchema: "org",
                         principalTable: "User",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Inventory_User_UserId",
                         column: x => x.UserId,
-                        principalSchema: "org",
                         principalTable: "User",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "Journal",
-                schema: "org",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CurrencyId = table.Column<long>(type: "bigint", nullable: false),
+                    Rate = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
                     RefranceId = table.Column<long>(type: "bigint", nullable: false),
+                    RefranceCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     RefranceTypeId = table.Column<long>(type: "bigint", nullable: false),
                     RefranceTable = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Note = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -819,40 +772,34 @@ namespace Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_Journal_Branch_BranchId",
                         column: x => x.BranchId,
-                        principalSchema: "org",
                         principalTable: "Branch",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Journal_Currency_CurrencyId",
                         column: x => x.CurrencyId,
-                        principalSchema: "org",
                         principalTable: "Currency",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Journal_Shift_ShiftId",
                         column: x => x.ShiftId,
-                        principalSchema: "org",
                         principalTable: "Shift",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Journal_User_CreateUserId",
                         column: x => x.CreateUserId,
-                        principalSchema: "org",
                         principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Journal_User_ModifyUserId",
                         column: x => x.ModifyUserId,
-                        principalSchema: "org",
                         principalTable: "User",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "BankBranch",
-                schema: "org",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -877,28 +824,24 @@ namespace Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_BankBranch_Bank_BankId",
                         column: x => x.BankId,
-                        principalSchema: "org",
                         principalTable: "Bank",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_BankBranch_City_CityId",
                         column: x => x.CityId,
-                        principalSchema: "org",
                         principalTable: "City",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_BankBranch_Country_CountryId",
                         column: x => x.CountryId,
-                        principalSchema: "org",
                         principalTable: "Country",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_BankBranch_District_DistrictId",
                         column: x => x.DistrictId,
-                        principalSchema: "org",
                         principalTable: "District",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -906,7 +849,6 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Dealer",
-                schema: "org",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -935,38 +877,32 @@ namespace Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_Dealer_Account_AccountId",
                         column: x => x.AccountId,
-                        principalSchema: "org",
                         principalTable: "Account",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Dealer_City_CityId",
                         column: x => x.CityId,
-                        principalSchema: "org",
                         principalTable: "City",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Dealer_Country_CountryId",
                         column: x => x.CountryId,
-                        principalSchema: "org",
                         principalTable: "Country",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Dealer_DealerGroup_DealerGroupId",
                         column: x => x.DealerGroupId,
-                        principalSchema: "org",
                         principalTable: "DealerGroup",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Dealer_District_DistrictId",
                         column: x => x.DistrictId,
-                        principalSchema: "org",
                         principalTable: "District",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "JournalItem",
-                schema: "org",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -991,14 +927,12 @@ namespace Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_JournalItem_Account_AccountId",
                         column: x => x.AccountId,
-                        principalSchema: "org",
                         principalTable: "Account",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_JournalItem_Journal_JournalId",
                         column: x => x.JournalId,
-                        principalSchema: "org",
                         principalTable: "Journal",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -1006,7 +940,6 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "AccountBank",
-                schema: "org",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -1032,19 +965,16 @@ namespace Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_AccountBank_Account_AccountId",
                         column: x => x.AccountId,
-                        principalSchema: "org",
                         principalTable: "Account",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_AccountBank_BankBranch_BankBranchd",
                         column: x => x.BankBranchd,
-                        principalSchema: "org",
                         principalTable: "BankBranch",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_AccountBank_Bank_BankId",
                         column: x => x.BankId,
-                        principalSchema: "org",
                         principalTable: "Bank",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -1052,7 +982,6 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Financial",
-                schema: "org",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -1091,66 +1020,56 @@ namespace Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_Financial_Branch_BranchId",
                         column: x => x.BranchId,
-                        principalSchema: "org",
                         principalTable: "Branch",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Financial_Currency_CurrencyId",
                         column: x => x.CurrencyId,
-                        principalSchema: "org",
                         principalTable: "Currency",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Financial_Dealer_DealerId",
                         column: x => x.DealerId,
-                        principalSchema: "org",
                         principalTable: "Dealer",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Financial_Outlay_OutlayId",
                         column: x => x.OutlayId,
-                        principalSchema: "org",
                         principalTable: "Outlay",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Financial_PaymentType_PaymentTypeId",
                         column: x => x.PaymentTypeId,
-                        principalSchema: "org",
                         principalTable: "PaymentType",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Financial_Safe_SafeId",
                         column: x => x.SafeId,
-                        principalSchema: "org",
                         principalTable: "Safe",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Financial_Shift_ShiftId",
                         column: x => x.ShiftId,
-                        principalSchema: "org",
                         principalTable: "Shift",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Financial_User_CreateUserId",
                         column: x => x.CreateUserId,
-                        principalSchema: "org",
                         principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Financial_User_ModifyUserId",
                         column: x => x.ModifyUserId,
-                        principalSchema: "org",
                         principalTable: "User",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "Product",
-                schema: "org",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -1179,21 +1098,18 @@ namespace Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_Product_Classification_ClassificationId",
                         column: x => x.ClassificationId,
-                        principalSchema: "org",
                         principalTable: "Classification",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Product_Dealer_DealerId",
                         column: x => x.DealerId,
-                        principalSchema: "org",
                         principalTable: "Dealer",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "InventoryProduct",
-                schema: "org",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -1221,21 +1137,18 @@ namespace Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_InventoryProduct_Inventory_InventoryId",
                         column: x => x.InventoryId,
-                        principalSchema: "org",
                         principalTable: "Inventory",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_InventoryProduct_Product_ProductId",
                         column: x => x.ProductId,
-                        principalSchema: "org",
                         principalTable: "Product",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_InventoryProduct_Unit_UnitId",
                         column: x => x.UnitId,
-                        principalSchema: "org",
                         principalTable: "Unit",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -1243,7 +1156,6 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "ProductPropertyElement",
-                schema: "org",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -1267,26 +1179,22 @@ namespace Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_ProductPropertyElement_Product_ProductId",
                         column: x => x.ProductId,
-                        principalSchema: "org",
                         principalTable: "Product",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_ProductPropertyElement_PropertyElement_PropertyElementId",
                         column: x => x.PropertyElementId,
-                        principalSchema: "org",
                         principalTable: "PropertyElement",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_ProductPropertyElement_Property_PropertyId",
                         column: x => x.PropertyId,
-                        principalSchema: "org",
                         principalTable: "Property",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "ProductRecipe",
-                schema: "org",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -1310,7 +1218,6 @@ namespace Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_ProductRecipe_Product_ProductId",
                         column: x => x.ProductId,
-                        principalSchema: "org",
                         principalTable: "Product",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -1318,7 +1225,6 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "ProductUnit",
-                schema: "org",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -1342,14 +1248,12 @@ namespace Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_ProductUnit_Product_ProductId",
                         column: x => x.ProductId,
-                        principalSchema: "org",
                         principalTable: "Product",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ProductUnit_Unit_UnitId",
                         column: x => x.UnitId,
-                        principalSchema: "org",
                         principalTable: "Unit",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -1357,7 +1261,6 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "FinancialInvoice",
-                schema: "org",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -1381,7 +1284,6 @@ namespace Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_FinancialInvoice_Financial_FinancialId",
                         column: x => x.FinancialId,
-                        principalSchema: "org",
                         principalTable: "Financial",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -1389,7 +1291,6 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Invoice",
-                schema: "org",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -1439,60 +1340,51 @@ namespace Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_Invoice_Branch_BranchId",
                         column: x => x.BranchId,
-                        principalSchema: "org",
                         principalTable: "Branch",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Invoice_Currency_CurrencyId",
                         column: x => x.CurrencyId,
-                        principalSchema: "org",
                         principalTable: "Currency",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Invoice_Dealer_DealerId",
                         column: x => x.DealerId,
-                        principalSchema: "org",
                         principalTable: "Dealer",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Invoice_PaymentType_PaymentTypeId",
                         column: x => x.PaymentTypeId,
-                        principalSchema: "org",
                         principalTable: "PaymentType",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Invoice_Shift_ShiftId",
                         column: x => x.ShiftId,
-                        principalSchema: "org",
                         principalTable: "Shift",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Invoice_Stock_StockId",
                         column: x => x.StockId,
-                        principalSchema: "org",
                         principalTable: "Stock",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Invoice_User_CreateUserId",
                         column: x => x.CreateUserId,
-                        principalSchema: "org",
                         principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Invoice_User_ModifyUserId",
                         column: x => x.ModifyUserId,
-                        principalSchema: "org",
                         principalTable: "User",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "InvoiceProduct",
-                schema: "org",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -1525,27 +1417,23 @@ namespace Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_InvoiceProduct_Invoice_InvoiceId",
                         column: x => x.InvoiceId,
-                        principalSchema: "org",
                         principalTable: "Invoice",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_InvoiceProduct_Product_ProductId",
                         column: x => x.ProductId,
-                        principalSchema: "org",
                         principalTable: "Product",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_InvoiceProduct_Stock_StockId",
                         column: x => x.StockId,
-                        principalSchema: "org",
                         principalTable: "Stock",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_InvoiceProduct_Unit_UnitId",
                         column: x => x.UnitId,
-                        principalSchema: "org",
                         principalTable: "Unit",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -1553,7 +1441,6 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Order",
-                schema: "org",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -1596,51 +1483,43 @@ namespace Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_Order_Branch_BranchId",
                         column: x => x.BranchId,
-                        principalSchema: "org",
                         principalTable: "Branch",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Order_Dealer_DealerId",
                         column: x => x.DealerId,
-                        principalSchema: "org",
                         principalTable: "Dealer",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Order_Invoice_InvoiceId",
                         column: x => x.InvoiceId,
-                        principalSchema: "org",
                         principalTable: "Invoice",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Order_Shift_ShiftId",
                         column: x => x.ShiftId,
-                        principalSchema: "org",
                         principalTable: "Shift",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Order_Table_TableId",
                         column: x => x.TableId,
-                        principalSchema: "org",
                         principalTable: "Table",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Order_User_CreateUserId",
                         column: x => x.CreateUserId,
-                        principalSchema: "org",
                         principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Order_User_ModifyUserId",
                         column: x => x.ModifyUserId,
-                        principalSchema: "org",
                         principalTable: "User",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "OrderProduct",
-                schema: "org",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -1672,21 +1551,18 @@ namespace Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_OrderProduct_Order_OrderId",
                         column: x => x.OrderId,
-                        principalSchema: "org",
                         principalTable: "Order",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_OrderProduct_Product_ProductId",
                         column: x => x.ProductId,
-                        principalSchema: "org",
                         principalTable: "Product",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_OrderProduct_Unit_UnitId",
                         column: x => x.UnitId,
-                        principalSchema: "org",
                         principalTable: "Unit",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -1694,7 +1570,6 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Transaction",
-                schema: "org",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -1730,57 +1605,48 @@ namespace Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_Transaction_Branch_BranchId",
                         column: x => x.BranchId,
-                        principalSchema: "org",
                         principalTable: "Branch",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Transaction_Dealer_DealerId",
                         column: x => x.DealerId,
-                        principalSchema: "org",
                         principalTable: "Dealer",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Transaction_Order_OrderId",
                         column: x => x.OrderId,
-                        principalSchema: "org",
                         principalTable: "Order",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Transaction_Shift_ShiftId",
                         column: x => x.ShiftId,
-                        principalSchema: "org",
                         principalTable: "Shift",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Transaction_Stock_StockId",
                         column: x => x.StockId,
-                        principalSchema: "org",
                         principalTable: "Stock",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Transaction_Stock_ToStockId",
                         column: x => x.ToStockId,
-                        principalSchema: "org",
                         principalTable: "Stock",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Transaction_User_CreateUserId",
                         column: x => x.CreateUserId,
-                        principalSchema: "org",
                         principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Transaction_User_ModifyUserId",
                         column: x => x.ModifyUserId,
-                        principalSchema: "org",
                         principalTable: "User",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "TransactionProduct",
-                schema: "org",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -1809,27 +1675,23 @@ namespace Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_TransactionProduct_Product_ProductId",
                         column: x => x.ProductId,
-                        principalSchema: "org",
                         principalTable: "Product",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_TransactionProduct_Stock_StockId",
                         column: x => x.StockId,
-                        principalSchema: "org",
                         principalTable: "Stock",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_TransactionProduct_Transaction_TransactionId",
                         column: x => x.TransactionId,
-                        principalSchema: "org",
                         principalTable: "Transaction",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_TransactionProduct_Unit_UnitId",
                         column: x => x.UnitId,
-                        principalSchema: "org",
                         principalTable: "Unit",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -1837,577 +1699,480 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_Account_AccountTypeId",
-                schema: "org",
                 table: "Account",
                 column: "AccountTypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AccountBank_AccountId",
-                schema: "org",
                 table: "AccountBank",
                 column: "AccountId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AccountBank_BankBranchd",
-                schema: "org",
                 table: "AccountBank",
                 column: "BankBranchd");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AccountBank_BankId",
-                schema: "org",
                 table: "AccountBank",
                 column: "BankId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BankBranch_BankId",
-                schema: "org",
                 table: "BankBranch",
                 column: "BankId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BankBranch_CityId",
-                schema: "org",
                 table: "BankBranch",
                 column: "CityId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BankBranch_CountryId",
-                schema: "org",
                 table: "BankBranch",
                 column: "CountryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BankBranch_DistrictId",
-                schema: "org",
                 table: "BankBranch",
                 column: "DistrictId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_City_CountryId",
-                schema: "org",
                 table: "City",
                 column: "CountryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Dealer_AccountId",
-                schema: "org",
                 table: "Dealer",
                 column: "AccountId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Dealer_CityId",
-                schema: "org",
                 table: "Dealer",
                 column: "CityId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Dealer_CountryId",
-                schema: "org",
                 table: "Dealer",
                 column: "CountryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Dealer_DealerGroupId",
-                schema: "org",
                 table: "Dealer",
                 column: "DealerGroupId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Dealer_DistrictId",
-                schema: "org",
                 table: "Dealer",
                 column: "DistrictId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_District_CityId",
-                schema: "org",
                 table: "District",
                 column: "CityId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_District_CountryId",
-                schema: "org",
                 table: "District",
                 column: "CountryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Financial_BranchId",
-                schema: "org",
                 table: "Financial",
                 column: "BranchId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Financial_CreateUserId",
-                schema: "org",
                 table: "Financial",
                 column: "CreateUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Financial_CurrencyId",
-                schema: "org",
                 table: "Financial",
                 column: "CurrencyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Financial_DealerId",
-                schema: "org",
                 table: "Financial",
                 column: "DealerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Financial_ModifyUserId",
-                schema: "org",
                 table: "Financial",
                 column: "ModifyUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Financial_OutlayId",
-                schema: "org",
                 table: "Financial",
                 column: "OutlayId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Financial_PaymentTypeId",
-                schema: "org",
                 table: "Financial",
                 column: "PaymentTypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Financial_SafeId",
-                schema: "org",
                 table: "Financial",
                 column: "SafeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Financial_ShiftId",
-                schema: "org",
                 table: "Financial",
                 column: "ShiftId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_FinancialInvoice_FinancialId",
-                schema: "org",
                 table: "FinancialInvoice",
                 column: "FinancialId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_FinancialInvoice_InvoiceId",
-                schema: "org",
                 table: "FinancialInvoice",
                 column: "InvoiceId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Inventory_BranchId",
-                schema: "org",
                 table: "Inventory",
                 column: "BranchId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Inventory_CreateUserId",
-                schema: "org",
                 table: "Inventory",
                 column: "CreateUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Inventory_ModifyUserId",
-                schema: "org",
                 table: "Inventory",
                 column: "ModifyUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Inventory_ShiftId",
-                schema: "org",
                 table: "Inventory",
                 column: "ShiftId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Inventory_StockId",
-                schema: "org",
                 table: "Inventory",
                 column: "StockId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Inventory_UserId",
-                schema: "org",
                 table: "Inventory",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_InventoryProduct_InventoryId",
-                schema: "org",
                 table: "InventoryProduct",
                 column: "InventoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_InventoryProduct_ProductId",
-                schema: "org",
                 table: "InventoryProduct",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_InventoryProduct_UnitId",
-                schema: "org",
                 table: "InventoryProduct",
                 column: "UnitId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Invoice_BranchId",
-                schema: "org",
                 table: "Invoice",
                 column: "BranchId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Invoice_CreateUserId",
-                schema: "org",
                 table: "Invoice",
                 column: "CreateUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Invoice_CurrencyId",
-                schema: "org",
                 table: "Invoice",
                 column: "CurrencyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Invoice_DealerId",
-                schema: "org",
                 table: "Invoice",
                 column: "DealerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Invoice_ModifyUserId",
-                schema: "org",
                 table: "Invoice",
                 column: "ModifyUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Invoice_PaymentTypeId",
-                schema: "org",
                 table: "Invoice",
                 column: "PaymentTypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Invoice_ShiftId",
-                schema: "org",
                 table: "Invoice",
                 column: "ShiftId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Invoice_StockId",
-                schema: "org",
                 table: "Invoice",
                 column: "StockId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Invoice_TransactionId",
-                schema: "org",
                 table: "Invoice",
                 column: "TransactionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_InvoiceProduct_InvoiceId",
-                schema: "org",
                 table: "InvoiceProduct",
                 column: "InvoiceId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_InvoiceProduct_ProductId",
-                schema: "org",
                 table: "InvoiceProduct",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_InvoiceProduct_StockId",
-                schema: "org",
                 table: "InvoiceProduct",
                 column: "StockId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_InvoiceProduct_UnitId",
-                schema: "org",
                 table: "InvoiceProduct",
                 column: "UnitId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Journal_BranchId",
-                schema: "org",
                 table: "Journal",
                 column: "BranchId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Journal_CreateUserId",
-                schema: "org",
                 table: "Journal",
                 column: "CreateUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Journal_CurrencyId",
-                schema: "org",
                 table: "Journal",
                 column: "CurrencyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Journal_ModifyUserId",
-                schema: "org",
                 table: "Journal",
                 column: "ModifyUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Journal_ShiftId",
-                schema: "org",
                 table: "Journal",
                 column: "ShiftId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_JournalItem_AccountId",
-                schema: "org",
                 table: "JournalItem",
                 column: "AccountId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_JournalItem_JournalId",
-                schema: "org",
                 table: "JournalItem",
                 column: "JournalId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Order_BranchId",
-                schema: "org",
                 table: "Order",
                 column: "BranchId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Order_CreateUserId",
-                schema: "org",
                 table: "Order",
                 column: "CreateUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Order_DealerId",
-                schema: "org",
                 table: "Order",
                 column: "DealerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Order_InvoiceId",
-                schema: "org",
                 table: "Order",
                 column: "InvoiceId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Order_ModifyUserId",
-                schema: "org",
                 table: "Order",
                 column: "ModifyUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Order_ShiftId",
-                schema: "org",
                 table: "Order",
                 column: "ShiftId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Order_TableId",
-                schema: "org",
                 table: "Order",
                 column: "TableId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderProduct_OrderId",
-                schema: "org",
                 table: "OrderProduct",
                 column: "OrderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderProduct_ProductId",
-                schema: "org",
                 table: "OrderProduct",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderProduct_UnitId",
-                schema: "org",
                 table: "OrderProduct",
                 column: "UnitId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Product_ClassificationId",
-                schema: "org",
                 table: "Product",
                 column: "ClassificationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Product_DealerId",
-                schema: "org",
                 table: "Product",
                 column: "DealerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProductPropertyElement_ProductId",
-                schema: "org",
                 table: "ProductPropertyElement",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProductPropertyElement_PropertyElementId",
-                schema: "org",
                 table: "ProductPropertyElement",
                 column: "PropertyElementId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProductPropertyElement_PropertyId",
-                schema: "org",
                 table: "ProductPropertyElement",
                 column: "PropertyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProductRecipe_ProductId",
-                schema: "org",
                 table: "ProductRecipe",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProductUnit_ProductId",
-                schema: "org",
                 table: "ProductUnit",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProductUnit_UnitId",
-                schema: "org",
                 table: "ProductUnit",
                 column: "UnitId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PropertyElement_PropertyId",
-                schema: "org",
                 table: "PropertyElement",
                 column: "PropertyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RolePermission_PermissionId",
-                schema: "org",
                 table: "RolePermission",
                 column: "PermissionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RolePermission_RoleId",
-                schema: "org",
                 table: "RolePermission",
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Safe_AccountId",
-                schema: "org",
                 table: "Safe",
                 column: "AccountId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Stock_BranchId",
-                schema: "org",
                 table: "Stock",
                 column: "BranchId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Transaction_BranchId",
-                schema: "org",
                 table: "Transaction",
                 column: "BranchId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Transaction_CreateUserId",
-                schema: "org",
                 table: "Transaction",
                 column: "CreateUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Transaction_DealerId",
-                schema: "org",
                 table: "Transaction",
                 column: "DealerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Transaction_ModifyUserId",
-                schema: "org",
                 table: "Transaction",
                 column: "ModifyUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Transaction_OrderId",
-                schema: "org",
                 table: "Transaction",
                 column: "OrderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Transaction_ShiftId",
-                schema: "org",
                 table: "Transaction",
                 column: "ShiftId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Transaction_StockId",
-                schema: "org",
                 table: "Transaction",
                 column: "StockId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Transaction_ToStockId",
-                schema: "org",
                 table: "Transaction",
                 column: "ToStockId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TransactionProduct_ProductId",
-                schema: "org",
                 table: "TransactionProduct",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TransactionProduct_StockId",
-                schema: "org",
                 table: "TransactionProduct",
                 column: "StockId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TransactionProduct_TransactionId",
-                schema: "org",
                 table: "TransactionProduct",
                 column: "TransactionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TransactionProduct_UnitId",
-                schema: "org",
                 table: "TransactionProduct",
                 column: "UnitId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_User_BranchId",
-                schema: "org",
                 table: "User",
                 column: "BranchId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_User_RoleId",
-                schema: "org",
                 table: "User",
                 column: "RoleId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_FinancialInvoice_Invoice_InvoiceId",
-                schema: "org",
                 table: "FinancialInvoice",
                 column: "InvoiceId",
-                principalSchema: "org",
                 principalTable: "Invoice",
                 principalColumn: "Id");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Invoice_Transaction_TransactionId",
-                schema: "org",
                 table: "Invoice",
                 column: "TransactionId",
-                principalSchema: "org",
                 principalTable: "Transaction",
                 principalColumn: "Id");
         }
@@ -2417,327 +2182,253 @@ namespace Infrastructure.Migrations
         {
             migrationBuilder.DropForeignKey(
                 name: "FK_Account_AccountType_AccountTypeId",
-                schema: "org",
                 table: "Account");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Dealer_Account_AccountId",
-                schema: "org",
                 table: "Dealer");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Dealer_City_CityId",
-                schema: "org",
                 table: "Dealer");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_District_City_CityId",
-                schema: "org",
                 table: "District");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Dealer_Country_CountryId",
-                schema: "org",
                 table: "Dealer");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_District_Country_CountryId",
-                schema: "org",
                 table: "District");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Dealer_District_DistrictId",
-                schema: "org",
                 table: "Dealer");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Dealer_DealerGroup_DealerGroupId",
-                schema: "org",
                 table: "Dealer");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Invoice_Branch_BranchId",
-                schema: "org",
                 table: "Invoice");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Order_Branch_BranchId",
-                schema: "org",
                 table: "Order");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Stock_Branch_BranchId",
-                schema: "org",
                 table: "Stock");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Transaction_Branch_BranchId",
-                schema: "org",
                 table: "Transaction");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_User_Branch_BranchId",
-                schema: "org",
                 table: "User");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Invoice_Currency_CurrencyId",
-                schema: "org",
                 table: "Invoice");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Invoice_Dealer_DealerId",
-                schema: "org",
                 table: "Invoice");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Order_Dealer_DealerId",
-                schema: "org",
                 table: "Order");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Transaction_Dealer_DealerId",
-                schema: "org",
                 table: "Transaction");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Invoice_PaymentType_PaymentTypeId",
-                schema: "org",
                 table: "Invoice");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Invoice_Shift_ShiftId",
-                schema: "org",
                 table: "Invoice");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Order_Shift_ShiftId",
-                schema: "org",
                 table: "Order");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Transaction_Shift_ShiftId",
-                schema: "org",
                 table: "Transaction");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Invoice_User_CreateUserId",
-                schema: "org",
                 table: "Invoice");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Invoice_User_ModifyUserId",
-                schema: "org",
                 table: "Invoice");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Order_User_CreateUserId",
-                schema: "org",
                 table: "Order");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Order_User_ModifyUserId",
-                schema: "org",
                 table: "Order");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Transaction_User_CreateUserId",
-                schema: "org",
                 table: "Transaction");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Transaction_User_ModifyUserId",
-                schema: "org",
                 table: "Transaction");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Order_Invoice_InvoiceId",
-                schema: "org",
                 table: "Order");
 
             migrationBuilder.DropTable(
-                name: "AccountBank",
-                schema: "org");
+                name: "AccountBank");
 
             migrationBuilder.DropTable(
-                name: "FinancialInvoice",
-                schema: "org");
+                name: "FinancialInvoice");
 
             migrationBuilder.DropTable(
-                name: "FinancialType",
-                schema: "org");
+                name: "FinancialType");
 
             migrationBuilder.DropTable(
-                name: "InventoryProduct",
-                schema: "org");
+                name: "InventoryProduct");
 
             migrationBuilder.DropTable(
-                name: "InvoiceProduct",
-                schema: "org");
+                name: "InvoiceProduct");
 
             migrationBuilder.DropTable(
-                name: "InvoiceType",
-                schema: "org");
+                name: "InvoiceType");
 
             migrationBuilder.DropTable(
-                name: "JournalItem",
-                schema: "org");
+                name: "JournalItem");
 
             migrationBuilder.DropTable(
-                name: "OrderProduct",
-                schema: "org");
+                name: "OrderProduct");
 
             migrationBuilder.DropTable(
-                name: "Preference",
-                schema: "org");
+                name: "Preference");
 
             migrationBuilder.DropTable(
-                name: "ProductPropertyElement",
-                schema: "org");
+                name: "ProductPropertyElement");
 
             migrationBuilder.DropTable(
-                name: "ProductRecipe",
-                schema: "org");
+                name: "ProductRecipe");
 
             migrationBuilder.DropTable(
-                name: "ProductUnit",
-                schema: "org");
+                name: "ProductUnit");
 
             migrationBuilder.DropTable(
-                name: "RolePermission",
-                schema: "org");
+                name: "RolePermission");
 
             migrationBuilder.DropTable(
-                name: "TransactionProduct",
-                schema: "org");
+                name: "TransactionProduct");
 
             migrationBuilder.DropTable(
-                name: "TransactionType",
-                schema: "org");
+                name: "TransactionType");
 
             migrationBuilder.DropTable(
-                name: "BankBranch",
-                schema: "org");
+                name: "BankBranch");
 
             migrationBuilder.DropTable(
-                name: "Financial",
-                schema: "org");
+                name: "Financial");
 
             migrationBuilder.DropTable(
-                name: "Inventory",
-                schema: "org");
+                name: "Inventory");
 
             migrationBuilder.DropTable(
-                name: "Journal",
-                schema: "org");
+                name: "Journal");
 
             migrationBuilder.DropTable(
-                name: "PropertyElement",
-                schema: "org");
+                name: "PropertyElement");
 
             migrationBuilder.DropTable(
-                name: "Permission",
-                schema: "org");
+                name: "Permission");
 
             migrationBuilder.DropTable(
-                name: "Product",
-                schema: "org");
+                name: "Product");
 
             migrationBuilder.DropTable(
-                name: "Unit",
-                schema: "org");
+                name: "Unit");
 
             migrationBuilder.DropTable(
-                name: "Bank",
-                schema: "org");
+                name: "Bank");
 
             migrationBuilder.DropTable(
-                name: "Outlay",
-                schema: "org");
+                name: "Outlay");
 
             migrationBuilder.DropTable(
-                name: "Safe",
-                schema: "org");
+                name: "Safe");
 
             migrationBuilder.DropTable(
-                name: "Property",
-                schema: "org");
+                name: "Property");
 
             migrationBuilder.DropTable(
-                name: "Classification",
-                schema: "org");
+                name: "Classification");
 
             migrationBuilder.DropTable(
-                name: "AccountType",
-                schema: "org");
+                name: "AccountType");
 
             migrationBuilder.DropTable(
-                name: "Account",
-                schema: "org");
+                name: "Account");
 
             migrationBuilder.DropTable(
-                name: "City",
-                schema: "org");
+                name: "City");
 
             migrationBuilder.DropTable(
-                name: "Country",
-                schema: "org");
+                name: "Country");
 
             migrationBuilder.DropTable(
-                name: "District",
-                schema: "org");
+                name: "District");
 
             migrationBuilder.DropTable(
-                name: "DealerGroup",
-                schema: "org");
+                name: "DealerGroup");
 
             migrationBuilder.DropTable(
-                name: "Branch",
-                schema: "org");
+                name: "Branch");
 
             migrationBuilder.DropTable(
-                name: "Currency",
-                schema: "org");
+                name: "Currency");
 
             migrationBuilder.DropTable(
-                name: "Dealer",
-                schema: "org");
+                name: "Dealer");
 
             migrationBuilder.DropTable(
-                name: "PaymentType",
-                schema: "org");
+                name: "PaymentType");
 
             migrationBuilder.DropTable(
-                name: "Shift",
-                schema: "org");
+                name: "Shift");
 
             migrationBuilder.DropTable(
-                name: "User",
-                schema: "org");
+                name: "User");
 
             migrationBuilder.DropTable(
-                name: "Role",
-                schema: "org");
+                name: "Role");
 
             migrationBuilder.DropTable(
-                name: "Invoice",
-                schema: "org");
+                name: "Invoice");
 
             migrationBuilder.DropTable(
-                name: "Transaction",
-                schema: "org");
+                name: "Transaction");
 
             migrationBuilder.DropTable(
-                name: "Order",
-                schema: "org");
+                name: "Order");
 
             migrationBuilder.DropTable(
-                name: "Stock",
-                schema: "org");
+                name: "Stock");
 
             migrationBuilder.DropTable(
-                name: "Table",
-                schema: "org");
+                name: "Table");
         }
     }
 }

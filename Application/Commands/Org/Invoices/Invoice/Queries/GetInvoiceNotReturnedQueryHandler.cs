@@ -26,7 +26,7 @@ namespace Application.Commands.Org.Invoices.Invoice.Queries
                     !returnedInvoiceIds.Contains(e.Id) &&
                     e.TypeId == request.TypeId &&
                     (string.IsNullOrEmpty(request.KeySearch) ||
-                     e.Code.Contains(request.KeySearch)) &&
+                     e.Code!.Contains(request.KeySearch)) &&
                     e.Id != e.ParentId &&
                     e.Status != Domain.Enums.Status.Deleted &&
                     e.Hide != true,

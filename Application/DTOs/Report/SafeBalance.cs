@@ -10,12 +10,12 @@ namespace Application.Report
     {
         public long Id { get; set; }
         public long SafeId { get; set; }
-        public string SafeName { get; set; }
+        public string? SafeName { get; set; }
         public long DealerId { get; set; }
-        public string DealerName { get; set; }
+        public string? DealerName { get; set; }
         public long CurrencyId { get; set; }
-        public string CurrencyName { get; set; }
-        public string SafeImgPath { get; set; }
+        public string? CurrencyName { get; set; }
+        public string? SafeImgPath { get; set; }
 
     }
 }

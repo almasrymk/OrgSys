@@ -1,13 +1,32 @@
+@using Application.DTOs
+@using Microsoft.AspNetCore.Mvc.Localization
 @using System.Globalization
 @model Domain.Shared.ResultPagination<Application.DTOs.JournalDto>
 @using OrgSys
 @{
     Layout = null;
+    var DateFormat = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "yyyy-MM-dd" : "dd-MM-yyyy";
+    var CurrentUICulture = CultureInfo.CurrentUICulture;
+    var IsRightToLeft = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft;
     var TextAlign = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "text-right" : "text-left";
     var TextAlign2 = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "text-left" : "text-right";
-    var DateFormat = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "yyyy-MM-dd" : "dd-MM-yyyy";
-    var AllowEdit = User.IsAllowed("Journal.Edit");
-    var AllowDelete = User.IsAllowed("Journal.Delete");
+    var DateFromate = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "yyyy-MM-dd" : "dd-MM-yyyy";
+    var TimeFromate = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "mm:hh t" : "hh:mm t";
+    var AllowView = false;
+    var AllowAdd = false;
+    var AllowEdit = false;
+    var AllowDelete = false;
+    var AllowCancel = false;
+    var AllowRedo = false;
+    AllowView = User.IsAllowed("Journal.View");
+    AllowAdd = User.IsAllowed("Journal.Add");
+    AllowEdit = User.IsAllowed("Journal.Edit");
+    AllowDelete = User.IsAllowed("Journal.Delete");
+    AllowCancel = User.IsAllowed("Journal.Cancel");
+    AllowRedo = User.IsAllowed("Journal.Redo");
+
+    List<InvoiceTypeDto> InvoicesTypes = ViewBag.InvoicesTypes;
+    List<TransactionTypeDto> TransactionsTypes = ViewBag.TransactionsTypes;
 }
 
 @if (Model != null && Model.Response.Count > 0)
@@ -18,11 +37,12 @@
                 <thead>
                     <tr>
                         <th class="text-center">#</th>
+                        <th class="@TextAlign">Journal Type</th>
                         <th class="text-center">@Domain.Resource.Title_Designer.Code</th>
                         <th class="text-center">@Domain.Resource.Title_Designer.Date</th>
                         <th class="@TextAlign">@Domain.Resource.Title_Designer.Currency</th>
-                        <th class="text-center">Reference</th>
                         <th class="@TextAlign">@Domain.Resource.Title_Designer.Notes</th>
+                        <th class="text-center">Reference</th>
                         <th class="text-center">Review</th>
                         <th class="text-center">Posted</th>
                         @if (AllowEdit || AllowDelete)
@@ -40,38 +60,58 @@
                     {
                         <tr>
                             <td class="text-center align-middle">@x</td>
+                            <td class="@TextAlign align-middle">@Model.Response[i].JournalTypeName</td>
                             <td class="text-center align-middle">@Model.Response[i].Code</td>
                             <td class="text-center align-middle">@Model.Response[i].Date.ToString(DateFormat, new CultureInfo("en-US"))</td>
                             <td class="@TextAlign align-middle">@Model.Response[i].CurrencyName</td>
-                            <td class="text-center align-middle">@Model.Response[i].RefranceId</td>
                             <td class="@TextAlign align-middle">@Model.Response[i].Note</td>
+                            <td class="text-center align-middle">
+                                @if ("" + Model.Response[i].RefranceTable == "invoice")
+                                {
+                                    <a href="/Invoices/Invoice/Save?id=@Model.Response[i].RefranceId&ParentId=@ViewBag.ParentId&TypeId=@Model.Response[i].RefranceTypeId"><i class="@InvoicesTypes.FirstOrDefault(e => e.Id == @Model.Response[i].RefranceTypeId).Icon"> @Model.Response[i].RefranceCode </i></a>
+                                }
+                                else if ("" + Model.Response[i].RefranceTable == "transaction")
+                                {
+                                    <a href="/Transactions/Transaction/Save?id=@Model.Response[i].RefranceId&ParentId=@ViewBag.ParentId&TypeId=@Model.Response[i].RefranceTypeId"><i class="@TransactionsTypes.FirstOrDefault(e => e.Id == @Model.Response[i].RefranceTypeId).Icon"> @Model.Response[i].RefranceCode </i></a>
+                                }
+                            </td>
                             <td class="text-center align-middle">@(Model.Response[i].Review ? "✓" : "")</td>
                             <td class="text-center align-middle">@(Model.Response[i].Posted ? "✓" : "")</td>
                             @if (AllowEdit || AllowDelete)
                             {
                                 <td class="@TextAlign2 align-middle">
-                                    @if (AllowEdit)
+                                    @if ("" + Model.Response[i].RefranceTable == "")
                                     {
-                                        <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"><i class="iconsminds-folder-edit" style="color:green"></i></a>
+                                        @if (AllowEdit)
+                                        {
+                                            <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"><i class="iconsminds-folder-edit" style="color:green"></i></a>
+                                        }
+                                        @if (AllowEdit && AllowDelete)
+                                        {
+                                            <span>&nbsp; | &nbsp;</span>
+                                        }
+                                        @if (AllowDelete)
+                                        {
+                                            <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash', '@Domain.Resource.Message_Designer.DeleteConfirmation', '@Domain.Resource.Message_Designer.DoYouWantDeleteFile', '@Domain.Resource.Title_Designer.Ok', @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i></a>
+                                        }
                                     }
-                                    @if (AllowEdit && AllowDelete)
+                                    else
                                     {
-                                        <span>&nbsp; | &nbsp;</span>
-                                    }
-                                    @if (AllowDelete)
-                                    {
-                                        <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash', '@Domain.Resource.Message_Designer.DeleteConfirmation', '@Domain.Resource.Message_Designer.DoYouWantDeleteFile', '@Domain.Resource.Title_Designer.Ok', @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i></a>
+                                            <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"><i class="simple-icon-eye" style="color:green"></i></a>
                                     }
                                 </td>
                             }
                             @if (AllowDelete)
                             {
                                 <td class="align-middle @TextAlign2" style="width:30px">
-                                    <label class="custom-control custom-checkbox pt-2">
-                                        <input id="chk_@Model.Response[i].Id" type="checkbox" class="custom-control-input chk">
-                                        <input type="hidden" value="@Model.Response[i].Id" />
-                                        <span class="custom-control-label">&nbsp;</span>
-                                    </label>
+                                    @if (Model.Response[i].RefranceTable == "")
+                                    {
+                                        <label class="custom-control custom-checkbox pt-2">
+                                            <input id="chk_@Model.Response[i].Id" type="checkbox" class="custom-control-input chk">
+                                            <input type="hidden" value="@Model.Response[i].Id" />
+                                            <span class="custom-control-label">&nbsp;</span>
+                                        </label>
+                                    }
                                 </td>
                             }
                         </tr>
@@ -82,41 +122,152 @@
     </div>
 
     <div id="rowList" style="display:none;">
-        @for (int i = 0, x = ((Model.Page - 1) * Model.PageSize) + 1; i < Model.Response.Count; i++, x++)
-        {
-            <div class="card d-flex flex-row mb-2">
-                <div class="list-thumbnail border-0 card-img-left badge-theme-1" style="height:60px;width:60px;font-size:x-large;text-align:center;padding:14px;">
-                    @x
-                </div>
-                <div class="card-body align-self-center d-flex flex-column flex-md-row align-items-md-center">
-                    <div class="list-item-heading mb-0 w-10">@Model.Response[i].Code</div>
-                    <div class="list-item-heading mb-0 truncate w-15">@Model.Response[i].Date.ToString(DateFormat, new CultureInfo("en-US"))</div>
-                    <div class="list-item-heading mb-0 w-20">@Model.Response[i].CurrencyName</div>
-                    <div class="list-item-heading mb-0 w-30">@Model.Response[i].Note</div>
-                    <div class="w-20 @TextAlign2">
-                        @if (AllowEdit)
-                        {
-                            <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"><i class="iconsminds-folder-edit" style="color:green"></i></a>
-                        }
-                        @if (AllowDelete)
-                        {
-                            <span>&nbsp; | &nbsp;</span>
-                            <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash', '@Domain.Resource.Message_Designer.DeleteConfirmation', '@Domain.Resource.Message_Designer.DoYouWantDeleteFile', '@Domain.Resource.Title_Designer.Ok', @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i></a>
-                        }
+        <div class="col-12 list  m-0 p-0 pt-2" data-check-all="checkAll">
+            <div class=" d-flex flex-row mb-2" style="background-color:transparent !important;height:50px;padding:0px;margin:0px;">
+                <div class="d-flex flex-grow-1 min-width-zero" style="border-radius:15px; height:60px;">
+                    <div class="list-thumbnail  border-0" style="height:60px; width:60px; font-size:x-large; text-align:center; padding:14px;">
+                        <small>#</small>
                     </div>
-                </div>
-                @if (AllowDelete)
-                {
+                    <div class="card-body align-self-center d-flex flex-column flex-md-row  align-items-md-center">
+                        <div class="w-25">
+                            <small>Journal Type</small>
+                        </div>
+                        <div class="list-item-heading mb-0  w-10  ">
+                            <small>@Domain.Resource.Title_Designer.Code</small>
+                        </div>
+                        <div class="list-item-heading mb-0 truncate w-15 ">
+                            <small>@Domain.Resource.Title_Designer.Date</small>
+                        </div>
+                        <div class="w-20">
+                            <small>@Domain.Resource.Title_Designer.Currency</small>
+                        </div>
+                        <div class="w-30">
+                            <small>@Domain.Resource.Title_Designer.Notes</small>
+                        </div>
+                        <div class="list-item-heading mb-0 truncate w-10">
+                            <small>Reference</small>
+                        </div>
+                        <div class="list-item-heading mb-0 truncate w-10">
+                            <small>Review</small>
+                        </div>
+                        <div class="list-item-heading mb-0 truncate w-10">
+                            <small>Posted</small>
+                        </div>
+                        <div class="w-20 @TextAlign2">
+                        </div>
+                    </div>
                     <div style="width:30px;">
-                        <label class="custom-control custom-checkbox pt-3">
-                            <input id="chk_card_@Model.Response[i].Id" type="checkbox" class="custom-control-input chk">
-                            <input type="hidden" value="@Model.Response[i].Id" />
-                            <span class="custom-control-label">&nbsp;</span>
-                        </label>
                     </div>
-                }
+                </div>
             </div>
-        }
+            @for (int i = 0, x = ((Model.Page - 1) * Model.PageSize) + 1; i < Model.Response.Count; i++, x++)
+            {
+                <div class="card d-flex flex-row mb-2">
+                    <div class="d-flex flex-grow-1 min-width-zero" style="border-radius:15px; height:60px; @(Model.Response[i].Status == Domain.Enums.Status.Cancel ? "color:#a8a7a7;background:repeating-linear-gradient(60deg, transparent, transparent 5px, gainsboro 5px, gainsboro 6px);" : "")">
+                        <div class="list-thumbnail  border-0 card-img-left badge-theme-1" style="height:60px; width:60px; font-size:x-large; text-align:center; padding:14px;">
+                            <i class="iconsminds-address-book-2"></i>
+                        </div>
+                        <div class="card-body align-self-center d-flex flex-column flex-md-row  align-items-md-center">
+                            <div class="w-25">
+                                @Model.Response[i].JournalTypeName
+                            </div>
+                            <div class="list-item-heading mb-0  w-10  ">
+                                @Model.Response[i].Code
+                            </div>
+                            <div class="list-item-heading mb-0 truncate w-15 ">
+                                @Model.Response[i].Date.ToString(DateFromate, new CultureInfo("en-US"))
+                            </div>
+                            <div class="w-20">
+                                @Model.Response[i].CurrencyName
+                            </div>
+                            <div class="w-30">
+                                @Model.Response[i].Note
+                            </div>
+                            <div class="list-item-heading mb-0 truncate w-10">
+                                @if ("" + Model.Response[i].RefranceTable == "invoice")
+                                {
+                                    <a href="/Invoices/Invoice/Save?id=@Model.Response[i].RefranceId&ParentId=@ViewBag.ParentId&TypeId=@Model.Response[i].RefranceTypeId"><i class="@InvoicesTypes.FirstOrDefault(e => e.Id == @Model.Response[i].RefranceTypeId).Icon"> @Model.Response[i].RefranceCode </i></a>
+                                }
+                                else if ("" + Model.Response[i].RefranceTable == "transaction")
+                                {
+                                    <a href="/Transactions/Transaction/Save?id=@Model.Response[i].RefranceId&ParentId=@ViewBag.ParentId&TypeId=@Model.Response[i].RefranceTypeId"><i class="@TransactionsTypes.FirstOrDefault(e => e.Id == @Model.Response[i].RefranceTypeId).Icon"> @Model.Response[i].RefranceCode </i></a>
+                                }
+                            </div>
+                            <div class="list-item-heading mb-0 truncate w-10">
+                                @(Model.Response[i].Review ? "✓" : "")
+                            </div>
+                            <div class="list-item-heading mb-0 truncate w-10">
+                                @(Model.Response[i].Posted ? "✓" : "")
+                            </div>
+                            <div class="w-20 @TextAlign2">
+                                @if ("" + Model.Response[i].RefranceTable == "")
+                                {
+                                    @if (Model.Response[i].Status == Domain.Enums.Status.Cancel)
+                                    {
+                                        <a href="/@ViewBag.area/@ViewBag.PageTitle/Redo?id=@Model.Response[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.Page"> <i class="simple-icon-action-redo"></i> </a>
+                                        if (AllowDelete)
+                                        {
+                                            <span>&nbsp; | &nbsp;</span>
+                                            <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Domain.Resource.Message_Designer.DeleteConfirmation' , '@Domain.Resource.Message_Designer.DoYouWantDeleteFile' , '@Domain.Resource.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (AllowEdit)
+                                        {
+                                            <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit" style="color:green"></i> </a>
+                                            if (AllowCancel || AllowDelete)
+                                            {
+                                                <span>&nbsp; | &nbsp;</span>
+                                            }
+                                        }
+                                        if (AllowCancel)
+                                        {
+                                            <a href="/@ViewBag.area/@ViewBag.PageTitle/Cancel?id=@Model.Response[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.Page"> <i>X</i> </a>
+                                            @if (AllowDelete)
+                                            {
+                                                <span>&nbsp; | &nbsp;</span>
+                                            }
+                                        }
+                                        if (AllowDelete)
+                                        {
+                                            <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Domain.Resource.Message_Designer.DeleteConfirmation' , '@Domain.Resource.Message_Designer.DoYouWantDeleteFile' , '@Domain.Resource.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
+                                        }
+
+                                        <span>&nbsp; | &nbsp;</span>
+                                        <a href="/@ViewBag.area/@ViewBag.PageTitle/Print?id=@Model.Response[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.Page" target="_blank"> <i class="fa fa-print text-info"></i> </a>
+                                    }
+                                }
+                                else
+                                {
+                                    <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="simple-icon-eye" style="color:green"></i> </a>
+                                    <span>&nbsp; | &nbsp;</span>
+                                    <a href="/@ViewBag.area/@ViewBag.PageTitle/Print?id=@Model.Response[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.Page" target="_blank"> <i class="fa fa-print text-info"></i> </a>
+                                }
+                            </div>
+                        </div>
+                        <div style="width:30px;">
+                            @if (AllowDelete)
+                            {
+                                @if (Model.Response[i].RefranceTable == "")
+                                {
+                                    @if (Model.Response[i].Status != Domain.Enums.Status.Cancel)
+                                    {
+                                        <label class="custom-control custom-checkbox pt-3">
+                                            <input id="chk_@Model.Response[i].Id" type="checkbox" class="custom-control-input chk">
+                                            <input type="hidden" value="@Model.Response[i].Id" />
+                                            <span class="custom-control-label">&nbsp;</span>
+                                        </label>
+                                    }
+                                }
+                            }
+                        </div>
+
+                    </div>
+                </div>
+
+            }
+        </div>
     </div>
 }
 

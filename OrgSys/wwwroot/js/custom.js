@@ -188,8 +188,7 @@ function exportToExcel(_page) {
         });
     }, 300);
 }
-
-
+ 
 function ReportSearch(_page, dir) {
     page = _page;
     var searchParams = "";
@@ -211,7 +210,6 @@ function ReportSearch(_page, dir) {
     // This assumes 'url' and 'dir' are defined elsewhere in your script and form a valid path to your Excel download action
     window.location.href = downloadUrl;
 }
-
  
 function search(_page) {
     page = _page; 
@@ -378,8 +376,7 @@ function CheckRequired(control, dvivControl , message) {
     }
     return false;
 }
-
-
+ 
 function CheckRequiredNoMessage(control) {
     if ($("#" + control).val() == "") {
         $("#" + control).focus();      
@@ -387,8 +384,7 @@ function CheckRequiredNoMessage(control) {
     }
     return false;
 }
-
-
+ 
 function CheckRage(control, dvivControl , min , max , message) {
     $("#error" + control).remove();
     if ("" + $("#" + control).val() != "") {

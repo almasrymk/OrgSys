@@ -236,7 +236,6 @@
                                 </td>
                             }
                         </tr>
-
                     }
                 </tbody>
             </table>
@@ -286,11 +285,9 @@
                            
                         </div>
                     </div>
-
                     <div style="width:30px;">
 
                     </div>
-
                 </div>
             </div>
             @for (int i = 0, x = ((Model.Page - 1) * Model.PageSize) + 1; i < Model.Response.Count; i++, x++)
@@ -300,7 +297,6 @@
                         <div class="list-thumbnail  border-0 card-img-left badge-theme-1" style="height:60px; width:60px; font-size:x-large; text-align:center; padding:14px;">
                             <i class="@ViewBag.InvoicesIcon"></i>
                         </div>
-
                         <div class="card-body align-self-center d-flex flex-column flex-md-row  align-items-md-center">
                             <div class="list-item-heading mb-0  w-10  ">
                                 @Model.Response[i].Code
@@ -341,7 +337,6 @@
                                 }
                             </div>
                             <div class="w-10">
-
                                 @if ("" + Model.Response[i].Transaction?.Code == "")
                                 {
                                     if (Model.Response[i].Status != Domain.Enums.Status.Cancel && AllowAdd && Model.Response[i].TransactionId == null )
@@ -421,7 +416,6 @@
 
                     </div>
                 </div>
-
             }
         </div>
     </div>

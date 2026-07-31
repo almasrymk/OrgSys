@@ -33,10 +33,10 @@
                 if (invoice == null)
                     continue;
 
-                invoice.InvoiceProducts.Clear();
+                invoice.InvoiceProducts!.Clear();
 
                 var financial = await financialRepo
-                    .GetByFilterAsync(e => e.FinancialInvoices.Select(f => f.InvoiceId)
+                    .GetByFilterAsync(e => e.FinancialInvoices!.Select(f => f.InvoiceId)
                     .Contains(invoiceId),"FinancialInvoices");
 
                 if (financial != null)

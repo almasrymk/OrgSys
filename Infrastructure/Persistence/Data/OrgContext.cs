@@ -14,47 +14,43 @@
 
     public class OrgContext : DbContext , IOrgContext
     {
-        public string Schema { get; set; } = "org";
+        //public string Schema { get; set; } = "org";
 
         public OrgContext(DbContextOptions<OrgContext> options) : base(options)
         {
 
         }
-
-        public OrgContext(DbContextOptions<OrgContext> MyOptions, string schema) : base(MyOptions)
-        {
-            if ("" + schema != "")
-                Schema = schema;
-        }
-
+         
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
             var builder = new ConfigurationBuilder().AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
             IConfigurationRoot config = builder.Build();
-            string assemblyName = typeof(OrgContext).Namespace;
+            string assemblyName = "" + typeof(OrgContext).Namespace;
             optionsBuilder
                 .UseSqlServer(
                     config.GetConnectionString("OrgConnection"),
-                    e => e.MigrationsHistoryTable("__MigrationsHistory", Schema))
-                .ReplaceService<IModelCacheKeyFactory, DbSchemaAwareModelCacheKeyFactory>()
-                .ReplaceService<IMigrationsAssembly, DbSchemaAwareMigrationAssembly>()
+                    e => e.MigrationsHistoryTable("__MigrationsHistory"))
+                //.ReplaceService<IModelCacheKeyFactory, DbSchemaAwareModelCacheKeyFactory>()
+                //.ReplaceService<IMigrationsAssembly, DbSchemaAwareMigrationAssembly>()
                 .UseSeeding((context, _) =>
                 {
                     var orgContext = (OrgContext)context;
-                    new InitialData(orgContext.Schema).Seed(orgContext);
+                    new InitialData().Seed(orgContext);
                 })
                 .UseAsyncSeeding((context, _, _) =>
                 {
                     var orgContext = (OrgContext)context;
-                    new InitialData(orgContext.Schema).Seed(orgContext);
+                    new InitialData().Seed(orgContext);
                     return Task.CompletedTask;
                 });
         }
          
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasDefaultSchema(Schema);
+            modelBuilder.Entity<Journal>()
+                .Property(journal => journal.Rate)
+                .HasPrecision(18, 2);
         }
 
         public Task BeginTransactionAsync()
@@ -119,6 +115,7 @@
         public virtual DbSet<City> Cities { get; set; }
         public virtual DbSet<Country> Countries { get; set; }
         public virtual DbSet<District> Districts { get; set; }
+        public virtual DbSet<JournalType> JournalTypes { get; set; }
         public virtual DbSet<Journal> Journals { get; set; }
         public virtual DbSet<JournalItem> JournalItem { get; set; }
 
@@ -188,69 +185,5 @@
 
         //[NotMapped]
         //public virtual DbSet<SafeList> SafeListReport { get; set; }
-    }
-
-    public class DbSchemaAwareModelCacheKeyFactory : IModelCacheKeyFactory
-    {
-        private string _schemaName;
-
-        public object Create(DbContext context, bool designTime)
-        {
-            var dataContext = context as OrgContext;
-            if (dataContext != null)
-            {
-                _schemaName = dataContext.Schema;
-            }
-            return new MultiTenantModelCacheKey(_schemaName, context, designTime);
-        }
-    }
-
-    public class MultiTenantModelCacheKey : ModelCacheKey
-    {
-        private readonly string _schemaName;
-        public MultiTenantModelCacheKey(string schemaName, DbContext context, bool designTime) : base(context, designTime)
-        {
-            _schemaName = schemaName;
-        }
-        public override int GetHashCode()
-        {
-            return _schemaName.GetHashCode();
-        }
-    }
-
-    public class DbSchemaAwareMigrationAssembly : MigrationsAssembly
-    {
-        private readonly DbContext _context;
-
-        public DbSchemaAwareMigrationAssembly(ICurrentDbContext currentContext,
-              IDbContextOptions options, IMigrationsIdGenerator idGenerator,
-              IDiagnosticsLogger<DbLoggerCategory.Migrations> logger)
-          : base(currentContext, options, idGenerator, logger)
-        {
-            _context = currentContext.Context;
-        }
-        public override string FindMigrationId(string nameOrId)
-        {
-            return base.FindMigrationId(nameOrId)!;
-        }
-
-        public override Migration CreateMigration(TypeInfo migrationClass,
-              string activeProvider)
-        {
-            if (activeProvider == null)
-                throw new ArgumentNullException(nameof(activeProvider));
-
-            PropertyInfo pinfo = typeof(OrgContext).GetProperty("Schema")!;
-            var Schema = "" + pinfo.GetValue(_context);
-
-            var hasCtorWithSchema = migrationClass.GetConstructor(new[] { typeof(string) }) != null;
-            if (hasCtorWithSchema)
-            {
-                var instance = (Migration)Activator.CreateInstance(migrationClass.AsType(), Schema)!;
-                instance.ActiveProvider = activeProvider;
-                return instance;
-            }
-            return base.CreateMigration(migrationClass, activeProvider);
-        }
-    }
+    }    
 }

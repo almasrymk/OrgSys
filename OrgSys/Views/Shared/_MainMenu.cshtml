@@ -546,11 +546,11 @@
             {
                 <ul class="list-unstyled" data-link="Financial" id="Financial">
                     <li>
-                        <a href="#" data-toggle="collapse" data-target="#collapseFinancial" aria-expanded="true"
+                        <a href="#" data-toggle="collapse" data-target="#collapseFinancial1" aria-expanded="true"
                            aria-controls="collapseFinancial" class="rotate-arrow-icon opacity-50">
                             <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">Safe Notices</span>
                         </a>
-                        <div id="collapseFinancial" class="collapse show">
+                        <div id="collapseFinancial1" class="collapse show">
                             <ul class="list-unstyled inner-level-menu">
                                 @if (User.IsAllowed("Collection.All"))
                                 {
@@ -581,26 +581,36 @@
                                             </span>
                                         </a>
                                     </li>
-                                }
-                                @if (User.IsAllowed("Journal.All"))
-                                {
-                                  <li>
-                                        <a href="/Financials/Journal">
-                                            <i class="iconsminds-wallet"></i> <span class="d-inline-block">
-                                                Journal
-                                            </span>
-                                        </a>
-                                    </li>
-                                }
+                                }                              
                             </ul>
                         </div>
                     </li>
                     <li>
-                        <a href="#" data-toggle="collapse" data-target="#collapseFinancial" aria-expanded="false"
+                        <a href="#" data-toggle="collapse" data-target="#collapseFinancial2" aria-expanded="false"
+                           aria-controls="collapseFinancial" class="rotate-arrow-icon opacity-50 collapsed">
+                            <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">Journal entries</span>
+                        </a>
+                         <div id="collapseFinancial2" class="collapse">
+                            <ul class="list-unstyled inner-level-menu">
+                               @if (User.IsAllowed("Journal.All"))
+                                {
+                                  <li>
+                                        <a href="/Financials/Journal">
+                                            <i class="iconsminds-address-book-2"></i> <span class="d-inline-block">
+                                                Journal
+                                            </span>
+                                        </a>
+                                    </li>
+                                }                           
+                            </ul>
+                        </div>                      
+                    </li>
+                    <li>
+                        <a href="#" data-toggle="collapse" data-target="#collapseFinancial3" aria-expanded="false"
                            aria-controls="collapseFinancial" class="rotate-arrow-icon opacity-50 collapsed">
                             <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.Report</span>
                         </a>
-                        <div id="collapseFinancial" class="collapse">
+                        <div id="collapseFinancial3" class="collapse">
                             <a href="/Reports/Finances/SafeMovement">
                                 <i class="simple-icon-list"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.SafeMovement</span>
                             </a>

@@ -4,6 +4,10 @@ namespace Application.DTOs
 {
     public class JournalDto : MovementDto
     {
+        public virtual long JournalTypeId { get; set; }
+
+        public virtual string? JournalTypeName { get; set; }
+
         public virtual long CurrencyId { get; set; }
 
         public virtual string? CurrencyName { get; set; }
@@ -11,6 +15,7 @@ namespace Application.DTOs
         public virtual decimal Rate { get; set; }
 
         public virtual long RefranceId { get; set; }
+        public virtual string? RefranceCode { get; set; }
 
         public virtual long RefranceTypeId { get; set; }
 

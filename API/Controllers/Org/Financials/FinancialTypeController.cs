@@ -1,4 +1,5 @@
-﻿using Application.Commands.Org.Financials.FinancialType.Commands;
+﻿using Application.Commands.Org.Setting.FinancialType.Command;
+using Application.Commands.Org.Setting.FinancialType.Queries;
 using Application.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Http;

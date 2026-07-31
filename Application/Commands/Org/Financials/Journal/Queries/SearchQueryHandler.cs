@@ -19,7 +19,7 @@
             PageSize = request.PageSize;
 
             return e => 
-            (string.IsNullOrEmpty(request.KeySearch) || e.Code.Contains(request.KeySearch)) &&
+            (string.IsNullOrEmpty(request.KeySearch) || e.Code!.Contains(request.KeySearch)) &&
             (request.ParentId ==0 || e.ParentId == request.ParentId) &&
             (request.TypeId == 0 || e.TypeId == request.TypeId) &&
             e.Status != Domain.Enums.Status.Deleted && e.Hide != true;
@@ -27,7 +27,7 @@
 
         public override string CreateInclude()
         {
-            return "Currency";
+            return "Currency,JournalType";
         }
 
         override public Func<IQueryable<Domain.Entities.Journal>, IOrderedQueryable<Domain.Entities.Journal>> CreateOrderBy(SearchJournalQuery request)

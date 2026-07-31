@@ -7,7 +7,7 @@ namespace Application.DTOs
     public class DistrictDto : BaseModel
     {
         [StringLength(50, MinimumLength = 3)]
-        public virtual string Name { get; set; }
+        public virtual string? Name { get; set; }
 
         [ForeignKey("Country")]
         public virtual long? CountryId { get; set; }
@@ -15,8 +15,8 @@ namespace Application.DTOs
         [ForeignKey("City")]
         public virtual long? CityId { get; set; }
 
-        public string CountryName { get; set; }
-        public string CityName { get; set; }
+        public string? CountryName { get; set; }
 
+        public string? CityName { get; set; }
     }
 }

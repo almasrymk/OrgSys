@@ -9,7 +9,7 @@ public partial class MappingProfile : Profile
     {
         #region Account
         CreateMap<Account, AccountDto>()
-        .ForMember(dest => dest.AccountTypeName, opt => opt.MapFrom(src => src.AccountType.Name));
+        .ForMember(dest => dest.AccountTypeName, opt => opt.MapFrom(src => src.AccountType!.Name));
         CreateMap<AccountDto, Account>();
 
         CreateMap<Account, CreateAccountCommand>();

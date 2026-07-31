@@ -9,7 +9,7 @@ public partial class MappingProfile : Profile
     {
         #region City
         CreateMap<City, CityDto>()
-        .ForMember(dest => dest.CountryName,opt => opt.MapFrom(src => src.Country.Name));
+        .ForMember(dest => dest.CountryName,opt => opt.MapFrom(src => src.Country!.Name));
         CreateMap<CityDto, City>();
 
         CreateMap<City, CreateCityCommand>();

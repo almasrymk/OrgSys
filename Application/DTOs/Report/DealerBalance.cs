@@ -11,8 +11,8 @@ namespace Application.Report
     {
         [Key]
         public long DealerId { get; set; }
-        public string DealerName { get; set; }
-        public string DealerImgPath { get; set; }
+        public string? DealerName { get; set; }
+        public string? DealerImgPath { get; set; }
 
         [Column(TypeName = "decimal(18,2)")]
         public decimal OpenningBalance { get; set; }

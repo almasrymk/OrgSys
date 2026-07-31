@@ -1,4 +1,4 @@
-﻿namespace Application.Commands.Org.Financials.FinancialType.Commands;
+﻿namespace Application.Commands.Org.Setting.FinancialType.Command;
 
 using Application.Abstraction.Command;
 using Application.Common.Commands;
@@ -8,7 +8,7 @@ using Domain.Abstraction;
 using Domain.Shared;
 using Application.DTOs;
 
-public sealed class CreateFinancialTypeCommand : Application.DTOs.FinancialTypeDto, ICommand , ICreateCommand<Result>;
+public sealed class CreateFinancialTypeCommand : FinancialTypeDto, ICommand , ICreateCommand<Result>;
 
 public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork, 
     IRepository<Domain.Entities.FinancialType> _Repository, 

@@ -29,7 +29,7 @@
             if (invoice == null)
                 return false;
 
-            invoice.InvoiceProducts.Clear();
+            invoice.InvoiceProducts!.Clear();
 
             var financialRepo = _provider.GetRequiredService<IRepository<Financial>>();
 

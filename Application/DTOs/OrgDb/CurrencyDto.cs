@@ -7,7 +7,7 @@ namespace Application.DTOs
     public class CurrencyDto : BaseModel
     {
         [StringLength(50, MinimumLength = 3)]
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         [Column(TypeName = "decimal(18,2)")]
         public decimal Rate { get; set; }

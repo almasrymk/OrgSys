@@ -16,9 +16,9 @@ namespace Application.DTOs
 
         public  bool DefaultUnit { get; set; }
 
-        public virtual string ProductName { get; set; }
+        public virtual string? ProductName { get; set; }
 
         [StringLength(50, MinimumLength = 2)]
-        public virtual string UnitName { get; set; }
+        public virtual string? UnitName { get; set; }
     }
 }

@@ -24,7 +24,7 @@
             if (journal == null)
                 return false;
 
-            journal.JournalItems.Clear();
+            journal.JournalItems!.Clear();
 
             return await _UnitOfWork.SaveChangeAsync() > 0;
         }

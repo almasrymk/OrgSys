@@ -9,16 +9,16 @@ namespace Application.Report
 
         public long? ReferenceId { get; set; }
         
-        public string Code { get; set; }
+        public string? Code { get; set; }
 
         public long? TypeId { get; set; }
         public int OpenningBalance { get; set; }
         public int Type { get; set; }
-        public string TypeName { get; set; }
+        public string? TypeName { get; set; }
         public DateTime Date { get; set; }    
         public long DealerId { get; set; }
-        public string DealerName { get; set; }
-        public string DealerImgPath { get; set; }
+        public string? DealerName { get; set; }
+        public string? DealerImgPath { get; set; }
 
         [Column(TypeName = "decimal(18,2)")]
         public decimal Amount { get; set; }
@@ -32,6 +32,6 @@ namespace Application.Report
     {
         public DateTime FromDate { get; set; }
         public DateTime ToDate { get; set; }
-        public DealerBalance DealerBalance { get; set; }
+        public DealerBalance? DealerBalance { get; set; }
     }
 }

@@ -182,6 +182,28 @@ namespace OrgSys.Areas.Setting.Controllers
                 ViewBag.TypeSerial = new SelectList(selectListItems, "Value", "Text", Service.FirstOrDefault(e => e.Key == "TypeSerial")?.Value);
                 ViewBag.AutoSave = Service.FirstOrDefault(e => e.Key == "AutoSave")?.Value == "1";
             }
+
+            if (Resource == "Journal")
+            {
+                ViewBag.Currencys = new SelectList(await GetListApi<CurrencyDto>(), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultCurrency")?.Value);
+                ViewBag.JournalTypes = new SelectList(await GetListApi<JournalTypeDto>(), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultJournalType")?.Value);
+
+                List<SelectListItem> selectListItems = new List<SelectListItem>();
+                selectListItems.Add(new SelectListItem { Value = "1", Text = "Data after product" });
+                selectListItems.Add(new SelectListItem { Value = "2", Text = "Product after Data" });
+
+                ViewBag.OrderTabe = new SelectList(selectListItems, "Value", "Text", Service.FirstOrDefault(e => e.Key == "OrderTabe")?.Value);
+
+                selectListItems = new List<SelectListItem>();
+                selectListItems.Add(new SelectListItem { Value = "1", Text = "Allow" });
+                selectListItems.Add(new SelectListItem { Value = "2", Text = "Not allowed" });
+
+                ViewBag.TypeSerial = new SelectList(selectListItems, "Value", "Text", Service.FirstOrDefault(e => e.Key == "TypeSerial")?.Value);
+
+                ViewBag.NumberLine = Service.FirstOrDefault(e => e.Key == "NumberLine")?.Value;
+                ViewBag.AutoSave = Service.FirstOrDefault(e => e.Key == "AutoSave")?.Value == "1";
+                ViewBag.SaveLastStatusSetting = Service.FirstOrDefault(e => e.Key == "SaveLastStatusSetting")?.Value == "1";
+            }
             return View(Service);
         }
 

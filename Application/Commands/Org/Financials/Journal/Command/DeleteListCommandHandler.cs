@@ -23,7 +23,7 @@
                 if (journal == null)
                     continue;
 
-                journal.JournalItems.Clear();
+                journal.JournalItems!.Clear();
             }
 
             return await _UnitOfWork.SaveChangeAsync() > 0;

@@ -4,7 +4,7 @@
     {
         public long Id { get; set; }
         public long ClassificationId { get; set; }
-        public string ClassificationName { get; set; }
+        public string? ClassificationName { get; set; }
         public int CountProduct { get; set; }
         public virtual bool BePurchased { get; set; }
 

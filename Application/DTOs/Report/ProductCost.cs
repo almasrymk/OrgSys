@@ -6,10 +6,10 @@ namespace Application.Report
     {
         public long Id { get; set; }
         public long ClassificationId { get; set; }
-        public string ClassificationName { get; set; }
+        public string? ClassificationName { get; set; }
         public long ItemId { get; set; }
-        public string ItemCode { get; set; }
-        public string ItemName { get; set; }
+        public string? ItemCode { get; set; }
+        public string? ItemName { get; set; }
 
         [Column(TypeName = "decimal(18,2)")]
         public decimal CurrentCost { get; set; }

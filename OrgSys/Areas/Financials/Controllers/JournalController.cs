@@ -18,16 +18,23 @@ namespace OrgSys.Areas.Financial.Controllers
     [Area("Financials")]
     public class JournalController(IConfiguration configuration, IMapper mapper) : MainController<JournalDto, CreateJournalCommand, UpdateJournalCommand>(configuration, mapper)
     {
+        public override async Task LoadViewBagIndex(long ParentId = 0, long TypeId = 0)
+        {
+            ViewBag.InvoicesTypes = await GetListApi<InvoiceTypeDto>(); ;
+            ViewBag.TransactionsTypes = await GetListApi<TransactionTypeDto>(); ;           
+        }
+
         public override async Task LoadViewBag(JournalDto model)
         {
+            ViewBag.JournalTypeId = new SelectList(await GetListApi<JournalTypeDto>(), "Id", "Name", model.JournalTypeId);
             ViewBag.CurrencyId = new SelectList(await GetListApi<CurrencyDto>(), "Id", "Name", model.CurrencyId);
         }
 
         public override async Task<JournalDto> InitializeData(JournalDto ob)
         {
             var preferenceList = await GetListApi<PreferenceDto>(TypeId: ob.TypeId, TextSearch: "Journal", PageSize: 1000);
-
             var DefaultCurrencyId = long.Parse("0" + preferenceList.FirstOrDefault(e => e.Key == "DefaultCurrency")?.Value);
+            var DefaultJournalTypeId = long.Parse("0" + preferenceList.FirstOrDefault(e => e.Key == "DefaultJournalType")?.Value);
             ViewBag.NumberLine = int.Parse("0" + preferenceList.FirstOrDefault(e => e.Key == "NumberLine")?.Value);
             ViewBag.OrderTabe = int.Parse("0" + preferenceList.FirstOrDefault(e => e.Key == "OrderTabe")?.Value);
             ViewBag.AutoSave = int.Parse("0" + preferenceList.FirstOrDefault(e => e.Key == "AutoSave")?.Value);
@@ -39,20 +46,18 @@ namespace OrgSys.Areas.Financial.Controllers
 
             if (ob.Id == 0)
             {
-
                 ob.CodeNumber = long.Parse("0" + await GetValueApi<JournalDto>($"GetMax?ParentId=0&TypeId={ob.TypeId}")) + 1;
                 ob.Code = "" + ob.CodeNumber;               
                 ob.CurrencyId = DefaultCurrencyId;
+                ob.JournalTypeId = DefaultJournalTypeId;
                 ob.Date = DateTime.Now;
-
+                ob.Rate = (await GetObApi<CurrencyDto>($"GetById?Id={ob.CurrencyId}"))?.Rate ?? 0;
                 ob.JournalItems = new List<JournalItemDto>();
             }
 
             if (ob.JournalItems == null)
                 ob.JournalItems = new List<JournalItemDto>();
-
-            ob.Rate = (await GetObApi<CurrencyDto>($"GetById?Id={ob.CurrencyId}"))?.Rate ?? 0;
-
+             
             return ob;
         }
 

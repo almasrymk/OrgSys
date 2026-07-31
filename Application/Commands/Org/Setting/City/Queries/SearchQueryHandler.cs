@@ -19,7 +19,7 @@
             PageSize = request.PageSize;
 
             return e => 
-            (string.IsNullOrEmpty(request.KeySearch) || e.Name.Contains(request.KeySearch)) &&
+            (string.IsNullOrEmpty(request.KeySearch) || e.Name!.Contains(request.KeySearch)) &&
             e.Status != Domain.Enums.Status.Deleted && e.Hide != true;
         }
 

@@ -198,7 +198,7 @@
             {
                 <div href="#" class="card w-15 m-2" style="box-shadow:0 1px 15px rgb(0 0 0 / 5%), 0 1px 5px rgb(0 0 0 / 5%) !important; ">
                     <label class="custom-control custom-checkbox mr-1 ml-1">
-                        @if (Model.Response[i].Status == Domain.Enums.Status.All)
+                        @if (Model.Response[i].Status == Domain.Enums.Status.New)
                         {
                             <input id="chk_@Model.Response[i].Id" type="checkbox" class="custom-control-input chk">
                             <input type="hidden" value="@Model.Response[i].Id" />

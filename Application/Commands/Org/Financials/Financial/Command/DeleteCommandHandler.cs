@@ -25,7 +25,7 @@
 
             var finanicial = await _Repository.GetByFilterAsync(e => e.Id == request.Id, "FinancialInvoices") ?? new Financial();
 
-            foreach (var item in finanicial.FinancialInvoices)
+            foreach (var item in finanicial.FinancialInvoices!)
             {
                 var invoice = await _RepositoryInvoice.GetByFilterAsync(e => e.Id == item.InvoiceId, "") ?? new Invoice();
                 invoice.Credit += item.Amount;

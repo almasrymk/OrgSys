@@ -52,7 +52,8 @@
         DbSet<City> Cities { get; set; }
         DbSet<Country> Countries { get; set; }
         DbSet<District> Districts { get; set; }
-        //DbSet<Journal> Journals { get; set; }
+        DbSet<JournalType> JournalTypes { get; set; }
+        DbSet<Journal> Journals { get; set; }
         //DbSet<JournalItem> JournalItems { get; set; }
         //DbSet<CompanyProfile> CompanyProfiles { get; set; }
 

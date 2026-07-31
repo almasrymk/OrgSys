@@ -32,7 +32,7 @@ namespace Application.Commands.Org.Financials.Financial.Commands
             {
                 var finanicial = await _Repository.GetByFilterAsync(e => e.Id == request.Id, "FinancialInvoices") ?? new();
 
-                foreach (var item in finanicial.FinancialInvoices)
+                foreach (var item in finanicial.FinancialInvoices!)
                 {
                     var invoice = await _RepositoryInvoice.GetByFilterAsync(e => e.Id == item.InvoiceId, "");
                     invoice!.Credit += item.Amount;

@@ -27,13 +27,13 @@ namespace Application.Commands.Org.Invoices.Invoice.Queries
 
             var Invlist = await _Repository.GetListByFilterAsync(e => e.ParentId == request.Id, "InvoiceProducts");
             List<InvoiceProduct> proList = new List<InvoiceProduct>();
-            foreach (var item in Invlist)
-                proList.AddRange(item.InvoiceProducts);
+            foreach (var item in Invlist!)
+                proList.AddRange(item.InvoiceProducts!);
             var ob = await _Repository.GetByFilterAsync( e => e.Id == request.Id, "InvoiceProducts");
 
             if (ob == null)
                 ob = new() { InvoiceProducts = new List<InvoiceProduct>() };
-            foreach (var item in ob.InvoiceProducts)
+            foreach (var item in ob.InvoiceProducts!)
                 item.Quantity -= proList.Where(e => e.ProductId == item.ProductId)?.Sum(e => e.Quantity) ?? 0;
 
             return new ResultCollection<InvoiceProductDto>(

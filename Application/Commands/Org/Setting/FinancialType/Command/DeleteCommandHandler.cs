@@ -1,4 +1,4 @@
-﻿namespace Application.Commands.Org.Financials.FinancialType.Commands
+﻿namespace Application.Commands.Org.Setting.FinancialType.Command
 {
     using Application.Abstraction.Command;
     using Application.Common.Commands;

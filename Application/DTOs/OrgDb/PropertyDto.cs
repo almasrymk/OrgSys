@@ -4,6 +4,6 @@ namespace Application.DTOs
 {
     public class PropertyDto : Property
     {
-        public List<PropertyElementDto> PropertyElementList { get; set; }
+        public List<PropertyElementDto>? PropertyElementList { get; set; }
     }
 }

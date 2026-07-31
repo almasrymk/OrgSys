@@ -440,38 +440,90 @@ namespace OrgSys.Controllers
             }
         }
 
-        public virtual string SaveFile(string LastPath)
+        //public virtual string SaveFile(string LastPath)
+        //{
+        //    if (Request.Form.Files == null || Request.Form.Files.Count == 0)
+        //        return LastPath;
+        //    string NewPath = null;
+        //    string path = Path.GetFullPath("~/wwwroot").Replace("~\\", "");
+        //    string oldPath = Path.GetFullPath("~/wwwroot" + LastPath).Replace("~\\", "").Replace(@"\\", @"\");
+        //    if ("" + LastPath != "" && System.IO.File.Exists(oldPath))
+        //        System.IO.File.Delete(oldPath);
+
+        //    foreach (var formFile in Request.Form.Files)
+        //    {
+        //        if (formFile.Length > 0)
+        //        {
+        //            if ("" + formFile.FileName != "")
+        //            {
+        //                NewPath = "/Files/" + ControllerContext.ActionDescriptor.ControllerName + string.Format("{0:000000000}", new Random().Next(999999999)) + Path.GetExtension(formFile.FileName);
+        //                using (var inputStream = new FileStream(path + NewPath, FileMode.Create))
+        //                {
+        //                    // read file to stream
+        //                    formFile.CopyTo(inputStream);
+        //                    // stream to byte array
+        //                    byte[] array = new byte[inputStream.Length];
+        //                    inputStream.Seek(0, SeekOrigin.Begin);
+        //                    inputStream.Read(array, 0, array.Length);
+        //                    // get file name
+        //                    string fName = formFile.FileName;
+        //                }
+        //            }
+        //        }
+        //    }
+        //    return NewPath;
+        //}
+
+        public virtual string SaveFile(string lastPath)
         {
-            if (Request.Form.Files == null || Request.Form.Files.Count == 0)
-                return LastPath;
-            string NewPath = null;
-            string path = Path.GetFullPath("~/wwwroot").Replace("~\\", "");
-            string oldPath = Path.GetFullPath("~/wwwroot" + LastPath).Replace("~\\", "").Replace(@"\\", @"\");
-            if ("" + LastPath != "" && System.IO.File.Exists(oldPath))
-                System.IO.File.Delete(oldPath);
+            if (Request.Form.Files.Count == 0)
+                return lastPath ?? string.Empty;
+
+            string newPath = null;
+
+            string webRootPath = Path.Combine(
+                Directory.GetCurrentDirectory(),
+                "wwwroot");
+
+            if (!string.IsNullOrWhiteSpace(lastPath))
+            {
+                string oldPath = Path.Combine(
+                    webRootPath,
+                    lastPath.TrimStart('/', '\\'));
+
+                if (System.IO.File.Exists(oldPath))
+                    System.IO.File.Delete(oldPath);
+            }
 
             foreach (var formFile in Request.Form.Files)
             {
-                if (formFile.Length > 0)
-                {
-                    if ("" + formFile.FileName != "")
-                    {
-                        NewPath = "/Files/" + ControllerContext.ActionDescriptor.ControllerName + string.Format("{0:000000000}", new Random().Next(999999999)) + Path.GetExtension(formFile.FileName);
-                        using (var inputStream = new FileStream(path + NewPath, FileMode.Create))
-                        {
-                            // read file to stream
-                            formFile.CopyTo(inputStream);
-                            // stream to byte array
-                            byte[] array = new byte[inputStream.Length];
-                            inputStream.Seek(0, SeekOrigin.Begin);
-                            inputStream.Read(array, 0, array.Length);
-                            // get file name
-                            string fName = formFile.FileName;
-                        }
-                    }
-                }
+                if (formFile.Length <= 0 || string.IsNullOrWhiteSpace(formFile.FileName))
+                    continue;
+
+                string extension = Path.GetExtension(formFile.FileName);
+
+                string fileName =
+                    $"{ControllerContext.ActionDescriptor.ControllerName}_{Guid.NewGuid():N}{extension}";
+
+                newPath = $"/Files/{fileName}";
+
+                string physicalPath = Path.Combine(
+                    webRootPath,
+                    "Files",
+                    fileName);
+
+                Directory.CreateDirectory(Path.GetDirectoryName(physicalPath)!);
+
+                using var outputStream = new FileStream(
+                    physicalPath,
+                    FileMode.Create,
+                    FileAccess.Write,
+                    FileShare.None);
+
+                formFile.CopyTo(outputStream);
             }
-            return NewPath;
+
+            return newPath ?? lastPath ?? string.Empty;
         }
 
         public async Task<IActionResult> Print()

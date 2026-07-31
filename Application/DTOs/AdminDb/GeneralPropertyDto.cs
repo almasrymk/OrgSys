@@ -4,6 +4,6 @@ namespace Application.DTOs
 {
     public class GeneralPropertyDto : GeneralProperty
     {
-        public List<GeneralPropertyElementDto> GeneralPropertyElementList { get; set; }
+        public List<GeneralPropertyElementDto>? GeneralPropertyElementList { get; set; }
     }
 }

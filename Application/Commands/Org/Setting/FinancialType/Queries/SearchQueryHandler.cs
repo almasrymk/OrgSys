@@ -1,4 +1,4 @@
-﻿namespace Application.Commands.Org.Financials.FinancialType.Commands
+﻿namespace Application.Commands.Org.Setting.FinancialType.Queries
 {
     using Application.Abstraction.Command;
     using Application.Common.Queries;
@@ -21,7 +21,7 @@
             PageSize = request.PageSize;
 
             return e => 
-            (string.IsNullOrEmpty(request.KeySearch) || e.Code.Contains(request.KeySearch)) &&
+            (string.IsNullOrEmpty(request.KeySearch) || ("" + e.Code).Contains(request.KeySearch)) &&
             (request.ParentId ==0 || e.ParentId == request.ParentId) &&
             (request.TypeId == 0 || e.TypeId == request.TypeId) &&
             e.Status != Domain.Enums.Status.Deleted && e.Hide != true;

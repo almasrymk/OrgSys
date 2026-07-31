@@ -30,10 +30,10 @@ namespace API.Controllers
         {
             var query = (TSearch)Activator.CreateInstance(typeof(TSearch), KeySearch, ParentId, TypeId, Page, PageSize)!;
             return await sender.Send(query, cancellationToken);
-        }      
+        }
     }
 
-    public class CoreController<TGetById, TSearch , TList , TCreate, TUpdate, TDelete, TDeleteList, TResponse>(ISender sender) : ControllerBase
+    public class CoreController<TGetById, TSearch, TList, TCreate, TUpdate, TDelete, TDeleteList, TResponse>(ISender sender) : ControllerBase
         where TGetById : IGetByIdQuery<Result<TResponse>>
         where TSearch : ISearchQuery<ResultPagination<TResponse>>
         where TList : IListQuery<ResultCollection<TResponse>>
@@ -48,7 +48,7 @@ namespace API.Controllers
             var query = (TGetById)Activator.CreateInstance(typeof(TGetById), Id)!;
             return await sender.Send(query, cancellationToken);
         }
-       
+
         [HttpGet("GetList")]
         public virtual async Task<ResultCollection<TResponse>> GetList(string? KeySearch, long ParentId, long TypeId, int Page, int PageSize, CancellationToken cancellationToken)
         {
@@ -86,11 +86,11 @@ namespace API.Controllers
         public virtual async Task<Result> DeleteList([FromQuery] List<long> Ids, CancellationToken cancellationToken)
         {
             var command = (TDeleteList)Activator.CreateInstance(typeof(TDeleteList), Ids)!;
-            return await sender.Send(command, cancellationToken);            
+            return await sender.Send(command, cancellationToken);
         }
     }
 
-    public class BaseController<TGetById, TSearch , TList , TCreate, TUpdate, TDelete, TDeleteList, TResponse>(ISender sender) : CoreController<TGetById, TSearch , TList , TCreate, TUpdate, TDelete, TDeleteList, TResponse>(sender)
+    public class BaseController<TGetById, TSearch, TList, TCreate, TUpdate, TDelete, TDeleteList, TResponse>(ISender sender) : CoreController<TGetById, TSearch, TList, TCreate, TUpdate, TDelete, TDeleteList, TResponse>(sender)
         where TGetById : IGetByIdQuery<Result<TResponse>>
         where TSearch : ISearchQuery<ResultPagination<TResponse>>
         where TList : IListQuery<ResultCollection<TResponse>>
@@ -102,7 +102,7 @@ namespace API.Controllers
 
     }
 
-    public class BaseController<TGetById, TSearch , TList , TCreate, TUpdate, TDelete, TDeleteList, IGetMax, TResponse>(ISender sender) : CoreController<TGetById, TSearch , TList , TCreate, TUpdate, TDelete, TDeleteList, TResponse>(sender)
+    public class BaseController<TGetById, TSearch, TList, TCreate, TUpdate, TDelete, TDeleteList, IGetMax, TResponse>(ISender sender) : CoreController<TGetById, TSearch, TList, TCreate, TUpdate, TDelete, TDeleteList, TResponse>(sender)
         where TGetById : IGetByIdQuery<Result<TResponse>>
         where TSearch : ISearchQuery<ResultPagination<TResponse>>
         where TList : IListQuery<ResultCollection<TResponse>>
@@ -116,8 +116,8 @@ namespace API.Controllers
         [HttpGet("GetMax")]
         public virtual async Task<object> GetMax(long ParentId, long TypeId, CancellationToken cancellationToken)
         {
-            var query = (IGetMax)Activator.CreateInstance(typeof(IGetMax), TypeId , ParentId)!;
+            var query = (IGetMax)Activator.CreateInstance(typeof(IGetMax), TypeId, ParentId)!;
             return await sender.Send(query, cancellationToken);
-        }        
+        }
     }
 }

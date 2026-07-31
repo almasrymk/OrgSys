@@ -9,15 +9,12 @@ namespace Application.Report
 {
     public class SalesClient
     {
-
         [Key]
         public long DealerId { get; set; }
-        public string DealerName { get; set; }
-
-   
-
-
+        public string? DealerName { get; set; }
+         
         public decimal InAmount { get; set; }
+
         public decimal OutAmount { get; set; }
       
         public decimal Net { get; set; }

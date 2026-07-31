@@ -4,6 +4,6 @@ namespace Application.DTOs
 {
     public class GeneralCityDto : GeneralCity
     {       
-        public string GeneralCountryName { get; set; }
+        public string? GeneralCountryName { get; set; }
     }
 }
