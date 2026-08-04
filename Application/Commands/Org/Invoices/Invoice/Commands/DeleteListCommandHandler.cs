@@ -10,6 +10,7 @@
     using Application.DTOs;
     using Microsoft.Extensions.DependencyInjection;
     using System.Linq.Expressions;
+    using Application.Commands.Org.Financials.Integration.JournalInvoice;
 
     public sealed record DeleteListInvoiceCommand(List<long> Ids) : ICommand, IDeleteListCommand<Result>;   
 
@@ -33,6 +34,7 @@
                 if (invoice == null)
                     continue;
 
+                await new InvoiceJournalIntegration(_provider).DeleteByInvoiceIdAsync(invoiceId);
                 invoice.InvoiceProducts!.Clear();
 
                 var financial = await financialRepo

@@ -35,7 +35,6 @@
   <ItemGroup>
     <Folder Include="Commands\Admin\" />
     <Folder Include="Commands\Org\Financials\Financial\Queries\" />
-    <Folder Include="Commands\Org\Financials\Integration\JournalInvoice\Command\" />
   </ItemGroup>
 
   <ItemGroup>

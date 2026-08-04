@@ -41,7 +41,7 @@ namespace OrgSys.Areas.Setting.Controllers
                 ViewBag.TaxType = new SelectList(selectListItems, "Value", "Text", Service.FirstOrDefault(e => e.Key == "DefaultTaxType")?.Value);
                 ViewBag.Currencys = new SelectList(await GetListApi<CurrencyDto>(), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultCurrency")?.Value);
                 ViewBag.SalesAccounts = new SelectList(Accounts, "Id", "Name", Service.FirstOrDefault(e => e.Key == "SalesAccount")?.Value);
-                ViewBag.ClientsAccounts = new SelectList(Accounts, "Id", "Name", Service.FirstOrDefault(e => e.Key == "ClientsAccount")?.Value);
+                ViewBag.DealerAccounts = new SelectList(Accounts, "Id", "Name", Service.FirstOrDefault(e => e.Key == "DealerAccount")?.Value);
                 ViewBag.TaxAccounts = new SelectList(Accounts, "Id", "Name", Service.FirstOrDefault(e => e.Key == "TaxAccount")?.Value);
 
                 ViewBag.DiscountValue = Service.FirstOrDefault(e => e.Key == "DiscountValue")?.Value;

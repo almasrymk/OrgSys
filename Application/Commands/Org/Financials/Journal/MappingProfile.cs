@@ -2,7 +2,6 @@
 using AutoMapper;
 using Domain.Entities;
 using Application.DTOs;
-using Application.Commands.Org.Financials.Integration.JournalInvoice.Command;
 
 public partial class MappingProfile : Profile
 {

@@ -252,14 +252,14 @@
                     </div>
                     <div class="form-group col-md-4">
                         <label>
-                            Clients Account
+                            Dealer Account
                         </label>
                         <div id="divPaymentTypeId">
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="iconsminds-financial"></i></span>
                                 </div>
-                                @Html.DropDownList("ClientsAccounts", null, "...", new { @class = "form-control" })
+                                @Html.DropDownList("DealerAccounts", null, "...", new { @class = "form-control" })
                             </div>
                             @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
@@ -2009,15 +2009,15 @@ function SavePreference() {
         }
 
         // Sales Account
-        if ($("#ClientsAccounts").length) {
-            var ClientsAccount = {
+        if ($("#DealerAccounts").length) {
+            var DealerAccount = {
                 Id: 2,
-                Key: "ClientsAccount",
-                Value: $('#ClientsAccounts').val(),
+                Key: "DealerAccount",
+                Value: $('#DealerAccounts').val(),
                 Reference: '@ViewBag.Resource',
                 TypeId: Number('@ViewBag.type'),
             }
-            list.push(ClientsAccount);
+            list.push(DealerAccount);
         }
 
         // Tax Account

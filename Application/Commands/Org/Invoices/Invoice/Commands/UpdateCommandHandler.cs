@@ -9,6 +9,7 @@
     using Domain.Shared;
     using Domain.Entities;
     using Application.DTOs;
+    using Application.Commands.Org.Financials.Integration.JournalInvoice;
 
     public sealed class UpdateInvoiceCommand : Application.DTOs.InvoiceDto , ICommand, IUpdateCommand<Result>;
     public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork, 
@@ -29,6 +30,12 @@
             var ob = mapper.Map<List<InvoiceProduct>>(request.InvoiceProductList);
             res = await UpdateDetails<InvoiceProduct>(ob);
             #endregion 
+
+            if (res)
+            {
+                await new InvoiceJournalIntegration(_provider).SyncAsync(request);
+                res = await _Repository.UpdateAsync(request);
+            }
 
             return res;
         }

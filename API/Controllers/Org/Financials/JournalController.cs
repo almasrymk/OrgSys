@@ -1,5 +1,4 @@
-﻿using Application.Commands.Org.Financials.Integration.JournalInvoice.Command;
-using Application.Commands.Org.Financials.Journal.Commands;
+﻿using Application.Commands.Org.Financials.Journal.Commands;
 using Application.Commands.Org.Financials.Journal.Queries;
 using Application.DTOs;
 using MediatR;

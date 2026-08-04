@@ -363,7 +363,7 @@ namespace Infrastructure.Seed
                new Preference { Id = 20, Key = "LengthQtyElectronicScale", Value = "5", Reference = "Invoice", TypeId = 1, Hide = false },
                new Preference { Id = 21, Key = "AccountsIntegration", Value = "5", Reference = "Invoice", TypeId = 1, Hide = false },
                new Preference { Id = 22, Key = "SalesAccount", Value = "0", Reference = "Invoice", TypeId = 1, Hide = false },
-               new Preference { Id = 23, Key = "ClientsAccount", Value = "0", Reference = "Invoice", TypeId = 1, Hide = false },
+               new Preference { Id = 23, Key = "DealerAccount", Value = "0", Reference = "Invoice", TypeId = 1, Hide = false },
                new Preference { Id = 24, Key = "TaxAccount", Value = "0", Reference = "Invoice", TypeId = 1, Hide = false },
                new Preference { Id = 25, Key = "AutoCreateJournalEntry", Value = "0", Reference = "Invoice", TypeId = 1, Hide = false },
 
