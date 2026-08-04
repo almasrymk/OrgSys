@@ -361,6 +361,11 @@ namespace Infrastructure.Seed
                new Preference { Id = 18, Key = "CodeElectronicScale", Value = "009", Reference = "Invoice", TypeId = 1, Hide = false },
                new Preference { Id = 19, Key = "LengthElectronicScale", Value = "7", Reference = "Invoice", TypeId = 1, Hide = false },
                new Preference { Id = 20, Key = "LengthQtyElectronicScale", Value = "5", Reference = "Invoice", TypeId = 1, Hide = false },
+               new Preference { Id = 21, Key = "AccountsIntegration", Value = "5", Reference = "Invoice", TypeId = 1, Hide = false },
+               new Preference { Id = 22, Key = "SalesAccount", Value = "0", Reference = "Invoice", TypeId = 1, Hide = false },
+               new Preference { Id = 23, Key = "ClientsAccount", Value = "0", Reference = "Invoice", TypeId = 1, Hide = false },
+               new Preference { Id = 24, Key = "TaxAccount", Value = "0", Reference = "Invoice", TypeId = 1, Hide = false },
+               new Preference { Id = 25, Key = "AutoCreateJournalEntry", Value = "0", Reference = "Invoice", TypeId = 1, Hide = false },
 
                new Preference { Id = 101, Key = "DefaultStock", Value = "1", Reference = "Invoice", TypeId = 2, Hide = false },
                new Preference { Id = 102, Key = "DefaultSupplier", Value = "1", Reference = "Invoice", TypeId = 2, Hide = false },

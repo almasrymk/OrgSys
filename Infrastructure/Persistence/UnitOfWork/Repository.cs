@@ -1,10 +1,11 @@
 ﻿namespace Infrastructure.Persistence.UnitOfWork
 {
-    using Domain.Abstraction;   
-    using System.Linq.Expressions;
     using CorePagination.Extensions;
-    using Microsoft.EntityFrameworkCore;
     using CorePagination.Paginators.SizeAwarePaginator;
+    using Domain.Abstraction;   
+    using Microsoft.EntityFrameworkCore;
+    using System.Linq.Expressions;
+    using static System.Net.WebRequestMethods;
 
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : Domain.Entities.BaseModel //BaseEntity
     {
@@ -189,6 +190,11 @@
         public virtual async ValueTask<bool> AnyAsync(Expression<Func<TEntity, bool>> Filter, CancellationToken cancellationToken)
         {
             return await dbEntity.AnyAsync(Filter , cancellationToken);
+        }
+
+        public virtual async ValueTask<TResponse> GetMaxAsync<TResponse>(Expression<Func<TEntity, TResponse>> Selector)
+        {
+            return await dbEntity.MaxAsync(Selector);
         }
     }
 }

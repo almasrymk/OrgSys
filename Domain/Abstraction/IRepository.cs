@@ -12,6 +12,7 @@
         ValueTask<bool> AnyAsync(Expression<Func<TEntity, bool>> Filter);
         ValueTask<bool> AnyAsync(Expression<Func<TEntity, bool>> Filter, CancellationToken cancellationToken);
         ValueTask<TEntity?> GetByFilterAsync(Expression<Func<TEntity, bool>> Filter, string includeProperties);
+        ValueTask<TResponse> GetMaxAsync<TResponse>(Expression<Func<TEntity, TResponse>> Selector);
         ValueTask<TResponse> GetMaxByFilterAsync<TResponse>(Expression<Func<TEntity, bool>> Filter, Expression<Func<TEntity, TResponse>> Selector);
         ValueTask<IEnumerable<TEntity>?> GetListByFilterAsync(Expression<Func<TEntity, bool>> Filter);
         ValueTask<IEnumerable<TEntity>?> GetListByFilterAsync(string includeProperties);

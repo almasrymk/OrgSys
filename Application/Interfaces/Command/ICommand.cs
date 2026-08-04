@@ -3,6 +3,11 @@
     using MediatR;
     using Domain.Shared;
 
+    public interface IDoCommand : IRequest<bool>
+    {
+
+    }
+
     public interface ICommand : IRequest<Result>
     {   
 

@@ -1,5 +1,6 @@
 namespace OrgSys.Areas.Financial.Controllers
 {
+    using Application.Commands.Org.Financials.Integration.JournalInvoice.Command;
     using Application.Commands.Org.Financials.Journal.Commands;
     using Application.DTOs;
     using AutoMapper;

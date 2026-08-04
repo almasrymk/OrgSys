@@ -18,8 +18,7 @@ namespace OrgSys.Areas.Setting.Controllers
     public class PreferenceController(IConfiguration configuration, IMapper mapper)
         :  MainController<PreferenceDto, CreatePreferenceCommand , UpdatePreferenceCommand>(configuration, mapper)
     {
-
-
+         
         public async Task<ActionResult> Show(string Resource = "", int type = 0)
         {
             ViewBag.Resource = Resource;
@@ -30,8 +29,10 @@ namespace OrgSys.Areas.Setting.Controllers
                 List<SelectListItem> selectListItems = new List<SelectListItem>();
                 selectListItems.Add(new SelectListItem { Value = "1", Text = "Amount" });
                 selectListItems.Add(new SelectListItem { Value = "2", Text = "Percentage" });
-                ViewBag.Stocks = new SelectList(await GetListApi<StockDto>(TypeId: 1), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultStock")?.Value);
 
+                var Accounts = await GetListApi<AccountDto>(TypeId: 1);
+
+                ViewBag.Stocks = new SelectList(await GetListApi<StockDto>(TypeId: 1), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultStock")?.Value);
                 ViewBag.Customers = new SelectList(await GetListApi<DealerDto>(TypeId:1), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultCustomer")?.Value);
                 ViewBag.Suppliers = new SelectList(await GetListApi<DealerDto>(TypeId: 2), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultSupplier")?.Value);
                 ViewBag.PaymentTypes = new SelectList(await GetListApi<PaymentTypeDto>(), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultPaymentType")?.Value);
@@ -39,6 +40,9 @@ namespace OrgSys.Areas.Setting.Controllers
                 ViewBag.ServiceType = new SelectList(selectListItems, "Value", "Text", Service.FirstOrDefault(e => e.Key == "DefaultServiceType")?.Value);
                 ViewBag.TaxType = new SelectList(selectListItems, "Value", "Text", Service.FirstOrDefault(e => e.Key == "DefaultTaxType")?.Value);
                 ViewBag.Currencys = new SelectList(await GetListApi<CurrencyDto>(), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultCurrency")?.Value);
+                ViewBag.SalesAccounts = new SelectList(Accounts, "Id", "Name", Service.FirstOrDefault(e => e.Key == "SalesAccount")?.Value);
+                ViewBag.ClientsAccounts = new SelectList(Accounts, "Id", "Name", Service.FirstOrDefault(e => e.Key == "ClientsAccount")?.Value);
+                ViewBag.TaxAccounts = new SelectList(Accounts, "Id", "Name", Service.FirstOrDefault(e => e.Key == "TaxAccount")?.Value);
 
                 ViewBag.DiscountValue = Service.FirstOrDefault(e => e.Key == "DiscountValue")?.Value;
                 ViewBag.ServiceValue = Service.FirstOrDefault(e => e.Key == "ServiceValue")?.Value;
@@ -47,20 +51,17 @@ namespace OrgSys.Areas.Setting.Controllers
                 selectListItems = new List<SelectListItem>();
                 selectListItems.Add(new SelectListItem { Value = "1", Text = "Data after product" });
                 selectListItems.Add(new SelectListItem { Value = "2", Text = "Product after Data" });
-
                 ViewBag.OrderTabe = new SelectList(selectListItems, "Value", "Text", Service.FirstOrDefault(e => e.Key == "OrderTabe")?.Value);
 
                 selectListItems = new List<SelectListItem>();
                 selectListItems.Add(new SelectListItem { Value = "1", Text = "Allow Repeated" });
                 selectListItems.Add(new SelectListItem { Value = "2", Text = "Increasing the quantity" });
                 selectListItems.Add(new SelectListItem { Value = "3", Text = "Not allowed" });
-
                 ViewBag.AllowRepeated = new SelectList(selectListItems, "Value", "Text", Service.FirstOrDefault(e => e.Key == "AllowRepeated")?.Value);
 
                 selectListItems = new List<SelectListItem>();
                 selectListItems.Add(new SelectListItem { Value = "1", Text = "Allow" });
                 selectListItems.Add(new SelectListItem { Value = "2", Text = "Not allowed" });
-
                 ViewBag.TypeSerial = new SelectList(selectListItems, "Value", "Text", Service.FirstOrDefault(e => e.Key == "TypeSerial")?.Value);
 
                 ViewBag.NumberLine = Service.FirstOrDefault(e => e.Key == "NumberLine")?.Value;
@@ -70,7 +71,8 @@ namespace OrgSys.Areas.Setting.Controllers
                 ViewBag.CodeElectronicScale = Service.FirstOrDefault(e => e.Key == "CodeElectronicScale")?.Value;
                 ViewBag.LengthElectronicScale = Service.FirstOrDefault(e => e.Key == "LengthElectronicScale")?.Value;
                 ViewBag.LengthQtyElectronicScale = Service.FirstOrDefault(e => e.Key == "LengthQtyElectronicScale")?.Value;
-
+                ViewBag.AccountsIntegration = Service.FirstOrDefault(e => e.Key == "AccountsIntegration")?.Value == "1";
+                ViewBag.AutoCreateJournalEntry = Service.FirstOrDefault(e => e.Key == "AutoCreateJournalEntry")?.Value == "1";
             }
 
             if (Resource == "Transaction")

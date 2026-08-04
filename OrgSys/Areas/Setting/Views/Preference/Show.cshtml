@@ -85,7 +85,7 @@
                         </div>
                     </div>
                 </div>
-
+               
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         <label>@Domain.Resource.Title_Designer.OrderTabe</label>
@@ -179,8 +179,11 @@
                             </div>
                             @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
-                    </div>
-                    <div class="form-group col-md-4">
+                    </div>                    
+                </div>
+                <hr>
+                 <div class="form-row">
+                     <div class="form-group col-md-4">
                         <label> @Domain.Resource.Title_Designer.AutoSave</label>
                         <div id="divPaymentTypeId">
                             <div class="input-group mt-2">
@@ -204,8 +207,6 @@
                             @* <small class="form-text text-muted" style="margin-top:12px;"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
                     </div>
-                </div>
-                <div class="form-row">
                     <div class="form-group col-md-4">
                         <label>@Domain.Resource.Title_Designer.AutoCreateTransaction</label>
                         <div id="divPaymentTypeId">
@@ -219,6 +220,79 @@
                         </div>
                     </div>
                 </div>
+                 <hr class="SalesIntegration" style="display:none;">
+                  <div class="form-row">
+                     <div class="form-group col-md-4">
+                        <label>  Accounts Integration </label>
+                        <div id="divAccountsIntegrationId">
+                            <div class="input-group mt-2">
+                                <div id="divAccountsIntegration" class="custom-switch custom-switch-primary-inverse custom-switch-small">
+                                    <input class="custom-switch-input" id="AccountsIntegration" name="AccountsIntegration" type="checkbox" checked="@ViewBag.AccountsIntegration" onclick="ShowHide('AccountsIntegration','SalesIntegration')">
+                                    <label class="custom-switch-btn" for="AccountsIntegration"></label>
+                                </div>
+                            </div>
+                            @* <small class="form-text text-muted" style="margin-top:12px;"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                        </div>
+                    </div>                 
+                </div>
+                 <div class="form-row SalesIntegration" style="display:none;">
+                   <div class="form-group col-md-4">
+                        <label>
+                            Sales Account
+                        </label>
+                        <div id="divPaymentTypeId">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="iconsminds-financial"></i></span>
+                                </div>
+                                @Html.DropDownList("SalesAccounts", null, "...", new { @class = "form-control" })
+                            </div>
+                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>
+                            Clients Account
+                        </label>
+                        <div id="divPaymentTypeId">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="iconsminds-financial"></i></span>
+                                </div>
+                                @Html.DropDownList("ClientsAccounts", null, "...", new { @class = "form-control" })
+                            </div>
+                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>
+                            Tax Account
+                        </label>
+                        <div id="divPaymentTypeId">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="iconsminds-financial"></i></span>
+                                </div>
+                                @Html.DropDownList("TaxAccounts", null, "...", new { @class = "form-control" })
+                            </div>
+                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                        </div>
+                    </div>
+                </div>
+                 <div class="form-row SalesIntegration" style="display:none;">
+                     <div class="form-group col-md-4">
+                        <label> Auto-Create Journal Entry </label>
+                        <div id="divAutoCreateJournalEntryeId">
+                            <div class="input-group mt-2">
+                                <div id="divAutoCreateJournalEntry" class="custom-switch custom-switch-primary-inverse custom-switch-small">
+                                    <input class="custom-switch-input" id="AutoCreateJournalEntry" name="AutoCreateJournalEntry" type="checkbox" checked="@ViewBag.AutoCreateJournalEntry">
+                                    <label class="custom-switch-btn" for="AutoCreateJournalEntry"></label>
+                                </div>
+                            </div>
+                            @* <small class="form-text text-muted" style="margin-top:12px;"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                        </div>
+                    </div>                 
+                </div>               
             }
 
             @if (ViewBag.type == 2 && ViewBag.Resource == "Invoice")
@@ -1898,7 +1972,7 @@ function SavePreference() {
             list.push(OrderTabe);
         }
 
-            // DefaultClient
+        // DefaultClient
         if ($("#Clients").length) {
             var OrderTabe = {
                 Id: 2,
@@ -1910,7 +1984,75 @@ function SavePreference() {
             list.push(OrderTabe);
         }
 
+        // Accounts Integration
+        if ($("#AccountsIntegration").length) {
+            var AccountsIntegration = {
+                Id: 2,
+                Key: "AccountsIntegration",
+                Value: $('#AccountsIntegration').is(":checked") ? "1" : "2",
+                Reference: '@ViewBag.Resource',
+                TypeId: Number('@ViewBag.type'),
+            }
+            list.push(AccountsIntegration);
+        }
+
+        // Sales Account
+        if ($("#SalesAccounts").length) {
+            var SalesAccount = {
+                Id: 2,
+                Key: "SalesAccount",
+                Value: $('#SalesAccounts').val(),
+                Reference: '@ViewBag.Resource',
+                TypeId: Number('@ViewBag.type'),
+            }
+            list.push(SalesAccount);
+        }
+
+        // Sales Account
+        if ($("#ClientsAccounts").length) {
+            var ClientsAccount = {
+                Id: 2,
+                Key: "ClientsAccount",
+                Value: $('#ClientsAccounts').val(),
+                Reference: '@ViewBag.Resource',
+                TypeId: Number('@ViewBag.type'),
+            }
+            list.push(ClientsAccount);
+        }
+
+        // Tax Account
+        if ($("#TaxAccounts").length) {
+            var TaxAccount = {
+                Id: 2,
+                Key: "TaxAccount",
+                Value: $('#TaxAccounts').val(),
+                Reference: '@ViewBag.Resource',
+                TypeId: Number('@ViewBag.type'),
+            }
+            list.push(TaxAccount);
+        }
+
+        // Auto-Create Journal Entry
+        if ($("#AutoCreateJournalEntry").length) {
+            var AutoCreateJournalEntry = {
+                Id: 2,
+                Key: "AutoCreateJournalEntry",
+                Value: $('#AutoCreateJournalEntry').is(":checked") ? "1" : "0",
+                Reference: '@ViewBag.Resource',
+                TypeId: Number('@ViewBag.type'),
+            }
+            list.push(AutoCreateJournalEntry);
+        }
         return list;
+    }
+
+    ShowHide('AccountsIntegration','SalesIntegration');
+    function ShowHide(controlName , controlClass)
+    {
+        if($("#" + controlName).is(":checked"))
+            $("." + controlClass).show();
+        else
+             $("." + controlClass).hide();
     }
 
     function Close() {

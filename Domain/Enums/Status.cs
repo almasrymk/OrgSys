@@ -1,14 +1,8 @@
 ﻿namespace Domain.Enums
 {
-    public enum Status
+    public enum CommandType
     {
-        New = 0,
-        Deleted = 5,
-        UnderReview = 10,
-        Approved = 15,
-        Rejected = 20,
-        Locked = 25,
-        Hold = 30,
-        Cancel = 35
+        Create = 0,
+        Deleted = 1
     }
 }

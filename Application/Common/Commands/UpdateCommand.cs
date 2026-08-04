@@ -45,6 +45,7 @@
         {
             return true;
         }
+
         protected async Task<bool> UpdateDetails<TModelDetails>(IEnumerable<TModelDetails> Details)
           where TModelDetails : Domain.Entities.BaseModel
         {
@@ -65,6 +66,7 @@
                 return false;
             }
         }
+
         protected async Task<bool> RemoveDetails<TModelDetails>(IEnumerable<TModelDetails> RemovedList)
           where TModelDetails : Domain.Entities.BaseModel
         {
@@ -79,6 +81,7 @@
                 return false;
             }
         }
+
         protected async Task<string> CreateInclude()
         {
             return string.Empty;

@@ -1,8 +1,11 @@
 ﻿namespace Application.Abstraction.Command
 {
     using Domain.Shared;
-    using Domain.Entities;
     using MediatR;
+
+    public interface IDoCommandHandler<TCommand> : IRequestHandler<TCommand, bool> where TCommand : IDoCommand
+    {
+    }
 
     public interface ICommandHandler<TCommand> : IRequestHandler<TCommand , Result> where TCommand : ICommand
     {
