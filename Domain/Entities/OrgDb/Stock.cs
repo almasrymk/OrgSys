@@ -10,5 +10,10 @@
         public virtual long BranchId { get; set; }
 
         public virtual Branch? Branch { get; set; }
+
+        [ForeignKey("Account")]
+        public virtual long? AccountId { get; set; }
+
+        public virtual Account? Account { get; set; }
     }
 }

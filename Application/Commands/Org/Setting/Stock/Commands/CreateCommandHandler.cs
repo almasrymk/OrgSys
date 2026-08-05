@@ -7,7 +7,7 @@
     using Domain.Abstraction;
     using Domain.Shared;
 
-    public sealed record CreateStockCommand(string Name , long BranchId) : ICommand , ICreateCommand<Result>;
+    public sealed record CreateStockCommand(string Name, long BranchId, long? AccountId) : ICommand, ICreateCommand<Result>;
 
     public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Domain.Entities.Stock> _Repository , IMapper mapper) : CreateCommandHandler<CreateStockCommand, Domain.Entities.Stock>(_UnitOfWork, _Repository , mapper)
     {

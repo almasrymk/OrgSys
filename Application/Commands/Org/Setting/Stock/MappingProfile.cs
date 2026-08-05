@@ -9,7 +9,8 @@ public partial class MappingProfile : Profile
     {
         #region Stock
         CreateMap<Stock, StockDto>()
-        .ForMember(dest => dest.BranchName, opt => opt.MapFrom(src => src.Branch.Name));
+        .ForMember(dest => dest.BranchName, opt => opt.MapFrom(src => src.Branch.Name))
+        .ForMember(dest => dest.AccountName, opt => opt.MapFrom(src => src.Account.Name));
         CreateMap<StockDto, Stock>();
 
         CreateMap<Stock, CreateStockCommand>();

@@ -1,0 +1,94 @@
+@model List<Application.DTOs.PreferenceDto>
+
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label>@Domain.Resource.Title_Designer.OrderTabe</label>
+                        <div id="divStockId">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="iconsminds-clothing-Stock"></i></span>
+                                </div>
+                                @Html.DropDownList("OrderTabe", null, null, new { @class = "form-control" })
+                            </div>
+                            @* <small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                        </div>
+                    </div>                    
+                    <div class="form-group col-md-4">
+                        <label>@Domain.Resource.Title_Designer.TypeSerial</label>
+                        <div id="divPaymentTypeId">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="iconsminds-financial"></i></span>
+                                </div>
+                                @Html.DropDownList("TypeSerial", null, null, new { @class = "form-control" })
+                            </div>
+                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                        </div>
+                    </div>
+                     <div class="form-group col-md-4">
+                        <label>
+                            @Domain.Resource.Title_Designer.DefaultCurrency
+                        </label>
+                        <div id="divPaymentTypeId">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="iconsminds-financial"></i></span>
+                                </div>
+                                @Html.DropDownList("Currencys", null, null, new { @class = "form-control" })
+                            </div>
+                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">                   
+                    <div class="form-group col-md-4">
+                        <label>@Domain.Resource.Title_Designer.EmptyLineCount</label>
+                        <div id="divStockId">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="iconsminds-clothing-Stock"></i></span>
+                                </div>
+                                <input type="text" id="NumberLine" name="NumberLine" value="@ViewBag.NumberLine" class="form-control" />
+                            </div>
+                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>Journal Type</label>
+                        <div id="divJournalTypeId">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="iconsminds-financial"></i></span>
+                                </div>
+                                @Html.DropDownList("JournalTypes", null, null, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">                   
+                    <div class="form-group col-md-4">
+                        <label> @Domain.Resource.Title_Designer.AutoSave</label>
+                        <div id="divPaymentTypeId">
+                            <div class="input-group mt-2">
+                                <div id="divAutoSave" class="custom-switch custom-switch-primary-inverse custom-switch-small">
+                                    <input class="custom-switch-input" id="AutoSave" name="AutoSave" type="checkbox" checked="@ViewBag.AutoSave">
+                                    <label class="custom-switch-btn" for="AutoSave"></label>
+                                </div>
+                            </div>
+                            @* <small class="form-text text-muted" style="margin-top:12px;"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>@Domain.Resource.Title_Designer.SaveLastStatusPreference</label>
+                        <div id="divPaymentTypeId">
+                            <div class="input-group mt-2">
+                                <div id="divSaveLastStatusSetting" class="custom-switch custom-switch-primary-inverse custom-switch-small">
+                                    <input class="custom-switch-input" id="SaveLastStatusSetting" name="SaveLastStatusSetting" type="checkbox" checked="@ViewBag.SaveLastStatusSetting">
+                                    <label class="custom-switch-btn" for="SaveLastStatusSetting"></label>
+                                </div>
+                            </div>
+                            @* <small class="form-text text-muted" style="margin-top:12px;"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                        </div>
+                    </div>
+                </div>               

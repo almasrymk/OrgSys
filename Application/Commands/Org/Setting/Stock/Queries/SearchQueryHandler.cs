@@ -27,5 +27,10 @@
         {
             return q => q.OrderByDescending(e => e.Id);
         }
+
+        public override string CreateInclude()
+        {
+            return "Branch,Account";
+        }
     }
 }

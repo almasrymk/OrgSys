@@ -318,7 +318,11 @@
                                     @if (Model.TypeId == 1 || Model.TypeId == 2)
                                     {
                                         <div class="form-group col-md-4">
-                                            <label>@Domain.Resource.Title_Designer.Dealer</label>
+                                            <label>
+                                                @(Model.TypeId == 2
+                                                    ? Domain.Resource.Title_Designer.Client
+                                                    : Domain.Resource.Title_Designer.Supplier)
+                                            </label>
                                             <div id="divDealerId">
                                                 <div class="input-group DropAutoComplete">
                                                     <div class="input-group-prepend">

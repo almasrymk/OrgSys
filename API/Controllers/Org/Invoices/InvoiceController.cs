@@ -27,10 +27,11 @@ namespace API.Controllers.Org.Invoices
         [HttpPut("Update")]
         public override async Task<Result> Update([FromBody] UpdateInvoiceCommand Update, CancellationToken cancellationToken)
         {
-          await base.Update(Update, cancellationToken);
+            var result = await base.Update(Update, cancellationToken);
+            if (result.StatusCode != HttpStatusCode.OK)
+                return result;
 
             return Update.TransactionId > 0 ? await sender.Send(new CreateTransactionByInvoiceCommand(Update.Id), cancellationToken) : new Result(HttpStatusCode.OK, null);
-
         }
 
         [HttpPut("Redo")]

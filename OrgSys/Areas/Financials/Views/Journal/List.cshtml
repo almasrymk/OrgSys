@@ -41,7 +41,6 @@
                         <th class="text-center">@Domain.Resource.Title_Designer.Code</th>
                         <th class="text-center">@Domain.Resource.Title_Designer.Date</th>
                         <th class="@TextAlign">@Domain.Resource.Title_Designer.Currency</th>
-                        <th class="@TextAlign">@Domain.Resource.Title_Designer.Notes</th>
                         <th class="text-center">Reference</th>
                         <th class="text-center">Review</th>
                         <th class="text-center">Posted</th>
@@ -64,16 +63,34 @@
                             <td class="text-center align-middle">@Model.Response[i].Code</td>
                             <td class="text-center align-middle">@Model.Response[i].Date.ToString(DateFormat, new CultureInfo("en-US"))</td>
                             <td class="@TextAlign align-middle">@Model.Response[i].CurrencyName</td>
-                            <td class="@TextAlign align-middle">@Model.Response[i].Note</td>
-                            <td class="text-center align-middle">
+                            <td class="@TextAlign align-middle">
                                 @if ("" + Model.Response[i].RefranceTable == "invoice")
                                 {
-                                    <a href="/Invoices/Invoice/Save?id=@Model.Response[i].RefranceId&ParentId=@ViewBag.ParentId&TypeId=@Model.Response[i].RefranceTypeId"><i class="@InvoicesTypes.FirstOrDefault(e => e.Id == @Model.Response[i].RefranceTypeId).Icon"> @Model.Response[i].RefranceCode </i></a>
+                                    <i class="@InvoicesTypes.FirstOrDefault(e => e.Id == @Model.Response[i].RefranceTypeId).Icon"></i>
+                                    <span> &nbsp; </span>
+                                    @if (Model.Response[i].RefranceTypeId == 1)
+                                    {
+                                        <span> @Domain.Resource.Title_Designer.Sales @Domain.Resource.Title_Designer.Invoice </span>                                        
+                                    }
+                                    else if (Model.Response[i].RefranceTypeId == 2)
+                                    {
+                                        <span> @Domain.Resource.Title_Designer.Purchase @Domain.Resource.Title_Designer.Invoice </span>
+                                    }
+                                    else if (Model.Response[i].RefranceTypeId == 3)
+                                    {
+                                        <span> @Domain.Resource.Title_Designer.Sales @Domain.Resource.Title_Designer.Return </span>
+                                    }
+                                    else if (Model.Response[i].RefranceTypeId == 4)
+                                    {
+                                        <span> @Domain.Resource.Title_Designer.Purchase @Domain.Resource.Title_Designer.Return </span>
+                                    }
+                                    <span> &nbsp; (@Model.Response[i].RefranceCode) </span>
+                                    
                                 }
                                 else if ("" + Model.Response[i].RefranceTable == "transaction")
                                 {
                                     <a href="/Transactions/Transaction/Save?id=@Model.Response[i].RefranceId&ParentId=@ViewBag.ParentId&TypeId=@Model.Response[i].RefranceTypeId"><i class="@TransactionsTypes.FirstOrDefault(e => e.Id == @Model.Response[i].RefranceTypeId).Icon"> @Model.Response[i].RefranceCode </i></a>
-                                }
+                                }                                                                                            
                             </td>
                             <td class="text-center align-middle">@(Model.Response[i].Review ? "✓" : "")</td>
                             <td class="text-center align-middle">@(Model.Response[i].Posted ? "✓" : "")</td>
@@ -97,7 +114,7 @@
                                     }
                                     else
                                     {
-                                            <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"><i class="simple-icon-eye" style="color:green"></i></a>
+                                        <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"><i class="simple-icon-eye" style="color:green"></i></a>
                                     }
                                 </td>
                             }
@@ -140,11 +157,8 @@
                         </div>
                         <div class="w-20">
                             <small>@Domain.Resource.Title_Designer.Currency</small>
-                        </div>
-                        <div class="w-30">
-                            <small>@Domain.Resource.Title_Designer.Notes</small>
-                        </div>
-                        <div class="list-item-heading mb-0 truncate w-10">
+                        </div>                      
+                        <div class="list-item-heading mb-0 truncate w-30">
                             <small>Reference</small>
                         </div>
                         <div class="list-item-heading mb-0 truncate w-10">
@@ -165,7 +179,14 @@
                 <div class="card d-flex flex-row mb-2">
                     <div class="d-flex flex-grow-1 min-width-zero" style="border-radius:15px; height:60px; @(Model.Response[i].Status == Domain.Enums.Status.Cancel ? "color:#a8a7a7;background:repeating-linear-gradient(60deg, transparent, transparent 5px, gainsboro 5px, gainsboro 6px);" : "")">
                         <div class="list-thumbnail  border-0 card-img-left badge-theme-1" style="height:60px; width:60px; font-size:x-large; text-align:center; padding:14px;">
-                            <i class="iconsminds-address-book-2"></i>
+                            @if ("" + Model.Response[i].RefranceTable == "invoice")
+                            {
+                                <i class="@InvoicesTypes.FirstOrDefault(e => e.Id == @Model.Response[i].RefranceTypeId).Icon"></i>
+                            }
+                            else
+                            {
+                                <i class="iconsminds-address-book-2"></i>
+                            }
                         </div>
                         <div class="card-body align-self-center d-flex flex-column flex-md-row  align-items-md-center">
                             <div class="w-25">
@@ -179,14 +200,31 @@
                             </div>
                             <div class="w-20">
                                 @Model.Response[i].CurrencyName
-                            </div>
-                            <div class="w-30">
-                                @Model.Response[i].Note
-                            </div>
-                            <div class="list-item-heading mb-0 truncate w-10">
+                            </div>                          
+                            <div class="list-item-heading mb-0 truncate w-30">
                                 @if ("" + Model.Response[i].RefranceTable == "invoice")
                                 {
-                                    <a href="/Invoices/Invoice/Save?id=@Model.Response[i].RefranceId&ParentId=@ViewBag.ParentId&TypeId=@Model.Response[i].RefranceTypeId"><i class="@InvoicesTypes.FirstOrDefault(e => e.Id == @Model.Response[i].RefranceTypeId).Icon"> @Model.Response[i].RefranceCode </i></a>
+                                    <a href="/Invoices/Invoice/Save?id=@Model.Response[i].RefranceId&ParentId=@ViewBag.ParentId&TypeId=@Model.Response[i].RefranceTypeId">
+                                        <i class="@InvoicesTypes.FirstOrDefault(e => e.Id == @Model.Response[i].RefranceTypeId).Icon"></i>
+                                        <span> &nbsp; </span>
+                                            @if (Model.Response[i].RefranceTypeId == 1)
+                                            {
+                                                <span> @Domain.Resource.Title_Designer.Sales @Domain.Resource.Title_Designer.Invoice </span>
+                                            }
+                                            else if (Model.Response[i].RefranceTypeId == 2)
+                                            {
+                                                <span> @Domain.Resource.Title_Designer.Purchase @Domain.Resource.Title_Designer.Invoice </span>
+                                            }
+                                            else if (Model.Response[i].RefranceTypeId == 3)
+                                            {
+                                                <span> @Domain.Resource.Title_Designer.Sales @Domain.Resource.Title_Designer.Return </span>
+                                            }
+                                            else if (Model.Response[i].RefranceTypeId == 4)
+                                            {
+                                                <span> @Domain.Resource.Title_Designer.Purchase @Domain.Resource.Title_Designer.Return </span>
+                                            }
+                                            <span> (@Model.Response[i].RefranceCode) </span>                                        
+                                    </a>
                                 }
                                 else if ("" + Model.Response[i].RefranceTable == "transaction")
                                 {

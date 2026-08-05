@@ -20,6 +20,12 @@
             ViewBag.BranchList = new SelectList(await GetListApi<BranchDto>(Page: 1, PageSize: 20), "Id", "Name", model.BranchId);
         }
 
+        public override async Task<StockDto> InitializeData(StockDto ob)
+        {
+            ob.AccountName = (await GetObApi<AccountDto>($"GetById?Id={ob.AccountId ?? 0}"))?.Name;
+            return ob;
+        }
+
         public async Task<JsonResult> GetList(string txtSearch = "", int page = 1, int pageSize = 20)
         {
             if (txtSearch != null)

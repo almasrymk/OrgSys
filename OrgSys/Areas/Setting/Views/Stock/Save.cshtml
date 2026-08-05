@@ -74,6 +74,22 @@
                                     @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.NameRequired</small>*@
                                     @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger " })
                                 </div>
+                                <div class="form-group col-md-6">
+                                    <label>@Domain.Resource.Title_Designer.Account</label>
+                                    <div id="divAccountName">
+                                        <div class="input-group DropAutoComplete">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="simple-icon-people"></i></span>
+                                            </div>
+                                            <input type="text" class="form-control Droptxt" id="txtAccountId" value="@Model.AccountName" autocomplete="off" />
+                                            <input type="hidden" asp-for="AccountId" />
+                                            <div class="input-group-prepend Dropbtn">
+                                                <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.AccountId, "", new { @class = "text-danger " })
+                                </div>
                             </div>
                             <hr />
                             <button type="button" onclick="Save()" class="btn btn-primary mb-0">@Domain.Resource.Title_Designer.Save</button>
@@ -87,7 +103,49 @@
 </div>
 
 <script src="~/js/vendor/jquery-3.3.1.min.js"></script>
+<script src="~/js/vendor/bootstrap3-typeahead.js"></script>
+<link href="~/css/jquery-ui.css" rel="stylesheet" />
+<script src="~/js/jquery-ui.js"></script>
 <script>
+
+    jQuery(function ($) {
+        $("#txtAccountId").autocomplete({
+            minLength: 0,
+            source: function (request, response) {
+                $.ajax({
+                    url: "/Setting/Account/GetList",
+                    type: "GET",
+                    dataType: "json",
+                    data: { txtSearch: $("#txtAccountId").val(), TypeId: $("#TypeId").val(), page: 1, pageSize: 7 },
+                    success: function (data) {
+                        if (!data.length)
+                            data = [{ name: "NoResultsFound" }];
+                        if ($("#txtAccountId").val() === "")
+                            $("#AccountId").val("");
+                        response($.map(data, function (item) {
+                            return { label: item.name, value: item.name, id: item.id };
+                        }));
+                    }
+                });
+            },
+            select: function (event, ui) {
+                if (ui.item.label === "NoResultsFound") {
+                    event.preventDefault();
+                    return;
+                }
+                $("#AccountId").val(ui.item.id);
+            }
+        });
+
+        $("#txtAccountId").on("input", function () {
+            $("#AccountId").val("");
+        });
+
+        $(".Droptxt, .Dropbtn").click(function (event) {
+            event.preventDefault();
+            $("#txtAccountId").autocomplete("search", $("#txtAccountId").val());
+        });
+    });
 
     function Save() {
         var Valid = true;
@@ -106,6 +164,7 @@
             var data = {
                 Id: $('#Id').val(),
                 BranchId: $('#BranchId').val().trim(),
+                AccountId: $('#AccountId').val() || null,
                 Name: $('#Name').val().trim(),
                 ParentId: $('#ParentId').val(),
                 TypeId: $('#TypeId').val()

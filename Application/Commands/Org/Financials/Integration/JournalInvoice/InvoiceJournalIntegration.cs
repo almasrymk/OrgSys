@@ -33,7 +33,8 @@ internal sealed class InvoiceJournalIntegration(IServiceProvider provider)
             return;
         }
 
-        var invoiceAccountId = ParseAccountId(preferences, "SalesAccount");
+        var invoiceAccountKey = invoice.TypeId is 2 or 4 ? "PurchaseAccount" : "SalesAccount";
+        var invoiceAccountId = ParseAccountId(preferences, invoiceAccountKey);
         var dealerRepository = provider.GetRequiredService<IRepository<Dealer>>();
         var dealer = await dealerRepository.GetByFilterAsync(e => e.Id == invoice.DealerId, "");
         var dealerAccountId = dealer?.AccountId is > 0
@@ -45,12 +46,13 @@ internal sealed class InvoiceJournalIntegration(IServiceProvider provider)
             throw new InvalidOperationException("The invoice account is not configured in invoice preferences.");
         if (dealerAccountId <= 0)
             throw new InvalidOperationException("The selected dealer does not have an account and DealerAccount is not configured in invoice preferences.");
-        if (invoice.Tax != 0 && taxAccountId <= 0)
+        var taxAmount = CalculateTaxAmount(invoice);
+        if (taxAmount != 0 && taxAccountId <= 0)
             throw new InvalidOperationException("The tax account is not configured in invoice preferences.");
 
         var dealerIsDebit = invoice.TypeId is 1 or 4;
         var amount = invoice.Net;
-        var invoiceAmount = amount - invoice.Tax;
+        var invoiceAmount = amount - taxAmount;
         var items = new List<JournalItem>
         {
             new()
@@ -69,13 +71,13 @@ internal sealed class InvoiceJournalIntegration(IServiceProvider provider)
             }
         };
 
-        if (invoice.Tax != 0)
+        if (taxAmount != 0)
         {
             items.Add(new JournalItem
             {
                 AccountId = taxAccountId,
-                Debit = dealerIsDebit ? 0 : invoice.Tax,
-                Credit = dealerIsDebit ? invoice.Tax : 0,
+                Debit = dealerIsDebit ? 0 : taxAmount,
+                Credit = dealerIsDebit ? taxAmount : 0,
                 Note = invoice.Notes
             });
         }
@@ -114,6 +116,8 @@ internal sealed class InvoiceJournalIntegration(IServiceProvider provider)
             foreach (var item in items)
                 item.JournalId = journal.Id;
 
+            await journalItemRepository.CreateAsync(items);
+
             journal.Date = invoice.Date;
             journal.ModifyDate = invoice.ModifyDate;
             journal.ModifyUserId = invoice.ModifyUserId;
@@ -123,7 +127,7 @@ internal sealed class InvoiceJournalIntegration(IServiceProvider provider)
             journal.Rate = invoice.Rate;
             journal.RefranceCode = invoice.Code;
             journal.Note = invoice.Notes;
-            journal.JournalItems = items;
+            await journalRepository.UpdateAsync(journal);
         }
 
         invoice.HasJournal = true;
@@ -142,6 +146,25 @@ internal sealed class InvoiceJournalIntegration(IServiceProvider provider)
 
     private static long ParseAccountId(IEnumerable<Preference> preferences, string key) =>
         long.TryParse(preferences.FirstOrDefault(e => e.Key == key)?.Value, out var id) ? id : 0;
+
+    private static decimal CalculateTaxAmount(Domain.Entities.Invoice invoice)
+    {
+        if (invoice.Tax == 0)
+            return 0;
+
+        if (invoice.TaxType == 1)
+            return invoice.Tax;
+
+        if (invoice.TaxType != 2)
+            return 0;
+
+        var discountAmount = invoice.DiscountType == 2
+            ? invoice.Total * invoice.Discount / 100
+            : invoice.DiscountType == 1 ? invoice.Discount : 0;
+        var taxableAmount = invoice.Total - discountAmount;
+
+        return taxableAmount * invoice.Tax / 100;
+    }
 
     private static async Task DeleteAsync(
         Journal? journal,
