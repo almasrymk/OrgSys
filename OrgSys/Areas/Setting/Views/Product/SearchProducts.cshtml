@@ -16,7 +16,7 @@
                 <div class="float-md-right">
                     <div class="navbar p-0 m-0" style="height:50px;background-color:transparent;box-shadow:none;">
                         <div class="search-text  m-0 p-0" style="box-shadow: 0 1px 15px rgba(0,0,0,.04), 0 1px 6px rgba(0,0,0,.04);">
-                            <input id="txtSearchProduct" placeholder='@Domain.Resource.Title_Designer.TextSearch...' onkeyup="changeProduct(event , 1)">
+                            <input id="txtSearchProduct" placeholder='@Domain.Resource.Title_Designer.TextSearch...' oninput="changeProduct(event, 1)" onkeydown="changeProduct(event, 1)">
                             <span class="search-icon" onclick="searchProduct(1)">
                                 <i class="simple-icon-magnifier"></i>
                             </span>
@@ -34,11 +34,11 @@
     </div>
     <div class="modal-footer" style="padding:12px;">
         <span class="btn-group group-add" role="group" aria-label="Basic example">
-            <button class="btn btn-primary" onclick="Select()">
+            <button type="button" class="btn btn-primary" onclick="Select()">
                 <i class="fa fa-check"></i>
                 @Domain.Resource.Title_Designer.Ok
             </button>
-            <button class="btn btn-primary" onclick="Close()">
+            <button type="button" class="btn btn-primary" onclick="Close()">
                 <i class="simple-icon-action-undo"> </i>
                 @Domain.Resource.Title_Designer.Back
             </button>
@@ -47,34 +47,36 @@
 </div>
 
 <script>
-    ReIndexPro(1);
+    var productSearchTimer;
+    ReIndexPro(@Model.Page);
 
     function ReIndexPro(page) {
         $("#tblSearch").find('tr').each(function (index) {
             $(this).find("#Index").empty();
-            $(this).find("#Index").append(((page -1) * 7) + index);
+            $(this).find("#Index").append(((page - 1) * 20) + index + 1);
         });
     }
 
     function changeProduct(event, _page) {
-        if ("" + $('#txtSearchProduct').val() == "" || event.keyCode == '13') {
+        if (event.type === "keydown" && event.key === "Enter") {
+            event.preventDefault();
             searchProduct(_page);
+        } else if (event.type === "input") {
+            clearTimeout(productSearchTimer);
+            productSearchTimer = setTimeout(function () { searchProduct(_page); }, 300);
         }
     }
 
     function searchProduct(_page) {
-        page = _page;
-        var Search2 = "";     
-        setTimeout(() => {
-            $.ajax({
-                url: "/Setting/Product/SearchProducts" + "?txt=" + $('#txtSearchProduct').val() + Search2 + "&page=" + page + "&Type=2",
-                success: function (result) {
-                    $('#ProductList').empty();
-                    $('#ProductList').html(result);
-                    ReIndexPro(_page);
-                }
-            });
-        }, 300);
+        clearTimeout(productSearchTimer);
+        $.ajax({
+            url: "/Setting/Product/SearchProducts",
+            data: { txt: $('#txtSearchProduct').val(), page: _page, Type: 2 },
+            success: function (result) {
+                $('#ProductList').html(result);
+                ReIndexPro(_page);
+            }
+        });
     }
 
     function Select() {
@@ -101,7 +103,7 @@
             }
            
         });
-        $(".close").trigger("click");
+        $('.ProductBody').modal('hide');
     }
 
     function tbl(_index)
@@ -115,6 +117,6 @@
     }
 
     function Close() {
-        $(".close").trigger("click");
+        $('.ProductBody').modal('hide');
     }
 </script>

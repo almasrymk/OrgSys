@@ -12,6 +12,7 @@
     using System.Linq.Expressions;
     using Domain.Enums;
     using Application.Commands.Org.Financials.Integration.JournalInvoice;
+    using Application.Commands.Org.Financials.Integration.JournalTransaction;
 
     public sealed record DeleteInvoiceCommand(long Id) : ICommand, IDeleteCommand<Result>;
 
@@ -50,11 +51,15 @@
 
             if (transaction != null)
             {
-                //transaction.TransactionProducts.Clear();
+                await new TransactionJournalIntegration(_provider).DeleteByTransactionIdAsync(transaction.Id);
+                transaction.TransactionProducts?.Clear();
                 await transactionRepo.ShiftDeleteAsync(t => t.Id == transaction.Id);
             }
 
-            return await _UnitOfWork.SaveChangeAsync() > 0;
+            // The base delete handler deletes the invoice and saves all staged changes
+            // together. Saving here would try to delete the referenced transaction
+            // while the invoice still exists and can violate the foreign key.
+            return true;
         }
     }
 }

@@ -9,6 +9,7 @@
     using Domain.Shared;
     using Domain.Entities;
     using Application.DTOs;
+    using Application.Commands.Org.Financials.Integration.JournalTransaction;
 
     public sealed class UpdateTransactionCommand : Application.DTOs.TransactionDto , ICommand, IUpdateCommand<Result>;
     public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork,
@@ -27,6 +28,12 @@
             var ob = mapper.Map<List<TransactionProduct>>(request.TransactionProductList);
             res = await UpdateDetails<TransactionProduct>(ob);
             #endregion 
+
+            if (res)
+            {
+                await new TransactionJournalIntegration(_provider).SyncAsync(request);
+                res = await _Repository.UpdateAsync(request);
+            }
 
             return res;
         }

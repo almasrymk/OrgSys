@@ -31,7 +31,9 @@ namespace API.Controllers.Org.Invoices
             if (result.StatusCode != HttpStatusCode.OK)
                 return result;
 
-            return Update.TransactionId > 0 ? await sender.Send(new CreateTransactionByInvoiceCommand(Update.Id), cancellationToken) : new Result(HttpStatusCode.OK, null);
+            return await sender.Send(
+                new CreateTransactionByInvoiceCommand(Update.Id, RespectAutoCreatePreference: true),
+                cancellationToken);
         }
 
         [HttpPut("Redo")]

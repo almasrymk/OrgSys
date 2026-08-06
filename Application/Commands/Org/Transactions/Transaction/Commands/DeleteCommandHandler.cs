@@ -11,6 +11,7 @@
     using Application.DTOs;
     using Microsoft.Extensions.DependencyInjection;
     using System.Linq.Expressions;
+    using Application.Commands.Org.Financials.Integration.JournalTransaction;
 
     public sealed record DeleteTransactionCommand(long Id) : ICommand, IDeleteCommand<Result>;
 
@@ -29,13 +30,12 @@
 
           var transactionProducts =  await _Repository.GetByFilterAsync(t => t.Id == request.Id, "TransactionProducts");
 
-            if(transactionProducts != null && transactionProducts.TransactionProducts.Count > 0)
-            {
-                transactionProducts.TransactionProducts.Clear();
-                return true;
-            }
+            if (transactionProducts == null)
+                return false;
 
-            return false;
+            await new TransactionJournalIntegration(_provider).DeleteByTransactionIdAsync(request.Id);
+            transactionProducts.TransactionProducts?.Clear();
+            return true;
         }
     }
 }

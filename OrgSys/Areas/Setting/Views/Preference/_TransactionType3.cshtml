@@ -103,3 +103,36 @@
         </div>
     </div>
 </div>
+
+<hr class="WarehouseIntegration" style="display:none;">
+<div class="form-row">
+    <div class="form-group col-md-4">
+        <label>Accounts Integration</label>
+        <div class="input-group mt-2">
+            <div class="custom-switch custom-switch-primary-inverse custom-switch-small">
+                <input class="custom-switch-input" id="AccountsIntegration" name="AccountsIntegration" type="checkbox" checked="@ViewBag.AccountsIntegration" onclick="ShowHide('AccountsIntegration','WarehouseIntegration')">
+                <label class="custom-switch-btn" for="AccountsIntegration"></label>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-row WarehouseIntegration" style="display:none;">
+    <div class="form-group col-md-4">
+        <label>Source Inventory Account</label>
+        <div class="input-group">
+            <div class="input-group-prepend"><span class="input-group-text"><i class="iconsminds-financial"></i></span></div>
+            @Html.DropDownList("SourceInventoryAccount", null, "...", new { @class = "form-control" })
+        </div>
+    </div>
+</div>
+<div class="form-row WarehouseIntegration" style="display:none;">
+    <div class="form-group col-md-4">
+        <label>Auto-Create Journal Entry</label>
+        <div class="input-group mt-2">
+            <div class="custom-switch custom-switch-primary-inverse custom-switch-small">
+                <input class="custom-switch-input" id="AutoCreateJournalEntry" name="AutoCreateJournalEntry" type="checkbox" checked="@ViewBag.AutoCreateJournalEntry">
+                <label class="custom-switch-btn" for="AutoCreateJournalEntry"></label>
+            </div>
+        </div>
+    </div>
+</div>

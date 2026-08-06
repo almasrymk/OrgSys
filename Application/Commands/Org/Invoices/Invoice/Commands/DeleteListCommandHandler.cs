@@ -11,6 +11,7 @@
     using Microsoft.Extensions.DependencyInjection;
     using System.Linq.Expressions;
     using Application.Commands.Org.Financials.Integration.JournalInvoice;
+    using Application.Commands.Org.Financials.Integration.JournalTransaction;
 
     public sealed record DeleteListInvoiceCommand(List<long> Ids) : ICommand, IDeleteListCommand<Result>;   
 
@@ -48,10 +49,16 @@
                     .GetByFilterAsync(e => e.Id == invoice.TransactionId,"TransactionProducts");
 
                 if (transaction != null)
+                {
+                    await new TransactionJournalIntegration(_provider).DeleteByTransactionIdAsync(transaction.Id);
+                    transaction.TransactionProducts?.Clear();
                     await transactionRepo.ShiftDeleteAsync(t => t.Id == transaction.Id);
+                }
             }
 
-            return await _UnitOfWork.SaveChangeAsync() > 0;
+            // The base delete handler deletes the invoices and persists the complete
+            // graph in one SaveChanges call, allowing EF to order dependent deletes.
+            return true;
         }
     }
 }

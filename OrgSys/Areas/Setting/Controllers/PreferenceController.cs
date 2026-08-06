@@ -118,6 +118,8 @@ namespace OrgSys.Areas.Setting.Controllers
             ViewBag.PurchaseReturnAccount = new SelectList(Accounts, "Id", "Name", Service.FirstOrDefault(e => e.Key == "PurchaseReturnAccount")?.Value);
             ViewBag.PurchaseAccount = new SelectList(Accounts, "Id", "Name", Service.FirstOrDefault(e => e.Key == "PurchaseAccount")?.Value);
             ViewBag.SalesReturnAccount = new SelectList(Accounts, "Id", "Name", Service.FirstOrDefault(e => e.Key == "SalesReturnAccount")?.Value);
+            ViewBag.SourceInventoryAccount = new SelectList(Accounts, "Id", "Name", Service.FirstOrDefault(e => e.Key == "SourceInventoryAccount")?.Value);
+            ViewBag.DestinationInventoryAccount = new SelectList(Accounts, "Id", "Name", Service.FirstOrDefault(e => e.Key == "DestinationInventoryAccount")?.Value);
 
             List<SelectListItem> selectListItems = new List<SelectListItem>();
             selectListItems.Add(new SelectListItem { Value = "1", Text = "Data after product" });

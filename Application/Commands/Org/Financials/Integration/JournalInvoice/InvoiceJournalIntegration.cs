@@ -144,6 +144,19 @@ internal sealed class InvoiceJournalIntegration(IServiceProvider provider)
             await DeleteAsync(journal, journalRepository, journalItemRepository);
     }
 
+    public async Task SetStatusByInvoiceIdAsync(long invoiceId, Domain.Enums.Status status)
+    {
+        var journalRepository = provider.GetRequiredService<IRepository<Journal>>();
+        var journals = await journalRepository.GetListByFilterAsync(
+            e => e.RefranceTable == ReferenceTable && e.RefranceId == invoiceId);
+
+        foreach (var journal in journals ?? [])
+        {
+            journal.Status = status;
+            await journalRepository.UpdateAsync(journal);
+        }
+    }
+
     private static long ParseAccountId(IEnumerable<Preference> preferences, string key) =>
         long.TryParse(preferences.FirstOrDefault(e => e.Key == key)?.Value, out var id) ? id : 0;
 

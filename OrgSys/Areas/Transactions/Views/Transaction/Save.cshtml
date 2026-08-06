@@ -454,7 +454,8 @@
             Save();
         });
 
-        $('.SearchProduct').on("click", function () {
+        $(document).off('click.transactionProductSearch', '.SearchProduct[data-target=".bd-example-modal-lg"]')
+            .on('click.transactionProductSearch', '.SearchProduct[data-target=".bd-example-modal-lg"]', function () {
             var index = $(this).parents("tr").find("#Index").html();
             $.ajax({
                 type: 'GET',
@@ -894,11 +895,6 @@
                 ReCalc();
                 AutoSave();
                 RowRepeated.find("#RepeatedWarning").css("display", "block");
-                if ($row.find("#ProductId").val() == 0) {
-                    setTimeout(function () {
-                        $row.find("#query").val("");
-                    }, 200);
-                }
                 setTimeout(function () {
                     RowRepeated.find("#RepeatedDanger").css("display", "none");
                     RowRepeated.find("#RepeatedWarning").css("display", "none");
@@ -907,12 +903,6 @@
             }
             else if (AllowRepeated == 3 && RowRepeated != "") {
                 RowRepeated.find("#RepeatedDanger").css("display", "block");
-                if ($row.find("#ProductId").val() == 0) {
-                    setTimeout(function () {
-                        $row.find("#query").val("");
-                        $row.find("#query").select();
-                    }, 200);
-                }
                 setTimeout(function () {
                     RowRepeated.find("#RepeatedDanger").css("display", "none");
                     RowRepeated.find("#RepeatedWarning").css("display", "none");

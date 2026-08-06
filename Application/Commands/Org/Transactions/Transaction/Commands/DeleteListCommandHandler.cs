@@ -8,6 +8,7 @@
     using Domain.Shared;
     using Application.DTOs;
     using System.Linq.Expressions;
+    using Application.Commands.Org.Financials.Integration.JournalTransaction;
 
     public sealed record DeleteListTransactionCommand(List<long> Ids) : ICommand, IDeleteListCommand<Result>;   
 
@@ -29,7 +30,10 @@
 
 
             foreach (var transactionProduct in transactions)
+            {
+                await new TransactionJournalIntegration(_provider).DeleteByTransactionIdAsync(transactionProduct.Id);
                 transactionProduct.TransactionProducts.Clear();
+            }
             
             return true;
         }

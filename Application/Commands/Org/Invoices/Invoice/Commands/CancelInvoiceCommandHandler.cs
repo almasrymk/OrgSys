@@ -13,6 +13,8 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text;
 using System.Transactions;
+using Application.Commands.Org.Financials.Integration.JournalInvoice;
+using Application.Commands.Org.Financials.Integration.JournalTransaction;
 
 namespace Application.Commands.Org.Invoices.Invoice.Commands
 {
@@ -23,15 +25,21 @@ namespace Application.Commands.Org.Invoices.Invoice.Commands
 
         public override async Task<Result> Handle(CancelInvoiceCommand request, CancellationToken cancellationToken)
         {
+            await _UnitOfWork.BeginTransactionAsync();
             try
             {
                 var invoice = await _Repository.GetByFilterAsync(x => x.Id == request.Id, await CreateInclude());
 
 
                 if (invoice is null)
+                {
+                    await _UnitOfWork.RollbackAsync();
                     return new Result(HttpStatusCode.NotFound, new List<Error> { new Error("Invoice not found") });
+                }
 
                 invoice.Status = Domain.Enums.Status.Cancel;
+                await new InvoiceJournalIntegration(_provider)
+                    .SetStatusByInvoiceIdAsync(invoice.Id, Domain.Enums.Status.Cancel);
 
                 if (invoice.TransactionId > 0)
                 {
@@ -40,19 +48,30 @@ namespace Application.Commands.Org.Invoices.Invoice.Commands
                     var transaction = await transactionRepo.GetByFilterAsync(x => x.Id == invoice.TransactionId, await CreateInclude());
 
                     if (transaction == null)
+                    {
+                        await _UnitOfWork.RollbackAsync();
                         return new Result(HttpStatusCode.InternalServerError, new List<Error> { new Error("Transaction not found") });
+                    }
 
                     transaction.Status = Domain.Enums.Status.Cancel;
+                    await new TransactionJournalIntegration(_provider)
+                        .SetStatusByTransactionIdAsync(transaction.Id, Domain.Enums.Status.Cancel);
                 }
 
-                var saved = await _UnitOfWork.SaveChangeAsync();
+                var saved = await _UnitOfWork.SaveChangeAsync(cancellationToken);
+                if (saved > 0)
+                {
+                    await _UnitOfWork.CommitAsync();
+                    return new Result(HttpStatusCode.OK, null);
+                }
 
-                return saved > 0 ? new Result(HttpStatusCode.OK, null) : new Result(HttpStatusCode.InternalServerError, new List<Error> { new Error("Error saving changes") });
+                await _UnitOfWork.RollbackAsync();
+                return new Result(HttpStatusCode.InternalServerError, new List<Error> { new Error("Error saving changes") });
             }
             catch (Exception ex)
             {
-
-                return new Result(HttpStatusCode.InternalServerError, new List<Error> { new Error("Error") });
+                await _UnitOfWork.RollbackAsync();
+                return new Result(HttpStatusCode.InternalServerError, new List<Error> { new Error(ex.Message) });
 
             }
         }
