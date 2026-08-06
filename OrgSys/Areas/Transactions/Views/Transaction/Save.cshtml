@@ -1,5 +1,6 @@
 ﻿@model Application.DTOs.TransactionDto
 @using System.Globalization
+@using OrgSys
 @{
     var culture = CultureInfo.CurrentUICulture.Name;
     ViewData["Title_Designer"] = "Index";
@@ -427,6 +428,21 @@
                             {
                                 <a href="/Transactions/Inventory/Save?id=@Model.InventoryId&ParentId=0&TypeId=0" class="btn btn-primary ml-4 mr-4 mb-4">
                                     <i class="iconsminds-check"></i> Inventory (@Model.InventoryId)
+                                </a>
+                            }
+                        }
+                        @if (Model.Id > 0 && Model.TypeId is >= 1 and <= 4)
+                        {
+                            if (Model.JournalId is > 0 && (User.IsAllowed("Journal.View") || User.IsAllowed("Journal.Edit")))
+                            {
+                                <a href="/Financials/Journal/Save?id=@Model.JournalId&ParentId=0&TypeId=2" class="btn btn-primary mr-4 mb-4">
+                                    <i class="iconsminds-address-book-2"></i> Journal (@Model.JournalCode)
+                                </a>
+                            }
+                            else if (Model.JournalId is not > 0 && Model.Status != Domain.Enums.Status.Cancel && User.IsAllowed("Journal.Add"))
+                            {
+                                <a href="/Transactions/Transaction/CreateJournal?id=@Model.Id&ParentId=@Model.ParentId&TypeId=@Model.TypeId&dir=Save" class="btn btn-primary mr-4 mb-4">
+                                    <i class="iconsminds-add"></i> Create Journal
                                 </a>
                             }
                         }

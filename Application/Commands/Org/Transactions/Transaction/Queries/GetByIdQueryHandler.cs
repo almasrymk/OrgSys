@@ -12,7 +12,7 @@
 
     public sealed record GetByIdTransactionQuery(long Id) : ICommand<TransactionDto> , IGetByIdQuery<Result<TransactionDto>>;
 
-    public sealed class GetByIdQueryHandler(IRepository<Domain.Entities.Transaction> _Repository, IRepository<Domain.Entities.Invoice> invoiceRepository, IMapper mapper) : GetCommandHandler<GetByIdTransactionQuery, Domain.Entities.Transaction, TransactionDto>(_Repository, mapper)
+    public sealed class GetByIdQueryHandler(IRepository<Domain.Entities.Transaction> _Repository, IRepository<Domain.Entities.Invoice> invoiceRepository, IRepository<Domain.Entities.Journal> journalRepository, IMapper mapper) : GetCommandHandler<GetByIdTransactionQuery, Domain.Entities.Transaction, TransactionDto>(_Repository, mapper)
     {
         public override async Task<Result<TransactionDto>> Handle(GetByIdTransactionQuery request, CancellationToken cancellationToken)
         {
@@ -27,6 +27,14 @@
                 result.Response.SourceInvoiceCode = invoice.Code;
                 result.Response.SourceInvoiceTypeId = invoice.TypeId;
             }
+
+            var journal = await journalRepository.GetByFilterAsync(
+                e => e.RefranceTable == "transaction"
+                    && e.RefranceId == result.Response.Id
+                    && e.RefranceTypeId == result.Response.TypeId,
+                string.Empty);
+            result.Response.JournalId = journal?.Id;
+            result.Response.JournalCode = journal?.Code;
             return result;
         }
 

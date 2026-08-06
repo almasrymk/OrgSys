@@ -24,7 +24,9 @@ internal sealed class InvoiceJournalIntegration(IServiceProvider provider)
             e => e.Reference == "Invoice" && e.TypeId == invoice.TypeId))?.ToList() ?? [];
 
         var enabled = preferences.FirstOrDefault(e => e.Key == "AccountsIntegration")?.Value == "1"
-            && (force || preferences.FirstOrDefault(e => e.Key == "AutoCreateJournalEntry")?.Value == "1");
+            && (force
+                || journal != null
+                || preferences.FirstOrDefault(e => e.Key == "AutoCreateJournalEntry")?.Value == "1");
 
         if (!enabled)
         {

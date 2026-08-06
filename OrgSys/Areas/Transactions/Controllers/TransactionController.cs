@@ -73,9 +73,11 @@ namespace OrgSys.Areas.Transaction.Controllers
             return Redirect($"/Transactions/Transaction/Index?ParentId={ParentId}&TypeId={TypeId}&page={page}&status={(response.IsSuccessStatusCode ? ResultStatus.success : ResultStatus.error)}&MsgError={(response.IsSuccessStatusCode ? "Success" : "Error")}");
         }
 
-        public async Task<ActionResult> CreateJournal(long id, long ParentId = 0, long TypeId = 0, int page = 1)
+        public async Task<ActionResult> CreateJournal(long id, long ParentId = 0, long TypeId = 0, int page = 1, string dir = "Index")
         {
             var response = await ApiMethod(ApiMethodType.Post, $"CreateJournal?TransactionId={id}");
+            //if (dir == "Save")
+            //    return Redirect($"/Transactions/Transaction/Save?id={id}&ParentId={ParentId}&TypeId={TypeId}&status={(response.IsSuccessStatusCode ? ResultStatus.success : ResultStatus.error)}&MsgError={(response.IsSuccessStatusCode ? "Success" : "Unable to create journal. Check account integration settings.")}");
             return Redirect($"/Transactions/Transaction/Index?ParentId={ParentId}&TypeId={TypeId}&page={page}&status={(response.IsSuccessStatusCode ? ResultStatus.success : ResultStatus.error)}&MsgError={(response.IsSuccessStatusCode ? "Success" : "Unable to create journal. Check account integration settings.")}");
         }
 

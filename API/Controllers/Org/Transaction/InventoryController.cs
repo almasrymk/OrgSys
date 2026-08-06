@@ -24,5 +24,11 @@ namespace API.Controllers.Org.Transaction
         {
             return await sender.Send(new RedoInventoryCommand(Id), cancellationToken);
         }
+
+        [HttpPost("CreateAdjustment")]
+        public Task<Result> CreateAdjustment(long InventoryId, CancellationToken cancellationToken)
+        {
+            return sender.Send(new CreateAdjustmentCommand(InventoryId), cancellationToken);
+        }
     }
 }

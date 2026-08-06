@@ -10,6 +10,15 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var BorderAlign = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "border-top:none;border-bottom:none;border-left:none;" : "border-top:none;border-bottom:none;border-right:none;";
     var AllowPreference = false;
+    var transactionTypeId = Model.Transaction?.TypeId ?? (Model.TypeId is 2 or 3 ? 1L : 2L);
+    var transactionIcon = transactionTypeId == 1 ? "iconsminds-down-1" : "iconsminds-up-1";
+    var transactionName = transactionTypeId == 1
+        ? $"{Domain.Resource.Title_Designer.Addition} {Domain.Resource.Title_Designer.Transactions}"
+        : $"{Domain.Resource.Title_Designer.Issue} {Domain.Resource.Title_Designer.Transactions}";
+    var AllowCreateTransaction = transactionTypeId == 1 ? User.IsAllowed("Addition.Add") : User.IsAllowed("Issue.Add");
+    var AllowViewTransaction = transactionTypeId == 1
+        ? User.IsAllowed("Addition.View") || User.IsAllowed("Addition.Edit")
+        : User.IsAllowed("Issue.View") || User.IsAllowed("Issue.Edit");
     var formateDate = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "{0:yyyy/MM/dd}" : "{0:dd/MM/yyyy}";
     if (Model.TypeId == 1)
     {
@@ -139,6 +148,18 @@
                                         <tbody>
                                             @foreach (var InvoiceProduct in Model.InvoiceProductList)
                                             {
+                                                var productUnits = InvoiceProduct.Product?.ProductUnits?
+                                                    .Where(e => e.Unit != null)
+                                                    .Select(e => e.Unit!)
+                                                    .ToList() ?? new List<Domain.Entities.Unit>();
+                                                if (productUnits.Count == 0 && InvoiceProduct.UnitId > 0)
+                                                {
+                                                    productUnits.Add(new Domain.Entities.Unit
+                                                    {
+                                                        Id = InvoiceProduct.UnitId,
+                                                        Name = InvoiceProduct.UnitName ?? InvoiceProduct.UnitId.ToString()
+                                                    });
+                                                }
                                                 <tr class="product-empty ProductRow">
                                                     <td class="text-center align-middle" style="width:35px;padding:0px;">
                                                         <span id="Index">  </span>
@@ -164,7 +185,7 @@
                                                         </div>
                                                     </td>
                                                     <td style="width:150px;padding:0px;">
-                                                        @Html.DropDownList("UnitId", new SelectList(InvoiceProduct.Product.ProductUnits.Select(e => e.Unit), "Id", "Name", InvoiceProduct.UnitId), null, new { @class = "form-control UnitId", @style = BorderAlign })
+                                                        @Html.DropDownList("UnitId", new SelectList(productUnits, "Id", "Name", InvoiceProduct.UnitId), null, new { @class = "form-control UnitId", @style = BorderAlign })
                                                     </td> 
                                                     <td style="width:100px;padding:0px;">
                                                         <input type="text" id="Price" name="Price" class="form-control Price" value="@InvoiceProduct.Price" style="@BorderAlign" placeholder="0.0" autocomplete="off" />
@@ -553,6 +574,34 @@
                 <div class="row">
                     <div class="col-7">
                         <button id="btn" type="button" class="btn btn-primary ml-4 mr-4 mb-4">@Domain.Resource.Title_Designer.Save</button>
+                        @if (Model.Id > 0)
+                        {
+                            if (Model.TransactionId is > 0 && AllowViewTransaction)
+                            {
+                                <a href="/Transactions/Transaction/Save?id=@Model.TransactionId&ParentId=0&TypeId=@transactionTypeId" class="btn btn-primary mr-4 mb-4">
+                                    <i class="@transactionIcon"></i> @transactionName (@Model.Transaction?.Code)
+                                </a>
+                            }
+                            else if (Model.TransactionId is not > 0 && Model.Status != Domain.Enums.Status.Cancel && AllowCreateTransaction)
+                            {
+                                <a href="/Invoices/Invoice/CreateTransaction?id=@Model.Id&ParentId=@Model.ParentId&TypeId=@Model.TypeId&dir=Save" class="btn btn-primary mr-4 mb-4">
+                                    <i class="iconsminds-add"></i> Create Transaction
+                                </a>
+                            }
+
+                            if (Model.JournalId is > 0 && (User.IsAllowed("Journal.View") || User.IsAllowed("Journal.Edit")))
+                            {
+                                <a href="/Financials/Journal/Save?id=@Model.JournalId&ParentId=0&TypeId=2" class="btn btn-primary mr-4 mb-4">
+                                    <i class="simple-icon-basket-loaded"></i> Journal (@Model.JournalCode)
+                                </a>
+                            }
+                            else if (Model.JournalId is not > 0 && Model.Status != Domain.Enums.Status.Cancel && User.IsAllowed("Journal.Add"))
+                            {
+                                <a href="/Invoices/Invoice/CreateJournal?id=@Model.Id&ParentId=@Model.ParentId&TypeId=@Model.TypeId&dir=Save" class="btn btn-primary mr-4 mb-4">
+                                    <i class="iconsminds-add"></i> Create Journal
+                                </a>
+                            }
+                        }
                     </div>
                     <div class="col-5">
                         <span class="btn-group group-add mb-4" style="width:92%">

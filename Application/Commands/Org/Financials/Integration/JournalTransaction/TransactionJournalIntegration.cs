@@ -24,7 +24,9 @@ internal sealed class TransactionJournalIntegration(IServiceProvider provider)
             e => e.Reference == "Transaction" && e.TypeId == transaction.TypeId))?.ToList() ?? [];
 
         var enabled = preferences.FirstOrDefault(e => e.Key == "AccountsIntegration")?.Value == "1"
-            && (force || preferences.FirstOrDefault(e => e.Key == "AutoCreateJournalEntry")?.Value == "1");
+            && (force
+                || journal != null
+                || preferences.FirstOrDefault(e => e.Key == "AutoCreateJournalEntry")?.Value == "1");
 
         if (!enabled)
         {
@@ -143,9 +145,11 @@ internal sealed class TransactionJournalIntegration(IServiceProvider provider)
                 return (ParseAccountId(preferences, counterKey), ParseAccountId(preferences, "StockAccount"));
             }
             case 3:
-                return (await GetStockAccountIdAsync(transaction.ToStockId), ParseAccountId(preferences, "SourceInventoryAccount"));
+                // Transfer: move value out of the source warehouse and into the in-transit account.
+                return (ParseAccountId(preferences, "SourceInventoryAccount"), await GetStockAccountIdAsync(transaction.StockId));
             case 4:
-                return (ParseAccountId(preferences, "DestinationInventoryAccount"), await GetStockAccountIdAsync(transaction.StockId));
+                // Received: move value out of the in-transit account and into the destination warehouse.
+                return (await GetStockAccountIdAsync(transaction.StockId), ParseAccountId(preferences, "DestinationInventoryAccount"));
             default:
                 throw new InvalidOperationException($"Transaction type {transaction.TypeId} does not support journal integration.");
         }

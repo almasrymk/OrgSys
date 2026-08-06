@@ -34,7 +34,8 @@ public partial class MappingProfile : Profile
                 opt => opt.MapFrom(src => src.InvoiceProducts));
 
         CreateMap<InvoiceProduct, TransactionProduct>()
-            .ForMember(dest => dest.Id, opt => opt.Ignore());
+            .ForMember(dest => dest.Id, opt => opt.Ignore())
+            .ForMember(dest => dest.Cost, opt => opt.MapFrom(src => src.Price));
 
 
 

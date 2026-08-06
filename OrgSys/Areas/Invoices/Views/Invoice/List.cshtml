@@ -99,7 +99,7 @@
                             }
                         </th>
                         <th class="text-center">@Domain.Resource.Title_Designer.Transactions</th>
-                        <th class="text-center"><i class="simple-icon-basket-loaded"></i> Journal</th>
+                        <th class="text-center">Journal</th>
                         @if (AllowEdit || AllowCancel || AllowDelete)
                         {
                             <th>
@@ -165,7 +165,7 @@
                                     }
                                 }
                             </td>
-                            <td class="text-center align-middle" style="width:10px;">
+                            <td class="text-center align-middle" >
                                 @if (Model.Response[i].Transaction == null || "" + Model.Response[i].Transaction.Code == "")
                                 {
                                     var transactionTypeId = TransactionTypeId(Model.Response[i].TypeId);
@@ -175,7 +175,7 @@
                                     if (Model.Response[i].Status != Domain.Enums.Status.Cancel && allowCreateTransaction && Model.Response[i].TransactionId == null)
                                     {
                                         <a href="/@ViewBag.area/@ViewBag.PageTitle/CreateTransaction?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.Page">
-                                            <i class="@TransactionIcon(transactionTypeId)"></i> Create Transaction
+                                            <i class="iconsminds-add"></i> Create
                                         </a>
                                     }else {
                                          <small><i class="fa fa-check"></i> </small>
@@ -203,13 +203,13 @@
                                 @if (Model.Response[i].JournalId is > 0)
                                 {
                                     <a href="/Financials/Journal/Save?id=@Model.Response[i].JournalId&ParentId=0&TypeId=2" title="Journal">
-                                        <i class="simple-icon-basket-loaded"></i> Journal (@Model.Response[i].JournalCode)
+                                        <i class="iconsminds-address-book-2"></i> Journal (@Model.Response[i].JournalCode)
                                     </a>
                                 }
                                 else if (Model.Response[i].Status != Domain.Enums.Status.Cancel && User.IsAllowed("Journal.Add"))
                                 {
                                     <a href="/Invoices/Invoice/CreateJournal?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.Page" title="Create Journal">
-                                        <i class="simple-icon-basket-loaded"></i> Create Journal
+                                        <i class="iconsminds-add"></i> Create 
                                     </a>
                                 }
                             </td>
@@ -282,7 +282,7 @@
                         <div class="list-item-heading mb-0  w-10  ">
                             <small>@Domain.Resource.Title_Designer.Code</small>
                         </div>
-                        <div class="list-item-heading mb-0  w-40">
+                        <div class="list-item-heading mb-0  w-20">
                             @if (ViewBag.TypeId == 1 || ViewBag.TypeId == 3)
                             {
                                 <small> @Domain.Resource.Title_Designer.Client </small>
@@ -298,7 +298,7 @@
                         <div class="w-10">
                             <small>@Domain.Resource.Title_Designer.Amount</small>
                         </div>
-                        <div class="w-10">
+                        <div class="w-20">
                             @if (ViewBag.TypeId == 1 || ViewBag.TypeId == 4)
                             {
                                 <small>@Domain.Resource.Title_Designer.Collect</small>
@@ -308,11 +308,11 @@
                                 <small>@Domain.Resource.Title_Designer.Paid</small>
                             }
                         </div>
-                        <div class="w-10">
+                        <div class="w-20">
                             <small>@Domain.Resource.Title_Designer.Transactions</small>
                         </div>
-                        <div class="w-10">
-                            <small><i class="simple-icon-basket-loaded"></i> Journal</small>
+                        <div class="w-20">
+                            <small> Journal</small>
                         </div>
                         <div class="w-20 @TextAlign2">
                            
@@ -334,7 +334,7 @@
                             <div class="list-item-heading mb-0  w-10  ">
                                 @Model.Response[i].Code
                             </div>
-                            <div class="list-item-heading mb-0  w-40">
+                            <div class="list-item-heading mb-0  w-20">
                                 @Model.Response[i].DealerName
                             </div>
                             <div class="list-item-heading mb-0 truncate w-15 ">
@@ -343,7 +343,7 @@
                             <div class="w-10">
                                 @Model.Response[i].Net
                             </div>
-                            <div class="w-10">
+                            <div class="w-20">
                                 @if (@Model.Response[i].Credit == 0)
                                 {
                                     <small><i class="fa fa-check"></i> </small>
@@ -369,7 +369,7 @@
                                     }
                                 }
                             </div>
-                            <div class="w-10">
+                            <div class="w-20">
                                 @if ("" + Model.Response[i].Transaction?.Code == "")
                                 {
                                     var transactionTypeId = TransactionTypeId(Model.Response[i].TypeId);
@@ -379,7 +379,7 @@
                                     if (Model.Response[i].Status != Domain.Enums.Status.Cancel && allowCreateTransaction && Model.Response[i].TransactionId == null)
                                     {
                                         <a href="/@ViewBag.area/@ViewBag.PageTitle/CreateTransaction?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.Page">
-                                            <i class="@TransactionIcon(transactionTypeId)"></i> Create Transaction
+                                            <i class="iconsminds-add"></i> Create
                                         </a>
                                     } else {
                                          <small><i class="fa fa-check"></i> </small>
@@ -403,17 +403,17 @@
                                     }
                                 }
                             </div>
-                            <div class="w-10">
+                            <div class="w-20">
                                 @if (Model.Response[i].JournalId is > 0)
                                 {
                                     <a href="/Financials/Journal/Save?id=@Model.Response[i].JournalId&ParentId=0&TypeId=2" title="Journal">
-                                        <i class="simple-icon-basket-loaded"></i> Journal (@Model.Response[i].JournalCode)
+                                        <i class="iconsminds-address-book-2"></i> Journal (@Model.Response[i].JournalCode)
                                     </a>
                                 }
                                 else if (Model.Response[i].Status != Domain.Enums.Status.Cancel && User.IsAllowed("Journal.Add"))
                                 {
                                     <a href="/Invoices/Invoice/CreateJournal?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.Page" title="Create Journal">
-                                        <i class="simple-icon-basket-loaded"></i> Create Journal
+                                        <i class="iconsminds-add"></i> Create
                                     </a>
                                 }
                             </div>

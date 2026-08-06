@@ -48,6 +48,8 @@
                 }
                 
                 Transaction transaction;
+                var expectedTransactionTypeId = invoice.TypeId == 2 || invoice.TypeId == 3 ? 1L : 2L;
+                var transactionTypeChanged = false;
 
                 if (invoice.TransactionId > 0)
                 {
@@ -59,22 +61,30 @@
                         return new Result(HttpStatusCode.NotFound,new List<Error>{new Error("Transaction not found")});
                     }
 
+                    var originalTransactionTypeId = transaction.TypeId;
                     transaction.TransactionProducts?.Clear();
 
                     mapper.Map(invoice, transaction);
+                    transaction.TypeId = expectedTransactionTypeId;
+                    transactionTypeChanged = originalTransactionTypeId != expectedTransactionTypeId;
 
                 }
                 else
                 {
                     transaction = mapper.Map<Transaction>(invoice);
 
-                    transaction.TypeId = invoice.TypeId == 2 || invoice.TypeId == 3 ? 1 : 2;
+                    transaction.TypeId = expectedTransactionTypeId;
 
-                    transaction.CodeNumber = await _Repository.GetMaxByFilterAsync(
-                        e => e.TypeId == transaction.TypeId
+                    transaction.CodeNumber = await _Repository.AnyAsync(e =>
+                            e.TypeId == transaction.TypeId
                             || (transaction.TypeId == 1 && e.TypeId == 5)
-                            || (transaction.TypeId == 2 && e.TypeId == 6),
-                        e => e.CodeNumber) + 1;
+                            || (transaction.TypeId == 2 && e.TypeId == 6))
+                        ? await _Repository.GetMaxByFilterAsync(
+                            e => e.TypeId == transaction.TypeId
+                                || (transaction.TypeId == 1 && e.TypeId == 5)
+                                || (transaction.TypeId == 2 && e.TypeId == 6),
+                            e => e.CodeNumber) + 1
+                        : 1;
 
                     transaction.Code = transaction.CodeNumber.ToString();
                 }
@@ -88,6 +98,8 @@
                 {
                     invoice.TransactionId = transaction.Id;
 
+                    if (transactionTypeChanged)
+                        await new TransactionJournalIntegration(provider).DeleteByTransactionIdAsync(transaction.Id);
                     await new TransactionJournalIntegration(provider).SyncAsync(transaction, invoice.TypeId);
                     await _Repository.UpdateAsync(transaction);
 

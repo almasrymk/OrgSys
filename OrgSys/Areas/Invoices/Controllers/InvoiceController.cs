@@ -116,15 +116,19 @@ namespace OrgSys.Areas.Invoices.Controllers
             return base.FixData(ob);
         }
 
-        public async Task<ActionResult> CreateTransaction(long id, long ParentId = 0, long TypeId = 0, int page = 1)
+        public async Task<ActionResult> CreateTransaction(long id, long ParentId = 0, long TypeId = 0, int page = 1, string dir = "Index")
         {
             var response = await ApiMethod(ApiMethodType.Post, $"CreateTransactionInvoice?InvoiceId={id}");
+            //if (dir == "Save")
+            //    return Redirect($"/Invoices/Invoice/Save?id={id}&ParentId={ParentId}&TypeId={TypeId}&status={(response.IsSuccessStatusCode ? ResultStatus.success : ResultStatus.error)}&MsgError={(response.IsSuccessStatusCode ? "Success" : "Unable to create transaction")}");
             return Redirect($"/Invoices/Invoice/Index?ParentId={ParentId}&TypeId={TypeId}&page={page}&status={(response.IsSuccessStatusCode ? ResultStatus.success : ResultStatus.error)}&MsgError={(response.IsSuccessStatusCode ? "Success" : "Unable to create transaction")}");
         }
 
-        public async Task<ActionResult> CreateJournal(long id, long ParentId = 0, long TypeId = 0, int page = 1)
+        public async Task<ActionResult> CreateJournal(long id, long ParentId = 0, long TypeId = 0, int page = 1, string dir = "Index")
         {
             var response = await ApiMethod(ApiMethodType.Post, $"CreateJournal?InvoiceId={id}");
+            //if (dir == "Save")
+            //    return Redirect($"/Invoices/Invoice/Save?id={id}&ParentId={ParentId}&TypeId={TypeId}&status={(response.IsSuccessStatusCode ? ResultStatus.success : ResultStatus.error)}&MsgError={(response.IsSuccessStatusCode ? "Success" : "Unable to create journal. Check account integration settings.")}");
             return Redirect($"/Invoices/Invoice/Index?ParentId={ParentId}&TypeId={TypeId}&page={page}&status={(response.IsSuccessStatusCode ? ResultStatus.success : ResultStatus.error)}&MsgError={(response.IsSuccessStatusCode ? "Success" : "Unable to create journal. Check account integration settings.")}");
         }
 

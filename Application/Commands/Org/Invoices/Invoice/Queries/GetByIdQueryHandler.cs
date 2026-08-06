@@ -12,11 +12,27 @@
 
     public sealed record GetByIdInvoiceQuery(long Id) : ICommand<InvoiceDto> , IGetByIdQuery<Result<InvoiceDto>>;
 
-    public sealed class GetByIdQueryHandler(IRepository<Domain.Entities.Invoice> _Repository, IMapper mapper) : GetCommandHandler<GetByIdInvoiceQuery, Domain.Entities.Invoice, InvoiceDto>(_Repository, mapper)
+    public sealed class GetByIdQueryHandler(IRepository<Domain.Entities.Invoice> _Repository, IRepository<Domain.Entities.Journal> journalRepository, IMapper mapper) : GetCommandHandler<GetByIdInvoiceQuery, Domain.Entities.Invoice, InvoiceDto>(_Repository, mapper)
     {
+        public override async Task<Result<InvoiceDto>> Handle(GetByIdInvoiceQuery request, CancellationToken cancellationToken)
+        {
+            var result = await base.Handle(request, cancellationToken);
+            if (result.Response == null)
+                return result;
+
+            var journal = await journalRepository.GetByFilterAsync(
+                e => e.RefranceTable == "invoice"
+                    && e.RefranceId == result.Response.Id
+                    && e.RefranceTypeId == result.Response.TypeId,
+                string.Empty);
+            result.Response.JournalId = journal?.Id;
+            result.Response.JournalCode = journal?.Code;
+            return result;
+        }
+
         public override string CreateInclude()
         {
-            return "InvoiceProducts,InvoiceProducts.Product.ProductUnits.Unit";
+            return "InvoiceProducts,InvoiceProducts.Product.ProductUnits.Unit,Transaction";
         }
 
         public override Expression<Func<Domain.Entities.Invoice, bool>> CreateFilter(GetByIdInvoiceQuery request)

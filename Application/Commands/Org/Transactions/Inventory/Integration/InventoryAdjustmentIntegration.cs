@@ -9,7 +9,7 @@ internal sealed class InventoryAdjustmentIntegration(IServiceProvider provider)
     private const long AdjustmentInTypeId = 5;
     private const long AdjustmentOutTypeId = 6;
 
-    public async Task SyncAsync(Inventory inventory, CancellationToken cancellationToken = default)
+    public async Task SyncAsync(Inventory inventory, CancellationToken cancellationToken = default, bool force = false)
     {
         var preferenceRepository = provider.GetRequiredService<IRepository<Preference>>();
         var preference = await preferenceRepository.GetByFilterAsync(
@@ -18,7 +18,7 @@ internal sealed class InventoryAdjustmentIntegration(IServiceProvider provider)
                 && (e.TypeId == inventory.TypeId || e.TypeId == 0),
             string.Empty);
 
-        if (preference?.Value != "1")
+        if (!force && preference?.Value != "1")
             return;
 
         var transactionRepository = provider.GetRequiredService<IRepository<Transaction>>();

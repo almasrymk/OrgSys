@@ -83,6 +83,17 @@ namespace OrgSys.Areas.Inventory.Controllers
                 (res?.StatusCode != null ? ResultStatus.success : ResultStatus.error) + "&MsgError=Success");
         }
 
+        public async Task<ActionResult> CreateAdjustment(long id, long ParentId = 0, long TypeId = 0, int page = 1, string dir = "Index")
+        {
+            var response = await ApiMethod(ApiMethodType.Post, $"CreateAdjustment?InventoryId={id}");
+            var target = 
+                //dir == "Save"
+                //? $"/Transactions/Inventory/Save?id={id}&ParentId={ParentId}&TypeId={TypeId}"
+                //: 
+                $"/Transactions/Inventory/Index?ParentId={ParentId}&TypeId={TypeId}&page={page}";
+            return Redirect($"{target}&status={(response.IsSuccessStatusCode ? ResultStatus.success : ResultStatus.error)}&MsgError={(response.IsSuccessStatusCode ? "Success" : "Unable to create adjustment. Check inventory differences.")}");
+        }
+
 
         [HttpPost]
         public async Task<ActionResult> AutoSave(InventoryDto ob)

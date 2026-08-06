@@ -37,9 +37,9 @@
                     <th class="text-center">#</th>
                     <th style="text-align: center; width:10px"></th>
                     <th class="text-center">@Domain.Resource.Title_Designer.Code</th>
-                    <th class="text-center">@Domain.Resource.Title_Designer.Stock</th>
+                    <th class="@TextAlign">@Domain.Resource.Title_Designer.Stock</th>
                     <th class="text-center">@Domain.Resource.Title_Designer.Date</th>
-                    <th class="text-center">Resource</th>
+                    <th class="@TextAlign">Resource</th>
                     <th colspan="3"></th>
                 </tr>
             </thead>
@@ -58,13 +58,13 @@
                         <td class="w-4 text-center align-middle">
                             <p class="text-muted">@Model.Response[i].Code</p>
                         </td>
-                        <td class="w-4 text-center align-middle">
+                        <td class="w-30 @TextAlign align-middle">
                             <p class="text-muted">@Model.Response[i].StockName</p>
                         </td>
                         <td class="w-4 text-center align-middle">
                             @Model.Response[i].Date.ToString("dd-MM-yyyy")
                         </td>
-                        <td class="text-center align-middle">
+                        <td class="w-4 @TextAlign align-middle">
                             @if (Model.Response[i].HasAdjustment)
                             {
                                 if (Model.Response[i].AdjustmentInTransactionId > 0)
@@ -82,7 +82,12 @@
                             }
                             else
                             {
-                                <span class="text-muted">-</span>
+                                @if (Model.Response[i].Status != Domain.Enums.Status.Cancel)
+                                {
+                                    <a  href="/Transactions/Inventory/CreateAdjustment?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.Page" title="Create Adjustment">
+                                        <i class="iconsminds-add"></i> Create Adjustment
+                                    </a>
+                                }
                             }
                         </td>
                         @if (AllowEdit || AllowCancel || AllowRedo || AllowDelete)
@@ -160,13 +165,13 @@
                         <div class="list-item-heading mb-0 truncate w-10 w-xs-100 d-inline-block" href="Pages.Product.Detail.html">
                             <small>@Domain.Resource.Title_Designer.Code</small>
                         </div>
-                        <div class="list-item-heading mb-0 truncate w-20 w-xs-100 d-inline-block" href="Pages.Product.Detail.html">
+                        <div class="list-item-heading mb-0 truncate w-30 w-xs-100 d-inline-block" href="Pages.Product.Detail.html">
                             <small>@Domain.Resource.Title_Designer.Stock</small>
                         </div>
                         <div class="list-item-heading mb-0 truncate w-15 w-xs-100 d-inline-block" href="Pages.Product.Detail.html">
                             <small>@Domain.Resource.Title_Designer.Date</small>
                         </div>
-                        <div class="list-item-heading mb-0 truncate w-15 w-xs-100 d-inline-block">
+                        <div class="list-item-heading mb-0 truncate w-25 w-xs-100 d-inline-block">
                             <small>Resource</small>
                         </div>
                         <div class="w-20 @TextAlign2">
@@ -189,7 +194,7 @@
                             <div class="list-item-heading mb-0 truncate w-10 w-xs-100 d-inline-block" href="Pages.Product.Detail.html">
                                 @Model.Response[i].Code
                             </div>
-                            <div class="list-item-heading mb-0 truncate w-20 w-xs-100 d-inline-block" href="Pages.Product.Detail.html">
+                            <div class="list-item-heading mb-0 truncate w-30 w-xs-100 d-inline-block" href="Pages.Product.Detail.html">
                                 @Model.Response[i].StockName
                             </div>
                             <div class="list-item-heading mb-0 truncate w-15 w-xs-100 d-inline-block" href="Pages.Product.Detail.html">
@@ -209,7 +214,10 @@
                                 }
                                 else
                                 {
-                                    <span class="text-muted">-</span>
+                                    @if (Model.Response[i].Status != Domain.Enums.Status.Cancel)
+                                    {
+                                        <a href="/Transactions/Inventory/CreateAdjustment?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.Page" title="Create Adjustment"><i class="iconsminds-add"></i> Create Adjustment</a>
+                                    }
                                 }
                             </div>
                             <div class="w-20 @TextAlign2">
