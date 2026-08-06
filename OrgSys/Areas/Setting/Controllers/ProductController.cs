@@ -14,6 +14,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Globalization;
     using System.Threading.Tasks;
 
     [Area("Setting")]
@@ -155,18 +156,31 @@
             return Json(data);
         }
 
-        public async Task<JsonResult> LoadProductsByStock(long StockId, DateTime date)
+        public async Task<IActionResult> LoadProductsByStock(long StockId, string date)
         {
-            //var products = new ProductService(User.GetSchema()).GetAllByBalance(StockId, date);
-            var products = await GetListApi<ProductDto>($"GetAllByBalance?StockId={StockId}&date={date}");
-            var data = products.Select(e => new
+            if (StockId <= 0)
+                return BadRequest(new { error = "A stock must be selected." });
+
+            if (!DateTime.TryParse(date, CultureInfo.CurrentCulture, DateTimeStyles.None, out var inventoryDate)
+                && !DateTime.TryParse(date, CultureInfo.InvariantCulture, DateTimeStyles.None, out inventoryDate))
+                return BadRequest(new { error = "The inventory date is invalid." });
+
+            var encodedDate = Uri.EscapeDataString(inventoryDate.ToString("O", CultureInfo.InvariantCulture));
+            var products = await GetListApi<ProductDto>($"GetAllByBalance?StockId={StockId}&date={encodedDate}");
+            var data = products.Select(e =>
             {
-                id = e.Id,
-                name = e.Name,
-                price = e.Price,
-                selectunitid = e.ProductUnits.FirstOrDefault(e => e.DefaultUnit).UnitId,
-                selectunitName = e.ProductUnits.FirstOrDefault(e => e.DefaultUnit).UnitName,
-                balance = e.Balance
+                var selectedUnit = e.ProductUnits?.FirstOrDefault(unit => unit.DefaultUnit)
+                    ?? e.ProductUnits?.FirstOrDefault();
+
+                return new
+                {
+                    id = e.Id,
+                    name = e.Name,
+                    price = e.Price,
+                    selectunitid = selectedUnit?.UnitId ?? 0,
+                    selectunitName = selectedUnit?.UnitName ?? string.Empty,
+                    balance = e.Balance
+                };
             }).ToList();
             return Json(data);
         }

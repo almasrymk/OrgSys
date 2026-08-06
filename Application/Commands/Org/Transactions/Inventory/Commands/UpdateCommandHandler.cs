@@ -19,12 +19,18 @@
         override public async Task<bool> SaveDetials(UpdateInventoryCommand request)
         {
             #region UpdateProduct
-            var ids = request.InventoryProductList.Select(e => e.Id);
+            request.InventoryProductList ??= new List<InventoryProductDto>();
+            var ids = request.InventoryProductList.Where(e => e.Id > 0).Select(e => e.Id).ToList();
             var removeList = await _InventoryProductRepository.GetListByFilterAsync(e => e.InventoryId == request.Id && !ids.Contains(e.Id));
 
-            var res = await RemoveDetails<InventoryProduct>(removeList!);
+            var res = await RemoveDetails<InventoryProduct>(removeList ?? new List<InventoryProduct>());
             if (!res) return false;
             var ob = mapper.Map<List<InventoryProduct>>(request.InventoryProductList);
+            for (var index = 0; index < ob.Count; index++)
+            {
+                ob[index].InventoryId = request.Id;
+                ob[index].RowNumber = index + 1;
+            }
             res = await UpdateDetails<InventoryProduct>(ob);
             #endregion 
 

@@ -24,6 +24,9 @@
             if (journal == null)
                 return false;
 
+            if (!string.IsNullOrEmpty(journal.RefranceTable))
+                throw new InvalidOperationException("A journal created from a resource cannot be deleted");
+
             journal.JournalItems!.Clear();
 
             return await _UnitOfWork.SaveChangeAsync() > 0;

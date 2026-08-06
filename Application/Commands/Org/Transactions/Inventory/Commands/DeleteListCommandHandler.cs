@@ -25,11 +25,11 @@
 
             var inventories = await _Repository.GetListByFilterAsync(t => request.Ids.Contains(t.Id), "InventoryProducts");
 
-            if (inventories == null || !inventories.Any())
+            if (inventories == null)
                 return false;
 
             foreach (var inventoryProduct in inventories)
-                inventoryProduct.InventoryProducts.Clear();
+                inventoryProduct.InventoryProducts?.Clear();
             
             return true;
         }

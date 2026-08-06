@@ -28,6 +28,8 @@ namespace OrgSys.Areas.Financial.Controllers
         {
             ViewBag.JournalTypeId = new SelectList(await GetListApi<JournalTypeDto>(), "Id", "Name", model.JournalTypeId);
             ViewBag.CurrencyId = new SelectList(await GetListApi<CurrencyDto>(), "Id", "Name", model.CurrencyId);
+            ViewBag.InvoicesTypes = await GetListApi<InvoiceTypeDto>();
+            ViewBag.TransactionsTypes = await GetListApi<TransactionTypeDto>();
         }
 
         public override async Task<JournalDto> InitializeData(JournalDto ob)
@@ -74,6 +76,20 @@ namespace OrgSys.Areas.Financial.Controllers
                 ob.ModifyDate = DateTime.Now;
             }
             return base.FixData(ob);
+        }
+
+        public async Task<ActionResult> Cancel(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1)
+        {
+            var response = await ApiMethod(ApiMethodType.Put, $"Cancel?Id={id}");
+            response.EnsureSuccessStatusCode();
+            return Redirect($"/Financials/Journal/Index?ParentId={ParentId}&TypeId={TypeId}&page={page}&status={ResultStatus.success}&MsgError=Success");
+        }
+
+        public async Task<ActionResult> Redo(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1)
+        {
+            var response = await ApiMethod(ApiMethodType.Put, $"Redo?Id={id}");
+            response.EnsureSuccessStatusCode();
+            return Redirect($"/Financials/Journal/Index?ParentId={ParentId}&TypeId={TypeId}&page={page}&status={ResultStatus.success}&MsgError=Success");
         }
 
         [HttpPost]

@@ -20,6 +20,12 @@ namespace Application.DTOs
 
         public string? ShiftName { get; set; }
 
+        public long? SourceInvoiceId { get; set; }
+
+        public string? SourceInvoiceCode { get; set; }
+
+        public long? SourceInvoiceTypeId { get; set; }
+
         public List<TransactionProductDto>? TransactionProductList { get; set; }
     }
 }

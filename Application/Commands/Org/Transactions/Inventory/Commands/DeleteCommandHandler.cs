@@ -29,13 +29,11 @@
 
           var inventoryProducts =  await _Repository.GetByFilterAsync(t => t.Id == request.Id, "InventoryProducts");
 
-            if(inventoryProducts != null && inventoryProducts.InventoryProducts.Count > 0)
-            {
-                inventoryProducts.InventoryProducts.Clear();
-                return true;
-            }
+            if (inventoryProducts == null)
+                return false;
 
-            return false;
+            inventoryProducts.InventoryProducts?.Clear();
+            return true;
         }
     }
 }

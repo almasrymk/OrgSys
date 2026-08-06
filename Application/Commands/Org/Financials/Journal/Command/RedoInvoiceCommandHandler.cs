@@ -23,9 +23,15 @@ namespace Application.Commands.Org.Financials.Journal.Commands
                 if (journal is null)
                     return new Result(HttpStatusCode.NotFound, new List<Error> { new Error("Journal not found") });
 
+                if (!string.IsNullOrEmpty(journal.RefranceTable))
+                    return new Result(HttpStatusCode.Forbidden, new List<Error> { new Error("A journal created from a resource is controlled by that resource") });
+
+                if (journal.Status == Domain.Enums.Status.New)
+                    return new Result(HttpStatusCode.OK, null);
+
                 journal.Status = Domain.Enums.Status.New;               
 
-                var saved = await _UnitOfWork.SaveChangeAsync();
+                var saved = await _UnitOfWork.SaveChangeAsync(cancellationToken);
 
                 return saved > 0 ? new Result(HttpStatusCode.OK, null) : new Result(HttpStatusCode.InternalServerError, new List<Error> { new Error("Error saving changes") });
             }

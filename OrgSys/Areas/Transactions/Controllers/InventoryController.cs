@@ -61,6 +61,28 @@ namespace OrgSys.Areas.Inventory.Controllers
             return base.FixData(ob);
         }
 
+        public async Task<ActionResult> Cancel(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1)
+        {
+            var response = await ApiMethod(ApiMethodType.Put, $"Cancel?Id={id}");
+            response.EnsureSuccessStatusCode();
+            var data = await response.Content.ReadAsStringAsync();
+            var res = JsonConvert.DeserializeObject<Result>(data);
+
+            return Redirect("/Transactions/Inventory/Index?ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" +
+                (res?.StatusCode != null ? ResultStatus.success : ResultStatus.error) + "&MsgError=Success");
+        }
+
+        public async Task<ActionResult> Redo(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1)
+        {
+            var response = await ApiMethod(ApiMethodType.Put, $"Redo?Id={id}");
+            response.EnsureSuccessStatusCode();
+            var data = await response.Content.ReadAsStringAsync();
+            var res = JsonConvert.DeserializeObject<Result>(data);
+
+            return Redirect("/Transactions/Inventory/Index?ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" +
+                (res?.StatusCode != null ? ResultStatus.success : ResultStatus.error) + "&MsgError=Success");
+        }
+
 
         [HttpPost]
         public async Task<ActionResult> AutoSave(InventoryDto ob)

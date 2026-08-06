@@ -25,6 +25,7 @@ namespace OrgSys.Areas.Transaction.Controllers
             var type = await GetObApi<TransactionTypeDto>($"GetById?Id={TypeId}");
             ViewBag.TransactionsType = type.MaskText;            
             ViewBag.TransactionsIcon = type.Icon;
+            ViewBag.InvoicesTypes = await GetListApi<InvoiceTypeDto>();
         }
 
         public override async Task LoadViewBag(TransactionDto model)
@@ -34,6 +35,7 @@ namespace OrgSys.Areas.Transaction.Controllers
             var type = await GetObApi<TransactionTypeDto>($"GetById?Id={model.TypeId}");
             ViewBag.TransactionsType = type.Name;
             ViewBag.TransactionsType = type.Icon;
+            ViewBag.InvoicesTypes = await GetListApi<InvoiceTypeDto>();
         }
 
         public override Task<TransactionDto> FixData(TransactionDto ob)
@@ -49,6 +51,20 @@ namespace OrgSys.Areas.Transaction.Controllers
                 ob.ModifyDate = DateTime.Now;
             }
             return base.FixData(ob);
+        }
+
+        public async Task<ActionResult> Cancel(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1)
+        {
+            var response = await ApiMethod(ApiMethodType.Put, $"Cancel?Id={id}");
+            response.EnsureSuccessStatusCode();
+            return Redirect($"/Transactions/Transaction/Index?ParentId={ParentId}&TypeId={TypeId}&page={page}&status={ResultStatus.success}&MsgError=Success");
+        }
+
+        public async Task<ActionResult> Redo(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1)
+        {
+            var response = await ApiMethod(ApiMethodType.Put, $"Redo?Id={id}");
+            response.EnsureSuccessStatusCode();
+            return Redirect($"/Transactions/Transaction/Index?ParentId={ParentId}&TypeId={TypeId}&page={page}&status={ResultStatus.success}&MsgError=Success");
         }
 
         public override async Task<TransactionDto> InitializeData(TransactionDto ob)

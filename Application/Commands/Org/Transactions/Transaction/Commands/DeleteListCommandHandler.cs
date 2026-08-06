@@ -9,6 +9,7 @@
     using Application.DTOs;
     using System.Linq.Expressions;
     using Application.Commands.Org.Financials.Integration.JournalTransaction;
+    using Microsoft.Extensions.DependencyInjection;
 
     public sealed record DeleteListTransactionCommand(List<long> Ids) : ICommand, IDeleteListCommand<Result>;   
 
@@ -21,6 +22,10 @@
 
         public override async Task<bool> RemoveDetails(DeleteListTransactionCommand request)
         {
+            var invoiceRepository = _provider.GetRequiredService<IRepository<Domain.Entities.Invoice>>();
+            var sourceInvoices = await invoiceRepository.GetListByFilterAsync(e => e.TransactionId.HasValue && request.Ids.Contains(e.TransactionId.Value));
+            if (sourceInvoices?.Any() == true)
+                throw new InvalidOperationException("Transactions created from invoices cannot be deleted");
 
             var transactions = await _Repository.GetListByFilterAsync(t => request.Ids.Contains(t.Id), "TransactionProducts");
 

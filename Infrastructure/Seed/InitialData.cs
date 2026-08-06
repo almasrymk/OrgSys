@@ -223,6 +223,7 @@ namespace Infrastructure.Seed
                            new Permission { Id = 3010104, Name = "Delete", Key = "SalesInvoices.Delete", ParentId = 30101, TypeId = 1 },
                            new Permission { Id = 3010105, Name = "Cancel", Key = "SalesInvoices.Cancel", ParentId = 30101, TypeId = 1 },
                            new Permission { Id = 3010106, Name = "Preference", Key = "SalesInvoices.Preference", ParentId = 30101, TypeId = 1 },
+                           new Permission { Id = 3010107, Name = "Redo", Key = "SalesInvoices.Redo", ParentId = 30101, TypeId = 1 },
 
                        new Permission { Id = 30102, Name = "Returns", Key = "SalesReturns.All", ParentId = 301 },
                            new Permission { Id = 3010201, Name = "View", Key = "SalesReturns.View", ParentId = 30102, TypeId = 1 },
@@ -231,6 +232,7 @@ namespace Infrastructure.Seed
                            new Permission { Id = 3010204, Name = "Delete", Key = "SalesReturns.Delete", ParentId = 30102, TypeId = 1 },
                            new Permission { Id = 3010205, Name = "Cancel", Key = "SalesReturns.Cancel", ParentId = 30102, TypeId = 1 },
                            new Permission { Id = 3010206, Name = "Preference", Key = "SalesReturns.Preference", ParentId = 30102, TypeId = 1 },
+                           new Permission { Id = 3010207, Name = "Redo", Key = "SalesReturns.Redo", ParentId = 30102, TypeId = 1 },
 
                    new Permission { Id = 302, Name = "Purchases", Key = "Purchases", ParentId = 30 },
 
@@ -241,6 +243,7 @@ namespace Infrastructure.Seed
                            new Permission { Id = 3020104, Name = "Delete", Key = "PurchasesInvoices.Delete", ParentId = 30201, TypeId = 1 },
                            new Permission { Id = 3020105, Name = "Cancel", Key = "PurchasesInvoices.Cancel", ParentId = 30201, TypeId = 1 },
                            new Permission { Id = 3020106, Name = "Preference", Key = "PurchasesInvoices.Preference", ParentId = 30201, TypeId = 1 },
+                           new Permission { Id = 3020107, Name = "Redo", Key = "PurchasesInvoices.Redo", ParentId = 30201, TypeId = 1 },
 
                        new Permission { Id = 30202, Name = "Returns", Key = "PurchasesReturns.All", ParentId = 302 },
                            new Permission { Id = 3020201, Name = "View", Key = "PurchasesReturns.View", ParentId = 30202, TypeId = 1 },
@@ -249,6 +252,7 @@ namespace Infrastructure.Seed
                            new Permission { Id = 3020204, Name = "Delete", Key = "PurchasesReturns.Delete", ParentId = 30202, TypeId = 1 },
                            new Permission { Id = 3020205, Name = "Cancel", Key = "PurchasesReturns.Cancel", ParentId = 30202, TypeId = 1 },
                            new Permission { Id = 3020206, Name = "Preference", Key = "PurchasesReturns.Preference", ParentId = 30202, TypeId = 1 },
+                           new Permission { Id = 3020207, Name = "Redo", Key = "PurchasesReturns.Redo", ParentId = 30202, TypeId = 1 },
 
                    new Permission { Id = 40, Name = "Transactions", Key = "Transactions.All", ParentId = 1 },
 
@@ -260,6 +264,8 @@ namespace Infrastructure.Seed
                                    new Permission { Id = 4010103, Name = "Edit", Key = "Addition.Edit", ParentId = 40101, TypeId = 1 },
                                    new Permission { Id = 4010104, Name = "Delete", Key = "Addition.Delete", ParentId = 40101, TypeId = 1 },
                                    new Permission { Id = 4010105, Name = "Preference", Key = "Addition.Preference", ParentId = 40101, TypeId = 1 },
+                                   new Permission { Id = 4010106, Name = "Cancel", Key = "Addition.Cancel", ParentId = 40101, TypeId = 1 },
+                                   new Permission { Id = 4010107, Name = "Redo", Key = "Addition.Redo", ParentId = 40101, TypeId = 1 },
 
                                new Permission { Id = 40102, Name = "Issue", Key = "Issue.All", ParentId = 401 },
                                    new Permission { Id = 4010201, Name = "View", Key = "Issue.View", ParentId = 40102, TypeId = 1 },
@@ -267,6 +273,8 @@ namespace Infrastructure.Seed
                                    new Permission { Id = 4010203, Name = "Edit", Key = "Issue.Edit", ParentId = 40102, TypeId = 1 },
                                    new Permission { Id = 4010204, Name = "Delete", Key = "Issue.Delete", ParentId = 40102, TypeId = 1 },
                                    new Permission { Id = 4010205, Name = "Preference", Key = "Issue.Preference", ParentId = 40102, TypeId = 1 },
+                                   new Permission { Id = 4010206, Name = "Cancel", Key = "Issue.Cancel", ParentId = 40102, TypeId = 1 },
+                                   new Permission { Id = 4010207, Name = "Redo", Key = "Issue.Redo", ParentId = 40102, TypeId = 1 },
 
                                new Permission { Id = 40103, Name = "Transafer", Key = "Transafer.All", ParentId = 401 },
                                    new Permission { Id = 4010301, Name = "View", Key = "Transafer.View", ParentId = 40103, TypeId = 1 },
@@ -274,6 +282,8 @@ namespace Infrastructure.Seed
                                    new Permission { Id = 4010303, Name = "Edit", Key = "Transafer.Edit", ParentId = 40103, TypeId = 1 },
                                    new Permission { Id = 4010304, Name = "Delete", Key = "Transafer.Delete", ParentId = 40103, TypeId = 1 },
                                    new Permission { Id = 4010305, Name = "Preference", Key = "Transafer.Preference", ParentId = 40103, TypeId = 1 },
+                                   new Permission { Id = 4010306, Name = "Cancel", Key = "Transafer.Cancel", ParentId = 40103, TypeId = 1 },
+                                   new Permission { Id = 4010307, Name = "Redo", Key = "Transafer.Redo", ParentId = 40103, TypeId = 1 },
 
                                new Permission { Id = 40104, Name = "Received", Key = "Received.All", ParentId = 401 },
                                    new Permission { Id = 4010401, Name = "View", Key = "Received.View", ParentId = 40104, TypeId = 1 },
@@ -281,6 +291,8 @@ namespace Infrastructure.Seed
                                    new Permission { Id = 4010403, Name = "Edit", Key = "Received.Edit", ParentId = 40104, TypeId = 1 },
                                    new Permission { Id = 4010404, Name = "Delete", Key = "Received.Delete", ParentId = 40104, TypeId = 1 },
                                    new Permission { Id = 4010405, Name = "Preference", Key = "Received.Preference", ParentId = 40104, TypeId = 1 },
+                                   new Permission { Id = 4010406, Name = "Cancel", Key = "Received.Cancel", ParentId = 40104, TypeId = 1 },
+                                   new Permission { Id = 4010407, Name = "Redo", Key = "Received.Redo", ParentId = 40104, TypeId = 1 },
 
                                new Permission { Id = 40105, Name = "Inventory", Key = "Inventory.All", ParentId = 401 },
                                    new Permission { Id = 4010501, Name = "View", Key = "Inventory.View", ParentId = 40105, TypeId = 1 },
@@ -288,6 +300,8 @@ namespace Infrastructure.Seed
                                    new Permission { Id = 4010503, Name = "Edit", Key = "Inventory.Edit", ParentId = 40105, TypeId = 1 },
                                    new Permission { Id = 4010504, Name = "Delete", Key = "Inventory.Delete", ParentId = 40105, TypeId = 1 },
                                    new Permission { Id = 4010505, Name = "Preference", Key = "Inventory.Preference", ParentId = 40105, TypeId = 1 },
+                                   new Permission { Id = 4010506, Name = "Cancel", Key = "Inventory.Cancel", ParentId = 40105, TypeId = 1 },
+                                   new Permission { Id = 4010507, Name = "Redo", Key = "Inventory.Redo", ParentId = 40105, TypeId = 1 },
 
                        new Permission { Id = 50, Name = "Financials", Key = "Financials.All", ParentId = 1 },
 
@@ -326,7 +340,9 @@ namespace Infrastructure.Seed
                                    new Permission { Id = 5010602, Name = "Add", Key = "Journal.Add", ParentId = 50106, TypeId = 1 },
                                    new Permission { Id = 5010603, Name = "Edit", Key = "Journal.Edit", ParentId = 50106, TypeId = 1 },
                                    new Permission { Id = 5010604, Name = "Delete", Key = "Journal.Delete", ParentId = 50106, TypeId = 1 },
-                                   new Permission { Id = 5010605, Name = "Preference", Key = "Journal.Preference", ParentId = 50106, TypeId = 1 }
+                                   new Permission { Id = 5010605, Name = "Preference", Key = "Journal.Preference", ParentId = 50106, TypeId = 1 },
+                                   new Permission { Id = 5010606, Name = "Cancel", Key = "Journal.Cancel", ParentId = 50106, TypeId = 1 },
+                                   new Permission { Id = 5010607, Name = "Redo", Key = "Journal.Redo", ParentId = 50106, TypeId = 1 }
                };
             foreach (var ob in list)
             {
@@ -555,8 +571,8 @@ namespace Infrastructure.Seed
             {
                 if (!orgContext.Preferences.Any(e => e.Id == ob.Id))
                     orgContext.Set<Preference>().Add(ob);
-                else
-                    orgContext.Entry<Preference>(orgContext.Set<Preference>().Find(ob.Id)).CurrentValues.SetValues(ob);
+                //else
+                //    orgContext.Entry<Preference>(orgContext.Set<Preference>().Find(ob.Id)).CurrentValues.SetValues(ob);
             }
             orgContext.SaveChanges();
         }

@@ -11,19 +11,30 @@
 
     public sealed record GetListProductByBalanceQuery(long StockId, DateTime date) : ICommandCollection<ProductDto>;
 
-    public sealed class GetListByBalanceQueryHandler(IRepository<Domain.Entities.TransactionProduct> _trnsRepository, IMapper mapper) : ICommandCollectionHandler<GetListProductByBalanceQuery, ProductDto>
+    public sealed class GetListByBalanceQueryHandler(
+        IRepository<Domain.Entities.TransactionProduct> _trnsRepository,
+        IRepository<Domain.Entities.Product> productRepository,
+        IMapper mapper) : ICommandCollectionHandler<GetListProductByBalanceQuery, ProductDto>
     {        
         public async Task<ResultCollection<ProductDto>> Handle(GetListProductByBalanceQuery request, CancellationToken cancellationToken)
         {
             try
             {
                 List<ProductDto> list = new List<ProductDto>();
-                var trns = await _trnsRepository.GetListByFilterAsync(e => e.StockId == request.StockId && e.Transaction.Date <= request.date , "Transaction,Transaction.Stock,Product,Unit,Product.ProductUnits");
-                var products = trns!.Select(e => e.Product).Distinct().ToList();
+                var trns = (await _trnsRepository.GetListByFilterAsync(
+                    e => e.StockId == request.StockId && e.Transaction!.Date <= request.date,
+                    "Transaction,Product,Unit"))?.ToList() ?? [];
+                var products = (await productRepository.GetListByFilterAsync(
+                    e => true,
+                    "ProductUnits,ProductUnits.Unit"))?.ToList() ?? [];
+
                 foreach (var product in products)
                 {
                     var ob = mapper.Map<ProductDto>(product);
-                    ob.Balance = trns!.Where(e => e.ProductId == product.Id).Sum(e => e.Transaction.TypeId == 2 || e.Transaction.TypeId == 3 || e.Transaction.TypeId == 6 ? -1 * e.Quantity : e.Quantity);
+                    ob.Balance = trns.Where(e => e.ProductId == product.Id)
+                        .Sum(e => e.Transaction!.TypeId == 2 || e.Transaction.TypeId == 3 || e.Transaction.TypeId == 6
+                            ? -e.Quantity
+                            : e.Quantity);
                     list.Add(ob);
                 }
                

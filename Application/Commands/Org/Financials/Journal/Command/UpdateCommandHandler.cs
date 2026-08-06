@@ -14,6 +14,14 @@
         IRepository<Domain.Entities.JournalItem> _RepositoryJournalInvoice,
         IMapper mapper, IServiceProvider _provider) : UpdateCommandHandler<UpdateJournalCommand, Domain.Entities.Journal>(_UnitOfWork, _Repository, mapper, _provider)
     {
+        public override async Task<Result> Handle(UpdateJournalCommand request, CancellationToken cancellationToken)
+        {
+            var journal = await _Repository.GetByFilterAsync(e => e.Id == request.Id, string.Empty);
+            if (journal != null && !string.IsNullOrEmpty(journal.RefranceTable))
+                return new Result(System.Net.HttpStatusCode.Forbidden, [new Error("A journal created from a resource is read-only")]);
+
+            return await base.Handle(request, cancellationToken);
+        }
 
         override public async Task<bool> SaveDetials(UpdateJournalCommand request)
         {

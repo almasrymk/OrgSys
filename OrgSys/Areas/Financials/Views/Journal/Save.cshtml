@@ -10,6 +10,31 @@
     var BorderAlign = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "border-top:none;border-bottom:none;border-left:none;" : "border-top:none;border-bottom:none;border-right:none;";
     var AllowPreference = User.IsAllowed("Journal.Preference");
     var formateDate = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "{0:yyyy/MM/dd}" : "{0:dd/MM/yyyy}";
+    List<Application.DTOs.InvoiceTypeDto> InvoicesTypes = ViewBag.InvoicesTypes ?? new List<Application.DTOs.InvoiceTypeDto>();
+    List<Application.DTOs.TransactionTypeDto> TransactionsTypes = ViewBag.TransactionsTypes ?? new List<Application.DTOs.TransactionTypeDto>();
+    var SourceResourceName = "";
+    if (Model.RefranceTable == "invoice")
+    {
+        SourceResourceName = Model.RefranceTypeId switch
+        {
+            1 => $"{Domain.Resource.Title_Designer.Sales} {Domain.Resource.Title_Designer.Invoice}",
+            2 => $"{Domain.Resource.Title_Designer.Purchase} {Domain.Resource.Title_Designer.Invoice}",
+            3 => $"{Domain.Resource.Title_Designer.Sales} {Domain.Resource.Title_Designer.Return}",
+            4 => $"{Domain.Resource.Title_Designer.Purchase} {Domain.Resource.Title_Designer.Return}",
+            _ => Domain.Resource.Title_Designer.Invoice
+        };
+    }
+    else if (Model.RefranceTable == "transaction")
+    {
+        SourceResourceName = Model.RefranceTypeId switch
+        {
+            1 => $"{Domain.Resource.Title_Designer.Addition} {Domain.Resource.Title_Designer.Stock}",
+            2 => $"{Domain.Resource.Title_Designer.Issue} {Domain.Resource.Title_Designer.Stock}",
+            3 => $"{Domain.Resource.Title_Designer.Transfer} {Domain.Resource.Title_Designer.Stock}",
+            4 => $"{Domain.Resource.Title_Designer.Received} {Domain.Resource.Title_Designer.Stock}",
+            _ => "Transaction"
+        };
+    }
 }
 
 <div id="HPage" class="container-fluid">
@@ -342,6 +367,20 @@
                         @if ("" + Model.RefranceTable == "")
                         {
                             <button id="btn" type="button" class="btn btn-primary ml-4 mr-4 mb-4">@Domain.Resource.Title_Designer.Save</button>
+                        }
+                        else if (Model.RefranceTable == "invoice")
+                        {
+                            <a href="/Invoices/Invoice/Save?id=@Model.RefranceId&ParentId=0&TypeId=@Model.RefranceTypeId" class="btn btn-primary ml-4 mr-4 mb-4">
+                                <i class="@(InvoicesTypes.FirstOrDefault(e => e.Id == Model.RefranceTypeId)?.Icon)"></i>
+                                @SourceResourceName (@Model.RefranceCode)
+                            </a>
+                        }
+                        else if (Model.RefranceTable == "transaction")
+                        {
+                            <a href="/Transactions/Transaction/Save?id=@Model.RefranceId&ParentId=0&TypeId=@Model.RefranceTypeId" class="btn btn-primary ml-4 mr-4 mb-4">
+                                <i class="@(TransactionsTypes.FirstOrDefault(e => e.Id == Model.RefranceTypeId)?.Icon)"></i>
+                                @SourceResourceName (@Model.RefranceCode)
+                            </a>
                         }
                     </div>
                     <div class="col-5">

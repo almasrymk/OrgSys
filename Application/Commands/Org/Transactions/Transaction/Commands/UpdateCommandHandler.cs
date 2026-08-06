@@ -10,6 +10,7 @@
     using Domain.Entities;
     using Application.DTOs;
     using Application.Commands.Org.Financials.Integration.JournalTransaction;
+    using Microsoft.Extensions.DependencyInjection;
 
     public sealed class UpdateTransactionCommand : Application.DTOs.TransactionDto , ICommand, IUpdateCommand<Result>;
     public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork,
@@ -17,6 +18,16 @@
         IRepository<TransactionProduct> _TransactionRepository,
         IMapper mapper, IServiceProvider _provider) : UpdateCommandHandler<UpdateTransactionCommand, Domain.Entities.Transaction>(_UnitOfWork, _Repository , mapper , _provider)
     {
+        public override async Task<Result> Handle(UpdateTransactionCommand request, CancellationToken cancellationToken)
+        {
+            var sourceInvoice = await _provider.GetRequiredService<IRepository<Domain.Entities.Invoice>>()
+                .GetByFilterAsync(e => e.TransactionId == request.Id, string.Empty);
+            if (sourceInvoice != null)
+                return new Result(System.Net.HttpStatusCode.Forbidden, [new Error("A transaction created from an invoice is read-only")]);
+
+            return await base.Handle(request, cancellationToken);
+        }
+
         override public async Task<bool> SaveDetials(UpdateTransactionCommand request)
         {
             #region UpdateProduct
