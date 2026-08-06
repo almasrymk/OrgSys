@@ -7,6 +7,9 @@
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.Extensions.Configuration;
     using OrgSys.Controllers;
+    using Domain.Enums;
+    using Domain.Shared;
+    using Newtonsoft.Json;
     
     using System;
     using System.Collections.Generic;
@@ -47,8 +50,20 @@
         public async Task<ActionResult> SearchProducts(string txt = "", int page = 1, int Type = 1, int index = 0)
         {
             ViewBag.index = index;
-            var list = await GetListApi<ProductDto>(TextSearch:txt , Page: page , PageSize:20);
-            return Type != 1 ? (ActionResult)PartialView("SearchProductsList", list) : View("SearchProducts", list);
+            var encodedSearch = Uri.EscapeDataString(txt ?? string.Empty);
+            var response = await ApiMethod(
+                ApiMethodType.Get,
+                $"Search?KeySearch={encodedSearch}&ParentId=0&TypeId=0&Page={page}&PageSize=20");
+
+            response.EnsureSuccessStatusCode();
+            var json = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<ResultPagination<ProductDto>>(json)
+                ?? new ResultPagination<ProductDto>(
+                    System.Net.HttpStatusCode.OK, [], page, 20, 0, null);
+
+            return Type != 1
+                ? PartialView("SearchProductsList", result)
+                : PartialView("SearchProducts", result);
         }
 
         public async Task<JsonResult> SearchItems(string phrase = "", int TypeInv = 1)

@@ -146,7 +146,7 @@
                                                     <td class="input-group typeahead-container" style="min-width:120px;padding:0px;">
                                                         <div class="input-group typeahead-container DropAutoComplete">
                                                             <div class="input-group-append " style="border:none;">
-                                                                <button id="SearchProduct" type="button" class="btn btn-primary SearchProduct text-center align-middle" data-toggle="modal" data-target=".bd-example-modal-lg" style="width:30px;padding:0px;color:white;">
+                                                                <button id="SearchProduct" type="button" class="btn btn-primary SearchProduct text-center align-middle" data-toggle="modal" data-target="#InvoiceProductSearchModal" style="width:30px;padding:0px;color:white;">
                                                                     <i class="simple-icon-magnifier"></i>
                                                                 </button>
                                                             </div>
@@ -192,7 +192,7 @@
                                                         <td class="input-group typeahead-container" style="min-width:120px;padding:0px;">
                                                             <div class="input-group typeahead-container DropAutoComplete">
                                                                 <div class="input-group-append " style="border:none;">
-                                                                    <button id="SearchProduct" type="button" class="btn btn-primary SearchProduct text-center align-middle" data-toggle="modal" data-target=".bd-example-modal-lg" style="width:30px;padding:0px;color:white;">
+                                                                    <button id="SearchProduct" type="button" class="btn btn-primary SearchProduct text-center align-middle" data-toggle="modal" data-target="#InvoiceProductSearchModal" style="width:30px;padding:0px;color:white;">
                                                                         <i class="simple-icon-magnifier"></i>
                                                                     </button>
                                                                 </div>
@@ -236,7 +236,7 @@
                                                 <td class="input-group typeahead-container" style="min-width:120px;padding:0px;">
                                                     <div class="input-group typeahead-container DropAutoComplete">
                                                         <div class="input-group-append " style="border:none;">
-                                                            <button id="SearchProduct" type="button" class="btn btn-primary SearchProduct text-center align-middle" data-toggle="modal" data-target=".bd-example-modal-lg" style="width:30px;padding:0px;color:white;">
+                                                            <button id="SearchProduct" type="button" class="btn btn-primary SearchProduct text-center align-middle" data-toggle="modal" data-target="#InvoiceProductSearchModal" style="width:30px;padding:0px;color:white;">
                                                                 <i class="simple-icon-magnifier"></i>
                                                             </button>
                                                         </div>
@@ -578,7 +578,7 @@
     </div>
 </div>
 
-<div class="modal fade bd-example-modal-lg ProductBody" tabindex="-1" role="dialog" aria-hidden="true">
+<div id="InvoiceProductSearchModal" class="modal fade bd-example-modal-lg ProductBody" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg" id="SearchProductBody">
 
     </div>
@@ -626,8 +626,8 @@
             Save();
         });
 
-        $(document).off('click.invoiceProductSearch', '.SearchProduct[data-target=".bd-example-modal-lg"]')
-            .on('click.invoiceProductSearch', '.SearchProduct[data-target=".bd-example-modal-lg"]', function () {
+        $(document).off('click.invoiceProductSearch', '.SearchProduct[data-target="#InvoiceProductSearchModal"]')
+            .on('click.invoiceProductSearch', '.SearchProduct[data-target="#InvoiceProductSearchModal"]', function () {
             var index = $(this).parents("tr").find("#Index").html();
             $.ajax({
                 type: 'GET',
@@ -635,6 +635,10 @@
                 data: { txt: "", page: 1, index: index },
                 success: function (res) {
                     $("#SearchProductBody").html(res);
+                    $("#InvoiceProductSearchModal").modal("show");
+                },
+                error: function () {
+                    toastr.error("Unable to load products");
                 }
             });
         });
