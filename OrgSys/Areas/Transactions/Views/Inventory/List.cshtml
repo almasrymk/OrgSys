@@ -39,6 +39,7 @@
                     <th class="text-center">@Domain.Resource.Title_Designer.Code</th>
                     <th class="text-center">@Domain.Resource.Title_Designer.Stock</th>
                     <th class="text-center">@Domain.Resource.Title_Designer.Date</th>
+                    <th class="text-center">Resource</th>
                     <th colspan="3"></th>
                 </tr>
             </thead>
@@ -62,6 +63,27 @@
                         </td>
                         <td class="w-4 text-center align-middle">
                             @Model.Response[i].Date.ToString("dd-MM-yyyy")
+                        </td>
+                        <td class="text-center align-middle">
+                            @if (Model.Response[i].HasAdjustment)
+                            {
+                                if (Model.Response[i].AdjustmentInTransactionId > 0)
+                                {
+                                    <a class="badge badge-success" href="/Transactions/Transaction/Save?id=@Model.Response[i].AdjustmentInTransactionId&ParentId=0&TypeId=5" title="Adjustment In">
+                                        <i class="iconsminds-down-1"></i> @Domain.Resource.Title_Designer.Addition @Domain.Resource.Title_Designer.Stock (@Model.Response[i].AdjustmentInTransactionCode)
+                                    </a>
+                                }
+                                if (Model.Response[i].AdjustmentOutTransactionId > 0)
+                                {
+                                    <a class="badge badge-danger" href="/Transactions/Transaction/Save?id=@Model.Response[i].AdjustmentOutTransactionId&ParentId=0&TypeId=6" title="Adjustment Out">
+                                        <i class="iconsminds-up-1"></i> @Domain.Resource.Title_Designer.Issue @Domain.Resource.Title_Designer.Stock (@Model.Response[i].AdjustmentOutTransactionCode)
+                                    </a>
+                                }
+                            }
+                            else
+                            {
+                                <span class="text-muted">-</span>
+                            }
                         </td>
                         @if (AllowEdit || AllowCancel || AllowRedo || AllowDelete)
                         {
@@ -144,6 +166,9 @@
                         <div class="list-item-heading mb-0 truncate w-15 w-xs-100 d-inline-block" href="Pages.Product.Detail.html">
                             <small>@Domain.Resource.Title_Designer.Date</small>
                         </div>
+                        <div class="list-item-heading mb-0 truncate w-15 w-xs-100 d-inline-block">
+                            <small>Resource</small>
+                        </div>
                         <div class="w-20 @TextAlign2">
 
                         </div>
@@ -169,6 +194,23 @@
                             </div>
                             <div class="list-item-heading mb-0 truncate w-15 w-xs-100 d-inline-block" href="Pages.Product.Detail.html">
                                 @Model.Response[i].Date.ToString("dd-MM-yyyy")
+                            </div>
+                            <div class="list-item-heading mb-0 truncate w-25 w-xs-100 d-inline-block">
+                                @if (Model.Response[i].HasAdjustment)
+                                {
+                                    if (Model.Response[i].AdjustmentInTransactionId > 0)
+                                    {
+                                        <a class="badge badge-success" href="/Transactions/Transaction/Save?id=@Model.Response[i].AdjustmentInTransactionId&ParentId=0&TypeId=5"><i class="iconsminds-down-1"></i> @Domain.Resource.Title_Designer.Addition @Domain.Resource.Title_Designer.Stock (@Model.Response[i].AdjustmentInTransactionCode)</a>
+                                    }
+                                    if (Model.Response[i].AdjustmentOutTransactionId > 0)
+                                    {
+                                        <a class="badge badge-danger" href="/Transactions/Transaction/Save?id=@Model.Response[i].AdjustmentOutTransactionId&ParentId=0&TypeId=6"><i class="iconsminds-up-1"></i> @Domain.Resource.Title_Designer.Issue @Domain.Resource.Title_Designer.Stock (@Model.Response[i].AdjustmentOutTransactionCode)</a>
+                                    }
+                                }
+                                else
+                                {
+                                    <span class="text-muted">-</span>
+                                }
                             </div>
                             <div class="w-20 @TextAlign2">
                                 @if (Model.Response[i].Status == Domain.Enums.Status.Cancel)

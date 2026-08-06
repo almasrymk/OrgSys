@@ -24,6 +24,10 @@ namespace Application.DTOs
 
         public bool Cash { get; set; }      
 
+        public long? JournalId { get; set; }
+
+        public string? JournalCode { get; set; }
+
         public List<InvoiceProductDto>? InvoiceProductList { get; set; }
     }
 }

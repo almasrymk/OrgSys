@@ -27,6 +27,10 @@
 
         public override async Task<bool> RemoveDetails(DeleteTransactionCommand request)
         {
+            var sourceTransaction = await _Repository.GetByFilterAsync(e => e.Id == request.Id, string.Empty);
+            if (sourceTransaction?.InventoryId is > 0)
+                throw new InvalidOperationException("A transaction created from an inventory cannot be deleted");
+
             var sourceInvoice = await _provider.GetRequiredService<IRepository<Domain.Entities.Invoice>>()
                 .GetByFilterAsync(e => e.TransactionId == request.Id, string.Empty);
             if (sourceInvoice != null)
@@ -38,8 +42,7 @@
                 return false;
 
             await new TransactionJournalIntegration(_provider).DeleteByTransactionIdAsync(request.Id);
-            transactionProducts.TransactionProducts?.Clear();
-            return true;
+            return await _TransactionProductRepository.ShiftDeleteAsync(e => e.TransactionId == request.Id);
         }
     }
 }

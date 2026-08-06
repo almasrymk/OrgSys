@@ -225,6 +225,7 @@ namespace OrgSys.Areas.Setting.Controllers
 
             ViewBag.TypeSerial = new SelectList(selectListItems, "Value", "Text", Service.FirstOrDefault(e => e.Key == "TypeSerial")?.Value);
             ViewBag.AutoSave = Service.FirstOrDefault(e => e.Key == "AutoSave")?.Value == "1";
+            ViewBag.AutoCreateAdjustment = Service.FirstOrDefault(e => e.Key == "AutoCreateAdjustment")?.Value == "1";
         }
 
         private async Task ConfigureJournalPreferences(List<PreferenceDto> Service)

@@ -70,7 +70,11 @@
 
                     transaction.TypeId = invoice.TypeId == 2 || invoice.TypeId == 3 ? 1 : 2;
 
-                    transaction.CodeNumber =await _Repository.GetMaxByFilterAsync(e => e.TypeId == transaction.TypeId,e => e.CodeNumber) + 1;
+                    transaction.CodeNumber = await _Repository.GetMaxByFilterAsync(
+                        e => e.TypeId == transaction.TypeId
+                            || (transaction.TypeId == 1 && e.TypeId == 5)
+                            || (transaction.TypeId == 2 && e.TypeId == 6),
+                        e => e.CodeNumber) + 1;
 
                     transaction.Code = transaction.CodeNumber.ToString();
                 }

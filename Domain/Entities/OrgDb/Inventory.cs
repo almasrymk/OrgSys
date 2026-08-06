@@ -17,6 +17,10 @@
          
         public virtual bool Closed { get; set; }
 
+        public virtual bool HasAdjustment { get; set; }
+
         public virtual ICollection<InventoryProduct>? InventoryProducts { get; set; }
+
+        public virtual ICollection<Transaction>? Transactions { get; set; }
     }
 }

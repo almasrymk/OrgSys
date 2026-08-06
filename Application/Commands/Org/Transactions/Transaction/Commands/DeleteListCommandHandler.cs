@@ -34,10 +34,14 @@
 
 
 
-            foreach (var transactionProduct in transactions)
+            if (transactions.Any(e => e.InventoryId is > 0))
+                throw new InvalidOperationException("Transactions created from inventories cannot be deleted");
+
+            var transactionProductRepository = _provider.GetRequiredService<IRepository<Domain.Entities.TransactionProduct>>();
+            foreach (var transaction in transactions)
             {
-                await new TransactionJournalIntegration(_provider).DeleteByTransactionIdAsync(transactionProduct.Id);
-                transactionProduct.TransactionProducts.Clear();
+                await new TransactionJournalIntegration(_provider).DeleteByTransactionIdAsync(transaction.Id);
+                await transactionProductRepository.ShiftDeleteAsync(e => e.TransactionId == transaction.Id);
             }
             
             return true;

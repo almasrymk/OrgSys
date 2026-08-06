@@ -22,5 +22,13 @@ namespace API.Controllers.Org.Transaction
         public Task<Result> Redo(long Id, CancellationToken cancellationToken) =>
             sender.Send(new RedoTransactionCommand(Id), cancellationToken);
 
+        [HttpPost("CreateReceived")]
+        public Task<Result> CreateReceived(long TransferId, CancellationToken cancellationToken) =>
+            sender.Send(new CreateReceivedByTransferCommand(TransferId), cancellationToken);
+
+        [HttpPost("CreateJournal")]
+        public Task<Result> CreateJournal(long TransactionId, CancellationToken cancellationToken) =>
+            sender.Send(new CreateJournalByTransactionCommand(TransactionId), cancellationToken);
+
     }
 }

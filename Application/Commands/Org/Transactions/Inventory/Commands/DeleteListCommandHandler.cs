@@ -8,6 +8,7 @@
     using Domain.Shared;
     using Application.DTOs;
     using System.Linq.Expressions;
+    using Application.Commands.Org.Transactions.Inventory.Integration;
 
     public sealed record DeleteListInventoryCommand(List<long> Ids) : ICommand, IDeleteListCommand<Result>;   
 
@@ -28,8 +29,12 @@
             if (inventories == null)
                 return false;
 
-            foreach (var inventoryProduct in inventories)
-                inventoryProduct.InventoryProducts?.Clear();
+            var integration = new InventoryAdjustmentIntegration(_provider);
+            foreach (var inventory in inventories)
+            {
+                await integration.DeleteAsync(inventory.Id);
+                inventory.InventoryProducts?.Clear();
+            }
             
             return true;
         }

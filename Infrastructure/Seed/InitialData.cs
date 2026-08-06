@@ -557,6 +557,7 @@ namespace Infrastructure.Seed
                new Preference { Id = 1300, Key = "DefaultStock", Value = "1", Reference = "Inventory", TypeId = 0, Hide = false },
                new Preference { Id = 1301, Key = "AutoSave", Value = "0", Reference = "Inventory", TypeId = 0, Hide = false },
                new Preference { Id = 1302, Key = "TypeSerial", Value = "1", Reference = "Inventory", TypeId = 0, Hide = false },
+               new Preference { Id = 1303, Key = "AutoCreateAdjustment", Value = "0", Reference = "Inventory", TypeId = 0, Hide = false },
                
                new Preference { Id = 1400, Key = "NumberLine", Value = "2", Reference = "Journal", TypeId = 0, Hide = false },
                new Preference { Id = 1401, Key = "OrderTabe", Value = "1", Reference = "Journal", TypeId = 0, Hide = false },

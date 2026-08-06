@@ -50,10 +50,14 @@ namespace API.Controllers.Org.Invoices
         }
 
         [HttpPost("CreateTransactionInvoice")]
-        public async Task<Result> CreateTransactionInvoice(int InvoiceId, CancellationToken cancellationToken)
+        public async Task<Result> CreateTransactionInvoice(long InvoiceId, CancellationToken cancellationToken)
         {
             return await sender.Send(new CreateTransactionByInvoiceCommand(InvoiceId), cancellationToken);
         }
+
+        [HttpPost("CreateJournal")]
+        public Task<Result> CreateJournal(long InvoiceId, CancellationToken cancellationToken) =>
+            sender.Send(new CreateJournalByInvoiceCommand(InvoiceId), cancellationToken);
 
 
         [HttpGet("GetInvoicesNotReturn")]

@@ -11,6 +11,7 @@
     using Application.DTOs;
     using Application.Commands.Org.Financials.Integration.JournalTransaction;
     using Microsoft.Extensions.DependencyInjection;
+    using Application.Commands.Org.Transactions.Transaction.Integration;
 
     public sealed class UpdateTransactionCommand : Application.DTOs.TransactionDto , ICommand, IUpdateCommand<Result>;
     public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork,
@@ -20,12 +21,26 @@
     {
         public override async Task<Result> Handle(UpdateTransactionCommand request, CancellationToken cancellationToken)
         {
+            var transaction = await _Repository.GetByFilterAsync(e => e.Id == request.Id, string.Empty);
+            if (transaction?.InventoryId is > 0)
+                return new Result(System.Net.HttpStatusCode.Forbidden, [new Error("A transaction created from an inventory is read-only")]);
+
             var sourceInvoice = await _provider.GetRequiredService<IRepository<Domain.Entities.Invoice>>()
                 .GetByFilterAsync(e => e.TransactionId == request.Id, string.Empty);
             if (sourceInvoice != null)
                 return new Result(System.Net.HttpStatusCode.Forbidden, [new Error("A transaction created from an invoice is read-only")]);
 
-            return await base.Handle(request, cancellationToken);
+            var result = await base.Handle(request, cancellationToken);
+            if (result.StatusCode != System.Net.HttpStatusCode.OK || request.TypeId != 3)
+                return result;
+
+            var transfer = await _Repository.GetByFilterAsync(e => e.Id == request.Id, "TransactionProducts");
+            if (transfer == null)
+                return new Result(System.Net.HttpStatusCode.NotFound, [new Error("Transfer not found")]);
+
+            await new TransferReceivedIntegration(_provider).SyncAsync(transfer, cancellationToken);
+            await _UnitOfWork.SaveChangeAsync(cancellationToken);
+            return result;
         }
 
         override public async Task<bool> SaveDetials(UpdateTransactionCommand request)

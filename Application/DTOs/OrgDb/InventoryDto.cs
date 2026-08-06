@@ -16,6 +16,14 @@ namespace Application.DTOs
 
         public string? ShiftName { get; set; }
 
+        public long? AdjustmentInTransactionId { get; set; }
+
+        public string? AdjustmentInTransactionCode { get; set; }
+
+        public long? AdjustmentOutTransactionId { get; set; }
+
+        public string? AdjustmentOutTransactionCode { get; set; }
+
         public List<InventoryProductDto>? InventoryProductList { get; set; }
     }
 }

@@ -67,6 +67,18 @@ namespace OrgSys.Areas.Transaction.Controllers
             return Redirect($"/Transactions/Transaction/Index?ParentId={ParentId}&TypeId={TypeId}&page={page}&status={ResultStatus.success}&MsgError=Success");
         }
 
+        public async Task<ActionResult> CreateReceived(long id, long ParentId = 0, long TypeId = 3, int page = 1)
+        {
+            var response = await ApiMethod(ApiMethodType.Post, $"CreateReceived?TransferId={id}");
+            return Redirect($"/Transactions/Transaction/Index?ParentId={ParentId}&TypeId={TypeId}&page={page}&status={(response.IsSuccessStatusCode ? ResultStatus.success : ResultStatus.error)}&MsgError={(response.IsSuccessStatusCode ? "Success" : "Error")}");
+        }
+
+        public async Task<ActionResult> CreateJournal(long id, long ParentId = 0, long TypeId = 0, int page = 1)
+        {
+            var response = await ApiMethod(ApiMethodType.Post, $"CreateJournal?TransactionId={id}");
+            return Redirect($"/Transactions/Transaction/Index?ParentId={ParentId}&TypeId={TypeId}&page={page}&status={(response.IsSuccessStatusCode ? ResultStatus.success : ResultStatus.error)}&MsgError={(response.IsSuccessStatusCode ? "Success" : "Unable to create journal. Check account integration settings.")}");
+        }
+
         public override async Task<TransactionDto> InitializeData(TransactionDto ob)
         {
             
@@ -101,8 +113,12 @@ namespace OrgSys.Areas.Transaction.Controllers
                 ob.TransactionProductList = new List<TransactionProductDto>();
             }
 
-            ob.StockName = (await GetObApi<StockDto>($"GetById?Id={ob.StockId}"))?.Name;
-            ob.ToStockName = (await GetObApi<StockDto>($"GetById?Id={ob.StockId}"))?.Name;
+            ob.StockName = ob.StockId is > 0
+                ? (await GetObApi<StockDto>($"GetById?Id={ob.StockId}"))?.Name
+                : null;
+            ob.ToStockName = ob.ToStockId is > 0
+                ? (await GetObApi<StockDto>($"GetById?Id={ob.ToStockId}"))?.Name
+                : null;
             ob.DealerName = (await GetObApi<DealerDto>($"GetById?Id={ob.DealerId?? 0 }"))?.Name;
             return ob;
         }

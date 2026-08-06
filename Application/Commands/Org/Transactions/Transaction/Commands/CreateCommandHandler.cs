@@ -9,6 +9,7 @@
     using Application.DTOs;
     using Application.Commands.Org.Financials.Integration.JournalTransaction;
     using System.Net;
+    using Application.Commands.Org.Transactions.Transaction.Integration;
 
     public sealed class CreateTransactionCommand : Application.DTOs.TransactionDto, ICommand , ICreateCommand<Result>;
 
@@ -24,6 +25,7 @@
                 await _UnitOfWork.SaveChangeAsync(cancellationToken);
 
                 await new TransactionJournalIntegration(provider).SyncAsync(transaction);
+                await new TransferReceivedIntegration(provider).SyncAsync(transaction, cancellationToken);
                 await _UnitOfWork.SaveChangeAsync(cancellationToken);
                 await _UnitOfWork.CommitAsync();
                 return new Result(HttpStatusCode.OK, null);

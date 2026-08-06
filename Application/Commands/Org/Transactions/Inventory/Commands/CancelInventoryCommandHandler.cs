@@ -5,6 +5,7 @@ using AutoMapper;
 using Domain.Abstraction;
 using Domain.Shared;
 using System.Net;
+using Application.Commands.Org.Transactions.Inventory.Integration;
 
 namespace Application.Commands.Org.Transactions.Inventory.Commands
 {
@@ -36,6 +37,8 @@ namespace Application.Commands.Org.Transactions.Inventory.Commands
                 }
 
                 inventory.Status = Domain.Enums.Status.Cancel;
+                await new InventoryAdjustmentIntegration(provider)
+                    .SetStatusAsync(inventory.Id, Domain.Enums.Status.Cancel);
                 var saved = await unitOfWork.SaveChangeAsync(cancellationToken);
                 if (saved > 0)
                 {

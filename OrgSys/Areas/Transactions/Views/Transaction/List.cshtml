@@ -10,6 +10,7 @@
     var TextAlign2 = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "text-left" : "text-right";
     var DateFromate = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "yyyy-MM-dd" : "dd-MM-yyyy";
     var TimeFromate = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "mm:hh t" : "hh:mm t";
+    var ResourceDisplay = ViewBag.TypeId == 3 || ViewBag.TypeId == 4 ? "display:none;" : "";
     var AllowView = false;
     var AllowAdd = false;
     var AllowEdit = false;
@@ -91,7 +92,8 @@
                         }
                         <th class="text-center">@Domain.Resource.Title_Designer.Date</th>
                         <th class="text-center">@Domain.Resource.Title_Designer.Amount</th>
-                        <th class="w-20 text-center">@Domain.Resource.Title_Designer.Invoice</th>
+                        <th class="w-20 @TextAlign" style="@ResourceDisplay">Resource</th>
+                        <th class="text-center"><i class="simple-icon-basket-loaded"></i> Journal</th>
                         @if (ViewBag.TypeId == 3)
                         {
                             <th class="text-center"> @Domain.Resource.Title_Designer.Received </th>
@@ -151,12 +153,32 @@
                             <td class="w-10 text-center align-middle">
                                 @Model.Response[i].Total
                             </td>
-                            <td class="w-20 text-center align-middle">
+                            <td class="w-20 @TextAlign align-middle" style="@ResourceDisplay">
                                 @if (Model.Response[i].SourceInvoiceId > 0)
                                 {
                                     <a href="/Invoices/Invoice/Save?id=@Model.Response[i].SourceInvoiceId&ParentId=0&TypeId=@Model.Response[i].SourceInvoiceTypeId">
                                         <i class="@(InvoicesTypes.FirstOrDefault(e => e.Id == Model.Response[i].SourceInvoiceTypeId)?.Icon)"></i>
                                         @InvoiceResourceName(Model.Response[i].SourceInvoiceTypeId) <span>(@Model.Response[i].SourceInvoiceCode)</span>
+                                    </a>
+                                }
+                                else if (Model.Response[i].InventoryId > 0)
+                                {
+                                    <a href="/Transactions/Inventory/Save?id=@Model.Response[i].InventoryId&ParentId=0&TypeId=0">
+                                        <i class="iconsminds-check"></i> Inventory <span>(@Model.Response[i].InventoryId)</span>
+                                    </a>
+                                }
+                            </td>
+                            <td class="text-center align-middle">
+                                @if (Model.Response[i].JournalId is > 0)
+                                {
+                                    <a href="/Financials/Journal/Save?id=@Model.Response[i].JournalId&ParentId=0&TypeId=2" title="Journal">
+                                        <i class="simple-icon-basket-loaded"></i> Journal (@Model.Response[i].JournalCode)
+                                    </a>
+                                }
+                                else if (Model.Response[i].TypeId is >= 1 and <= 4 && Model.Response[i].Status != Domain.Enums.Status.Cancel && User.IsAllowed("Journal.Add"))
+                                {
+                                    <a href="/Transactions/Transaction/CreateJournal?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.Page" title="Create Journal">
+                                        <i class="simple-icon-basket-loaded"></i> Create Journal
                                     </a>
                                 }
                             </td>
@@ -167,7 +189,13 @@
                                     {
                                         <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model.Response[i].ParentId&ParentId=@ViewBag.ParentId&TypeId=4">
                                             <i class="iconsminds-file-edit"></i>
-                                            @Model.Response[i].ParentCode
+                                            @Domain.Resource.Title_Designer.Received @Domain.Resource.Title_Designer.Stock (@Model.Response[i].ParentCode)
+                                        </a>
+                                    }
+                                    else if (Model.Response[i].Status != Domain.Enums.Status.Cancel && User.IsAllowed("Received.Add"))
+                                    {
+                                        <a href="/@ViewBag.area/@ViewBag.PageTitle/CreateReceived?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=3&page=@Model.Page" title="Create Received">
+                                            <i class="iconsminds-synchronize-2"></i> Create @Domain.Resource.Title_Designer.Received @Domain.Resource.Title_Designer.Stock
                                         </a>
                                     }
                                 </td>
@@ -179,7 +207,7 @@
                                     {
                                         <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model.Response[i].ParentId&ParentId=@ViewBag.ParentId&TypeId=3">
                                             <i class="iconsminds-shuffle-1"></i>
-                                            @Model.Response[i].ParentCode
+                                            @Domain.Resource.Title_Designer.Transfer @Domain.Resource.Title_Designer.Stock (@Model.Response[i].ParentCode)
                                         </a>
                                     }
 
@@ -188,7 +216,7 @@
                             @if (AllowView || AllowEdit || AllowCancel || AllowRedo || AllowDelete)
                             {
                                 <td class="w-20 @TextAlign2 align-middle">
-                                    @if (Model.Response[i].SourceInvoiceId > 0)
+                                    @if (Model.Response[i].SourceInvoiceId > 0 || Model.Response[i].InventoryId > 0)
                                     {
                                         <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"><i class="simple-icon-eye" style="color:green"></i></a>
                                         <span>&nbsp; | &nbsp;</span>
@@ -229,7 +257,7 @@
                                         }
                                         if (AllowDelete)
                                         {
-                                            <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Domain.Resource.Message_Designer.DeleteConfirmation' , '@Domain.Resource.Message_Designer.DoYouWantDeleteFile' , '@Domain.Resource.Title_Designer.Ok' , Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
+                                            <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Domain.Resource.Message_Designer.DeleteConfirmation' , '@Domain.Resource.Message_Designer.DoYouWantDeleteFile' , '@Domain.Resource.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
                                         }
                                         <span>&nbsp; | &nbsp;</span>
                                         <a href="/@ViewBag.area/@ViewBag.PageTitle/Print?id=@Model.Response[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.PageCount" target="_blank"> <i class="fa fa-print text-info"></i> </a>
@@ -239,7 +267,7 @@
                             @if (AllowDelete)
                             {
                                 <td class="align-middle @TextAlign2" style="width:30px">
-                                    @if (Model.Response[i].Status != Domain.Enums.Status.Cancel && Model.Response[i].SourceInvoiceId is not > 0)
+                                    @if (Model.Response[i].Status != Domain.Enums.Status.Cancel && Model.Response[i].SourceInvoiceId is not > 0 && Model.Response[i].InventoryId is not > 0)
                                     {
                                         <label class="custom-control custom-checkbox pt-2">
                                             <input id="chk_@Model.Response[i].Id" type="checkbox" class="custom-control-input chk">
@@ -288,8 +316,11 @@
                         <div class="w-10">
                             <small>@Domain.Resource.Title_Designer.Amount</small>
                         </div>
-                        <div class="w-20">
-                            <small>@Domain.Resource.Title_Designer.Invoice</small>
+                        <div class="w-20 @TextAlign" style="@ResourceDisplay">
+                            <small>Resource</small>
+                        </div>
+                        <div class="w-10">
+                            <small><i class="simple-icon-basket-loaded"></i> Journal</small>
                         </div>
                         @if (ViewBag.TypeId == 3)
                         {
@@ -347,12 +378,32 @@
                             <div class="w-10">
                                 @Model.Response[i].Total
                             </div>
-                            <div class="w-20">
+                            <div class="w-20 @TextAlign" style="@ResourceDisplay">
                                 @if (Model.Response[i].SourceInvoiceId > 0)
                                 {
                                     <a href="/Invoices/Invoice/Save?id=@Model.Response[i].SourceInvoiceId&ParentId=0&TypeId=@Model.Response[i].SourceInvoiceTypeId">
                                         <i class="@(InvoicesTypes.FirstOrDefault(e => e.Id == Model.Response[i].SourceInvoiceTypeId)?.Icon)"></i>
                                         @InvoiceResourceName(Model.Response[i].SourceInvoiceTypeId) <span>(@Model.Response[i].SourceInvoiceCode)</span>
+                                    </a>
+                                }
+                                else if (Model.Response[i].InventoryId > 0)
+                                {
+                                    <a href="/Transactions/Inventory/Save?id=@Model.Response[i].InventoryId&ParentId=0&TypeId=0">
+                                        <i class="iconsminds-check"></i> Inventory <span>(@Model.Response[i].InventoryId)</span>
+                                    </a>
+                                }
+                            </div>
+                            <div class="w-10">
+                                @if (Model.Response[i].JournalId is > 0)
+                                {
+                                    <a href="/Financials/Journal/Save?id=@Model.Response[i].JournalId&ParentId=0&TypeId=2" title="Journal">
+                                        <i class="simple-icon-basket-loaded"></i> Journal (@Model.Response[i].JournalCode)
+                                    </a>
+                                }
+                                else if (Model.Response[i].TypeId is >= 1 and <= 4 && Model.Response[i].Status != Domain.Enums.Status.Cancel && User.IsAllowed("Journal.Add"))
+                                {
+                                    <a href="/Transactions/Transaction/CreateJournal?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.Page" title="Create Journal">
+                                        <i class="simple-icon-basket-loaded"></i> Create Journal
                                     </a>
                                 }
                             </div>
@@ -363,7 +414,13 @@
                                     {
                                         <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model.Response[i].ParentId&ParentId=@ViewBag.ParentId&TypeId=4">
                                             <i class="iconsminds-file-edit"></i>
-                                            @Model.Response[i].ParentCode
+                                            @Domain.Resource.Title_Designer.Received @Domain.Resource.Title_Designer.Stock (@Model.Response[i].ParentCode)
+                                        </a>
+                                    }
+                                    else if (Model.Response[i].Status != Domain.Enums.Status.Cancel && User.IsAllowed("Received.Add"))
+                                    {
+                                        <a href="/@ViewBag.area/@ViewBag.PageTitle/CreateReceived?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=3&page=@Model.Page" title="Create Received">
+                                            <i class="iconsminds-synchronize-2"></i> Create @Domain.Resource.Title_Designer.Received @Domain.Resource.Title_Designer.Stock
                                         </a>
                                     }
                                 </div>
@@ -375,14 +432,14 @@
                                     {
                                         <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model.Response[i].ParentId&ParentId=@ViewBag.ParentId&TypeId=3">
                                             <i class="iconsminds-shuffle-1"></i>
-                                            @Model.Response[i].ParentCode
+                                            @Domain.Resource.Title_Designer.Transfer @Domain.Resource.Title_Designer.Stock (@Model.Response[i].ParentCode)
                                         </a>
                                     }
 
                                 </div>
                             }
                             <div class="w-20 @TextAlign2">
-                                @if (Model.Response[i].SourceInvoiceId > 0)
+                                @if (Model.Response[i].SourceInvoiceId > 0 || Model.Response[i].InventoryId > 0)
                                 {
                                     <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"><i class="simple-icon-eye" style="color:green"></i></a>
                                     <span>&nbsp; | &nbsp;</span>
@@ -434,7 +491,7 @@
                         <div style="width:30px;">
                             @if (AllowDelete)
                             {
-                                @if (Model.Response[i].Status != Domain.Enums.Status.Cancel && Model.Response[i].SourceInvoiceId is not > 0)
+                                @if (Model.Response[i].Status != Domain.Enums.Status.Cancel && Model.Response[i].SourceInvoiceId is not > 0 && Model.Response[i].InventoryId is not > 0)
                                 {
                                     <label class="custom-control custom-checkbox pt-3">
                                         <input id="chk_@Model.Response[i].Id" type="checkbox" class="custom-control-input chk">

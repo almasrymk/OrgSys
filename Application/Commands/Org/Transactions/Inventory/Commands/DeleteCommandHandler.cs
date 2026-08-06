@@ -9,6 +9,7 @@
     using Domain.Shared;
     using Domain.Entities;
     using Application.DTOs;
+    using Application.Commands.Org.Transactions.Inventory.Integration;
     using Microsoft.Extensions.DependencyInjection;
     using System.Linq.Expressions;
 
@@ -32,6 +33,7 @@
             if (inventoryProducts == null)
                 return false;
 
+            await new InventoryAdjustmentIntegration(_provider).DeleteAsync(request.Id);
             inventoryProducts.InventoryProducts?.Clear();
             return true;
         }

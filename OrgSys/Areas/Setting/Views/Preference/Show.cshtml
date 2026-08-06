@@ -350,6 +350,17 @@ function SavePreference() {
             list.push(AutoCreateTransaction);
         }
 
+        // AutoCreateAdjustment
+        if ($("#AutoCreateAdjustment").length) {
+            list.push({
+                Id: 2,
+                Key: "AutoCreateAdjustment",
+                Value: $('#AutoCreateAdjustment').is(":checked") ? "1" : "0",
+                Reference: '@ViewBag.Resource',
+                TypeId: Number('@ViewBag.type'),
+            });
+        }
+
          // DefaultSafe
         if ($("#Safes").length) {
             var OrderTabe = {

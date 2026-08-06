@@ -9,6 +9,8 @@
     using Domain.Shared;
     using Domain.Entities;
     using Application.DTOs;
+    using Application.Commands.Org.Transactions.Inventory.Integration;
+    using System.Net;
 
     public sealed class UpdateInventoryCommand : Application.DTOs.InventoryDto, ICommand, IUpdateCommand<Result>;
     public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork,
@@ -16,6 +18,28 @@
         IRepository<InventoryProduct> _InventoryProductRepository,
         IMapper mapper, IServiceProvider _provider) : UpdateCommandHandler<UpdateInventoryCommand, Domain.Entities.Inventory>(_UnitOfWork, _Repository , mapper , _provider)
     {
+        public override async Task<Result> Handle(UpdateInventoryCommand request, CancellationToken cancellationToken)
+        {
+            var result = await base.Handle(request, cancellationToken);
+            if (result.StatusCode != HttpStatusCode.OK)
+                return result;
+
+            try
+            {
+                var inventory = await _Repository.GetByFilterAsync(e => e.Id == request.Id, "InventoryProducts");
+                if (inventory == null)
+                    return new Result(HttpStatusCode.NotFound, [new Error("Inventory not found")]);
+
+                await new InventoryAdjustmentIntegration(_provider).SyncAsync(inventory, cancellationToken);
+                await _UnitOfWork.SaveChangeAsync(cancellationToken);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return new Result(HttpStatusCode.InternalServerError, [new Error(ex.Message)]);
+            }
+        }
+
         override public async Task<bool> SaveDetials(UpdateInventoryCommand request)
         {
             #region UpdateProduct

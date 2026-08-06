@@ -37,6 +37,14 @@
                 {
                     <h1> @Domain.Resource.Title_Designer.Received </h1>
                 }
+                else if (Model.TypeId == 5)
+                {
+                    <h1>Adjustment In</h1>
+                }
+                else if (Model.TypeId == 6)
+                {
+                    <h1>Adjustment Out</h1>
+                }
                 <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
                     <ol class="breadcrumb pt-0">
                         <li class="breadcrumb-item">
@@ -402,16 +410,25 @@
                 </div>
                 <div class="row">
                     <div class="col-7">
-                        @if (Model.SourceInvoiceId is not > 0)
+                        @if (Model.SourceInvoiceId is not > 0 && Model.InventoryId is not > 0)
                         {
                             <button id="btn" type="button" class="btn btn-primary ml-4 mr-4 mb-4">@Domain.Resource.Title_Designer.Save</button>
                         }
                         else
                         {
-                            <a href="/Invoices/Invoice/Save?id=@Model.SourceInvoiceId&ParentId=0&TypeId=@Model.SourceInvoiceTypeId" class="btn btn-primary ml-4 mr-4 mb-4">
-                                <i class="@(InvoicesTypes.FirstOrDefault(e => e.Id == Model.SourceInvoiceTypeId)?.Icon)"></i>
-                                @SourceInvoiceName (@Model.SourceInvoiceCode)
-                            </a>
+                            if (Model.SourceInvoiceId > 0)
+                            {
+                                <a href="/Invoices/Invoice/Save?id=@Model.SourceInvoiceId&ParentId=0&TypeId=@Model.SourceInvoiceTypeId" class="btn btn-primary ml-4 mr-4 mb-4">
+                                    <i class="@(InvoicesTypes.FirstOrDefault(e => e.Id == Model.SourceInvoiceTypeId)?.Icon)"></i>
+                                    @SourceInvoiceName (@Model.SourceInvoiceCode)
+                                </a>
+                            }
+                            else
+                            {
+                                <a href="/Transactions/Inventory/Save?id=@Model.InventoryId&ParentId=0&TypeId=0" class="btn btn-primary ml-4 mr-4 mb-4">
+                                    <i class="iconsminds-check"></i> Inventory (@Model.InventoryId)
+                                </a>
+                            }
                         }
                     </div>
                     <div class="col-5">

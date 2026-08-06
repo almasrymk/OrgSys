@@ -30,6 +30,12 @@ public sealed class RedoTransactionCommandHandler(
                 return new Result(HttpStatusCode.NotFound, [new Error("Transaction not found")]);
             }
 
+            if (transaction.InventoryId is > 0)
+            {
+                await unitOfWork.RollbackAsync();
+                return new Result(HttpStatusCode.Forbidden, [new Error("A transaction created from an inventory is controlled by that inventory")]);
+            }
+
             if (transaction.Status == Domain.Enums.Status.New)
             {
                 await unitOfWork.RollbackAsync();

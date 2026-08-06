@@ -23,6 +23,11 @@
 
         public virtual Order? Order { get; set; }
 
+        [ForeignKey("Inventory")]
+        public virtual long? InventoryId { get; set; }
+
+        public virtual Inventory? Inventory { get; set; }
+
         [Column(TypeName = "decimal(18,2)")]
         public virtual decimal Total { get; set; }
 

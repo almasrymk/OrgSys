@@ -8,7 +8,7 @@ internal sealed class TransactionJournalIntegration(IServiceProvider provider)
 {
     private const string ReferenceTable = "transaction";
 
-    public async Task SyncAsync(Transaction transaction, long? sourceInvoiceTypeId = null)
+    public async Task SyncAsync(Transaction transaction, long? sourceInvoiceTypeId = null, bool force = false)
     {
         var journalRepository = provider.GetRequiredService<IRepository<Journal>>();
         var journalItemRepository = provider.GetRequiredService<IRepository<JournalItem>>();
@@ -24,7 +24,7 @@ internal sealed class TransactionJournalIntegration(IServiceProvider provider)
             e => e.Reference == "Transaction" && e.TypeId == transaction.TypeId))?.ToList() ?? [];
 
         var enabled = preferences.FirstOrDefault(e => e.Key == "AccountsIntegration")?.Value == "1"
-            && preferences.FirstOrDefault(e => e.Key == "AutoCreateJournalEntry")?.Value == "1";
+            && (force || preferences.FirstOrDefault(e => e.Key == "AutoCreateJournalEntry")?.Value == "1");
 
         if (!enabled)
         {

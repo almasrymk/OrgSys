@@ -11,8 +11,27 @@
 
     public sealed record SearchInvoiceQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandPagination<InvoiceDto> ,ISearchQuery<ResultPagination<InvoiceDto>>;
 
-    public sealed class SearchQueryHandler(IRepository<Domain.Entities.Invoice> _Repository, IMapper mapper) : SearchCommandHandler<SearchInvoiceQuery, Domain.Entities.Invoice, InvoiceDto>(_Repository, mapper)
+    public sealed class SearchQueryHandler(IRepository<Domain.Entities.Invoice> _Repository, IRepository<Domain.Entities.Journal> journalRepository, IMapper mapper) : SearchCommandHandler<SearchInvoiceQuery, Domain.Entities.Invoice, InvoiceDto>(_Repository, mapper)
     {
+        public override async Task<ResultPagination<InvoiceDto>> Handle(SearchInvoiceQuery request, CancellationToken cancellationToken)
+        {
+            var result = await base.Handle(request, cancellationToken);
+            var invoiceIds = result.Response.Select(e => e.Id).ToList();
+            if (invoiceIds.Count == 0)
+                return result;
+
+            var journals = await journalRepository.GetListByFilterAsync(
+                e => e.RefranceTable == "invoice" && invoiceIds.Contains(e.RefranceId));
+            foreach (var invoice in result.Response)
+            {
+                var journal = journals?.FirstOrDefault(e => e.RefranceId == invoice.Id && e.RefranceTypeId == invoice.TypeId);
+                invoice.JournalId = journal?.Id;
+                invoice.JournalCode = journal?.Code;
+            }
+
+            return result;
+        }
+
         public override Expression<Func<Domain.Entities.Invoice, bool>> CreateFilter(SearchInvoiceQuery request)
         {
             Page = request.Page;
@@ -27,7 +46,7 @@
 
         public override string CreateInclude()
         {
-            return "Dealer,Stock,PaymentType,Currency";
+            return "Dealer,Stock,PaymentType,Currency,Transaction";
         }
 
         override public Func<IQueryable<Domain.Entities.Invoice>, IOrderedQueryable<Domain.Entities.Invoice>> CreateOrderBy(SearchInvoiceQuery request)

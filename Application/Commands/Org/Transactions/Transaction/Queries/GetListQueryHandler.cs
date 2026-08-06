@@ -21,8 +21,16 @@
             return e =>
            (string.IsNullOrEmpty(request.KeySearch) || e.Code.Contains(request.KeySearch)) &&
            (request.ParentId == 0 || e.ParentId == request.ParentId) &&
-           (request.TypeId == 0 || e.TypeId == request.TypeId) &&
+           (request.TypeId == 0
+               || e.TypeId == request.TypeId
+               || (request.TypeId == 1 && e.TypeId == 5)
+               || (request.TypeId == 2 && e.TypeId == 6)) &&
            e.Status != Domain.Enums.Status.Deleted && e.Hide != true;
+        }
+
+        public override string CreateInclude()
+        {
+            return "Dealer,Stock,ToStock";
         }
 
         override public Func<IQueryable<Domain.Entities.Transaction>, IOrderedQueryable<Domain.Entities.Transaction>> CreateOrderBy(GetListTransactionQuery request)

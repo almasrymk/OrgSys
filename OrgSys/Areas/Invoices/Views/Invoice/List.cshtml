@@ -17,6 +17,11 @@
     var AllowCancel = false;
     var AllowRedo = false;
     var AllowFinancial = false;
+    Func<long, long> TransactionTypeId = invoiceTypeId => invoiceTypeId is 2 or 3 ? 1 : 2;
+    Func<long, string> TransactionIcon = transactionTypeId => transactionTypeId == 1 ? "iconsminds-down-1" : "iconsminds-up-1";
+    Func<long, string> TransactionName = transactionTypeId => transactionTypeId == 1
+        ? $"{Domain.Resource.Title_Designer.Addition} {Domain.Resource.Title_Designer.Transactions}"
+        : $"{Domain.Resource.Title_Designer.Issue} {Domain.Resource.Title_Designer.Transactions}";
     if (ViewBag.TypeId == 1)
     {
         AllowView = User.IsAllowed("SalesInvoices.View");
@@ -94,6 +99,7 @@
                             }
                         </th>
                         <th class="text-center">@Domain.Resource.Title_Designer.Transactions</th>
+                        <th class="text-center"><i class="simple-icon-basket-loaded"></i> Journal</th>
                         @if (AllowEdit || AllowCancel || AllowDelete)
                         {
                             <th>
@@ -162,25 +168,49 @@
                             <td class="text-center align-middle" style="width:10px;">
                                 @if (Model.Response[i].Transaction == null || "" + Model.Response[i].Transaction.Code == "")
                                 {
-                                    if (Model.Response[i].Status != Domain.Enums.Status.Cancel && User.IsAllowed("Addition.Add") && Model.Response[i].TransactionId == null)
+                                    var transactionTypeId = TransactionTypeId(Model.Response[i].TypeId);
+                                    var allowCreateTransaction = transactionTypeId == 1
+                                        ? User.IsAllowed("Addition.Add")
+                                        : User.IsAllowed("Issue.Add");
+                                    if (Model.Response[i].Status != Domain.Enums.Status.Cancel && allowCreateTransaction && Model.Response[i].TransactionId == null)
                                     {
-                                        <a href="/@ViewBag.area/@ViewBag.PageTitle/CreateTransaction?id=@Model.Response[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.Page"> <i class="iconsminds-synchronize-2"></i>  </a>
+                                        <a href="/@ViewBag.area/@ViewBag.PageTitle/CreateTransaction?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.Page">
+                                            <i class="@TransactionIcon(transactionTypeId)"></i> Create Transaction
+                                        </a>
                                     }else {
                                          <small><i class="fa fa-check"></i> </small>
                                     }
                                 }
                                 else
                                 {
-                                    if (User.IsAllowed("Addition.View") || User.IsAllowed("Addition.Edit"))
+                                    var transactionTypeId = Model.Response[i].Transaction?.TypeId ?? TransactionTypeId(Model.Response[i].TypeId);
+                                    var allowOpenTransaction = transactionTypeId == 1
+                                        ? User.IsAllowed("Addition.View") || User.IsAllowed("Addition.Edit")
+                                        : User.IsAllowed("Issue.View") || User.IsAllowed("Issue.Edit");
+                                    if (allowOpenTransaction)
                                     {
-                                        <a href="/Transactions/Transaction/Save?id=@Model.Response[i].TransactionId&ParentId=0&amp;TypeId=1">
-                                            @Model.Response[i].Transaction?.Code
+                                        <a href="/Transactions/Transaction/Save?id=@Model.Response[i].TransactionId&ParentId=0&TypeId=@transactionTypeId">
+                                            <i class="@TransactionIcon(transactionTypeId)"></i> @TransactionName(transactionTypeId) (@Model.Response[i].Transaction?.Code)
                                         </a>
                                     }
                                     else
                                     {
                                         <i class="fa fa-check"></i>
                                     }
+                                }
+                            </td>
+                            <td class="text-center align-middle">
+                                @if (Model.Response[i].JournalId is > 0)
+                                {
+                                    <a href="/Financials/Journal/Save?id=@Model.Response[i].JournalId&ParentId=0&TypeId=2" title="Journal">
+                                        <i class="simple-icon-basket-loaded"></i> Journal (@Model.Response[i].JournalCode)
+                                    </a>
+                                }
+                                else if (Model.Response[i].Status != Domain.Enums.Status.Cancel && User.IsAllowed("Journal.Add"))
+                                {
+                                    <a href="/Invoices/Invoice/CreateJournal?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.Page" title="Create Journal">
+                                        <i class="simple-icon-basket-loaded"></i> Create Journal
+                                    </a>
                                 }
                             </td>
                             @if (AllowEdit || AllowCancel || AllowDelete)
@@ -281,6 +311,9 @@
                         <div class="w-10">
                             <small>@Domain.Resource.Title_Designer.Transactions</small>
                         </div>
+                        <div class="w-10">
+                            <small><i class="simple-icon-basket-loaded"></i> Journal</small>
+                        </div>
                         <div class="w-20 @TextAlign2">
                            
                         </div>
@@ -339,26 +372,49 @@
                             <div class="w-10">
                                 @if ("" + Model.Response[i].Transaction?.Code == "")
                                 {
-                                    if (Model.Response[i].Status != Domain.Enums.Status.Cancel && AllowAdd && Model.Response[i].TransactionId == null )
+                                    var transactionTypeId = TransactionTypeId(Model.Response[i].TypeId);
+                                    var allowCreateTransaction = transactionTypeId == 1
+                                        ? User.IsAllowed("Addition.Add")
+                                        : User.IsAllowed("Issue.Add");
+                                    if (Model.Response[i].Status != Domain.Enums.Status.Cancel && allowCreateTransaction && Model.Response[i].TransactionId == null)
                                     {
-
-                                        <a href="/@ViewBag.area/@ViewBag.PageTitle/CreateTransaction?id=@Model.Response[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.Page"> <i class="iconsminds-synchronize-2"></i>  </a>
+                                        <a href="/@ViewBag.area/@ViewBag.PageTitle/CreateTransaction?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.Page">
+                                            <i class="@TransactionIcon(transactionTypeId)"></i> Create Transaction
+                                        </a>
                                     } else {
                                          <small><i class="fa fa-check"></i> </small>
                                     }
                                 }
                                 else
                                 {
-                                    if (AllowView || AllowEdit)
+                                    var transactionTypeId = Model.Response[i].Transaction?.TypeId ?? TransactionTypeId(Model.Response[i].TypeId);
+                                    var allowOpenTransaction = transactionTypeId == 1
+                                        ? User.IsAllowed("Addition.View") || User.IsAllowed("Addition.Edit")
+                                        : User.IsAllowed("Issue.View") || User.IsAllowed("Issue.Edit");
+                                    if (allowOpenTransaction)
                                     {
-                                        <a href="/Transactions/Transaction/Save?id=@Model.Response[i].TransactionId&ParentId=0&amp;TypeId=1">
-                                            @Model.Response[i].Transaction?.Code
+                                        <a href="/Transactions/Transaction/Save?id=@Model.Response[i].TransactionId&ParentId=0&TypeId=@transactionTypeId">
+                                            <i class="@TransactionIcon(transactionTypeId)"></i> @TransactionName(transactionTypeId) (@Model.Response[i].Transaction?.Code)
                                         </a>
                                     }
                                     else
                                     {
                                         <i class="fa fa-check"></i>
                                     }
+                                }
+                            </div>
+                            <div class="w-10">
+                                @if (Model.Response[i].JournalId is > 0)
+                                {
+                                    <a href="/Financials/Journal/Save?id=@Model.Response[i].JournalId&ParentId=0&TypeId=2" title="Journal">
+                                        <i class="simple-icon-basket-loaded"></i> Journal (@Model.Response[i].JournalCode)
+                                    </a>
+                                }
+                                else if (Model.Response[i].Status != Domain.Enums.Status.Cancel && User.IsAllowed("Journal.Add"))
+                                {
+                                    <a href="/Invoices/Invoice/CreateJournal?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.Page" title="Create Journal">
+                                        <i class="simple-icon-basket-loaded"></i> Create Journal
+                                    </a>
                                 }
                             </div>
                             <div class="w-20 @TextAlign2">

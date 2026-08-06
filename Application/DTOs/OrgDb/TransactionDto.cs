@@ -26,6 +26,10 @@ namespace Application.DTOs
 
         public long? SourceInvoiceTypeId { get; set; }
 
+        public long? JournalId { get; set; }
+
+        public string? JournalCode { get; set; }
+
         public List<TransactionProductDto>? TransactionProductList { get; set; }
     }
 }
