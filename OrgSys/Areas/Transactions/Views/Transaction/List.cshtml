@@ -175,7 +175,7 @@
                                         <i class="simple-icon-basket-loaded"></i> Journal (@Model.Response[i].JournalCode)
                                     </a>
                                 }
-                                else if (Model.Response[i].TypeId is >= 1 and <= 4 && Model.Response[i].Status != Domain.Enums.Status.Cancel && User.IsAllowed("Journal.Add"))
+                                else if (Model.Response[i].TypeId is >= 1 and <= 6 && Model.Response[i].Status != Domain.Enums.Status.Cancel && User.IsAllowed("Journal.Add"))
                                 {
                                     <a href="/Transactions/Transaction/CreateJournal?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.Page" title="Create Journal">
                                         <i class="iconsminds-add"></i> Create
@@ -189,13 +189,13 @@
                                     {
                                         <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model.Response[i].ParentId&ParentId=@ViewBag.ParentId&TypeId=4">
                                             <i class="iconsminds-file-edit"></i>
-                                            @Domain.Resource.Title_Designer.Received @Domain.Resource.Title_Designer.Stock (@Model.Response[i].ParentCode)
+                                            @Domain.Resource.Title_Designer.Received (@Model.Response[i].ParentCode)
                                         </a>
                                     }
                                     else if (Model.Response[i].Status != Domain.Enums.Status.Cancel && User.IsAllowed("Received.Add"))
                                     {
                                         <a href="/@ViewBag.area/@ViewBag.PageTitle/CreateReceived?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=3&page=@Model.Page" title="Create Received">
-                                            <i class="iconsminds-add"></i> Create @Domain.Resource.Title_Designer.Received @Domain.Resource.Title_Designer.Stock
+                                            <i class="iconsminds-add"></i> Create
                                         </a>
                                     }
                                 </td>
@@ -400,7 +400,7 @@
                                         <i class="iconsminds-address-book-2"></i> Journal (@Model.Response[i].JournalCode)
                                     </a>
                                 }
-                                else if (Model.Response[i].TypeId is >= 1 and <= 4 && Model.Response[i].Status != Domain.Enums.Status.Cancel && User.IsAllowed("Journal.Add"))
+                                else if (Model.Response[i].TypeId is >= 1 and <= 6 && Model.Response[i].Status != Domain.Enums.Status.Cancel && User.IsAllowed("Journal.Add"))
                                 {
                                     <a href="/Transactions/Transaction/CreateJournal?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.Page" title="Create Journal">
                                         <i class="iconsminds-add"></i> Create
@@ -414,13 +414,13 @@
                                     {
                                         <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model.Response[i].ParentId&ParentId=@ViewBag.ParentId&TypeId=4">
                                             <i class="iconsminds-file-edit"></i>
-                                            @Domain.Resource.Title_Designer.Received @Domain.Resource.Title_Designer.Stock (@Model.Response[i].ParentCode)
+                                            @Domain.Resource.Title_Designer.Received (@Model.Response[i].ParentCode)
                                         </a>
                                     }
                                     else if (Model.Response[i].Status != Domain.Enums.Status.Cancel && User.IsAllowed("Received.Add"))
                                     {
                                         <a href="/@ViewBag.area/@ViewBag.PageTitle/CreateReceived?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=3&page=@Model.Page" title="Create Received">
-                                            <i class="iconsminds-add"></i> Create @Domain.Resource.Title_Designer.Received @Domain.Resource.Title_Designer.Stock
+                                            <i class="iconsminds-add"></i> Create
                                         </a>
                                     }
                                 </div>

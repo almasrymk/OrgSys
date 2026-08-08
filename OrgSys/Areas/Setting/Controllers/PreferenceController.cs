@@ -108,7 +108,7 @@ namespace OrgSys.Areas.Setting.Controllers
 
         private async Task ConfigureTransactionPreferences(List<PreferenceDto> Service)
         {
-            var Accounts = await GetListApi<AccountDto>(TypeId: 1);
+            var Accounts = await GetListApi<AccountDto>(TypeId: 1, PageSize: 100000);
 
             ViewBag.Customers = new SelectList(await GetListApi<DealerDto>(TypeId: 1), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultCustomer")?.Value);
             ViewBag.Suppliers = new SelectList(await GetListApi<DealerDto>(TypeId: 2), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultSupplier")?.Value);
@@ -120,6 +120,7 @@ namespace OrgSys.Areas.Setting.Controllers
             ViewBag.SalesReturnAccount = new SelectList(Accounts, "Id", "Name", Service.FirstOrDefault(e => e.Key == "SalesReturnAccount")?.Value);
             ViewBag.SourceInventoryAccount = new SelectList(Accounts, "Id", "Name", Service.FirstOrDefault(e => e.Key == "SourceInventoryAccount")?.Value);
             ViewBag.DestinationInventoryAccount = new SelectList(Accounts, "Id", "Name", Service.FirstOrDefault(e => e.Key == "DestinationInventoryAccount")?.Value);
+            ViewBag.TransitAccount = new SelectList(Accounts, "Id", "Name", Service.FirstOrDefault(e => e.Key == "TransitAccount")?.Value);
 
             List<SelectListItem> selectListItems = new List<SelectListItem>();
             selectListItems.Add(new SelectListItem { Value = "1", Text = "Data after product" });

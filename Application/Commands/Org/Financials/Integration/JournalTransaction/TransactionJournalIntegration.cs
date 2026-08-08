@@ -20,13 +20,20 @@ internal sealed class TransactionJournalIntegration(IServiceProvider provider)
                 && e.RefranceTypeId == transaction.TypeId,
             "JournalItems");
 
+        var preferenceTypeId = transaction.TypeId switch
+        {
+            5 => 1,
+            6 => 2,
+            _ => transaction.TypeId
+        };
         var preferences = (await preferenceRepository.GetListByFilterAsync(
-            e => e.Reference == "Transaction" && e.TypeId == transaction.TypeId))?.ToList() ?? [];
+            e => e.Reference == "Transaction" && e.TypeId == preferenceTypeId))?.ToList() ?? [];
 
-        var enabled = preferences.FirstOrDefault(e => e.Key == "AccountsIntegration")?.Value == "1"
-            && (force
-                || journal != null
-                || preferences.FirstOrDefault(e => e.Key == "AutoCreateJournalEntry")?.Value == "1");
+        var accountsIntegrationEnabled = preferences.FirstOrDefault(e => e.Key == "AccountsIntegration")?.Value == "1";
+        var autoCreateJournalEnabled = preferences.FirstOrDefault(e => e.Key == "AutoCreateJournalEntry")?.Value == "1";
+        var enabled = force
+            || autoCreateJournalEnabled
+            || (accountsIntegrationEnabled && journal != null);
 
         if (!enabled)
         {
@@ -37,7 +44,14 @@ internal sealed class TransactionJournalIntegration(IServiceProvider provider)
 
         var (debitAccountId, creditAccountId) = await ResolveAccountsAsync(transaction, preferences, sourceInvoiceTypeId);
         if (debitAccountId <= 0 || creditAccountId <= 0)
-            throw new InvalidOperationException("The transaction accounts are not configured in transaction preferences or warehouse settings.");
+        {
+            if (force)
+                throw new InvalidOperationException("The transaction accounts are not configured in transaction preferences or warehouse settings.");
+
+            await DeleteAsync(journal, journalRepository, journalItemRepository);
+            transaction.HasJournal = false;
+            return;
+        }
 
         var currencyRepository = provider.GetRequiredService<IRepository<Currency>>();
         var currency = await currencyRepository.GetByFilterAsync(e => e.IsDefault, "")
@@ -128,31 +142,58 @@ internal sealed class TransactionJournalIntegration(IServiceProvider provider)
         IEnumerable<Preference> preferences,
         long? sourceInvoiceTypeId)
     {
-        switch (transaction.TypeId)
+        return transaction.TypeId switch
         {
-            case 1:
-            {
-                var counterKey = sourceInvoiceTypeId == 3
-                    ? "SalesReturnAccount"
-                    : await ResolveInvoiceCounterKeyAsync(transaction.Id, 3, "SalesReturnAccount", "PurchaseAccount");
-                return (ParseAccountId(preferences, "StockAccount"), ParseAccountId(preferences, counterKey));
-            }
-            case 2:
-            {
-                var counterKey = sourceInvoiceTypeId == 4
-                    ? "PurchaseReturnAccount"
-                    : await ResolveInvoiceCounterKeyAsync(transaction.Id, 4, "PurchaseReturnAccount", "SalesAccount");
-                return (ParseAccountId(preferences, counterKey), ParseAccountId(preferences, "StockAccount"));
-            }
-            case 3:
-                // Transfer: move value out of the source warehouse and into the in-transit account.
-                return (ParseAccountId(preferences, "SourceInventoryAccount"), await GetStockAccountIdAsync(transaction.StockId));
-            case 4:
-                // Received: move value out of the in-transit account and into the destination warehouse.
-                return (await GetStockAccountIdAsync(transaction.StockId), ParseAccountId(preferences, "DestinationInventoryAccount"));
-            default:
-                throw new InvalidOperationException($"Transaction type {transaction.TypeId} does not support journal integration.");
-        }
+            1 => await ResolveAdditionAccountsAsync(transaction, preferences, sourceInvoiceTypeId),
+            2 => await ResolveIssueAccountsAsync(transaction, preferences, sourceInvoiceTypeId),
+            3 => await ResolveTransferAccountsAsync(transaction, preferences),
+            4 => await ResolveReceivedAccountsAsync(transaction, preferences),
+            5 => await ResolveAdditionAccountsAsync(transaction, preferences, sourceInvoiceTypeId),
+            6 => await ResolveIssueAccountsAsync(transaction, preferences, sourceInvoiceTypeId),
+            _ => throw new InvalidOperationException($"Transaction type {transaction.TypeId} does not support journal integration.")
+        };
+    }
+
+    private async Task<(long DebitAccountId, long CreditAccountId)> ResolveAdditionAccountsAsync(
+        Transaction transaction,
+        IEnumerable<Preference> preferences,
+        long? sourceInvoiceTypeId)
+    {
+        var counterKey = sourceInvoiceTypeId == 3
+            ? "SalesReturnAccount"
+            : await ResolveInvoiceCounterKeyAsync(transaction.Id, 3, "SalesReturnAccount", "PurchaseAccount");
+        return (ParseAccountId(preferences, "StockAccount"), ParseAccountId(preferences, counterKey));
+    }
+
+    private async Task<(long DebitAccountId, long CreditAccountId)> ResolveIssueAccountsAsync(
+        Transaction transaction,
+        IEnumerable<Preference> preferences,
+        long? sourceInvoiceTypeId)
+    {
+        var counterKey = sourceInvoiceTypeId == 4
+            ? "PurchaseReturnAccount"
+            : await ResolveInvoiceCounterKeyAsync(transaction.Id, 4, "PurchaseReturnAccount", "SalesAccount");
+        return (ParseAccountId(preferences, counterKey), ParseAccountId(preferences, "StockAccount"));
+    }
+
+    private async Task<(long DebitAccountId, long CreditAccountId)> ResolveTransferAccountsAsync(
+        Transaction transaction,
+        IEnumerable<Preference> preferences)
+    {
+        var sourceAccountId = await GetStockAccountIdAsync(transaction.StockId);
+        return (
+            ParseAccountId(preferences, "TransitAccount"),
+            sourceAccountId > 0 ? sourceAccountId : ParseAccountId(preferences, "SourceInventoryAccount"));
+    }
+
+    private async Task<(long DebitAccountId, long CreditAccountId)> ResolveReceivedAccountsAsync(
+        Transaction transaction,
+        IEnumerable<Preference> preferences)
+    {
+        var destinationAccountId = await GetStockAccountIdAsync(transaction.StockId);
+        return (
+            destinationAccountId > 0 ? destinationAccountId : ParseAccountId(preferences, "DestinationInventoryAccount"),
+            ParseAccountId(preferences, "TransitAccount"));
     }
 
     private async Task<string> ResolveInvoiceCounterKeyAsync(

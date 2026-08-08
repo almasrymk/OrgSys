@@ -469,7 +469,7 @@ function SavePreference() {
             list.push(TaxAccount);
         }
 
-        ["StockAccount", "SalesAccount", "PurchaseReturnAccount", "PurchaseAccount", "SalesReturnAccount", "SourceInventoryAccount", "DestinationInventoryAccount"].forEach(function (accountKey) {
+        ["StockAccount", "SalesAccount", "PurchaseReturnAccount", "PurchaseAccount", "SalesReturnAccount", "SourceInventoryAccount", "DestinationInventoryAccount", "TransitAccount"].forEach(function (accountKey) {
             if ($("#" + accountKey).length) {
                 list.push({
                     Id: 0,

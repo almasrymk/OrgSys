@@ -19,7 +19,7 @@ public sealed class CreateJournalByTransactionCommandHandler(
         var transaction = await repository.GetByFilterAsync(e => e.Id == request.TransactionId, string.Empty);
         if (transaction == null)
             return new Result(HttpStatusCode.NotFound, [new Error("Transaction not found")]);
-        if (transaction.TypeId is < 1 or > 4)
+        if (transaction.TypeId is < 1 or > 6)
             return new Result(HttpStatusCode.BadRequest, [new Error("This transaction type does not support journal creation")]);
 
         try

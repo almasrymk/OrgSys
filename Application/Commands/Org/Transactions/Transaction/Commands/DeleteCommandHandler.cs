@@ -12,6 +12,7 @@
     using Microsoft.Extensions.DependencyInjection;
     using System.Linq.Expressions;
     using Application.Commands.Org.Financials.Integration.JournalTransaction;
+    using Application.Commands.Org.Transactions.Transaction.Integration;
 
     public sealed record DeleteTransactionCommand(long Id) : ICommand, IDeleteCommand<Result>;
 
@@ -41,6 +42,7 @@
             if (transactionProducts == null)
                 return false;
 
+            await new TransferReceivedIntegration(_provider).DeleteReceivedAsync(transactionProducts);
             await new TransactionJournalIntegration(_provider).DeleteByTransactionIdAsync(request.Id);
             return await _TransactionProductRepository.ShiftDeleteAsync(e => e.TransactionId == request.Id);
         }

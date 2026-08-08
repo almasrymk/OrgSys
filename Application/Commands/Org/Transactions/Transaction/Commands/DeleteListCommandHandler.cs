@@ -10,6 +10,7 @@
     using System.Linq.Expressions;
     using Application.Commands.Org.Financials.Integration.JournalTransaction;
     using Microsoft.Extensions.DependencyInjection;
+    using Application.Commands.Org.Transactions.Transaction.Integration;
 
     public sealed record DeleteListTransactionCommand(List<long> Ids) : ICommand, IDeleteListCommand<Result>;   
 
@@ -40,6 +41,7 @@
             var transactionProductRepository = _provider.GetRequiredService<IRepository<Domain.Entities.TransactionProduct>>();
             foreach (var transaction in transactions)
             {
+                await new TransferReceivedIntegration(_provider).DeleteReceivedAsync(transaction);
                 await new TransactionJournalIntegration(_provider).DeleteByTransactionIdAsync(transaction.Id);
                 await transactionProductRepository.ShiftDeleteAsync(e => e.TransactionId == transaction.Id);
             }

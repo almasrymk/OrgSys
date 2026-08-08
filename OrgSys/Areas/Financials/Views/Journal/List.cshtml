@@ -33,6 +33,8 @@
         2 => $"{Domain.Resource.Title_Designer.Issue} {Domain.Resource.Title_Designer.Stock}",
         3 => $"{Domain.Resource.Title_Designer.Transfer} {Domain.Resource.Title_Designer.Stock}",
         4 => $"{Domain.Resource.Title_Designer.Received} {Domain.Resource.Title_Designer.Stock}",
+        5 => $"{Domain.Resource.Title_Designer.Addition} {Domain.Resource.Title_Designer.Stock}",
+        6 => $"{Domain.Resource.Title_Designer.Issue} {Domain.Resource.Title_Designer.Stock}",
         _ => "Transaction"
     };
 }
@@ -49,7 +51,7 @@
                         <th class="text-center">@Domain.Resource.Title_Designer.Code</th>
                         <th class="text-center">@Domain.Resource.Title_Designer.Date</th>
                         <th class="@TextAlign">@Domain.Resource.Title_Designer.Currency</th>
-                        <th class="text-center">Reference</th>
+                        <th class="@TextAlign">Reference</th>
                         <th class="text-center">Review</th>
                         <th class="text-center">Posted</th>
                         @if (AllowView || AllowEdit || AllowCancel || AllowRedo || AllowDelete)

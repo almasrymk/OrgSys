@@ -494,6 +494,7 @@ namespace Infrastructure.Seed
                new Preference { Id = 609, Key = "AccountsIntegration", Value = "0", Reference = "Transaction", TypeId = 3, Hide = false },
                new Preference { Id = 610, Key = "AutoCreateJournalEntry", Value = "0", Reference = "Transaction", TypeId = 3, Hide = false },
                new Preference { Id = 611, Key = "SourceInventoryAccount", Value = "0", Reference = "Transaction", TypeId = 3, Hide = false },
+               new Preference { Id = 612, Key = "TransitAccount", Value = "0", Reference = "Transaction", TypeId = 3, Hide = false },
 
                new Preference { Id = 701, Key = "DefaultStock", Value = "1", Reference = "Transaction", TypeId = 4, Hide = false },
                new Preference { Id = 702, Key = "NumberLine", Value = "6", Reference = "Transaction", TypeId = 4, Hide = false },
@@ -504,6 +505,7 @@ namespace Infrastructure.Seed
                new Preference { Id = 707, Key = "AccountsIntegration", Value = "0", Reference = "Transaction", TypeId = 4, Hide = false },
                new Preference { Id = 708, Key = "AutoCreateJournalEntry", Value = "0", Reference = "Transaction", TypeId = 4, Hide = false },
                new Preference { Id = 709, Key = "DestinationInventoryAccount", Value = "0", Reference = "Transaction", TypeId = 4, Hide = false },
+               new Preference { Id = 710, Key = "TransitAccount", Value = "0", Reference = "Transaction", TypeId = 4, Hide = false },
 
                new Preference { Id = 801, Key = "NumberLine", Value = "6", Reference = "Order", TypeId = 1, Hide = false },
                new Preference { Id = 802, Key = "OrderTabe", Value = "2", Reference = "Order", TypeId = 1, Hide = false },

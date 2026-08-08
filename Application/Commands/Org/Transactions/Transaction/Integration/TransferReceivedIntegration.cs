@@ -7,6 +7,29 @@ using Microsoft.Extensions.DependencyInjection;
 
 internal sealed class TransferReceivedIntegration(IServiceProvider provider)
 {
+    public async Task DeleteReceivedAsync(Transaction transfer)
+    {
+        if (transfer.TypeId != 3)
+            return;
+
+        var transactionRepository = provider.GetRequiredService<IRepository<Transaction>>();
+        var received = transfer.ParentId > 0
+            ? await transactionRepository.GetByFilterAsync(
+                e => e.Id == transfer.ParentId && e.TypeId == 4,
+                string.Empty)
+            : await transactionRepository.GetByFilterAsync(
+                e => e.TypeId == 4 && e.ParentId == transfer.Id,
+                string.Empty);
+
+        if (received is null)
+            return;
+
+        await new TransactionJournalIntegration(provider).DeleteByTransactionIdAsync(received.Id);
+        var productRepository = provider.GetRequiredService<IRepository<TransactionProduct>>();
+        await productRepository.ShiftDeleteAsync(e => e.TransactionId == received.Id);
+        await transactionRepository.ShiftDeleteAsync(e => e.Id == received.Id);
+    }
+
     public async Task SyncAsync(Transaction transfer, CancellationToken cancellationToken = default, bool force = false)
     {
         if (transfer.TypeId != 3)
@@ -54,7 +77,9 @@ internal sealed class TransferReceivedIntegration(IServiceProvider provider)
         received.StockId = transfer.ToStockId;
         received.ToStockId = null;
         received.DealerId = transfer.DealerId;
-        received.Notes = $"TransferId: {transfer.Id}" + (string.IsNullOrWhiteSpace(transfer.Notes) ? string.Empty : $" - {transfer.Notes}");
+        var receivedNotes = $"TransferId: {transfer.Id}"
+            + (string.IsNullOrWhiteSpace(transfer.Notes) ? string.Empty : $" - {transfer.Notes}");
+        received.Notes = receivedNotes.Length <= 500 ? receivedNotes : receivedNotes[..500];
         received.Total = transfer.Total;
         received.Status = transfer.Status;
 
@@ -81,6 +106,18 @@ internal sealed class TransferReceivedIntegration(IServiceProvider provider)
         received.ParentId = transfer.Id;
         await transactionRepository.UpdateAsync(transfer);
         await transactionRepository.UpdateAsync(received);
-        await new TransactionJournalIntegration(provider).SyncAsync(received);
+
+        var autoCreateReceivedJournal = await preferenceRepository.GetByFilterAsync(
+            e => e.Reference == "Transaction"
+                && e.TypeId == 4
+                && e.Key == "AutoCreateJournalEntry",
+            string.Empty);
+        if (autoCreateReceivedJournal?.Value == "1")
+        {
+            // Keep this non-forced so incomplete account configuration does not roll back
+            // the Transfer and its automatically generated Received transaction.
+            await new TransactionJournalIntegration(provider).SyncAsync(received);
+            await provider.GetRequiredService<IUnitOfWork>().SaveChangeAsync(cancellationToken);
+        }
     }
 }

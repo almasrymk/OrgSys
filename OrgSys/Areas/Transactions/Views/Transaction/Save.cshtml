@@ -333,7 +333,7 @@
 
                                 <div class="form-row">
 
-                                    @if (Model.TypeId == 1 || Model.TypeId == 2)
+                                    @if ((Model.TypeId == 1 || Model.TypeId == 2) && Model.InventoryId is not > 0)
                                     {
                                         <div class="form-group col-md-4">
                                             <label>
@@ -431,7 +431,7 @@
                                 </a>
                             }
                         }
-                        @if (Model.Id > 0 && Model.TypeId is >= 1 and <= 4)
+                        @if (Model.Id > 0 && Model.TypeId is >= 1 and <= 6)
                         {
                             if (Model.JournalId is > 0 && (User.IsAllowed("Journal.View") || User.IsAllowed("Journal.Edit")))
                             {
@@ -1043,7 +1043,7 @@
                 if (CheckRequired("Code", "divCode", '@Domain.Resource.Message_Designer.CodeRequired'))
                     Valid = false;
 
-                if ('@Model.TypeId' == 1 || '@Model.TypeId' == 2) {
+                if (('@Model.TypeId' == 1 || '@Model.TypeId' == 2) && !('@Model.InventoryId' > 0)) {
                     if (CheckRequired("DealerId", "divDealerId", '@Domain.Resource.Message_Designer.CustomerRequired'))
                         Valid = false;
                 }
@@ -1091,7 +1091,7 @@
                if (CheckRequiredNoMessage("Code"))
                     Valid = false;
 
-               if ('@Model.TypeId' == 1 || '@Model.TypeId' == 2) {
+               if (('@Model.TypeId' == 1 || '@Model.TypeId' == 2) && !('@Model.InventoryId' > 0)) {
                    if (CheckRequiredNoMessage("DealerId"))
                        Valid = false;
                }
