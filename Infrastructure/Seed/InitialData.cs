@@ -301,7 +301,25 @@ namespace Infrastructure.Seed
                                    new Permission { Id = 4010504, Name = "Delete", Key = "Inventory.Delete", ParentId = 40105, TypeId = 1 },
                                    new Permission { Id = 4010505, Name = "Preference", Key = "Inventory.Preference", ParentId = 40105, TypeId = 1 },
                                    new Permission { Id = 4010506, Name = "Cancel", Key = "Inventory.Cancel", ParentId = 40105, TypeId = 1 },
-                                   new Permission { Id = 4010507, Name = "Redo", Key = "Inventory.Redo", ParentId = 40105, TypeId = 1 },
+                               new Permission { Id = 4010507, Name = "Redo", Key = "Inventory.Redo", ParentId = 40105, TypeId = 1 },
+
+                               new Permission { Id = 40106, Name = "Opening Balance", Key = "OpeningBalance.All", ParentId = 401 },
+                                   new Permission { Id = 4010601, Name = "View", Key = "OpeningBalance.View", ParentId = 40106, TypeId = 1 },
+                                   new Permission { Id = 4010602, Name = "Add", Key = "OpeningBalance.Add", ParentId = 40106, TypeId = 1 },
+                                   new Permission { Id = 4010603, Name = "Edit", Key = "OpeningBalance.Edit", ParentId = 40106, TypeId = 1 },
+                                   new Permission { Id = 4010604, Name = "Delete", Key = "OpeningBalance.Delete", ParentId = 40106, TypeId = 1 },
+                                   new Permission { Id = 4010605, Name = "Preference", Key = "OpeningBalance.Preference", ParentId = 40106, TypeId = 1 },
+                                   new Permission { Id = 4010606, Name = "Cancel", Key = "OpeningBalance.Cancel", ParentId = 40106, TypeId = 1 },
+                               new Permission { Id = 4010607, Name = "Redo", Key = "OpeningBalance.Redo", ParentId = 40106, TypeId = 1 },
+
+                               new Permission { Id = 40107, Name = "Damaged", Key = "Damaged.All", ParentId = 401 },
+                                   new Permission { Id = 4010701, Name = "View", Key = "Damaged.View", ParentId = 40107, TypeId = 1 },
+                                   new Permission { Id = 4010702, Name = "Add", Key = "Damaged.Add", ParentId = 40107, TypeId = 1 },
+                                   new Permission { Id = 4010703, Name = "Edit", Key = "Damaged.Edit", ParentId = 40107, TypeId = 1 },
+                                   new Permission { Id = 4010704, Name = "Delete", Key = "Damaged.Delete", ParentId = 40107, TypeId = 1 },
+                                   new Permission { Id = 4010705, Name = "Preference", Key = "Damaged.Preference", ParentId = 40107, TypeId = 1 },
+                                   new Permission { Id = 4010706, Name = "Cancel", Key = "Damaged.Cancel", ParentId = 40107, TypeId = 1 },
+                                   new Permission { Id = 4010707, Name = "Redo", Key = "Damaged.Redo", ParentId = 40107, TypeId = 1 },
 
                        new Permission { Id = 50, Name = "Financials", Key = "Financials.All", ParentId = 1 },
 
@@ -507,6 +525,30 @@ namespace Infrastructure.Seed
                new Preference { Id = 709, Key = "DestinationInventoryAccount", Value = "0", Reference = "Transaction", TypeId = 4, Hide = false },
                new Preference { Id = 710, Key = "TransitAccount", Value = "0", Reference = "Transaction", TypeId = 4, Hide = false },
 
+               new Preference { Id = 1501, Key = "DefaultStock", Value = "1", Reference = "Transaction", TypeId = 7, Hide = false },
+               new Preference { Id = 1502, Key = "NumberLine", Value = "10", Reference = "Transaction", TypeId = 7, Hide = false },
+               new Preference { Id = 1503, Key = "OrderTabe", Value = "1", Reference = "Transaction", TypeId = 7, Hide = false },
+               new Preference { Id = 1504, Key = "AutoSave", Value = "0", Reference = "Transaction", TypeId = 7, Hide = false },
+               new Preference { Id = 1505, Key = "TypeSerial", Value = "1", Reference = "Transaction", TypeId = 7, Hide = false },
+               new Preference { Id = 1506, Key = "AllowRepeated", Value = "0", Reference = "Transaction", TypeId = 7, Hide = false },
+               new Preference { Id = 1507, Key = "SaveLastStatusSetting", Value = "1", Reference = "Transaction", TypeId = 7, Hide = false },
+               new Preference { Id = 1509, Key = "AccountsIntegration", Value = "0", Reference = "Transaction", TypeId = 7, Hide = false },
+               new Preference { Id = 1510, Key = "AutoCreateJournalEntry", Value = "0", Reference = "Transaction", TypeId = 7, Hide = false },
+               new Preference { Id = 1511, Key = "StockAccount", Value = "0", Reference = "Transaction", TypeId = 7, Hide = false },
+               new Preference { Id = 1512, Key = "OpeningBalanceAccount", Value = "0", Reference = "Transaction", TypeId = 7, Hide = false },
+
+               new Preference { Id = 1601, Key = "DefaultStock", Value = "1", Reference = "Transaction", TypeId = 8, Hide = false },
+               new Preference { Id = 1602, Key = "NumberLine", Value = "10", Reference = "Transaction", TypeId = 8, Hide = false },
+               new Preference { Id = 1603, Key = "OrderTabe", Value = "1", Reference = "Transaction", TypeId = 8, Hide = false },
+               new Preference { Id = 1604, Key = "AutoSave", Value = "0", Reference = "Transaction", TypeId = 8, Hide = false },
+               new Preference { Id = 1605, Key = "TypeSerial", Value = "1", Reference = "Transaction", TypeId = 8, Hide = false },
+               new Preference { Id = 1606, Key = "AllowRepeated", Value = "0", Reference = "Transaction", TypeId = 8, Hide = false },
+               new Preference { Id = 1607, Key = "SaveLastStatusSetting", Value = "1", Reference = "Transaction", TypeId = 8, Hide = false },
+               new Preference { Id = 1609, Key = "AccountsIntegration", Value = "0", Reference = "Transaction", TypeId = 8, Hide = false },
+               new Preference { Id = 1610, Key = "AutoCreateJournalEntry", Value = "0", Reference = "Transaction", TypeId = 8, Hide = false },
+               new Preference { Id = 1611, Key = "StockAccount", Value = "0", Reference = "Transaction", TypeId = 8, Hide = false },
+               new Preference { Id = 1612, Key = "InventoryDamageExpenseAccount", Value = "0", Reference = "Transaction", TypeId = 8, Hide = false },
+
                new Preference { Id = 801, Key = "NumberLine", Value = "6", Reference = "Order", TypeId = 1, Hide = false },
                new Preference { Id = 802, Key = "OrderTabe", Value = "2", Reference = "Order", TypeId = 1, Hide = false },
                new Preference { Id = 803, Key = "AutoSave", Value = "0", Reference = "Order", TypeId = 1, Hide = false },
@@ -569,6 +611,24 @@ namespace Infrastructure.Seed
                new Preference { Id = 1405, Key = "DefaultCurrency", Value = "1", Reference = "Journal", TypeId = 0, Hide = false },
                new Preference { Id = 1406, Key = "DefaultJournalType", Value = "2", Reference = "Journal", TypeId = 0, Hide = false }
             };
+
+            var openingBalancePurchaseAccount = orgContext.Preferences.FirstOrDefault(e =>
+                e.Reference == "Transaction" && e.TypeId == 7 && e.Key == "PurchaseAccount");
+            if (openingBalancePurchaseAccount != null)
+                openingBalancePurchaseAccount.Key = "OpeningBalanceAccount";
+
+            var obsoleteOpeningBalancePreferences = orgContext.Preferences.Where(e =>
+                e.Reference == "Transaction" && e.TypeId == 7 && e.Key == "SalesReturnAccount");
+            orgContext.Preferences.RemoveRange(obsoleteOpeningBalancePreferences);
+
+            var inventoryDamagePurchaseAccount = orgContext.Preferences.FirstOrDefault(e =>
+                e.Reference == "Transaction" && e.TypeId == 8 && e.Key == "PurchaseAccount");
+            if (inventoryDamagePurchaseAccount != null)
+                inventoryDamagePurchaseAccount.Key = "InventoryDamageExpenseAccount";
+
+            var obsoleteInventoryDamagePreferences = orgContext.Preferences.Where(e =>
+                e.Reference == "Transaction" && e.TypeId == 8 && e.Key == "SalesReturnAccount");
+            orgContext.Preferences.RemoveRange(obsoleteInventoryDamagePreferences);
 
             foreach (var ob in list)
             {
@@ -641,7 +701,9 @@ namespace Infrastructure.Seed
                   new TransactionType { Id = 3, Name = "Transafer", Hide = false, InOut = -1, Icon = "iconsminds-shuffle-1" },
                   new TransactionType { Id = 4, Name = "Received", Hide = false, InOut = 1, Icon = "iconsminds-file-edit" },
                   new TransactionType { Id = 5, Name = "Adjustment In", Hide = false, InOut = 1, Icon = "" },
-                  new TransactionType { Id = 6, Name = "Adjustment Out", Hide = false, InOut = -1, Icon = "" }
+                  new TransactionType { Id = 6, Name = "Adjustment Out", Hide = false, InOut = -1, Icon = "" },
+                  new TransactionType { Id = 7, Name = "Opening Balance", Hide = false, InOut = 1, Icon = "iconsminds-folder-open" },
+                  new TransactionType { Id = 8, Name = "Damaged", Hide = false, InOut = -1, Icon = "iconsminds-bio-hazard" }
             };
 
             foreach (var ob in list)

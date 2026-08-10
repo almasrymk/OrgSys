@@ -1,0 +1,98 @@
+@model List<Application.DTOs.PreferenceDto>
+
+<div class="form-row">
+    <div class="form-group col-md-4">
+        <label>@Domain.Resource.Title_Designer.Stocks</label>
+        <div class="input-group">
+            <div class="input-group-prepend"><span class="input-group-text"><i class="iconsminds-clothing-Stock"></i></span></div>
+            @Html.DropDownList("Stocks", null, null, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group col-md-4">
+        <label>@Domain.Resource.Title_Designer.OrderTabe</label>
+        <div class="input-group">
+            <div class="input-group-prepend"><span class="input-group-text"><i class="iconsminds-clothing-Stock"></i></span></div>
+            @Html.DropDownList("OrderTabe", null, null, new { @class = "form-control" })
+        </div>
+    </div>
+</div>
+
+<div class="form-row">
+    <div class="form-group col-md-4">
+        <label>@Domain.Resource.Title_Designer.Repeated</label>
+        <div class="input-group">
+            <div class="input-group-prepend"><span class="input-group-text"><i class="iconsminds-financial"></i></span></div>
+            @Html.DropDownList("AllowRepeated", null, null, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group col-md-4">
+        <label>@Domain.Resource.Title_Designer.TypeSerial</label>
+        <div class="input-group">
+            <div class="input-group-prepend"><span class="input-group-text"><i class="iconsminds-financial"></i></span></div>
+            @Html.DropDownList("TypeSerial", null, null, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group col-md-4">
+        <label>@Domain.Resource.Title_Designer.EmptyLineCount</label>
+        <div class="input-group">
+            <div class="input-group-prepend"><span class="input-group-text"><i class="iconsminds-clothing-Stock"></i></span></div>
+            <input type="text" id="NumberLine" name="NumberLine" value="@ViewBag.NumberLine" class="form-control" />
+        </div>
+    </div>
+</div>
+
+<div class="form-row">
+    <div class="form-group col-md-4">
+        <label>@Domain.Resource.Title_Designer.AutoSave</label>
+        <div class="custom-switch custom-switch-primary-inverse custom-switch-small mt-2">
+            <input class="custom-switch-input" id="AutoSave" name="AutoSave" type="checkbox" checked="@ViewBag.AutoSave">
+            <label class="custom-switch-btn" for="AutoSave"></label>
+        </div>
+    </div>
+    <div class="form-group col-md-4">
+        <label>@Domain.Resource.Title_Designer.SaveLastStatusPreference</label>
+        <div class="custom-switch custom-switch-primary-inverse custom-switch-small mt-2">
+            <input class="custom-switch-input" id="SaveLastStatusSetting" name="SaveLastStatusSetting" type="checkbox" checked="@ViewBag.SaveLastStatusSetting">
+            <label class="custom-switch-btn" for="SaveLastStatusSetting"></label>
+        </div>
+    </div>
+</div>
+
+<hr class="WarehouseIntegration" style="display:none;">
+
+<div class="form-row">
+    <div class="form-group col-md-4">
+        <label>Accounts Integration</label>
+        <div class="custom-switch custom-switch-primary-inverse custom-switch-small mt-2">
+            <input class="custom-switch-input" id="AccountsIntegration" name="AccountsIntegration" type="checkbox" checked="@ViewBag.AccountsIntegration" onclick="ShowHide('AccountsIntegration','WarehouseIntegration')">
+            <label class="custom-switch-btn" for="AccountsIntegration"></label>
+        </div>
+    </div>
+</div>
+
+<div class="form-row WarehouseIntegration" style="display:none;">
+    <div class="form-group col-md-4">
+        <label>Stock Account</label>
+        <div class="input-group">
+            <div class="input-group-prepend"><span class="input-group-text"><i class="iconsminds-financial"></i></span></div>
+            @Html.DropDownList("StockAccount", null, "...", new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group col-md-4">
+        <label>Opening Balance Account</label>
+        <div class="input-group">
+            <div class="input-group-prepend"><span class="input-group-text"><i class="iconsminds-financial"></i></span></div>
+            @Html.DropDownList("OpeningBalanceAccount", null, "...", new { @class = "form-control" })
+        </div>
+    </div>
+</div>
+
+<div class="form-row WarehouseIntegration" style="display:none;">
+    <div class="form-group col-md-4">
+        <label>Auto-Create Journal Entry</label>
+        <div class="custom-switch custom-switch-primary-inverse custom-switch-small mt-2">
+            <input class="custom-switch-input" id="AutoCreateJournalEntry" name="AutoCreateJournalEntry" type="checkbox" checked="@ViewBag.AutoCreateJournalEntry">
+            <label class="custom-switch-btn" for="AutoCreateJournalEntry"></label>
+        </div>
+    </div>
+</div>

@@ -65,14 +65,15 @@ internal sealed class TransactionJournalIntegration(IServiceProvider provider)
 
         if (journal is null)
         {
-            var codeNumber = await journalRepository.AnyAsync(e => e.TypeId == 2)
-                ? await journalRepository.GetMaxByFilterAsync(e => e.TypeId == 2, e => e.CodeNumber) + 1
+            var journalTypeId = transaction.TypeId == 7 ? 1 : 2;
+            var codeNumber = await journalRepository.AnyAsync(e => e.TypeId == journalTypeId)
+                ? await journalRepository.GetMaxByFilterAsync(e => e.TypeId == journalTypeId, e => e.CodeNumber) + 1
                 : 1;
 
             journal = new Journal
             {
-                JournalTypeId = 2,
-                TypeId = 2,
+                JournalTypeId = journalTypeId,
+                TypeId = journalTypeId,
                 CodeNumber = codeNumber,
                 Code = codeNumber.ToString(),
                 Date = transaction.Date,
@@ -150,9 +151,19 @@ internal sealed class TransactionJournalIntegration(IServiceProvider provider)
             4 => await ResolveReceivedAccountsAsync(transaction, preferences),
             5 => await ResolveAdditionAccountsAsync(transaction, preferences, sourceInvoiceTypeId),
             6 => await ResolveIssueAccountsAsync(transaction, preferences, sourceInvoiceTypeId),
+            7 => ResolveOpeningBalanceAccounts(preferences),
+            8 => ResolveInventoryDamageAccounts(preferences),
             _ => throw new InvalidOperationException($"Transaction type {transaction.TypeId} does not support journal integration.")
         };
     }
+
+    private static (long DebitAccountId, long CreditAccountId) ResolveOpeningBalanceAccounts(
+        IEnumerable<Preference> preferences) =>
+        (ParseAccountId(preferences, "StockAccount"), ParseAccountId(preferences, "OpeningBalanceAccount"));
+
+    private static (long DebitAccountId, long CreditAccountId) ResolveInventoryDamageAccounts(
+        IEnumerable<Preference> preferences) =>
+        (ParseAccountId(preferences, "InventoryDamageExpenseAccount"), ParseAccountId(preferences, "StockAccount"));
 
     private async Task<(long DebitAccountId, long CreditAccountId)> ResolveAdditionAccountsAsync(
         Transaction transaction,

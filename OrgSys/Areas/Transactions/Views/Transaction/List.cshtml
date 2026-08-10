@@ -10,7 +10,7 @@
     var TextAlign2 = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "text-left" : "text-right";
     var DateFromate = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "yyyy-MM-dd" : "dd-MM-yyyy";
     var TimeFromate = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "mm:hh t" : "hh:mm t";
-    var ResourceDisplay = ViewBag.TypeId == 3 || ViewBag.TypeId == 4 ? "display:none;" : "";
+    var ResourceDisplay = ViewBag.TypeId == 3 || ViewBag.TypeId == 4 || ViewBag.TypeId == 7 || ViewBag.TypeId == 8 ? "display:none;" : "";
     var AllowView = false;
     var AllowAdd = false;
     var AllowEdit = false;
@@ -66,6 +66,24 @@
         AllowCancel = User.IsAllowed("Received.Cancel");
         AllowRedo = User.IsAllowed("Received.Redo");
         AllowInvoice = User.IsAllowed("Collection.View") && User.IsAllowed("Collection.Add");
+    }
+    if (ViewBag.TypeId == 7)
+    {
+        AllowView = User.IsAllowed("OpeningBalance.View");
+        AllowAdd = User.IsAllowed("OpeningBalance.Add");
+        AllowEdit = User.IsAllowed("OpeningBalance.Edit");
+        AllowDelete = User.IsAllowed("OpeningBalance.Delete");
+        AllowCancel = User.IsAllowed("OpeningBalance.Cancel");
+        AllowRedo = User.IsAllowed("OpeningBalance.Redo");
+    }
+    if (ViewBag.TypeId == 8)
+    {
+        AllowView = User.IsAllowed("Damaged.View");
+        AllowAdd = User.IsAllowed("Damaged.Add");
+        AllowEdit = User.IsAllowed("Damaged.Edit");
+        AllowDelete = User.IsAllowed("Damaged.Delete");
+        AllowCancel = User.IsAllowed("Damaged.Cancel");
+        AllowRedo = User.IsAllowed("Damaged.Redo");
     }
 }
 

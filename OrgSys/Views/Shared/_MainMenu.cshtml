@@ -39,7 +39,7 @@
                         </a>
                     </li>
                 }
-                @if (User.IsAllowed("Addition.All,Issue.All,Transafer.All,Received.All,Inventory.All"))
+                @if (User.IsAllowed("Damaged.All,OpeningBalance.All,Addition.All,Issue.All,Transafer.All,Received.All,Inventory.All"))
                 {
                     <li>
                         <a href="#Transaction">
@@ -451,7 +451,7 @@
                     </li>
                 </ul>
             }
-            @if (User.IsAllowed("Addition.All,Issue.All,Transafer.All,Received.All,Inventory.All"))
+            @if (User.IsAllowed("Damaged.All,OpeningBalance.All,Addition.All,Issue.All,Transafer.All,Received.All,Inventory.All"))
             {
                 <ul class="list-unstyled" data-link="Transaction" id="Transaction">
                     <li>
@@ -460,7 +460,15 @@
                             <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.TransactionNotices</span>
                         </a>
                         <div id="collapseTransaction" class="collapse">
-                            <ul class="list-unstyled inner-level-menu">
+                            <ul class="list-unstyled inner-level-menu">                              
+                                @if (User.IsAllowed("OpeningBalance.All"))
+                                {
+                                    <li>
+                                        <a href="/Transactions/Transaction?TypeId=7">
+                                            <i class="iconsminds-folder-open"></i> <span class="d-inline-block">Opening Balance</span>
+                                        </a>
+                                    </li>
+                                }
                                 @if (User.IsAllowed("Addition.All"))
                                 {
                                     <li>
@@ -508,6 +516,14 @@
                                             <i class="iconsminds-check"></i> <span class="d-inline-block">
                                                 @Domain.Resource.Title_Designer.Inventory
                                             </span>
+                                        </a>
+                                    </li>
+                                }
+                                @if (User.IsAllowed("Damaged.All"))
+                                {
+                                    <li>
+                                        <a href="/Transactions/Transaction?TypeId=8">
+                                            <i class="iconsminds-bio-hazard"></i> <span class="d-inline-block">Damaged</span>
                                         </a>
                                     </li>
                                 }

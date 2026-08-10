@@ -49,7 +49,7 @@ namespace Service
             foreach (var product in products)
             {
                 var ob = product.Map<ProductDto>();
-                ob.Balance = trns.Where(e => e.ProductId == product.Id).Sum(e => e.Transaction.TypeId == 2 || e.Transaction.TypeId == 3 || e.Transaction.TypeId == 6 ? -1 * e.Quantity : e.Quantity);
+                ob.Balance = trns.Where(e => e.ProductId == product.Id).Sum(e => e.Transaction.TypeId == 2 || e.Transaction.TypeId == 3 || e.Transaction.TypeId == 6 || e.Transaction.TypeId == 8 ? -1 * e.Quantity : e.Quantity);
                 list.Add(ob);
             }
             return list;

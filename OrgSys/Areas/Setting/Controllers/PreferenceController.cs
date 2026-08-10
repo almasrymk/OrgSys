@@ -118,6 +118,8 @@ namespace OrgSys.Areas.Setting.Controllers
             ViewBag.PurchaseReturnAccount = new SelectList(Accounts, "Id", "Name", Service.FirstOrDefault(e => e.Key == "PurchaseReturnAccount")?.Value);
             ViewBag.PurchaseAccount = new SelectList(Accounts, "Id", "Name", Service.FirstOrDefault(e => e.Key == "PurchaseAccount")?.Value);
             ViewBag.SalesReturnAccount = new SelectList(Accounts, "Id", "Name", Service.FirstOrDefault(e => e.Key == "SalesReturnAccount")?.Value);
+            ViewBag.OpeningBalanceAccount = new SelectList(Accounts, "Id", "Name", Service.FirstOrDefault(e => e.Key == "OpeningBalanceAccount")?.Value);
+            ViewBag.InventoryDamageExpenseAccount = new SelectList(Accounts, "Id", "Name", Service.FirstOrDefault(e => e.Key == "InventoryDamageExpenseAccount")?.Value);
             ViewBag.SourceInventoryAccount = new SelectList(Accounts, "Id", "Name", Service.FirstOrDefault(e => e.Key == "SourceInventoryAccount")?.Value);
             ViewBag.DestinationInventoryAccount = new SelectList(Accounts, "Id", "Name", Service.FirstOrDefault(e => e.Key == "DestinationInventoryAccount")?.Value);
             ViewBag.TransitAccount = new SelectList(Accounts, "Id", "Name", Service.FirstOrDefault(e => e.Key == "TransitAccount")?.Value);

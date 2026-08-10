@@ -32,6 +32,10 @@
             {
                 @await Html.PartialAsync("_TransactionType1", Model)
             }
+            @if (ViewBag.type == 5 && ViewBag.Resource == "Transaction")
+            {
+                @await Html.PartialAsync("_TransactionType5", Model)
+            }
             @if (ViewBag.type == 2 && ViewBag.Resource == "Transaction")
             {
                 @await Html.PartialAsync("_TransactionType2", Model)
@@ -43,6 +47,18 @@
             @if (ViewBag.type == 4 && ViewBag.Resource == "Transaction")
             {
                 @await Html.PartialAsync("_TransactionType4", Model)
+            }
+            @if (ViewBag.type == 6 && ViewBag.Resource == "Transaction")
+            {
+                @await Html.PartialAsync("_TransactionType6", Model)
+            }
+            @if (ViewBag.type == 7 && ViewBag.Resource == "Transaction")
+            {
+                @await Html.PartialAsync("_TransactionType7", Model)
+            }
+            @if (ViewBag.type == 8 && ViewBag.Resource == "Transaction")
+            {
+                @await Html.PartialAsync("_TransactionType8", Model)
             }
             @if (ViewBag.Resource == "Order")
             {
@@ -469,7 +485,7 @@ function SavePreference() {
             list.push(TaxAccount);
         }
 
-        ["StockAccount", "SalesAccount", "PurchaseReturnAccount", "PurchaseAccount", "SalesReturnAccount", "SourceInventoryAccount", "DestinationInventoryAccount", "TransitAccount"].forEach(function (accountKey) {
+        ["StockAccount", "SalesAccount", "PurchaseReturnAccount", "PurchaseAccount", "SalesReturnAccount", "OpeningBalanceAccount", "InventoryDamageExpenseAccount", "SourceInventoryAccount", "DestinationInventoryAccount", "TransitAccount"].forEach(function (accountKey) {
             if ($("#" + accountKey).length) {
                 list.push({
                     Id: 0,

@@ -46,6 +46,14 @@
                 {
                     <h1>Adjustment Out</h1>
                 }
+                else if (Model.TypeId == 7)
+                {
+                    <h1>Opening Balance</h1>
+                }
+                else if (Model.TypeId == 8)
+                {
+                    <h1>Damaged</h1>
+                }
                 <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
                     <ol class="breadcrumb pt-0">
                         <li class="breadcrumb-item">
@@ -402,6 +410,13 @@
                                 <i class="iconsminds-gear-2"></i>
                                 @Domain.Resource.Title_Designer.Preference
                             </a>
+                            @if (Model.TypeId == 7)
+                            {
+                                <button type="button" class="btn btn-primary" onclick="LoadOpeningBalanceProducts()">
+                                    <i class="iconsminds-repeat-2"></i>
+                                    Load Products
+                                </button>
+                            }
                             <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId" class="btn btn-primary ">
                                 <i class="simple-icon-action-undo"> </i>
                                 @Domain.Resource.Title_Designer.Back
@@ -533,6 +548,51 @@
                 }
             });
         });
+
+        window.LoadOpeningBalanceProducts = function () {
+            var stockId = $("#StockId").val();
+            var date = $("#Date").val();
+
+            if (!(parseInt(stockId, 10) > 0) || !date) {
+                toastr.error("Please select stock and date first");
+                return;
+            }
+
+            $.ajax({
+                dataType: "json",
+                url: "/Setting/Product/LoadProductsByStock",
+                type: "GET",
+                data: { StockId: stockId, date: date },
+                success: function (data) {
+                    $("#tbl .ProductRow").not(".trNew").remove();
+
+                    for (var i = 0; i < data.length; i++) {
+                        var $row = $("#tbl .trNew");
+                        $row.find("#ProductId").val(data[i].id);
+                        $row.find("#query").val(data[i].name);
+                        $row.find("#UnitId").empty().append(
+                            $("<option>", {
+                                value: data[i].selectunitid,
+                                text: data[i].selectunitName
+                            })
+                        );
+                        $row.find("#Cost").val(data[i].price);
+                        $row.find("#Quantity").val(data[i].balance);
+                        AddNewRow();
+                    }
+
+                    ReIndex();
+                    ReCalc();
+                    AutoSave();
+                },
+                error: function (res) {
+                    var message = res.responseJSON && res.responseJSON.error
+                        ? res.responseJSON.error
+                        : "Unable to load products";
+                    toastr.error(message);
+                }
+            });
+        };
 
         AddNewRow = function () {
             var Current = $('.trNew');

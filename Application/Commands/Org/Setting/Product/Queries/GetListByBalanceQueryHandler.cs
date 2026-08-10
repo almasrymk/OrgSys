@@ -32,7 +32,7 @@
                 {
                     var ob = mapper.Map<ProductDto>(product);
                     ob.Balance = trns.Where(e => e.ProductId == product.Id)
-                        .Sum(e => e.Transaction!.TypeId == 2 || e.Transaction.TypeId == 3 || e.Transaction.TypeId == 6
+                        .Sum(e => e.Transaction!.TypeId == 2 || e.Transaction.TypeId == 3 || e.Transaction.TypeId == 6 || e.Transaction.TypeId == 8
                             ? -e.Quantity
                             : e.Quantity);
                     list.Add(ob);
