@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 namespace Infrastructure.Seed
 {
     public class InitialData
-    {        
+    {
         public async Task Run()
         {
             await using var orgContext = new OrgContext(new DbContextOptions<OrgContext>());
@@ -303,14 +303,14 @@ namespace Infrastructure.Seed
                                    new Permission { Id = 4010506, Name = "Cancel", Key = "Inventory.Cancel", ParentId = 40105, TypeId = 1 },
                                new Permission { Id = 4010507, Name = "Redo", Key = "Inventory.Redo", ParentId = 40105, TypeId = 1 },
 
-                               new Permission { Id = 40106, Name = "Opening Balance", Key = "OpeningBalance.All", ParentId = 401 },
-                                   new Permission { Id = 4010601, Name = "View", Key = "OpeningBalance.View", ParentId = 40106, TypeId = 1 },
-                                   new Permission { Id = 4010602, Name = "Add", Key = "OpeningBalance.Add", ParentId = 40106, TypeId = 1 },
-                                   new Permission { Id = 4010603, Name = "Edit", Key = "OpeningBalance.Edit", ParentId = 40106, TypeId = 1 },
-                                   new Permission { Id = 4010604, Name = "Delete", Key = "OpeningBalance.Delete", ParentId = 40106, TypeId = 1 },
-                                   new Permission { Id = 4010605, Name = "Preference", Key = "OpeningBalance.Preference", ParentId = 40106, TypeId = 1 },
-                                   new Permission { Id = 4010606, Name = "Cancel", Key = "OpeningBalance.Cancel", ParentId = 40106, TypeId = 1 },
-                               new Permission { Id = 4010607, Name = "Redo", Key = "OpeningBalance.Redo", ParentId = 40106, TypeId = 1 },
+                               new Permission { Id = 40106, Name = "Stock Opening Balance", Key = "StockOpeningBalance.All", ParentId = 401 },
+                                   new Permission { Id = 4010601, Name = "View", Key = "StockOpeningBalance.View", ParentId = 40106, TypeId = 1 },
+                                   new Permission { Id = 4010602, Name = "Add", Key = "StockOpeningBalance.Add", ParentId = 40106, TypeId = 1 },
+                                   new Permission { Id = 4010603, Name = "Edit", Key = "StockOpeningBalance.Edit", ParentId = 40106, TypeId = 1 },
+                                   new Permission { Id = 4010604, Name = "Delete", Key = "StockOpeningBalance.Delete", ParentId = 40106, TypeId = 1 },
+                                   new Permission { Id = 4010605, Name = "Preference", Key = "StockOpeningBalance.Preference", ParentId = 40106, TypeId = 1 },
+                                   new Permission { Id = 4010606, Name = "Cancel", Key = "StockOpeningBalance.Cancel", ParentId = 40106, TypeId = 1 },
+                               new Permission { Id = 4010607, Name = "Redo", Key = "StockOpeningBalance.Redo", ParentId = 40106, TypeId = 1 },
 
                                new Permission { Id = 40107, Name = "Damaged", Key = "Damaged.All", ParentId = 401 },
                                    new Permission { Id = 4010701, Name = "View", Key = "Damaged.View", ParentId = 40107, TypeId = 1 },
@@ -325,43 +325,78 @@ namespace Infrastructure.Seed
 
                           new Permission { Id = 501, Name = "Safe Notices", Key = "SafeNotices", ParentId = 50 },
 
-                               new Permission { Id = 50101, Name = "Collection", Key = "Collection.All", ParentId = 501 },
-                                   new Permission { Id = 5010101, Name = "View", Key = "Collection.View", ParentId = 50101, TypeId = 1 },
-                                   new Permission { Id = 5010102, Name = "Add", Key = "Collection.Add", ParentId = 50101, TypeId = 1 },
-                                   new Permission { Id = 5010103, Name = "Edit", Key = "Collection.Edit", ParentId = 50101, TypeId = 1 },
-                                   new Permission { Id = 5010104, Name = "Delete", Key = "Collection.Delete", ParentId = 50101, TypeId = 1 },
-                                   new Permission { Id = 5010105, Name = "Preference", Key = "Collection.Preference", ParentId = 50101, TypeId = 1 },
+                              new Permission { Id = 50101, Name = "FinancialOpeningBalance", Key = "FinancialOpeningBalance.All", ParentId = 501 },
+                                   new Permission { Id = 5010101, Name = "View", Key = "FinancialOpeningBalance.View", ParentId = 50101, TypeId = 1 },
+                                   new Permission { Id = 5010102, Name = "Add", Key = "FinancialOpeningBalance.Add", ParentId = 50101, TypeId = 1 },
+                                   new Permission { Id = 5010103, Name = "Edit", Key = "FinancialOpeningBalance.Edit", ParentId = 50101, TypeId = 1 },
+                                   new Permission { Id = 5010104, Name = "Delete", Key = "FinancialOpeningBalance.Delete", ParentId = 50101, TypeId = 1 },
+                                   new Permission { Id = 5010105, Name = "Preference", Key = "FinancialOpeningBalance.Preference", ParentId = 50101, TypeId = 1 },
 
-                               new Permission { Id = 50102, Name = "Payment", Key = "Payment.All", ParentId = 501 },
-                                   new Permission { Id = 5010201, Name = "View", Key = "Payment.View", ParentId = 50102, TypeId = 1 },
-                                   new Permission { Id = 5010202, Name = "Add", Key = "Payment.Add", ParentId = 50102, TypeId = 1 },
-                                   new Permission { Id = 5010203, Name = "Edit", Key = "Payment.Edit", ParentId = 50102, TypeId = 1 },
-                                   new Permission { Id = 5010204, Name = "Delete", Key = "Payment.Delete", ParentId = 50102, TypeId = 1 },
-                                   new Permission { Id = 5010205, Name = "Preference", Key = "Payment.Preference", ParentId = 50102, TypeId = 1 },
+                              new Permission { Id = 50102, Name = "FinancialReceipt", Key = "FinancialReceipt.All", ParentId = 501 },
+                                   new Permission { Id = 5010201, Name = "View", Key = "FinancialReceipt.View", ParentId = 50102, TypeId = 1 },
+                                   new Permission { Id = 5010202, Name = "Add", Key = "FinancialReceipt.Add", ParentId = 50102, TypeId = 1 },
+                                   new Permission { Id = 5010203, Name = "Edit", Key = "FinancialReceipt.Edit", ParentId = 50102, TypeId = 1 },
+                                   new Permission { Id = 5010204, Name = "Delete", Key = "FinancialReceipt.Delete", ParentId = 50102, TypeId = 1 },
+                                   new Permission { Id = 5010205, Name = "Preference", Key = "FinancialReceipt.Preference", ParentId = 50102, TypeId = 1 },
 
-                               new Permission { Id = 50103, Name = "Outlays", Key = "Outlay.All", ParentId = 501 },
-                                   new Permission { Id = 5010301, Name = "View", Key = "Outlay.View", ParentId = 50103, TypeId = 1 },
-                                   new Permission { Id = 5010302, Name = "Add", Key = "Outlay.Add", ParentId = 50103, TypeId = 1 },
-                                   new Permission { Id = 5010303, Name = "Edit", Key = "Outlay.Edit", ParentId = 50103, TypeId = 1 },
-                                   new Permission { Id = 5010304, Name = "Delete", Key = "Outlay.Delete", ParentId = 50103, TypeId = 1 },
-                                   new Permission { Id = 5010305, Name = "Preference", Key = "Outlay.Preference", ParentId = 50103, TypeId = 1 },
+                              new Permission { Id = 50103, Name = "FinancialPayment", Key = "FinancialPayment.All", ParentId = 501 },
+                                   new Permission { Id = 5010301, Name = "View", Key = "FinancialPayment.View", ParentId = 50103, TypeId = 1 },
+                                   new Permission { Id = 5010302, Name = "Add", Key = "FinancialPayment.Add", ParentId = 50103, TypeId = 1 },
+                                   new Permission { Id = 5010303, Name = "Edit", Key = "FinancialPayment.Edit", ParentId = 50103, TypeId = 1 },
+                                   new Permission { Id = 5010304, Name = "Delete", Key = "FinancialPayment.Delete", ParentId = 50103, TypeId = 1 },
+                                   new Permission { Id = 5010305, Name = "Preference", Key = "FinancialPayment.Preference", ParentId = 50103, TypeId = 1 },
 
-                              new Permission { Id = 50105, Name = "Create journal accounts", Key = "CreateJournalAccounts.All", ParentId = 501 },
-                                   new Permission { Id = 5010501, Name = "View", Key = "CreateJournalAccounts.View", ParentId = 50105, TypeId = 1 },
-                                   new Permission { Id = 5010502, Name = "Add", Key = "CreateJournalAccounts.Add", ParentId = 50105, TypeId = 1 },
-                                   new Permission { Id = 5010503, Name = "Edit", Key = "CreateJournalAccounts.Edit", ParentId = 50105, TypeId = 1 },
-                                   new Permission { Id = 5010504, Name = "Delete", Key = "CreateJournalAccounts.Delete", ParentId = 50105, TypeId = 1 },
-                                   new Permission { Id = 5010505, Name = "Preference", Key = "CreateJournalAccounts.Preference", ParentId = 50105, TypeId = 1 },
+                              new Permission { Id = 50104, Name = "FinancialTransfer", Key = "FinancialTransfer.All", ParentId = 501 },
+                                   new Permission { Id = 5010401, Name = "View", Key = "FinancialTransfer.View", ParentId = 50104, TypeId = 1 },
+                                   new Permission { Id = 5010402, Name = "Add", Key = "FinancialTransfer.Add", ParentId = 50104, TypeId = 1 },
+                                   new Permission { Id = 5010403, Name = "Edit", Key = "FinancialTransfer.Edit", ParentId = 50104, TypeId = 1 },
+                                   new Permission { Id = 5010404, Name = "Delete", Key = "FinancialTransfer.Delete", ParentId = 50104, TypeId = 1 },
+                                   new Permission { Id = 5010405, Name = "Preference", Key = "FinancialTransfer.Preference", ParentId = 50104, TypeId = 1 },
 
-                               new Permission { Id = 50106, Name = "Journal", Key = "Journal.All", ParentId = 501 },
-                                   new Permission { Id = 5010601, Name = "View", Key = "Journal.View", ParentId = 50106, TypeId = 1 },
-                                   new Permission { Id = 5010602, Name = "Add", Key = "Journal.Add", ParentId = 50106, TypeId = 1 },
-                                   new Permission { Id = 5010603, Name = "Edit", Key = "Journal.Edit", ParentId = 50106, TypeId = 1 },
-                                   new Permission { Id = 5010604, Name = "Delete", Key = "Journal.Delete", ParentId = 50106, TypeId = 1 },
-                                   new Permission { Id = 5010605, Name = "Preference", Key = "Journal.Preference", ParentId = 50106, TypeId = 1 },
-                                   new Permission { Id = 5010606, Name = "Cancel", Key = "Journal.Cancel", ParentId = 50106, TypeId = 1 },
-                                   new Permission { Id = 5010607, Name = "Redo", Key = "Journal.Redo", ParentId = 50106, TypeId = 1 }
+                              new Permission { Id = 50105, Name = "FinancialDeposit", Key = "FinancialDeposit.All", ParentId = 501 },
+                                   new Permission { Id = 5010501, Name = "View", Key = "FinancialDeposit.View", ParentId = 50105, TypeId = 1 },
+                                   new Permission { Id = 5010502, Name = "Add", Key = "FinancialDeposit.Add", ParentId = 50105, TypeId = 1 },
+                                   new Permission { Id = 5010503, Name = "Edit", Key = "FinancialDeposit.Edit", ParentId = 50105, TypeId = 1 },
+                                   new Permission { Id = 5010504, Name = "Delete", Key = "FinancialDeposit.Delete", ParentId = 50105, TypeId = 1 },
+                                   new Permission { Id = 5010505, Name = "Preference", Key = "FinancialDeposit.Preference", ParentId = 50105, TypeId = 1 },
+
+                              new Permission { Id = 50106, Name = "FinancialWithdrawal", Key = "FinancialWithdrawal.All", ParentId = 501 },
+                                   new Permission { Id = 5010601, Name = "View", Key = "FinancialWithdrawal.View", ParentId = 50106, TypeId = 1 },
+                                   new Permission { Id = 5010602, Name = "Add", Key = "FinancialWithdrawal.Add", ParentId = 50106, TypeId = 1 },
+                                   new Permission { Id = 5010603, Name = "Edit", Key = "FinancialWithdrawal.Edit", ParentId = 50106, TypeId = 1 },
+                                   new Permission { Id = 5010604, Name = "Delete", Key = "FinancialWithdrawal.Delete", ParentId = 50106, TypeId = 1 },
+                                   new Permission { Id = 5010605, Name = "Preference", Key = "FinancialWithdrawal.Preference", ParentId = 50106, TypeId = 1 },
+
+                              new Permission { Id = 50107, Name = "FinancialFee", Key = "FinancialFee.All", ParentId = 501 },
+                                   new Permission { Id = 5010701, Name = "View", Key = "FinancialFee.View", ParentId = 50107, TypeId = 1 },
+                                   new Permission { Id = 5010702, Name = "Add", Key = "FinancialFee.Add", ParentId = 50107, TypeId = 1 },
+                                   new Permission { Id = 5010703, Name = "Edit", Key = "FinancialFee.Edit", ParentId = 50107, TypeId = 1 },
+                                   new Permission { Id = 5010704, Name = "Delete", Key = "FinancialFee.Delete", ParentId = 50107, TypeId = 1 },
+                                   new Permission { Id = 5010705, Name = "Preference", Key = "FinancialFee.Preference", ParentId = 50107, TypeId = 1 },
+
+                              new Permission { Id = 50108, Name = "FinancialInterest", Key = "FinancialInterest.All", ParentId = 501 },
+                                   new Permission { Id = 5010801, Name = "View", Key = "FinancialInterest.View", ParentId = 50108, TypeId = 1 },
+                                   new Permission { Id = 5010802, Name = "Add", Key = "FinancialInterest.Add", ParentId = 50108, TypeId = 1 },
+                                   new Permission { Id = 5010803, Name = "Edit", Key = "FinancialInterest.Edit", ParentId = 50108, TypeId = 1 },
+                                   new Permission { Id = 5010804, Name = "Delete", Key = "FinancialInterest.Delete", ParentId = 50108, TypeId = 1 },
+                                   new Permission { Id = 5010805, Name = "Preference", Key = "FinancialInterest.Preference", ParentId = 50108, TypeId = 1 },
+
+                              new Permission { Id = 50109, Name = "FinancialCheque", Key = "FinancialCheque.All", ParentId = 501 },
+                                   new Permission { Id = 5010901, Name = "View", Key = "FinancialCheque.View", ParentId = 50109, TypeId = 1 },
+                                   new Permission { Id = 5010902, Name = "Add", Key = "FinancialCheque.Add", ParentId = 50109, TypeId = 1 },
+                                   new Permission { Id = 5010903, Name = "Edit", Key = "FinancialCheque.Edit", ParentId = 50109, TypeId = 1 },
+                                   new Permission { Id = 5010904, Name = "Delete", Key = "FinancialCheque.Delete", ParentId = 50109, TypeId = 1 },
+                                   new Permission { Id = 5010905, Name = "Preference", Key = "FinancialCheque.Preference", ParentId = 50109, TypeId = 1 },
+
+                              new Permission { Id = 50110, Name = "FinancialAdjustment", Key = "FinancialAdjustment.All", ParentId = 501 },
+                                   new Permission { Id = 5011001, Name = "View", Key = "FinancialAdjustment.View", ParentId = 50110, TypeId = 1 },
+                                   new Permission { Id = 5011002, Name = "Add", Key = "FinancialAdjustment.Add", ParentId = 50110, TypeId = 1 },
+                                   new Permission { Id = 5011003, Name = "Edit", Key = "FinancialAdjustment.Edit", ParentId = 50110, TypeId = 1 },
+                                   new Permission { Id = 5011004, Name = "Delete", Key = "FinancialAdjustment.Delete", ParentId = 50110, TypeId = 1 },
+                                   new Permission { Id = 5011005, Name = "Preference", Key = "FinancialAdjustment.Preference", ParentId = 50110, TypeId = 1 },
+                               
                };
+
             foreach (var ob in list)
             {
                 if (!orgContext.Permissions.Any(e => e.Id == ob.Id))
@@ -549,6 +584,11 @@ namespace Infrastructure.Seed
                new Preference { Id = 1611, Key = "StockAccount", Value = "0", Reference = "Transaction", TypeId = 8, Hide = false },
                new Preference { Id = 1612, Key = "InventoryDamageExpenseAccount", Value = "0", Reference = "Transaction", TypeId = 8, Hide = false },
 
+               new Preference { Id = 1700, Key = "DefaultStock", Value = "1", Reference = "Inventory", TypeId = 0, Hide = false },
+               new Preference { Id = 1701, Key = "AutoSave", Value = "0", Reference = "Inventory", TypeId = 0, Hide = false },
+               new Preference { Id = 1702, Key = "TypeSerial", Value = "1", Reference = "Inventory", TypeId = 0, Hide = false },
+               new Preference { Id = 1703, Key = "AutoCreateAdjustment", Value = "0", Reference = "Inventory", TypeId = 0, Hide = false },
+
                new Preference { Id = 801, Key = "NumberLine", Value = "6", Reference = "Order", TypeId = 1, Hide = false },
                new Preference { Id = 802, Key = "OrderTabe", Value = "2", Reference = "Order", TypeId = 1, Hide = false },
                new Preference { Id = 803, Key = "AutoSave", Value = "0", Reference = "Order", TypeId = 1, Hide = false },
@@ -577,39 +617,73 @@ namespace Infrastructure.Seed
                new Preference { Id = 912, Key = "AutoCreateInvoice", Value = "0", Reference = "Order", TypeId = 2, Hide = false },
                new Preference { Id = 913, Key = "DefaultCustomer", Value = "1", Reference = "Order", TypeId = 2, Hide = false },
 
-               new Preference { Id = 1000, Key = "DefaultClient", Value = "1", Reference = "Financial", TypeId = 1, Hide = false },
-               new Preference { Id = 1001, Key = "DefaultSafe", Value = "1", Reference = "Financial", TypeId = 1, Hide = false },
-               new Preference { Id = 1002, Key = "DefaultPaymentType", Value = "1", Reference = "Financial", TypeId = 1, Hide = false },
-               new Preference { Id = 1003, Key = "DefaultCurrency", Value = "1", Reference = "Financial", TypeId = 1, Hide = false },
-               new Preference { Id = 1004, Key = "AutoSave", Value = "0", Reference = "Financial", TypeId = 1, Hide = false },
-               new Preference { Id = 1005, Key = "TypeSerial", Value = "1", Reference = "Financial", TypeId = 1, Hide = false },
+               new Preference { Id = 2000, Key = "SaveLastStatusSetting", Value = "1", Reference = "Financial", TypeId = 1, Hide = false },
+               new Preference { Id = 2001, Key = "AccountsIntegration", Value = "0", Reference = "Financial", TypeId = 1, Hide = false },
+               new Preference { Id = 2002, Key = "AutoCreateJournalEntry", Value = "0", Reference = "Financial", TypeId = 1, Hide = false },
+               new Preference { Id = 2003, Key = "AutoSave", Value = "0", Reference = "Financial", TypeId = 1, Hide = false },
+               new Preference { Id = 2004, Key = "TypeSerial", Value = "1", Reference = "Financial", TypeId = 1, Hide = false },
 
-               new Preference { Id = 1100, Key = "DefaultSupplier", Value = "1", Reference = "Financial", TypeId = 2, Hide = false },
-               new Preference { Id = 1101, Key = "DefaultSafe", Value = "1", Reference = "Financial", TypeId = 2, Hide = false },
-               new Preference { Id = 1102, Key = "DefaultPaymentType", Value = "1", Reference = "Financial", TypeId = 2, Hide = false },
-               new Preference { Id = 1103, Key = "DefaultCurrency", Value = "1", Reference = "Financial", TypeId = 2, Hide = false },
-               new Preference { Id = 1104, Key = "AutoSave", Value = "0", Reference = "Financial", TypeId = 2, Hide = false },
-               new Preference { Id = 1105, Key = "TypeSerial", Value = "1", Reference = "Financial", TypeId = 2, Hide = false },
+               new Preference { Id = 2100, Key = "SaveLastStatusSetting", Value = "1", Reference = "Financial", TypeId = 2, Hide = false },
+               new Preference { Id = 2101, Key = "AccountsIntegration", Value = "0", Reference = "Financial", TypeId = 2, Hide = false },
+               new Preference { Id = 2102, Key = "AutoCreateJournalEntry", Value = "0", Reference = "Financial", TypeId = 2, Hide = false },
+               new Preference { Id = 2103, Key = "AutoSave", Value = "0", Reference = "Financial", TypeId = 2, Hide = false },
+               new Preference { Id = 2104, Key = "TypeSerial", Value = "1", Reference = "Financial", TypeId = 2, Hide = false },
 
-               new Preference { Id = 1200, Key = "DefaultOutlay", Value = "1", Reference = "Financial", TypeId = 3, Hide = false },
-               new Preference { Id = 1201, Key = "DefaultSafe", Value = "1", Reference = "Financial", TypeId = 3, Hide = false },
-               new Preference { Id = 1202, Key = "DefaultPaymentType", Value = "1", Reference = "Financial", TypeId = 3, Hide = false },
-               new Preference { Id = 1203, Key = "DefaultCurrency", Value = "1", Reference = "Financial", TypeId = 3, Hide = false },
-               new Preference { Id = 1204, Key = "AutoSave", Value = "0", Reference = "Financial", TypeId = 3, Hide = false },
-               new Preference { Id = 1205, Key = "TypeSerial", Value = "1", Reference = "Financial", TypeId = 3, Hide = false },
+               new Preference { Id = 2200, Key = "SaveLastStatusSetting", Value = "1", Reference = "Financial", TypeId = 3, Hide = false },
+               new Preference { Id = 2201, Key = "AccountsIntegration", Value = "0", Reference = "Financial", TypeId = 3, Hide = false },
+               new Preference { Id = 2202, Key = "AutoCreateJournalEntry", Value = "0", Reference = "Financial", TypeId = 3, Hide = false },
+               new Preference { Id = 2203, Key = "AutoSave", Value = "0", Reference = "Financial", TypeId = 3, Hide = false },
+               new Preference { Id = 2204, Key = "TypeSerial", Value = "1", Reference = "Financial", TypeId = 3, Hide = false },
 
-               new Preference { Id = 1300, Key = "DefaultStock", Value = "1", Reference = "Inventory", TypeId = 0, Hide = false },
-               new Preference { Id = 1301, Key = "AutoSave", Value = "0", Reference = "Inventory", TypeId = 0, Hide = false },
-               new Preference { Id = 1302, Key = "TypeSerial", Value = "1", Reference = "Inventory", TypeId = 0, Hide = false },
-               new Preference { Id = 1303, Key = "AutoCreateAdjustment", Value = "0", Reference = "Inventory", TypeId = 0, Hide = false },
-               
-               new Preference { Id = 1400, Key = "NumberLine", Value = "2", Reference = "Journal", TypeId = 0, Hide = false },
-               new Preference { Id = 1401, Key = "OrderTabe", Value = "1", Reference = "Journal", TypeId = 0, Hide = false },
-               new Preference { Id = 1402, Key = "AutoSave", Value = "0", Reference = "Journal", TypeId = 0, Hide = false },
-               new Preference { Id = 1403, Key = "TypeSerial", Value = "1", Reference = "Journal", TypeId = 0, Hide = false },
-               new Preference { Id = 1404, Key = "SaveLastStatusSetting", Value = "1", Reference = "Journal", TypeId = 0, Hide = false },
-               new Preference { Id = 1405, Key = "DefaultCurrency", Value = "1", Reference = "Journal", TypeId = 0, Hide = false },
-               new Preference { Id = 1406, Key = "DefaultJournalType", Value = "2", Reference = "Journal", TypeId = 0, Hide = false }
+               new Preference { Id = 2300, Key = "SaveLastStatusSetting", Value = "1", Reference = "Financial", TypeId = 4, Hide = false },
+               new Preference { Id = 2301, Key = "AccountsIntegration", Value = "0", Reference = "Financial", TypeId = 4, Hide = false },
+               new Preference { Id = 2302, Key = "AutoCreateJournalEntry", Value = "0", Reference = "Financial", TypeId = 4, Hide = false },
+               new Preference { Id = 2303, Key = "AutoSave", Value = "0", Reference = "Financial", TypeId = 4, Hide = false },
+               new Preference { Id = 2304, Key = "TypeSerial", Value = "1", Reference = "Financial", TypeId = 4, Hide = false },
+
+               new Preference { Id = 2400, Key = "SaveLastStatusSetting", Value = "1", Reference = "Financial", TypeId = 5, Hide = false },
+               new Preference { Id = 2401, Key = "AccountsIntegration", Value = "0", Reference = "Financial", TypeId = 5, Hide = false },
+               new Preference { Id = 2402, Key = "AutoCreateJournalEntry", Value = "0", Reference = "Financial", TypeId = 5, Hide = false },
+               new Preference { Id = 2403, Key = "AutoSave", Value = "0", Reference = "Financial", TypeId = 5, Hide = false },
+               new Preference { Id = 2404, Key = "TypeSerial", Value = "1", Reference = "Financial", TypeId = 5, Hide = false },
+
+               new Preference { Id = 2500, Key = "SaveLastStatusSetting", Value = "1", Reference = "Financial", TypeId = 6, Hide = false },
+               new Preference { Id = 2501, Key = "AccountsIntegration", Value = "0", Reference = "Financial", TypeId = 6, Hide = false },
+               new Preference { Id = 2502, Key = "AutoCreateJournalEntry", Value = "0", Reference = "Financial", TypeId = 6, Hide = false },
+               new Preference { Id = 2503, Key = "AutoSave", Value = "0", Reference = "Financial", TypeId = 6, Hide = false },
+               new Preference { Id = 2504, Key = "TypeSerial", Value = "1", Reference = "Financial", TypeId = 6, Hide = false },
+
+               new Preference { Id = 2600, Key = "SaveLastStatusSetting", Value = "1", Reference = "Financial", TypeId = 7, Hide = false },
+               new Preference { Id = 2601, Key = "AccountsIntegration", Value = "0", Reference = "Financial", TypeId = 7, Hide = false },
+               new Preference { Id = 2602, Key = "AutoCreateJournalEntry", Value = "0", Reference = "Financial", TypeId = 7, Hide = false },
+               new Preference { Id = 2603, Key = "AutoSave", Value = "0", Reference = "Financial", TypeId = 7, Hide = false },
+               new Preference { Id = 2604, Key = "TypeSerial", Value = "1", Reference = "Financial", TypeId = 7, Hide = false },
+
+               new Preference { Id = 2700, Key = "SaveLastStatusSetting", Value = "1", Reference = "Financial", TypeId = 8, Hide = false },
+               new Preference { Id = 2701, Key = "AccountsIntegration", Value = "0", Reference = "Financial", TypeId = 8, Hide = false },
+               new Preference { Id = 2702, Key = "AutoCreateJournalEntry", Value = "0", Reference = "Financial", TypeId = 8, Hide = false },
+               new Preference { Id = 2703, Key = "AutoSave", Value = "0", Reference = "Financial", TypeId = 8, Hide = false },
+               new Preference { Id = 2704, Key = "TypeSerial", Value = "1", Reference = "Financial", TypeId = 8, Hide = false },
+
+               new Preference { Id = 2800, Key = "SaveLastStatusSetting", Value = "1", Reference = "Financial", TypeId = 9, Hide = false },
+               new Preference { Id = 2801, Key = "AccountsIntegration", Value = "0", Reference = "Financial", TypeId = 9, Hide = false },
+               new Preference { Id = 2802, Key = "AutoCreateJournalEntry", Value = "0", Reference = "Financial", TypeId = 9, Hide = false },
+               new Preference { Id = 2803, Key = "AutoSave", Value = "0", Reference = "Financial", TypeId = 9, Hide = false },
+               new Preference { Id = 2804, Key = "TypeSerial", Value = "1", Reference = "Financial", TypeId = 9, Hide = false },
+
+               new Preference { Id = 2900, Key = "SaveLastStatusSetting", Value = "1", Reference = "Financial", TypeId = 10, Hide = false },
+               new Preference { Id = 2901, Key = "AccountsIntegration", Value = "0", Reference = "Financial", TypeId = 10, Hide = false },
+               new Preference { Id = 2902, Key = "AutoCreateJournalEntry", Value = "0", Reference = "Financial", TypeId = 10, Hide = false },
+               new Preference { Id = 2903, Key = "AutoSave", Value = "0", Reference = "Financial", TypeId = 10, Hide = false },
+               new Preference { Id = 2904, Key = "TypeSerial", Value = "1", Reference = "Financial", TypeId = 10, Hide = false },
+
+               new Preference { Id = 3000, Key = "NumberLine", Value = "2", Reference = "Journal", TypeId = 0, Hide = false },
+               new Preference { Id = 3001, Key = "OrderTabe", Value = "1", Reference = "Journal", TypeId = 0, Hide = false },
+               new Preference { Id = 3002, Key = "AutoSave", Value = "0", Reference = "Journal", TypeId = 0, Hide = false },
+               new Preference { Id = 3003, Key = "TypeSerial", Value = "1", Reference = "Journal", TypeId = 0, Hide = false },
+               new Preference { Id = 3004, Key = "SaveLastStatusSetting", Value = "1", Reference = "Journal", TypeId = 0, Hide = false },
+               new Preference { Id = 3005, Key = "DefaultCurrency", Value = "1", Reference = "Journal", TypeId = 0, Hide = false },
+               new Preference { Id = 3006, Key = "DefaultJournalType", Value = "2", Reference = "Journal", TypeId = 0, Hide = false }
             };
 
             var openingBalancePurchaseAccount = orgContext.Preferences.FirstOrDefault(e =>
@@ -719,9 +793,16 @@ namespace Infrastructure.Seed
         public void InitialFinancialType(OrgContext orgContext)
         {
             List<FinancialType> list = new List<FinancialType> {
-                 new FinancialType { Id = 1, Name = "Collection", Hide = false, InOut = 1, Icon = "iconsminds-financial" },
-                 new FinancialType { Id = 2, Name = "Payment", Hide = false, InOut = -1, Icon = "iconsminds-handshake" },
-                 new FinancialType { Id = 3, Name = "Outlay", Hide = false, InOut = -1, Icon = "iconsminds-wallet" }
+                 new FinancialType { Id = 1, Name = "OpeningBalance", Hide = false, InOut = 1, Icon = "iconsminds-start-2" },
+                 new FinancialType { Id = 2, Name = "Receipt", Hide = false, InOut = 1, Icon = "iconsminds-financial" },
+                 new FinancialType { Id = 3, Name = "Payment", Hide = false, InOut = -1, Icon = "iconsminds-handshake" },
+                 new FinancialType { Id = 4, Name = "Transfer", Hide = false, InOut = 0, Icon = "simple-icon-shuffle" },
+                 new FinancialType { Id = 5, Name = "Deposit", Hide = false, InOut = 1, Icon = "iconsminds-down-1" },
+                 new FinancialType { Id = 6, Name = "Withdrawal", Hide = false, InOut = -1, Icon = "iconsminds-up-1" },
+                 new FinancialType { Id = 7, Name = "Fee", Hide = false, InOut = -1, Icon = "iconsminds-receipt-4" },
+                 new FinancialType { Id = 8, Name = "Interest", Hide = false, InOut = 1, Icon = "iconsminds-line-chart-1" },
+                 new FinancialType { Id = 9, Name = "Cheque", Hide = false, InOut = 0, Icon = "iconsminds-check" },
+                 new FinancialType { Id = 10, Name = "Adjustment", Hide = false, InOut = 0, Icon = "iconsminds-gear" }
             };
 
             foreach (var ob in list)

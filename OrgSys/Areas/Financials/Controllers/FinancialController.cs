@@ -14,6 +14,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.Xml;
 using System.Threading.Tasks;
+using System.Net.Http.Json;
+using System.Net.Http;
 
 namespace OrgSys.Areas.Financial.Controllers
 {
@@ -23,11 +25,8 @@ namespace OrgSys.Areas.Financial.Controllers
     {
         public override async Task LoadViewBagIndex(long ParentId = 0, long TypeId = 0)
         {
-
-            //var type = new FinancialTypeService(User.GetSchema()).Get(TypeId);
-            var type = await GetObApi<FinancialTypeDto>($"GetById?Id={TypeId}");
-            ViewBag.FinancialsType = type.Name;
-            ViewBag.FinancialsIcon = type.Icon;
+            ViewBag.FinancialsType = "Financial Transactions";
+            ViewBag.FinancialsIcon = "iconsminds-coins";
         }
 
         public override Task<FinancialDto> FixData(FinancialDto ob)
@@ -47,76 +46,74 @@ namespace OrgSys.Areas.Financial.Controllers
         public override async Task LoadViewBag(FinancialDto model)
         {
 
-            //await GetListApi<InvoiceModelView>($"GetList?ParentId={model.ParentId}");
-            //ViewBag.OutlayId = new SelectList(new OutlayService(User.GetSchema()).GetAll(model.ParentId, 0, 1, 20), "Id", "Name", model.OutlayId);
-            ViewBag.OutlayId = new SelectList( await GetListApi<OutlayDto>($"GetList?ParentId={model.ParentId}"), "Id", "Name", model.OutlayId);
-            //ViewBag.CurrencyId = new SelectList(new CurrencyService(User.GetSchema()).GetAll(model.ParentId, 0, 1, 20), "Id", "Name", model.CurrencyId);
+            using var client = new HttpClient();
+            var accountsResponse = await client.GetAsync($"{configuration["ApiUrl"]}/Financial/Accounts");
+            accountsResponse.EnsureSuccessStatusCode();
+            var accountsResult = JsonConvert.DeserializeObject<ResultCollection<FinancialAccountDto>>(
+                await accountsResponse.Content.ReadAsStringAsync());
+            ViewBag.FinancialAccountId = new SelectList(accountsResult?.Response ?? [], "Id", "Name", model.FinancialAccountId);
+
+            ViewBag.FinancialTypeId = new SelectList(await GetListApi<FinancialTypeDto>(), "Id", "Name", model.FinancialTypeId);
+
+            ViewBag.CounterAccountId = new SelectList(await GetListApi<AccountDto>(), "Id", "Name", model.CounterAccountId);
             ViewBag.CurrencyId = new SelectList(await GetListApi<CurrencyDto>() , "Id", "Name", model.CurrencyId);
-            //ViewBag.PaymentTypeId = new SelectList(new PaymentTypeService(User.GetSchema()).GetAll(model.ParentId, 0, 1, 20), "Id", "Name", model.PaymentTypeId);
-            ViewBag.PaymentTypeId = new SelectList(await GetListApi<PaymentTypeDto>(), "Id", "Name", model.PaymentTypeId);
-            //ViewBag.SafeId = new SelectList(new SafeService(User.GetSchema()).GetAll(model.ParentId, 0, 1, 20), "Id", "Name", model.SafeId);
-            ViewBag.SafeId = new SelectList( await GetListApi<SafeDto>($"GetList?ParentId={model.ParentId}") , "Id", "Name", model.SafeId);
-            //var type = new TransactionTypeService(User.GetSchema()).Get(model.TypeId);
-            var type = await GetObApi<TransactionTypeDto>($"GetById?Id={model.TypeId}");
-            ViewBag.TransactionsType = type.Name;
-            ViewBag.TransactionsType = type.Icon;
         }
 
 
         public override async Task<FinancialDto> InitializeData(FinancialDto ob)
         {
 
-
-            //var setting = new PreferenceService(User.GetSchema());
-            var setting = await GetListApi<PreferenceDto>(TypeId: ob.TypeId, TextSearch: "Financial", PageSize: 1000);
-
-
-            //var SafeId = long.Parse("0" + setting.GetByKey("DefaultSafe", "Financial", ob.TypeId, 0)?.Value);
-            var SafeId = long.Parse("0" + setting.FirstOrDefault(e => e.Key == "DefaultSafe")?.Value);
-            //var PaymentTypeId = long.Parse("0" + setting.GetByKey("DefaultPaymentType", "Financial", ob.TypeId, 0)?.Value);
-            var PaymentTypeId = long.Parse("0" + setting.FirstOrDefault(e => e.Key == "DefaultPaymentType")?.Value);
-            //var CurrencyId = long.Parse("0" + setting.GetByKey("DefaultCurrency", "Financial", ob.TypeId, 0)?.Value);
-            var CurrencyId = long.Parse("0" + setting.FirstOrDefault(e => e.Key == "DefaultCurrency")?.Value);
-            //var OutlayId = long.Parse("0" + setting.GetByKey("DefaultOutlay", "Financial", ob.TypeId, 0)?.Value);
-            var OutlayId = long.Parse("0" + setting.FirstOrDefault(e => e.Key == "DefaultOutlay")?.Value);
-
-            long DealerId = 0;
-            if (ob.TypeId == 1)
-                //DealerId = long.Parse("0" + setting.GetByKey("DefaultSupplier", "Financial", ob.TypeId, 0)?.Value);
-                DealerId = long.Parse("0" + setting.FirstOrDefault(e => e.Key == "DefaultClient")?.Value);
-            else if (ob.TypeId == 2)
-                //DealerId = long.Parse("0" + setting.FirstOrDefault(e => e.Key == "DefaultCustomer")?.Value);
-                DealerId = long.Parse("0" + setting.FirstOrDefault(e => e.Key == "DefaultSupplier")?.Value);
-
-            //ViewBag.AutoSave = int.Parse("0" + setting.GetByKey("AutoSave", "Financial", ob.TypeId, 0)?.Value);
-            ViewBag.AutoSave = int.Parse("0" + setting.FirstOrDefault(e => e.Key == "AutoSave")?.Value);
-            var TypeCode = int.Parse("0" + setting.FirstOrDefault(e => e.Key == "TypeSerial")?.Value);
-            //var TypeCode = int.Parse("0" + setting.FirstOrDefault(e => e.Key == "TypeSerial")?.Value);
-            ViewBag.TypeSerial = TypeCode;
-
-            if (ob == null)
-                ob = new FinancialDto();
-
             if (ob.Id == 0)
             {
-                //ob.CodeNumber = new FinancialService(User.GetSchema()).GetMaxCode(ob.TypeId);
-                ob.CodeNumber = long.Parse("0" + await GetValueApi<FinancialDto>($"GetMax?ParentId=0&TypeId={ob.TypeId}")) + 1;
-                ob.Code = "" + ob.CodeNumber;
-                ob.SafeId = SafeId;
-                ob.DealerId = DealerId;
-                ob.CurrencyId = long.Parse("0" + CurrencyId);
-                //ob.Rate = new CurrencyService(User.GetSchema()).Get(long.Parse("0" + CurrencyId))?.Rate??0;
-                ob.Rate = (await GetObApi<CurrencyDto>($"GetById?Id={CurrencyId}")).Rate;
-                ob.PaymentTypeId = PaymentTypeId;
-                ob.OutlayId = OutlayId;
-                ob.Date = DateTime.Now;
-                ob.FinancialInvoiceList = new List<FinancialInvoiceDto>();
+                ob.Date = DateTime.Today;
+                ob.Rate = 1;
+                ob.Direction = FinancialTransactionDirection.In;
+                ob.FinancialTypeId = ob.TypeId > 0 ? ob.TypeId : 1;
+                ob.ReferenceType = FinancialReferenceType.Other;
             }
 
-            //ob.SafeName = new SafeService(User.GetSchema()).Get(ob.SafeId)?.Name;
-            ob.SafeName = (await GetObApi<SafeDto>($"GetById?Id={ob.SafeId}"))?.Name;
-            ob.DealerName = (await GetObApi<DealerDto>($"GetById?Id={ob.DealerId ?? 0}"))?.Name;
             return ob;
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public override async Task<ActionResult> Save(FinancialDto ob)
+        {
+            if (ob.FinancialAccountId is null or <= 0)
+                ModelState.AddModelError(nameof(ob.FinancialAccountId), "Financial account is required.");
+            if (ob.FinancialTypeId is null or <= 0)
+                ModelState.AddModelError(nameof(ob.FinancialTypeId), "Financial type is required.");
+            if (ob.Amount <= 0)
+                ModelState.AddModelError(nameof(ob.Amount), "Amount must be greater than zero.");
+            if (ob.CounterAccountId <= 0)
+                ModelState.AddModelError(nameof(ob.CounterAccountId), "Counter GL account is required.");
+
+            if (ModelState.IsValid)
+            {
+                var command = new PostFinancialTransactionDto
+                {
+                    FinancialAccountId = ob.FinancialAccountId!.Value,
+                    FinancialTypeId = ob.FinancialTypeId!.Value,
+                    Direction = ob.Direction ?? FinancialTransactionDirection.In,
+                    Amount = ob.Amount,
+                    CurrencyId = ob.CurrencyId,
+                    ExchangeRate = ob.Rate,
+                    TransactionDate = ob.Date,
+                    ReferenceType = ob.ReferenceType,
+                    ReferenceId = ob.ReferenceId,
+                    CounterAccountId = ob.CounterAccountId,
+                    Description = ob.Notes,
+                    CreateUserId = User.GetUserId(),
+                    BranchId = ob.BranchId,
+                    ShiftId = ob.ShiftId
+                };
+                using var client = new HttpClient();
+                var response = await client.PostAsJsonAsync($"{configuration["ApiUrl"]}/Financial/Transactions/Post", command);
+                if (response.IsSuccessStatusCode)
+                    return RedirectToAction(nameof(Index), new { TypeId = command.FinancialTypeId, status = ResultStatus.success, MsgError = "Success" });
+                ModelState.AddModelError(string.Empty, await response.Content.ReadAsStringAsync());
+            }
+            await LoadViewBag(ob);
+            return View(ob);
         }
 
         public async Task<ActionResult> Cancel(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1)

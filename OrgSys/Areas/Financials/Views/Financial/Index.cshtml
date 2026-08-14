@@ -1,4 +1,4 @@
-﻿@model Domain.Shared.ResultPagination<Application.DTOs.FinancialDto>
+@model Domain.Shared.ResultPagination<Application.DTOs.FinancialDto>
 @{
     ViewData["Title_Designer"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -8,18 +8,7 @@
     <div class="row">
         <div class="col-12">
             <div class="mb-2">
-                @if (ViewBag.TypeId == 1)
-                {
-                    <h1> <i class="@ViewBag.FinancialsIcon rounded-circle badge-theme-1  p-1"></i> @Domain.Resource.Title_Designer.Collection </h1>
-                }
-                else if (ViewBag.TypeId == 2)
-                {
-                    <h1> <i class="@ViewBag.FinancialsIcon rounded-circle badge-theme-1  p-1"></i> @Domain.Resource.Title_Designer.Payment</h1>
-                }
-                else if (ViewBag.TypeId == 3)
-                {
-                    <h1> <i class="@ViewBag.FinancialsIcon rounded-circle badge-theme-1  p-1"></i> @Domain.Resource.Title_Designer.Outlay</h1>
-                }
+                <h1>Journal</h1>
                 <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
                     <ol class="breadcrumb pt-0">
                         <li class="breadcrumb-item">
@@ -29,7 +18,7 @@
                             @Domain.Resource.Title_Designer.Financial
                         </li>
                         <li class="breadcrumb-item">
-                            @Domain.Resource.Title_Designer.Safe_Notices
+                            Financial
                         </li>                       
                     </ol>
                 </nav>

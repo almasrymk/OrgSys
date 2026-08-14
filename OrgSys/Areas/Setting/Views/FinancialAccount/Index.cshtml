@@ -1,0 +1,17 @@
+@model List<Application.DTOs.FinancialAccountDto>
+@using Domain.Enums
+@{ Layout = "~/Views/Shared/_Layout.cshtml"; ViewData["Title_Designer"] = "Financial Accounts"; }
+<div class="container-fluid disable-text-selection">
+ <div class="row"><div class="col-12"><div class="mb-2"><h1>Financial Accounts</h1>
+  <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block"><ol class="breadcrumb pt-0"><li class="breadcrumb-item"><a href="/">Home</a></li><li class="breadcrumb-item">Settings</li><li class="breadcrumb-item">Financial</li></ol></nav>
+ </div><div class="d-flex justify-content-between mb-3">
+  <a href="/Setting/FinancialAccount/Save" class="btn btn-outline-primary"><i class="iconsminds-folder-add--"></i> Add</a>
+  <div class="d-flex"><select id="accountType" class="form-control mr-2"><option value="">All types</option><option value="1">Cash Box</option><option value="2">Bank</option></select><div class="search-text"><input id="txtSearch" value="@ViewBag.Search" placeholder="Text search..."><span class="search-icon"><i class="simple-icon-magnifier"></i></span></div></div>
+ </div></div></div>
+ <div class="row"><div id="List" class="col-12">@await Html.PartialAsync("List", Model)</div></div>
+</div>
+<script src="~/js/vendor/jquery-3.3.1.min.js"></script>
+<script>
+ function loadAccounts(){ $.get('/Setting/FinancialAccount',{search:$('#txtSearch').val(),accountType:$('#accountType').val()},function(x){$('#List').html(x);}); }
+ $('#txtSearch').on('keyup',loadAccounts); $('#accountType').on('change',loadAccounts);
+</script>

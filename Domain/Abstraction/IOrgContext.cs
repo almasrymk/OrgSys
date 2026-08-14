@@ -38,8 +38,10 @@
         DbSet<Table> Tables { get; set; }
         DbSet<Safe> Safes { get; set; }
         DbSet<Financial> Financials { get; set; }
+        DbSet<FinancialAccount> FinancialAccounts { get; set; }
+        DbSet<FinancialType> FinancialTypes { get; set; }
+        DbSet<FinancialTransfer> FinancialTransfers { get; set; }
         DbSet<FinancialInvoice> FinancialInvoices { get; set; }
-        //DbSet<FinancialType> FinancialTypes { get; set; }
         DbSet<Outlay> Outlays { get; set; }
         DbSet<Currency> Currencys { get; set; }
         DbSet<RolePermission> RolePermissions { get; set; }

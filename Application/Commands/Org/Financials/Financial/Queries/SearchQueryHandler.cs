@@ -19,15 +19,18 @@
             PageSize = request.PageSize;
 
             return e => 
-            (string.IsNullOrEmpty(request.KeySearch) || e.Code!.Contains(request.KeySearch)) &&
+            (string.IsNullOrEmpty(request.KeySearch) ||
+             (e.Code != null && e.Code.Contains(request.KeySearch)) ||
+             (e.Notes != null && e.Notes.Contains(request.KeySearch)) ||
+             (e.FinancialAccount != null && e.FinancialAccount.Name.Contains(request.KeySearch))) &&
             (request.ParentId ==0 || e.ParentId == request.ParentId) &&
-            (request.TypeId == 0 || e.TypeId == request.TypeId) &&
+            (request.TypeId == 0 || e.FinancialTypeId == request.TypeId) &&
             e.Status != Domain.Enums.Status.Deleted && e.Hide != true;
         }
 
         public override string CreateInclude()
         {
-            return "Dealer,Safe,Currency";
+            return "Dealer,Safe,Currency,FinancialAccount,FinancialType,Journal";
         }
 
         override public Func<IQueryable<Domain.Entities.Financial>, IOrderedQueryable<Domain.Entities.Financial>> CreateOrderBy(SearchFinancialQuery request)

@@ -1,4 +1,5 @@
 ﻿@{
+    var financialTypes = Model as IReadOnlyList<Application.DTOs.FinancialTypeDto> ?? [];
     var collapseOrganization = (new[] { "Branch", "Stock", "Table" }).Any(c => c.Equals(ViewContext.RouteData.Values["controller"].ToString()));
 }
 
@@ -39,7 +40,7 @@
                         </a>
                     </li>
                 }
-                @if (User.IsAllowed("Damaged.All,OpeningBalance.All,Addition.All,Issue.All,Transafer.All,Received.All,Inventory.All"))
+                @if (User.IsAllowed("Damaged.All,StockOpeningBalance.All,Addition.All,Issue.All,Transafer.All,Received.All,Inventory.All"))
                 {
                     <li>
                         <a href="#Transaction">
@@ -47,7 +48,7 @@
                         </a>
                     </li>
                 }
-                @if (User.IsAllowed("Collection.All,Payment.All,Outlay.All"))
+                @if (User.IsAllowed("FinancialOpeningBalance.All,FinancialReceipt.All,FinancialPayment.All,FinancialTransfer.All,FinancialDeposit.All,FinancialWithdrawal.All,FinancialFee.All,FinancialInterest.All,FinancialCheque.All,FinancialAdjustment.All,Journal.All"))
                 {
                     <li>
                         <a href="#Financial">
@@ -261,6 +262,11 @@
                                     }
                                     @if (User.IsAllowed("AccountBanks.All"))
                                     {
+                                        <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "FinancialAccount" ? "active" : "")">
+                                            <a href="/Setting/FinancialAccount">
+                                                <i class="iconsminds-coins"></i> <span class="d-inline-block">Financial Accounts</span>
+                                            </a>
+                                        </li>
                                         <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "AccountBank" ? "active" : "")">
                                             <a href="/Setting/AccountBank">
                                                 <i class="iconsminds-safe-box"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.AccountBanks</span>
@@ -451,7 +457,7 @@
                     </li>
                 </ul>
             }
-            @if (User.IsAllowed("Damaged.All,OpeningBalance.All,Addition.All,Issue.All,Transafer.All,Received.All,Inventory.All"))
+            @if (User.IsAllowed("Damaged.All,StockOpeningBalance.All,Addition.All,Issue.All,Transafer.All,Received.All,Inventory.All"))
             {
                 <ul class="list-unstyled" data-link="Transaction" id="Transaction">
                     <li>
@@ -461,7 +467,7 @@
                         </a>
                         <div id="collapseTransaction" class="collapse">
                             <ul class="list-unstyled inner-level-menu">                              
-                                @if (User.IsAllowed("OpeningBalance.All"))
+                                @if (User.IsAllowed("StockOpeningBalance.All"))
                                 {
                                     <li>
                                         <a href="/Transactions/Transaction?TypeId=7">
@@ -558,7 +564,7 @@
                     </li>
                 </ul>
             }
-            @if (User.IsAllowed("Collection.All,Payment.All,Outlay.All,Journal.All"))
+            @if (User.IsAllowed("FinancialOpeningBalance.All,FinancialReceipt.All,FinancialPayment.All,FinancialTransfer.All,FinancialDeposit.All,FinancialWithdrawal.All,FinancialFee.All,FinancialInterest.All,FinancialCheque.All,FinancialAdjustment.All,Journal.All"))
             {
                 <ul class="list-unstyled" data-link="Financial" id="Financial">
                     <li>
@@ -567,37 +573,87 @@
                             <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">Safe Notices</span>
                         </a>
                         <div id="collapseFinancial1" class="collapse show">
-                            <ul class="list-unstyled inner-level-menu">
-                                @if (User.IsAllowed("Collection.All"))
+                            <ul class="list-unstyled inner-level-menu">                              
+                                @if (User.IsAllowed("FinancialOpeningBalance.All"))
                                 {
                                     <li>
                                         <a href="/Financials/Financial?TypeId=1">
-                                            <i class="iconsminds-financial"></i> <span class="d-inline-block">
-                                                @Domain.Resource.Title_Designer.Collection
-                                            </span>
+                                            <i class="iconsminds-start-2"></i> <span class="d-inline-block">Opening Balance</span>
                                         </a>
                                     </li>
                                 }
-                                @if (User.IsAllowed("Payment.All"))
+                                @if (User.IsAllowed("FinancialReceipt.All"))
                                 {
                                     <li>
                                         <a href="/Financials/Financial?TypeId=2">
-                                            <i class="iconsminds-handshake"></i> <span class="d-inline-block">
-                                                @Domain.Resource.Title_Designer.Payment
-                                            </span>
+                                            <i class="iconsminds-financial"></i> <span class="d-inline-block">Receipt</span>
                                         </a>
                                     </li>
                                 }
-                                @if (User.IsAllowed("Outlay.All"))
+                                @if (User.IsAllowed("FinancialPayment.All"))
                                 {
                                     <li>
                                         <a href="/Financials/Financial?TypeId=3">
-                                            <i class="iconsminds-wallet"></i> <span class="d-inline-block">
-                                                @Domain.Resource.Title_Designer.Outlay
-                                            </span>
+                                            <i class="iconsminds-handshake"></i> <span class="d-inline-block">Payment</span>
                                         </a>
                                     </li>
-                                }                              
+                                }
+                                @if (User.IsAllowed("FinancialTransfer.All"))
+                                {
+                                    <li>
+                                        <a href="/Financials/Financial?TypeId=4">
+                                            <i class="simple-icon-shuffle"></i> <span class="d-inline-block">Transfer</span>
+                                        </a>
+                                    </li>
+                                }
+                                @if (User.IsAllowed("FinancialDeposit.All"))
+                                {
+                                    <li>
+                                        <a href="/Financials/Financial?TypeId=5">
+                                            <i class="iconsminds-down-1"></i> <span class="d-inline-block">Deposit</span>
+                                        </a>
+                                    </li>
+                                }
+                                @if (User.IsAllowed("FinancialWithdrawal.All"))
+                                {
+                                    <li>
+                                        <a href="/Financials/Financial?TypeId=6">
+                                            <i class="iconsminds-up-1"></i> <span class="d-inline-block">Withdrawal</span>
+                                        </a>
+                                    </li>
+                                }
+                                @if (User.IsAllowed("FinancialFee.All"))
+                                {
+                                    <li>
+                                        <a href="/Financials/Financial?TypeId=7">
+                                            <i class="iconsminds-receipt-4"></i> <span class="d-inline-block">Fee</span>
+                                        </a>
+                                    </li>
+                                }
+                                @if (User.IsAllowed("FinancialInterest.All"))
+                                {
+                                    <li>
+                                        <a href="/Financials/Financial?TypeId=8">
+                                            <i class="iconsminds-line-chart-1"></i> <span class="d-inline-block">Interest</span>
+                                        </a>
+                                    </li>
+                                }
+                                @if (User.IsAllowed("FinancialCheque.All"))
+                                {
+                                    <li>
+                                        <a href="/Financials/Financial?TypeId=9">
+                                            <i class="iconsminds-check"></i> <span class="d-inline-block">Cheque</span>
+                                        </a>
+                                    </li>
+                                }
+                                @if (User.IsAllowed("FinancialAdjustment.All"))
+                                {
+                                    <li>
+                                        <a href="/Financials/Financial?TypeId=10">
+                                            <i class="iconsminds-gear"></i> <span class="d-inline-block">Adjustment</span>
+                                        </a>
+                                    </li>
+                                }
                             </ul>
                         </div>
                     </li>

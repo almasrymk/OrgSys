@@ -371,7 +371,7 @@
     </nav>
     @if (User.Identity.IsAuthenticated)
     {
-        @Html.Partial("_MainMenu")
+        @await Component.InvokeAsync("MainMenu")
     }
     <main style="margin-top:110px !important;">
         @RenderBody()

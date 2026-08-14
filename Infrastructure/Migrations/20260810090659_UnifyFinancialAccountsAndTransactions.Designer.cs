@@ -4,6 +4,7 @@ using Infrastructure.Persistence.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(OrgContext))]
-    partial class OrgContextModelSnapshot : ModelSnapshot
+    [Migration("20260810090659_UnifyFinancialAccountsAndTransactions")]
+    partial class UnifyFinancialAccountsAndTransactions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -748,10 +751,10 @@ namespace Infrastructure.Migrations
                     b.Property<long?>("FinancialAccountId")
                         .HasColumnType("bigint");
 
-                    b.Property<long?>("FinancialTransferId")
+                    b.Property<long?>("FinancialTransactionTypeId")
                         .HasColumnType("bigint");
 
-                    b.Property<long?>("FinancialTypeId")
+                    b.Property<long?>("FinancialTransferId")
                         .HasColumnType("bigint");
 
                     b.Property<bool>("HasJournal")
@@ -829,9 +832,9 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("FinancialAccountId");
 
-                    b.HasIndex("FinancialTransferId");
+                    b.HasIndex("FinancialTransactionTypeId");
 
-                    b.HasIndex("FinancialTypeId");
+                    b.HasIndex("FinancialTransferId");
 
                     b.HasIndex("JournalId");
 
@@ -957,6 +960,45 @@ namespace Infrastructure.Migrations
                     b.HasIndex("InvoiceId");
 
                     b.ToTable("FinancialInvoice");
+                });
+
+            modelBuilder.Entity("Domain.Entities.FinancialTransactionType", b =>
+                {
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FinancialTransactionType");
                 });
 
             modelBuilder.Entity("Domain.Entities.FinancialTransfer", b =>
@@ -3216,13 +3258,13 @@ namespace Infrastructure.Migrations
                         .HasForeignKey("FinancialAccountId")
                         .OnDelete(DeleteBehavior.Restrict);
 
+                    b.HasOne("Domain.Entities.FinancialTransactionType", "FinancialTransactionType")
+                        .WithMany()
+                        .HasForeignKey("FinancialTransactionTypeId");
+
                     b.HasOne("Domain.Entities.FinancialTransfer", "FinancialTransfer")
                         .WithMany("Transactions")
                         .HasForeignKey("FinancialTransferId");
-
-                    b.HasOne("Domain.Entities.FinancialType", "FinancialType")
-                        .WithMany()
-                        .HasForeignKey("FinancialTypeId");
 
                     b.HasOne("Domain.Entities.Journal", "Journal")
                         .WithMany()
@@ -3264,9 +3306,9 @@ namespace Infrastructure.Migrations
 
                     b.Navigation("FinancialAccount");
 
-                    b.Navigation("FinancialTransfer");
+                    b.Navigation("FinancialTransactionType");
 
-                    b.Navigation("FinancialType");
+                    b.Navigation("FinancialTransfer");
 
                     b.Navigation("Journal");
 

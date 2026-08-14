@@ -26,5 +26,21 @@
         public virtual long? AccountId { get; set; }
        
         public virtual Account? Account { get; set; }
+
+        [ForeignKey(nameof(FinancialAccount))]
+        public virtual long? FinancialAccountId { get; set; }
+        public virtual FinancialAccount? FinancialAccount { get; set; }
+
+        [StringLength(100)]
+        public string? AccountNumber { get; set; }
+
+        [StringLength(34)]
+        public string? IBAN { get; set; }
+
+        [StringLength(11)]
+        public string? SwiftCode { get; set; }
+
+        [StringLength(100)]
+        public string? BranchName { get; set; }
     }
 }

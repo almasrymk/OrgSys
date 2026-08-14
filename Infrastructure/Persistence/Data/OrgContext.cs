@@ -48,9 +48,29 @@
          
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Journal>()
                 .Property(journal => journal.Rate)
                 .HasPrecision(18, 2);
+
+            modelBuilder.Entity<Safe>()
+                .HasOne(e => e.FinancialAccount).WithOne(e => e.CashBox)
+                .HasForeignKey<Safe>(e => e.FinancialAccountId).OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<AccountBank>()
+                .HasOne(e => e.FinancialAccount).WithOne(e => e.BankAccount)
+                .HasForeignKey<AccountBank>(e => e.FinancialAccountId).OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Financial>()
+                .HasOne(e => e.FinancialAccount).WithMany()
+                .HasForeignKey(e => e.FinancialAccountId).OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Financial>()
+                .HasOne(e => e.ContraFinancialAccount).WithMany()
+                .HasForeignKey(e => e.ContraFinancialAccountId).OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<FinancialTransfer>()
+                .HasOne(e => e.FromFinancialAccount).WithMany()
+                .HasForeignKey(e => e.FromFinancialAccountId).OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<FinancialTransfer>()
+                .HasOne(e => e.ToFinancialAccount).WithMany()
+                .HasForeignKey(e => e.ToFinancialAccountId).OnDelete(DeleteBehavior.Restrict);
         }
 
         public Task BeginTransactionAsync()
@@ -101,6 +121,8 @@
         public virtual DbSet<Table> Tables { get; set; }
         public virtual DbSet<Safe> Safes { get; set; }
         public virtual DbSet<Financial> Financials { get; set; }
+        public virtual DbSet<FinancialAccount> FinancialAccounts { get; set; }
+        public virtual DbSet<FinancialTransfer> FinancialTransfers { get; set; }
         public virtual DbSet<FinancialInvoice> FinancialInvoices { get; set; }
         public virtual DbSet<FinancialType> FinancialTypes { get; set; }
         public virtual DbSet<Outlay> Outlays { get; set; }

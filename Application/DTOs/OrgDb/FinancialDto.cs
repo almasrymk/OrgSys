@@ -16,6 +16,8 @@ namespace Application.DTOs
 
         public string? CurrencyName { get; set; }
 
+        public long CounterAccountId { get; set; }
+
         public List<FinancialInvoiceDto>? FinancialInvoiceList { get; set; }
     }
 }

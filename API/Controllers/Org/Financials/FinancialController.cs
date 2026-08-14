@@ -1,7 +1,9 @@
 ﻿using Application.Commands.Org.Financials.Financial.Commands;
 using Application.Commands.Org.Financials.Financial.Queries;
+using Application.Commands.Org.Financials.Unified;
 using Domain.Shared;
 using Application.DTOs;
+using Domain.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,6 +26,38 @@ namespace API.Controllers.Org.Financials
         public async Task<Result> Cancel(long Id, CancellationToken cancellationToken)
         {
             return await sender.Send(new CancelFinancialCommand(Id), cancellationToken);
+        }
+
+        [HttpGet("Accounts")]
+        public Task<ResultCollection<FinancialAccountDto>> Accounts(
+            FinancialAccountType? accountType,
+            CancellationToken cancellationToken)
+        {
+            return sender.Send(new GetFinancialAccountsQuery(accountType), cancellationToken);
+        }
+
+        [HttpGet("Accounts/{financialAccountId:long}/Balance")]
+        public Task<Result<decimal>> Balance(
+            long financialAccountId,
+            CancellationToken cancellationToken)
+        {
+            return sender.Send(new GetFinancialAccountBalanceQuery(financialAccountId), cancellationToken);
+        }
+
+        [HttpPost("Accounts")]
+        public Task<Result> SaveAccount(
+            [FromBody] FinancialAccountDto account,
+            CancellationToken cancellationToken)
+        {
+            return sender.Send(new SaveFinancialAccountCommand(account), cancellationToken);
+        }
+
+        [HttpPost("Transactions/Post")]
+        public Task<Result> PostTransaction(
+            [FromBody] PostFinancialTransactionDto transaction,
+            CancellationToken cancellationToken)
+        {
+            return sender.Send(new PostFinancialTransactionCommand(transaction), cancellationToken);
         }
     }
 }

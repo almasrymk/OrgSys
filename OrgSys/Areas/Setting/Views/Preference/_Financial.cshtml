@@ -1,7 +1,7 @@
 @model List<Application.DTOs.PreferenceDto>
 
                 <div class="form-row">
-                    @if (ViewBag.type == 1)
+                    @if (ViewBag.type == 2)
                     {
                         <div class="form-group col-md-4">
                             <label>@Domain.Resource.Title_Designer.DefaultClient</label>
@@ -16,7 +16,7 @@
                             </div>
                         </div>
                     }
-                    else if (ViewBag.type == 2)
+                    else if (ViewBag.type == 3)
                     {
                         <div class="form-group col-md-4">
                             <label>@Domain.Resource.Title_Designer.DefaultSupplier</label>
