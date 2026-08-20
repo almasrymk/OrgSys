@@ -923,7 +923,16 @@ namespace Domain.Resource {
                 return ResourceManager.GetString("End", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to End Date.
+        /// </summary>
+        public static string EndDate {
+            get {
+                return ResourceManager.GetString("EndDate", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to English.
         /// </summary>
@@ -1040,7 +1049,52 @@ namespace Domain.Resource {
                 return ResourceManager.GetString("FinancialType", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Fiscal Year.
+        /// </summary>
+        public static string FiscalYear {
+            get {
+                return ResourceManager.GetString("FiscalYear", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Fiscal Years.
+        /// </summary>
+        public static string FiscalYears {
+            get {
+                return ResourceManager.GetString("FiscalYears", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Fiscal Period.
+        /// </summary>
+        public static string FiscalPeriod {
+            get {
+                return ResourceManager.GetString("FiscalPeriod", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Fiscal Periods.
+        /// </summary>
+        public static string FiscalPeriods {
+            get {
+                return ResourceManager.GetString("FiscalPeriods", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Period Number.
+        /// </summary>
+        public static string PeriodNumber {
+            get {
+                return ResourceManager.GetString("PeriodNumber", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Forget Password.
         /// </summary>
@@ -1220,7 +1274,16 @@ namespace Domain.Resource {
                 return ResourceManager.GetString("Invoices", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Is Current.
+        /// </summary>
+        public static string IsCurrent {
+            get {
+                return ResourceManager.GetString("IsCurrent", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Is Default.
         /// </summary>
@@ -2327,7 +2390,25 @@ namespace Domain.Resource {
                 return ResourceManager.GetString("Start", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Start Date.
+        /// </summary>
+        public static string StartDate {
+            get {
+                return ResourceManager.GetString("StartDate", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Status.
+        /// </summary>
+        public static string Status {
+            get {
+                return ResourceManager.GetString("Status", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to START NOW.
         /// </summary>

@@ -1,0 +1,326 @@
+@model Application.DTOs.FiscalYearDto
+@using System.Globalization
+@using OrgSys
+@{
+    ViewData["Title_Designer"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var IsRightToLeft = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft;
+    var formateDate = IsRightToLeft ? "{0:yyyy/MM/dd}" : "{0:dd/MM/yyyy}";
+    var periodStatusList = Html.GetEnumSelectList<Domain.Enums.FiscalPeriodStatus>();
+}
+
+<div id="HPage" class="container-fluid">
+    <h1> @Domain.Resource.Title_Designer.FiscalYear</h1>
+    <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
+        <ol class="breadcrumb pt-0">
+            <li class="breadcrumb-item">
+                <a href="/">@Domain.Resource.Title_Designer.Home</a>
+            </li>
+            <li class="breadcrumb-item">
+                @Domain.Resource.Title_Designer.Setting
+            </li>
+            <li class="breadcrumb-item">
+                @Domain.Resource.Title_Designer.Financial
+            </li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        <div class="col-xl-12 col-lg-12 mb-4">
+            <div class="card h-100">
+
+                <div class="card p-4">
+                    <div class="d-md-block" id="displayOptions">
+                        <h3 class="mr-4 mb-2 ml-4 d-inline-block float-md-left">
+                            @if (Model != null || Model.Id == 0)
+                            {
+                                <span class="mb-4"> @Domain.Resource.Title_Designer.New ...</span>
+                            }
+                            else
+                            {
+                                <span class="mb-4"> @Domain.Resource.Title_Designer.Edit ...</span>
+                            }
+                        </h3>
+                        <div class="position-absolute card-top-buttons">
+                            <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId" class="btn btn-primary"><i class="simple-icon-action-undo"></i>  @Domain.Resource.Title_Designer.Back</a>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="card-body p-0">
+                        <form id="frmId" action="Save" method="post" class="tooltip-label-right" novalidate>
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-lg-12">
+                                    @Html.HiddenFor(model => model.Id)
+                                    @Html.HiddenFor(model => model.TypeId)
+                                    @Html.HiddenFor(model => model.ParentId)
+                                    <div class="form-row">
+                                        <div class="form-group col-md-4" id="divName">
+                                            <label>@Domain.Resource.Title_Designer.Name</label>
+                                            @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @placeholder = @Domain.Resource.Title_Designer.Name })
+                                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="form-group col-md-4" id="divStartDate">
+                                            <label>@Domain.Resource.Title_Designer.StartDate</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="simple-icon-calendar"></i></span>
+                                                </div>
+                                                @Html.TextBoxFor(model => model.StartDate, new { @class = "form-control datepicker" })
+                                            </div>
+                                            @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="form-group col-md-4" id="divEndDate">
+                                            <label>@Domain.Resource.Title_Designer.EndDate</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="simple-icon-calendar"></i></span>
+                                                </div>
+                                                @Html.TextBoxFor(model => model.EndDate, new { @class = "form-control datepicker" })
+                                            </div>
+                                            @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-4">
+                                            <label>@Domain.Resource.Title_Designer.Status</label>
+                                            @Html.DropDownListFor(model => model.FiscalYearStatus, Html.GetEnumSelectList<Domain.Enums.FiscalYearStatus>(), new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.FiscalYearStatus, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <div class="custom-control custom-checkbox" style="padding-top:36px">
+                                                @Html.CheckBoxFor(model => model.IsCurrent, new { @class = "custom-control-input" })
+                                                <label class="custom-control-label" for="IsCurrent">
+                                                    @Domain.Resource.Title_Designer.IsCurrent
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group position-relative error-l-50 mb-4 mt-4">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                @Domain.Resource.Title_Designer.FiscalPeriods
+                                            </div>
+                                            <div class="card-body">
+                                                <table id="tblPeriod" class="table table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col" style="width:110px;">@Domain.Resource.Title_Designer.PeriodNumber</th>
+                                                            <th scope="col">@Domain.Resource.Title_Designer.Name</th>
+                                                            <th scope="col" style="width:160px;">@Domain.Resource.Title_Designer.StartDate</th>
+                                                            <th scope="col" style="width:160px;">@Domain.Resource.Title_Designer.EndDate</th>
+                                                            <th scope="col" style="width:140px;">@Domain.Resource.Title_Designer.Status</th>
+                                                            <th scope="col"></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @if (Model.Periods != null)
+                                                        {
+                                                            foreach (var p in Model.Periods)
+                                                            {
+                                                                <tr class="PeriodRow">
+                                                                    <td>
+                                                                        <input type="hidden" id="RowId" value="@p.Id" />
+                                                                        <input type="number" id="PeriodNumber" name="PeriodNumber" class="form-control" value="@p.PeriodNumber" />
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" id="PeriodName" name="PeriodName" class="form-control" value="@p.Name" placeholder="@Domain.Resource.Title_Designer.Name" />
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" id="PeriodStartDate" name="PeriodStartDate" class="form-control datepicker" value="@string.Format(formateDate, p.StartDate)" />
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" id="PeriodEndDate" name="PeriodEndDate" class="form-control datepicker" value="@string.Format(formateDate, p.EndDate)" />
+                                                                    </td>
+                                                                    <td>
+                                                                        <select id="FiscalPeriodStatus" name="FiscalPeriodStatus" class="form-control">
+                                                                            @foreach (var item in periodStatusList)
+                                                                            {
+                                                                                <option value="@item.Value" selected="@(item.Value == ((int)p.FiscalPeriodStatus).ToString() ? "selected" : null)">@item.Text</option>
+                                                                            }
+                                                                        </select>
+                                                                    </td>
+                                                                    <td style="vertical-align:middle;">
+                                                                        <a id="btDeletePeriod" href="javascript:;" onclick="RemoveRowPeriod($(this).closest('tr'))"> <i class="simple-icon-trash"></i> @Domain.Resource.Title_Designer.Delete </a>
+                                                                    </td>
+                                                                </tr>
+                                                            }
+                                                        }
+
+                                                        <tr class="trNewPeriod PeriodRow">
+                                                            <td>
+                                                                <input type="hidden" id="RowId" value="-1" />
+                                                                <input type="number" id="PeriodNumber" name="PeriodNumber" class="form-control" onkeyup="AddNewRowPeriod($(this).closest('tr'))" />
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" id="PeriodName" name="PeriodName" class="form-control" placeholder="@Domain.Resource.Title_Designer.Name" onkeyup="AddNewRowPeriod($(this).closest('tr'))" />
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" id="PeriodStartDate" name="PeriodStartDate" class="form-control datepicker" onchange="AddNewRowPeriod($(this).closest('tr'))" />
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" id="PeriodEndDate" name="PeriodEndDate" class="form-control datepicker" onchange="AddNewRowPeriod($(this).closest('tr'))" />
+                                                            </td>
+                                                            <td>
+                                                                <select id="FiscalPeriodStatus" name="FiscalPeriodStatus" class="form-control">
+                                                                    @foreach (var item in periodStatusList)
+                                                                    {
+                                                                        <option value="@item.Value">@item.Text</option>
+                                                                    }
+                                                                </select>
+                                                            </td>
+                                                            <td style="vertical-align:middle;">
+                                                                <a id="btDeletePeriod" href="javascript:;" onclick="RemoveRowPeriod($(this).closest('tr'))" style="display:none"> <i class="simple-icon-trash"></i> @Domain.Resource.Title_Designer.Delete </a>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+                            <button type="button" onclick="Save()" class="btn btn-primary mb-0">@Domain.Resource.Title_Designer.Save</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function ($) {
+        $(".datepicker").eq(0).val('@string.Format(formateDate, Model.StartDate)');
+        $(".datepicker").eq(1).val('@string.Format(formateDate, Model.EndDate)');
+    })(jQuery);
+
+    function InitPeriodDatepicker(row) {
+        $(row).find(".datepicker").datepicker({
+            autoclose: true,
+            rtl: @(IsRightToLeft.ToString().ToLower()),
+            templates: {
+                leftArrow: '<i class="simple-icon-arrow-left"></i>',
+                rightArrow: '<i class="simple-icon-arrow-right"></i>'
+            }
+        });
+    }
+
+    function validPeriodRow(row) {
+        row.find("#errorPeriodName, #errorPeriodStartDate, #errorPeriodEndDate").remove();
+        var valid = true;
+
+        if ("" + row.find("#PeriodName").val() == "") {
+            row.find("#PeriodName").after('<span id="errorPeriodName" class="error" style="color:red">@Domain.Resource.Message_Designer.NameRequired</span>');
+            valid = false;
+        }
+        if ("" + row.find("#PeriodStartDate").val() == "") {
+            row.find("#PeriodStartDate").after('<span id="errorPeriodStartDate" class="error" style="color:red">@Domain.Resource.Message_Designer.DateRequired</span>');
+            valid = false;
+        }
+        if ("" + row.find("#PeriodEndDate").val() == "") {
+            row.find("#PeriodEndDate").after('<span id="errorPeriodEndDate" class="error" style="color:red">@Domain.Resource.Message_Designer.DateRequired</span>');
+            valid = false;
+        }
+        return valid;
+    }
+
+    function AddNewRowPeriod(row) {
+        row = $(row);
+        if (row.find("#RowId").val() != "-1")
+            return;
+        if (!validPeriodRow(row))
+            return;
+
+        var newRow = row.clone();
+        newRow.find("#RowId").val("-1");
+        newRow.find("#PeriodNumber").val("");
+        newRow.find("#PeriodName").val("");
+        newRow.find("#PeriodStartDate").val("");
+        newRow.find("#PeriodEndDate").val("");
+        newRow.find("#FiscalPeriodStatus").val("1");
+        newRow.find("#btDeletePeriod").css("display", "none");
+
+        row.removeClass("trNewPeriod");
+        row.find("#RowId").val("0");
+        row.find("#btDeletePeriod").css("display", "block");
+
+        $("#tblPeriod tbody").append(newRow);
+        InitPeriodDatepicker(newRow);
+    }
+
+    function RemoveRowPeriod(row) {
+        $(row).remove();
+    }
+
+    function Save() {
+        var Valid = true;
+
+        if (CheckRequired("Name", "divName", '@Domain.Resource.Message_Designer.NameRequired'))
+            Valid = false;
+
+        if (CheckRequired("StartDate", "divStartDate", '@Domain.Resource.Message_Designer.DateRequired'))
+            Valid = false;
+
+        if (CheckRequired("EndDate", "divEndDate", '@Domain.Resource.Message_Designer.DateRequired'))
+            Valid = false;
+
+        if (Valid == true) {
+            var list = [];
+            $('#tblPeriod > tbody > tr').each(function () {
+                var currentRow = $(this);
+                if (!currentRow.hasClass('trNewPeriod')) {
+                    list.push({
+                        FiscalYearId: $('#Id').val(),
+                        Id: currentRow.find("#RowId").val(),
+                        PeriodNumber: currentRow.find("#PeriodNumber").val(),
+                        Name: currentRow.find("#PeriodName").val(),
+                        StartDate: currentRow.find("#PeriodStartDate").val(),
+                        EndDate: currentRow.find("#PeriodEndDate").val(),
+                        FiscalPeriodStatus: currentRow.find("#FiscalPeriodStatus").val()
+                    });
+                }
+            });
+
+            var data = {
+                Id: $('#Id').val(),
+                Name: $('#Name').val().trim(),
+                StartDate: $('#StartDate').val(),
+                EndDate: $('#EndDate').val(),
+                FiscalYearStatus: $('#FiscalYearStatus').val(),
+                IsCurrent: $('#IsCurrent').is(':checked'),
+                ParentId: $('#ParentId').val(),
+                TypeId: $('#TypeId').val(),
+                Periods: list
+            };
+
+            $.ajax({
+                type: 'POST',
+                url: "/Setting/FiscalYear/Save",
+                data: { ob: data },
+                success: function (res) {
+                    if (res.status == "success") {
+                        window.location.replace(res.url);
+                    }
+                },
+                error: function (xhr) {
+                    if (xhr.status === 400) {
+                        var errors = xhr.responseJSON.errors;
+
+                        $.each(errors, function (index, res) {
+                            var span = $("[data-valmsg-for='" + res.key + "']");
+                            span.text(res.messageError);
+                        });
+                    }
+                }
+            });
+        }
+    }
+
+    jQuery(function ($) {
+        $('#tblPeriod .PeriodRow').each(function () {
+            InitPeriodDatepicker($(this));
+        });
+    });
+</script>

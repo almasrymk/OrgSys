@@ -13,10 +13,14 @@ namespace API.Controllers.Org.Journals
     {
         [HttpPut("Cancel")]
         public Task<Result> Cancel(long Id, CancellationToken cancellationToken) =>
-            sender.Send(new CancelJournalCommand(Id), cancellationToken);
+            Sender.Send(new CancelJournalCommand(Id), cancellationToken);
 
         [HttpPut("Redo")]
         public Task<Result> Redo(long Id, CancellationToken cancellationToken) =>
-            sender.Send(new RedoJournalCommand(Id), cancellationToken);
+            Sender.Send(new RedoJournalCommand(Id), cancellationToken);
+
+        [HttpPut("Post")]
+        public Task<Result> Post(long Id, CancellationToken cancellationToken) =>
+            Sender.Send(new PostJournalCommand(Id), cancellationToken);
     }
 }

@@ -14,6 +14,12 @@ namespace Application.DTOs
 
         public virtual decimal Rate { get; set; }
 
+        /// <summary>Resolved server-side from <see cref="MovementDto.Date"/>. Any client-supplied value is ignored.</summary>
+        public virtual long? FiscalYearId { get; set; }
+
+        /// <summary>Resolved server-side from <see cref="MovementDto.Date"/>. Any client-supplied value is ignored.</summary>
+        public virtual long? FiscalPeriodId { get; set; }
+
         public virtual long RefranceId { get; set; }
         public virtual string? RefranceCode { get; set; }
 

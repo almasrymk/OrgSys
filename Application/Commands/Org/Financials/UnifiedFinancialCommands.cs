@@ -93,7 +93,8 @@ public sealed class PostFinancialTransactionCommandHandler(
     IRepository<FinancialType> typeRepository,
     IRepository<Account> glRepository,
     IRepository<Financial> transactionRepository,
-    IRepository<Journal> journalRepository) : ICommandHandler<PostFinancialTransactionCommand>
+    IRepository<Journal> journalRepository,
+    Application.Common.Services.IAccountingPeriodService accountingPeriodService) : ICommandHandler<PostFinancialTransactionCommand>
 {
     public async Task<Result> Handle(PostFinancialTransactionCommand request, CancellationToken cancellationToken)
     {
@@ -105,6 +106,10 @@ public sealed class PostFinancialTransactionCommandHandler(
         var counter = await glRepository.GetByFilterAsync(e => e.Id == dto.CounterAccountId, string.Empty);
         if (account is null || !account.IsActive || account.AccountId is not > 0 || type is null || counter is null)
             return BadRequest("Financial account, transaction type, and counter account must be valid.");
+
+        var resolution = await accountingPeriodService.ResolveAndValidateAsync(dto.TransactionDate, cancellationToken);
+        if (!resolution.Success)
+            return new Result(HttpStatusCode.BadRequest, resolution.Errors);
 
         await unitOfWork.BeginTransactionAsync();
         try
@@ -146,6 +151,7 @@ public sealed class PostFinancialTransactionCommandHandler(
                 BranchId = dto.BranchId, ShiftId = dto.ShiftId, CurrencyId = dto.CurrencyId,
                 Rate = dto.ExchangeRate, RefranceId = transaction.Id, RefranceCode = transaction.Code,
                 RefranceTypeId = type.Id, RefranceTable = "financialtransaction", Note = dto.Description,
+                FiscalYearId = resolution.FiscalYear!.Id, FiscalPeriodId = resolution.FiscalPeriod!.Id,
                 Posted = true, Status = Status.Approved,
                 JournalItems =
                 [

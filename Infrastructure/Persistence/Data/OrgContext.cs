@@ -71,6 +71,14 @@
             modelBuilder.Entity<FinancialTransfer>()
                 .HasOne(e => e.ToFinancialAccount).WithMany()
                 .HasForeignKey(e => e.ToFinancialAccountId).OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Journal>()
+                .HasOne(e => e.FiscalYear).WithMany()
+                .HasForeignKey(e => e.FiscalYearId).OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Journal>()
+                .HasOne(e => e.FiscalPeriod).WithMany()
+                .HasForeignKey(e => e.FiscalPeriodId).OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Journal>()
+                .HasIndex(e => e.Date);
         }
 
         public Task BeginTransactionAsync()
@@ -140,6 +148,8 @@
         public virtual DbSet<JournalType> JournalTypes { get; set; }
         public virtual DbSet<Journal> Journals { get; set; }
         public virtual DbSet<JournalItem> JournalItem { get; set; }
+        public virtual DbSet<FiscalYear> FiscalYears { get; set; }
+        public virtual DbSet<FiscalPeriod> FiscalPeriods { get; set; }
 
 
         public void ResetDbContextState()

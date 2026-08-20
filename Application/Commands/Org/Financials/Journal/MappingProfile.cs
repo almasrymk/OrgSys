@@ -11,16 +11,17 @@ public partial class MappingProfile : Profile
         CreateMap<Journal, JournalDto>()
             .ForMember(dest => dest.JournalTypeName, opt => opt.MapFrom(src => src.JournalType!.Name))
             .ForMember(dest => dest.JournalItems, opt => opt.MapFrom(src => src.JournalItems));
-        CreateMap<JournalDto, Journal>();
+        CreateMap<JournalDto, Journal>()
+            .ForMember(dest => dest.FiscalYearId, opt => opt.Ignore())
+            .ForMember(dest => dest.FiscalPeriodId, opt => opt.Ignore())
+            .ForMember(dest => dest.Posted, opt => opt.Ignore());
 
         CreateMap<JournalType, JournalTypeDto>();
         CreateMap<JournalTypeDto, JournalType>();
 
         CreateMap<Journal, CreateJournalCommand>();
-        CreateMap<CreateJournalCommand, Journal>();
 
         CreateMap<Journal, UpdateJournalCommand>();
-        CreateMap<UpdateJournalCommand, Journal>();
 
         CreateMap<Journal, DeleteJournalCommand>();
         CreateMap<DeleteJournalCommand, Journal>();
@@ -31,8 +32,16 @@ public partial class MappingProfile : Profile
         CreateMap<JournalItem, JournalItemDto>();
         CreateMap<JournalItemDto, JournalItem>();
 
-        CreateMap<CreateJournalCommand, Journal>().ForMember(dest => dest.JournalItems,opt => opt.MapFrom(src => src.JournalItems));  
-        CreateMap<UpdateJournalCommand, Journal>().ForMember(dest => dest.JournalItems, opt => opt.MapFrom(src => src.JournalItems));
+        CreateMap<CreateJournalCommand, Journal>()
+            .ForMember(dest => dest.JournalItems, opt => opt.MapFrom(src => src.JournalItems))
+            .ForMember(dest => dest.FiscalYearId, opt => opt.Ignore())
+            .ForMember(dest => dest.FiscalPeriodId, opt => opt.Ignore())
+            .ForMember(dest => dest.Posted, opt => opt.Ignore());
+        CreateMap<UpdateJournalCommand, Journal>()
+            .ForMember(dest => dest.JournalItems, opt => opt.MapFrom(src => src.JournalItems))
+            .ForMember(dest => dest.FiscalYearId, opt => opt.Ignore())
+            .ForMember(dest => dest.FiscalPeriodId, opt => opt.Ignore())
+            .ForMember(dest => dest.Posted, opt => opt.Ignore());
 
         CreateMap<JournalDto, UpdateJournalCommand>()
             .ForMember(dest => dest.JournalItems, opt => opt.MapFrom(src => src.JournalItems));

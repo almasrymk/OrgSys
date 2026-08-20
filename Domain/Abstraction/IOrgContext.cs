@@ -56,6 +56,8 @@
         DbSet<District> Districts { get; set; }
         DbSet<JournalType> JournalTypes { get; set; }
         DbSet<Journal> Journals { get; set; }
+        DbSet<FiscalYear> FiscalYears { get; set; }
+        DbSet<FiscalPeriod> FiscalPeriods { get; set; }
         //DbSet<JournalItem> JournalItems { get; set; }
         //DbSet<CompanyProfile> CompanyProfiles { get; set; }
 

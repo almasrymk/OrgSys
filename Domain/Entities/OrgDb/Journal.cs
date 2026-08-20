@@ -15,6 +15,16 @@
 
         public virtual decimal Rate { get; set; }
 
+        [ForeignKey("FiscalYear")]
+        public virtual long FiscalYearId { get; set; }
+
+        public virtual FiscalYear? FiscalYear { get; set; }
+
+        [ForeignKey("FiscalPeriod")]
+        public virtual long FiscalPeriodId { get; set; }
+
+        public virtual FiscalPeriod? FiscalPeriod { get; set; }
+
         public virtual long RefranceId { get; set; }
 
         public virtual string? RefranceCode { get; set; }
