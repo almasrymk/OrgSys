@@ -25,7 +25,7 @@
         <ul class="tree-children">
             @foreach (var child in Model.Children)
             {
-                @Html.Partial("_AccountTreeNode", child)
+                @await Html.PartialAsync("_AccountTreeNode", child)
             }
         </ul>
     }

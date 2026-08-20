@@ -42,6 +42,8 @@ namespace API.Controllers
         where TDelete : IDeleteCommand<Result>
         where TDeleteList : IDeleteListCommand<Result>
     {
+        protected ISender Sender => sender;
+
         [HttpGet("GetById")]
         public virtual async Task<Result<TResponse>> GetById(long Id, CancellationToken cancellationToken)
         {
@@ -117,7 +119,7 @@ namespace API.Controllers
         public virtual async Task<object> GetMax(long ParentId, long TypeId, CancellationToken cancellationToken)
         {
             var query = (IGetMax)Activator.CreateInstance(typeof(IGetMax), TypeId, ParentId)!;
-            return await sender.Send(query, cancellationToken);
+            return await Sender.Send(query, cancellationToken);
         }
     }
 }

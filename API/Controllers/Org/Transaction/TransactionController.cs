@@ -16,19 +16,19 @@ namespace API.Controllers.Org.Transaction
     {
         [HttpPut("Cancel")]
         public Task<Result> Cancel(long Id, CancellationToken cancellationToken) =>
-            sender.Send(new CancelTransactionCommand(Id), cancellationToken);
+            Sender.Send(new CancelTransactionCommand(Id), cancellationToken);
 
         [HttpPut("Redo")]
         public Task<Result> Redo(long Id, CancellationToken cancellationToken) =>
-            sender.Send(new RedoTransactionCommand(Id), cancellationToken);
+            Sender.Send(new RedoTransactionCommand(Id), cancellationToken);
 
         [HttpPost("CreateReceived")]
         public Task<Result> CreateReceived(long TransferId, CancellationToken cancellationToken) =>
-            sender.Send(new CreateReceivedByTransferCommand(TransferId), cancellationToken);
+            Sender.Send(new CreateReceivedByTransferCommand(TransferId), cancellationToken);
 
         [HttpPost("CreateJournal")]
         public Task<Result> CreateJournal(long TransactionId, CancellationToken cancellationToken) =>
-            sender.Send(new CreateJournalByTransactionCommand(TransactionId), cancellationToken);
+            Sender.Send(new CreateJournalByTransactionCommand(TransactionId), cancellationToken);
 
     }
 }

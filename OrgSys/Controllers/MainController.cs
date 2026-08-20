@@ -10,6 +10,7 @@
     using Microsoft.AspNetCore.Mvc.Filters;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
     using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
     using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
@@ -28,10 +29,15 @@
         string AreaName = "";
         string ControllerName = "";
 
+        protected IConfiguration Configuration => configuration;
+
+        protected HttpClient CreateClient() =>
+            HttpContext.RequestServices.GetRequiredService<IHttpClientFactory>().CreateClient();
+
         public virtual async Task<HttpResponseMessage> ApiMethod(ApiMethodType apiMethodType, string NameActionAndParamenter, object Ob = null)
         {
             string ApiUrl = configuration["ApiUrl"];
-            HttpClient httpClient = new HttpClient();           
+            HttpClient httpClient = CreateClient();           
             string ApiControllerName = typeof(TDto).Name.Replace("ModelView", "").Replace("Dto", "");
             switch (apiMethodType)
             {
@@ -55,7 +61,7 @@
 
             var ob = (List<TSubDto>)Activator.CreateInstance(typeof(List<TSubDto>));
             string ApiControllerName = typeof(TSubDto).Name.Replace("ModelView", "").Replace("Dto", "");
-            HttpClient httpClient = new HttpClient();
+            HttpClient httpClient = CreateClient();
             HttpResponseMessage response = await httpClient.GetAsync($"{ApiUrl}/{ApiControllerName}/{NameActionAndParamenter}");
             response.EnsureSuccessStatusCode();
             var data = await response.Content.ReadAsStringAsync();
@@ -71,7 +77,7 @@
 
             var ob = (List<TSubDto>)Activator.CreateInstance(typeof(List<TSubDto>));
             string ApiControllerName = typeof(TSubDto).Name.Replace("ModelView", "").Replace("Dto", "");
-            HttpClient httpClient = new HttpClient();
+            HttpClient httpClient = CreateClient();
             HttpResponseMessage response = await httpClient.GetAsync($"{ApiUrl}/{ApiControllerName}/GetList?KeySearch={TextSearch}&TypeId={TypeId}&ParentId={ParentId}&Page={Page}&PageSize={PageSize}");
             response.EnsureSuccessStatusCode();
             var data = await response.Content.ReadAsStringAsync();
@@ -87,7 +93,7 @@
 
             var ob = (TSubDto)Activator.CreateInstance(typeof(TSubDto));
             string ApiControllerName = typeof(TSubDto).Name.Replace("ModelView", "").Replace("Dto", "");
-            HttpClient httpClient = new HttpClient();
+            HttpClient httpClient = CreateClient();
             HttpResponseMessage response = await httpClient.GetAsync($"{ApiUrl}/{ApiControllerName}/{NameActionAndParamenter}");
             response.EnsureSuccessStatusCode();
             var data = await response.Content.ReadAsStringAsync();
@@ -101,7 +107,7 @@
         {
             string ApiUrl = configuration["ApiUrl"];
             string ApiControllerName = typeof(TSubDto).Name.Replace("ModelView", "").Replace("Dto", "");
-            HttpClient httpClient = new HttpClient();
+            HttpClient httpClient = CreateClient();
             HttpResponseMessage response = await httpClient.GetAsync($"{ApiUrl}/{ApiControllerName}/{NameActionAndParamenter}");
             response.EnsureSuccessStatusCode();
             var data = await response.Content.ReadAsStringAsync();

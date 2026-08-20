@@ -19,13 +19,13 @@ namespace API.Controllers.Org.Financials
         [HttpPut("Redo")]
         public async Task<Result> Redo(long Id, CancellationToken cancellationToken)
         {
-            return await sender.Send(new RedoFinancialCommand(Id), cancellationToken);
+            return await Sender.Send(new RedoFinancialCommand(Id), cancellationToken);
         }
 
         [HttpPut("Cancel")]
         public async Task<Result> Cancel(long Id, CancellationToken cancellationToken)
         {
-            return await sender.Send(new CancelFinancialCommand(Id), cancellationToken);
+            return await Sender.Send(new CancelFinancialCommand(Id), cancellationToken);
         }
 
         [HttpGet("Accounts")]
@@ -33,7 +33,7 @@ namespace API.Controllers.Org.Financials
             FinancialAccountType? accountType,
             CancellationToken cancellationToken)
         {
-            return sender.Send(new GetFinancialAccountsQuery(accountType), cancellationToken);
+            return Sender.Send(new GetFinancialAccountsQuery(accountType), cancellationToken);
         }
 
         [HttpGet("Accounts/{financialAccountId:long}/Balance")]
@@ -41,7 +41,7 @@ namespace API.Controllers.Org.Financials
             long financialAccountId,
             CancellationToken cancellationToken)
         {
-            return sender.Send(new GetFinancialAccountBalanceQuery(financialAccountId), cancellationToken);
+            return Sender.Send(new GetFinancialAccountBalanceQuery(financialAccountId), cancellationToken);
         }
 
         [HttpPost("Accounts")]
@@ -49,7 +49,7 @@ namespace API.Controllers.Org.Financials
             [FromBody] FinancialAccountDto account,
             CancellationToken cancellationToken)
         {
-            return sender.Send(new SaveFinancialAccountCommand(account), cancellationToken);
+            return Sender.Send(new SaveFinancialAccountCommand(account), cancellationToken);
         }
 
         [HttpPost("Transactions/Post")]
@@ -57,7 +57,7 @@ namespace API.Controllers.Org.Financials
             [FromBody] PostFinancialTransactionDto transaction,
             CancellationToken cancellationToken)
         {
-            return sender.Send(new PostFinancialTransactionCommand(transaction), cancellationToken);
+            return Sender.Send(new PostFinancialTransactionCommand(transaction), cancellationToken);
         }
     }
 }

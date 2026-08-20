@@ -1,3 +1,4 @@
+#nullable enable annotations
 using Application.DTOs;
 using Domain.Enums;
 using Domain.Shared;
@@ -15,7 +16,7 @@ using System.Threading.Tasks;
 namespace OrgSys.Areas.Setting.Controllers;
 
 [Area("Setting"), Authorize]
-public sealed class FinancialAccountController(IConfiguration configuration) : Controller
+public sealed class FinancialAccountController(IConfiguration configuration, IHttpClientFactory httpClientFactory) : Controller
 {
     private string ApiUrl => configuration["ApiUrl"] ?? string.Empty;
 
@@ -42,7 +43,7 @@ public sealed class FinancialAccountController(IConfiguration configuration) : C
     public async Task<IActionResult> Save(FinancialAccountDto model)
     {
         if (!ModelState.IsValid) return View(model);
-        using var client = new HttpClient();
+        using var client = httpClientFactory.CreateClient();
         var response = await client.PostAsJsonAsync($"{ApiUrl}/Financial/Accounts", model);
         if (response.IsSuccessStatusCode)
             return RedirectToAction(nameof(Index), new { status = ResultStatus.success, MsgError = "Success" });
@@ -61,7 +62,7 @@ public sealed class FinancialAccountController(IConfiguration configuration) : C
 
     private async Task<List<FinancialAccountDto>> GetAccounts(FinancialAccountType? accountType)
     {
-        using var client = new HttpClient();
+        using var client = httpClientFactory.CreateClient();
         var url = $"{ApiUrl}/Financial/Accounts" + (accountType.HasValue ? $"?accountType={(int)accountType.Value}" : "");
         var response = await client.GetAsync(url);
         response.EnsureSuccessStatusCode();

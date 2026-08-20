@@ -13,7 +13,7 @@
                         <span>@Domain.Resource.Title_Designer.Home</span>
                     </a>
                 </li>
-                @if (User.IsAllowed("Branchs.All,Stocks.All,Tables.All,Roles.All,Users.All,Shifts.All,Products.All,Classifications.All,UnitsMeasure.All,Clients.All,Suppliers.All,Safes.All,OutlayTerms.All,Currencies.All,Accounts.All,"))
+                @if (User.IsAllowed("Branchs.All,Stocks.All,Tables.All,Roles.All,Users.All,Shifts.All,Products.All,Classifications.All,UnitsMeasure.All,Clients.All,Suppliers.All,Safes.All,OutlayTerms.All,Currencies.All,Accounts.All,FiscalYears.All,"))
                 {
                     <li>
                         <a href="#setting">
@@ -61,7 +61,7 @@
     </div>
     <div class="sub-menu">
         <div class="scroll">
-            @if (User.IsAllowed("Branchs.All,Stocks.All,Tables.All,Roles.All,Users.All,Shifts.All,Products.All,Classifications.All,UnitsMeasure.All,Clients.All,Suppliers.All,Safes.All,OutlayTerms.All,Currencies.All,Accounts.All,"))
+            @if (User.IsAllowed("Branchs.All,Stocks.All,Tables.All,Roles.All,Users.All,Shifts.All,Products.All,Classifications.All,UnitsMeasure.All,Clients.All,Suppliers.All,Safes.All,OutlayTerms.All,Currencies.All,Accounts.All,FiscalYears.All,"))
             {
                 <ul class="list-unstyled" data-link="setting">
                     @if (User.IsAllowed("Branchs.All,Stocks.All,Tables.All"))
@@ -210,14 +210,14 @@
                         </li>
                     }
 
-                    @if (User.IsAllowed("Accounts.All,Banks.All,BankBranchs.All,AccountBanks.All,Safes.All,SafeTerms.All,Currencies.All"))
+                    @if (User.IsAllowed("Accounts.All,Banks.All,BankBranchs.All,AccountBanks.All,Safes.All,SafeTerms.All,Currencies.All,FiscalYears.All"))
                     {
                         <li>
                             <a href="#" data-toggle="collapse" data-target="#collapseDataFinancials" aria-expanded="false"
-                               aria-controls="collapseDataFinancials" class="rotate-arrow-icon opacity-50 @("Account,Bank,BankBranch,AccountBank,Safe,SafeTerm,Currency".Contains(ViewContext.RouteData.Values["controller"].ToString()) ? "" : "collapsed")">
+                               aria-controls="collapseDataFinancials" class="rotate-arrow-icon opacity-50 @("Account,Bank,BankBranch,AccountBank,Safe,SafeTerm,Currency,FiscalYear".Contains(ViewContext.RouteData.Values["controller"].ToString()) ? "" : "collapsed")">
                                 <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.Financial</span>
                             </a>
-                            <div id="collapseDataFinancials" class="collapse @("Account,Bank,BankBranch,AccountBank,Safe,SafeTerm,Currency".Contains(ViewContext.RouteData.Values["controller"].ToString()) ? "show" : "")">
+                            <div id="collapseDataFinancials" class="collapse @("Account,Bank,BankBranch,AccountBank,Safe,SafeTerm,Currency,FiscalYear".Contains(ViewContext.RouteData.Values["controller"].ToString()) ? "show" : "")">
                                 <ul class="list-unstyled inner-level-menu">
                                     @if (User.IsAllowed("Accounts.All"))
                                     {
@@ -278,6 +278,14 @@
                                         <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Currency" ? "active" : "")">
                                             <a href="/Setting/Currency">
                                                 <i class="iconsminds-coins"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.Currencies</span>
+                                            </a>
+                                        </li>
+                                    }
+                                    @if (User.IsAllowed("FiscalYears.All"))
+                                    {
+                                        <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "FiscalYear" ? "active" : "")">
+                                            <a href="/Setting/FiscalYear">
+                                                <i class="iconsminds-calendar-4"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.FiscalYears</span>
                                             </a>
                                         </li>
                                     }

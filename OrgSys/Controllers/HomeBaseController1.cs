@@ -1,20 +1,21 @@
-﻿using Domain.Shared;
+﻿#nullable enable annotations
+using Domain.Shared;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Http;
 using System;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 
-public class HomeBaseController : Controller
+public class HomeBaseController(IHttpClientFactory httpClientFactory) : Controller
 {
     private readonly string LocalHost = "https://localhost:44300/";
 
     protected HttpClient CreateClient()
     {
-        return new HttpClient
-        {
-            BaseAddress = new Uri(LocalHost)
-        };
+        var client = httpClientFactory.CreateClient();
+        client.BaseAddress = new Uri(LocalHost);
+        return client;
     }
 
     protected async Task<Result<T>?> GetAsync<T>(string url)

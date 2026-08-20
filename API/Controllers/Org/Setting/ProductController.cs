@@ -15,7 +15,7 @@ namespace API.Controllers.Org.Setting
         [HttpGet("GetAllByBalance")]
         public virtual async Task<ResultCollection<ProductDto>> GetAllByBalance(long StockId, DateTime date, CancellationToken cancellationToken)
         {
-            return await sender.Send(new GetListProductByBalanceQuery(StockId, date), cancellationToken);
+            return await Sender.Send(new GetListProductByBalanceQuery(StockId, date), cancellationToken);
         }
     }
 }

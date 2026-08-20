@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 
 namespace OrgSys.ViewComponents;
 
-public sealed class MainMenuViewComponent(IConfiguration configuration) : ViewComponent
+public sealed class MainMenuViewComponent(IConfiguration configuration, IHttpClientFactory httpClientFactory) : ViewComponent
 {
     public async Task<IViewComponentResult> InvokeAsync()
     {
         var financialTypes = new List<FinancialTypeDto>();
         try
         {
-            using var client = new HttpClient();
+            using var client = httpClientFactory.CreateClient();
             var response = await client.GetAsync($"{configuration["ApiUrl"]}/FinancialType/GetList?ParentId=0&TypeId=0&Page=1&PageSize=100");
             if (response.IsSuccessStatusCode)
             {
