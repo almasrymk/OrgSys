@@ -9,6 +9,7 @@
         Rejected = 20,
         Locked = 25,
         Hold = 30,
-        Cancel = 35
+        Cancel = 35,
+        Reversed = 40
     }
 }

@@ -33,6 +33,18 @@ namespace Application.DTOs
         public virtual string? DistrictName { get; set; }
         public virtual long? AccountId { get; set; }
 
+        public virtual string? AccountCode { get; set; }
+
         public virtual string? AccountName { get; set; }
+
+        /// <summary>UI-only convenience flag — when true and no <see cref="AccountId"/> is given, a
+        /// customer sub-account is auto-created under the configured AR parent account and linked.
+        /// Not persisted on the Dealer entity itself.</summary>
+        public virtual bool? AutoCreateReceivableAccount { get; set; }
+
+        /// <summary>UI-only convenience flag — when true and no <see cref="AccountId"/> is given, a
+        /// supplier sub-account is auto-created under the configured AP parent account and linked.
+        /// Not persisted on the Dealer entity itself.</summary>
+        public virtual bool? AutoCreatePayableAccount { get; set; }
     }
 }

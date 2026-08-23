@@ -20,6 +20,7 @@ using OrgSys.Models;
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace OrgSys.Controllers
@@ -34,7 +35,7 @@ namespace OrgSys.Controllers
         DbContextOptions<OrgContext> _option;
         //ClientService _clientService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IHttpClientFactory httpClientFactory) : base(httpClientFactory)
         {
             _logger = logger;
             _option = new DbContextOptions<OrgContext>();
@@ -162,7 +163,7 @@ namespace OrgSys.Controllers
                 //return View(_user);
                 //}
 
-                var user = PostAsync<UserDto>("api/auth/login", new LoginCommand(_user.UserName, _user.Password)).Result?.Response;
+                var user = (await PostAsync<UserDto>("api/auth/login", new LoginCommand(_user.UserName, _user.Password)))?.Response;
 
 
                 user!.SignIn(HttpContext, "org", _user.KeepLoggedIn);
@@ -400,7 +401,7 @@ namespace OrgSys.Controllers
             ViewBag.status = Status.ToString();
             var _id = User.GetUserId();
 
-            var user =  GetAsync<UserDto>($"User/GetById?Id={_id}").Result.Response;
+            var user = (await GetAsync<UserDto>($"User/GetById?Id={_id}"))?.Response;
             return View("Profile", user);
         }
 
@@ -423,7 +424,7 @@ namespace OrgSys.Controllers
                     //        //_userService = new UserService(User.GetSchema());
                     //}
                     //_userService.Save(_profile);
-                    var user = GetAsync<UserDto>($"User/GetById?Id={_profile.Id}").Result.Response;
+                    var user = (await GetAsync<UserDto>($"User/GetById?Id={_profile.Id}"))?.Response;
                     _profile.Password = user.Password;
 
                     await PutAsync<UserDto>("User/Update", _profile);
@@ -577,7 +578,7 @@ namespace OrgSys.Controllers
                 //Open In New Tap Or Download
                 Inline = true
             };
-            Response.Headers.Add(Microsoft.Net.Http.Headers.HeaderNames.ContentDisposition, cd.ToString());
+            Response.Headers.Append(Microsoft.Net.Http.Headers.HeaderNames.ContentDisposition, cd.ToString());
             var stream = new FileStream("PrintOut/0.pdf", FileMode.Open);
             return new FileStreamResult(stream, "application/pdf");
 

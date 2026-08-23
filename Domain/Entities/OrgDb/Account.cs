@@ -14,7 +14,11 @@
 
         [ForeignKey("AccountType")]
         public long AccountTypeId { get; set; }
-       
+
         public virtual AccountType? AccountType { get; set; }
+
+        /// <summary>False marks a group/parent account used only for hierarchy — Journal postings
+        /// (including a Dealer's receivable account link) must target a postable/detail account.</summary>
+        public virtual bool IsPostable { get; set; } = true;
     }
 }

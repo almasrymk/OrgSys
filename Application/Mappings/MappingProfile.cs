@@ -30,6 +30,8 @@ public partial class MappingProfile : Profile
         BankBranchMappingProfile();
         BankMappingProfile();
         CurrencyMappingProfile();
+        FiscalPeriodMappingProfile();
+        FiscalYearMappingProfile();
 
         // 1-6- Location
         CountryMappingProfile();

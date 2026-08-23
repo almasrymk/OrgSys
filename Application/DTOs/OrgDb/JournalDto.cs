@@ -14,6 +14,16 @@ namespace Application.DTOs
 
         public virtual decimal Rate { get; set; }
 
+        /// <summary>Resolved server-side from <see cref="MovementDto.Date"/>. Any client-supplied value is ignored.</summary>
+        public virtual long? FiscalYearId { get; set; }
+
+        public virtual string? FiscalYearName { get; set; }
+
+        /// <summary>Resolved server-side from <see cref="MovementDto.Date"/>. Any client-supplied value is ignored.</summary>
+        public virtual long? FiscalPeriodId { get; set; }
+
+        public virtual string? FiscalPeriodName { get; set; }
+
         public virtual long RefranceId { get; set; }
         public virtual string? RefranceCode { get; set; }
 
@@ -23,5 +33,15 @@ namespace Application.DTOs
 
         public virtual string? Note { get; set; }
         public ICollection<JournalItemDto>? JournalItems { get; set; }
+
+        /// <summary>Display-only — set only on a reversing entry. Never trusted from the client.</summary>
+        public virtual long? OriginalJournalId { get; set; }
+
+        public virtual string? OriginalJournalCode { get; set; }
+
+        /// <summary>Display-only — set only on the original once reversed. Never trusted from the client.</summary>
+        public virtual long? ReversalJournalId { get; set; }
+
+        public virtual string? ReversalJournalCode { get; set; }
     }
 }

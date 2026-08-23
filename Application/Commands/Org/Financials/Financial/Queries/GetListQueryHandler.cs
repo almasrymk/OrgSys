@@ -25,6 +25,11 @@
            e.Status != Domain.Enums.Status.Deleted && e.Hide != true;
         }
 
+        public override string CreateInclude()
+        {
+            return "Dealer,Safe,Currency,FinancialAccount,ContraFinancialAccount,FinancialType,Journal";
+        }
+
         override public Func<IQueryable<Domain.Entities.Financial>, IOrderedQueryable<Domain.Entities.Financial>> CreateOrderBy(GetListFinancialQuery request)
         {
             return q => q.OrderByDescending(e => e.Id);

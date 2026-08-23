@@ -12,6 +12,7 @@ using PuppeteerSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace OrgSys.Areas.Invoices.Controllers
@@ -201,7 +202,7 @@ namespace OrgSys.Areas.Invoices.Controllers
             var data = await response.Content.ReadAsStringAsync();
             var res = JsonConvert.DeserializeObject<Domain.Shared.Result>(data);
 
-            return Redirect("/Invoices/Invoice/Index?ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" + (res.StatusCode != null ? ResultStatus.success : ResultStatus.error) + "&MsgError=Success");
+            return Redirect("/Invoices/Invoice/Index?ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" + (res.StatusCode == HttpStatusCode.OK ? ResultStatus.success : ResultStatus.error) + "&MsgError=Success");
         }
 
         public async Task<ActionResult> Redo(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1)
@@ -211,13 +212,13 @@ namespace OrgSys.Areas.Invoices.Controllers
             var data = await response.Content.ReadAsStringAsync();
             var res = JsonConvert.DeserializeObject<Domain.Shared.Result>(data);
 
-            return Redirect("/Invoices/Invoice/Index?ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" + (res.StatusCode != null ? ResultStatus.success : ResultStatus.error) + "&MsgError=Success");
+            return Redirect("/Invoices/Invoice/Index?ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" + (res.StatusCode == HttpStatusCode.OK ? ResultStatus.success : ResultStatus.error) + "&MsgError=Success");
         }
 
         public async Task<JsonResult> GetProductInvoice(int Id)
         {
 
-          var responseMessage =  ApiMethod(ApiMethodType.Get, $"GetProductInvoicesNotReturn?Id={Id}").Result.EnsureSuccessStatusCode();
+            var responseMessage = await ApiMethod(ApiMethodType.Get, $"GetProductInvoicesNotReturn?Id={Id}");
 
             responseMessage.EnsureSuccessStatusCode();
             var dataa = await responseMessage.Content.ReadAsStringAsync();

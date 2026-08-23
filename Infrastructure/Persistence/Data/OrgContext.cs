@@ -24,7 +24,7 @@
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-            var builder = new ConfigurationBuilder().AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+            var builder = new ConfigurationBuilder().AddJsonFile("appsettings.json", optional: true, reloadOnChange: false);
             IConfigurationRoot config = builder.Build();
             string assemblyName = "" + typeof(OrgContext).Namespace;
             optionsBuilder
@@ -71,6 +71,23 @@
             modelBuilder.Entity<FinancialTransfer>()
                 .HasOne(e => e.ToFinancialAccount).WithMany()
                 .HasForeignKey(e => e.ToFinancialAccountId).OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Journal>()
+                .HasOne(e => e.FiscalYear).WithMany()
+                .HasForeignKey(e => e.FiscalYearId).OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Journal>()
+                .HasOne(e => e.FiscalPeriod).WithMany()
+                .HasForeignKey(e => e.FiscalPeriodId).OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Journal>()
+                .HasIndex(e => e.Date);
+            modelBuilder.Entity<Journal>()
+                .HasOne(e => e.OriginalJournal).WithOne(e => e.ReversalJournal)
+                .HasForeignKey<Journal>(e => e.OriginalJournalId).OnDelete(DeleteBehavior.Restrict);
+            // At most one reversing entry per original journal — enforced at the DB level too,
+            // not just in the handler, so a race between two concurrent Reverse calls can't slip through.
+            modelBuilder.Entity<Journal>()
+                .HasIndex(e => e.OriginalJournalId)
+                .IsUnique()
+                .HasFilter("[OriginalJournalId] IS NOT NULL");
         }
 
         public Task BeginTransactionAsync()
@@ -140,6 +157,8 @@
         public virtual DbSet<JournalType> JournalTypes { get; set; }
         public virtual DbSet<Journal> Journals { get; set; }
         public virtual DbSet<JournalItem> JournalItem { get; set; }
+        public virtual DbSet<FiscalYear> FiscalYears { get; set; }
+        public virtual DbSet<FiscalPeriod> FiscalPeriods { get; set; }
 
 
         public void ResetDbContextState()

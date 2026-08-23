@@ -345,6 +345,9 @@
   <data name="End" xml:space="preserve">
     <value>ينتهي فى</value>
   </data>
+  <data name="EndDate" xml:space="preserve">
+    <value>تاريخ النهاية</value>
+  </data>
   <data name="English" xml:space="preserve">
     <value>الانجليزية</value>
   </data>
@@ -380,6 +383,21 @@
   </data>
   <data name="Financials" xml:space="preserve">
     <value>المالية</value>
+  </data>
+  <data name="FiscalYear" xml:space="preserve">
+    <value>السنة المالية</value>
+  </data>
+  <data name="FiscalYears" xml:space="preserve">
+    <value>السنوات المالية</value>
+  </data>
+  <data name="FiscalPeriod" xml:space="preserve">
+    <value>الفترة المالية</value>
+  </data>
+  <data name="FiscalPeriods" xml:space="preserve">
+    <value>الفترات المالية</value>
+  </data>
+  <data name="PeriodNumber" xml:space="preserve">
+    <value>رقم الفترة</value>
   </data>
   <data name="ForgetPassword" xml:space="preserve">
     <value>نسيت كلمة المرور</value>
@@ -440,6 +458,9 @@
   </data>
   <data name="Invoices" xml:space="preserve">
     <value>الفواتير</value>
+  </data>
+  <data name="IsCurrent" xml:space="preserve">
+    <value>سنة حالية</value>
   </data>
   <data name="IsDefault" xml:space="preserve">
     <value>افتراضي</value>
@@ -764,6 +785,12 @@
   </data>
   <data name="Start" xml:space="preserve">
     <value>يبدأ من</value>
+  </data>
+  <data name="StartDate" xml:space="preserve">
+    <value>تاريخ البداية</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>الحالة</value>
   </data>
   <data name="STARTNOW" xml:space="preserve">
     <value>ابدأ الآن</value>

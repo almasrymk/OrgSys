@@ -2,6 +2,7 @@
 using Application.Commands.Org.Setting.Dealer.Commands;
 using Application.Commands.Org.Setting.Dealer.Queries;
 using Application.DTOs;
+using Domain.Shared;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,6 +12,10 @@ namespace API.Controllers.Org.Setting
     [Route("[controller]")]
     public class DealerController(ISender sender) : BaseController<GetByIdDealerQuery, SearchDealerQuery , GetListDealerQuery, CreateDealerCommand, UpdateDealerCommand, DeleteDealerCommand, DeleteListDealerCommand , GetMaxDealerQuery, DealerDto>(sender)
     {
-
+        [HttpGet("Balance")]
+        public Task<Result<decimal>> Balance(long Id, DateTime? AsOfDate, CancellationToken cancellationToken)
+        {
+            return Sender.Send(new GetDealerBalanceQuery(Id, AsOfDate), cancellationToken);
+        }
     }
 }

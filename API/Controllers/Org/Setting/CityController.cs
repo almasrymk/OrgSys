@@ -17,7 +17,7 @@ namespace API.Controllers.Org.Setting
         public virtual async Task<IActionResult> GetListByCountryId(string? KeySearch , long? CountryId, long ParentId, long TypeId, int Page, int PageSize, CancellationToken cancellationToken)
         {
             var query = (GetListByCountryCityQuery)Activator.CreateInstance(typeof(GetListByCountryCityQuery), KeySearch , CountryId , ParentId, TypeId, Page, PageSize)!;
-            var res = await sender.Send(query, cancellationToken);
+            var res = await Sender.Send(query, cancellationToken);
             return res.StatusCode == HttpStatusCode.OK ? Ok(res) : BadRequest(res);
         }
     }

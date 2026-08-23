@@ -63,7 +63,8 @@ public sealed class PostFinancialTransferCommandHandler(
     IRepository<Domain.Entities.FinancialTransfer> transferRepository,
     IRepository<FinancialAccount> accountRepository,
     IRepository<Financial> transactionRepository,
-    IRepository<Journal> journalRepository) : ICommandHandler<PostFinancialTransferCommand>
+    IRepository<Journal> journalRepository,
+    Application.Common.Services.IAccountingPeriodService accountingPeriodService) : ICommandHandler<PostFinancialTransferCommand>
 {
     public async Task<Result> Handle(PostFinancialTransferCommand request, CancellationToken cancellationToken)
     {
@@ -79,6 +80,10 @@ public sealed class PostFinancialTransferCommandHandler(
             return BadRequest("Both financial accounts must exist and be active.");
         if (source.AccountId is not > 0 || destination.AccountId is not > 0)
             return BadRequest("Both financial accounts must be linked to general-ledger accounts.");
+
+        var resolution = await accountingPeriodService.ResolveAndValidateAsync(dto.TransactionDate, cancellationToken);
+        if (!resolution.Success)
+            return new Result(HttpStatusCode.BadRequest, resolution.Errors);
 
         await unitOfWork.BeginTransactionAsync();
         try
@@ -125,6 +130,8 @@ public sealed class PostFinancialTransferCommandHandler(
                 RefranceTypeId = 3,
                 RefranceTable = "financialtransfer",
                 Note = dto.Description,
+                FiscalYearId = resolution.FiscalYear!.Id,
+                FiscalPeriodId = resolution.FiscalPeriod!.Id,
                 Posted = true,
                 Status = Status.Approved,
                 JournalItems =

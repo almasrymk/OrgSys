@@ -16,19 +16,19 @@ namespace API.Controllers.Org.Transaction
         [HttpPut("Cancel")]
         public async Task<Result> Cancel(long Id, CancellationToken cancellationToken)
         {
-            return await sender.Send(new CancelInventoryCommand(Id), cancellationToken);
+            return await Sender.Send(new CancelInventoryCommand(Id), cancellationToken);
         }
 
         [HttpPut("Redo")]
         public async Task<Result> Redo(long Id, CancellationToken cancellationToken)
         {
-            return await sender.Send(new RedoInventoryCommand(Id), cancellationToken);
+            return await Sender.Send(new RedoInventoryCommand(Id), cancellationToken);
         }
 
         [HttpPost("CreateAdjustment")]
         public Task<Result> CreateAdjustment(long InventoryId, CancellationToken cancellationToken)
         {
-            return sender.Send(new CreateAdjustmentCommand(InventoryId), cancellationToken);
+            return Sender.Send(new CreateAdjustmentCommand(InventoryId), cancellationToken);
         }
     }
 }

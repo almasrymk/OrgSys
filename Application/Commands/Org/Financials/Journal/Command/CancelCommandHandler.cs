@@ -28,6 +28,11 @@ namespace Application.Commands.Org.Financials.Journal.Commands
                 if (!string.IsNullOrEmpty(journal.RefranceTable))
                     return new Result(HttpStatusCode.Forbidden, new List<Error> { new Error("A journal created from a resource is controlled by that resource") });
 
+                // Cancel only voids an unposted Draft. A Posted journal's accounting effect must never be
+                // altered directly — use ReverseJournalCommand instead, which books a proper reversing entry.
+                if (journal.Posted)
+                    return new Result(HttpStatusCode.Forbidden, new List<Error> { new Error("A posted journal entry cannot be cancelled. Use Reverse instead.") });
+
                 if (journal.Status == Domain.Enums.Status.Cancel)
                     return new Result(HttpStatusCode.OK, null);
 

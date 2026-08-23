@@ -11,19 +11,26 @@ using MediatR;
 using System.Net;
 
 public sealed record SaveFinancialAccountCommand(FinancialAccountDto Account) : ICommand;
-public sealed record GetFinancialAccountsQuery(FinancialAccountType? AccountType) : IRequest<ResultCollection<FinancialAccountDto>>;
-public sealed record GetFinancialAccountBalanceQuery(long FinancialAccountId) : IRequest<Result<decimal>>;
+public sealed record GetFinancialAccountsQuery(FinancialAccountType? AccountType, bool IncludeInactive = false) : IRequest<ResultCollection<FinancialAccountDto>>;
+public sealed record GetFinancialAccountBalanceQuery(long FinancialAccountId, DateTime? AsOfDate = null) : IRequest<Result<decimal>>;
 public sealed record PostFinancialTransactionCommand(PostFinancialTransactionDto Transaction) : ICommand, ICreateCommand<Result>;
 
 public sealed class SaveFinancialAccountCommandHandler(
     IRepository<FinancialAccount> repository, IRepository<Safe> safeRepository,
-    IRepository<AccountBank> bankRepository, IUnitOfWork unitOfWork) : ICommandHandler<SaveFinancialAccountCommand>
+    IRepository<AccountBank> bankRepository, IUnitOfWork unitOfWork,
+    Application.Common.Services.IReceivableAccountValidator accountValidator) : ICommandHandler<SaveFinancialAccountCommand>
 {
     public async Task<Result> Handle(SaveFinancialAccountCommand request, CancellationToken cancellationToken)
     {
         var dto = request.Account;
         if (string.IsNullOrWhiteSpace(dto.Name))
             return new Result(HttpStatusCode.BadRequest, [new Error("Financial account name is required.")]);
+        if (dto.AccountId is > 0)
+        {
+            var (_, accountErrors) = await accountValidator.ValidateAccountAsync(dto.AccountId.Value, cancellationToken);
+            if (accountErrors.Count > 0)
+                return new Result(HttpStatusCode.BadRequest, accountErrors);
+        }
         var entity = dto.Id > 0
             ? await repository.GetByFilterAsync(e => e.Id == dto.Id, string.Empty)
             : new FinancialAccount();
@@ -72,12 +79,13 @@ public sealed class GetFinancialAccountsQueryHandler(IRepository<FinancialAccoun
     public async Task<ResultCollection<FinancialAccountDto>> Handle(GetFinancialAccountsQuery request, CancellationToken cancellationToken)
     {
         var rows = await repository.GetListByFilterAsync(
-            e => e.IsActive && (!request.AccountType.HasValue || e.FinancialAccountType == request.AccountType.Value),
-            "CashBox,BankAccount");
+            e => (request.IncludeInactive || e.IsActive) && (!request.AccountType.HasValue || e.FinancialAccountType == request.AccountType.Value),
+            "CashBox,BankAccount,Account,Currency");
         var result = (rows ?? []).Select(e => new FinancialAccountDto
         {
             Id = e.Id, Code = e.Code, Name = e.Name, FinancialAccountType = e.FinancialAccountType,
-            AccountId = e.AccountId, CurrencyId = e.CurrencyId, IsActive = e.IsActive,
+            AccountId = e.AccountId, AccountName = e.Account?.Name, AccountCode = e.Account?.Code,
+            CurrencyId = e.CurrencyId, CurrencyName = e.Currency?.Name, IsActive = e.IsActive,
             BranchId = e.CashBox?.BranchId, KeeperUserId = e.CashBox?.KeeperUserId,
             BankId = e.BankAccount?.BankId, BankBranchId = e.BankAccount?.BankBranchd,
             AccountNumber = e.BankAccount?.AccountNumber, IBAN = e.BankAccount?.IBAN,
@@ -93,7 +101,8 @@ public sealed class PostFinancialTransactionCommandHandler(
     IRepository<FinancialType> typeRepository,
     IRepository<Account> glRepository,
     IRepository<Financial> transactionRepository,
-    IRepository<Journal> journalRepository) : ICommandHandler<PostFinancialTransactionCommand>
+    IRepository<Journal> journalRepository,
+    Application.Common.Services.IAccountingPeriodService accountingPeriodService) : ICommandHandler<PostFinancialTransactionCommand>
 {
     public async Task<Result> Handle(PostFinancialTransactionCommand request, CancellationToken cancellationToken)
     {
@@ -106,6 +115,10 @@ public sealed class PostFinancialTransactionCommandHandler(
         if (account is null || !account.IsActive || account.AccountId is not > 0 || type is null || counter is null)
             return BadRequest("Financial account, transaction type, and counter account must be valid.");
 
+        var resolution = await accountingPeriodService.ResolveAndValidateAsync(dto.TransactionDate, cancellationToken);
+        if (!resolution.Success)
+            return new Result(HttpStatusCode.BadRequest, resolution.Errors);
+
         await unitOfWork.BeginTransactionAsync();
         try
         {
@@ -117,6 +130,7 @@ public sealed class PostFinancialTransactionCommandHandler(
                 Direction = dto.Direction,
                 ReferenceType = dto.ReferenceType,
                 ReferenceId = dto.ReferenceId,
+                DealerId = dto.DealerId,
                 Amount = dto.Amount,
                 AmountByDefaultCurrency = dto.Amount * dto.ExchangeRate,
                 CurrencyId = dto.CurrencyId,
@@ -146,6 +160,7 @@ public sealed class PostFinancialTransactionCommandHandler(
                 BranchId = dto.BranchId, ShiftId = dto.ShiftId, CurrencyId = dto.CurrencyId,
                 Rate = dto.ExchangeRate, RefranceId = transaction.Id, RefranceCode = transaction.Code,
                 RefranceTypeId = type.Id, RefranceTable = "financialtransaction", Note = dto.Description,
+                FiscalYearId = resolution.FiscalYear!.Id, FiscalPeriodId = resolution.FiscalPeriod!.Id,
                 Posted = true, Status = Status.Approved,
                 JournalItems =
                 [
@@ -177,8 +192,10 @@ public sealed class GetFinancialAccountBalanceQueryHandler(IRepository<Financial
 {
     public async Task<Result<decimal>> Handle(GetFinancialAccountBalanceQuery request, CancellationToken cancellationToken)
     {
+        var asOfDate = request.AsOfDate?.Date;
         var rows = await repository.GetListByFilterAsync(e =>
-            e.FinancialAccountId == request.FinancialAccountId && e.Posted && e.Status == Status.Approved);
+            e.FinancialAccountId == request.FinancialAccountId && e.Posted && e.Status == Status.Approved
+            && (asOfDate == null || e.Date.Date <= asOfDate));
         var balance = (rows ?? []).Sum(e => e.Direction == FinancialTransactionDirection.In ? e.Amount : -e.Amount);
         return new Result<decimal>(HttpStatusCode.OK, balance, null);
     }

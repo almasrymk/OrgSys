@@ -16,13 +16,13 @@ using System.Threading.Tasks;
 namespace OrgSys.Areas.Financial.Controllers;
 
 [Area("Financials"), Authorize]
-public sealed class FinancialTransferController(IConfiguration configuration) : Controller
+public sealed class FinancialTransferController(IConfiguration configuration, IHttpClientFactory httpClientFactory) : Controller
 {
     private string ApiUrl => configuration["ApiUrl"] ?? string.Empty;
 
     public async Task<IActionResult> Index(string search = "")
     {
-        using var client = new HttpClient();
+        using var client = httpClientFactory.CreateClient();
         var response = await client.GetAsync($"{ApiUrl}/FinancialTransfer/GetList");
         response.EnsureSuccessStatusCode();
         var result = JsonConvert.DeserializeObject<ResultCollection<FinancialTransferDto>>(await response.Content.ReadAsStringAsync());
@@ -39,7 +39,7 @@ public sealed class FinancialTransferController(IConfiguration configuration) : 
     public async Task<IActionResult> Save(long id = 0)
     {
         if (id == 0) return View(new FinancialTransferDto { TransactionDate = DateTime.Today, ExchangeRate = 1 });
-        using var client = new HttpClient();
+        using var client = httpClientFactory.CreateClient();
         var response = await client.GetAsync($"{ApiUrl}/FinancialTransfer/GetById?id={id}");
         response.EnsureSuccessStatusCode();
         var result = JsonConvert.DeserializeObject<Result<FinancialTransferDto>>(await response.Content.ReadAsStringAsync());
@@ -51,11 +51,19 @@ public sealed class FinancialTransferController(IConfiguration configuration) : 
     {
         if (model.Id > 0) return RedirectToAction(nameof(Index));
         model.CreateUserId = User.GetUserId();
-        using var client = new HttpClient();
+        using var client = httpClientFactory.CreateClient();
         var response = await client.PostAsJsonAsync($"{ApiUrl}/FinancialTransfer/Post", model);
         if (response.IsSuccessStatusCode)
             return RedirectToAction(nameof(Index), new { status = ResultStatus.success, MsgError = "Success" });
         ModelState.AddModelError(string.Empty, await response.Content.ReadAsStringAsync());
         return View(model);
+    }
+
+    [HttpPost, ValidateAntiForgeryToken]
+    public async Task<IActionResult> Reverse(long id)
+    {
+        using var client = httpClientFactory.CreateClient();
+        await client.PutAsync($"{ApiUrl}/FinancialTransfer/Reverse?id={id}", null);
+        return RedirectToAction(nameof(Index));
     }
 }

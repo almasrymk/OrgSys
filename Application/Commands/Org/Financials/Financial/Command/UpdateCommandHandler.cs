@@ -9,9 +9,10 @@
     using Domain.Shared;
     using Domain.Entities;
     using Application.DTOs;
+    using System.Net;
 
     public sealed class UpdateFinancialCommand : Application.DTOs.FinancialDto, ICommand, IUpdateCommand<Result>;
-    public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork, 
+    public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork,
         IRepository<Domain.Entities.Financial> _Repository ,
         IRepository<Domain.Entities.FinancialInvoice> _RepositoryFinancialInvoice,
         IRepository<Domain.Entities.Invoice> _RepositoryInvoice,
@@ -24,6 +25,11 @@
             //await _UnitOfWork.BeginTransactionAsync();
 
             var finanicial = await _Repository.GetByFilterAsync(e => e.Id == request.Id, "FinancialInvoices") ?? new Financial();
+
+            // A Posted financial transaction (e.g. a Customer Receipt) is immutable — correct it via
+            // Reverse, never by editing the row a Posted Journal Entry was already generated from.
+            if (finanicial.Posted)
+                return new Result(HttpStatusCode.Forbidden, [new Error("A Posted financial transaction cannot be edited. Use Reverse instead.")]);
 
 
 

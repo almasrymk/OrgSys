@@ -16,7 +16,7 @@
     {
         public override string CreateInclude()
         {
-            return "JournalItems,JournalItems.Account";
+            return "JournalItems,JournalItems.Account,FiscalYear,FiscalPeriod,OriginalJournal,ReversalJournal";
         }
 
         public override Expression<Func<Domain.Entities.Journal, bool>> CreateFilter(GetByIdJournalQuery request)

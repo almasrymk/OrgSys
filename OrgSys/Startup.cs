@@ -48,8 +48,9 @@ namespace OrgSys
             });
 
             services.AddOptions();
+            services.AddHttpClient();
             //services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
-            services.AddMvc(options => options.EnableEndpointRouting = false);            
+            services.AddMvc(options => options.EnableEndpointRouting = false);
             
             services.AddLocalization(options => options.ResourcesPath = "Resource");
             services.AddMvc().AddViewLocalization(options => options.ResourcesPath = "Resource").

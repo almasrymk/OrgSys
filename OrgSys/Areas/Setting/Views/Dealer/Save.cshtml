@@ -162,8 +162,42 @@
                                                 @* <small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                                             </div>
                                             @Html.ValidationMessageFor(model => model.DealerGroupId, "", new { @class = "text-danger " })
-                                        </div> 
-                                    </div> 
+                                        </div>
+                                        @if (Model.TypeId == 1)
+                                        {
+                                            <div class="form-group col-md-6">
+                                                <label class="custom-control custom-checkbox mt-4 pt-1">
+                                                    @Html.CheckBoxFor(model => model.AutoCreateReceivableAccount, new { @class = "custom-control-input", id = "chkAutoCreateReceivableAccount" })
+                                                    <span class="custom-control-label">Auto-create receivable account under Accounts Receivable</span>
+                                                </label>
+                                                <small class="form-text text-muted">Only used when no Account is selected above — generates a customer sub-account and links it automatically.</small>
+                                                @if (Model.Id > 0 && ViewBag.CustomerBalance != null)
+                                                {
+                                                    <div class="mt-2">
+                                                        <label>@Domain.Resource.Title_Designer.Balance</label>
+                                                        <div class="form-control-plaintext">@(((decimal)ViewBag.CustomerBalance).ToString("N2"))</div>
+                                                    </div>
+                                                }
+                                            </div>
+                                        }
+                                        else if (Model.TypeId == 2)
+                                        {
+                                            <div class="form-group col-md-6">
+                                                <label class="custom-control custom-checkbox mt-4 pt-1">
+                                                    @Html.CheckBoxFor(model => model.AutoCreatePayableAccount, new { @class = "custom-control-input", id = "chkAutoCreatePayableAccount" })
+                                                    <span class="custom-control-label">Auto-create payable account under Accounts Payable</span>
+                                                </label>
+                                                <small class="form-text text-muted">Only used when no Account is selected above — generates a supplier sub-account and links it automatically.</small>
+                                                @if (Model.Id > 0 && ViewBag.SupplierBalance != null)
+                                                {
+                                                    <div class="mt-2">
+                                                        <label>@Domain.Resource.Title_Designer.Balance</label>
+                                                        <div class="form-control-plaintext">@(((decimal)ViewBag.SupplierBalance).ToString("N2"))</div>
+                                                    </div>
+                                                }
+                                            </div>
+                                        }
+                                    </div>
                                 </div>
                                 <div class="col-sm-12 col-md-12 col-lg-3 pt-2 pb-4">
                                     <div class="card mb-4 p-3">

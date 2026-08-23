@@ -12,6 +12,7 @@ using OrgSys.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Security.Cryptography.Xml;
 using System.Threading.Tasks;
 using System.Net.Http.Json;
@@ -46,8 +47,8 @@ namespace OrgSys.Areas.Financial.Controllers
         public override async Task LoadViewBag(FinancialDto model)
         {
 
-            using var client = new HttpClient();
-            var accountsResponse = await client.GetAsync($"{configuration["ApiUrl"]}/Financial/Accounts");
+            using var client = CreateClient();
+            var accountsResponse = await client.GetAsync($"{Configuration["ApiUrl"]}/Financial/Accounts");
             accountsResponse.EnsureSuccessStatusCode();
             var accountsResult = JsonConvert.DeserializeObject<ResultCollection<FinancialAccountDto>>(
                 await accountsResponse.Content.ReadAsStringAsync());
@@ -106,8 +107,8 @@ namespace OrgSys.Areas.Financial.Controllers
                     BranchId = ob.BranchId,
                     ShiftId = ob.ShiftId
                 };
-                using var client = new HttpClient();
-                var response = await client.PostAsJsonAsync($"{configuration["ApiUrl"]}/Financial/Transactions/Post", command);
+                using var client = CreateClient();
+                var response = await client.PostAsJsonAsync($"{Configuration["ApiUrl"]}/Financial/Transactions/Post", command);
                 if (response.IsSuccessStatusCode)
                     return RedirectToAction(nameof(Index), new { TypeId = command.FinancialTypeId, status = ResultStatus.success, MsgError = "Success" });
                 ModelState.AddModelError(string.Empty, await response.Content.ReadAsStringAsync());
@@ -123,7 +124,7 @@ namespace OrgSys.Areas.Financial.Controllers
             var data = await response.Content.ReadAsStringAsync();
             var res = JsonConvert.DeserializeObject<Domain.Shared.Result>(data);
 
-            return Redirect("/Financials/Financial/Index?ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" + (res.StatusCode != null ? ResultStatus.success : ResultStatus.error) + "&MsgError=Success");
+            return Redirect("/Financials/Financial/Index?ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" + (res.StatusCode == HttpStatusCode.OK ? ResultStatus.success : ResultStatus.error) + "&MsgError=Success");
         }
 
         public async Task<ActionResult> Redo(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1)
@@ -133,7 +134,7 @@ namespace OrgSys.Areas.Financial.Controllers
             var data = await response.Content.ReadAsStringAsync();
             var res = JsonConvert.DeserializeObject<Domain.Shared.Result>(data);
 
-            return Redirect("/Financials/Financial/Index?ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" + (res.StatusCode != null ? ResultStatus.success : ResultStatus.error) + "&MsgError=Success");
+            return Redirect("/Financials/Financial/Index?ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" + (res.StatusCode == HttpStatusCode.OK ? ResultStatus.success : ResultStatus.error) + "&MsgError=Success");
         }
 
 

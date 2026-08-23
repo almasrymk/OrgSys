@@ -9,7 +9,10 @@ public sealed class FinancialAccountDto
     public string Name { get; set; } = string.Empty;
     public FinancialAccountType FinancialAccountType { get; set; }
     public long? AccountId { get; set; }
+    public string? AccountName { get; set; }
+    public string? AccountCode { get; set; }
     public long? CurrencyId { get; set; }
+    public string? CurrencyName { get; set; }
     public bool IsActive { get; set; } = true;
     public long? BranchId { get; set; }
     public long? KeeperUserId { get; set; }
@@ -33,7 +36,23 @@ public sealed class PostFinancialTransactionDto
     public FinancialReferenceType ReferenceType { get; set; }
     public long? ReferenceId { get; set; }
     public long CounterAccountId { get; set; }
+    public long? DealerId { get; set; }
     public string? Description { get; set; }
+    public long CreateUserId { get; set; }
+    public long? BranchId { get; set; }
+    public long? ShiftId { get; set; }
+}
+
+public sealed class PostCustomerReceiptDto
+{
+    public long DealerId { get; set; }
+    public long FinancialAccountId { get; set; }
+    public decimal Amount { get; set; }
+    public long CurrencyId { get; set; }
+    public decimal ExchangeRate { get; set; } = 1;
+    public DateTime Date { get; set; }
+    public string? ReferenceNumber { get; set; }
+    public string? Notes { get; set; }
     public long CreateUserId { get; set; }
     public long? BranchId { get; set; }
     public long? ShiftId { get; set; }

@@ -26,10 +26,16 @@ namespace Application.Commands.Org.Financials.Journal.Commands
                 if (!string.IsNullOrEmpty(journal.RefranceTable))
                     return new Result(HttpStatusCode.Forbidden, new List<Error> { new Error("A journal created from a resource is controlled by that resource") });
 
-                if (journal.Status == Domain.Enums.Status.New)
+                // Once a journal has been Posted, its accounting history is immutable — Redo can only
+                // reopen a Cancelled Draft (never posted). A Posted journal is corrected by reversing it,
+                // not by reopening it, and a Reversed journal's original accounting effect must stand.
+                if (journal.Posted || journal.Status == Domain.Enums.Status.Reversed)
+                    return new Result(HttpStatusCode.Forbidden, new List<Error> { new Error("A posted or reversed journal entry cannot be redone.") });
+
+                if (journal.Status != Domain.Enums.Status.Cancel)
                     return new Result(HttpStatusCode.OK, null);
 
-                journal.Status = Domain.Enums.Status.New;               
+                journal.Status = Domain.Enums.Status.New;
 
                 var saved = await _UnitOfWork.SaveChangeAsync(cancellationToken);
 

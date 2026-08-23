@@ -51,6 +51,9 @@ namespace Infrastructure.Migrations
                     b.Property<string>("ImgPath")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsPostable")
+                        .HasColumnType("bit");
+
                     b.Property<string>("MaskText")
                         .HasColumnType("nvarchar(max)");
 
@@ -1103,6 +1106,117 @@ namespace Infrastructure.Migrations
                     b.ToTable("FinancialType");
                 });
 
+            modelBuilder.Entity("Domain.Entities.FiscalPeriod", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("FiscalPeriodStatus")
+                        .HasColumnType("int");
+
+                    b.Property<long>("FiscalYearId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("PeriodNumber")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FiscalYearId");
+
+                    b.ToTable("FiscalPeriod");
+                });
+
+            modelBuilder.Entity("Domain.Entities.FiscalYear", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("FiscalYearStatus")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsCurrent")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FiscalYear");
+                });
+
             modelBuilder.Entity("Domain.Entities.Inventory", b =>
                 {
                     b.Property<long>("Id")
@@ -1571,6 +1685,12 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
+                    b.Property<long>("FiscalPeriodId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("FiscalYearId")
+                        .HasColumnType("bigint");
+
                     b.Property<bool>("HasJournal")
                         .HasColumnType("bit");
 
@@ -1594,6 +1714,9 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("Note")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("OriginalJournalId")
+                        .HasColumnType("bigint");
 
                     b.Property<long>("ParentId")
                         .HasColumnType("bigint");
@@ -1637,9 +1760,19 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("CurrencyId");
 
+                    b.HasIndex("Date");
+
+                    b.HasIndex("FiscalPeriodId");
+
+                    b.HasIndex("FiscalYearId");
+
                     b.HasIndex("JournalTypeId");
 
                     b.HasIndex("ModifyUserId");
+
+                    b.HasIndex("OriginalJournalId")
+                        .IsUnique()
+                        .HasFilter("[OriginalJournalId] IS NOT NULL");
 
                     b.HasIndex("ShiftId");
 
@@ -3366,6 +3499,17 @@ namespace Infrastructure.Migrations
                     b.Navigation("ToFinancialAccount");
                 });
 
+            modelBuilder.Entity("Domain.Entities.FiscalPeriod", b =>
+                {
+                    b.HasOne("Domain.Entities.FiscalYear", "FiscalYear")
+                        .WithMany("Periods")
+                        .HasForeignKey("FiscalYearId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("FiscalYear");
+                });
+
             modelBuilder.Entity("Domain.Entities.Inventory", b =>
                 {
                     b.HasOne("Domain.Entities.Branch", "Branch")
@@ -3550,6 +3694,18 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Domain.Entities.FiscalPeriod", "FiscalPeriod")
+                        .WithMany()
+                        .HasForeignKey("FiscalPeriodId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.FiscalYear", "FiscalYear")
+                        .WithMany()
+                        .HasForeignKey("FiscalYearId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("Domain.Entities.JournalType", "JournalType")
                         .WithMany()
                         .HasForeignKey("JournalTypeId")
@@ -3559,6 +3715,11 @@ namespace Infrastructure.Migrations
                     b.HasOne("Domain.Entities.User", "ModifyUser")
                         .WithMany()
                         .HasForeignKey("ModifyUserId");
+
+                    b.HasOne("Domain.Entities.Journal", "OriginalJournal")
+                        .WithOne("ReversalJournal")
+                        .HasForeignKey("Domain.Entities.Journal", "OriginalJournalId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Domain.Entities.Shift", "Shift")
                         .WithMany()
@@ -3570,9 +3731,15 @@ namespace Infrastructure.Migrations
 
                     b.Navigation("Currency");
 
+                    b.Navigation("FiscalPeriod");
+
+                    b.Navigation("FiscalYear");
+
                     b.Navigation("JournalType");
 
                     b.Navigation("ModifyUser");
+
+                    b.Navigation("OriginalJournal");
 
                     b.Navigation("Shift");
                 });
@@ -3937,6 +4104,11 @@ namespace Infrastructure.Migrations
                     b.Navigation("Transactions");
                 });
 
+            modelBuilder.Entity("Domain.Entities.FiscalYear", b =>
+                {
+                    b.Navigation("Periods");
+                });
+
             modelBuilder.Entity("Domain.Entities.Inventory", b =>
                 {
                     b.Navigation("InventoryProducts");
@@ -3952,6 +4124,8 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.Journal", b =>
                 {
                     b.Navigation("JournalItems");
+
+                    b.Navigation("ReversalJournal");
                 });
 
             modelBuilder.Entity("Domain.Entities.Order", b =>

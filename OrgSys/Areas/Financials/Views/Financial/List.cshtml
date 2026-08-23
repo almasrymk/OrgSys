@@ -50,8 +50,12 @@
                         <th class="@TextAlign">Financial Type</th>
                         <th class="text-center">@Domain.Resource.Title_Designer.Code</th>
                         <th class="text-center">@Domain.Resource.Title_Designer.Date</th>
+                        <th class="@TextAlign">Financial Account</th>
+                        <th class="@TextAlign">Counterparty</th>
+                        <th class="text-center">Amount</th>
                         <th class="@TextAlign">@Domain.Resource.Title_Designer.Currency</th>
                         <th class="@TextAlign">Reference</th>
+                        <th class="text-center">Status</th>
                         <th class="text-center">Review</th>
                         <th class="text-center">Posted</th>
                         @if (AllowView || AllowEdit || AllowCancel || AllowRedo || AllowDelete)
@@ -72,7 +76,11 @@
                             <td class="@TextAlign align-middle">@Model.Response[i].FinancialTypeName</td>
                             <td class="text-center align-middle">@Model.Response[i].Code</td>
                             <td class="text-center align-middle">@Model.Response[i].Date.ToString(DateFormat, new CultureInfo("en-US"))</td>
+                            <td class="@TextAlign align-middle">@Model.Response[i].FinancialAccountName</td>
+                            <td class="@TextAlign align-middle">@(Model.Response[i].ContraFinancialAccountName ?? Model.Response[i].DealerName)</td>
+                            <td class="text-center align-middle">@Model.Response[i].Amount.ToString("N2")</td>
                             <td class="@TextAlign align-middle">@Model.Response[i].CurrencyName</td>
+                            <td class="text-center align-middle">@Model.Response[i].Status</td>
                             <td class="@TextAlign align-middle">
                                 @if ("" + Model.Response[i].RefranceTable == "invoice")
                                 {
