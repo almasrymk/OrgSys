@@ -31,6 +31,10 @@ builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
 builder.Services.AddScoped<Application.Common.Services.IAccountingPeriodService, Application.Common.Services.AccountingPeriodService>();
 
+builder.Services.AddScoped<Application.Common.Services.IReceivableAccountValidator, Application.Common.Services.ReceivableAccountValidator>();
+
+builder.Services.AddScoped<Application.Common.Services.IPayableAccountValidator, Application.Common.Services.PayableAccountValidator>();
+
 builder.Services.AddAutoMapper(cfg => { cfg.AddProfile<MappingProfile>(); });
 
 builder.Services.AddSwaggerGen(c => { c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First()); });

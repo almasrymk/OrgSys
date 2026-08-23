@@ -4,6 +4,7 @@ using AutoMapper;
 using Domain.Abstraction;
 using Domain.Entities;
 using Domain.Enums;
+using Domain.Shared;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using System.Net;
@@ -112,6 +113,75 @@ public class JournalPostCommandHandlerTests
 
         Assert.Equal(HttpStatusCode.BadRequest, result.StatusCode);
         Assert.Contains("Fiscal year 2026 is closed. Journal entries cannot be created or posted.", result.Errors!.Select(e => e.MessageError));
+    }
+
+    [Fact]
+    public async Task Handle_DebitDoesNotEqualCredit_RejectsPosting()
+    {
+        var existing = new Journal
+        {
+            Id = 1,
+            Date = JournalDate,
+            Posted = false,
+            FiscalYearId = 10,
+            FiscalPeriodId = 20,
+            JournalItems = [new JournalItem { Debit = 100, Credit = 0 }, new JournalItem { Debit = 0, Credit = 50 }]
+        };
+        var (handler, repository, unitOfWork, accountingPeriodService) = BuildHandler(existing);
+
+        var result = await handler.Handle(new PostJournalCommand(1), CancellationToken.None);
+
+        Assert.Equal(HttpStatusCode.BadRequest, result.StatusCode);
+        Assert.Contains("Total Debit must equal total Credit before posting.", result.Errors!.Select(e => e.MessageError));
+        Assert.False(existing.Posted);
+        repository.Verify(r => r.UpdateAsync(It.IsAny<Journal>()), Times.Never);
+        unitOfWork.Verify(u => u.BeginTransactionAsync(), Times.Never);
+    }
+
+    [Fact]
+    public async Task Handle_DebitEqualsCredit_PostsSuccessfully()
+    {
+        var existing = new Journal
+        {
+            Id = 1,
+            Date = JournalDate,
+            Posted = false,
+            FiscalYearId = 10,
+            FiscalPeriodId = 20,
+            JournalItems = [new JournalItem { Debit = 100, Credit = 0 }, new JournalItem { Debit = 0, Credit = 100 }]
+        };
+        var (handler, repository, unitOfWork, accountingPeriodService) = BuildHandler(existing);
+        var year = Year();
+        var period = Period();
+        accountingPeriodService.Setup(s => s.ResolveAndValidateAsync(JournalDate, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(AccountingPeriodResult.Ok(year, period));
+
+        var result = await handler.Handle(new PostJournalCommand(1), CancellationToken.None);
+
+        Assert.Equal(HttpStatusCode.OK, result.StatusCode);
+        Assert.True(existing.Posted);
+    }
+
+    [Fact]
+    public async Task Handle_OpeningBalanceRuleViolated_RollsBackAndRejectsPosting()
+    {
+        var existing = new Journal { Id = 1, Date = JournalDate, Posted = false, FiscalYearId = 10, FiscalPeriodId = 20 };
+        var (handler, repository, unitOfWork, accountingPeriodService) = BuildHandler(existing);
+        var year = Year();
+        var period = Period();
+        accountingPeriodService.Setup(s => s.ResolveAndValidateAsync(JournalDate, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(AccountingPeriodResult.Ok(year, period));
+        accountingPeriodService.Setup(s => s.ValidateOpeningBalanceAsync(It.IsAny<long>(), It.IsAny<DateTime>(), It.IsAny<FiscalYear>(), It.IsAny<long>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync([new Error("An Opening Balance journal already exists for fiscal year 2026.")]);
+
+        var result = await handler.Handle(new PostJournalCommand(1), CancellationToken.None);
+
+        Assert.Equal(HttpStatusCode.BadRequest, result.StatusCode);
+        Assert.Contains("An Opening Balance journal already exists for fiscal year 2026.", result.Errors!.Select(e => e.MessageError));
+        Assert.False(existing.Posted);
+        repository.Verify(r => r.UpdateAsync(It.IsAny<Journal>()), Times.Never);
+        unitOfWork.Verify(u => u.RollbackAsync(), Times.Once);
+        unitOfWork.Verify(u => u.CommitAsync(), Times.Never);
     }
 
     [Fact]

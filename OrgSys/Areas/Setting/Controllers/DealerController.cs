@@ -3,9 +3,12 @@
     using Application.Commands.Org.Setting.Dealer.Commands;
     using AutoMapper;
     using Application.DTOs;
+    using Domain.Enums;
+    using Domain.Shared;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.Extensions.Configuration;
+    using Newtonsoft.Json;
     using OrgSys.Controllers;
     using System.Collections.Generic;
     using System.Linq;
@@ -35,6 +38,21 @@
             }
             ob.DealerGroupName = (await GetObApi<DealerGroupDto>($"GetById?Id={ob.DealerGroupId ?? 0}"))?.Name;
             ob.AccountName = (await GetObApi<AccountDto>($"GetById?Id={ob.AccountId ?? 0}"))?.Name;
+
+            if (ob.Id > 0 && ob.AccountId is > 0)
+            {
+                var balanceResponse = await ApiMethod(ApiMethodType.Get, $"Balance?Id={ob.Id}");
+                if (balanceResponse.IsSuccessStatusCode)
+                {
+                    var balanceData = await balanceResponse.Content.ReadAsStringAsync();
+                    var balance = JsonConvert.DeserializeObject<Result<decimal>>(balanceData)?.Response;
+                    if (ob.TypeId == (long)DealerType.Supplier)
+                        // GetDealerBalanceQuery returns Debit - Credit; a payable is conventionally shown as a credit balance.
+                        ViewBag.SupplierBalance = balance is null ? null : -balance;
+                    else
+                        ViewBag.CustomerBalance = balance;
+                }
+            }
 
             return ob;
         }

@@ -51,6 +51,9 @@ namespace Infrastructure.Migrations
                     b.Property<string>("ImgPath")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsPostable")
+                        .HasColumnType("bit");
+
                     b.Property<string>("MaskText")
                         .HasColumnType("nvarchar(max)");
 
@@ -1712,6 +1715,9 @@ namespace Infrastructure.Migrations
                     b.Property<string>("Note")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<long?>("OriginalJournalId")
+                        .HasColumnType("bigint");
+
                     b.Property<long>("ParentId")
                         .HasColumnType("bigint");
 
@@ -1763,6 +1769,10 @@ namespace Infrastructure.Migrations
                     b.HasIndex("JournalTypeId");
 
                     b.HasIndex("ModifyUserId");
+
+                    b.HasIndex("OriginalJournalId")
+                        .IsUnique()
+                        .HasFilter("[OriginalJournalId] IS NOT NULL");
 
                     b.HasIndex("ShiftId");
 
@@ -3706,6 +3716,11 @@ namespace Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("ModifyUserId");
 
+                    b.HasOne("Domain.Entities.Journal", "OriginalJournal")
+                        .WithOne("ReversalJournal")
+                        .HasForeignKey("Domain.Entities.Journal", "OriginalJournalId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("Domain.Entities.Shift", "Shift")
                         .WithMany()
                         .HasForeignKey("ShiftId");
@@ -3723,6 +3738,8 @@ namespace Infrastructure.Migrations
                     b.Navigation("JournalType");
 
                     b.Navigation("ModifyUser");
+
+                    b.Navigation("OriginalJournal");
 
                     b.Navigation("Shift");
                 });
@@ -4107,6 +4124,8 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.Journal", b =>
                 {
                     b.Navigation("JournalItems");
+
+                    b.Navigation("ReversalJournal");
                 });
 
             modelBuilder.Entity("Domain.Entities.Order", b =>

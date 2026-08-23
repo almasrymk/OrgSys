@@ -58,4 +58,12 @@ public sealed class FinancialTransferController(IConfiguration configuration, IH
         ModelState.AddModelError(string.Empty, await response.Content.ReadAsStringAsync());
         return View(model);
     }
+
+    [HttpPost, ValidateAntiForgeryToken]
+    public async Task<IActionResult> Reverse(long id)
+    {
+        using var client = httpClientFactory.CreateClient();
+        await client.PutAsync($"{ApiUrl}/FinancialTransfer/Reverse?id={id}", null);
+        return RedirectToAction(nameof(Index));
+    }
 }

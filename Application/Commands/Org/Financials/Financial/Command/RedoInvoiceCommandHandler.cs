@@ -33,7 +33,10 @@ namespace Application.Commands.Org.Financials.Financial.Commands
                 var finanicial = await _Repository
                     .GetByFilterAsync(e => e.Id == request.Id, "FinancialInvoices") ?? new();
 
-                foreach (var item in finanicial.FinancialInvoices!)
+                if (finanicial.Posted)
+                    return new Result(HttpStatusCode.Forbidden, [new Error("A Posted financial transaction cannot be redone. Use Reverse instead.")]);
+
+                foreach (var item in finanicial.FinancialInvoices ?? [])
                 {
                     var invoice = await _RepositoryInvoice
                         .GetByFilterAsync(e => e.Id == item.InvoiceId, "");

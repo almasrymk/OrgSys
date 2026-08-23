@@ -15,7 +15,7 @@
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-            var builder = new ConfigurationBuilder().AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+            var builder = new ConfigurationBuilder().AddJsonFile("appsettings.json", optional: true, reloadOnChange: false);
             IConfigurationRoot config = builder.Build();
             optionsBuilder.UseSqlServer(config.GetConnectionString("OrgConnection"));
         }

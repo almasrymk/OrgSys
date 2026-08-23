@@ -22,5 +22,9 @@ namespace API.Controllers.Org.Journals
         [HttpPut("Post")]
         public Task<Result> Post(long Id, CancellationToken cancellationToken) =>
             Sender.Send(new PostJournalCommand(Id), cancellationToken);
+
+        [HttpPut("Reverse")]
+        public Task<Result> Reverse(long Id, CancellationToken cancellationToken) =>
+            Sender.Send(new ReverseJournalCommand(Id), cancellationToken);
     }
 }

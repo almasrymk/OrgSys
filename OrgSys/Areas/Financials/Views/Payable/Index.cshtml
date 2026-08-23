@@ -1,0 +1,92 @@
+@model List<Application.DTOs.FinancialDto>
+@using OrgSys
+@{
+    ViewData["Title_Designer"] = "Supplier Payments";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    long dealerId = ViewBag.DealerId;
+    var allowPost = User.IsAllowed("FinancialPayment.Post");
+    var allowReverse = User.IsAllowed("FinancialPayment.Reverse");
+}
+
+<div id="HPage" class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="mb-3">
+                <h1><i class="iconsminds-handshake"></i> Supplier Payments</h1>
+                <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
+                    <ol class="breadcrumb pt-0">
+                        <li class="breadcrumb-item"><a href="/">@Domain.Resource.Title_Designer.Home</a></li>
+                        <li class="breadcrumb-item">@Domain.Resource.Title_Designer.Financials</li>
+                        <li class="breadcrumb-item">Supplier Payments</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 mb-4">
+            <div class="card p-4">
+                <form method="get" asp-action="Index" class="form-inline mb-3">
+                    <label class="mr-2">Supplier</label>
+                    @Html.DropDownList("dealerId", (SelectList)ViewBag.Dealers, "Select a supplier...", new { @class = "form-control mr-2", onchange = "this.form.submit()" })
+                    @if (dealerId > 0 && allowPost)
+                    {
+                        <a class="btn btn-primary ml-auto" href="@Url.Action("Save", new { dealerId })"><i class="simple-icon-plus"></i> New Payment</a>
+                    }
+                </form>
+
+                @if (dealerId > 0)
+                {
+                    <div class="mb-3">
+                        <strong>Current Balance:</strong>
+                        @(ViewBag.Balance != null ? ((decimal)ViewBag.Balance).ToString("N2") : "-")
+                    </div>
+
+                    @if (Model.Count == 0)
+                    {
+                        <p>No payments recorded for this supplier yet.</p>
+                    }
+                    else
+                    {
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Code</th>
+                                    <th>Date</th>
+                                    <th>Amount</th>
+                                    <th>Notes</th>
+                                    <th>Status</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr style="@(item.Status == Domain.Enums.Status.Reversed ? "color:#a8a7a7;" : "")">
+                                        <td>@item.Code</td>
+                                        <td>@item.Date.ToString("yyyy-MM-dd")</td>
+                                        <td>@item.Amount.ToString("N2")</td>
+                                        <td>@item.Notes</td>
+                                        <td>@item.Status</td>
+                                        <td>
+                                            @if (allowReverse && item.Posted && item.Status != Domain.Enums.Status.Reversed)
+                                            {
+                                                <form method="post" asp-action="Reverse" class="d-inline">
+                                                    @Html.AntiForgeryToken()
+                                                    <input type="hidden" name="id" value="@item.Id" />
+                                                    <input type="hidden" name="dealerId" value="@dealerId" />
+                                                    <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Reverse this payment? This creates a reversing Journal Entry and cannot be undone.');">Reverse</button>
+                                                </form>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>

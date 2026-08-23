@@ -1,12 +1,93 @@
 @model Application.DTOs.FinancialAccountDto
 @using Domain.Enums
-@{ Layout = "~/Views/Shared/_Layout.cshtml"; ViewData["Title_Designer"] = "Financial Account"; }
-<div class="container-fluid"><div class="row"><div class="col-12"><div class="mb-3"><h1>@(Model.Id==0 ? "New Financial Account" : "Edit Financial Account")</h1></div></div></div>
-<div class="card"><div class="card-body"><form asp-action="Save" method="post"><div asp-validation-summary="ModelOnly" class="text-danger"></div><input asp-for="Id" type="hidden" />
- <div class="form-row"><div class="form-group col-md-4"><label>Code</label><input asp-for="Code" class="form-control" /></div><div class="form-group col-md-4"><label>Name</label><input asp-for="Name" class="form-control" required /></div><div class="form-group col-md-4"><label>Type</label><select asp-for="FinancialAccountType" class="form-control" id="accountType"><option value="1">Cash Box</option><option value="2">Bank</option></select></div></div>
- <div class="form-row"><div class="form-group col-md-4"><label>GL Account</label><input asp-for="AccountId" class="form-control" type="number" /></div><div class="form-group col-md-4"><label>Currency</label><input asp-for="CurrencyId" class="form-control" type="number" /></div><div class="form-group col-md-4 pt-4"><label class="custom-control custom-checkbox"><input asp-for="IsActive" class="custom-control-input" /><span class="custom-control-label">Active</span></label></div></div>
- <div id="cashFields" class="card mb-3"><div class="card-body"><h5>Cash Box Details</h5><div class="form-row"><div class="form-group col-md-6"><label>Branch</label><input asp-for="BranchId" type="number" class="form-control" /></div><div class="form-group col-md-6"><label>Keeper User</label><input asp-for="KeeperUserId" type="number" class="form-control" /></div></div></div></div>
- <div id="bankFields" class="card mb-3"><div class="card-body"><h5>Bank Account Details</h5><div class="form-row"><div class="form-group col-md-3"><label>Bank</label><input asp-for="BankId" type="number" class="form-control" /></div><div class="form-group col-md-3"><label>Bank Branch</label><input asp-for="BankBranchId" type="number" class="form-control" /></div><div class="form-group col-md-3"><label>Account Number</label><input asp-for="AccountNumber" class="form-control" /></div><div class="form-group col-md-3"><label>IBAN</label><input asp-for="IBAN" class="form-control" /></div></div><div class="form-row"><div class="form-group col-md-6"><label>SWIFT</label><input asp-for="SwiftCode" class="form-control" /></div><div class="form-group col-md-6"><label>Branch Name</label><input asp-for="BranchName" class="form-control" /></div></div></div></div>
- <hr/><button class="btn btn-primary" type="submit">Save</button> <a class="btn btn-light" href="/Setting/FinancialAccount">Back</a>
-</form></div></div></div>
-<script src="~/js/vendor/jquery-3.3.1.min.js"></script><script>function toggleDetails(){var bank=$('#accountType').val()==='2';$('#cashFields').toggle(!bank);$('#bankFields').toggle(bank);}$('#accountType').on('change',toggleDetails);toggleDetails();</script>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title_Designer"] = "Financial Account";
+    var isBank = Model.FinancialAccountType == FinancialAccountType.Bank;
+    var backUrl = $"/Setting/FinancialAccount?accountType={(int)Model.FinancialAccountType}";
+    List<Application.DTOs.BankBranchDto> bankBranches = ViewBag.BankBranchList ?? new List<Application.DTOs.BankBranchDto>();
+}
+<div class="container-fluid">
+    <div class="row"><div class="col-12"><div class="mb-3"><h1>@(Model.Id == 0 ? (isBank ? "New Bank Account" : "New Cash Box") : (isBank ? "Edit Bank Account" : "Edit Cash Box"))</h1></div></div></div>
+    <div class="card"><div class="card-body">
+        <form asp-action="Save" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="Id" type="hidden" />
+            <div class="form-row">
+                <div class="form-group col-md-4"><label>Code</label><input asp-for="Code" class="form-control" /></div>
+                <div class="form-group col-md-4"><label>Name</label><input asp-for="Name" class="form-control" required /></div>
+                <div class="form-group col-md-4"><label>Type</label>
+                    <select asp-for="FinancialAccountType" class="form-control" id="accountType">
+                        <option value="1">Cash Box</option>
+                        <option value="2">Bank</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4"><label>GL Account</label><select asp-for="AccountId" asp-items="ViewBag.AccountList" class="form-control"><option value="">Select an account...</option></select></div>
+                <div class="form-group col-md-4"><label>Currency</label><select asp-for="CurrencyId" asp-items="ViewBag.CurrencyList" class="form-control"><option value="">Select a currency...</option></select></div>
+                <div class="form-group col-md-4 pt-4"><label class="custom-control custom-checkbox"><input asp-for="IsActive" class="custom-control-input" /><span class="custom-control-label">Active</span></label></div>
+            </div>
+
+            @if (Model.Id > 0 && ViewBag.Balance != null)
+            {
+                <div class="mb-3">
+                    <label>Current Balance</label>
+                    <div class="form-control-plaintext">@(((decimal)ViewBag.Balance).ToString("N2"))</div>
+                </div>
+            }
+
+            <div id="cashFields" class="card mb-3"><div class="card-body">
+                <h5>Cash Box Details</h5>
+                <div class="form-row">
+                    <div class="form-group col-md-6"><label>Branch</label><select asp-for="BranchId" asp-items="ViewBag.BranchList" class="form-control"><option value="">Select a branch...</option></select></div>
+                    <div class="form-group col-md-6"><label>Keeper User</label><select asp-for="KeeperUserId" asp-items="ViewBag.UserList" class="form-control"><option value="">Select a user...</option></select></div>
+                </div>
+            </div></div>
+
+            <div id="bankFields" class="card mb-3"><div class="card-body">
+                <h5>Bank Account Details</h5>
+                <div class="form-row">
+                    <div class="form-group col-md-3"><label>Bank</label><select asp-for="BankId" asp-items="ViewBag.BankList" class="form-control" id="bankId"><option value="">Select a bank...</option></select></div>
+                    <div class="form-group col-md-3"><label>Bank Branch</label>
+                        <select asp-for="BankBranchId" class="form-control" id="bankBranchId">
+                            <option value="">Select a branch...</option>
+                            @foreach (var b in bankBranches)
+                            {
+                                <option value="@b.Id" data-bank-id="@b.BankId">@b.Name</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group col-md-3"><label>Account Number</label><input asp-for="AccountNumber" class="form-control" /></div>
+                    <div class="form-group col-md-3"><label>IBAN</label><input asp-for="IBAN" class="form-control" /></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6"><label>SWIFT</label><input asp-for="SwiftCode" class="form-control" /></div>
+                    <div class="form-group col-md-6"><label>Branch Name</label><input asp-for="BranchName" class="form-control" /></div>
+                </div>
+            </div></div>
+            <hr/>
+            <button class="btn btn-primary" type="submit">Save</button>
+            <a class="btn btn-light" href="@backUrl">Back</a>
+        </form>
+    </div></div>
+</div>
+<script src="~/js/vendor/jquery-3.3.1.min.js"></script>
+<script>
+    function toggleDetails() { var bank = $('#accountType').val() === '2'; $('#cashFields').toggle(!bank); $('#bankFields').toggle(bank); }
+    $('#accountType').on('change', toggleDetails);
+    toggleDetails();
+
+    function filterBankBranches() {
+        var bankId = $('#bankId').val();
+        var selected = $('#bankBranchId').val();
+        $('#bankBranchId option').each(function () {
+            var branchBankId = $(this).data('bank-id');
+            $(this).toggle(!branchBankId || String(branchBankId) === String(bankId));
+        });
+        if ($('#bankBranchId option:selected').is(':hidden')) $('#bankBranchId').val('');
+        else $('#bankBranchId').val(selected);
+    }
+    $('#bankId').on('change', filterBankBranches);
+    filterBankBranches();
+</script>

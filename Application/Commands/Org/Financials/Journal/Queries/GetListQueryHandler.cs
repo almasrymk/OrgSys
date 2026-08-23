@@ -32,7 +32,7 @@
 
         public override string CreateInclude()
         {
-            return "Currency,JournalType";
+            return "Currency,JournalType,FiscalYear,OriginalJournal,ReversalJournal";
         }
     }
 }

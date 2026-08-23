@@ -185,13 +185,28 @@
             }
 
             await LoadViewBag(ob);
+            bool isAjax = Request.Headers["X-Requested-With"] == "XMLHttpRequest";
+
             if (res != null)
             {
-                if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+                if (isAjax)
                     return BadRequest(new { res.Errors });
 
                 foreach (var item in res.Errors)
                     ModelState.AddModelError(item.Key, item.MessageError);
+            }
+            else if (isAjax)
+            {
+                // Reaching here with res == null means the save was never even attempted — model
+                // binding/validation failed before the API was called. Returning View(ob) here would
+                // send a 200 OK HTML page back to the AJAX caller, which jQuery's success callback
+                // treats as success regardless of body content — silently telling the user "saved"
+                // when nothing was persisted. Surface it as a real error instead.
+                var modelErrors = ModelState
+                    .Where(kv => kv.Value.Errors.Count > 0)
+                    .SelectMany(kv => kv.Value.Errors.Select(e => new Error(string.IsNullOrEmpty(e.ErrorMessage) ? "Invalid value." : e.ErrorMessage, kv.Key)))
+                    .ToList();
+                return BadRequest(new { Errors = modelErrors });
             }
             return View(ob);
         }

@@ -11,6 +11,16 @@ namespace Application.Common.Services
     public interface IAccountingPeriodService
     {
         Task<AccountingPeriodResult> ResolveAndValidateAsync(DateTime journalDate, CancellationToken cancellationToken = default);
+
+        /// <summary>Plain lookup (no open/closed checks) — used when a journal's date hasn't changed and its
+        /// already-resolved FiscalYear is needed for a check that isn't itself about period resolution.</summary>
+        Task<FiscalYear?> GetFiscalYearAsync(long fiscalYearId, CancellationToken cancellationToken = default);
+
+        /// <summary>Enforces the Opening Balance rules for a journal of the given type: entry date must equal
+        /// the fiscal year's StartDate, and at most one non-deleted/non-cancelled Opening Balance journal may
+        /// exist per fiscal year. No-ops (returns no errors) when <paramref name="journalTypeId"/> does not map
+        /// to an Opening-Balance JournalType. Pass 0 for <paramref name="journalId"/> when creating a new journal.</summary>
+        Task<List<Error>> ValidateOpeningBalanceAsync(long journalTypeId, DateTime journalDate, FiscalYear fiscalYear, long journalId, CancellationToken cancellationToken = default);
     }
 
     public sealed class AccountingPeriodResult

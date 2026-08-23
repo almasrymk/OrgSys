@@ -18,12 +18,16 @@
     var AllowDelete = false;
     var AllowCancel = false;
     var AllowRedo = false;
+    var AllowPost = false;
+    var AllowReverse = false;
     AllowView = User.IsAllowed("Journal.View");
     AllowAdd = User.IsAllowed("Journal.Add");
     AllowEdit = User.IsAllowed("Journal.Edit");
     AllowDelete = User.IsAllowed("Journal.Delete");
     AllowCancel = User.IsAllowed("Journal.Cancel");
     AllowRedo = User.IsAllowed("Journal.Redo");
+    AllowPost = User.IsAllowed("Journal.Post");
+    AllowReverse = User.IsAllowed("Journal.Reverse");
 
     List<InvoiceTypeDto> InvoicesTypes = ViewBag.InvoicesTypes;
     List<TransactionTypeDto> TransactionsTypes = ViewBag.TransactionsTypes;
@@ -51,10 +55,11 @@
                         <th class="text-center">@Domain.Resource.Title_Designer.Code</th>
                         <th class="text-center">@Domain.Resource.Title_Designer.Date</th>
                         <th class="@TextAlign">@Domain.Resource.Title_Designer.Currency</th>
+                        <th class="@TextAlign">Fiscal Year</th>
                         <th class="@TextAlign">Reference</th>
                         <th class="text-center">Review</th>
                         <th class="text-center">Posted</th>
-                        @if (AllowView || AllowEdit || AllowCancel || AllowRedo || AllowDelete)
+                        @if (AllowView || AllowEdit || AllowCancel || AllowRedo || AllowDelete || AllowPost || AllowReverse)
                         {
                             <th></th>
                         }
@@ -67,12 +72,13 @@
                 <tbody>
                     @for (int i = 0, x = ((Model.Page - 1) * Model.PageSize) + 1; i < Model.Response.Count; i++, x++)
                     {
-                        <tr style="@(Model.Response[i].Status == Domain.Enums.Status.Cancel ? "color:#a8a7a7;background:repeating-linear-gradient(60deg, transparent, transparent 5px, gainsboro 5px, gainsboro 6px);" : "")">
+                        <tr style="@((Model.Response[i].Status is Domain.Enums.Status.Cancel or Domain.Enums.Status.Reversed) ? "color:#a8a7a7;background:repeating-linear-gradient(60deg, transparent, transparent 5px, gainsboro 5px, gainsboro 6px);" : "")">
                             <td class="text-center align-middle">@x</td>
                             <td class="@TextAlign align-middle">@Model.Response[i].JournalTypeName</td>
                             <td class="text-center align-middle">@Model.Response[i].Code</td>
                             <td class="text-center align-middle">@Model.Response[i].Date.ToString(DateFormat, new CultureInfo("en-US"))</td>
                             <td class="@TextAlign align-middle">@Model.Response[i].CurrencyName</td>
+                            <td class="@TextAlign align-middle">@Model.Response[i].FiscalYearName</td>
                             <td class="@TextAlign align-middle">
                                 @if ("" + Model.Response[i].RefranceTable == "invoice")
                                 {
@@ -107,7 +113,7 @@
                             </td>
                             <td class="text-center align-middle">@(Model.Response[i].Review ? "✓" : "")</td>
                             <td class="text-center align-middle">@(Model.Response[i].Posted ? "✓" : "")</td>
-                            @if (AllowView || AllowEdit || AllowCancel || AllowRedo || AllowDelete)
+                            @if (AllowView || AllowEdit || AllowCancel || AllowRedo || AllowDelete || AllowPost || AllowReverse)
                             {
                                 <td class="@TextAlign2 align-middle">
                                     @if ("" + Model.Response[i].RefranceTable == "")
@@ -127,15 +133,44 @@
                                                 <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash', '@Domain.Resource.Message_Designer.DeleteConfirmation', '@Domain.Resource.Message_Designer.DoYouWantDeleteFile', '@Domain.Resource.Title_Designer.Ok', @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i></a>
                                             }
                                         }
+                                        else if (Model.Response[i].Status == Domain.Enums.Status.Reversed)
+                                        {
+                                            <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"><i class="simple-icon-eye" style="color:green"></i></a>
+                                            @if (!string.IsNullOrEmpty(Model.Response[i].ReversalJournalCode))
+                                            {
+                                                <br /><small><a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model.Response[i].ReversalJournalId&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId">Reversal: @Model.Response[i].ReversalJournalCode</a></small>
+                                            }
+                                        }
+                                        else if (Model.Response[i].Posted)
+                                        {
+                                            <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"><i class="simple-icon-eye" style="color:green"></i></a>
+                                            @if (AllowReverse)
+                                            {
+                                                <span>&nbsp; | &nbsp;</span>
+                                                <a href="/@ViewBag.area/@ViewBag.PageTitle/Reverse?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.Page" onclick="return confirm('Reverse this posted journal entry? This will create a new reversing entry.');"><i class="simple-icon-action-undo"></i></a>
+                                            }
+                                            @if (!string.IsNullOrEmpty(Model.Response[i].OriginalJournalCode))
+                                            {
+                                                <br /><small><a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model.Response[i].OriginalJournalId&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId">Reverses: @Model.Response[i].OriginalJournalCode</a></small>
+                                            }
+                                        }
                                         else
                                         {
                                             if (AllowEdit)
                                             {
                                                 <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"><i class="iconsminds-folder-edit" style="color:green"></i></a>
                                             }
-                                            if (AllowCancel)
+                                            if (AllowPost)
                                             {
                                                 if (AllowEdit)
+                                                {
+                                                    <span>&nbsp; | &nbsp;</span>
+                                                }
+                                                <a href="/@ViewBag.area/@ViewBag.PageTitle/Post?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.Page"><i class="simple-icon-check" style="color:#2d8f2d;"></i></a>
+                                            }
+                                            if (AllowCancel)
+                                            {
+                                                if (AllowEdit || AllowPost)
                                                 {
                                                     <span>&nbsp; | &nbsp;</span>
                                                 }
@@ -143,7 +178,7 @@
                                             }
                                             if (AllowDelete)
                                             {
-                                                if (AllowEdit || AllowCancel)
+                                                if (AllowEdit || AllowPost || AllowCancel)
                                                 {
                                                     <span>&nbsp; | &nbsp;</span>
                                                 }
@@ -155,9 +190,9 @@
                                     {
                                         <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"><i class="simple-icon-eye" style="color:green"></i></a>
                                     }
-                                    @if (Model.Response[i].Status != Domain.Enums.Status.Cancel)
+                                    @if (Model.Response[i].Status is not (Domain.Enums.Status.Cancel or Domain.Enums.Status.Reversed))
                                     {
-                                        @if ((("" + Model.Response[i].RefranceTable) == "" && (AllowEdit || AllowCancel || AllowRedo || AllowDelete)) || ("" + Model.Response[i].RefranceTable) != "")
+                                        @if ((("" + Model.Response[i].RefranceTable) == "" && (AllowEdit || AllowCancel || AllowRedo || AllowDelete || AllowPost || AllowReverse)) || ("" + Model.Response[i].RefranceTable) != "")
                                         {
                                             <span>&nbsp; | &nbsp;</span>
                                         }
@@ -168,7 +203,7 @@
                             @if (AllowDelete)
                             {
                                 <td class="align-middle @TextAlign2" style="width:30px">
-                                    @if (("" + Model.Response[i].RefranceTable) == "" && Model.Response[i].Status != Domain.Enums.Status.Cancel)
+                                    @if (("" + Model.Response[i].RefranceTable) == "" && Model.Response[i].Status is not (Domain.Enums.Status.Cancel or Domain.Enums.Status.Reversed) && !Model.Response[i].Posted)
                                     {
                                         <label class="custom-control custom-checkbox pt-2">
                                             <input id="chk_@Model.Response[i].Id" type="checkbox" class="custom-control-input chk">
@@ -204,7 +239,10 @@
                         </div>
                         <div class="w-20">
                             <small>@Domain.Resource.Title_Designer.Currency</small>
-                        </div>                      
+                        </div>
+                        <div class="w-20">
+                            <small>Fiscal Year</small>
+                        </div>
                         <div class="list-item-heading mb-0 truncate w-30">
                             <small>Reference</small>
                         </div>
@@ -224,7 +262,7 @@
             @for (int i = 0, x = ((Model.Page - 1) * Model.PageSize) + 1; i < Model.Response.Count; i++, x++)
             {
                 <div class="card d-flex flex-row mb-2">
-                    <div class="d-flex flex-grow-1 min-width-zero" style="border-radius:15px; height:60px; @(Model.Response[i].Status == Domain.Enums.Status.Cancel ? "color:#a8a7a7;background:repeating-linear-gradient(60deg, transparent, transparent 5px, gainsboro 5px, gainsboro 6px);" : "")">
+                    <div class="d-flex flex-grow-1 min-width-zero" style="border-radius:15px; height:60px; @((Model.Response[i].Status is Domain.Enums.Status.Cancel or Domain.Enums.Status.Reversed) ? "color:#a8a7a7;background:repeating-linear-gradient(60deg, transparent, transparent 5px, gainsboro 5px, gainsboro 6px);" : "")">
                         <div class="list-thumbnail  border-0 card-img-left badge-theme-1" style="height:60px; width:60px; font-size:x-large; text-align:center; padding:14px;">
                             @if ("" + Model.Response[i].RefranceTable == "invoice")
                             {
@@ -247,7 +285,10 @@
                             </div>
                             <div class="w-20">
                                 @Model.Response[i].CurrencyName
-                            </div>                          
+                            </div>
+                            <div class="w-20">
+                                @Model.Response[i].FiscalYearName
+                            </div>
                             <div class="list-item-heading mb-0 truncate w-30">
                                 @if ("" + Model.Response[i].RefranceTable == "invoice")
                                 {
@@ -305,12 +346,45 @@
                                             <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Domain.Resource.Message_Designer.DeleteConfirmation' , '@Domain.Resource.Message_Designer.DoYouWantDeleteFile' , '@Domain.Resource.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
                                         }
                                     }
+                                    else if (Model.Response[i].Status == Domain.Enums.Status.Reversed)
+                                    {
+                                        <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="simple-icon-eye" style="color:green"></i> </a>
+                                        @if (!string.IsNullOrEmpty(Model.Response[i].ReversalJournalCode))
+                                        {
+                                            <span>&nbsp; | &nbsp;</span>
+                                            <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model.Response[i].ReversalJournalId&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"><small>Reversal: @Model.Response[i].ReversalJournalCode</small></a>
+                                        }
+                                    }
+                                    else if (Model.Response[i].Posted)
+                                    {
+                                        <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="simple-icon-eye" style="color:green"></i> </a>
+                                        @if (AllowReverse)
+                                        {
+                                            <span>&nbsp; | &nbsp;</span>
+                                            <a href="/@ViewBag.area/@ViewBag.PageTitle/Reverse?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.Page" onclick="return confirm('Reverse this posted journal entry? This will create a new reversing entry.');"> <i class="simple-icon-action-undo"></i> </a>
+                                        }
+                                        @if (!string.IsNullOrEmpty(Model.Response[i].OriginalJournalCode))
+                                        {
+                                            <span>&nbsp; | &nbsp;</span>
+                                            <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model.Response[i].OriginalJournalId&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"><small>Reverses: @Model.Response[i].OriginalJournalCode</small></a>
+                                        }
+                                        <span>&nbsp; | &nbsp;</span>
+                                        <a href="/@ViewBag.area/@ViewBag.PageTitle/Print?id=@Model.Response[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.Page" target="_blank"> <i class="fa fa-print text-info"></i> </a>
+                                    }
                                     else
                                     {
                                         if (AllowEdit)
                                         {
                                             <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit" style="color:green"></i> </a>
-                                            if (AllowCancel || AllowDelete)
+                                            if (AllowPost || AllowCancel || AllowDelete)
+                                            {
+                                                <span>&nbsp; | &nbsp;</span>
+                                            }
+                                        }
+                                        if (AllowPost)
+                                        {
+                                            <a href="/@ViewBag.area/@ViewBag.PageTitle/Post?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.Page"> <i class="simple-icon-check" style="color:#2d8f2d;"></i> </a>
+                                            @if (AllowCancel || AllowDelete)
                                             {
                                                 <span>&nbsp; | &nbsp;</span>
                                             }
@@ -335,7 +409,7 @@
                                 else
                                 {
                                     <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="simple-icon-eye" style="color:green"></i> </a>
-                                    @if (Model.Response[i].Status != Domain.Enums.Status.Cancel)
+                                    @if (Model.Response[i].Status is not (Domain.Enums.Status.Cancel or Domain.Enums.Status.Reversed))
                                     {
                                         <span>&nbsp; | &nbsp;</span>
                                         <a href="/@ViewBag.area/@ViewBag.PageTitle/Print?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.Page" target="_blank"> <i class="fa fa-print text-info"></i> </a>
@@ -348,7 +422,7 @@
                             {
                                 @if (Model.Response[i].RefranceTable == "")
                                 {
-                                    @if (Model.Response[i].Status != Domain.Enums.Status.Cancel)
+                                    @if (Model.Response[i].Status is not (Domain.Enums.Status.Cancel or Domain.Enums.Status.Reversed) && !Model.Response[i].Posted)
                                     {
                                         <label class="custom-control custom-checkbox pt-3">
                                             <input id="chk_@Model.Response[i].Id" type="checkbox" class="custom-control-input chk">

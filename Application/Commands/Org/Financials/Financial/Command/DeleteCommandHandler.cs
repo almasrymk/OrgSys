@@ -38,7 +38,9 @@
         }
         public override Expression<Func<Financial, bool>> CreateFilter(DeleteFinancialCommand request)
         {
-            return e => e.Id == request.Id && e.Status != Domain.Enums.Status.Deleted && e.Hide != true;
+            // A Posted financial transaction (e.g. a Customer Receipt) is immutable — it is
+            // deliberately excluded here so it cannot be deleted; correct it via Reverse instead.
+            return e => e.Id == request.Id && e.Status != Domain.Enums.Status.Deleted && e.Hide != true && e.Posted != true;
         }
 
     }

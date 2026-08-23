@@ -4,6 +4,7 @@ using AutoMapper;
 using Domain.Abstraction;
 using Domain.Entities;
 using Domain.Enums;
+using Domain.Shared;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using System.Net;
@@ -167,6 +168,25 @@ public class JournalUpdateCommandHandlerTests
         Assert.Equal(HttpStatusCode.OK, result.StatusCode);
         Assert.Equal(year.Id, updated!.FiscalYearId);
         Assert.Equal(newPeriod.Id, updated.FiscalPeriodId);
+    }
+
+    [Fact]
+    public async Task Handle_TypeChangedToOpeningBalanceWithDateUnchanged_StillValidatesOpeningBalanceRules()
+    {
+        // Date is unchanged (so the fast path that skips ResolveAndValidateAsync applies), but the
+        // JournalType is being switched to Opening Balance — this must still be validated.
+        var existing = new Journal { Id = 1, RefranceTable = null, Posted = false, Date = OriginalDate, FiscalYearId = 10, FiscalPeriodId = 20 };
+        var (handler, repository, accountingPeriodService) = BuildHandler(existing);
+        var year = Year(10);
+        accountingPeriodService.Setup(s => s.GetFiscalYearAsync(10, It.IsAny<CancellationToken>())).ReturnsAsync(year);
+        accountingPeriodService.Setup(s => s.ValidateOpeningBalanceAsync(It.IsAny<long>(), It.IsAny<DateTime>(), It.IsAny<FiscalYear>(), It.IsAny<long>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync([new Error("Opening Balance entry date must equal the fiscal year start date (2026-01-01).")]);
+
+        var result = await handler.Handle(ValidCommand(1, OriginalDate), CancellationToken.None);
+
+        Assert.Equal(HttpStatusCode.BadRequest, result.StatusCode);
+        Assert.Contains("Opening Balance entry date must equal the fiscal year start date (2026-01-01).", result.Errors!.Select(e => e.MessageError));
+        repository.Verify(r => r.UpdateAsync(It.IsAny<Journal>()), Times.Never);
     }
 
     [Fact]

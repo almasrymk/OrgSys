@@ -7,6 +7,7 @@
     var textAlign2 = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "text-left" : "text-right";
     var dateFormat = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "yyyy-MM-dd" : "dd-MM-yyyy";
     var allowView = User.IsAllowed("Collection.View,Payment.View,Journal.View");
+    var allowReverse = User.IsAllowed("FinancialTransfer.Reverse");
 }
 @if (Model.Count > 0)
 {
@@ -19,7 +20,10 @@
   <td class="text-center align-middle">@(i+1)</td><td class="text-center align-middle"><div class="list-thumbnail border-0 rounded-circle badge-theme-1 m-0" style="height:40px;width:40px;font-size:17px;text-align:center;padding:9px;"><i class="simple-icon-shuffle"></i></div></td>
   <td class="text-center align-middle">@row.TransactionDate.ToString(dateFormat,new CultureInfo("en-US"))</td><td class="@textAlign align-middle">@row.FromFinancialAccountName</td><td class="@textAlign align-middle">@row.ToFinancialAccountName</td><td class="text-center align-middle">@row.Amount</td><td class="text-center align-middle">@row.ExchangeRate</td><td class="text-center align-middle"><span class="badge badge-pill @(row.Status==Domain.Enums.Status.Approved?"badge-success":"badge-secondary")">@row.Status</span></td>
   <td class="text-center align-middle">@if(row.JournalId.HasValue){<a href="/Financials/Journal/Save?id=@row.JournalId&ParentId=0&TypeId=2"><i class="iconsminds-file"></i> Journal</a>}</td>
-  <td class="@textAlign2 align-middle">@if(allowView){<a href="/Financials/FinancialTransfer/Save?id=@row.Id"><i class="iconsminds-folder-edit" style="color:green"></i></a>}</td>
+  <td class="@textAlign2 align-middle">
+   @if(allowView){<a href="/Financials/FinancialTransfer/Save?id=@row.Id"><i class="iconsminds-folder-edit" style="color:green"></i></a>}
+   @if(allowReverse && row.Status!=Domain.Enums.Status.Reversed){<span>&nbsp;|&nbsp;</span><form method="post" action="/Financials/FinancialTransfer/Reverse" class="d-inline">@Html.AntiForgeryToken()<input type="hidden" name="id" value="@row.Id"/><button type="submit" class="btn btn-link p-0" style="color:#820404;" onclick="return confirm('Reverse this transfer? This creates a reversing Journal Entry and cannot be undone.');"><i class="simple-icon-action-undo"></i></button></form>}
+  </td>
  </tr>}
  </tbody></table></div></div>
 <div id="lbList"><div class="row"><div class="col-12 list" data-check-all="checkAll">

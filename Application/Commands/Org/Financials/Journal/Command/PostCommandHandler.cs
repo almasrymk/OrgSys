@@ -5,6 +5,7 @@ using Application.Interfaces.CQRS;
 using AutoMapper;
 using Domain.Abstraction;
 using Domain.Shared;
+using System.Linq;
 using System.Net;
 
 namespace Application.Commands.Org.Financials.Journal.Commands
@@ -22,7 +23,7 @@ namespace Application.Commands.Org.Financials.Journal.Commands
         {
             try
             {
-                var journal = await _Repository.GetByFilterAsync(x => x.Id == request.Id, string.Empty);
+                var journal = await _Repository.GetByFilterAsync(x => x.Id == request.Id, "JournalItems");
 
                 if (journal is null)
                     return new Result(HttpStatusCode.NotFound, [new Error("Journal not found")]);
@@ -32,6 +33,11 @@ namespace Application.Commands.Org.Financials.Journal.Commands
 
                 if (!string.IsNullOrEmpty(journal.RefranceTable))
                     return new Result(HttpStatusCode.Forbidden, [new Error("A journal created from a resource is controlled by that resource")]);
+
+                var totalDebit = journal.JournalItems?.Sum(i => i.Debit) ?? 0;
+                var totalCredit = journal.JournalItems?.Sum(i => i.Credit) ?? 0;
+                if (totalDebit != totalCredit)
+                    return new Result(HttpStatusCode.BadRequest, [new Error("Total Debit must equal total Credit before posting.")]);
 
                 await _UnitOfWork.BeginTransactionAsync();
                 try
@@ -43,6 +49,13 @@ namespace Application.Commands.Org.Financials.Journal.Commands
                     {
                         await _UnitOfWork.RollbackAsync();
                         return new Result(HttpStatusCode.BadRequest, resolution.Errors);
+                    }
+
+                    var openingBalanceErrors = await _AccountingPeriodService.ValidateOpeningBalanceAsync(journal.JournalTypeId, journal.Date, resolution.FiscalYear!, journal.Id, cancellationToken);
+                    if (openingBalanceErrors is { Count: > 0 })
+                    {
+                        await _UnitOfWork.RollbackAsync();
+                        return new Result(HttpStatusCode.BadRequest, openingBalanceErrors);
                     }
 
                     journal.FiscalYearId = resolution.FiscalYear!.Id;

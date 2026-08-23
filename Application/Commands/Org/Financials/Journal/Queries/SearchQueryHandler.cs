@@ -27,7 +27,7 @@
 
         public override string CreateInclude()
         {
-            return "Currency,JournalType";
+            return "Currency,JournalType,FiscalYear,OriginalJournal,ReversalJournal";
         }
 
         override public Func<IQueryable<Domain.Entities.Journal>, IOrderedQueryable<Domain.Entities.Journal>> CreateOrderBy(SearchJournalQuery request)

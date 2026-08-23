@@ -35,5 +35,14 @@
 
         public virtual string? Note { get; set; }
         public virtual ICollection<JournalItem>? JournalItems { get; set; }
+
+        /// <summary>Set only on a reversing entry — the Posted journal it reverses.</summary>
+        [ForeignKey("OriginalJournal")]
+        public virtual long? OriginalJournalId { get; set; }
+
+        public virtual Journal? OriginalJournal { get; set; }
+
+        /// <summary>Inverse of <see cref="OriginalJournal"/> — set only on the original once reversed. No own column.</summary>
+        public virtual Journal? ReversalJournal { get; set; }
     }
 }

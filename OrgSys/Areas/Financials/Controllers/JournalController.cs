@@ -92,6 +92,20 @@ namespace OrgSys.Areas.Financial.Controllers
             return Redirect($"/Financials/Journal/Index?ParentId={ParentId}&TypeId={TypeId}&page={page}&status={ResultStatus.success}&MsgError=Success");
         }
 
+        public async Task<ActionResult> Post(long id, long ParentId = 0, long TypeId = 0, int page = 1)
+        {
+            var response = await ApiMethod(ApiMethodType.Put, $"Post?Id={id}");
+            response.EnsureSuccessStatusCode();
+            return Redirect($"/Financials/Journal/Index?ParentId={ParentId}&TypeId={TypeId}&page={page}&status={ResultStatus.success}&MsgError=Success");
+        }
+
+        public async Task<ActionResult> Reverse(long id, long ParentId = 0, long TypeId = 0, int page = 1)
+        {
+            var response = await ApiMethod(ApiMethodType.Put, $"Reverse?Id={id}");
+            response.EnsureSuccessStatusCode();
+            return Redirect($"/Financials/Journal/Index?ParentId={ParentId}&TypeId={TypeId}&page={page}&status={ResultStatus.success}&MsgError=Success");
+        }
+
         [HttpPost]
         public async Task<ActionResult> AutoSave(JournalDto ob)
         {

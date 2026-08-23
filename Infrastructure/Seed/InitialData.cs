@@ -162,6 +162,12 @@ namespace Infrastructure.Seed
                            new Permission { Id = 1050503, Name = "Edit", Key = "Accountbanks.Edit", ParentId = 10505, TypeId = 1 },
                            new Permission { Id = 1050504, Name = "Delete", Key = "Accountbanks.Delete", ParentId = 10505, TypeId = 1 },
 
+                       new Permission { Id = 10506, Name = "Cash Boxes", Key = "CashBoxes.All", ParentId = 105 },
+                           new Permission { Id = 1050601, Name = "View", Key = "CashBoxes.View", ParentId = 10506, TypeId = 1 },
+                           new Permission { Id = 1050602, Name = "Add", Key = "CashBoxes.Add", ParentId = 10506, TypeId = 1 },
+                           new Permission { Id = 1050603, Name = "Edit", Key = "CashBoxes.Edit", ParentId = 10506, TypeId = 1 },
+                           new Permission { Id = 1050604, Name = "Delete", Key = "CashBoxes.Delete", ParentId = 10506, TypeId = 1 },
+
                        new Permission { Id = 10507, Name = "Safe Terms", Key = "SafeTerms.All", ParentId = 105 },
                            new Permission { Id = 1050701, Name = "View", Key = "SafeTerms.View", ParentId = 10507, TypeId = 1 },
                            new Permission { Id = 1050702, Name = "Add", Key = "SafeTerms.Add", ParentId = 10507, TypeId = 1 },
@@ -179,6 +185,12 @@ namespace Infrastructure.Seed
                            new Permission { Id = 1050902, Name = "Add", Key = "FiscalYears.Add", ParentId = 10509, TypeId = 1 },
                            new Permission { Id = 1050903, Name = "Edit", Key = "FiscalYears.Edit", ParentId = 10509, TypeId = 1 },
                            new Permission { Id = 1050904, Name = "Delete", Key = "FiscalYears.Delete", ParentId = 10509, TypeId = 1 },
+
+                       new Permission { Id = 10510, Name = "Bank Accounts", Key = "BankAccounts.All", ParentId = 105 },
+                           new Permission { Id = 1051001, Name = "View", Key = "BankAccounts.View", ParentId = 10510, TypeId = 1 },
+                           new Permission { Id = 1051002, Name = "Add", Key = "BankAccounts.Add", ParentId = 10510, TypeId = 1 },
+                           new Permission { Id = 1051003, Name = "Edit", Key = "BankAccounts.Edit", ParentId = 10510, TypeId = 1 },
+                           new Permission { Id = 1051004, Name = "Delete", Key = "BankAccounts.Delete", ParentId = 10510, TypeId = 1 },
 
                    new Permission { Id = 106, Name = "Areas", Key = "Areas", ParentId = 10 },
 
@@ -346,6 +358,8 @@ namespace Infrastructure.Seed
                                    new Permission { Id = 5010203, Name = "Edit", Key = "FinancialReceipt.Edit", ParentId = 50102, TypeId = 1 },
                                    new Permission { Id = 5010204, Name = "Delete", Key = "FinancialReceipt.Delete", ParentId = 50102, TypeId = 1 },
                                    new Permission { Id = 5010205, Name = "Preference", Key = "FinancialReceipt.Preference", ParentId = 50102, TypeId = 1 },
+                                   new Permission { Id = 5010206, Name = "Post", Key = "FinancialReceipt.Post", ParentId = 50102, TypeId = 1 },
+                                   new Permission { Id = 5010207, Name = "Reverse", Key = "FinancialReceipt.Reverse", ParentId = 50102, TypeId = 1 },
 
                               new Permission { Id = 50103, Name = "FinancialPayment", Key = "FinancialPayment.All", ParentId = 501 },
                                    new Permission { Id = 5010301, Name = "View", Key = "FinancialPayment.View", ParentId = 50103, TypeId = 1 },
@@ -353,6 +367,8 @@ namespace Infrastructure.Seed
                                    new Permission { Id = 5010303, Name = "Edit", Key = "FinancialPayment.Edit", ParentId = 50103, TypeId = 1 },
                                    new Permission { Id = 5010304, Name = "Delete", Key = "FinancialPayment.Delete", ParentId = 50103, TypeId = 1 },
                                    new Permission { Id = 5010305, Name = "Preference", Key = "FinancialPayment.Preference", ParentId = 50103, TypeId = 1 },
+                                   new Permission { Id = 5010306, Name = "Post", Key = "FinancialPayment.Post", ParentId = 50103, TypeId = 1 },
+                                   new Permission { Id = 5010307, Name = "Reverse", Key = "FinancialPayment.Reverse", ParentId = 50103, TypeId = 1 },
 
                               new Permission { Id = 50104, Name = "FinancialTransfer", Key = "FinancialTransfer.All", ParentId = 501 },
                                    new Permission { Id = 5010401, Name = "View", Key = "FinancialTransfer.View", ParentId = 50104, TypeId = 1 },
@@ -360,6 +376,8 @@ namespace Infrastructure.Seed
                                    new Permission { Id = 5010403, Name = "Edit", Key = "FinancialTransfer.Edit", ParentId = 50104, TypeId = 1 },
                                    new Permission { Id = 5010404, Name = "Delete", Key = "FinancialTransfer.Delete", ParentId = 50104, TypeId = 1 },
                                    new Permission { Id = 5010405, Name = "Preference", Key = "FinancialTransfer.Preference", ParentId = 50104, TypeId = 1 },
+                                   new Permission { Id = 5010406, Name = "Post", Key = "FinancialTransfer.Post", ParentId = 50104, TypeId = 1 },
+                                   new Permission { Id = 5010407, Name = "Reverse", Key = "FinancialTransfer.Reverse", ParentId = 50104, TypeId = 1 },
 
                               new Permission { Id = 50105, Name = "FinancialDeposit", Key = "FinancialDeposit.All", ParentId = 501 },
                                    new Permission { Id = 5010501, Name = "View", Key = "FinancialDeposit.View", ParentId = 50105, TypeId = 1 },
@@ -409,6 +427,18 @@ namespace Infrastructure.Seed
                                    new Permission { Id = 5011103, Name = "Edit", Key = "Journal.Edit", ParentId = 50111, TypeId = 1 },
                                    new Permission { Id = 5011104, Name = "Delete", Key = "Journal.Delete", ParentId = 50111, TypeId = 1 },
                                    new Permission { Id = 5011105, Name = "Preference", Key = "Journal.Preference", ParentId = 50111, TypeId = 1 },
+                                   new Permission { Id = 5011106, Name = "Post", Key = "Journal.Post", ParentId = 50111, TypeId = 1 },
+                                   new Permission { Id = 5011107, Name = "Cancel", Key = "Journal.Cancel", ParentId = 50111, TypeId = 1 },
+                                   new Permission { Id = 5011108, Name = "Redo", Key = "Journal.Redo", ParentId = 50111, TypeId = 1 },
+                                   new Permission { Id = 5011109, Name = "Reverse", Key = "Journal.Reverse", ParentId = 50111, TypeId = 1 },
+
+                              new Permission { Id = 50112, Name = "Financial", Key = "Financial.All", ParentId = 501 },
+                                   new Permission { Id = 5011201, Name = "View", Key = "Financial.View", ParentId = 50112, TypeId = 1 },
+                                   new Permission { Id = 5011202, Name = "Add", Key = "Financial.Add", ParentId = 50112, TypeId = 1 },
+                                   new Permission { Id = 5011203, Name = "Edit", Key = "Financial.Edit", ParentId = 50112, TypeId = 1 },
+                                   new Permission { Id = 5011204, Name = "Delete", Key = "Financial.Delete", ParentId = 50112, TypeId = 1 },
+                                   new Permission { Id = 5011205, Name = "Cancel", Key = "Financial.Cancel", ParentId = 50112, TypeId = 1 },
+                                   new Permission { Id = 5011206, Name = "Redo", Key = "Financial.Redo", ParentId = 50112, TypeId = 1 },
                                
                };
 
@@ -698,7 +728,17 @@ namespace Infrastructure.Seed
                new Preference { Id = 3003, Key = "TypeSerial", Value = "1", Reference = "Journal", TypeId = 0, Hide = false },
                new Preference { Id = 3004, Key = "SaveLastStatusSetting", Value = "1", Reference = "Journal", TypeId = 0, Hide = false },
                new Preference { Id = 3005, Key = "DefaultCurrency", Value = "1", Reference = "Journal", TypeId = 0, Hide = false },
-               new Preference { Id = 3006, Key = "DefaultJournalType", Value = "2", Reference = "Journal", TypeId = 0, Hide = false }
+               new Preference { Id = 3006, Key = "DefaultJournalType", Value = "2", Reference = "Journal", TypeId = 0, Hide = false },
+
+               // AR / Customer accounting setup — TypeId 1 mirrors the Dealer.TypeId convention (Client).
+               new Preference { Id = 3101, Key = "ReceivableParentAccountId", Value = "0", Reference = "Dealer", TypeId = 1, Hide = false },
+               new Preference { Id = 3102, Key = "AutoCreateReceivableAccount", Value = "0", Reference = "Dealer", TypeId = 1, Hide = false },
+               new Preference { Id = 3103, Key = "OpeningBalanceClearingAccountId", Value = "0", Reference = "Dealer", TypeId = 1, Hide = false },
+
+               // AP / Supplier accounting setup — TypeId 2 mirrors the Dealer.TypeId convention (Supplier).
+               new Preference { Id = 3104, Key = "PayableParentAccountId", Value = "0", Reference = "Dealer", TypeId = 2, Hide = false },
+               new Preference { Id = 3105, Key = "AutoCreatePayableAccount", Value = "0", Reference = "Dealer", TypeId = 2, Hide = false },
+               new Preference { Id = 3106, Key = "OpeningBalanceClearingAccountId", Value = "0", Reference = "Dealer", TypeId = 2, Hide = false }
             };
 
             var openingBalancePurchaseAccount = orgContext.Preferences.FirstOrDefault(e =>
@@ -1049,6 +1089,10 @@ namespace Infrastructure.Seed
                 ("7104", "7", "Suspense Account", "Control")
             };
 
+            // A code that appears as some other row's ParentCode is a group/parent account — postings
+            // (including a Dealer's receivable account link) must target a leaf below it instead.
+            var parentCodes = rows.Where(e => e.ParentCode != null).Select(e => e.ParentCode!).ToHashSet();
+
             var idByCode = new Dictionary<string, long>();
 
             foreach (var row in rows)
@@ -1056,6 +1100,7 @@ namespace Infrastructure.Seed
                 long parentId = row.ParentCode == null ? 0 : idByCode[row.ParentCode];
                 long accountTypeId = accountTypeIdByName[row.AccountTypeName];
                 long codeNumber = long.Parse(row.Code);
+                bool isPostable = !parentCodes.Contains(row.Code);
 
                 var existing = orgContext.Accounts.FirstOrDefault(e => e.Code == row.Code);
                 if (existing == null)
@@ -1069,7 +1114,8 @@ namespace Infrastructure.Seed
                         AccountTypeId = accountTypeId,
                         Debit = 0,
                         Credit = 0,
-                        Hide = false
+                        Hide = false,
+                        IsPostable = isPostable
                     };
                     orgContext.Set<Account>().Add(account);
                     orgContext.SaveChanges();
@@ -1083,6 +1129,7 @@ namespace Infrastructure.Seed
                     existing.ParentId = parentId;
                     existing.AccountTypeId = accountTypeId;
                     existing.Hide = false;
+                    existing.IsPostable = isPostable;
                     orgContext.SaveChanges();
                     idByCode[row.Code] = existing.Id;
                 }

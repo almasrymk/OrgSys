@@ -32,6 +32,10 @@
                         <th class="text-center">#</th>
                         <th style="text-align:center"></th>
                         <th class="@TextAlign align-middle">@Domain.Resource.Title_Designer.Name</th>
+                        <th class="@TextAlign align-middle">Group</th>
+                        <th class="@TextAlign align-middle">Phone</th>
+                        <th class="@TextAlign align-middle">Email</th>
+                        <th class="@TextAlign align-middle">Account</th>
                         @if (AllowEdit || AllowDelete)
                         {
                             <th>
@@ -70,6 +74,18 @@
                                 </td>
                                 <td class="@TextAlign align-middle">
                                     @Model.Response[i].Name
+                                </td>
+                                <td class="@TextAlign align-middle">
+                                    @(string.IsNullOrEmpty(Model.Response[i].DealerGroupName) ? "-" : Model.Response[i].DealerGroupName)
+                                </td>
+                                <td class="@TextAlign align-middle">
+                                    @(string.IsNullOrEmpty(Model.Response[i].Phone) ? "-" : Model.Response[i].Phone)
+                                </td>
+                                <td class="@TextAlign align-middle">
+                                    @(string.IsNullOrEmpty(Model.Response[i].Email) ? "-" : Model.Response[i].Email)
+                                </td>
+                                <td class="@TextAlign align-middle">
+                                    @(string.IsNullOrEmpty(Model.Response[i].AccountCode) && string.IsNullOrEmpty(Model.Response[i].AccountName) ? "-" : $"{Model.Response[i].AccountCode} - {Model.Response[i].AccountName}")
                                 </td>
                                 @if (AllowEdit || AllowDelete)
                                 {
@@ -140,8 +156,20 @@
                                 </div>
                             }
                             <div class="card-body align-self-center d-flex flex-column flex-md-row  align-items-md-center">
-                                <div class="list-item-heading mb-0 w-90">
+                                <div class="list-item-heading mb-0 w-25">
                                     @Model.Response[i].Name
+                                </div>
+                                <div class="w-15">
+                                    @(string.IsNullOrEmpty(Model.Response[i].DealerGroupName) ? "-" : Model.Response[i].DealerGroupName)
+                                </div>
+                                <div class="w-15">
+                                    @(string.IsNullOrEmpty(Model.Response[i].Phone) ? "-" : Model.Response[i].Phone)
+                                </div>
+                                <div class="w-15">
+                                    @(string.IsNullOrEmpty(Model.Response[i].Email) ? "-" : Model.Response[i].Email)
+                                </div>
+                                <div class="w-15">
+                                    @(string.IsNullOrEmpty(Model.Response[i].AccountCode) && string.IsNullOrEmpty(Model.Response[i].AccountName) ? "-" : $"{Model.Response[i].AccountCode} - {Model.Response[i].AccountName}")
                                 </div>
                                 <div class="w-15 @TextAlign2">
                                     @if (Model.Response[i].Status == Domain.Enums.Status.Cancel)

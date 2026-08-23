@@ -106,6 +106,8 @@
                             @Html.HiddenFor(model => model.RefranceTypeId)
                             @Html.HiddenFor(model => model.Review)
                             @Html.HiddenFor(model => model.Posted)
+                            @Html.HiddenFor(model => model.Hide)
+                            @Html.HiddenFor(model => model.Status)
                           
                             <div id="checkStep1">
                                 <div id="divtbl" class="card">
@@ -317,6 +319,63 @@
                                         </div>
                                         @Html.ValidationMessageFor(model => model.Rate, "", new { @class = "text-danger " })
                                     </div>
+                                    @if (Model.Id > 0)
+                                    {
+                                        <div class="form-group col-md-4">
+                                            <label>Fiscal Year</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="iconsminds-financial"></i></span>
+                                                </div>
+                                                <input type="text" class="form-control" value="@Model.FiscalYearName" readonly style="background-color:transparent" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Fiscal Period</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="iconsminds-financial"></i></span>
+                                                </div>
+                                                <input type="text" class="form-control" value="@Model.FiscalPeriodName" readonly style="background-color:transparent" />
+                                            </div>
+                                        </div>
+                                    }
+                                    @if (Model.Posted)
+                                    {
+                                        <div class="form-group col-md-4">
+                                            <label>Status</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="simple-icon-lock"></i></span>
+                                                </div>
+                                                <input type="text" class="form-control" value="@(Model.Status == Domain.Enums.Status.Reversed ? "Reversed" : "Posted")" readonly style="background-color:transparent" />
+                                            </div>
+                                        </div>
+                                    }
+                                    @if (!string.IsNullOrEmpty(Model.OriginalJournalCode))
+                                    {
+                                        <div class="form-group col-md-4">
+                                            <label>Reverses</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="simple-icon-action-undo"></i></span>
+                                                </div>
+                                                <a class="form-control" style="background-color:transparent" href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model.OriginalJournalId&ParentId=@Model.ParentId&TypeId=@Model.TypeId">@Model.OriginalJournalCode</a>
+                                            </div>
+                                        </div>
+                                    }
+                                    @if (!string.IsNullOrEmpty(Model.ReversalJournalCode))
+                                    {
+                                        <div class="form-group col-md-4">
+                                            <label>Reversed By</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="simple-icon-action-undo"></i></span>
+                                                </div>
+                                                <a class="form-control" style="background-color:transparent" href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model.ReversalJournalId&ParentId=@Model.ParentId&TypeId=@Model.TypeId">@Model.ReversalJournalCode</a>
+                                            </div>
+                                        </div>
+                                    }
                                     <div class="form-group col-md-12">
                                         <label>@Domain.Resource.Title_Designer.Notes</label>
                                         <div id="divNote">
@@ -364,7 +423,11 @@
                 </div>
                 <div class="row">
                     <div class="col-7">
-                        @if ("" + Model.RefranceTable == "")
+                        @if (Model.Posted)
+                        {
+                            <span class="badge badge-success ml-4 mr-4 mb-4" style="font-size:1rem;padding:10px 16px;">Posted — read only</span>
+                        }
+                        else if ("" + Model.RefranceTable == "")
                         {
                             <button id="btn" type="button" class="btn btn-primary ml-4 mr-4 mb-4">@Domain.Resource.Title_Designer.Save</button>
                         }
@@ -420,6 +483,14 @@
             $("#query").focus();
             $(".sw-toolbar-bottom").css("display", "none");
             $(".datepicker").val('@string.Format(formateDate, Model.Date)');
+
+            if (@Json.Serialize(Model.Posted)) {
+                // Posted journals are immutable — the backend already rejects edits, this just
+                // keeps the UI from inviting an edit attempt that would only fail server-side.
+                $("#HPage").find("input, textarea, select, button, .btnDelete, .SearchAccount").prop("disabled", true);
+                $("#HPage").find(".btnDelete, .SearchAccount, #btn").css("display", "none");
+                $("#HPage").find("input, textarea").prop("readonly", true);
+            }
         }, 600);
 
         $('#btn').click(function () {

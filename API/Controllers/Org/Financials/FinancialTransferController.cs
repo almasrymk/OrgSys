@@ -21,4 +21,8 @@ public sealed class FinancialTransferController(ISender sender) : ControllerBase
     [HttpPost("Post")]
     public Task<Result> Post([FromBody] FinancialTransferDto transfer, CancellationToken cancellationToken) =>
         sender.Send(new PostFinancialTransferCommand(transfer), cancellationToken);
+
+    [HttpPut("Reverse")]
+    public Task<Result> Reverse(long id, CancellationToken cancellationToken) =>
+        sender.Send(new ReverseFinancialTransferCommand(id), cancellationToken);
 }

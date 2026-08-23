@@ -25,15 +25,16 @@ namespace Application.Commands.Org.Financials.Journal.Commands
                 if (journal is null)
                     return new Result(HttpStatusCode.NotFound, [new Error("Journal not found")]);
 
-                // A posted journal is immutable — correct it via the existing Cancel/Redo workflow, not by editing.
+                // A posted journal is immutable — correct it via ReverseJournalCommand, not by editing.
                 if (journal.Posted)
-                    return new Result(HttpStatusCode.Forbidden, [new Error("A posted journal entry cannot be edited. Use Cancel to reverse it instead.")]);
+                    return new Result(HttpStatusCode.Forbidden, [new Error("A posted journal entry cannot be edited. Use Reverse instead.")]);
 
                 if (!string.IsNullOrEmpty(journal.RefranceTable))
                     return new Result(HttpStatusCode.Forbidden, [new Error("A journal created from a resource is read-only")]);
 
                 long fiscalYearId = journal.FiscalYearId;
                 long fiscalPeriodId = journal.FiscalPeriodId;
+                Domain.Entities.FiscalYear? fiscalYear;
 
                 // Only re-resolve the accounting period when the journal date itself changes —
                 // editing other (non-accounting) fields on a Draft must not be blocked by a
@@ -46,7 +47,18 @@ namespace Application.Commands.Org.Financials.Journal.Commands
 
                     fiscalYearId = resolution.FiscalYear!.Id;
                     fiscalPeriodId = resolution.FiscalPeriod!.Id;
+                    fiscalYear = resolution.FiscalYear;
                 }
+                else
+                {
+                    fiscalYear = await _AccountingPeriodService.GetFiscalYearAsync(fiscalYearId, cancellationToken);
+                }
+
+                // Re-validated even when the date is unchanged: the JournalType itself may be switching to/from
+                // Opening Balance, which is an accounting-relevant edit that the date-unchanged fast path above must not skip.
+                var openingBalanceErrors = await _AccountingPeriodService.ValidateOpeningBalanceAsync(request.JournalTypeId, request.Date, fiscalYear!, journal.Id, cancellationToken);
+                if (openingBalanceErrors is { Count: > 0 })
+                    return new Result(HttpStatusCode.BadRequest, openingBalanceErrors);
 
                 var ob = mapper.Map<Domain.Entities.Journal>(request);
                 ob.FiscalYearId = fiscalYearId;
