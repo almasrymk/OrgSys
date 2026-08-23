@@ -341,3 +341,4 @@ healthchecksdb
 
 .local-chromium/
 **/.local-chromium/
+/OrgSys/wwwroot/bundle/js/bundle.min.js
