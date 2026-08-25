@@ -17,7 +17,7 @@ public sealed record PostFinancialTransactionCommand(PostFinancialTransactionDto
 
 public sealed class SaveFinancialAccountCommandHandler(
     IRepository<FinancialAccount> repository, IRepository<Safe> safeRepository,
-    IRepository<AccountBank> bankRepository, IUnitOfWork unitOfWork,
+    IRepository<BankAccount> bankRepository, IUnitOfWork unitOfWork,
     Application.Common.Services.IReceivableAccountValidator accountValidator) : ICommandHandler<SaveFinancialAccountCommand>
 {
     public async Task<Result> Handle(SaveFinancialAccountCommand request, CancellationToken cancellationToken)
@@ -57,7 +57,7 @@ public sealed class SaveFinancialAccountCommandHandler(
         else
         {
             var detail = await bankRepository.GetByFilterAsync(e => e.FinancialAccountId == entity.Id, string.Empty)
-                ?? new AccountBank { FinancialAccountId = entity.Id };
+                ?? new BankAccount { FinancialAccountId = entity.Id };
             detail.Name = entity.Name;
             detail.AccountId = entity.AccountId;
             detail.BankId = dto.BankId ?? 0;
@@ -127,9 +127,11 @@ public sealed class PostFinancialTransactionCommandHandler(
             {
                 FinancialAccountId = account.Id,
                 FinancialTypeId = type.Id,
+                FinancialTransactionType = dto.FinancialTransactionType,
                 Direction = dto.Direction,
                 ReferenceType = dto.ReferenceType,
                 ReferenceId = dto.ReferenceId,
+                ReferenceNumber = dto.ReferenceNumber,
                 DealerId = dto.DealerId,
                 Amount = dto.Amount,
                 AmountByDefaultCurrency = dto.Amount * dto.ExchangeRate,

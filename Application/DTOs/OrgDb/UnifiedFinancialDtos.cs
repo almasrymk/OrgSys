@@ -28,6 +28,7 @@ public sealed class PostFinancialTransactionDto
 {
     public long FinancialAccountId { get; set; }
     public long FinancialTypeId { get; set; }
+    public FinancialTransactionType FinancialTransactionType { get; set; }
     public FinancialTransactionDirection Direction { get; set; }
     public decimal Amount { get; set; }
     public long CurrencyId { get; set; }
@@ -35,24 +36,10 @@ public sealed class PostFinancialTransactionDto
     public DateTime TransactionDate { get; set; }
     public FinancialReferenceType ReferenceType { get; set; }
     public long? ReferenceId { get; set; }
+    public string? ReferenceNumber { get; set; }
     public long CounterAccountId { get; set; }
     public long? DealerId { get; set; }
     public string? Description { get; set; }
-    public long CreateUserId { get; set; }
-    public long? BranchId { get; set; }
-    public long? ShiftId { get; set; }
-}
-
-public sealed class PostCustomerReceiptDto
-{
-    public long DealerId { get; set; }
-    public long FinancialAccountId { get; set; }
-    public decimal Amount { get; set; }
-    public long CurrencyId { get; set; }
-    public decimal ExchangeRate { get; set; } = 1;
-    public DateTime Date { get; set; }
-    public string? ReferenceNumber { get; set; }
-    public string? Notes { get; set; }
     public long CreateUserId { get; set; }
     public long? BranchId { get; set; }
     public long? ShiftId { get; set; }

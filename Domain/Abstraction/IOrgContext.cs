@@ -47,7 +47,7 @@
         DbSet<RolePermission> RolePermissions { get; set; }
         //DbSet<Notification> Notifications { get; set; }
         DbSet<Account> Accounts { get; set; }
-        DbSet<AccountBank> AccountBanks { get; set; }
+        DbSet<BankAccount> BankAccounts { get; set; }
         DbSet<AccountType> AccountTypes { get; set; }
         DbSet<Bank> Banks { get; set; }
         DbSet<BankBranch> BankBranchs { get; set; }

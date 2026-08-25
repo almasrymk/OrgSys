@@ -156,12 +156,6 @@ namespace Infrastructure.Seed
                            new Permission { Id = 1050403, Name = "Edit", Key = "BankBranchs.Edit", ParentId = 10504, TypeId = 1 },
                            new Permission { Id = 1050404, Name = "Delete", Key = "BankBranchs.Delete", ParentId = 10504, TypeId = 1 },
 
-                       new Permission { Id = 10505, Name = "Accounts of bank", Key = "Accountbanks.All", ParentId = 105 },
-                           new Permission { Id = 1050501, Name = "View", Key = "Accountbanks.View", ParentId = 10505, TypeId = 1 },
-                           new Permission { Id = 1050502, Name = "Add", Key = "Accountbanks.Add", ParentId = 10505, TypeId = 1 },
-                           new Permission { Id = 1050503, Name = "Edit", Key = "Accountbanks.Edit", ParentId = 10505, TypeId = 1 },
-                           new Permission { Id = 1050504, Name = "Delete", Key = "Accountbanks.Delete", ParentId = 10505, TypeId = 1 },
-
                        new Permission { Id = 10506, Name = "Cash Boxes", Key = "CashBoxes.All", ParentId = 105 },
                            new Permission { Id = 1050601, Name = "View", Key = "CashBoxes.View", ParentId = 10506, TypeId = 1 },
                            new Permission { Id = 1050602, Name = "Add", Key = "CashBoxes.Add", ParentId = 10506, TypeId = 1 },
@@ -358,8 +352,6 @@ namespace Infrastructure.Seed
                                    new Permission { Id = 5010203, Name = "Edit", Key = "FinancialReceipt.Edit", ParentId = 50102, TypeId = 1 },
                                    new Permission { Id = 5010204, Name = "Delete", Key = "FinancialReceipt.Delete", ParentId = 50102, TypeId = 1 },
                                    new Permission { Id = 5010205, Name = "Preference", Key = "FinancialReceipt.Preference", ParentId = 50102, TypeId = 1 },
-                                   new Permission { Id = 5010206, Name = "Post", Key = "FinancialReceipt.Post", ParentId = 50102, TypeId = 1 },
-                                   new Permission { Id = 5010207, Name = "Reverse", Key = "FinancialReceipt.Reverse", ParentId = 50102, TypeId = 1 },
 
                               new Permission { Id = 50103, Name = "FinancialPayment", Key = "FinancialPayment.All", ParentId = 501 },
                                    new Permission { Id = 5010301, Name = "View", Key = "FinancialPayment.View", ParentId = 50103, TypeId = 1 },
@@ -367,8 +359,6 @@ namespace Infrastructure.Seed
                                    new Permission { Id = 5010303, Name = "Edit", Key = "FinancialPayment.Edit", ParentId = 50103, TypeId = 1 },
                                    new Permission { Id = 5010304, Name = "Delete", Key = "FinancialPayment.Delete", ParentId = 50103, TypeId = 1 },
                                    new Permission { Id = 5010305, Name = "Preference", Key = "FinancialPayment.Preference", ParentId = 50103, TypeId = 1 },
-                                   new Permission { Id = 5010306, Name = "Post", Key = "FinancialPayment.Post", ParentId = 50103, TypeId = 1 },
-                                   new Permission { Id = 5010307, Name = "Reverse", Key = "FinancialPayment.Reverse", ParentId = 50103, TypeId = 1 },
 
                               new Permission { Id = 50104, Name = "FinancialTransfer", Key = "FinancialTransfer.All", ParentId = 501 },
                                    new Permission { Id = 5010401, Name = "View", Key = "FinancialTransfer.View", ParentId = 50104, TypeId = 1 },

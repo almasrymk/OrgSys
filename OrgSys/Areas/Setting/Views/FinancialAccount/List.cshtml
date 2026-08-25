@@ -1,8 +1,36 @@
 @model List<Application.DTOs.FinancialAccountDto>
-@{ Layout = null; }
+@using Domain.Enums
+@using OrgSys
+@{
+    Layout = null;
+    var allowEdit = Model.Count == 0 || User.IsAllowed($"{(Model[0].FinancialAccountType == FinancialAccountType.Bank ? "BankAccounts" : "CashBoxes")}.Edit");
+}
 <div class="card"><div class="card-body p-0"><div class="table-responsive">
- <table class="table table-hover mb-0"><thead><tr><th>#</th><th>Code</th><th>Name</th><th>Type</th><th>GL Account</th><th>Currency</th><th>Status</th><th></th></tr></thead><tbody>
- @for(var i=0;i<Model.Count;i++){ var row=Model[i]; <tr style="@(row.IsActive ? "" : "color:#a8a7a7;")"><td>@(i+1)</td><td>@row.Code</td><td>@row.Name</td><td>@row.FinancialAccountType</td><td>@(string.IsNullOrEmpty(row.AccountCode) && string.IsNullOrEmpty(row.AccountName) ? "-" : $"{row.AccountCode} - {row.AccountName}")</td><td>@(row.CurrencyName ?? "-")</td><td>@(row.IsActive ? "Active" : "Inactive")</td><td class="text-right"><a href="/Setting/FinancialAccount/Save?id=@row.Id"><i class="iconsminds-folder-edit" style="color:green"></i></a></td></tr> }
+ <table class="table table-hover mb-0"><thead><tr>
+  <th>#</th><th>@Domain.Resource.Title_Designer.Code</th><th>@Domain.Resource.Title_Designer.Name</th><th>@Domain.Resource.Title_Designer.Type</th><th>@Domain.Resource.Title_Designer.Account</th><th>@Domain.Resource.Title_Designer.Currency</th><th>@Domain.Resource.Title_Designer.Status</th><th></th>
+ </tr></thead><tbody>
+ @for (var i = 0; i < Model.Count; i++)
+ {
+     var row = Model[i];
+     <tr style="@(row.IsActive ? "" : "color:#a8a7a7;")">
+         <td>@(i + 1)</td>
+         <td>@row.Code</td>
+         <td>@row.Name</td>
+         <td>@(row.FinancialAccountType == FinancialAccountType.Bank ? Domain.Resource.Title_Designer.Bank : Domain.Resource.Title_Designer.CashBox)</td>
+         <td>@(string.IsNullOrEmpty(row.AccountCode) && string.IsNullOrEmpty(row.AccountName) ? "-" : $"{row.AccountCode} - {row.AccountName}")</td>
+         <td>@(row.CurrencyName ?? "-")</td>
+         <td>@(row.IsActive ? Domain.Resource.Title_Designer.Active : "Inactive")</td>
+         <td class="text-right">
+             @if (User.IsAllowed($"{(row.FinancialAccountType == FinancialAccountType.Bank ? "BankAccounts" : "CashBoxes")}.Edit"))
+             {
+                 <a href="/Setting/FinancialAccount/Save?id=@row.Id"><i class="iconsminds-folder-edit" style="color:green"></i></a>
+             }
+         </td>
+     </tr>
+ }
  </tbody></table>
- @if(Model.Count==0){<div class="p-4 text-center text-muted">No financial accounts found.</div>}
+ @if (Model.Count == 0)
+ {
+     <div class="p-4 text-center text-muted">No accounts found.</div>
+ }
  </div></div></div>

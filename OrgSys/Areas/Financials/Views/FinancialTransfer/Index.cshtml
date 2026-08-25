@@ -1,15 +1,15 @@
 @model List<Application.DTOs.FinancialTransferDto>
 @{
-    ViewData["Title_Designer"] = "Financial Transfers";
+    ViewData["Title_Designer"] = Domain.Resource.Title_Designer.FinancialTransfers;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="container-fluid disable-text-selection">
     <div class="row"><div class="col-12">
         <div class="mb-2">
-            <h1><i class="simple-icon-shuffle rounded-circle badge-theme-1 p-1"></i> Financial Transfers</h1>
+            <h1><i class="simple-icon-shuffle rounded-circle badge-theme-1 p-1"></i> @Domain.Resource.Title_Designer.FinancialTransfers</h1>
             <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block"><ol class="breadcrumb pt-0">
                 <li class="breadcrumb-item"><a href="/">@Domain.Resource.Title_Designer.Home</a></li>
-                <li class="breadcrumb-item">Financials</li><li class="breadcrumb-item">Financial Transfers</li>
+                <li class="breadcrumb-item">@Domain.Resource.Title_Designer.Financial</li><li class="breadcrumb-item">@Domain.Resource.Title_Designer.FinancialTransfers</li>
             </ol></nav>
         </div>
         <a class="btn pt-0 pl-0 d-inline-block d-md-none" data-toggle="collapse" href="#displayOptions" aria-expanded="true">
@@ -29,7 +29,6 @@
     </div></div>
     <div class="row"><div id="List" class="col-12">@await Html.PartialAsync("List", Model)</div></div>
 </div>
-<script src="~/js/vendor/jquery-3.3.1.min.js"></script>
 <script>
  function searchTransfer(){ $.ajax({url:'/Financials/FinancialTransfer',data:{search:$('#txtSearch').val()},headers:{'X-Requested-With':'XMLHttpRequest'},success:function(x){$('#List').html(x);}}); }
  function changeTransfer(e){if(e.keyCode===13)searchTransfer();}

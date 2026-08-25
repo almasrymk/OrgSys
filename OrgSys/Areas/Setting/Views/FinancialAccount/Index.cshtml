@@ -1,23 +1,56 @@
 @model List<Application.DTOs.FinancialAccountDto>
 @using Domain.Enums
+@using OrgSys
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     FinancialAccountType currentType = ViewBag.AccountType ?? FinancialAccountType.CashBox;
-    var title = currentType == FinancialAccountType.Bank ? "Bank Accounts" : "Cash Boxes";
+    var title = currentType == FinancialAccountType.Bank ? Domain.Resource.Title_Designer.BankAccounts : Domain.Resource.Title_Designer.CashBoxes;
     ViewData["Title_Designer"] = title;
 }
 <div class="container-fluid disable-text-selection">
- <div class="row"><div class="col-12"><div class="mb-2"><h1>@title</h1>
-  <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block"><ol class="breadcrumb pt-0"><li class="breadcrumb-item"><a href="/">Home</a></li><li class="breadcrumb-item">Settings</li><li class="breadcrumb-item">@title</li></ol></nav>
- </div><div class="d-flex justify-content-between mb-3">
-  <a href="/Setting/FinancialAccount/Save?accountType=@((int)currentType)" class="btn btn-outline-primary"><i class="iconsminds-folder-add--"></i> Add</a>
-  <div class="d-flex"><select id="accountType" class="form-control mr-2"><option value="1" selected="@(currentType==FinancialAccountType.CashBox)">Cash Box</option><option value="2" selected="@(currentType==FinancialAccountType.Bank)">Bank</option></select><div class="search-text"><input id="txtSearch" value="@ViewBag.Search" placeholder="Text search..."><span class="search-icon"><i class="simple-icon-magnifier"></i></span></div></div>
- </div></div></div>
- <div class="row"><div id="List" class="col-12">@await Html.PartialAsync("List", Model)</div></div>
+    <div class="row">
+        <div class="col-12">
+            <div class="mb-2">
+                <h1>@title</h1>
+                <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
+                    <ol class="breadcrumb pt-0">
+                        <li class="breadcrumb-item">
+                            <a href="/">@Domain.Resource.Title_Designer.Home</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <span>@Domain.Resource.Title_Designer.Settings</span>
+                        </li>
+                        <li class="breadcrumb-item">
+                            @title
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="d-flex justify-content-between align-items-center flex-wrap mb-2">
+                @if (User.IsAllowed($"{(currentType == FinancialAccountType.Bank ? "BankAccounts" : "CashBoxes")}.Add"))
+                {
+                    <a href="/Setting/FinancialAccount/Save?accountType=@((int)currentType)" class="btn btn-outline-primary btn-add"><i class="iconsminds-folder-add--"></i> @Domain.Resource.Title_Designer.Add</a>
+                }
+                <div class="d-flex">
+                    <select id="accountType" class="form-control mr-2">
+                        <option value="1" selected="@(currentType == FinancialAccountType.CashBox)">@Domain.Resource.Title_Designer.CashBox</option>
+                        <option value="2" selected="@(currentType == FinancialAccountType.Bank)">@Domain.Resource.Title_Designer.Bank</option>
+                    </select>
+                    <div class="search-text m-0 p-0" style="box-shadow: 0 1px 15px rgba(0,0,0,.04), 0 1px 6px rgba(0,0,0,.04);">
+                        <input id="txtSearch" value="@ViewBag.Search" placeholder="@Domain.Resource.Title_Designer.TextSearch...">
+                        <span class="search-icon" onclick="loadAccounts()"><i class="simple-icon-magnifier"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div id="List" class="col-12">@await Html.PartialAsync("List", Model)</div>
+    </div>
 </div>
-<script src="~/js/vendor/jquery-3.3.1.min.js"></script>
 <script>
- function loadAccounts(){ $.get('/Setting/FinancialAccount',{search:$('#txtSearch').val(),accountType:$('#accountType').val()},function(x){$('#List').html(x);}); }
- function switchType(){ location.href='/Setting/FinancialAccount?accountType='+$('#accountType').val(); }
- $('#txtSearch').on('keyup',loadAccounts); $('#accountType').on('change',switchType);
+    function loadAccounts() { $.get('/Setting/FinancialAccount', { search: $('#txtSearch').val(), accountType: $('#accountType').val() }, function (x) { $('#List').html(x); }); }
+    function switchType() { location.href = '/Setting/FinancialAccount?accountType=' + $('#accountType').val(); }
+    $('#txtSearch').on('keyup', loadAccounts);
+    $('#accountType').on('change', switchType);
 </script>

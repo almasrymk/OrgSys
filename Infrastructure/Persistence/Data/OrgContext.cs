@@ -56,9 +56,9 @@
             modelBuilder.Entity<Safe>()
                 .HasOne(e => e.FinancialAccount).WithOne(e => e.CashBox)
                 .HasForeignKey<Safe>(e => e.FinancialAccountId).OnDelete(DeleteBehavior.Restrict);
-            modelBuilder.Entity<AccountBank>()
+            modelBuilder.Entity<BankAccount>()
                 .HasOne(e => e.FinancialAccount).WithOne(e => e.BankAccount)
-                .HasForeignKey<AccountBank>(e => e.FinancialAccountId).OnDelete(DeleteBehavior.Restrict);
+                .HasForeignKey<BankAccount>(e => e.FinancialAccountId).OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Financial>()
                 .HasOne(e => e.FinancialAccount).WithMany()
                 .HasForeignKey(e => e.FinancialAccountId).OnDelete(DeleteBehavior.Restrict);
@@ -147,7 +147,7 @@
         public virtual DbSet<RolePermission> RolePermissions { get; set; }
         //public virtual DbSet<Notification> Notifications { get; set; }
         public virtual DbSet<Account> Accounts { get; set; }
-        public virtual DbSet<AccountBank> AccountBanks { get; set; }
+        public virtual DbSet<BankAccount> BankAccounts { get; set; }
         public virtual DbSet<AccountType> AccountTypes { get; set; }
         public virtual DbSet<Bank> Banks { get; set; }
         public virtual DbSet<BankBranch> BankBranchs { get; set; }
