@@ -2,11 +2,10 @@
 @using Domain.Enums
 @using OrgSys
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml";
     var isBank = Model.FinancialAccountType == FinancialAccountType.Bank;
     var title = isBank ? Domain.Resource.Title_Designer.BankAccounts : Domain.Resource.Title_Designer.CashBoxes;
     ViewData["Title_Designer"] = title;
-    var backUrl = $"/Setting/FinancialAccount?accountType={(int)Model.FinancialAccountType}";
+    Layout = "~/Views/Shared/_Layout.cshtml";
     List<Application.DTOs.BankBranchDto> bankBranches = ViewBag.BankBranchList ?? new List<Application.DTOs.BankBranchDto>();
 }
 
@@ -42,137 +41,191 @@
                             }
                         </h3>
                         <div class="position-absolute card-top-buttons">
-                            <a href="@backUrl" class="btn btn-primary"><i class="simple-icon-action-undo"></i> @Domain.Resource.Title_Designer.Back</a>
+                            <a href="/@ViewBag.area/@ViewBag.PageTitle?TypeId=@ViewBag.TypeId" class="btn btn-primary"><i class="simple-icon-action-undo"></i>  @Domain.Resource.Title_Designer.Back</a>
                         </div>
                     </div>
 
                     <hr />
 
-                    <form action="Save" method="post" novalidate>
-                        @Html.HiddenFor(model => model.Id)
-                        <input type="hidden" id="accountType" name="FinancialAccountType" value="@((int)Model.FinancialAccountType)" />
-                        <div class="card-body p-0">
-                            <div class="row">
-                                <div class="form-group col-md-4">
+                    <div class="card-body p-0">
+                        <form action="Save" method="post" class="tooltip-label-right" novalidate>
+                            @Html.AntiForgeryToken()
+                            @Html.HiddenFor(model => model.Id)
+                            @Html.HiddenFor(model => model.FinancialAccountType)
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
                                     <label>@Domain.Resource.Title_Designer.Code</label>
-                                    @Html.TextBoxFor(model => model.Code, new { @class = "form-control" })
+                                    @Html.TextBoxFor(model => model.Code, new { @class = "form-control", @placeholder = @Domain.Resource.Title_Designer.Code })
+                                    @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger " })
                                 </div>
-                                <div class="form-group col-md-4">
+                                <div class="form-group col-md-6">
                                     <label>@Domain.Resource.Title_Designer.Name</label>
-                                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger mt-3 m-1" })
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <label>@Domain.Resource.Title_Designer.Account</label>
-                                    @Html.DropDownListFor(model => model.AccountId, (SelectList)ViewBag.AccountList, Domain.Resource.Title_Designer.Select + "...", new { @class = "form-control" })
+                                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @placeholder = @Domain.Resource.Title_Designer.Name })
+                                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="form-group col-md-4">
-                                    <label>@Domain.Resource.Title_Designer.Currency</label>
-                                    @Html.DropDownListFor(model => model.CurrencyId, (SelectList)ViewBag.CurrencyList, Domain.Resource.Title_Designer.Select + "...", new { @class = "form-control" })
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label>@Domain.Resource.Title_Designer.Account</label>
+                                    <div id="divAccountName">
+                                        <div class="input-group DropAutoComplete">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="simple-icon-wallet"></i></span>
+                                            </div>
+                                            <input type="text" class="form-control Droptxt" id="txtAccountId" value="@Model.AccountName" autocomplete="off" />
+                                            @Html.HiddenFor(model => model.AccountId)
+                                            <div class="input-group-prepend Dropbtn">
+                                                <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.AccountId, "", new { @class = "text-danger " })
                                 </div>
-                                <div class="form-group col-md-4 pt-4">
+                                <div class="form-group col-md-6">
+                                    <label>@Domain.Resource.Title_Designer.Currency</label>
+                                    <select asp-for="CurrencyId" asp-items="@ViewBag.CurrencyList" class="form-control">
+                                        <option value="">@Domain.Resource.Title_Designer.Select...</option>
+                                    </select>
+                                    @Html.ValidationMessageFor(model => model.CurrencyId, "", new { @class = "text-danger " })
+                                </div>
+                            </div>
+
+                            @if (isBank)
+                            {
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label>@Domain.Resource.Title_Designer.Bank</label>
+                                        <select asp-for="BankId" asp-items="@ViewBag.BankList" class="form-control" id="bankId">
+                                            <option value="">@Domain.Resource.Title_Designer.Select...</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label>@Domain.Resource.Title_Designer.BankBranch</label>
+                                        <select id="bankBranchId" name="BankBranchId" class="form-control">
+                                            <option value="">@Domain.Resource.Title_Designer.Select...</option>
+                                            @foreach (var b in bankBranches)
+                                            {
+                                                <option value="@b.Id" data-bank-id="@b.BankId" selected="@(b.Id == Model.BankBranchId)">@b.Name</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label>@Domain.Resource.Title_Designer.AccountNumber</label>
+                                        @Html.TextBoxFor(model => model.AccountNumber, new { @class = "form-control" })
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label>@Domain.Resource.Title_Designer.IBAN</label>
+                                        @Html.TextBoxFor(model => model.IBAN, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label>@Domain.Resource.Title_Designer.SwiftCode</label>
+                                        @Html.TextBoxFor(model => model.SwiftCode, new { @class = "form-control" })
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label>@Domain.Resource.Title_Designer.Branch</label>
+                                        @Html.TextBoxFor(model => model.BranchName, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label>@Domain.Resource.Title_Designer.Branch</label>
+                                        <select asp-for="BranchId" asp-items="@ViewBag.BranchList" class="form-control">
+                                            <option value="">@Domain.Resource.Title_Designer.Select...</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label>@Domain.Resource.Title_Designer.KeeperUser</label>
+                                        <select asp-for="KeeperUserId" asp-items="@ViewBag.UserList" class="form-control">
+                                            <option value="">@Domain.Resource.Title_Designer.Select...</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            }
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6 pt-4">
                                     <label class="custom-control custom-checkbox">
                                         @Html.CheckBoxFor(model => model.IsActive, new { @class = "custom-control-input" })
                                         <span class="custom-control-label">@Domain.Resource.Title_Designer.Active</span>
                                     </label>
                                 </div>
-                            </div>
-
-                            @if (Model.Id > 0 && ViewBag.Balance != null)
-                            {
-                                <div class="row">
-                                    <div class="form-group col-md-4">
+                                @if (Model.Id > 0 && ViewBag.Balance != null)
+                                {
+                                    <div class="form-group col-md-6">
                                         <label>@Domain.Resource.Title_Designer.Balance</label>
                                         <div class="form-control-plaintext">@(((decimal)ViewBag.Balance).ToString("N2"))</div>
                                     </div>
-                                </div>
+                                }
+                            </div>
+
+                            <hr />
+                            @if (User.IsAllowed($"{(isBank ? "BankAccounts" : "CashBoxes")}.{(Model.Id == 0 ? "Add" : "Edit")}"))
+                            {
+                                <button type="submit" class="btn btn-primary mb-0">@Domain.Resource.Title_Designer.Save</button>
                             }
-
-                            <div id="cashFields" class="card mb-3">
-                                <div class="card-body">
-                                    <h5>@Domain.Resource.Title_Designer.CashBox</h5>
-                                    <div class="row">
-                                        <div class="form-group col-md-6">
-                                            <label>@Domain.Resource.Title_Designer.Branch</label>
-                                            @Html.DropDownListFor(model => model.BranchId, (SelectList)ViewBag.BranchList, Domain.Resource.Title_Designer.Select + "...", new { @class = "form-control" })
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label>@Domain.Resource.Title_Designer.KeeperUser</label>
-                                            @Html.DropDownListFor(model => model.KeeperUserId, (SelectList)ViewBag.UserList, Domain.Resource.Title_Designer.Select + "...", new { @class = "form-control" })
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div id="bankFields" class="card mb-3">
-                                <div class="card-body">
-                                    <h5>@Domain.Resource.Title_Designer.Bank</h5>
-                                    <div class="row">
-                                        <div class="form-group col-md-3">
-                                            <label>@Domain.Resource.Title_Designer.Bank</label>
-                                            @Html.DropDownListFor(model => model.BankId, (SelectList)ViewBag.BankList, Domain.Resource.Title_Designer.Select + "...", new { @class = "form-control", id = "bankId" })
-                                        </div>
-                                        <div class="form-group col-md-3">
-                                            <label>@Domain.Resource.Title_Designer.BankBranch</label>
-                                            <select id="bankBranchId" name="BankBranchId" class="form-control">
-                                                <option value="">@Domain.Resource.Title_Designer.Select...</option>
-                                                @foreach (var b in bankBranches)
-                                                {
-                                                    <option value="@b.Id" data-bank-id="@b.BankId" selected="@(b.Id == Model.BankBranchId)">@b.Name</option>
-                                                }
-                                            </select>
-                                        </div>
-                                        <div class="form-group col-md-3">
-                                            <label>@Domain.Resource.Title_Designer.AccountNumber</label>
-                                            @Html.TextBoxFor(model => model.AccountNumber, new { @class = "form-control" })
-                                        </div>
-                                        <div class="form-group col-md-3">
-                                            <label>@Domain.Resource.Title_Designer.IBAN</label>
-                                            @Html.TextBoxFor(model => model.IBAN, new { @class = "form-control" })
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="form-group col-md-6">
-                                            <label>@Domain.Resource.Title_Designer.SwiftCode</label>
-                                            @Html.TextBoxFor(model => model.SwiftCode, new { @class = "form-control" })
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label>@Domain.Resource.Title_Designer.Branch</label>
-                                            @Html.TextBoxFor(model => model.BranchName, new { @class = "form-control" })
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        @if (User.IsAllowed($"{(isBank ? "BankAccounts" : "CashBoxes")}.{(Model.Id == 0 ? "Add" : "Edit")}"))
-                        {
-                            <div class="card-footer m-0" style="background-color:transparent;">
-                                <button type="submit" class="btn btn-primary">@Domain.Resource.Title_Designer.Save</button>
-                            </div>
-                        }
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<script>
-    function toggleDetails() { var bank = $('#accountType').val() === '2'; $('#cashFields').toggle(!bank); $('#bankFields').toggle(bank); }
-    $('#accountType').on('change', toggleDetails);
-    toggleDetails();
 
-    function filterBankBranches() {
-        var bankId = $('#bankId').val();
-        var selected = $('#bankBranchId').val();
-        $('#bankBranchId option').each(function () {
-            var branchBankId = $(this).data('bank-id');
-            $(this).toggle(!branchBankId || String(branchBankId) === String(bankId));
+<link href="~/css/jquery-ui.css" rel="stylesheet" />
+<script src="~/js/jquery-ui.js"></script>
+<script>
+    jQuery(function ($) {
+        $("#txtAccountId").autocomplete({
+            minLength: 0,
+            source: function (request, response) {
+                var searchPhrase = $("#txtAccountId").val();
+                if (searchPhrase == "...") searchPhrase = "";
+                $.ajax({
+                    url: "/Setting/Account/GetList",
+                    type: "Get",
+                    dataType: "json",
+                    data: { txtSearch: searchPhrase, page: 1, pageSize: 7 },
+                    success: function (data) {
+                        if (!data.length) data = [{ name: "NoResultsFound" }];
+                        response($.map(data, function (item) {
+                            return { label: item.name, value: item.name, id: item.id };
+                        }));
+                    }
+                });
+            },
+            select: function (event, ui) {
+                if (ui.item.label === "NoResultsFound") { event.preventDefault(); return; }
+                $("#AccountId").val(ui.item.id);
+            }
         });
-        if ($('#bankBranchId option:selected').is(':hidden')) $('#bankBranchId').val('');
-        else $('#bankBranchId').val(selected);
-    }
-    $('#bankId').on('change', filterBankBranches);
-    filterBankBranches();
+
+        $(".Droptxt").click(function () {
+            if ($(this).val() == "" || $(this).val() == "...") $(this).autocomplete("search", "");
+        });
+        $(".Dropbtn").click(function () {
+            $(this).parent().find(".Droptxt").autocomplete("search", "");
+        });
+
+        function filterBankBranches() {
+            var bankId = $('#bankId').val();
+            var selected = $('#bankBranchId').val();
+            $('#bankBranchId option').each(function () {
+                var branchBankId = $(this).data('bank-id');
+                $(this).toggle(!branchBankId || String(branchBankId) === String(bankId));
+            });
+            if ($('#bankBranchId option:selected').is(':hidden')) $('#bankBranchId').val('');
+            else $('#bankBranchId').val(selected);
+        }
+        $('#bankId').on('change', filterBankBranches);
+        filterBankBranches();
+    });
 </script>

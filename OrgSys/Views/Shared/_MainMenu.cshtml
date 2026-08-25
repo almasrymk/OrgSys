@@ -253,16 +253,16 @@
                                     }
                                     @if (User.IsAllowed("CashBoxes.All"))
                                     {
-                                        <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "FinancialAccount" && Context.Request.Query["accountType"] != "2" ? "active" : "")">
-                                            <a href="/Setting/FinancialAccount?accountType=1">
+                                        <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "FinancialAccount" && Context.Request.Query["TypeId"] != "2" ? "active" : "")">
+                                            <a href="/Setting/FinancialAccount?TypeId=1">
                                                 <i class="iconsminds-coins"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.CashBoxes</span>
                                             </a>
                                         </li>
                                     }
                                     @if (User.IsAllowed("BankAccounts.All"))
                                     {
-                                        <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "FinancialAccount" && Context.Request.Query["accountType"] == "2" ? "active" : "")">
-                                            <a href="/Setting/FinancialAccount?accountType=2">
+                                        <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "FinancialAccount" && Context.Request.Query["TypeId"] == "2" ? "active" : "")">
+                                            <a href="/Setting/FinancialAccount?TypeId=2">
                                                 <i class="iconsminds-safe-box"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.BankAccounts</span>
                                             </a>
                                         </li>

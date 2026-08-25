@@ -1,36 +1,172 @@
-@model List<Application.DTOs.FinancialAccountDto>
+@using System.Globalization
+@model Domain.Shared.ResultPagination<Application.DTOs.FinancialAccountDto>
 @using Domain.Enums
 @using OrgSys
 @{
     Layout = null;
-    var allowEdit = Model.Count == 0 || User.IsAllowed($"{(Model[0].FinancialAccountType == FinancialAccountType.Bank ? "BankAccounts" : "CashBoxes")}.Edit");
+    var TextAlign = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "text-right" : "text-left";
+    var TextAlign2 = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "text-left" : "text-right";
+    var AllowEdit = false;
+    var AllowDelete = false;
+    for (var i = 0; i < Model.Response.Count && (!AllowEdit || !AllowDelete); i++)
+    {
+        var prefix = Model.Response[i].FinancialAccountType == FinancialAccountType.Bank ? "BankAccounts" : "CashBoxes";
+        AllowEdit = AllowEdit || User.IsAllowed($"{prefix}.Edit");
+        AllowDelete = AllowDelete || User.IsAllowed($"{prefix}.Delete");
+    }
 }
-<div class="card"><div class="card-body p-0"><div class="table-responsive">
- <table class="table table-hover mb-0"><thead><tr>
-  <th>#</th><th>@Domain.Resource.Title_Designer.Code</th><th>@Domain.Resource.Title_Designer.Name</th><th>@Domain.Resource.Title_Designer.Type</th><th>@Domain.Resource.Title_Designer.Account</th><th>@Domain.Resource.Title_Designer.Currency</th><th>@Domain.Resource.Title_Designer.Status</th><th></th>
- </tr></thead><tbody>
- @for (var i = 0; i < Model.Count; i++)
- {
-     var row = Model[i];
-     <tr style="@(row.IsActive ? "" : "color:#a8a7a7;")">
-         <td>@(i + 1)</td>
-         <td>@row.Code</td>
-         <td>@row.Name</td>
-         <td>@(row.FinancialAccountType == FinancialAccountType.Bank ? Domain.Resource.Title_Designer.Bank : Domain.Resource.Title_Designer.CashBox)</td>
-         <td>@(string.IsNullOrEmpty(row.AccountCode) && string.IsNullOrEmpty(row.AccountName) ? "-" : $"{row.AccountCode} - {row.AccountName}")</td>
-         <td>@(row.CurrencyName ?? "-")</td>
-         <td>@(row.IsActive ? Domain.Resource.Title_Designer.Active : "Inactive")</td>
-         <td class="text-right">
-             @if (User.IsAllowed($"{(row.FinancialAccountType == FinancialAccountType.Bank ? "BankAccounts" : "CashBoxes")}.Edit"))
-             {
-                 <a href="/Setting/FinancialAccount/Save?id=@row.Id"><i class="iconsminds-folder-edit" style="color:green"></i></a>
-             }
-         </td>
-     </tr>
- }
- </tbody></table>
- @if (Model.Count == 0)
- {
-     <div class="p-4 text-center text-muted">No accounts found.</div>
- }
- </div></div></div>
+
+@if (Model != null && Model.Response.Count > 0)
+{
+    <div id="tbList" class="card" style="display:none;">
+        <div class="card-body pl-0 pr-0 pb-2 pt-0">
+            <table class="table table-hover responsive nowrap m-0" data-order="[[ 1, &quot;desc&quot; ]]">
+                <thead>
+                    <tr>
+                        <th class="text-center">#</th>
+                        <th style="text-align:center"></th>
+                        <th class="@TextAlign align-middle">@Domain.Resource.Title_Designer.Code</th>
+                        <th class="@TextAlign align-middle">@Domain.Resource.Title_Designer.Name</th>
+                        <th class="@TextAlign align-middle">@Domain.Resource.Title_Designer.Type</th>
+                        <th class="@TextAlign align-middle">@Domain.Resource.Title_Designer.Account</th>
+                        <th class="@TextAlign align-middle">@Domain.Resource.Title_Designer.Currency</th>
+                        <th class="text-center align-middle">@Domain.Resource.Title_Designer.Status</th>
+                        @if (AllowEdit || AllowDelete)
+                        {
+                            <th></th>
+                        }
+                        @if (AllowDelete)
+                        {
+                            <th></th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0, x = ((Model.Page - 1) * Model.PageSize) + 1; i < Model.Response.Count; i++, x++)
+                    {
+                        var row = Model.Response[i];
+                        var isBank = row.FinancialAccountType == FinancialAccountType.Bank;
+                        var prefix = isBank ? "BankAccounts" : "CashBoxes";
+                        var rowAllowEdit = User.IsAllowed($"{prefix}.Edit");
+                        var rowAllowDelete = User.IsAllowed($"{prefix}.Delete");
+                        <tr style="@(row.IsActive ? "" : "color:#a8a7a7;")">
+                            <td class="text-center align-middle" style="width:50px;">
+                                <p class="list-item-heading">@x</p>
+                            </td>
+                            <td class="text-center align-middle" style="width:50px;">
+                                <div class="list-thumbnail  border-0 rounded-circle badge-theme-1 m-0" style="height:40px;width:40px;font-size:17px;text-align:center;padding:9px;">
+                                    <i class="@(isBank ? "iconsminds-bank" : "iconsminds-coins")"></i>
+                                </div>
+                            </td>
+                            <td class="@TextAlign align-middle">@row.Code</td>
+                            <td class="@TextAlign align-middle">@row.Name</td>
+                            <td class="@TextAlign align-middle">@(isBank ? Domain.Resource.Title_Designer.Bank : Domain.Resource.Title_Designer.CashBox)</td>
+                            <td class="@TextAlign align-middle">@(string.IsNullOrEmpty(row.AccountCode) && string.IsNullOrEmpty(row.AccountName) ? "-" : $"{row.AccountCode} - {row.AccountName}")</td>
+                            <td class="@TextAlign align-middle">@(row.CurrencyName ?? "-")</td>
+                            <td class="text-center align-middle">
+                                <span class="badge badge-pill @(row.IsActive ? "badge-success" : "badge-secondary")">
+                                    @(row.IsActive ? Domain.Resource.Title_Designer.Active : "Inactive")
+                                </span>
+                            </td>
+                            @if (AllowEdit || AllowDelete)
+                            {
+                                <td class="w-15 @TextAlign2 align-middle">
+                                    @if (rowAllowEdit)
+                                    {
+                                        <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@row.Id"> <i class="iconsminds-folder-edit" style="color:green"></i> </a>
+                                        if (rowAllowDelete)
+                                        {
+                                            <span>&nbsp; | &nbsp;</span>
+                                        }
+                                    }
+                                    @if (rowAllowDelete)
+                                    {
+                                        <a href="javascript:;" onclick="Delete('simple-icon-trash' , '@Domain.Resource.Message_Designer.DeleteConfirmation' , '@Domain.Resource.Message_Designer.DoYouWantDeleteFile' , '@Domain.Resource.Title_Designer.Ok' , @row.Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
+                                    }
+                                </td>
+                            }
+                            @if (AllowDelete)
+                            {
+                                <td class="align-middle @TextAlign2" style="width:30px">
+                                    @if (rowAllowDelete)
+                                    {
+                                        <label class="custom-control custom-checkbox pt-2">
+                                            <input id="chk_@row.Id" type="checkbox" class="custom-control-input chk">
+                                            <input type="hidden" value="@row.Id" />
+                                            <span class="custom-control-label">&nbsp;</span>
+                                        </label>
+                                    }
+                                </td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="rowList" style="display:none;">
+        <div class="col-12 list m-0 p-0 pt-2" data-check-all="checkAll">
+            <div class=" d-flex flex-row mb-2" style="background-color:transparent !important;height:50px;padding:0px;margin:0px;">
+                <div class="d-flex flex-grow-1 min-width-zero" style="border-radius:15px; height:60px;">
+                    <div class="list-thumbnail  border-0" style="height:60px; width:60px; font-size:x-large; text-align:center; padding:14px;">
+                        <small>#</small>
+                    </div>
+                    <div class="card-body align-self-center d-flex flex-column flex-md-row  align-items-md-center">
+                        <div class="list-item-heading mb-0 w-80">
+                            <small>@Domain.Resource.Title_Designer.Name</small>
+                        </div>
+                        <div class="w-15 @TextAlign2"></div>
+                    </div>
+                    <div style="width:30px;"></div>
+                </div>
+            </div>
+            @for (int i = 0, x = ((Model.Page - 1) * Model.PageSize) + 1; i < Model.Response.Count; i++, x++)
+            {
+                var row = Model.Response[i];
+                var isBank = row.FinancialAccountType == FinancialAccountType.Bank;
+                var prefix = isBank ? "BankAccounts" : "CashBoxes";
+                var rowAllowEdit = User.IsAllowed($"{prefix}.Edit");
+                var rowAllowDelete = User.IsAllowed($"{prefix}.Delete");
+                <div class="card d-flex flex-row mb-2">
+                    <div class="d-flex flex-grow-1 min-width-zero" style="border-radius:15px; height:60px; @(row.IsActive ? "" : "color:#a8a7a7;")">
+                        <div class="list-thumbnail  border-0 card-img-left badge-theme-1" style="height:60px; width:60px; font-size:x-large; text-align:center; padding:14px;">
+                            <i class="@(isBank ? "iconsminds-bank" : "iconsminds-coins")"></i>
+                        </div>
+                        <div class="card-body align-self-center d-flex flex-column flex-md-row  align-items-md-center">
+                            <div class="list-item-heading mb-0 w-90">
+                                @row.Name
+                                <div><small class="text-muted">@row.Code — @(isBank ? Domain.Resource.Title_Designer.Bank : Domain.Resource.Title_Designer.CashBox)</small></div>
+                            </div>
+                            <div class="w-15 @TextAlign2">
+                                @if (rowAllowEdit)
+                                {
+                                    <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@row.Id"> <i class="iconsminds-folder-edit" style="color:green"></i> </a>
+                                    if (rowAllowDelete)
+                                    {
+                                        <span>&nbsp; | &nbsp;</span>
+                                    }
+                                }
+                                @if (rowAllowDelete)
+                                {
+                                    <a href="javascript:;" onclick="Delete('simple-icon-trash' , '@Domain.Resource.Message_Designer.DeleteConfirmation' , '@Domain.Resource.Message_Designer.DoYouWantDeleteFile' , '@Domain.Resource.Title_Designer.Ok' , @row.Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
+                                }
+                            </div>
+                        </div>
+                        <div style="width:30px;">
+                            @if (rowAllowDelete)
+                            {
+                                <label class="custom-control custom-checkbox pt-3">
+                                    <input id="chk_@row.Id" type="checkbox" class="custom-control-input chk">
+                                    <input type="hidden" value="@row.Id" />
+                                    <span class="custom-control-label">&nbsp;</span>
+                                </label>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}
+
+@await Html.PartialAsync("ToPagedList", new Domain.Shared.Pagination(Model.Page, Model.PageSize, Model.PageCount))

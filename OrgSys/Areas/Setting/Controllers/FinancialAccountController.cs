@@ -4,6 +4,7 @@ using Domain.Enums;
 using Domain.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using System.Net.Http.Json;
@@ -11,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using OrgSys;
@@ -18,10 +20,16 @@ using OrgSys;
 namespace OrgSys.Areas.Setting.Controllers;
 
 /// <summary>Cash Boxes and Bank Accounts screens — both are a <c>FinancialAccount</c> (CashBox/Bank
-/// discriminated by <see cref="FinancialAccountType"/>) filtered by <c>accountType</c>, mirroring how
+/// discriminated by <see cref="FinancialAccountType"/>) filtered by the generic <c>TypeId</c> filter
+/// dimension (same convention <c>Financials/Financial</c> uses for its own sub-types), mirroring how
 /// the Dealer controller multiplexes Client/Supplier under one entity. Persistence is delegated
-/// entirely to the existing unified <c>SaveFinancialAccountCommand</c>/<c>GetFinancialAccountsQuery</c>
-/// engine (Application/Commands/Org/Financials/UnifiedFinancialCommands.cs) — no new data path.</summary>
+/// entirely to the existing unified <c>SaveFinancialAccountCommand</c>/<c>SearchFinancialAccountsQuery</c>
+/// engine (Application/Commands/Org/Financials/UnifiedFinancialCommands.cs) — no new data path. Index
+/// follows the same contract as <see cref="OrgSys.Controllers.MainController{TDto,TCreate,TUpdate}.Index"/>
+/// (same ViewBag names, same paged List partial, same shared search()/change() JS) so this screen behaves
+/// identically to every other Setting master-data screen despite not inheriting that generic base — a
+/// dual-entity write (FinancialAccount + Safe/BankAccount) doesn't fit the generic single-entity
+/// Create/Update command shape.</summary>
 [Area("Setting"), Authorize]
 public sealed class FinancialAccountController(IConfiguration configuration, IHttpClientFactory httpClientFactory) : Controller
 {
@@ -30,28 +38,51 @@ public sealed class FinancialAccountController(IConfiguration configuration, IHt
     private static string PermissionPrefix(FinancialAccountType accountType) =>
         accountType == FinancialAccountType.Bank ? "BankAccounts" : "CashBoxes";
 
-    public async Task<IActionResult> Index(string? search = null, FinancialAccountType? accountType = null)
+    // Mirrors MainController<>.OnActionExecuting so the shared search()/change() JS and the
+    // "@ViewBag.area/@ViewBag.PageTitle/Save" link pattern used by every other Setting screen work here too.
+    public override void OnActionExecuting(ActionExecutingContext context)
     {
-        if (!User.IsAllowed($"{PermissionPrefix(accountType ?? FinancialAccountType.CashBox)}.View"))
-            return Forbid();
-
-        var rows = await GetAccounts(accountType, includeInactive: true);
-        if (!string.IsNullOrWhiteSpace(search))
-            rows = rows.Where(e => (e.Code ?? "").Contains(search, StringComparison.OrdinalIgnoreCase)
-                || e.Name.Contains(search, StringComparison.OrdinalIgnoreCase)).ToList();
-        ViewBag.Search = search;
-        ViewBag.AccountType = accountType;
-        return Request.Headers["X-Requested-With"] == "XMLHttpRequest"
-            ? PartialView("List", rows) : View(rows);
+        var areaName = "" + context.RouteData.Values["area"];
+        ViewBag.Page = "/" + areaName + "/" + ControllerContext.ActionDescriptor.ControllerName;
+        ViewBag.area = areaName;
+        ViewBag.PageTitle = ControllerContext.ActionDescriptor.ControllerName;
+        base.OnActionExecuting(context);
     }
 
-    public async Task<IActionResult> Save(long id = 0, FinancialAccountType accountType = FinancialAccountType.CashBox)
+    public async Task<IActionResult> Index(string search, long ParentId = 0, long TypeId = 0, int page = 1, int pageSize = 10, ResultStatus Status = ResultStatus.nothing, string MsgError = "")
     {
+        var accountType = TypeId == (long)FinancialAccountType.Bank ? FinancialAccountType.Bank : FinancialAccountType.CashBox;
+        if (!User.IsAllowed($"{PermissionPrefix(accountType)}.View"))
+            return Forbid();
+
+        if ("" + MsgError != "")
+            ViewBag.message = MsgError;
+        ViewBag.status = Status.ToString();
+        ViewBag.pageNumber = page;
+        ViewBag.ParentId = ParentId;
+        ViewBag.TypeId = TypeId;
+        ViewBag.AccountType = accountType;
+
+        using var client = httpClientFactory.CreateClient();
+        var response = await client.GetAsync($"{ApiUrl}/Financial/Accounts/Search?KeySearch={search}&AccountType={(int)accountType}&Page={page}&PageSize={pageSize}");
+        response.EnsureSuccessStatusCode();
+        var data = await response.Content.ReadAsStringAsync();
+        var dataList = JsonConvert.DeserializeObject<ResultPagination<FinancialAccountDto>>(data);
+
+        return Request.Headers["X-Requested-With"] == "XMLHttpRequest"
+            ? PartialView("List", dataList) : View("Index", dataList);
+    }
+
+    public async Task<IActionResult> Save(long id = 0, long TypeId = 0, ResultStatus status = ResultStatus.nothing, string MsgError = "")
+    {
+        var accountType = TypeId == (long)FinancialAccountType.Bank ? FinancialAccountType.Bank : FinancialAccountType.CashBox;
         var model = id == 0 ? new FinancialAccountDto { IsActive = true, FinancialAccountType = accountType }
             : (await GetAccounts(null, includeInactive: true)).FirstOrDefault(e => e.Id == id) ?? new FinancialAccountDto();
 
         if (!User.IsAllowed($"{PermissionPrefix(model.FinancialAccountType)}.{(id == 0 ? "Add" : "Edit")}"))
             return Forbid();
+
+        ViewBag.TypeId = (long)model.FinancialAccountType;
 
         if (id > 0)
         {
@@ -74,16 +105,58 @@ public sealed class FinancialAccountController(IConfiguration configuration, IHt
 
         if (!ModelState.IsValid)
         {
+            ViewBag.TypeId = (long)model.FinancialAccountType;
             await LoadViewBag();
             return View(model);
         }
         using var client = httpClientFactory.CreateClient();
         var response = await client.PostAsJsonAsync($"{ApiUrl}/Financial/Accounts", model);
         if (response.IsSuccessStatusCode)
-            return RedirectToAction(nameof(Index), new { accountType = model.FinancialAccountType, status = ResultStatus.success, MsgError = "Success" });
+            return Redirect($"/{ViewBag.area}/{ViewBag.PageTitle}?TypeId={(long)model.FinancialAccountType}&Status={ResultStatus.success}&MsgError=Success");
         ModelState.AddModelError(string.Empty, await response.Content.ReadAsStringAsync());
+        ViewBag.TypeId = (long)model.FinancialAccountType;
         await LoadViewBag();
         return View(model);
+    }
+
+    public async Task<Result> Delete(long id)
+    {
+        var account = (await GetAccounts(null, includeInactive: true)).FirstOrDefault(e => e.Id == id);
+        if (account == null)
+            return new Result(HttpStatusCode.NotFound, [new Error("Financial account not found.")]);
+        if (!User.IsAllowed($"{PermissionPrefix(account.FinancialAccountType)}.Delete"))
+            return new Result(HttpStatusCode.Forbidden, [new Error("Forbidden.")]);
+
+        using var client = httpClientFactory.CreateClient();
+        var response = await client.DeleteAsync($"{ApiUrl}/Financial/Accounts/Delete?Id={id}");
+        if (response.IsSuccessStatusCode)
+            return new Result(HttpStatusCode.OK, null);
+        return new Result(HttpStatusCode.BadRequest, [new Error("Error")]);
+    }
+
+    [HttpPost]
+    public async Task<Result> DeleteList(long[] ids, long TypeId = 0)
+    {
+        try
+        {
+            if (ids != null && ids.Length > 0)
+            {
+                var accountType = TypeId == (long)FinancialAccountType.Bank ? FinancialAccountType.Bank : FinancialAccountType.CashBox;
+                if (!User.IsAllowed($"{PermissionPrefix(accountType)}.Delete"))
+                    return new Result(HttpStatusCode.Forbidden, [new Error("Forbidden.")]);
+
+                var query = string.Join("&", ids.Select(i => $"Ids={i}"));
+                using var client = httpClientFactory.CreateClient();
+                var response = await client.DeleteAsync($"{ApiUrl}/Financial/Accounts/DeleteList?{query}");
+                if (response.IsSuccessStatusCode)
+                    return new Result(HttpStatusCode.OK, null);
+            }
+        }
+        catch (Exception ex)
+        {
+            return new Result(HttpStatusCode.InternalServerError, [new Error(ex.Message)]);
+        }
+        return new Result(HttpStatusCode.BadRequest, [new Error("Error")]);
     }
 
     public async Task<JsonResult> GetList(string? txtSearch = null, FinancialAccountType? accountType = null)
@@ -97,7 +170,6 @@ public sealed class FinancialAccountController(IConfiguration configuration, IHt
 
     private async Task LoadViewBag()
     {
-        ViewBag.AccountList = new SelectList(await GetListApi<AccountDto>("Account"), "Id", "Name");
         ViewBag.CurrencyList = new SelectList(await GetListApi<CurrencyDto>("Currency"), "Id", "Name");
         ViewBag.BranchList = new SelectList(await GetListApi<BranchDto>("Branch"), "Id", "Name");
         ViewBag.UserList = new SelectList(await GetListApi<UserDto>("User"), "Id", "Name");

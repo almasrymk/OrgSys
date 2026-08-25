@@ -38,6 +38,29 @@ namespace API.Controllers.Org.Financials
             return Sender.Send(new GetFinancialAccountsQuery(accountType, includeInactive), cancellationToken);
         }
 
+        [HttpGet("Accounts/Search")]
+        public Task<ResultPagination<FinancialAccountDto>> SearchAccounts(
+            string? KeySearch,
+            FinancialAccountType? AccountType,
+            int Page,
+            int PageSize,
+            CancellationToken cancellationToken)
+        {
+            return Sender.Send(new SearchFinancialAccountsQuery(KeySearch, AccountType, Page, PageSize), cancellationToken);
+        }
+
+        [HttpDelete("Accounts/Delete")]
+        public Task<Result> DeleteAccount(long Id, CancellationToken cancellationToken)
+        {
+            return Sender.Send(new DeleteFinancialAccountCommand(Id), cancellationToken);
+        }
+
+        [HttpDelete("Accounts/DeleteList")]
+        public Task<Result> DeleteAccountList([FromQuery] List<long> Ids, CancellationToken cancellationToken)
+        {
+            return Sender.Send(new DeleteListFinancialAccountCommand(Ids), cancellationToken);
+        }
+
         [HttpGet("Accounts/{financialAccountId:long}/Balance")]
         public Task<Result<decimal>> Balance(
             long financialAccountId,
