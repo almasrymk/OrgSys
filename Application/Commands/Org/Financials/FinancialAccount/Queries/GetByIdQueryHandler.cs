@@ -20,7 +20,7 @@ namespace Application.Commands.Org.Financials.FinancialAccount.Queries
 
         public override string CreateInclude()
         {
-            return "CashBox,BankAccount,Account,Currency";
+            return "CashBox,BankAccount.Bank,Account,Currency";
         }
     }
 }
