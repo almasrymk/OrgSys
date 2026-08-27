@@ -210,14 +210,14 @@
                         </li>
                     }
 
-                    @if (User.IsAllowed("Accounts.All,Banks.All,BankBranchs.All,CashBoxes.All,BankAccounts.All,Safes.All,SafeTerms.All,Currencies.All,FiscalYears.All"))
+                    @if (User.IsAllowed("Accounts.All,Banks.All,BankBranchs.All,CashBoxes.All,BankAccounts.All,SafeTerms.All,Currencies.All,FiscalYears.All"))
                     {
                         <li>
                             <a href="#" data-toggle="collapse" data-target="#collapseDataFinancials" aria-expanded="false"
-                               aria-controls="collapseDataFinancials" class="rotate-arrow-icon opacity-50 @("Account,Bank,BankBranch,FinancialAccount,Safe,SafeTerm,Currency,FiscalYear".Contains(ViewContext.RouteData.Values["controller"].ToString()) ? "" : "collapsed")">
+                               aria-controls="collapseDataFinancials" class="rotate-arrow-icon opacity-50 @("Account,Bank,BankBranch,FinancialAccount,SafeTerm,Currency,FiscalYear".Contains(ViewContext.RouteData.Values["controller"].ToString()) ? "" : "collapsed")">
                                 <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.Financial</span>
                             </a>
-                            <div id="collapseDataFinancials" class="collapse @("Account,Bank,BankBranch,FinancialAccount,Safe,SafeTerm,Currency,FiscalYear".Contains(ViewContext.RouteData.Values["controller"].ToString()) ? "show" : "")">
+                            <div id="collapseDataFinancials" class="collapse @("Account,Bank,BankBranch,FinancialAccount,SafeTerm,Currency,FiscalYear".Contains(ViewContext.RouteData.Values["controller"].ToString()) ? "show" : "")">
                                 <ul class="list-unstyled inner-level-menu">
                                     @if (User.IsAllowed("Accounts.All"))
                                     {
@@ -232,15 +232,6 @@
                                         <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Outlay" ? "active" : "")">
                                             <a href="/Setting/SafeTerm">
                                                 <i class="simple-icon-grid"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.SafeTerms</span>
-                                            </a>
-                                        </li>
-                                    }
-                                    @if (User.IsAllowed("Safes.All"))
-                                    {
-                                        <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Safe" ? "active" : "")">
-                                            <a href="/Setting/Safe">
-                                                <i class="iconsminds-safe-box"></i>
-                                                <span class="d-inline-block">@Domain.Resource.Title_Designer.Safes</span>
                                             </a>
                                         </li>
                                     }
@@ -262,17 +253,17 @@
                                     }
                                     @if (User.IsAllowed("CashBoxes.All"))
                                     {
-                                        <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "FinancialAccount" && Context.Request.Query["accountType"] != "2" ? "active" : "")">
-                                            <a href="/Setting/FinancialAccount?accountType=1">
-                                                <i class="iconsminds-coins"></i> <span class="d-inline-block">Cash Boxes</span>
+                                        <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "FinancialAccount" && Context.Request.Query["TypeId"] != "2" ? "active" : "")">
+                                            <a href="/Setting/FinancialAccount?TypeId=1">
+                                                <i class="iconsminds-coins"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.CashBoxes</span>
                                             </a>
                                         </li>
                                     }
                                     @if (User.IsAllowed("BankAccounts.All"))
                                     {
-                                        <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "FinancialAccount" && Context.Request.Query["accountType"] == "2" ? "active" : "")">
-                                            <a href="/Setting/FinancialAccount?accountType=2">
-                                                <i class="iconsminds-safe-box"></i> <span class="d-inline-block">Bank Accounts</span>
+                                        <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "FinancialAccount" && Context.Request.Query["TypeId"] == "2" ? "active" : "")">
+                                            <a href="/Setting/FinancialAccount?TypeId=2">
+                                                <i class="iconsminds-safe-box"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.BankAccounts</span>
                                             </a>
                                         </li>
                                     }
@@ -601,14 +592,6 @@
                                         </a>
                                     </li>
                                 }
-                                @if (User.IsAllowed("FinancialReceipt.Post"))
-                                {
-                                    <li>
-                                        <a href="/Financials/Receivable">
-                                            <i class="iconsminds-financial"></i> <span class="d-inline-block">Customer Receipts</span>
-                                        </a>
-                                    </li>
-                                }
                                 @if (User.IsAllowed("FinancialPayment.All"))
                                 {
                                     <li>
@@ -617,19 +600,11 @@
                                         </a>
                                     </li>
                                 }
-                                @if (User.IsAllowed("FinancialPayment.Post"))
-                                {
-                                    <li>
-                                        <a href="/Financials/Payable">
-                                            <i class="iconsminds-handshake"></i> <span class="d-inline-block">Supplier Payments</span>
-                                        </a>
-                                    </li>
-                                }
                                 @if (User.IsAllowed("FinancialTransfer.Post"))
                                 {
                                     <li>
                                         <a href="/Financials/FinancialTransfer">
-                                            <i class="simple-icon-shuffle"></i> <span class="d-inline-block">Transfer</span>
+                                            <i class="simple-icon-shuffle"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.Transfer</span>
                                         </a>
                                     </li>
                                 }

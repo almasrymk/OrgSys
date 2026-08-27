@@ -12,12 +12,11 @@ using System.Net;
 
 /// <summary>Correction path for a Posted Transfer. A Transfer shares ONE Journal between its TWO
 /// linked <c>Financial</c> legs (both carry the same <see cref="Financial.JournalId"/> and the same
-/// <see cref="Financial.FinancialTransferId"/>). The generic <c>ReverseCustomerReceiptCommand</c>
-/// reverses by a single Financial row's Id — pointed at one transfer leg it would correctly reverse
-/// the shared Journal once, but leave the OTHER leg's Status stale (still Approved), corrupting that
-/// account's transaction history. This command reverses the shared Journal exactly once (mirroring
-/// <c>Journal/Command/ReverseCommandHandler.cs</c>/<c>ReverseCustomerReceiptCommandHandler.cs</c>) and
-/// flips BOTH legs to Reversed.</summary>
+/// <see cref="Financial.FinancialTransferId"/>). A single-Financial-row reversal — pointed at one
+/// transfer leg — would correctly reverse the shared Journal once, but leave the OTHER leg's Status
+/// stale (still Approved), corrupting that account's transaction history. This command reverses the
+/// shared Journal exactly once (mirroring <c>Journal/Command/ReverseCommandHandler.cs</c>) and flips
+/// BOTH legs to Reversed.</summary>
 public sealed record ReverseFinancialTransferCommand(long FinancialTransferId) : ICommand, IUpdateCommand<Result>;
 
 public sealed class ReverseFinancialTransferCommandHandler(

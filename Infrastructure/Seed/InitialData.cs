@@ -36,6 +36,11 @@ namespace Infrastructure.Seed
             InitialDealer(orgContext);
             InitialSafe(orgContext);
             InitialCurrency(orgContext);
+            InitialCountry(orgContext);
+            InitialCity(orgContext);
+            InitialDistrict(orgContext);
+            InitialBank(orgContext);
+            InitialBankBranch(orgContext);
         }
 
         public void InitialPermission(OrgContext orgContext)
@@ -155,12 +160,6 @@ namespace Infrastructure.Seed
                            new Permission { Id = 1050402, Name = "Add", Key = "BankBranchs.Add", ParentId = 10504, TypeId = 1 },
                            new Permission { Id = 1050403, Name = "Edit", Key = "BankBranchs.Edit", ParentId = 10504, TypeId = 1 },
                            new Permission { Id = 1050404, Name = "Delete", Key = "BankBranchs.Delete", ParentId = 10504, TypeId = 1 },
-
-                       new Permission { Id = 10505, Name = "Accounts of bank", Key = "Accountbanks.All", ParentId = 105 },
-                           new Permission { Id = 1050501, Name = "View", Key = "Accountbanks.View", ParentId = 10505, TypeId = 1 },
-                           new Permission { Id = 1050502, Name = "Add", Key = "Accountbanks.Add", ParentId = 10505, TypeId = 1 },
-                           new Permission { Id = 1050503, Name = "Edit", Key = "Accountbanks.Edit", ParentId = 10505, TypeId = 1 },
-                           new Permission { Id = 1050504, Name = "Delete", Key = "Accountbanks.Delete", ParentId = 10505, TypeId = 1 },
 
                        new Permission { Id = 10506, Name = "Cash Boxes", Key = "CashBoxes.All", ParentId = 105 },
                            new Permission { Id = 1050601, Name = "View", Key = "CashBoxes.View", ParentId = 10506, TypeId = 1 },
@@ -358,8 +357,6 @@ namespace Infrastructure.Seed
                                    new Permission { Id = 5010203, Name = "Edit", Key = "FinancialReceipt.Edit", ParentId = 50102, TypeId = 1 },
                                    new Permission { Id = 5010204, Name = "Delete", Key = "FinancialReceipt.Delete", ParentId = 50102, TypeId = 1 },
                                    new Permission { Id = 5010205, Name = "Preference", Key = "FinancialReceipt.Preference", ParentId = 50102, TypeId = 1 },
-                                   new Permission { Id = 5010206, Name = "Post", Key = "FinancialReceipt.Post", ParentId = 50102, TypeId = 1 },
-                                   new Permission { Id = 5010207, Name = "Reverse", Key = "FinancialReceipt.Reverse", ParentId = 50102, TypeId = 1 },
 
                               new Permission { Id = 50103, Name = "FinancialPayment", Key = "FinancialPayment.All", ParentId = 501 },
                                    new Permission { Id = 5010301, Name = "View", Key = "FinancialPayment.View", ParentId = 50103, TypeId = 1 },
@@ -367,8 +364,6 @@ namespace Infrastructure.Seed
                                    new Permission { Id = 5010303, Name = "Edit", Key = "FinancialPayment.Edit", ParentId = 50103, TypeId = 1 },
                                    new Permission { Id = 5010304, Name = "Delete", Key = "FinancialPayment.Delete", ParentId = 50103, TypeId = 1 },
                                    new Permission { Id = 5010305, Name = "Preference", Key = "FinancialPayment.Preference", ParentId = 50103, TypeId = 1 },
-                                   new Permission { Id = 5010306, Name = "Post", Key = "FinancialPayment.Post", ParentId = 50103, TypeId = 1 },
-                                   new Permission { Id = 5010307, Name = "Reverse", Key = "FinancialPayment.Reverse", ParentId = 50103, TypeId = 1 },
 
                               new Permission { Id = 50104, Name = "FinancialTransfer", Key = "FinancialTransfer.All", ParentId = 501 },
                                    new Permission { Id = 5010401, Name = "View", Key = "FinancialTransfer.View", ParentId = 50104, TypeId = 1 },
@@ -1297,5 +1292,527 @@ namespace Infrastructure.Seed
                 orgContext.Set<Shift>().AddRange(list);
             orgContext.SaveChanges();
         }
+
+        // Country/City/District are plain BaseModel lockups (Name + Code only — no NameAr/ISO2/ISO3/
+        // PhoneCode columns exist on these entities, so this seed doesn't add any), identity-Id like
+        // everything else in this file. Idempotency is by business key, not Id: Country by Code (its
+        // ISO2), City by (CountryId, Name), District by (CityId, Name) — matching InitialAccount's
+        // Code-based approach, since two different countries/cities can legitimately share a Name.
+        public void InitialCountry(OrgContext orgContext)
+        {
+            var rows = new (string Code, string Name)[]
+            {
+                ("EG", "Egypt"),
+                ("SA", "Saudi Arabia"),
+                ("AE", "United Arab Emirates"),
+                ("KW", "Kuwait"),
+                ("QA", "Qatar"),
+                ("BH", "Bahrain"),
+                ("OM", "Oman"),
+                ("SD", "Sudan"),
+                ("LY", "Libya"),
+                ("TN", "Tunisia"),
+                ("DZ", "Algeria"),
+                ("MA", "Morocco"),
+                ("MR", "Mauritania"),
+            };
+
+            foreach (var row in rows)
+            {
+                var existing = orgContext.Countries.FirstOrDefault(e => e.Code == row.Code);
+                if (existing == null)
+                    orgContext.Set<Country>().Add(new Country { Code = row.Code, Name = row.Name, Hide = false });
+                else
+                    existing.Name = row.Name;
+            }
+            orgContext.SaveChanges();
+        }
+
+        public void InitialCity(OrgContext orgContext)
+        {
+            var countryIdByCode = orgContext.Countries.ToDictionary(e => e.Code!, e => e.Id);
+
+            AddCities(orgContext, countryIdByCode["EG"], EgyptCities());
+            AddCities(orgContext, countryIdByCode["SA"], SaudiArabiaCities());
+            AddCities(orgContext, countryIdByCode["AE"], UAECities());
+            AddCities(orgContext, countryIdByCode["KW"], KuwaitCities());
+            AddCities(orgContext, countryIdByCode["QA"], QatarCities());
+            AddCities(orgContext, countryIdByCode["BH"], BahrainCities());
+            AddCities(orgContext, countryIdByCode["OM"], OmanCities());
+            AddCities(orgContext, countryIdByCode["SD"], SudanCities());
+            AddCities(orgContext, countryIdByCode["LY"], LibyaCities());
+            AddCities(orgContext, countryIdByCode["TN"], TunisiaCities());
+            AddCities(orgContext, countryIdByCode["DZ"], AlgeriaCities());
+            AddCities(orgContext, countryIdByCode["MA"], MoroccoCities());
+            AddCities(orgContext, countryIdByCode["MR"], MauritaniaCities());
+
+            orgContext.SaveChanges();
+        }
+
+        private static void AddCities(OrgContext orgContext, long countryId, string[] names)
+        {
+            foreach (var name in names)
+            {
+                var existing = orgContext.Cities.FirstOrDefault(e => e.CountryId == countryId && e.Name == name);
+                if (existing == null)
+                    orgContext.Set<City>().Add(new City { CountryId = countryId, Name = name, Hide = false });
+            }
+        }
+
+        private static string[] EgyptCities() => new[]
+        {
+            "Cairo", "Giza", "Alexandria", "Dakahlia", "Red Sea", "Beheira", "Fayoum", "Gharbia",
+            "Ismailia", "Menofia", "Minya", "Qalyubia", "New Valley", "Suez", "Aswan", "Assiut",
+            "Beni Suef", "Port Said", "Damietta", "Sharqia", "South Sinai", "Kafr El Sheikh",
+            "Matrouh", "Luxor", "Qena", "North Sinai", "Sohag",
+        };
+
+        private static string[] SaudiArabiaCities() => new[]
+        {
+            "Riyadh", "Jeddah", "Mecca", "Medina", "Dammam", "Khobar", "Dhahran", "Taif", "Tabuk",
+            "Abha", "Khamis Mushait", "Buraidah", "Hail", "Jubail", "Yanbu", "Jazan", "Najran", "Al Ahsa",
+        };
+
+        private static string[] UAECities() => new[]
+        {
+            "Abu Dhabi", "Dubai", "Sharjah", "Ajman", "Umm Al Quwain", "Ras Al Khaimah", "Fujairah", "Al Ain",
+        };
+
+        private static string[] KuwaitCities() => new[]
+        {
+            "Kuwait City", "Hawalli", "Salmiya", "Farwaniya", "Jahra", "Ahmadi", "Mubarak Al-Kabeer",
+        };
+
+        private static string[] QatarCities() => new[]
+        {
+            "Doha", "Al Rayyan", "Al Wakrah", "Al Khor", "Umm Salal", "Lusail",
+        };
+
+        private static string[] BahrainCities() => new[]
+        {
+            "Manama", "Muharraq", "Riffa", "Hamad Town", "Isa Town",
+        };
+
+        private static string[] OmanCities() => new[]
+        {
+            "Muscat", "Salalah", "Sohar", "Nizwa", "Sur", "Barka", "Seeb",
+        };
+
+        private static string[] SudanCities() => new[]
+        {
+            "Khartoum", "Omdurman", "Khartoum North", "Port Sudan", "Kassala", "Gedaref",
+            "Wad Madani", "El Obeid", "Nyala", "Atbara",
+        };
+
+        private static string[] LibyaCities() => new[]
+        {
+            "Tripoli", "Benghazi", "Misrata", "Sabha", "Sirte", "Zawiya", "Tobruk",
+        };
+
+        private static string[] TunisiaCities() => new[]
+        {
+            "Tunis", "Sfax", "Sousse", "Bizerte", "Kairouan", "Gabes", "Monastir",
+        };
+
+        private static string[] AlgeriaCities() => new[]
+        {
+            "Algiers", "Oran", "Constantine", "Annaba", "Blida", "Setif", "Batna", "Tlemcen",
+        };
+
+        private static string[] MoroccoCities() => new[]
+        {
+            "Casablanca", "Rabat", "Marrakech", "Fez", "Tangier", "Agadir", "Meknes", "Oujda", "Tetouan",
+        };
+
+        private static string[] MauritaniaCities() => new[]
+        {
+            "Nouakchott", "Nouadhibou", "Rosso", "Kaedi", "Atar",
+        };
+
+        public void InitialDistrict(OrgContext orgContext)
+        {
+            var countryIdByCode = orgContext.Countries.ToDictionary(e => e.Code!, e => e.Id);
+            var cityIdByCountryAndName = orgContext.Cities
+                .Where(e => e.CountryId != null)
+                .ToDictionary(e => (e.CountryId!.Value, e.Name!), e => e.Id);
+
+            AddDistricts(orgContext, countryIdByCode["EG"], cityIdByCountryAndName, EgyptDistricts());
+            AddDistricts(orgContext, countryIdByCode["SA"], cityIdByCountryAndName, SaudiArabiaDistricts());
+            AddDistricts(orgContext, countryIdByCode["AE"], cityIdByCountryAndName, UAEDistricts());
+
+            orgContext.SaveChanges();
+        }
+
+        private static void AddDistricts(OrgContext orgContext, long countryId,
+            Dictionary<(long CountryId, string CityName), long> cityIdByCountryAndName, (string City, string District)[] rows)
+        {
+            foreach (var row in rows)
+            {
+                // Skip silently if the city lookup ever falls out of sync with the district list above —
+                // seeding the rest of the batch matters more than failing the whole run over one row.
+                if (!cityIdByCountryAndName.TryGetValue((countryId, row.City), out var cityId))
+                    continue;
+
+                var existing = orgContext.Districts.FirstOrDefault(e => e.CityId == cityId && e.Name == row.District);
+                if (existing == null)
+                    orgContext.Set<District>().Add(new District { CountryId = countryId, CityId = cityId, Name = row.District, Hide = false });
+            }
+        }
+
+        private static (string City, string District)[] EgyptDistricts()
+        {
+            var cairo = new[]
+            {
+                "Nasr City", "Heliopolis", "New Cairo", "Fifth Settlement", "First Settlement", "Third Settlement",
+                "Maadi", "Zahraa El Maadi", "Mokattam", "Dar El Salam", "Basateen", "Sayeda Zeinab",
+                "Downtown Cairo", "Abdeen", "Zamalek", "Shubra", "Ain Shams", "Matariya", "Zeitoun",
+                "Hadayek El Kobba", "El Marg", "Salam City", "Nozha", "Badr City", "El Shorouk",
+                "New Administrative Capital", "Helwan", "15 May City",
+            };
+            var giza = new[]
+            {
+                "Dokki", "Mohandessin", "Agouza", "Haram", "Faisal", "Omrania", "Boulaq El Dakrour",
+                "Imbaba", "Warraq", "Sheikh Zayed", "6th of October", "Hadayek October", "New Giza",
+                "Kerdasa", "Abu Rawash", "Hawamdia", "Badrasheen",
+            };
+            var alexandria = new[]
+            {
+                "Montaza", "Miami", "Sidi Bishr", "San Stefano", "Gleem", "Roushdy", "Smouha", "Sidi Gaber",
+                "Sporting", "Stanley", "Louran", "Mandara", "Asafra", "Agami", "Borg El Arab",
+                "New Borg El Arab", "Moharam Bek", "Mansheya",
+            };
+            // Remaining 24 governorates: main markaz/towns, not exhaustive — enough to make the District
+            // dropdown usable everywhere without trying to model every markaz in the country.
+            var rest = new (string City, string[] Districts)[]
+            {
+                ("Dakahlia", new[] { "Mansoura", "Talkha", "Mit Ghamr", "Aga" }),
+                ("Red Sea", new[] { "Hurghada", "Safaga", "Marsa Alam", "Ras Gharib" }),
+                ("Beheira", new[] { "Damanhur", "Kafr El Dawwar", "Rashid", "Edku" }),
+                ("Fayoum", new[] { "Fayoum City", "Sinnuris", "Tamiya", "Ibsheway" }),
+                ("Gharbia", new[] { "Tanta", "Mahalla El Kubra", "Kafr El Zayat", "Zefta" }),
+                ("Ismailia", new[] { "Ismailia City", "Fayed", "Qantara", "Tel El Kebir" }),
+                ("Menofia", new[] { "Shibin El Kom", "Sadat City", "Menouf", "Ashmoun" }),
+                ("Minya", new[] { "Minya City", "Mallawi", "Beni Mazar", "Samalut" }),
+                ("Qalyubia", new[] { "Banha", "Shubra El Kheima", "Qalyub", "Khanka", "Obour City" }),
+                ("New Valley", new[] { "Kharga", "Dakhla", "Farafra" }),
+                ("Suez", new[] { "Suez City", "Ain Sokhna" }),
+                ("Aswan", new[] { "Aswan City", "Kom Ombo", "Edfu", "Daraw" }),
+                ("Assiut", new[] { "Assiut City", "Dairut", "Manfalut", "Abnub" }),
+                ("Beni Suef", new[] { "Beni Suef City", "El Wasta", "Nasser", "Biba" }),
+                ("Port Said", new[] { "Port Fouad", "Al Manakh", "Al Zohour" }),
+                ("Damietta", new[] { "Damietta City", "New Damietta", "Faraskur", "Ras El Bar" }),
+                ("Sharqia", new[] { "Zagazig", "Belbeis", "Abu Kabir", "10th of Ramadan City" }),
+                ("South Sinai", new[] { "Sharm El Sheikh", "Dahab", "Nuweiba", "Taba", "Saint Catherine" }),
+                ("Kafr El Sheikh", new[] { "Kafr El Sheikh City", "Desouk", "Fuwwah", "Baltim" }),
+                ("Matrouh", new[] { "Marsa Matrouh", "Siwa", "El Alamein", "El Dabaa" }),
+                ("Luxor", new[] { "Luxor City", "Esna", "Armant" }),
+                ("Qena", new[] { "Qena City", "Nag Hammadi", "Qus", "Deshna" }),
+                ("North Sinai", new[] { "Arish", "Sheikh Zuweid", "Rafah", "Bir al-Abd" }),
+                ("Sohag", new[] { "Sohag City", "Akhmim", "Girga", "Tahta" }),
+            };
+
+            return Combine("Cairo", cairo)
+                .Concat(Combine("Giza", giza))
+                .Concat(Combine("Alexandria", alexandria))
+                .Concat(rest.SelectMany(g => Combine(g.City, g.Districts)))
+                .ToArray();
+        }
+
+        private static (string City, string District)[] SaudiArabiaDistricts()
+        {
+            var groups = new (string City, string[] Districts)[]
+            {
+                ("Riyadh", new[] { "Olaya", "Malaz", "Al Naseem", "Al Malqa", "Al Sulimaniyah", "Al Murabba", "Diriyah" }),
+                ("Jeddah", new[] { "Al Rawdah", "Al Salamah", "Al Hamra", "Al Zahra", "Al Naeem", "Al Balad", "Obhur" }),
+                ("Mecca", new[] { "Al Aziziyah", "Al Shoqiah", "Al Nassim", "Ajyad", "Al Awali" }),
+                ("Medina", new[] { "Al Aziziyah", "Quba", "Al Haram", "Al Ranuna", "Al Awali" }),
+                ("Dammam", new[] { "Al Faisaliyah", "Al Shati", "Al Rakah", "Al Adamah", "Al Manar" }),
+                ("Khobar", new[] { "Al Aqrabiyah", "Al Ulaya", "Al Thuqbah", "Al Yarmouk", "Corniche" }),
+            };
+            return groups.SelectMany(g => Combine(g.City, g.Districts)).ToArray();
+        }
+
+        private static (string City, string District)[] UAEDistricts()
+        {
+            var groups = new (string City, string[] Districts)[]
+            {
+                ("Dubai", new[] { "Deira", "Bur Dubai", "Jumeirah", "Downtown Dubai", "Dubai Marina", "Al Barsha", "Business Bay", "Al Qusais" }),
+                ("Abu Dhabi", new[] { "Al Khalidiyah", "Al Bateen", "Al Reem Island", "Al Zahiyah", "Mussafah", "Khalifa City", "Al Muroor" }),
+                ("Sharjah", new[] { "Al Majaz", "Al Qasimia", "Al Nahda", "Al Taawun", "Al Khan", "Muwaileh" }),
+            };
+            return groups.SelectMany(g => Combine(g.City, g.Districts)).ToArray();
+        }
+
+        private static IEnumerable<(string City, string District)> Combine(string city, string[] districts) =>
+            districts.Select(d => (city, d));
+
+        // Bank/BankBranch: same idempotency approach as Country/City/District (business key, not Id),
+        // but batched rather than per-row queried — existing Banks/BankBranches are loaded once up front
+        // into lookup structures and reconciled in memory, then written with a single AddRange +
+        // SaveChanges per method, since this seed is an order of magnitude larger (~500 branch candidates)
+        // than the per-row InitialAccount/InitialDistrict pattern comfortably handles as N+1 queries.
+        // No SWIFT/branch codes are seeded — none were supplied with confirmed values, and Code sits
+        // unused (null) rather than invented, so the fallback natural keys below are always what's used:
+        // Bank by (CountryId, Name), BankBranch by (BankId, CityId, DistrictId, Name).
+        public void InitialBank(OrgContext orgContext)
+        {
+            var countryIdByCode = orgContext.Countries.ToDictionary(e => e.Code!, e => e.Id);
+            var existingBanks = orgContext.Banks
+                .Where(e => e.CountryId != null)
+                .Select(e => new { e.CountryId, e.Name })
+                .AsEnumerable()
+                .Select(e => (e.CountryId!.Value, e.Name!))
+                .ToHashSet();
+
+            var toAdd = new List<Bank>();
+            void Collect(string countryCode, string[] names)
+            {
+                var countryId = countryIdByCode[countryCode];
+                foreach (var name in names)
+                    if (!existingBanks.Contains((countryId, name)))
+                        toAdd.Add(new Bank { CountryId = countryId, Name = name, Hide = false });
+            }
+
+            Collect("EG", EgyptBanks());
+            Collect("SA", SaudiArabiaBanks());
+            Collect("AE", UAEBanks());
+            Collect("KW", KuwaitBanks());
+            Collect("QA", QatarBanks());
+            Collect("BH", BahrainBanks());
+            Collect("OM", OmanBanks());
+            Collect("SD", SudanBanks());
+            Collect("LY", LibyaBanks());
+            Collect("TN", TunisiaBanks());
+            Collect("DZ", AlgeriaBanks());
+            Collect("MA", MoroccoBanks());
+            Collect("MR", MauritaniaBanks());
+
+            if (toAdd.Count > 0)
+            {
+                orgContext.Set<Bank>().AddRange(toAdd);
+                orgContext.SaveChanges();
+            }
+        }
+
+        private static string[] EgyptBanks() => new[]
+        {
+            // Government / major banks
+            "National Bank of Egypt", "Banque Misr", "Banque du Caire", "Agricultural Bank of Egypt",
+            // Private / commercial / foreign-subsidiary banks
+            "Commercial International Bank (CIB)", "QNB Egypt", "Arab African International Bank", "AlexBank",
+            "Credit Agricole Egypt", "HSBC Bank Egypt", "Emirates NBD Egypt", "Abu Dhabi Islamic Bank Egypt (ADIB)",
+            "Abu Dhabi Commercial Bank Egypt (ADCB)", "Mashreq Bank Egypt", "First Abu Dhabi Bank Egypt (FABMISR)",
+            "Arab International Bank", "Arab Bank Egypt", "Kuwait Finance House Egypt",
+            "Housing and Development Bank", "Suez Canal Bank", "Export Development Bank of Egypt",
+            "Egyptian Gulf Bank (EG Bank)", "Al Baraka Bank Egypt", "Faisal Islamic Bank of Egypt",
+            "MIDBANK", "saib", "Industrial Development Bank", "The United Bank",
+        };
+
+        private static string[] SaudiArabiaBanks() => new[]
+        {
+            "Saudi National Bank (SNB)", "Al Rajhi Bank", "Riyad Bank", "Alinma Bank", "Bank Albilad",
+            "Bank AlJazira", "Saudi Awwal Bank (SAB)", "Arab National Bank (ANB)", "Banque Saudi Fransi",
+            "Gulf International Bank Saudi Arabia",
+        };
+
+        private static string[] UAEBanks() => new[]
+        {
+            "First Abu Dhabi Bank (FAB)", "Emirates NBD", "Abu Dhabi Commercial Bank (ADCB)",
+            "Abu Dhabi Islamic Bank (ADIB)", "Mashreq", "Dubai Islamic Bank", "Emirates Islamic",
+            "Commercial Bank of Dubai", "RAKBANK", "Sharjah Islamic Bank", "National Bank of Fujairah",
+        };
+
+        private static string[] KuwaitBanks() => new[]
+        {
+            "National Bank of Kuwait", "Kuwait Finance House", "Gulf Bank", "Commercial Bank of Kuwait",
+            "Burgan Bank", "Boubyan Bank", "Warba Bank", "Kuwait International Bank", "Al Ahli Bank of Kuwait",
+        };
+
+        private static string[] QatarBanks() => new[]
+        {
+            "Qatar National Bank (QNB)", "Qatar Islamic Bank (QIB)", "Commercial Bank Qatar", "Doha Bank",
+            "Dukhan Bank", "Qatar International Islamic Bank", "Ahlibank Qatar", "Masraf Al Rayan",
+        };
+
+        private static string[] BahrainBanks() => new[]
+        {
+            "National Bank of Bahrain", "Bank of Bahrain and Kuwait", "Al Salam Bank", "Bahrain Islamic Bank",
+            "Ahli United Bank", "Gulf International Bank", "ila Bank",
+        };
+
+        private static string[] OmanBanks() => new[]
+        {
+            "Bank Muscat", "Bank Dhofar", "National Bank of Oman", "Sohar International", "Oman Arab Bank",
+            "Bank Nizwa", "Ahli Bank Oman",
+        };
+
+        private static string[] SudanBanks() => new[]
+        {
+            "Bank of Khartoum", "Omdurman National Bank", "Faisal Islamic Bank Sudan",
+            "Sudanese French Bank", "Blue Nile Mashreg Bank",
+        };
+
+        private static string[] LibyaBanks() => new[]
+        {
+            "Jumhouria Bank", "National Commercial Bank (Libya)", "Sahara Bank", "Wahda Bank",
+            "Bank of Commerce and Development",
+        };
+
+        private static string[] TunisiaBanks() => new[]
+        {
+            "Banque Nationale Agricole (BNA)", "Société Tunisienne de Banque (STB)", "Banque de l'Habitat (BH Bank)",
+            "Attijari Bank Tunisie", "Banque Internationale Arabe de Tunisie (BIAT)", "Amen Bank",
+            "Al Baraka Bank Tunisia",
+        };
+
+        private static string[] AlgeriaBanks() => new[]
+        {
+            "Banque Extérieure d'Algérie (BEA)", "Banque Nationale d'Algérie (BNA)",
+            "Crédit Populaire d'Algérie (CPA)", "Banque de Développement Local (BDL)",
+            "Société Générale Algérie", "BNP Paribas El Djazair",
+        };
+
+        private static string[] MoroccoBanks() => new[]
+        {
+            "Attijariwafa Bank", "Banque Populaire", "Bank of Africa", "CIH Bank", "Crédit du Maroc",
+            "Société Générale Maroc",
+        };
+
+        private static string[] MauritaniaBanks() => new[]
+        {
+            "Banque Nationale de Mauritanie (BNM)", "Générale de Banque de Mauritanie (GBM)", "Chinguitty Bank",
+        };
+
+        // Only Egypt/Saudi Arabia/UAE get branches — the only countries with District-level geography
+        // seeded (BankBranch.CityId/DistrictId are non-nullable FKs, so a branch literally cannot be
+        // created without a real district). Egypt's branch list mirrors the district-level detail asked
+        // for; Saudi/UAE get one representative "main branch" location per city instead, matching the
+        // shallower request for those countries. Every (bank, city, district) triple below resolves
+        // against rows InitialCity/InitialDistrict already created — anything that doesn't resolve is
+        // skipped rather than guessed at.
+        public void InitialBankBranch(OrgContext orgContext)
+        {
+            var countryIdByCode = orgContext.Countries.ToDictionary(e => e.Code!, e => e.Id);
+            var cityIdByCountryAndName = orgContext.Cities
+                .Where(e => e.CountryId != null)
+                .ToDictionary(e => (e.CountryId!.Value, e.Name!), e => e.Id);
+            var districtIdByCityAndName = orgContext.Districts
+                .Where(e => e.CityId != null)
+                .ToDictionary(e => (e.CityId!.Value, e.Name!), e => e.Id);
+            var bankIdByCountryAndName = orgContext.Banks
+                .Where(e => e.CountryId != null)
+                .ToDictionary(e => (e.CountryId!.Value, e.Name!), e => e.Id);
+            var existingBranches = orgContext.BankBranchs
+                .Select(e => new { e.BankId, e.CityId, e.DistrictId, e.Name })
+                .AsEnumerable()
+                .Select(e => (e.BankId, e.CityId, e.DistrictId, e.Name!))
+                .ToHashSet();
+
+            var toAdd = new List<BankBranch>();
+            void Collect(string countryCode, string[] bankNames, (string City, string District)[] locations)
+            {
+                if (!countryIdByCode.TryGetValue(countryCode, out var countryId)) return;
+                foreach (var bankName in bankNames)
+                {
+                    if (!bankIdByCountryAndName.TryGetValue((countryId, bankName), out var bankId)) continue;
+                    foreach (var loc in locations)
+                    {
+                        if (!cityIdByCountryAndName.TryGetValue((countryId, loc.City), out var cityId)) continue;
+                        if (!districtIdByCityAndName.TryGetValue((cityId, loc.District), out var districtId)) continue;
+
+                        var key = (bankId, cityId, districtId, loc.District);
+                        if (!existingBranches.Add(key)) continue; // already in DB, or a duplicate location in this run
+
+                        toAdd.Add(new BankBranch
+                        {
+                            BankId = bankId,
+                            CountryId = countryId,
+                            CityId = cityId,
+                            DistrictId = districtId,
+                            Name = loc.District,
+                            Hide = false,
+                        });
+                    }
+                }
+            }
+
+            Collect("EG", EgyptBranchBanks(), EgyptBranchLocations());
+            Collect("SA", SaudiArabiaBranchBanks(), SaudiArabiaBranchLocations());
+            Collect("AE", UAEBranchBanks(), UAEBranchLocations());
+
+            if (toAdd.Count > 0)
+            {
+                orgContext.Set<BankBranch>().AddRange(toAdd);
+                orgContext.SaveChanges();
+            }
+        }
+
+        // The 5 Egyptian banks with a genuinely nationwide branch network — confident enough to claim
+        // presence in every district below. The other 23 Egypt banks (foreign-subsidiary, specialised or
+        // smaller commercial banks) are seeded with no branches at all rather than guessing their footprint.
+        private static string[] EgyptBranchBanks() => new[]
+        {
+            "National Bank of Egypt", "Banque Misr", "Banque du Caire",
+            "Commercial International Bank (CIB)", "QNB Egypt",
+        };
+
+        private static (string City, string District)[] EgyptBranchLocations()
+        {
+            var cairo = new[]
+            {
+                "Downtown Cairo", "Nasr City", "Heliopolis", "New Cairo", "Fifth Settlement", "Maadi",
+                "Zamalek", "Shubra", "Mokattam", "Helwan", "Badr City", "El Shorouk",
+            };
+            var giza = new[] { "Dokki", "Mohandessin", "Faisal", "Haram", "Sheikh Zayed", "6th of October" };
+            // "Downtown Alexandria" isn't a separate seeded district — Mansheya is Alexandria's actual
+            // historic downtown/city-centre district, so it stands in for it rather than inventing a row.
+            var alexandria = new[] { "Smouha", "Sidi Gaber", "Roushdy", "Miami", "Montaza", "Mansheya", "Borg El Arab" };
+            var others = new (string City, string District)[]
+            {
+                ("Dakahlia", "Mansoura"), ("Gharbia", "Tanta"), ("Sharqia", "Zagazig"),
+                ("Ismailia", "Ismailia City"), ("Suez", "Suez City"), ("Port Said", "Al Manakh"),
+                ("Damietta", "Damietta City"), ("Assiut", "Assiut City"), ("Sohag", "Sohag City"),
+                ("Minya", "Minya City"), ("Beni Suef", "Beni Suef City"), ("Fayoum", "Fayoum City"),
+                ("Luxor", "Luxor City"), ("Aswan", "Aswan City"), ("Red Sea", "Hurghada"),
+                ("South Sinai", "Sharm El Sheikh"),
+            };
+
+            return Combine("Cairo", cairo)
+                .Concat(Combine("Giza", giza))
+                .Concat(Combine("Alexandria", alexandria))
+                .Concat(others)
+                .ToArray();
+        }
+
+        // Saudi/UAE: one confirmed, well-known central district per city as the "main branch" location —
+        // matching the shallower "أهم الفروع" ask for these countries rather than Egypt's district-by-district
+        // detail. Gulf International Bank Saudi Arabia is excluded: it's a wholesale/corporate bank without
+        // a retail branch network to place with any confidence.
+        private static string[] SaudiArabiaBranchBanks() => new[]
+        {
+            "Saudi National Bank (SNB)", "Al Rajhi Bank", "Riyad Bank", "Alinma Bank", "Bank Albilad",
+            "Bank AlJazira", "Saudi Awwal Bank (SAB)", "Arab National Bank (ANB)", "Banque Saudi Fransi",
+        };
+
+        // Jubail, Taif, Abha and Tabuk (also asked for) have no District-level data seeded, so no branch
+        // rows can be created there — see the Summary for this gap.
+        private static (string City, string District)[] SaudiArabiaBranchLocations() => new[]
+        {
+            ("Riyadh", "Olaya"), ("Jeddah", "Al Rawdah"), ("Mecca", "Ajyad"),
+            ("Medina", "Al Haram"), ("Dammam", "Al Faisaliyah"), ("Khobar", "Corniche"),
+        };
+
+        private static string[] UAEBranchBanks() => new[]
+        {
+            "First Abu Dhabi Bank (FAB)", "Emirates NBD", "Abu Dhabi Commercial Bank (ADCB)",
+            "Abu Dhabi Islamic Bank (ADIB)", "Mashreq", "Dubai Islamic Bank", "Emirates Islamic",
+            "Commercial Bank of Dubai", "RAKBANK", "Sharjah Islamic Bank", "National Bank of Fujairah",
+        };
+
+        // Ajman, Al Ain and Ras Al Khaimah (also asked for) have no District-level data seeded either.
+        private static (string City, string District)[] UAEBranchLocations() => new[]
+        {
+            ("Dubai", "Deira"), ("Abu Dhabi", "Al Khalidiyah"), ("Sharjah", "Al Majaz"),
+        };
     }
 }

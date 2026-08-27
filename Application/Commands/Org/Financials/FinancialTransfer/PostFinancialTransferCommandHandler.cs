@@ -149,10 +149,12 @@ public sealed class PostFinancialTransferCommandHandler(
                 dto.BranchId, dto.ShiftId
             };
             var outgoing = CreateMovement(transfer, source.Id, destination.Id,
-                FinancialTransactionDirection.Out, journal.Id, common.CurrencyId, common.ExchangeRate,
+                FinancialTransactionDirection.Out, Domain.Enums.FinancialTransactionType.TransferOut, journal.Id,
+                common.CurrencyId, common.ExchangeRate,
                 common.Description, common.CreateUserId, common.BranchId, common.ShiftId, now);
             var incoming = CreateMovement(transfer, destination.Id, source.Id,
-                FinancialTransactionDirection.In, journal.Id, common.CurrencyId, common.ExchangeRate,
+                FinancialTransactionDirection.In, Domain.Enums.FinancialTransactionType.TransferIn, journal.Id,
+                common.CurrencyId, common.ExchangeRate,
                 common.Description, common.CreateUserId, common.BranchId, common.ShiftId, now);
             await transactionRepository.CreateAsync([outgoing, incoming]);
             await unitOfWork.SaveChangeAsync(cancellationToken);
@@ -168,12 +170,14 @@ public sealed class PostFinancialTransferCommandHandler(
 
     private static Financial CreateMovement(
         Domain.Entities.FinancialTransfer transfer, long accountId, long contraId,
-        FinancialTransactionDirection direction, long journalId, long currencyId,
+        FinancialTransactionDirection direction, Domain.Enums.FinancialTransactionType transactionType,
+        long journalId, long currencyId,
         decimal rate, string? description, long userId, long? branchId, long? shiftId, DateTime now) => new()
     {
         FinancialAccountId = accountId,
         ContraFinancialAccountId = contraId,
         FinancialTypeId = 4,
+        FinancialTransactionType = transactionType,
         FinancialTransferId = transfer.Id,
         Direction = direction,
         ReferenceType = FinancialReferenceType.Transfer,

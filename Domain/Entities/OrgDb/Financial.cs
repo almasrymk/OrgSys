@@ -46,8 +46,12 @@
         public virtual FinancialType? FinancialType { get; set; }
 
         public FinancialTransactionDirection? Direction { get; set; }
+        public FinancialTransactionType? FinancialTransactionType { get; set; }
         public FinancialReferenceType ReferenceType { get; set; } = FinancialReferenceType.Other;
         public long? ReferenceId { get; set; }
+
+        [StringLength(100)]
+        public string? ReferenceNumber { get; set; }
 
         [ForeignKey(nameof(ContraFinancialAccount))]
         public long? ContraFinancialAccountId { get; set; }

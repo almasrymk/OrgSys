@@ -4,6 +4,7 @@ using Infrastructure.Persistence.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(OrgContext))]
-    partial class OrgContextModelSnapshot : ModelSnapshot
+    [Migration("20260825170342_RenameAccountBankToBankAccount")]
+    partial class RenameAccountBankToBankAccount
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -135,9 +138,6 @@ namespace Infrastructure.Migrations
                     b.Property<long>("CodeNumber")
                         .HasColumnType("bigint");
 
-                    b.Property<long?>("CountryId")
-                        .HasColumnType("bigint");
-
                     b.Property<bool>("Hide")
                         .HasColumnType("bit");
 
@@ -161,8 +161,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CountryId");
 
                     b.ToTable("Bank");
                 });
@@ -3205,15 +3203,6 @@ namespace Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("AccountType");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Bank", b =>
-                {
-                    b.HasOne("Domain.Entities.Country", "Country")
-                        .WithMany()
-                        .HasForeignKey("CountryId");
-
-                    b.Navigation("Country");
                 });
 
             modelBuilder.Entity("Domain.Entities.BankAccount", b =>

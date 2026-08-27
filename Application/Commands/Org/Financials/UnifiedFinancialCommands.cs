@@ -1,6 +1,7 @@
 namespace Application.Commands.Org.Financials.Unified;
 
 using Application.Abstraction.Command;
+using Application.Common.Commands;
 using Application.DTOs;
 using Application.Interfaces.CQRS;
 using Domain.Abstraction;
@@ -8,16 +9,20 @@ using Domain.Entities;
 using Domain.Enums;
 using Domain.Shared;
 using MediatR;
+using System.Linq.Expressions;
 using System.Net;
 
 public sealed record SaveFinancialAccountCommand(FinancialAccountDto Account) : ICommand;
 public sealed record GetFinancialAccountsQuery(FinancialAccountType? AccountType, bool IncludeInactive = false) : IRequest<ResultCollection<FinancialAccountDto>>;
+public sealed record SearchFinancialAccountsQuery(string? KeySearch, FinancialAccountType? AccountType, int Page, int PageSize) : IRequest<ResultPagination<FinancialAccountDto>>;
 public sealed record GetFinancialAccountBalanceQuery(long FinancialAccountId, DateTime? AsOfDate = null) : IRequest<Result<decimal>>;
+public sealed record DeleteFinancialAccountCommand(long Id) : ICommand, IDeleteCommand<Result>;
+public sealed record DeleteListFinancialAccountCommand(List<long> Ids) : ICommand, IDeleteListCommand<Result>;
 public sealed record PostFinancialTransactionCommand(PostFinancialTransactionDto Transaction) : ICommand, ICreateCommand<Result>;
 
 public sealed class SaveFinancialAccountCommandHandler(
     IRepository<FinancialAccount> repository, IRepository<Safe> safeRepository,
-    IRepository<AccountBank> bankRepository, IUnitOfWork unitOfWork,
+    IRepository<BankAccount> bankRepository, IUnitOfWork unitOfWork,
     Application.Common.Services.IReceivableAccountValidator accountValidator) : ICommandHandler<SaveFinancialAccountCommand>
 {
     public async Task<Result> Handle(SaveFinancialAccountCommand request, CancellationToken cancellationToken)
@@ -38,6 +43,7 @@ public sealed class SaveFinancialAccountCommandHandler(
             return new Result(HttpStatusCode.NotFound, [new Error("Financial account not found.")]);
         entity.Name = dto.Name.Trim();
         entity.Code = dto.Code;
+        if (dto.Id == 0) entity.CodeNumber = dto.CodeNumber;
         entity.FinancialAccountType = dto.FinancialAccountType;
         entity.AccountId = dto.AccountId;
         entity.CurrencyId = dto.CurrencyId;
@@ -57,7 +63,7 @@ public sealed class SaveFinancialAccountCommandHandler(
         else
         {
             var detail = await bankRepository.GetByFilterAsync(e => e.FinancialAccountId == entity.Id, string.Empty)
-                ?? new AccountBank { FinancialAccountId = entity.Id };
+                ?? new BankAccount { FinancialAccountId = entity.Id };
             detail.Name = entity.Name;
             detail.AccountId = entity.AccountId;
             detail.BankId = dto.BankId ?? 0;
@@ -65,7 +71,7 @@ public sealed class SaveFinancialAccountCommandHandler(
             detail.AccountNumber = dto.AccountNumber;
             detail.IBAN = dto.IBAN;
             detail.SwiftCode = dto.SwiftCode;
-            detail.BranchName = dto.BranchName;
+            detail.BranchId = dto.BranchId;
             if (detail.Id == 0) await bankRepository.CreateAsync(detail); else await bankRepository.UpdateAsync(detail);
         }
         await unitOfWork.SaveChangeAsync(cancellationToken);
@@ -86,12 +92,74 @@ public sealed class GetFinancialAccountsQueryHandler(IRepository<FinancialAccoun
             Id = e.Id, Code = e.Code, Name = e.Name, FinancialAccountType = e.FinancialAccountType,
             AccountId = e.AccountId, AccountName = e.Account?.Name, AccountCode = e.Account?.Code,
             CurrencyId = e.CurrencyId, CurrencyName = e.Currency?.Name, IsActive = e.IsActive,
-            BranchId = e.CashBox?.BranchId, KeeperUserId = e.CashBox?.KeeperUserId,
+            BranchId = e.CashBox?.BranchId ?? e.BankAccount?.BranchId, KeeperUserId = e.CashBox?.KeeperUserId,
             BankId = e.BankAccount?.BankId, BankBranchId = e.BankAccount?.BankBranchd,
             AccountNumber = e.BankAccount?.AccountNumber, IBAN = e.BankAccount?.IBAN,
-            SwiftCode = e.BankAccount?.SwiftCode, BranchName = e.BankAccount?.BranchName
+            SwiftCode = e.BankAccount?.SwiftCode
         }).ToList();
         return new ResultCollection<FinancialAccountDto>(HttpStatusCode.OK, result, null);
+    }
+}
+
+public sealed class DeleteFinancialAccountCommandHandler(
+    IUnitOfWork unitOfWork, IRepository<FinancialAccount> repository, IServiceProvider provider)
+    : DeleteCommandHandler<DeleteFinancialAccountCommand, FinancialAccount>(unitOfWork, repository, provider)
+{
+    public override Expression<Func<FinancialAccount, bool>> CreateFilter(DeleteFinancialAccountCommand request) =>
+        e => e.Id == request.Id && e.Status != Status.Deleted && e.Hide != true;
+
+    public override async Task<bool> RemoveDetails(DeleteFinancialAccountCommand request)
+    {
+        await RemoveDetails<Safe>(e => e.FinancialAccountId == request.Id);
+        await RemoveDetails<BankAccount>(e => e.FinancialAccountId == request.Id);
+        return true;
+    }
+}
+
+public sealed class DeleteListFinancialAccountCommandHandler(
+    IUnitOfWork unitOfWork, IRepository<FinancialAccount> repository, IServiceProvider provider)
+    : DeleteCommandHandler<DeleteListFinancialAccountCommand, FinancialAccount>(unitOfWork, repository, provider)
+{
+    public override Expression<Func<FinancialAccount, bool>> CreateFilter(DeleteListFinancialAccountCommand request) =>
+        e => request.Ids.Contains(e.Id) && e.Status != Status.Deleted && e.Hide != true;
+
+    public override async Task<bool> RemoveDetails(DeleteListFinancialAccountCommand request)
+    {
+        await RemoveDetails<Safe>(e => e.FinancialAccountId != null && request.Ids.Contains(e.FinancialAccountId.Value));
+        await RemoveDetails<BankAccount>(e => e.FinancialAccountId != null && request.Ids.Contains(e.FinancialAccountId.Value));
+        return true;
+    }
+}
+
+public sealed class SearchFinancialAccountsQueryHandler(IRepository<FinancialAccount> repository)
+    : IRequestHandler<SearchFinancialAccountsQuery, ResultPagination<FinancialAccountDto>>
+{
+    public async Task<ResultPagination<FinancialAccountDto>> Handle(SearchFinancialAccountsQuery request, CancellationToken cancellationToken)
+    {
+        var keySearch = request.KeySearch ?? string.Empty;
+        var res = await repository.GetPaginationByFilterAsync(
+            e => (!request.AccountType.HasValue || e.FinancialAccountType == request.AccountType.Value)
+                && (string.IsNullOrEmpty(keySearch)
+                    || (e.Code != null && e.Code.Contains(keySearch))
+                    || e.Name.Contains(keySearch)),
+            q => q.OrderByDescending(e => e.Id),
+            "CashBox,BankAccount,Account,Currency",
+            request.Page, request.PageSize);
+
+        if (res?.Items is null)
+            return new ResultPagination<FinancialAccountDto>(HttpStatusCode.InternalServerError, [], 0, 0, 0, [new Error("Error")]);
+
+        var result = res.Items.Select(e => new FinancialAccountDto
+        {
+            Id = e.Id, Code = e.Code, Name = e.Name, FinancialAccountType = e.FinancialAccountType,
+            AccountId = e.AccountId, AccountName = e.Account?.Name, AccountCode = e.Account?.Code,
+            CurrencyId = e.CurrencyId, CurrencyName = e.Currency?.Name, IsActive = e.IsActive,
+            BranchId = e.CashBox?.BranchId ?? e.BankAccount?.BranchId, KeeperUserId = e.CashBox?.KeeperUserId,
+            BankId = e.BankAccount?.BankId, BankBranchId = e.BankAccount?.BankBranchd,
+            AccountNumber = e.BankAccount?.AccountNumber, IBAN = e.BankAccount?.IBAN,
+            SwiftCode = e.BankAccount?.SwiftCode
+        }).ToList();
+        return new ResultPagination<FinancialAccountDto>(HttpStatusCode.OK, result, res.Page, res.PageSize, res.TotalPages, null);
     }
 }
 
@@ -127,9 +195,11 @@ public sealed class PostFinancialTransactionCommandHandler(
             {
                 FinancialAccountId = account.Id,
                 FinancialTypeId = type.Id,
+                FinancialTransactionType = dto.FinancialTransactionType,
                 Direction = dto.Direction,
                 ReferenceType = dto.ReferenceType,
                 ReferenceId = dto.ReferenceId,
+                ReferenceNumber = dto.ReferenceNumber,
                 DealerId = dto.DealerId,
                 Amount = dto.Amount,
                 AmountByDefaultCurrency = dto.Amount * dto.ExchangeRate,

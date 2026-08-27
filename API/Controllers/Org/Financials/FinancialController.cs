@@ -1,7 +1,6 @@
 ﻿using Application.Commands.Org.Financials.Financial.Commands;
 using Application.Commands.Org.Financials.Financial.Queries;
 using Application.Commands.Org.Financials.Receivable.Commands;
-using Application.Commands.Org.Financials.Receivable.Queries;
 using Application.Commands.Org.Financials.Unified;
 using Domain.Shared;
 using Application.DTOs;
@@ -39,6 +38,29 @@ namespace API.Controllers.Org.Financials
             return Sender.Send(new GetFinancialAccountsQuery(accountType, includeInactive), cancellationToken);
         }
 
+        [HttpGet("Accounts/Search")]
+        public Task<ResultPagination<FinancialAccountDto>> SearchAccounts(
+            string? KeySearch,
+            FinancialAccountType? AccountType,
+            int Page,
+            int PageSize,
+            CancellationToken cancellationToken)
+        {
+            return Sender.Send(new SearchFinancialAccountsQuery(KeySearch, AccountType, Page, PageSize), cancellationToken);
+        }
+
+        [HttpDelete("Accounts/Delete")]
+        public Task<Result> DeleteAccount(long Id, CancellationToken cancellationToken)
+        {
+            return Sender.Send(new DeleteFinancialAccountCommand(Id), cancellationToken);
+        }
+
+        [HttpDelete("Accounts/DeleteList")]
+        public Task<Result> DeleteAccountList([FromQuery] List<long> Ids, CancellationToken cancellationToken)
+        {
+            return Sender.Send(new DeleteListFinancialAccountCommand(Ids), cancellationToken);
+        }
+
         [HttpGet("Accounts/{financialAccountId:long}/Balance")]
         public Task<Result<decimal>> Balance(
             long financialAccountId,
@@ -62,26 +84,6 @@ namespace API.Controllers.Org.Financials
             CancellationToken cancellationToken)
         {
             return Sender.Send(new PostFinancialTransactionCommand(transaction), cancellationToken);
-        }
-
-        [HttpPost("Receivable/Receipt")]
-        public Task<Result> PostCustomerReceipt(
-            [FromBody] PostCustomerReceiptDto receipt,
-            CancellationToken cancellationToken)
-        {
-            return Sender.Send(new PostCustomerReceiptCommand(receipt), cancellationToken);
-        }
-
-        [HttpPut("Receivable/Receipt/Reverse")]
-        public Task<Result> ReverseCustomerReceipt(long Id, CancellationToken cancellationToken)
-        {
-            return Sender.Send(new ReverseCustomerReceiptCommand(Id), cancellationToken);
-        }
-
-        [HttpGet("Receivable/Receipts")]
-        public Task<ResultCollection<FinancialDto>> CustomerReceipts(long dealerId, CancellationToken cancellationToken)
-        {
-            return Sender.Send(new GetCustomerReceiptsQuery(dealerId), cancellationToken);
         }
 
         [HttpPost("Receivable/OpeningBalance")]

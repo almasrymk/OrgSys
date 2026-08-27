@@ -107,9 +107,6 @@
     <Content Remove="Areas\Setting\Views\Role\Index.cshtml" />
     <Content Remove="Areas\Setting\Views\Role\List.cshtml" />
     <Content Remove="Areas\Setting\Views\Role\Save.cshtml" />
-    <Content Remove="Areas\Setting\Views\Safe\Index.cshtml" />
-    <Content Remove="Areas\Setting\Views\Safe\List.cshtml" />
-    <Content Remove="Areas\Setting\Views\Safe\Save.cshtml" />
     <Content Remove="Areas\Setting\Views\Shift\Index.cshtml" />
     <Content Remove="Areas\Setting\Views\Shift\List.cshtml" />
     <Content Remove="Areas\Setting\Views\Shift\Save.cshtml" />
@@ -332,9 +329,6 @@
     <EmbeddedResource Include="Areas\Setting\Views\Role\Index.cshtml" />
     <EmbeddedResource Include="Areas\Setting\Views\Role\List.cshtml" />
     <EmbeddedResource Include="Areas\Setting\Views\Role\Save.cshtml" />
-    <EmbeddedResource Include="Areas\Setting\Views\Safe\Index.cshtml" />
-    <EmbeddedResource Include="Areas\Setting\Views\Safe\List.cshtml" />
-    <EmbeddedResource Include="Areas\Setting\Views\Safe\Save.cshtml" />
     <EmbeddedResource Include="Areas\Setting\Views\Shift\Index.cshtml" />
     <EmbeddedResource Include="Areas\Setting\Views\Shift\List.cshtml" />
     <EmbeddedResource Include="Areas\Setting\Views\Shift\Save.cshtml" />

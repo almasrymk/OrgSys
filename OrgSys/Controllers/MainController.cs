@@ -143,7 +143,7 @@
             response.EnsureSuccessStatusCode();
             var data = await response.Content.ReadAsStringAsync();
             var res = JsonConvert.DeserializeObject<Result<TDto>>(data);
-            if (res != null)
+            if (res != null && res.Response != null)
                 ob = res.Response;
 
             ob.ParentId = ParentId;
@@ -176,7 +176,15 @@
                 var data = await response.Content.ReadAsStringAsync();
                 res = JsonConvert.DeserializeObject<Domain.Shared.Result>(data);
 
-                if (response.IsSuccessStatusCode)
+                // The API's Create/Update actions return a plain Result object rather than an
+                // IActionResult, so ASP.NET Core always wraps it as a transport-level HTTP 200 —
+                // response.IsSuccessStatusCode is true even when the handler rejected the save
+                // (e.g. business validation failure) via res.StatusCode. Check the embedded
+                // business status code instead, or a failed save is reported to the user as "saved".
+                bool succeeded = response.IsSuccessStatusCode && res != null
+                    && (int)res.StatusCode is >= 200 and < 300;
+
+                if (succeeded)
                 {
                     if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
                         return Ok(new { status = "success", id = ob.Id, url = "/" + AreaName + "/" + ControllerName + "?ParentId=" + ob.ParentId + "&TypeId=" + ob.TypeId + "&status=" + ResultStatus.success + "&MsgError=Success" });

@@ -18,10 +18,11 @@
             Page = request.Page;
             PageSize = request.PageSize;
 
-            return e => 
+            return e =>
             (string.IsNullOrEmpty(request.KeySearch) ||
              (e.Code != null && e.Code.Contains(request.KeySearch)) ||
              (e.Notes != null && e.Notes.Contains(request.KeySearch)) ||
+             (e.ReferenceNumber != null && e.ReferenceNumber.Contains(request.KeySearch)) ||
              (e.FinancialAccount != null && e.FinancialAccount.Name.Contains(request.KeySearch))) &&
             (request.ParentId ==0 || e.ParentId == request.ParentId) &&
             (request.TypeId == 0 || e.FinancialTypeId == request.TypeId) &&

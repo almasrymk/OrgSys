@@ -120,6 +120,12 @@
   <data name="Account" xml:space="preserve">
     <value>الحساب</value>
   </data>
+  <data name="AccountNumber" xml:space="preserve">
+    <value>رقم الحساب</value>
+  </data>
+  <data name="Active" xml:space="preserve">
+    <value>نشط</value>
+  </data>
   <data name="ActualBalance" xml:space="preserve">
     <value>الرصيد الفعلي</value>
   </data>
@@ -185,6 +191,12 @@
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>الغاء</value>
+  </data>
+  <data name="CashBox" xml:space="preserve">
+    <value>خزينة</value>
+  </data>
+  <data name="CashBoxes" xml:space="preserve">
+    <value>الخزائن</value>
   </data>
   <data name="Check" xml:space="preserve">
     <value>اختار</value>
@@ -257,6 +269,9 @@
   </data>
   <data name="Customers" xml:space="preserve">
     <value>العملاء</value>
+  </data>
+  <data name="CustomerReceipts" xml:space="preserve">
+    <value>مقبوضات العملاء</value>
   </data>
   <data name="CustomerSheetReport" xml:space="preserve">
     <value>كشف حساب عميل</value>
@@ -378,11 +393,17 @@
   <data name="Financial" xml:space="preserve">
     <value>الماليات</value>
   </data>
+  <data name="FinancialAccount" xml:space="preserve">
+    <value>الحساب المالي</value>
+  </data>
   <data name="FinancialNotices" xml:space="preserve">
     <value>الاخطارات المالية</value>
   </data>
   <data name="Financials" xml:space="preserve">
     <value>المالية</value>
+  </data>
+  <data name="FinancialTransfers" xml:space="preserve">
+    <value>التحويلات المالية</value>
   </data>
   <data name="FiscalYear" xml:space="preserve">
     <value>السنة المالية</value>
@@ -426,6 +447,9 @@
   <data name="IAgreeToThe" xml:space="preserve">
     <value>أنا أوافق على</value>
   </data>
+  <data name="IBAN" xml:space="preserve">
+    <value>رقم الآيبان</value>
+  </data>
   <data name="Image" xml:space="preserve">
     <value>صورة</value>
   </data>
@@ -467,6 +491,12 @@
   </data>
   <data name="Issue" xml:space="preserve">
     <value>الصرف</value>
+  </data>
+  <data name="Journal" xml:space="preserve">
+    <value>قيد اليومية</value>
+  </data>
+  <data name="KeeperUser" xml:space="preserve">
+    <value>أمين الخزينة</value>
   </data>
   <data name="KeepMeLoggedIn" xml:space="preserve">
     <value>أبق تسجيل دخولي</value>
@@ -819,6 +849,9 @@
   <data name="Suppliers" xml:space="preserve">
     <value>الموردين</value>
   </data>
+  <data name="SupplierPayments" xml:space="preserve">
+    <value>مدفوعات الموردين</value>
+  </data>
   <data name="SuppliersBalances" xml:space="preserve">
     <value>ارصدة الموردين</value>
   </data>
@@ -833,6 +866,9 @@
   </data>
   <data name="Surveys" xml:space="preserve">
     <value>الدراسات الاستقصائية</value>
+  </data>
+  <data name="SwiftCode" xml:space="preserve">
+    <value>رمز السويفت</value>
   </data>
   <data name="Table" xml:space="preserve">
     <value>طاولة</value>
@@ -992,6 +1028,9 @@
   </data>
   <data name="Bank" xml:space="preserve">
     <value>بنك</value>
+  </data>
+  <data name="BankAccounts" xml:space="preserve">
+    <value>الحسابات البنكية</value>
   </data>
   <data name="BankBranch" xml:space="preserve">
     <value>فرع بنك</value>

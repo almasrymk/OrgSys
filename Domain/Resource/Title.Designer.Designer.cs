@@ -68,7 +68,25 @@ namespace Domain.Resource {
                 return ResourceManager.GetString("Account", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Account Number.
+        /// </summary>
+        public static string AccountNumber {
+            get {
+                return ResourceManager.GetString("AccountNumber", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Active.
+        /// </summary>
+        public static string Active {
+            get {
+                return ResourceManager.GetString("Active", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Account Bank.
         /// </summary>
@@ -257,7 +275,16 @@ namespace Domain.Resource {
                 return ResourceManager.GetString("Bank", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Bank Accounts.
+        /// </summary>
+        public static string BankAccounts {
+            get {
+                return ResourceManager.GetString("BankAccounts", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Bank Branch.
         /// </summary>
@@ -356,7 +383,25 @@ namespace Domain.Resource {
                 return ResourceManager.GetString("Cancel", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Cash Box.
+        /// </summary>
+        public static string CashBox {
+            get {
+                return ResourceManager.GetString("CashBox", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Cash Boxes.
+        /// </summary>
+        public static string CashBoxes {
+            get {
+                return ResourceManager.GetString("CashBoxes", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Check.
         /// </summary>
@@ -635,7 +680,16 @@ namespace Domain.Resource {
                 return ResourceManager.GetString("Customers", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Customer Receipts.
+        /// </summary>
+        public static string CustomerReceipts {
+            get {
+                return ResourceManager.GetString("CustomerReceipts", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Customer Sheet Report.
         /// </summary>
@@ -1022,7 +1076,16 @@ namespace Domain.Resource {
                 return ResourceManager.GetString("Financial", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Financial Account.
+        /// </summary>
+        public static string FinancialAccount {
+            get {
+                return ResourceManager.GetString("FinancialAccount", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Financial Notices.
         /// </summary>
@@ -1038,6 +1101,15 @@ namespace Domain.Resource {
         public static string Financials {
             get {
                 return ResourceManager.GetString("Financials", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Financial Transfers.
+        /// </summary>
+        public static string FinancialTransfers {
+            get {
+                return ResourceManager.GetString("FinancialTransfers", resourceCulture);
             }
         }
         
@@ -1175,7 +1247,16 @@ namespace Domain.Resource {
                 return ResourceManager.GetString("IAgreeToThe", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to IBAN.
+        /// </summary>
+        public static string IBAN {
+            get {
+                return ResourceManager.GetString("IBAN", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Image.
         /// </summary>
@@ -1301,7 +1382,25 @@ namespace Domain.Resource {
                 return ResourceManager.GetString("Issue", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Journal.
+        /// </summary>
+        public static string Journal {
+            get {
+                return ResourceManager.GetString("Journal", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Keeper User.
+        /// </summary>
+        public static string KeeperUser {
+            get {
+                return ResourceManager.GetString("KeeperUser", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Keep me logged in.
         /// </summary>
@@ -2516,6 +2615,15 @@ namespace Domain.Resource {
                 return ResourceManager.GetString("Suppliers", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Supplier Payments.
+        /// </summary>
+        public static string SupplierPayments {
+            get {
+                return ResourceManager.GetString("SupplierPayments", resourceCulture);
+            }
+        }
         
         /// <summary>
         ///   Looks up a localized string similar to Suppliers balances.
@@ -2568,6 +2676,15 @@ namespace Domain.Resource {
         public static string Surveys {
             get {
                 return ResourceManager.GetString("Surveys", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to SWIFT Code.
+        /// </summary>
+        public static string SwiftCode {
+            get {
+                return ResourceManager.GetString("SwiftCode", resourceCulture);
             }
         }
         
