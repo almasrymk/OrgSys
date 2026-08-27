@@ -141,7 +141,9 @@
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label>@Domain.Resource.Title_Designer.Branch</label>
-                                        @Html.TextBoxFor(model => model.BranchName, new { @class = "form-control" })
+                                        <select asp-for="BranchId" asp-items="@ViewBag.BranchList" class="form-control">
+                                            <option value="">@Domain.Resource.Title_Designer.Select...</option>
+                                        </select>
                                     </div>
                                 </div>
                             }

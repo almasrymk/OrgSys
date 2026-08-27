@@ -40,7 +40,9 @@
         [StringLength(11)]
         public string? SwiftCode { get; set; }
 
-        [StringLength(100)]
-        public string? BranchName { get; set; }
+        [ForeignKey(nameof(Branch))]
+        public virtual long? BranchId { get; set; }
+
+        public virtual Branch? Branch { get; set; }
     }
 }

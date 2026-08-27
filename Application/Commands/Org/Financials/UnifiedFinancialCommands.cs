@@ -71,7 +71,7 @@ public sealed class SaveFinancialAccountCommandHandler(
             detail.AccountNumber = dto.AccountNumber;
             detail.IBAN = dto.IBAN;
             detail.SwiftCode = dto.SwiftCode;
-            detail.BranchName = dto.BranchName;
+            detail.BranchId = dto.BranchId;
             if (detail.Id == 0) await bankRepository.CreateAsync(detail); else await bankRepository.UpdateAsync(detail);
         }
         await unitOfWork.SaveChangeAsync(cancellationToken);
@@ -92,10 +92,10 @@ public sealed class GetFinancialAccountsQueryHandler(IRepository<FinancialAccoun
             Id = e.Id, Code = e.Code, Name = e.Name, FinancialAccountType = e.FinancialAccountType,
             AccountId = e.AccountId, AccountName = e.Account?.Name, AccountCode = e.Account?.Code,
             CurrencyId = e.CurrencyId, CurrencyName = e.Currency?.Name, IsActive = e.IsActive,
-            BranchId = e.CashBox?.BranchId, KeeperUserId = e.CashBox?.KeeperUserId,
+            BranchId = e.CashBox?.BranchId ?? e.BankAccount?.BranchId, KeeperUserId = e.CashBox?.KeeperUserId,
             BankId = e.BankAccount?.BankId, BankBranchId = e.BankAccount?.BankBranchd,
             AccountNumber = e.BankAccount?.AccountNumber, IBAN = e.BankAccount?.IBAN,
-            SwiftCode = e.BankAccount?.SwiftCode, BranchName = e.BankAccount?.BranchName
+            SwiftCode = e.BankAccount?.SwiftCode
         }).ToList();
         return new ResultCollection<FinancialAccountDto>(HttpStatusCode.OK, result, null);
     }
@@ -154,10 +154,10 @@ public sealed class SearchFinancialAccountsQueryHandler(IRepository<FinancialAcc
             Id = e.Id, Code = e.Code, Name = e.Name, FinancialAccountType = e.FinancialAccountType,
             AccountId = e.AccountId, AccountName = e.Account?.Name, AccountCode = e.Account?.Code,
             CurrencyId = e.CurrencyId, CurrencyName = e.Currency?.Name, IsActive = e.IsActive,
-            BranchId = e.CashBox?.BranchId, KeeperUserId = e.CashBox?.KeeperUserId,
+            BranchId = e.CashBox?.BranchId ?? e.BankAccount?.BranchId, KeeperUserId = e.CashBox?.KeeperUserId,
             BankId = e.BankAccount?.BankId, BankBranchId = e.BankAccount?.BankBranchd,
             AccountNumber = e.BankAccount?.AccountNumber, IBAN = e.BankAccount?.IBAN,
-            SwiftCode = e.BankAccount?.SwiftCode, BranchName = e.BankAccount?.BranchName
+            SwiftCode = e.BankAccount?.SwiftCode
         }).ToList();
         return new ResultPagination<FinancialAccountDto>(HttpStatusCode.OK, result, res.Page, res.PageSize, res.TotalPages, null);
     }

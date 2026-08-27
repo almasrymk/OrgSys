@@ -21,7 +21,6 @@ public class FinancialAccountDto : Domain.Entities.BaseModel
     public string? AccountNumber { get; set; }
     public string? IBAN { get; set; }
     public string? SwiftCode { get; set; }
-    public string? BranchName { get; set; }
 }
 
 public sealed class PostFinancialTransactionDto

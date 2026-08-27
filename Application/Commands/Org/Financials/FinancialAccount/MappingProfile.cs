@@ -12,7 +12,7 @@ public partial class MappingProfile : Profile
             .ForMember(dest => dest.AccountName, opt => opt.MapFrom(src => src.Account != null ? src.Account.Name : null))
             .ForMember(dest => dest.AccountCode, opt => opt.MapFrom(src => src.Account != null ? src.Account.Code : null))
             .ForMember(dest => dest.CurrencyName, opt => opt.MapFrom(src => src.Currency != null ? src.Currency.Name : null))
-            .ForMember(dest => dest.BranchId, opt => opt.MapFrom(src => src.CashBox != null ? src.CashBox.BranchId : null))
+            .ForMember(dest => dest.BranchId, opt => opt.MapFrom(src => src.CashBox != null ? src.CashBox.BranchId : (src.BankAccount != null ? src.BankAccount.BranchId : null)))
             .ForMember(dest => dest.KeeperUserId, opt => opt.MapFrom(src => src.CashBox != null ? src.CashBox.KeeperUserId : null))
             .ForMember(dest => dest.BankId, opt => opt.MapFrom(src => src.BankAccount != null ? (long?)src.BankAccount.BankId : null))
             .ForMember(dest => dest.BankName, opt => opt.MapFrom(src => src.BankAccount != null && src.BankAccount.Bank != null ? src.BankAccount.Bank.Name : null))
@@ -20,8 +20,7 @@ public partial class MappingProfile : Profile
             .ForMember(dest => dest.BankBranchDisplayName, opt => opt.MapFrom(src => src.BankAccount != null && src.BankAccount.BankBranch != null ? src.BankAccount.BankBranch.Name : null))
             .ForMember(dest => dest.AccountNumber, opt => opt.MapFrom(src => src.BankAccount != null ? src.BankAccount.AccountNumber : null))
             .ForMember(dest => dest.IBAN, opt => opt.MapFrom(src => src.BankAccount != null ? src.BankAccount.IBAN : null))
-            .ForMember(dest => dest.SwiftCode, opt => opt.MapFrom(src => src.BankAccount != null ? src.BankAccount.SwiftCode : null))
-            .ForMember(dest => dest.BranchName, opt => opt.MapFrom(src => src.BankAccount != null ? src.BankAccount.BranchName : null));
+            .ForMember(dest => dest.SwiftCode, opt => opt.MapFrom(src => src.BankAccount != null ? src.BankAccount.SwiftCode : null));
         CreateMap<FinancialAccountDto, Domain.Entities.FinancialAccount>();
 
         CreateMap<Domain.Entities.FinancialAccount, CreateFinancialAccountCommand>();
