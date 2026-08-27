@@ -808,11 +808,11 @@ namespace Domain.Resource {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Default Safe.
+        ///   Looks up a localized string similar to Default Cash Box.
         /// </summary>
-        public static string DefaultSafe {
+        public static string DefaultCashBox {
             get {
-                return ResourceManager.GetString("DefaultSafe", resourceCulture);
+                return ResourceManager.GetString("DefaultCashBox", resourceCulture);
             }
         }
         

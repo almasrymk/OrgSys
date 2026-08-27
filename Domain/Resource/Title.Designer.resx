@@ -309,8 +309,8 @@
   <data name="DefaultPaymentType" xml:space="preserve">
     <value>Default Payment Type</value>
   </data>
-  <data name="DefaultSafe" xml:space="preserve">
-    <value>Default Safe</value>
+  <data name="DefaultCashBox" xml:space="preserve">
+    <value>Default Cash Box</value>
   </data>
   <data name="DefaultStock" xml:space="preserve">
     <value>Default Stock</value>

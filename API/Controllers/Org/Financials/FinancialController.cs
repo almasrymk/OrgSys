@@ -1,7 +1,9 @@
 ﻿using Application.Commands.Org.Financials.Financial.Commands;
 using Application.Commands.Org.Financials.Financial.Queries;
 using Application.Commands.Org.Financials.Receivable.Commands;
-using Application.Commands.Org.Financials.Unified;
+using Application.Commands.Org.Setting.FinancialAccount.Commands;
+using Application.Commands.Org.Setting.FinancialAccount.Queries;
+using AutoMapper;
 using Domain.Shared;
 using Application.DTOs;
 using Domain.Enums;
@@ -12,7 +14,7 @@ namespace API.Controllers.Org.Financials
 {
     [Route("[controller]")]
     [ApiController]
-    public class FinancialController(ISender sender) : BaseController<GetByIdFinancialQuery, SearchFinancialQuery, GetListFinancialQuery,
+    public class FinancialController(ISender sender, IMapper mapper) : BaseController<GetByIdFinancialQuery, SearchFinancialQuery, GetListFinancialQuery,
         CreateFinancialCommand, UpdateFinancialCommand, DeleteFinancialCommand, DeleteListFinancialCommand,
         GetMaxFinancialQuery, FinancialDto>(sender)
     {
@@ -30,12 +32,16 @@ namespace API.Controllers.Org.Financials
         }
 
         [HttpGet("Accounts")]
-        public Task<ResultCollection<FinancialAccountDto>> Accounts(
+        public async Task<ResultCollection<FinancialAccountDto>> Accounts(
             FinancialAccountType? accountType,
             bool includeInactive,
             CancellationToken cancellationToken)
         {
-            return Sender.Send(new GetFinancialAccountsQuery(accountType, includeInactive), cancellationToken);
+            var typeId = accountType.HasValue ? (long)accountType.Value : 0;
+            var res = await Sender.Send(new GetListFinancialAccountQuery("", 0, typeId, 1, int.MaxValue), cancellationToken);
+            if (!includeInactive && res.Response != null)
+                res = res with { Response = res.Response.Where(e => e.IsActive).ToList() };
+            return res;
         }
 
         [HttpGet("Accounts/Search")]
@@ -46,7 +52,8 @@ namespace API.Controllers.Org.Financials
             int PageSize,
             CancellationToken cancellationToken)
         {
-            return Sender.Send(new SearchFinancialAccountsQuery(KeySearch, AccountType, Page, PageSize), cancellationToken);
+            var typeId = AccountType.HasValue ? (long)AccountType.Value : 0;
+            return Sender.Send(new SearchFinancialAccountQuery(KeySearch ?? "", 0, typeId, Page, PageSize), cancellationToken);
         }
 
         [HttpDelete("Accounts/Delete")]
@@ -75,7 +82,9 @@ namespace API.Controllers.Org.Financials
             [FromBody] FinancialAccountDto account,
             CancellationToken cancellationToken)
         {
-            return Sender.Send(new SaveFinancialAccountCommand(account), cancellationToken);
+            return account.Id == 0
+                ? Sender.Send(mapper.Map<CreateFinancialAccountCommand>(account), cancellationToken)
+                : Sender.Send(mapper.Map<UpdateFinancialAccountCommand>(account), cancellationToken);
         }
 
         [HttpPost("Transactions/Post")]

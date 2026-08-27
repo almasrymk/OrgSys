@@ -47,11 +47,11 @@
                     <hr />
 
                     <div class="card-body p-0">
-                        <form action="Save" method="post" class="tooltip-label-right" novalidate>
-                            @Html.AntiForgeryToken()
+                        <form action="Save" method="post" enctype="multipart/form-data" novalidate>                           
                             @Html.HiddenFor(model => model.Id)
                             @Html.HiddenFor(model => model.FinancialAccountType)
                             @Html.HiddenFor(model => model.TypeId)
+                            @Html.HiddenFor(model => model.ParentId)
 
                             <div class="form-row">
                                 <div class="form-group col-md-6">

@@ -34,7 +34,7 @@ namespace Infrastructure.Seed
             InitialStock(orgContext);
             InitialDealerGroup(orgContext);
             InitialDealer(orgContext);
-            InitialSafe(orgContext);
+            InitialCashBox(orgContext);
             InitialCurrency(orgContext);
             InitialCountry(orgContext);
             InitialCity(orgContext);
@@ -142,12 +142,6 @@ namespace Infrastructure.Seed
                            new Permission { Id = 1050102, Name = "Add", Key = "Accounts.Add", ParentId = 10501, TypeId = 1 },
                            new Permission { Id = 1050103, Name = "Edit", Key = "Accounts.Edit", ParentId = 10501, TypeId = 1 },
                            new Permission { Id = 1050104, Name = "Delete", Key = "Accounts.Delete", ParentId = 10501, TypeId = 1 },
-
-                       new Permission { Id = 10502, Name = "Safes", Key = "Safes.All", ParentId = 105 },
-                           new Permission { Id = 1050201, Name = "View", Key = "Safes.View", ParentId = 10502, TypeId = 1 },
-                           new Permission { Id = 1050202, Name = "Add", Key = "Safes.Add", ParentId = 10502, TypeId = 1 },
-                           new Permission { Id = 1050203, Name = "Edit", Key = "Safes.Edit", ParentId = 10502, TypeId = 1 },
-                           new Permission { Id = 1050204, Name = "Delete", Key = "Safes.Delete", ParentId = 10502, TypeId = 1 },
 
                        new Permission { Id = 10503, Name = "Banks", Key = "Banks.All", ParentId = 105 },
                            new Permission { Id = 1050301, Name = "View", Key = "Banks.View", ParentId = 10503, TypeId = 1 },
@@ -1259,14 +1253,14 @@ namespace Infrastructure.Seed
             orgContext.SaveChanges();
         }
 
-        public void InitialSafe(OrgContext orgContext)
+        public void InitialCashBox(OrgContext orgContext)
         {
-            List<Safe> list = new List<Safe> {
-                 new Safe { Name = "Main Safe", Hide = false }
+            List<CashBox> list = new List<CashBox> {
+                 new CashBox { Name = "Main Cash Box", Hide = false }
             };
 
-            if (!orgContext.Safes.Any())
-                orgContext.Set<Safe>().AddRange(list);
+            if (!orgContext.CashBoxes.Any())
+                orgContext.Set<CashBox>().AddRange(list);
             orgContext.SaveChanges();
         }
 

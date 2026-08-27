@@ -377,12 +377,12 @@ function SavePreference() {
             });
         }
 
-         // DefaultSafe
-        if ($("#Safes").length) {
+         // DefaultCashBox
+        if ($("#CashBoxes").length) {
             var OrderTabe = {
                 Id: 2,
-                Key: "DefaultSafe",
-                Value: $('#Safes').val(),
+                Key: "DefaultCashBox",
+                Value: $('#CashBoxes').val(),
                 Reference: '@ViewBag.Resource',
                 TypeId: Number('@ViewBag.type'),
             }

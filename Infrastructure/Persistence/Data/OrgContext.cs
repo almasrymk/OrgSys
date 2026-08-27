@@ -53,9 +53,9 @@
                 .Property(journal => journal.Rate)
                 .HasPrecision(18, 2);
 
-            modelBuilder.Entity<Safe>()
+            modelBuilder.Entity<CashBox>()
                 .HasOne(e => e.FinancialAccount).WithOne(e => e.CashBox)
-                .HasForeignKey<Safe>(e => e.FinancialAccountId).OnDelete(DeleteBehavior.Restrict);
+                .HasForeignKey<CashBox>(e => e.FinancialAccountId).OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<BankAccount>()
                 .HasOne(e => e.FinancialAccount).WithOne(e => e.BankAccount)
                 .HasForeignKey<BankAccount>(e => e.FinancialAccountId).OnDelete(DeleteBehavior.Restrict);
@@ -136,7 +136,7 @@
         public virtual DbSet<InventoryProduct> InventoryProducts { get; set; }
         //public virtual DbSet<OrderType> OrderTypes { get; set; }
         public virtual DbSet<Table> Tables { get; set; }
-        public virtual DbSet<Safe> Safes { get; set; }
+        public virtual DbSet<CashBox> CashBoxes { get; set; }
         public virtual DbSet<Financial> Financials { get; set; }
         public virtual DbSet<FinancialAccount> FinancialAccounts { get; set; }
         public virtual DbSet<FinancialTransfer> FinancialTransfers { get; set; }

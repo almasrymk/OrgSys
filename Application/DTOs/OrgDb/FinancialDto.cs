@@ -12,7 +12,7 @@ namespace Application.DTOs
 
         public string? OutlayName { get; set; }
 
-        public string? SafeName { get; set; }
+        public string? CashBoxName { get; set; }
 
         public string? CurrencyName { get; set; }
 

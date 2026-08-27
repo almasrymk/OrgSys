@@ -309,7 +309,7 @@
   <data name="DefaultPaymentType" xml:space="preserve">
     <value>نوع الدفع الافتراضي</value>
   </data>
-  <data name="DefaultSafe" xml:space="preserve">
+  <data name="DefaultCashBox" xml:space="preserve">
     <value>الخزينة الافتراضية</value>
   </data>
   <data name="DefaultStock" xml:space="preserve">

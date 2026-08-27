@@ -18,6 +18,6 @@ public class FinancialAccount : BaseModel
 
     public bool IsActive { get; set; } = true;
 
-    public virtual Safe? CashBox { get; set; }
+    public virtual CashBox? CashBox { get; set; }
     public virtual BankAccount? BankAccount { get; set; }
 }

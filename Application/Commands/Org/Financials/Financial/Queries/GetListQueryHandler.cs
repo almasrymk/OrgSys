@@ -27,7 +27,7 @@
 
         public override string CreateInclude()
         {
-            return "Dealer,Safe,Currency,FinancialAccount,ContraFinancialAccount,FinancialType,Journal";
+            return "Dealer,CashBox,Currency,FinancialAccount,ContraFinancialAccount,FinancialType,Journal";
         }
 
         override public Func<IQueryable<Domain.Entities.Financial>, IOrderedQueryable<Domain.Entities.Financial>> CreateOrderBy(GetListFinancialQuery request)
