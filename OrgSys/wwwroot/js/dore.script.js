@@ -4508,9 +4508,6 @@ $.dore = function (element, options) {
       $.validator.setDefaults({
         ignore: [],
         errorElement: "div",
-        submitHandler: function () {
-          alert("submitted!");
-        },
         errorPlacement: function (error, element) {
           if (element.attr("class").indexOf("custom-control") != -1) {
             error.insertAfter(element.parent());
@@ -4520,13 +4517,18 @@ $.dore = function (element, options) {
         }
       });
 
-      $("#exampleForm").validate();
-      $("#exampleFormTopLabels").validate();
-      $("#exampleFormLabelsInInput").validate();
-      $("#tooltipPositions").validate();
-      $("#tooltipHelpers").validate();
+      // These are the theme's own UI-kit demo forms (no real backend), so they get the
+      // "submitted!" alert instead of the library default (form.submit()) that every
+      // other form on the site needs in order to actually post.
+      var demoSubmitHandler = function () { alert("submitted!"); };
+      $("#exampleForm").validate({ submitHandler: demoSubmitHandler });
+      $("#exampleFormTopLabels").validate({ submitHandler: demoSubmitHandler });
+      $("#exampleFormLabelsInInput").validate({ submitHandler: demoSubmitHandler });
+      $("#tooltipPositions").validate({ submitHandler: demoSubmitHandler });
+      $("#tooltipHelpers").validate({ submitHandler: demoSubmitHandler });
 
       $("#rulesForm").validate({
+        submitHandler: demoSubmitHandler,
         rules: {
           rulesName: {
             required: true,
