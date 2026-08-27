@@ -52,6 +52,7 @@
                             @Html.AntiForgeryToken()
                             @Html.HiddenFor(model => model.Id)
                             @Html.HiddenFor(model => model.FinancialAccountType)
+                            @Html.HiddenFor(model => model.TypeId)
 
                             <div class="form-row">
                                 <div class="form-group col-md-6">
@@ -181,6 +182,8 @@
 </div>
 
 <link href="~/css/jquery-ui.css" rel="stylesheet" />
+
+@section Scripts {
 <script src="~/js/jquery-ui.js"></script>
 <script>
     jQuery(function ($) {
@@ -193,7 +196,7 @@
                     url: "/Setting/Account/GetList",
                     type: "Get",
                     dataType: "json",
-                    data: { txtSearch: searchPhrase, page: 1, pageSize: 7 },
+                    data: { txtSearch: searchPhrase, page: 1, pageSize: 20 },
                     success: function (data) {
                         if (!data.length) data = [{ name: "NoResultsFound" }];
                         response($.map(data, function (item) {
@@ -229,3 +232,4 @@
         filterBankBranches();
     });
 </script>
+}

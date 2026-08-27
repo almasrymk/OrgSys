@@ -2,10 +2,8 @@ using Domain.Enums;
 
 namespace Application.DTOs;
 
-public sealed class FinancialAccountDto
+public class FinancialAccountDto : Domain.Entities.BaseModel
 {
-    public long Id { get; set; }
-    public string? Code { get; set; }
     public string Name { get; set; } = string.Empty;
     public FinancialAccountType FinancialAccountType { get; set; }
     public long? AccountId { get; set; }

@@ -112,8 +112,23 @@
                         <small>#</small>
                     </div>
                     <div class="card-body align-self-center d-flex flex-column flex-md-row  align-items-md-center">
-                        <div class="list-item-heading mb-0 w-80">
+                        <div class="list-item-heading mb-0 w-10">
+                            <small>@Domain.Resource.Title_Designer.Code</small>
+                        </div>
+                        <div class="w-25">
                             <small>@Domain.Resource.Title_Designer.Name</small>
+                        </div>
+                        <div class="w-15">
+                            <small>@Domain.Resource.Title_Designer.Type</small>
+                        </div>
+                        <div class="w-20">
+                            <small>@Domain.Resource.Title_Designer.Account</small>
+                        </div>
+                        <div class="w-15">
+                            <small>@Domain.Resource.Title_Designer.Currency</small>
+                        </div>
+                        <div class="w-15 text-center">
+                            <small>@Domain.Resource.Title_Designer.Status</small>
                         </div>
                         <div class="w-15 @TextAlign2"></div>
                     </div>
@@ -133,9 +148,25 @@
                             <i class="@(isBank ? "iconsminds-bank" : "iconsminds-coins")"></i>
                         </div>
                         <div class="card-body align-self-center d-flex flex-column flex-md-row  align-items-md-center">
-                            <div class="list-item-heading mb-0 w-90">
+                            <div class="list-item-heading mb-0 w-10">
+                                @row.Code
+                            </div>
+                            <div class="list-item-heading mb-0 w-25">
                                 @row.Name
-                                <div><small class="text-muted">@row.Code — @(isBank ? Domain.Resource.Title_Designer.Bank : Domain.Resource.Title_Designer.CashBox)</small></div>
+                            </div>
+                            <div class="w-15">
+                                @(isBank ? Domain.Resource.Title_Designer.Bank : Domain.Resource.Title_Designer.CashBox)
+                            </div>
+                            <div class="w-20">
+                                @(string.IsNullOrEmpty(row.AccountCode) && string.IsNullOrEmpty(row.AccountName) ? "-" : $"{row.AccountCode} - {row.AccountName}")
+                            </div>
+                            <div class="w-15">
+                                @(row.CurrencyName ?? "-")
+                            </div>
+                            <div class="w-15 text-center">
+                                <span class="badge badge-pill @(row.IsActive ? "badge-success" : "badge-secondary")">
+                                    @(row.IsActive ? Domain.Resource.Title_Designer.Active : "Inactive")
+                                </span>
                             </div>
                             <div class="w-15 @TextAlign2">
                                 @if (rowAllowEdit)

@@ -43,6 +43,7 @@ public sealed class SaveFinancialAccountCommandHandler(
             return new Result(HttpStatusCode.NotFound, [new Error("Financial account not found.")]);
         entity.Name = dto.Name.Trim();
         entity.Code = dto.Code;
+        if (dto.Id == 0) entity.CodeNumber = dto.CodeNumber;
         entity.FinancialAccountType = dto.FinancialAccountType;
         entity.AccountId = dto.AccountId;
         entity.CurrencyId = dto.CurrencyId;

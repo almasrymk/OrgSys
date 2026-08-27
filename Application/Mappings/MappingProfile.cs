@@ -49,6 +49,7 @@ public partial class MappingProfile : Profile
         // 4-Financials
         JournalMappingProfile();
         FinancialMappingProfile();
+        FinancialAccountMappingProfile();
 
         PreferenceMappingProfile();
 
