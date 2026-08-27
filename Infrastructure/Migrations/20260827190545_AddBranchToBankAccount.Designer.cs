@@ -4,6 +4,7 @@ using Infrastructure.Persistence.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(OrgContext))]
-    partial class OrgContextModelSnapshot : ModelSnapshot
+    [Migration("20260827190545_AddBranchToBankAccount")]
+    partial class AddBranchToBankAccount
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -353,69 +356,6 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Branch");
-                });
-
-            modelBuilder.Entity("Domain.Entities.CashBox", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<long?>("AccountId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("BranchId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("CodeNumber")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("FinancialAccountId")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("Hide")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ImgPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long?>("KeeperUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("MaskText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<long>("ParentId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<long>("TypeId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AccountId");
-
-                    b.HasIndex("BranchId");
-
-                    b.HasIndex("FinancialAccountId")
-                        .IsUnique()
-                        .HasFilter("[FinancialAccountId] IS NOT NULL");
-
-                    b.HasIndex("KeeperUserId");
-
-                    b.ToTable("CashBox");
                 });
 
             modelBuilder.Entity("Domain.Entities.City", b =>
@@ -790,9 +730,6 @@ namespace Infrastructure.Migrations
                     b.Property<long?>("BranchId")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("CashBoxId")
-                        .HasColumnType("bigint");
-
                     b.Property<string>("Code")
                         .HasColumnType("nvarchar(max)");
 
@@ -885,6 +822,9 @@ namespace Infrastructure.Migrations
                     b.Property<bool>("Review")
                         .HasColumnType("bit");
 
+                    b.Property<long>("SafeId")
+                        .HasColumnType("bigint");
+
                     b.Property<long?>("ShiftId")
                         .HasColumnType("bigint");
 
@@ -897,8 +837,6 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("BranchId");
-
-                    b.HasIndex("CashBoxId");
 
                     b.HasIndex("ContraFinancialAccountId");
 
@@ -921,6 +859,8 @@ namespace Infrastructure.Migrations
                     b.HasIndex("OutlayId");
 
                     b.HasIndex("PaymentTypeId");
+
+                    b.HasIndex("SafeId");
 
                     b.HasIndex("ShiftId");
 
@@ -2727,6 +2667,69 @@ namespace Infrastructure.Migrations
                     b.ToTable("RolePermission");
                 });
 
+            modelBuilder.Entity("Domain.Entities.Safe", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long?>("AccountId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("BranchId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("FinancialAccountId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("KeeperUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccountId");
+
+                    b.HasIndex("BranchId");
+
+                    b.HasIndex("FinancialAccountId")
+                        .IsUnique()
+                        .HasFilter("[FinancialAccountId] IS NOT NULL");
+
+                    b.HasIndex("KeeperUserId");
+
+                    b.ToTable("Safe");
+                });
+
             modelBuilder.Entity("Domain.Entities.Shift", b =>
                 {
                     b.Property<long>("Id")
@@ -3288,34 +3291,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("District");
                 });
 
-            modelBuilder.Entity("Domain.Entities.CashBox", b =>
-                {
-                    b.HasOne("Domain.Entities.Account", "Account")
-                        .WithMany()
-                        .HasForeignKey("AccountId");
-
-                    b.HasOne("Domain.Entities.Branch", "Branch")
-                        .WithMany()
-                        .HasForeignKey("BranchId");
-
-                    b.HasOne("Domain.Entities.FinancialAccount", "FinancialAccount")
-                        .WithOne("CashBox")
-                        .HasForeignKey("Domain.Entities.CashBox", "FinancialAccountId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Domain.Entities.User", "KeeperUser")
-                        .WithMany()
-                        .HasForeignKey("KeeperUserId");
-
-                    b.Navigation("Account");
-
-                    b.Navigation("Branch");
-
-                    b.Navigation("FinancialAccount");
-
-                    b.Navigation("KeeperUser");
-                });
-
             modelBuilder.Entity("Domain.Entities.City", b =>
                 {
                     b.HasOne("Domain.Entities.Country", "Country")
@@ -3379,12 +3354,6 @@ namespace Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("BranchId");
 
-                    b.HasOne("Domain.Entities.CashBox", "CashBox")
-                        .WithMany()
-                        .HasForeignKey("CashBoxId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Domain.Entities.FinancialAccount", "ContraFinancialAccount")
                         .WithMany()
                         .HasForeignKey("ContraFinancialAccountId")
@@ -3437,13 +3406,17 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Domain.Entities.Safe", "Safe")
+                        .WithMany()
+                        .HasForeignKey("SafeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Domain.Entities.Shift", "Shift")
                         .WithMany()
                         .HasForeignKey("ShiftId");
 
                     b.Navigation("Branch");
-
-                    b.Navigation("CashBox");
 
                     b.Navigation("ContraFinancialAccount");
 
@@ -3466,6 +3439,8 @@ namespace Infrastructure.Migrations
                     b.Navigation("Outlay");
 
                     b.Navigation("PaymentType");
+
+                    b.Navigation("Safe");
 
                     b.Navigation("Shift");
                 });
@@ -3987,6 +3962,34 @@ namespace Infrastructure.Migrations
                     b.Navigation("Permission");
 
                     b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Safe", b =>
+                {
+                    b.HasOne("Domain.Entities.Account", "Account")
+                        .WithMany()
+                        .HasForeignKey("AccountId");
+
+                    b.HasOne("Domain.Entities.Branch", "Branch")
+                        .WithMany()
+                        .HasForeignKey("BranchId");
+
+                    b.HasOne("Domain.Entities.FinancialAccount", "FinancialAccount")
+                        .WithOne("CashBox")
+                        .HasForeignKey("Domain.Entities.Safe", "FinancialAccountId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Domain.Entities.User", "KeeperUser")
+                        .WithMany()
+                        .HasForeignKey("KeeperUserId");
+
+                    b.Navigation("Account");
+
+                    b.Navigation("Branch");
+
+                    b.Navigation("FinancialAccount");
+
+                    b.Navigation("KeeperUser");
                 });
 
             modelBuilder.Entity("Domain.Entities.Stock", b =>

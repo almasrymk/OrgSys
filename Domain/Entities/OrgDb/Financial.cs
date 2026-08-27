@@ -26,10 +26,10 @@
         [Column(TypeName = "decimal(18,2)")]
         public decimal Rate { get; set; }
 
-        [ForeignKey("Safe")]
-        public long SafeId { get; set; }
+        [ForeignKey("CashBox")]
+        public long CashBoxId { get; set; }
 
-        public virtual Safe? Safe { get; set; }
+        public virtual CashBox? CashBox { get; set; }
 
         [Column(TypeName = "decimal(18,2)")]
         public decimal Amount { get; set; }

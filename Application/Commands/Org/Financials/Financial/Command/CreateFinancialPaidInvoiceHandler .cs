@@ -55,15 +55,15 @@ namespace Application.Commands.Org.Financials.Financial.Command
 
                     var prefRepo = _Provider.GetRequiredService<IRepository<Domain.Entities.Preference>>();
 
-                    var safePref = await prefRepo.GetByFilterAsync(
-                        e => e.Key == "DefaultSafe"
+                    var cashBoxPref = await prefRepo.GetByFilterAsync(
+                        e => e.Key == "DefaultCashBox"
                         && (e.TypeId == (invoice.TypeId == 1 || invoice.TypeId == 4 ? 1 : 2)
                             || (invoice.TypeId == 1 || invoice.TypeId == 4 ? 1 : 2) == 0)
                         && (e.Reference == "Financial" || "Financial" == ""),
                         ""
                     );
 
-                    financial.SafeId = int.Parse(safePref?.Value ?? "0");
+                    financial.CashBoxId = int.Parse(cashBoxPref?.Value ?? "0");
 
                     //invoice.CodeNumber = await _Repository.GetMaxByFilterAsync(e => e.TypeId == invoice.TypeId, e => e.CodeNumber) + 1;
 

@@ -36,7 +36,7 @@
         //DbSet<InventoryProduct> InventoryProducts { get; set; }
         //DbSet<OrderType> OrderTypes { get; set; }
         DbSet<Table> Tables { get; set; }
-        DbSet<Safe> Safes { get; set; }
+        DbSet<CashBox> CashBoxes { get; set; }
         DbSet<Financial> Financials { get; set; }
         DbSet<FinancialAccount> FinancialAccounts { get; set; }
         DbSet<FinancialType> FinancialTypes { get; set; }

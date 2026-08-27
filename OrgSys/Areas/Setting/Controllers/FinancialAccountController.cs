@@ -1,5 +1,5 @@
 #nullable enable annotations
-using Application.Commands.Org.Financials.FinancialAccount.Commands;
+using Application.Commands.Org.Setting.FinancialAccount.Commands;
 using Application.DTOs;
 using AutoMapper;
 using Domain.Enums;
@@ -23,9 +23,11 @@ namespace OrgSys.Areas.Setting.Controllers;
 /// Index/Save/Delete/DeleteList and only overrides the extension points (LoadViewBag,
 /// LoadViewBagIndex, InitializeData, Save) it genuinely needs. The API side
 /// (API/Controllers/Org/Financials/FinancialAccountController.cs) mirrors Setting/Account's
-/// GetById/GetList/Search/Create/Update/Delete/DeleteList shape; Create/Update both delegate to the
-/// existing <c>SaveFinancialAccountCommand</c> handler so the CashBox/BankAccount dual-write stays in
-/// one place.</summary>
+/// GetById/GetList/Search/Create/Update/Delete/DeleteList shape, and so do the underlying handlers
+/// (Application/Commands/Org/Setting/FinancialAccount) — Create/Update inherit the same generic
+/// CreateCommandHandler{}/UpdateCommandHandler{} bases Account uses, with the CashBox/BankAccount
+/// detail row handled via the mapped entity graph on Create and an overridden SaveDetials on Update,
+/// same as Setting/Product's ProductUnit rows.</summary>
 [Area("Setting")]
 public sealed class FinancialAccountController(IConfiguration configuration, IMapper mapper)
     : MainController<FinancialAccountDto, CreateFinancialAccountCommand, UpdateFinancialAccountCommand>(configuration, mapper)

@@ -26,9 +26,10 @@ public partial class MappingProfile : Profile
         // 1-5- Financial
         AccountTypeMappingProfile();
         AccountMappingProfile();
-        SafeMappingProfile();
+        CashBoxMappingProfile();
         BankBranchMappingProfile();
         BankMappingProfile();
+        FinancialAccountMappingProfile();
         CurrencyMappingProfile();
         FiscalPeriodMappingProfile();
         FiscalYearMappingProfile();
@@ -49,7 +50,6 @@ public partial class MappingProfile : Profile
         // 4-Financials
         JournalMappingProfile();
         FinancialMappingProfile();
-        FinancialAccountMappingProfile();
 
         PreferenceMappingProfile();
 

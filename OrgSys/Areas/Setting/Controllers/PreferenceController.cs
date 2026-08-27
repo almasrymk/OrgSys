@@ -199,7 +199,7 @@ namespace OrgSys.Areas.Setting.Controllers
         {
             ViewBag.Clients = new SelectList(await GetListApi<DealerDto>(TypeId: 1), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultClient")?.Value);
             ViewBag.Suppliers = new SelectList(await GetListApi<DealerDto>(TypeId: 2), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultSupplier")?.Value);
-            ViewBag.Safes = new SelectList( await GetListApi<SafeDto>(), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultSafe")?.Value);
+            ViewBag.CashBoxes = new SelectList( await GetListApi<CashBoxDto>(), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultCashBox")?.Value);
             ViewBag.PaymentTypes = new SelectList(await GetListApi<PaymentTypeDto>(), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultPaymentType")?.Value);
             ViewBag.Currencys = new SelectList(await GetListApi<CurrencyDto>(), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultCurrency")?.Value);
             ViewBag.Outlays = new SelectList(await GetListApi<OutlayDto>(), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultOutlay")?.Value);
