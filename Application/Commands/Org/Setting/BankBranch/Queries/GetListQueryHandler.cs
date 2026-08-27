@@ -19,6 +19,7 @@
             PageSize = request.PageSize;
 
             return e =>
+            (request.ParentId == 0 || e.BankId == request.ParentId) &&
             (string.IsNullOrEmpty(request.KeySearch) || e.Name!.Contains(request.KeySearch)) &&
             e.Status != Domain.Enums.Status.Deleted && e.Hide != true;
         }

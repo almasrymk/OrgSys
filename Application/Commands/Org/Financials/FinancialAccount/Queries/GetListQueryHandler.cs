@@ -26,7 +26,7 @@ namespace Application.Commands.Org.Financials.FinancialAccount.Queries
 
         public override string CreateInclude()
         {
-            return "CashBox,BankAccount.Bank,Account,Currency";
+            return "CashBox,BankAccount.Bank,BankAccount.BankBranch,Account,Currency";
         }
 
         override public Func<IQueryable<Domain.Entities.FinancialAccount>, IOrderedQueryable<Domain.Entities.FinancialAccount>> CreateOrderBy(GetListFinancialAccountQuery request)

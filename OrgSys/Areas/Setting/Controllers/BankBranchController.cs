@@ -21,11 +21,11 @@
             ViewBag.DistrictList = new SelectList(await GetListApi<DistrictDto>($"GetListByCityId?CityId={model.CityId}&Page=1&PageSize=20"), "Id", "Name", model.DistrictId);
         }
 
-        public async Task<JsonResult> GetList(string txtSearch = "", int page = 1, int pageSize = 20)
+        public async Task<JsonResult> GetList(string txtSearch = "", long bankId = 0, int page = 1, int pageSize = 20)
         {
             if (txtSearch != null)
                 txtSearch = txtSearch.Trim().ToLower();
-            var itemsList = await GetListApi<BankDto>(TextSearch: txtSearch, Page: page, PageSize: pageSize);
+            var itemsList = await GetListApi<BankBranchDto>(ParentId: bankId, TextSearch: txtSearch, Page: page, PageSize: pageSize);
             var list = itemsList.Distinct().OrderBy(_ => _.Name)
                 .Select(_ => new
                 {

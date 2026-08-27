@@ -6,7 +6,6 @@
     var title = isBank ? Domain.Resource.Title_Designer.BankAccounts : Domain.Resource.Title_Designer.CashBoxes;
     ViewData["Title_Designer"] = title;
     Layout = "~/Views/Shared/_Layout.cshtml";
-    List<Application.DTOs.BankBranchDto> bankBranches = ViewBag.BankBranchList ?? new List<Application.DTOs.BankBranchDto>();
 }
 
 <div id="HPage" class="container-fluid">
@@ -112,13 +111,17 @@
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label>@Domain.Resource.Title_Designer.BankBranch</label>
-                                        <select id="bankBranchId" name="BankBranchId" class="form-control">
-                                            <option value="">@Domain.Resource.Title_Designer.Select...</option>
-                                            @foreach (var b in bankBranches)
-                                            {
-                                                <option value="@b.Id" data-bank-id="@b.BankId" selected="@(b.Id == Model.BankBranchId)">@b.Name</option>
-                                            }
-                                        </select>
+                                        <div class="input-group DropAutoComplete">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="iconsminds-shop-4"></i></span>
+                                            </div>
+                                            <input type="text" class="form-control Droptxt" id="txtBankBranchId" value="@Model.BankBranchDisplayName" autocomplete="off" />
+                                            @Html.HiddenFor(model => model.BankBranchId)
+                                            <div class="input-group-prepend Dropbtn">
+                                                <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
+                                            </div>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.BankBranchId, "", new { @class = "text-danger " })
                                     </div>
                                 </div>
                                 <div class="form-row">
@@ -239,8 +242,35 @@
             },
             select: function (event, ui) {
                 if (ui.item.label === "NoResultsFound") { event.preventDefault(); return; }
+                var changed = String($("#BankId").val()) !== String(ui.item.id);
                 $("#BankId").val(ui.item.id);
-                filterBankBranches();
+                // A branch picked under the previous bank doesn't necessarily belong to the new one —
+                // clear it rather than leave a stale, now-unrelated branch selected.
+                if (changed) { $("#txtBankBranchId").val(""); $("#BankBranchId").val(""); }
+            }
+        });
+
+        $("#txtBankBranchId").autocomplete({
+            minLength: 0,
+            source: function (request, response) {
+                var searchPhrase = $("#txtBankBranchId").val();
+                if (searchPhrase == "...") searchPhrase = "";
+                $.ajax({
+                    url: "/Setting/BankBranch/GetList",
+                    type: "Get",
+                    dataType: "json",
+                    data: { txtSearch: searchPhrase, bankId: $("#BankId").val(), page: 1, pageSize: 20 },
+                    success: function (data) {
+                        if (!data.length) data = [{ name: "NoResultsFound" }];
+                        response($.map(data, function (item) {
+                            return { label: item.name, value: item.name, id: item.id };
+                        }));
+                    }
+                });
+            },
+            select: function (event, ui) {
+                if (ui.item.label === "NoResultsFound") { event.preventDefault(); return; }
+                $("#BankBranchId").val(ui.item.id);
             }
         });
 
@@ -250,22 +280,6 @@
         $(".Dropbtn").click(function () {
             $(this).parent().find(".Droptxt").autocomplete("search", "");
         });
-
-        function filterBankBranches() {
-            var bankId = $('#BankId').val();
-            var selected = $('#bankBranchId').val();
-            $('#bankBranchId option').each(function () {
-                var branchBankId = $(this).data('bank-id');
-                $(this).toggle(!branchBankId || String(branchBankId) === String(bankId));
-            });
-            // jQuery's :hidden/:visible can't be trusted for <option> elements — they have no layout
-            // box even when not display:none, so :hidden is always true for them. Check the option's
-            // own data-bank-id against the current bank directly instead.
-            var selectedBranchBankId = $('#bankBranchId option[value="' + selected + '"]').data('bank-id');
-            if (selected && selectedBranchBankId && String(selectedBranchBankId) !== String(bankId)) $('#bankBranchId').val('');
-            else $('#bankBranchId').val(selected);
-        }
-        filterBankBranches();
     });
 </script>
 }

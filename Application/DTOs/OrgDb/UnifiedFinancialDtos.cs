@@ -17,6 +17,7 @@ public class FinancialAccountDto : Domain.Entities.BaseModel
     public long? BankId { get; set; }
     public string? BankName { get; set; }
     public long? BankBranchId { get; set; }
+    public string? BankBranchDisplayName { get; set; }
     public string? AccountNumber { get; set; }
     public string? IBAN { get; set; }
     public string? SwiftCode { get; set; }

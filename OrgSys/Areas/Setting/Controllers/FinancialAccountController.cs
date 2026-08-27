@@ -35,8 +35,6 @@ public sealed class FinancialAccountController(IConfiguration configuration, IMa
         ViewBag.CurrencyList = new SelectList(await GetListApi<CurrencyDto>(PageSize: 500), "Id", "Name", model.CurrencyId);
         ViewBag.BranchList = new SelectList(await GetListApi<BranchDto>(PageSize: 500), "Id", "Name", model.BranchId);
         ViewBag.UserList = new SelectList(await GetListApi<UserDto>(PageSize: 500), "Id", "Name", model.KeeperUserId);
-        ViewBag.BankList = new SelectList(await GetListApi<BankDto>(PageSize: 500), "Id", "Name", model.BankId);
-        ViewBag.BankBranchList = await GetListApi<BankBranchDto>(PageSize: 500);
     }
 
     public override async Task LoadViewBagIndex(long ParentId = 0, long TypeId = 0)
