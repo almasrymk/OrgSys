@@ -55,8 +55,11 @@
         }
 
         public virtual async ValueTask<TResponse> GetMaxByFilterAsync<TResponse>(Expression<Func<TEntity, bool>> Filter , Expression<Func<TEntity, TResponse>> Selector)
-        {           
-            return await dbEntity.Where(Filter).MaxAsync(Selector);
+        {
+            var query = dbEntity.Where(Filter);
+            if (!await query.AnyAsync())
+                return default!;
+            return await query.MaxAsync(Selector);
         }
 
         public virtual async ValueTask<TEntity?> GetByFilterAsync(Expression<Func<TEntity, bool>> Filter, string includeProperties)
