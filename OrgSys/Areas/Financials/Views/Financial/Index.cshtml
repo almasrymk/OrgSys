@@ -1,6 +1,6 @@
 @model Domain.Shared.ResultPagination<Application.DTOs.FinancialDto>
 @{
-    ViewData["Title_Designer"] = "Index";
+    ViewData["Title_Designer"] = ViewBag.FinancialTypeName ?? "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col-12">
             <div class="mb-2">
-                <h1>FinancialTransaction</h1>
+                <h1> <i class="@ViewBag.FinancialTypeIcon rounded-circle badge-theme-1  p-1"></i> @ViewBag.FinancialTypeName </h1>
                 <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
                     <ol class="breadcrumb pt-0">
                         <li class="breadcrumb-item">
@@ -18,12 +18,12 @@
                             @Domain.Resource.Title_Designer.Financial
                         </li>
                         <li class="breadcrumb-item">
-                            FinancialTransaction
+                            @ViewBag.FinancialTypeName
                         </li>
                     </ol>
                 </nav>
             </div>
-            <div class="">
+            <div class="mb-2">
                 <a class="btn pt-0 pl-0 d-inline-block d-md-none" data-toggle="collapse" href="#displayOptions"
                    role="button" aria-expanded="true" aria-controls="displayOptions">
                     @Domain.Resource.Title_Designer.DisplayOptions

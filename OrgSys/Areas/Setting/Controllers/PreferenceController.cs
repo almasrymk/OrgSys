@@ -203,6 +203,9 @@ namespace OrgSys.Areas.Setting.Controllers
             ViewBag.PaymentTypes = new SelectList(await GetListApi<PaymentTypeDto>(), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultPaymentType")?.Value);
             ViewBag.Currencys = new SelectList(await GetListApi<CurrencyDto>(), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultCurrency")?.Value);
             ViewBag.Outlays = new SelectList(await GetListApi<OutlayDto>(), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultOutlay")?.Value);
+            // Opening Balance (FinancialTypeId 1) only: the GL account the FinancialAccount opening-balance
+            // journal lines are balanced against — see SetFinancialAccountOpeningBalanceCommandHandler.
+            ViewBag.OpeningBalanceEquityAccount = new SelectList(await GetListApi<AccountDto>(), "Id", "Name", Service.FirstOrDefault(e => e.Key == "OpeningBalanceEquityAccountId")?.Value);
 
             List<SelectListItem> selectListItems = new List<SelectListItem>();
             selectListItems.Add(new SelectListItem { Value = "1", Text = "Data after product" });

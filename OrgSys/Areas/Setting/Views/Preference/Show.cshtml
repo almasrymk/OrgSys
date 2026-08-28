@@ -377,6 +377,17 @@ function SavePreference() {
             });
         }
 
+         // OpeningBalanceEquityAccountId
+        if ($("#OpeningBalanceEquityAccount").length) {
+            list.push({
+                Id: 2,
+                Key: "OpeningBalanceEquityAccountId",
+                Value: $('#OpeningBalanceEquityAccount').val(),
+                Reference: '@ViewBag.Resource',
+                TypeId: Number('@ViewBag.type'),
+            });
+        }
+
          // DefaultCashBox
         if ($("#CashBoxes").length) {
             var OrderTabe = {

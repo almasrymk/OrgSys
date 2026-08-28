@@ -24,10 +24,32 @@ namespace OrgSys.Areas.Financial.Controllers
     public class FinancialController(IConfiguration configuration, IMapper mapper) :
         MainController<FinancialDto, CreateFinancialCommand , UpdateFinancialCommand>(configuration , mapper)
     {
+        // The FinancialType.Name seed values are raw English literals ("OpeningBalance", "Receipt", ...) —
+        // not something to show a user. The menu (_MainMenu.cshtml) is the actual source of truth for what
+        // each FinancialType is called, so this mirrors the same TypeId -> resource-key mapping used there
+        // (and the same convention Invoice/FinancialAccount already use for their own dynamic titles).
+        private static string ResolveFinancialTypeName(long typeId) => typeId switch
+        {
+            1 => Domain.Resource.Title_Designer.OpeningBalance,
+            2 => Domain.Resource.Title_Designer.Receipt,
+            3 => Domain.Resource.Title_Designer.Payment,
+            4 => Domain.Resource.Title_Designer.Transfer,
+            5 => Domain.Resource.Title_Designer.Deposit,
+            6 => Domain.Resource.Title_Designer.Withdrawal,
+            7 => Domain.Resource.Title_Designer.Fee,
+            8 => Domain.Resource.Title_Designer.Interest,
+            9 => Domain.Resource.Title_Designer.Cheque,
+            10 => Domain.Resource.Title_Designer.Adjustment,
+            _ => Domain.Resource.Title_Designer.Financial
+        };
+
         public override async Task LoadViewBagIndex(long ParentId = 0, long TypeId = 0)
         {
-            ViewBag.FinancialsType = "Financial Transactions";
-            ViewBag.FinancialsIcon = "iconsminds-coins";
+            ViewBag.FinancialTypeName = ResolveFinancialTypeName(TypeId);
+            // Icon isn't user-visible text (unlike Name), so the FinancialType table's own Icon column
+            // is safe to use directly here — same approach Invoice takes with ViewBag.InvoicesIcon.
+            var financialType = TypeId > 0 ? await GetObApi<FinancialTypeDto>($"GetById?Id={TypeId}") : null;
+            ViewBag.FinancialTypeIcon = string.IsNullOrEmpty(financialType?.Icon) ? "iconsminds-coins" : financialType.Icon;
         }
 
         public override Task<FinancialDto> FixData(FinancialDto ob)
@@ -54,10 +76,39 @@ namespace OrgSys.Areas.Financial.Controllers
                 await accountsResponse.Content.ReadAsStringAsync());
             ViewBag.FinancialAccountId = new SelectList(accountsResult?.Response ?? [], "Id", "Name", model.FinancialAccountId);
 
-            ViewBag.FinancialTypeId = new SelectList(await GetListApi<FinancialTypeDto>(), "Id", "Name", model.FinancialTypeId);
+            var currentFinancialTypeId = model.FinancialTypeId ?? model.TypeId;
+            ViewBag.FinancialTypeName = ResolveFinancialTypeName(currentFinancialTypeId);
+
+            // FinancialType.InOut is the real business rule for direction (1 = In-only, -1 = Out-only,
+            // 0 = either) — see Infrastructure/Seed/InitialData.cs. Lock Direction to it on new records
+            // instead of leaving it an open user choice; only types with InOut == 0 (Transfer/Cheque/
+            // Adjustment) genuinely need the user to pick.
+            var financialTypes = await GetListApi<FinancialTypeDto>();
+            var currentFinancialType = financialTypes.FirstOrDefault(t => t.Id == currentFinancialTypeId);
+            var inOut = currentFinancialType?.InOut ?? 0;
+            ViewBag.FinancialTypeInOut = inOut;
+            ViewBag.FinancialTypeIcon = string.IsNullOrEmpty(currentFinancialType?.Icon) ? "iconsminds-coins" : currentFinancialType.Icon;
+            if (model.Id == 0 && inOut != 0)
+                model.Direction = inOut > 0 ? FinancialTransactionDirection.In : FinancialTransactionDirection.Out;
 
             ViewBag.CounterAccountId = new SelectList(await GetListApi<AccountDto>(), "Id", "Name", model.CounterAccountId);
             ViewBag.CurrencyId = new SelectList(await GetListApi<CurrencyDto>() , "Id", "Name", model.CurrencyId);
+
+            if (currentFinancialTypeId == 1)
+            {
+                var fiscalYears = await GetListApi<FiscalYearDto>();
+                if (model.Id == 0 && model.FiscalYearId is null or <= 0)
+                {
+                    var defaultFiscalYear = fiscalYears.FirstOrDefault(f => f.IsCurrent)
+                        ?? fiscalYears.FirstOrDefault(f => f.FiscalYearStatus == FiscalYearStatus.Open);
+                    if (defaultFiscalYear is not null)
+                    {
+                        model.FiscalYearId = defaultFiscalYear.Id;
+                        model.Date = defaultFiscalYear.StartDate;
+                    }
+                }
+                ViewBag.FiscalYearId = new SelectList(fiscalYears, "Id", "Name", model.FiscalYearId);
+            }
         }
 
 
@@ -79,6 +130,12 @@ namespace OrgSys.Areas.Financial.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public override async Task<ActionResult> Save(FinancialDto ob)
         {
+            // Opening Balance doesn't create a Financial row at all — it writes a JournalItem line into the
+            // shared per-fiscal-year Opening Balance Journal, the same mechanism Customer/Supplier opening
+            // balances already use (see SetFinancialAccountOpeningBalanceCommandHandler).
+            if (ob.FinancialTypeId == 1)
+                return await SaveOpeningBalance(ob);
+
             if (ob.FinancialAccountId is null or <= 0)
                 ModelState.AddModelError(nameof(ob.FinancialAccountId), "Financial account is required.");
             if (ob.FinancialTypeId is null or <= 0)
@@ -115,6 +172,50 @@ namespace OrgSys.Areas.Financial.Controllers
             }
             await LoadViewBag(ob);
             return View(ob);
+        }
+
+        private async Task<ActionResult> SaveOpeningBalance(FinancialDto ob)
+        {
+            if (ob.FinancialAccountId is null or <= 0)
+                ModelState.AddModelError(nameof(ob.FinancialAccountId), "Financial account is required.");
+            if (ob.FiscalYearId is null or <= 0)
+                ModelState.AddModelError(nameof(ob.FiscalYearId), "Fiscal year is required.");
+            if (ob.Debit < 0 || ob.Credit < 0)
+                ModelState.AddModelError(string.Empty, "Debit and Credit must not be negative.");
+            if (ob.Debit > 0 && ob.Credit > 0)
+                ModelState.AddModelError(string.Empty, "Enter either Debit or Credit, not both.");
+            if (ob.Debit == 0 && ob.Credit == 0)
+                ModelState.AddModelError(string.Empty, "Enter a Debit or Credit amount greater than zero.");
+
+            if (ModelState.IsValid)
+            {
+                var command = new
+                {
+                    FinancialAccountId = ob.FinancialAccountId!.Value,
+                    FiscalYearId = ob.FiscalYearId!.Value,
+                    Debit = ob.Debit,
+                    Credit = ob.Credit,
+                    CurrencyId = ob.CurrencyId,
+                    Rate = ob.Rate,
+                    Notes = ob.Notes,
+                    CreateUserId = User.GetUserId()
+                };
+                using var client = CreateClient();
+                var response = await client.PostAsJsonAsync($"{Configuration["ApiUrl"]}/Financial/FinancialAccount/OpeningBalance", command);
+                var data = await response.Content.ReadAsStringAsync();
+                var result = JsonConvert.DeserializeObject<Result<long>>(data);
+                if (response.IsSuccessStatusCode && result is not null && (int)result.StatusCode is >= 200 and < 300)
+                    // No dedicated Post/Reverse UI here — the shared Opening Balance journal is managed
+                    // from the standard Journal screen, same as the existing Customer/Supplier flow.
+                    return Redirect($"/Financials/Journal/Save?id={result.Response}");
+
+                foreach (var error in result?.Errors ?? [])
+                    ModelState.AddModelError(string.Empty, error.MessageError);
+                if (result?.Errors is null or { Count: 0 })
+                    ModelState.AddModelError(string.Empty, data);
+            }
+            await LoadViewBag(ob);
+            return View("Save", ob);
         }
 
         public async Task<ActionResult> Cancel(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1)

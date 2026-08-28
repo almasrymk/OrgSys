@@ -102,5 +102,13 @@ namespace API.Controllers.Org.Financials
         {
             return Sender.Send(command, cancellationToken);
         }
+
+        [HttpPost("FinancialAccount/OpeningBalance")]
+        public Task<Result<long>> SetFinancialAccountOpeningBalance(
+            [FromBody] SetFinancialAccountOpeningBalanceCommand command,
+            CancellationToken cancellationToken)
+        {
+            return Sender.Send(command, cancellationToken);
+        }
     }
 }
