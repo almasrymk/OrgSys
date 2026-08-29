@@ -176,8 +176,7 @@ public sealed class PostFinancialTransferCommandHandler(
     {
         FinancialAccountId = accountId,
         ContraFinancialAccountId = contraId,
-        FinancialTypeId = 4,
-        FinancialTransactionType = transactionType,
+        FinancialTypeId = (long)transactionType,
         FinancialTransferId = transfer.Id,
         Direction = direction,
         ReferenceType = FinancialReferenceType.Transfer,

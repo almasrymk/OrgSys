@@ -33,7 +33,7 @@
 
 
 
-            foreach (var item in finanicial.FinancialInvoices!)
+            foreach (var item in finanicial.FinancialInvoices ?? [])
             {
                 var invoice = await _RepositoryInvoice.GetByFilterAsync(e => e.Id == item.InvoiceId,"");
                 invoice!.Credit += item.Amount;
@@ -41,7 +41,7 @@
                await _RepositoryInvoice.UpdateAsync(invoice);
             }
 
-            foreach (var item in request.FinancialInvoices!)
+            foreach (var item in request.FinancialInvoices ?? [])
             {
                 var invoice = await _RepositoryInvoice.GetByFilterAsync(e => e.Id == item.InvoiceId, "");
                 invoice!.Credit -= item.Amount;
@@ -49,8 +49,9 @@
                 await _RepositoryInvoice.UpdateAsync(invoice);
             }
 
+            finanicial.FinancialInvoices ??= new List<Domain.Entities.FinancialInvoice>();
             finanicial.FinancialInvoices.Clear();
-            await _RepositoryFinancialInvoice.CreateAsync(request.FinancialInvoices.ToList());
+            await _RepositoryFinancialInvoice.CreateAsync((request.FinancialInvoices ?? []).ToList());
             return await base.Handle(request, cancellationToken);
         }
 

@@ -103,12 +103,16 @@ namespace API.Controllers.Org.Financials
             return Sender.Send(command, cancellationToken);
         }
 
-        [HttpPost("FinancialAccount/OpeningBalance")]
-        public Task<Result<long>> SetFinancialAccountOpeningBalance(
-            [FromBody] SetFinancialAccountOpeningBalanceCommand command,
-            CancellationToken cancellationToken)
+        [HttpPut("Post")]
+        public Task<Result> PostOpeningBalance(long id, long userId, CancellationToken cancellationToken)
         {
-            return Sender.Send(command, cancellationToken);
+            return Sender.Send(new PostFinancialOpeningBalanceCommand(id, userId), cancellationToken);
+        }
+
+        [HttpPut("Reverse")]
+        public Task<Result> Reverse(long id, CancellationToken cancellationToken)
+        {
+            return Sender.Send(new ReverseFinancialCommand(id), cancellationToken);
         }
     }
 }

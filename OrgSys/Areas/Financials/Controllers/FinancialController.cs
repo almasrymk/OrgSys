@@ -33,13 +33,14 @@ namespace OrgSys.Areas.Financial.Controllers
             1 => Domain.Resource.Title_Designer.OpeningBalance,
             2 => Domain.Resource.Title_Designer.Receipt,
             3 => Domain.Resource.Title_Designer.Payment,
-            4 => Domain.Resource.Title_Designer.Transfer,
+            4 => Domain.Resource.Title_Designer.TransferIn,
             5 => Domain.Resource.Title_Designer.Deposit,
             6 => Domain.Resource.Title_Designer.Withdrawal,
             7 => Domain.Resource.Title_Designer.Fee,
             8 => Domain.Resource.Title_Designer.Interest,
             9 => Domain.Resource.Title_Designer.Cheque,
             10 => Domain.Resource.Title_Designer.Adjustment,
+            11 => Domain.Resource.Title_Designer.TransferOut,
             _ => Domain.Resource.Title_Designer.Financial
         };
 
@@ -107,7 +108,28 @@ namespace OrgSys.Areas.Financial.Controllers
                         model.Date = defaultFiscalYear.StartDate;
                     }
                 }
+                else if (model.Id > 0 && model.FiscalYearId is null or <= 0)
+                {
+                    // FiscalYearId is never persisted on Financial (see FinancialDto's own comment) —
+                    // on edit, re-derive it from Date for display only, the same way Post itself resolves
+                    // the fiscal year. Without this the dropdown loads blank and re-saving an untouched
+                    // Draft fails the "Fiscal year is required" check in SaveOpeningBalanceDraft.
+                    var matchingFiscalYear = fiscalYears.FirstOrDefault(f =>
+                        f.StartDate.Date <= model.Date.Date && f.EndDate.Date >= model.Date.Date);
+                    if (matchingFiscalYear is not null)
+                        model.FiscalYearId = matchingFiscalYear.Id;
+                }
                 ViewBag.FiscalYearId = new SelectList(fiscalYears, "Id", "Name", model.FiscalYearId);
+                ViewBag.AllowPost = User.IsAllowed("Financial.Post");
+                ViewBag.AllowReverse = User.IsAllowed("Financial.Reverse");
+
+                // Resolved via its own lookup, not a loaded ModifyUser nav — GetByIdFinancialQuery
+                // deliberately keeps Financial's own Include list minimal (see its CreateInclude comment).
+                if (model.Posted && model.ModifyUserId is > 0)
+                {
+                    var postedByUser = await GetObApi<UserDto>($"GetById?Id={model.ModifyUserId}");
+                    ViewBag.PostedByName = postedByUser?.Name;
+                }
             }
         }
 
@@ -130,11 +152,12 @@ namespace OrgSys.Areas.Financial.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public override async Task<ActionResult> Save(FinancialDto ob)
         {
-            // Opening Balance doesn't create a Financial row at all — it writes a JournalItem line into the
-            // shared per-fiscal-year Opening Balance Journal, the same mechanism Customer/Supplier opening
-            // balances already use (see SetFinancialAccountOpeningBalanceCommandHandler).
-            if (ob.FinancialTypeId == 1)
-                return await SaveOpeningBalance(ob);
+            // Opening Balance is a real Financial row like every other type, just Draft-first: Save here
+            // only persists it (FixData + the generic Create/Update dispatch from MainController<>.Save,
+            // same path AutoSave already uses) — no Journal, no Posted. Posting happens separately via the
+            // Post action/PostFinancialOpeningBalanceCommand, mirroring Journal's own Draft/Post/Reverse flow.
+            if (ob.FinancialTypeId == (long)Domain.Enums.FinancialTransactionType.OpeningBalance)
+                return await SaveOpeningBalanceDraft(ob);
 
             if (ob.FinancialAccountId is null or <= 0)
                 ModelState.AddModelError(nameof(ob.FinancialAccountId), "Financial account is required.");
@@ -150,7 +173,7 @@ namespace OrgSys.Areas.Financial.Controllers
                 var command = new PostFinancialTransactionDto
                 {
                     FinancialAccountId = ob.FinancialAccountId!.Value,
-                    FinancialTypeId = ob.FinancialTypeId!.Value,
+                    FinancialTypeId = (Domain.Enums.FinancialTransactionType)ob.FinancialTypeId!.Value,
                     Direction = ob.Direction ?? FinancialTransactionDirection.In,
                     Amount = ob.Amount,
                     CurrencyId = ob.CurrencyId,
@@ -167,55 +190,65 @@ namespace OrgSys.Areas.Financial.Controllers
                 using var client = CreateClient();
                 var response = await client.PostAsJsonAsync($"{Configuration["ApiUrl"]}/Financial/Transactions/Post", command);
                 if (response.IsSuccessStatusCode)
-                    return RedirectToAction(nameof(Index), new { TypeId = command.FinancialTypeId, status = ResultStatus.success, MsgError = "Success" });
+                    return RedirectToAction(nameof(Index), new { TypeId = (long)command.FinancialTypeId, status = ResultStatus.success, MsgError = "Success" });
                 ModelState.AddModelError(string.Empty, await response.Content.ReadAsStringAsync());
             }
             await LoadViewBag(ob);
             return View(ob);
         }
 
-        private async Task<ActionResult> SaveOpeningBalance(FinancialDto ob)
+        private async Task<ActionResult> SaveOpeningBalanceDraft(FinancialDto ob)
         {
             if (ob.FinancialAccountId is null or <= 0)
                 ModelState.AddModelError(nameof(ob.FinancialAccountId), "Financial account is required.");
             if (ob.FiscalYearId is null or <= 0)
                 ModelState.AddModelError(nameof(ob.FiscalYearId), "Fiscal year is required.");
-            if (ob.Debit < 0 || ob.Credit < 0)
-                ModelState.AddModelError(string.Empty, "Debit and Credit must not be negative.");
-            if (ob.Debit > 0 && ob.Credit > 0)
-                ModelState.AddModelError(string.Empty, "Enter either Debit or Credit, not both.");
-            if (ob.Debit == 0 && ob.Credit == 0)
-                ModelState.AddModelError(string.Empty, "Enter a Debit or Credit amount greater than zero.");
+            if (ob.Amount <= 0)
+                ModelState.AddModelError(nameof(ob.Amount), "Opening Balance amount must be greater than zero.");
 
-            if (ModelState.IsValid)
-            {
-                var command = new
-                {
-                    FinancialAccountId = ob.FinancialAccountId!.Value,
-                    FiscalYearId = ob.FiscalYearId!.Value,
-                    Debit = ob.Debit,
-                    Credit = ob.Credit,
-                    CurrencyId = ob.CurrencyId,
-                    Rate = ob.Rate,
-                    Notes = ob.Notes,
-                    CreateUserId = User.GetUserId()
-                };
-                using var client = CreateClient();
-                var response = await client.PostAsJsonAsync($"{Configuration["ApiUrl"]}/Financial/FinancialAccount/OpeningBalance", command);
-                var data = await response.Content.ReadAsStringAsync();
-                var result = JsonConvert.DeserializeObject<Result<long>>(data);
-                if (response.IsSuccessStatusCode && result is not null && (int)result.StatusCode is >= 200 and < 300)
-                    // No dedicated Post/Reverse UI here — the shared Opening Balance journal is managed
-                    // from the standard Journal screen, same as the existing Customer/Supplier flow.
-                    return Redirect($"/Financials/Journal/Save?id={result.Response}");
+            // Opening Balance has no free-form Direction/Reference/Counter-account/PaymentType choice —
+            // locked exactly like the FinancialType.InOut-driven types (Deposit/Withdrawal/...), see
+            // LoadViewBag above. PaymentTypeId is a required (non-nullable) FK on Financial with no field
+            // on this screen to set it from — default to Cash (Id 1) or the insert fails with an FK violation.
+            ob.Direction = FinancialTransactionDirection.In;
+            ob.ReferenceType = FinancialReferenceType.Other;
+            if (ob.PaymentTypeId <= 0)
+                ob.PaymentTypeId = 1;
+            ob.AmountByDefaultCurrency = ob.Amount * ob.Rate;
 
-                foreach (var error in result?.Errors ?? [])
-                    ModelState.AddModelError(string.Empty, error.MessageError);
-                if (result?.Errors is null or { Count: 0 })
-                    ModelState.AddModelError(string.Empty, data);
-            }
-            await LoadViewBag(ob);
-            return View("Save", ob);
+            return await base.Save(ob);
+        }
+
+        public async Task<ActionResult> Post(long id, long ParentId = 0, long TypeId = 0)
+        {
+            if (!User.IsAllowed("Financial.Post"))
+                return Forbid();
+
+            var response = await ApiMethod(ApiMethodType.Put, $"Post?Id={id}&UserId={User.GetUserId()}");
+            var data = await response.Content.ReadAsStringAsync();
+            var res = JsonConvert.DeserializeObject<Domain.Shared.Result>(data);
+
+            if (res?.StatusCode == HttpStatusCode.OK)
+                return Redirect($"/Financials/Financial/Index?ParentId={ParentId}&TypeId={TypeId}&status={ResultStatus.success}&MsgError=Success");
+
+            var message = string.Join(" ", res?.Errors?.Select(e => e.MessageError) ?? []);
+            return Redirect($"/Financials/Financial/Save?id={id}&ParentId={ParentId}&TypeId={TypeId}&status={ResultStatus.error}&MsgError={Uri.EscapeDataString(message)}");
+        }
+
+        public async Task<ActionResult> Reverse(long id, long ParentId = 0, long TypeId = 0)
+        {
+            if (!User.IsAllowed("Financial.Reverse"))
+                return Forbid();
+
+            var response = await ApiMethod(ApiMethodType.Put, $"Reverse?Id={id}");
+            var data = await response.Content.ReadAsStringAsync();
+            var res = JsonConvert.DeserializeObject<Domain.Shared.Result>(data);
+
+            if (res?.StatusCode == HttpStatusCode.OK)
+                return Redirect($"/Financials/Financial/Index?ParentId={ParentId}&TypeId={TypeId}&status={ResultStatus.success}&MsgError=Success");
+
+            var message = string.Join(" ", res?.Errors?.Select(e => e.MessageError) ?? []);
+            return Redirect($"/Financials/Financial/Save?id={id}&ParentId={ParentId}&TypeId={TypeId}&status={ResultStatus.error}&MsgError={Uri.EscapeDataString(message)}");
         }
 
         public async Task<ActionResult> Cancel(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1)

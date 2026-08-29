@@ -428,7 +428,9 @@ namespace Infrastructure.Seed
                                    new Permission { Id = 5011204, Name = "Delete", Key = "Financial.Delete", ParentId = 50112, TypeId = 1 },
                                    new Permission { Id = 5011205, Name = "Cancel", Key = "Financial.Cancel", ParentId = 50112, TypeId = 1 },
                                    new Permission { Id = 5011206, Name = "Redo", Key = "Financial.Redo", ParentId = 50112, TypeId = 1 },
-                               
+                                   new Permission { Id = 5011207, Name = "Post", Key = "Financial.Post", ParentId = 50112, TypeId = 1 },
+                                   new Permission { Id = 5011208, Name = "Reverse", Key = "Financial.Reverse", ParentId = 50112, TypeId = 1 },
+
                };
 
             foreach (var ob in list)
@@ -840,13 +842,14 @@ namespace Infrastructure.Seed
                  new FinancialType { Id = 1, Name = "OpeningBalance", Hide = false, InOut = 1, Icon = "iconsminds-start-2" },
                  new FinancialType { Id = 2, Name = "Receipt", Hide = false, InOut = 1, Icon = "iconsminds-financial" },
                  new FinancialType { Id = 3, Name = "Payment", Hide = false, InOut = -1, Icon = "iconsminds-handshake" },
-                 new FinancialType { Id = 4, Name = "Transfer", Hide = false, InOut = 0, Icon = "simple-icon-shuffle" },
+                 new FinancialType { Id = 4, Name = "TransferIn", Hide = false, InOut = 1, Icon = "simple-icon-shuffle" },
                  new FinancialType { Id = 5, Name = "Deposit", Hide = false, InOut = 1, Icon = "iconsminds-down-1" },
                  new FinancialType { Id = 6, Name = "Withdrawal", Hide = false, InOut = -1, Icon = "iconsminds-up-1" },
                  new FinancialType { Id = 7, Name = "Fee", Hide = false, InOut = -1, Icon = "iconsminds-receipt-4" },
                  new FinancialType { Id = 8, Name = "Interest", Hide = false, InOut = 1, Icon = "iconsminds-line-chart-1" },
                  new FinancialType { Id = 9, Name = "Cheque", Hide = false, InOut = 0, Icon = "iconsminds-check" },
-                 new FinancialType { Id = 10, Name = "Adjustment", Hide = false, InOut = 0, Icon = "iconsminds-gear" }
+                 new FinancialType { Id = 10, Name = "Adjustment", Hide = false, InOut = 0, Icon = "iconsminds-gear" },
+                 new FinancialType { Id = 11, Name = "TransferOut", Hide = false, InOut = -1, Icon = "simple-icon-shuffle" }
             };
 
             foreach (var ob in list)

@@ -26,7 +26,7 @@ namespace Application.Commands.Org.Financials.Financial.Commands
             if (dto.Amount <= 0 || dto.ExchangeRate <= 0)
                 return BadRequest("Amount and exchange rate must be greater than zero.");
             var account = await accountRepository.GetByFilterAsync(e => e.Id == dto.FinancialAccountId, string.Empty);
-            var type = await typeRepository.GetByFilterAsync(e => e.Id == dto.FinancialTypeId, string.Empty);
+            var type = await typeRepository.GetByFilterAsync(e => e.Id == (long)dto.FinancialTypeId, string.Empty);
             var counter = await glRepository.GetByFilterAsync(e => e.Id == dto.CounterAccountId, string.Empty);
             if (account is null || !account.IsActive || account.AccountId is not > 0 || type is null || counter is null)
                 return BadRequest("Financial account, transaction type, and counter account must be valid.");
@@ -42,8 +42,7 @@ namespace Application.Commands.Org.Financials.Financial.Commands
                 var transaction = new Domain.Entities.Financial
                 {
                     FinancialAccountId = account.Id,
-                    FinancialTypeId = type.Id,
-                    FinancialTransactionType = dto.FinancialTransactionType,
+                    FinancialTypeId = (long)dto.FinancialTypeId,
                     Direction = dto.Direction,
                     ReferenceType = dto.ReferenceType,
                     ReferenceId = dto.ReferenceId,

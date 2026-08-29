@@ -1807,6 +1807,24 @@ namespace Domain.Resource {
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to Transfer In.
+        /// </summary>
+        public static string TransferIn {
+            get {
+                return ResourceManager.GetString("TransferIn", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Transfer Out.
+        /// </summary>
+        public static string TransferOut {
+            get {
+                return ResourceManager.GetString("TransferOut", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Payment Types.
         /// </summary>
         public static string PaymentTypes {

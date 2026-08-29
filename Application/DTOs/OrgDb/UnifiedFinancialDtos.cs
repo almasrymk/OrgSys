@@ -26,8 +26,7 @@ public class FinancialAccountDto : Domain.Entities.BaseModel
 public sealed class PostFinancialTransactionDto
 {
     public long FinancialAccountId { get; set; }
-    public long FinancialTypeId { get; set; }
-    public FinancialTransactionType FinancialTransactionType { get; set; }
+    public FinancialTransactionType FinancialTypeId { get; set; }
     public FinancialTransactionDirection Direction { get; set; }
     public decimal Amount { get; set; }
     public long CurrencyId { get; set; }

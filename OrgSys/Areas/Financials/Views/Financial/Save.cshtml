@@ -17,6 +17,7 @@
         8 => "FinancialInterest.Preference",
         9 => "FinancialCheque.Preference",
         10 => "FinancialAdjustment.Preference",
+        11 => "FinancialTransfer.Preference",
         _ => string.Empty
     };
     var allowPreference = !string.IsNullOrEmpty(preferencePermission) && User.IsAllowed(preferencePermission);
@@ -42,9 +43,23 @@
         <div class="card pl-1 pr-1">
             <form action="Save" method="post" class="tooltip-label-right" autocomplete="off">
                 @Html.AntiForgeryToken()
-                @* FinancialType is already known from the menu/route context (TypeId) — the user must not
-                   re-pick it or switch it to a different type, so it travels as a hidden field only. *@
+                @* Id must round-trip on every postback — without it, MainController<>.Save's ob.Id == 0
+                   check (used by the Opening Balance Draft path) always takes the Create branch, even
+                   when editing an existing Draft, misfiring the duplicate-Opening-Balance validation.
+                   FinancialType is already known from the menu/route context (TypeId) — the user must not
+                   re-pick it or switch it to a different type, so it travels as a hidden field only.
+                   TypeId must round-trip too: the same Save's success redirect builds its Index URL from
+                   the posted ob.TypeId, not FinancialTypeId — without this it always redirects to TypeId=0.
+                   CreateUserId/CreateDate must round-trip too: the generic UpdateCommandHandler<> maps the
+                   posted DTO straight into a brand-new Financial (mapper.Map<TModel>(request)), it does not
+                   merge onto the existing row — any field missing from the form resets to its C# default on
+                   every save. CreateUserId is a required FK to User, so a missing/zeroed value fails the
+                   update outright; CreateDate would silently lose the original creation timestamp. *@
+                <input type="hidden" asp-for="Id" />
                 <input type="hidden" asp-for="FinancialTypeId" />
+                <input type="hidden" asp-for="TypeId" />
+                <input type="hidden" asp-for="CreateUserId" />
+                <input type="hidden" asp-for="CreateDate" />
                 @{ var financialTypeInOut = (int)(ViewBag.FinancialTypeInOut ?? 0); }
                 @if (financialTypeInOut != 0)
                 {
@@ -81,22 +96,37 @@
 
                         <div class="form-row">
                             <div class="form-group col-md-3">
-                                <label>Debit</label>
-                                <input asp-for="Debit" class="form-control" />
-                            </div>
-                            <div class="form-group col-md-3">
-                                <label>Credit</label>
-                                <input asp-for="Credit" class="form-control" />
+                                <label>Opening Balance</label>
+                                <input asp-for="Amount" class="form-control" />
+                                <span asp-validation-for="Amount" class="text-danger"></span>
                             </div>
                             <div class="form-group col-md-3">
                                 <label>@Domain.Resource.Title_Designer.Currency</label>
                                 <select asp-for="CurrencyId" asp-items="ViewBag.CurrencyId" class="form-control"></select>
                             </div>
                             <div class="form-group col-md-3">
-                                <label>@Domain.Resource.Title_Designer.Rate</label>
+                                <label>Exchange Rate</label>
                                 <input asp-for="Rate" class="form-control" />
                             </div>
+                            <div class="form-group col-md-3">
+                                <label>Opening Balance (Base Currency)</label>
+                                <input asp-for="AmountByDefaultCurrency" class="form-control" readonly title="Opening Balance x Exchange Rate" />
+                            </div>
                         </div>
+
+                        @if (Model.Posted)
+                        {
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label>Posted Date</label>
+                                    <input type="text" class="form-control" value="@Model.ModifyDate?.ToString("yyyy-MM-dd HH:mm")" readonly style="background-color:transparent" />
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label>Posted By</label>
+                                    <input type="text" class="form-control" value="@ViewBag.PostedByName" readonly style="background-color:transparent" />
+                                </div>
+                            </div>
+                        }
                     }
                     else
                     {
@@ -190,7 +220,32 @@
                 </div>
                 <div class="row">
                     <div class="col-7">
-                        <button id="btn" type="submit" class="btn btn-primary ml-4 mr-4 mb-4">@Domain.Resource.Title_Designer.Save</button>
+                        @if (financialTypeId == 1 && Model.Status == Domain.Enums.Status.Reversed)
+                        {
+                            <span class="badge badge-secondary ml-4 mr-4 mb-4" style="font-size:1rem;padding:10px 16px;">Reversed — read only</span>
+                        }
+                        else if (financialTypeId == 1 && Model.Posted)
+                        {
+                            <span class="badge badge-success ml-4 mr-4 mb-4" style="font-size:1rem;padding:10px 16px;">Posted — read only</span>
+                            @if ((bool)(ViewBag.AllowReverse ?? false))
+                            {
+                                <a href="/@ViewBag.area/@ViewBag.PageTitle/Reverse?id=@Model.Id&ParentId=@Model.ParentId&TypeId=@Model.TypeId" class="btn btn-outline-danger ml-4 mr-4 mb-4" onclick="return confirm('Reverse this posted Opening Balance? This will create a new reversing Journal Entry.');">
+                                    <i class="simple-icon-action-undo"></i>
+                                    Reverse
+                                </a>
+                            }
+                        }
+                        else
+                        {
+                            <button id="btn" type="submit" class="btn btn-primary ml-4 mr-4 mb-4">@Domain.Resource.Title_Designer.Save</button>
+                            @if (financialTypeId == 1 && Model.Id > 0 && (bool)(ViewBag.AllowPost ?? false))
+                            {
+                                <a href="/@ViewBag.area/@ViewBag.PageTitle/Post?id=@Model.Id&ParentId=@Model.ParentId&TypeId=@Model.TypeId" class="btn btn-success ml-4 mr-4 mb-4" onclick="return confirm('Post this Opening Balance? This will create the Journal Entry and it can no longer be edited or deleted.');">
+                                    <i class="simple-icon-check"></i>
+                                    Post
+                                </a>
+                            }
+                        }
                     </div>
                 </div>
             </form>
@@ -204,6 +259,36 @@
 
 <script src="~/js/vendor/jquery-3.3.1.min.js"></script>
 <script>
+    @if (financialTypeId == 1)
+    {
+        <text>
+        // Opening Balance (Base Currency) is a live preview of Opening Balance x Exchange Rate — the
+        // server recomputes the persisted value the same way on Save regardless, this just avoids a
+        // stale readonly field until the next round-trip.
+        $(function () {
+            function recalcBaseCurrency() {
+                var amount = parseFloat($('#Amount').val()) || 0;
+                var rate = parseFloat($('#Rate').val()) || 0;
+                $('#AmountByDefaultCurrency').val((amount * rate).toFixed(2));
+            }
+            $('#Amount, #Rate').on('input change', recalcBaseCurrency);
+            recalcBaseCurrency();
+        });
+        </text>
+    }
+
+    @if (financialTypeId == 1 && (Model.Posted || Model.Status == Domain.Enums.Status.Reversed))
+    {
+        @: // A Posted/Reversed Opening Balance is immutable — the backend already rejects edits,
+        @: // this just keeps the UI from inviting an edit attempt that would only fail server-side.
+        <text>
+        $(function () {
+            $("#HPage").find("input, textarea, select").prop("disabled", true).prop("readonly", true);
+            $("#HPage").find("#btn").hide();
+        });
+        </text>
+    }
+
     $('#ShowPreference').on('click', function () {
         $.ajax({
             type: 'GET',

@@ -63,7 +63,7 @@ namespace Application.Commands.Org.Financials.Financial.Command
                         ""
                     );
 
-                    financial.CashBoxId = int.Parse(cashBoxPref?.Value ?? "0");
+                    financial.FinancialAccountId = int.Parse(cashBoxPref?.Value ?? "0");
 
                     //invoice.CodeNumber = await _Repository.GetMaxByFilterAsync(e => e.TypeId == invoice.TypeId, e => e.CodeNumber) + 1;
 

@@ -25,7 +25,7 @@ public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork,
 
         try
         {
-            var ids = request.FinancialInvoices.Select(x => x.InvoiceId).ToList();
+            var ids = (request.FinancialInvoices ?? []).Select(x => x.InvoiceId).ToList();
 
             var invs = await _RepositoryInvoice
                 .GetListByFilterAsync(e => ids.Contains(e.Id), "");

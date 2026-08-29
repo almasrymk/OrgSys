@@ -1,4 +1,4 @@
-﻿namespace Domain.Entities
+namespace Domain.Entities
 {
     [Table("Financial")]
     public class Financial : MovementModel
@@ -26,11 +26,6 @@
         [Column(TypeName = "decimal(18,2)")]
         public decimal Rate { get; set; }
 
-        [ForeignKey("CashBox")]
-        public long CashBoxId { get; set; }
-
-        public virtual CashBox? CashBox { get; set; }
-
         [Column(TypeName = "decimal(18,2)")]
         public decimal Amount { get; set; }
 
@@ -41,12 +36,15 @@
         public long? FinancialAccountId { get; set; }
         public virtual FinancialAccount? FinancialAccount { get; set; }
 
+        // Numerically identical to FinancialTransactionType (Domain/Enums/FinancialTransactionType.cs) —
+        // that enum and the FinancialType table share one Id space (see InitialData.cs), so callers can
+        // freely cast between them. Kept as long? rather than the enum itself: EF Core cannot map an
+        // enum-typed FK against a long-typed principal key, even with a value converter.
         [ForeignKey(nameof(FinancialType))]
         public long? FinancialTypeId { get; set; }
         public virtual FinancialType? FinancialType { get; set; }
 
         public FinancialTransactionDirection? Direction { get; set; }
-        public FinancialTransactionType? FinancialTransactionType { get; set; }
         public FinancialReferenceType ReferenceType { get; set; } = FinancialReferenceType.Other;
         public long? ReferenceId { get; set; }
 
@@ -67,7 +65,7 @@
 
         [StringLength(500)]
         public string? Notes { get; set; }
-        
+
         public ICollection<FinancialInvoice>? FinancialInvoices { get; set; }
     }
 }

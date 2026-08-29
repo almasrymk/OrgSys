@@ -624,6 +624,12 @@
   <data name="Adjustment" xml:space="preserve">
     <value>Adjustment</value>
   </data>
+  <data name="TransferIn" xml:space="preserve">
+    <value>Transfer In</value>
+  </data>
+  <data name="TransferOut" xml:space="preserve">
+    <value>Transfer Out</value>
+  </data>
   <data name="PaymentTypes" xml:space="preserve">
     <value>Payment Types</value>
   </data>
