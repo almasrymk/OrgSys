@@ -227,11 +227,15 @@
                             Sales Account
                         </label>
                         <div id="divPaymentTypeId">
-                            <div class="input-group">
+                            <div class="input-group DropAutoComplete">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="iconsminds-financial"></i></span>
                                 </div>
-                                @Html.DropDownList("SalesAccounts", null, "...", new { @class = "form-control" })
+                                <input type="text" class="form-control Droptxt" id="txtSalesAccounts" value="@ViewBag.SalesAccountsName" autocomplete="off" />
+                                <input type="hidden" id="SalesAccounts" name="SalesAccounts" value="@ViewBag.SalesAccountsId" />
+                                <div class="input-group-prepend Dropbtn">
+                                    <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
+                                </div>
                             </div>
                             @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
@@ -241,11 +245,15 @@
                             Dealer Account
                         </label>
                         <div id="divPaymentTypeId">
-                            <div class="input-group">
+                            <div class="input-group DropAutoComplete">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="iconsminds-financial"></i></span>
                                 </div>
-                                @Html.DropDownList("DealerAccounts", null, "...", new { @class = "form-control" })
+                                <input type="text" class="form-control Droptxt" id="txtDealerAccounts" value="@ViewBag.DealerAccountsName" autocomplete="off" />
+                                <input type="hidden" id="DealerAccounts" name="DealerAccounts" value="@ViewBag.DealerAccountsId" />
+                                <div class="input-group-prepend Dropbtn">
+                                    <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
+                                </div>
                             </div>
                             @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>
@@ -255,11 +263,15 @@
                             Tax Account
                         </label>
                         <div id="divPaymentTypeId">
-                            <div class="input-group">
+                            <div class="input-group DropAutoComplete">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="iconsminds-financial"></i></span>
                                 </div>
-                                @Html.DropDownList("TaxAccounts", null, "...", new { @class = "form-control" })
+                                <input type="text" class="form-control Droptxt" id="txtTaxAccounts" value="@ViewBag.TaxAccountsName" autocomplete="off" />
+                                <input type="hidden" id="TaxAccounts" name="TaxAccounts" value="@ViewBag.TaxAccountsId" />
+                                <div class="input-group-prepend Dropbtn">
+                                    <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
+                                </div>
                             </div>
                             @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                         </div>

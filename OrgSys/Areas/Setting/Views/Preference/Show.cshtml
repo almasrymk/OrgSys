@@ -124,6 +124,55 @@ function SavePreference() {
         }
     });
 }
+    // Chart-of-account pickers (Droptxt + hidden input) rendered by the partials above — same
+    // pattern as Financial/Save.cshtml, bound to Setting/Account/GetList. Calling accountPicker
+    // for every known key is safe even when a given partial doesn't render that field: jQuery's
+    // selector just matches nothing and the call is a no-op.
+    function accountPicker(txtSelector, hiddenSelector) {
+        $(txtSelector).autocomplete({
+            // This picker lives inside the Preference Bootstrap modal (z-index 1050+), but jQuery UI
+            // appends its suggestion list to <body> by default at a much lower z-index — it renders
+            // behind the modal instead of on top of it. Anchoring it to .modal-content keeps the list
+            // in the modal's own stacking context so it draws above the modal body.
+            appendTo: ".modal-content",
+            minLength: 0,
+            source: function (request, response) {
+                var searchPhrase = $(txtSelector).val();
+                if (searchPhrase === "...") searchPhrase = "";
+                $.ajax({
+                    url: "/Setting/Account/GetList",
+                    type: "Get",
+                    dataType: "json",
+                    data: { txtSearch: searchPhrase, page: 1, pageSize: 20 },
+                    success: function (data) {
+                        if (!data.length) data = [{ name: "NoResultsFound" }];
+                        response($.map(data, function (item) {
+                            return { label: item.name, value: item.name, id: item.id };
+                        }));
+                    }
+                });
+            },
+            select: function (event, ui) {
+                if (ui.item.label === "NoResultsFound") { event.preventDefault(); return; }
+                $(hiddenSelector).val(ui.item.id);
+            }
+        });
+    }
+    [
+        "OpeningBalanceEquityAccount", "StockAccount", "PurchaseAccount", "SalesReturnAccount",
+        "SalesAccount", "PurchaseReturnAccount", "SourceInventoryAccount", "TransitAccount",
+        "DestinationInventoryAccount", "OpeningBalanceAccount", "InventoryDamageExpenseAccount",
+        "SalesAccounts", "DealerAccounts", "TaxAccounts", "InvoiceAccounts"
+    ].forEach(function (key) {
+        if ($("#txt" + key).length) accountPicker("#txt" + key, "#" + key);
+    });
+    $(".Droptxt").click(function () {
+        if ($(this).val() === "" || $(this).val() === "...") $(this).autocomplete("search", "");
+    });
+    $(".Dropbtn").click(function () {
+        $(this).parent().find(".Droptxt").autocomplete("search", "");
+    });
+
     function CollectDataPreference() {
         var list = [];
 

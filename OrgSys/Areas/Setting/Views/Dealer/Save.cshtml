@@ -167,7 +167,7 @@
                                         {
                                             <div class="form-group col-md-6">
                                                 <label class="custom-control custom-checkbox mt-4 pt-1">
-                                                    @Html.CheckBoxFor(model => model.AutoCreateReceivableAccount, new { @class = "custom-control-input", id = "chkAutoCreateReceivableAccount" })
+                                                    @Html.CheckBox("AutoCreateReceivableAccount", Model.AutoCreateReceivableAccount ?? false, new { @class = "custom-control-input", id = "chkAutoCreateReceivableAccount" })
                                                     <span class="custom-control-label">Auto-create receivable account under Accounts Receivable</span>
                                                 </label>
                                                 <small class="form-text text-muted">Only used when no Account is selected above — generates a customer sub-account and links it automatically.</small>
@@ -184,7 +184,7 @@
                                         {
                                             <div class="form-group col-md-6">
                                                 <label class="custom-control custom-checkbox mt-4 pt-1">
-                                                    @Html.CheckBoxFor(model => model.AutoCreatePayableAccount, new { @class = "custom-control-input", id = "chkAutoCreatePayableAccount" })
+                                                    @Html.CheckBox("AutoCreatePayableAccount", Model.AutoCreatePayableAccount ?? false, new { @class = "custom-control-input", id = "chkAutoCreatePayableAccount" })
                                                     <span class="custom-control-label">Auto-create payable account under Accounts Payable</span>
                                                 </label>
                                                 <small class="form-text text-muted">Only used when no Account is selected above — generates a supplier sub-account and links it automatically.</small>

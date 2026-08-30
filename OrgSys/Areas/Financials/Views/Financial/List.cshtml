@@ -1,4 +1,3 @@
-@using Application.DTOs
 @using Microsoft.AspNetCore.Mvc.Localization
 @using System.Globalization
 @model Domain.Shared.ResultPagination<Application.DTOs.FinancialDto>
@@ -24,19 +23,6 @@
     AllowDelete = User.IsAllowed("Financial.Delete");
     AllowCancel = User.IsAllowed("Financial.Cancel");
     AllowRedo = User.IsAllowed("Financial.Redo");
-
-    List<InvoiceTypeDto> InvoicesTypes = ViewBag.InvoicesTypes;
-    List<TransactionTypeDto> TransactionsTypes = ViewBag.TransactionsTypes;
-    Func<long, string> TransactionResourceName = typeId => typeId switch
-    {
-        1 => $"{Domain.Resource.Title_Designer.Addition} {Domain.Resource.Title_Designer.Stock}",
-        2 => $"{Domain.Resource.Title_Designer.Issue} {Domain.Resource.Title_Designer.Stock}",
-        3 => $"{Domain.Resource.Title_Designer.Transfer} {Domain.Resource.Title_Designer.Stock}",
-        4 => $"{Domain.Resource.Title_Designer.Received} {Domain.Resource.Title_Designer.Stock}",
-        5 => $"{Domain.Resource.Title_Designer.Addition} {Domain.Resource.Title_Designer.Stock}",
-        6 => $"{Domain.Resource.Title_Designer.Issue} {Domain.Resource.Title_Designer.Stock}",
-        _ => "Transaction"
-    };
 }
 
 @if (Model != null && Model.Response.Count > 0)
@@ -47,14 +33,11 @@
                 <thead>
                     <tr>
                         <th class="text-center">#</th>
+                        <th style="text-align:center"></th>
                         <th class="@TextAlign">Financial Type</th>
-                        <th class="text-center">@Domain.Resource.Title_Designer.Code</th>
-                        <th class="text-center">@Domain.Resource.Title_Designer.Date</th>
                         <th class="@TextAlign">Financial Account</th>
-                        <th class="@TextAlign">Counterparty</th>
-                        <th class="text-center">Amount</th>
+                        <th class="text-center">@Domain.Resource.Title_Designer.Date</th>
                         <th class="@TextAlign">@Domain.Resource.Title_Designer.Currency</th>
-                        <th class="@TextAlign">Reference</th>
                         <th class="text-center">Status</th>
                         <th class="text-center">Review</th>
                         <th class="text-center">Posted</th>
@@ -73,46 +56,16 @@
                     {
                         <tr style="@(Model.Response[i].Status == Domain.Enums.Status.Cancel ? "color:#a8a7a7;background:repeating-linear-gradient(60deg, transparent, transparent 5px, gainsboro 5px, gainsboro 6px);" : "")">
                             <td class="text-center align-middle">@x</td>
+                            <td class="text-center align-middle" style="width:50px;">
+                                <div class="list-thumbnail  border-0 rounded-circle badge-theme-1 m-0" style="height:40px;width:40px;font-size:17px;text-align:center;padding:9px;">
+                                    <i class="@ViewBag.FinancialTypeIcon"></i>
+                                </div>
+                            </td>
                             <td class="@TextAlign align-middle">@Model.Response[i].FinancialTypeName</td>
-                            <td class="text-center align-middle">@Model.Response[i].Code</td>
-                            <td class="text-center align-middle">@Model.Response[i].Date.ToString(DateFormat, new CultureInfo("en-US"))</td>
                             <td class="@TextAlign align-middle">@Model.Response[i].FinancialAccountName</td>
-                            <td class="@TextAlign align-middle">@(Model.Response[i].ContraFinancialAccountName ?? Model.Response[i].DealerName)</td>
-                            <td class="text-center align-middle">@Model.Response[i].Amount.ToString("N2")</td>
+                            <td class="text-center align-middle">@Model.Response[i].Date.ToString(DateFormat, new CultureInfo("en-US"))</td>
                             <td class="@TextAlign align-middle">@Model.Response[i].CurrencyName</td>
                             <td class="text-center align-middle">@Model.Response[i].Status</td>
-                            <td class="@TextAlign align-middle">
-                                @if ("" + Model.Response[i].RefranceTable == "invoice")
-                                {
-                                    <i class="@InvoicesTypes.FirstOrDefault(e => e.Id == @Model.Response[i].RefranceTypeId).Icon"></i>
-                                    <span> &nbsp; </span>
-                                    @if (Model.Response[i].RefranceTypeId == 1)
-                                    {
-                                        <span> @Domain.Resource.Title_Designer.Sales @Domain.Resource.Title_Designer.Invoice </span>                                        
-                                    }
-                                    else if (Model.Response[i].RefranceTypeId == 2)
-                                    {
-                                        <span> @Domain.Resource.Title_Designer.Purchase @Domain.Resource.Title_Designer.Invoice </span>
-                                    }
-                                    else if (Model.Response[i].RefranceTypeId == 3)
-                                    {
-                                        <span> @Domain.Resource.Title_Designer.Sales @Domain.Resource.Title_Designer.Return </span>
-                                    }
-                                    else if (Model.Response[i].RefranceTypeId == 4)
-                                    {
-                                        <span> @Domain.Resource.Title_Designer.Purchase @Domain.Resource.Title_Designer.Return </span>
-                                    }
-                                    <span> &nbsp; (@Model.Response[i].RefranceCode) </span>
-                                    
-                                }
-                                else if ("" + Model.Response[i].RefranceTable == "transaction")
-                                {
-                                    <a href="/Transactions/Transaction/Save?id=@Model.Response[i].RefranceId&ParentId=@ViewBag.ParentId&TypeId=@Model.Response[i].RefranceTypeId">
-                                        <i class="@(TransactionsTypes.FirstOrDefault(e => e.Id == Model.Response[i].RefranceTypeId)?.Icon)"></i>
-                                        @TransactionResourceName(Model.Response[i].RefranceTypeId) <span>(@Model.Response[i].RefranceCode)</span>
-                                    </a>
-                                }                                                                                            
-                            </td>
                             <td class="text-center align-middle">@(Model.Response[i].Review ? "✓" : "")</td>
                             <td class="text-center align-middle">@(Model.Response[i].Posted ? "✓" : "")</td>
                             @if (AllowView || AllowEdit || AllowCancel || AllowRedo || AllowDelete)
@@ -204,17 +157,17 @@
                         <div class="w-25">
                             <small>Financial Type</small>
                         </div>
-                        <div class="list-item-heading mb-0  w-10  ">
-                            <small>@Domain.Resource.Title_Designer.Code</small>
+                        <div class="list-item-heading mb-0 truncate w-20">
+                            <small>Financial Account</small>
                         </div>
                         <div class="list-item-heading mb-0 truncate w-15 ">
                             <small>@Domain.Resource.Title_Designer.Date</small>
                         </div>
-                        <div class="w-20">
+                        <div class="w-15">
                             <small>@Domain.Resource.Title_Designer.Currency</small>
-                        </div>                      
-                        <div class="list-item-heading mb-0 truncate w-30">
-                            <small>Reference</small>
+                        </div>
+                        <div class="list-item-heading mb-0 truncate w-10">
+                            <small>Status</small>
                         </div>
                         <div class="list-item-heading mb-0 truncate w-10">
                             <small>Review</small>
@@ -234,60 +187,23 @@
                 <div class="card d-flex flex-row mb-2">
                     <div class="d-flex flex-grow-1 min-width-zero" style="border-radius:15px; height:60px; @(Model.Response[i].Status == Domain.Enums.Status.Cancel ? "color:#a8a7a7;background:repeating-linear-gradient(60deg, transparent, transparent 5px, gainsboro 5px, gainsboro 6px);" : "")">
                         <div class="list-thumbnail  border-0 card-img-left badge-theme-1" style="height:60px; width:60px; font-size:x-large; text-align:center; padding:14px;">
-                            @if ("" + Model.Response[i].RefranceTable == "invoice")
-                            {
-                                <i class="@InvoicesTypes.FirstOrDefault(e => e.Id == @Model.Response[i].RefranceTypeId).Icon"></i>
-                            }
-                            else
-                            {
-                                <i class="iconsminds-address-book-2"></i>
-                            }
+                            <i class="@ViewBag.FinancialTypeIcon"></i>
                         </div>
                         <div class="card-body align-self-center d-flex flex-column flex-md-row  align-items-md-center">
                             <div class="w-25">
                                 @Model.Response[i].FinancialTypeName
                             </div>
-                            <div class="list-item-heading mb-0  w-10  ">
-                                @Model.Response[i].Code
+                            <div class="list-item-heading mb-0 truncate w-20">
+                                @Model.Response[i].FinancialAccountName
                             </div>
                             <div class="list-item-heading mb-0 truncate w-15 ">
                                 @Model.Response[i].Date.ToString(DateFromate, new CultureInfo("en-US"))
                             </div>
-                            <div class="w-20">
+                            <div class="w-15">
                                 @Model.Response[i].CurrencyName
-                            </div>                          
-                            <div class="list-item-heading mb-0 truncate w-30">
-                                @if ("" + Model.Response[i].RefranceTable == "invoice")
-                                {
-                                    <a href="/Invoices/Invoice/Save?id=@Model.Response[i].RefranceId&ParentId=@ViewBag.ParentId&TypeId=@Model.Response[i].RefranceTypeId">
-                                        <i class="@InvoicesTypes.FirstOrDefault(e => e.Id == @Model.Response[i].RefranceTypeId).Icon"></i>
-                                        <span> &nbsp; </span>
-                                            @if (Model.Response[i].RefranceTypeId == 1)
-                                            {
-                                                <span> @Domain.Resource.Title_Designer.Sales @Domain.Resource.Title_Designer.Invoice </span>
-                                            }
-                                            else if (Model.Response[i].RefranceTypeId == 2)
-                                            {
-                                                <span> @Domain.Resource.Title_Designer.Purchase @Domain.Resource.Title_Designer.Invoice </span>
-                                            }
-                                            else if (Model.Response[i].RefranceTypeId == 3)
-                                            {
-                                                <span> @Domain.Resource.Title_Designer.Sales @Domain.Resource.Title_Designer.Return </span>
-                                            }
-                                            else if (Model.Response[i].RefranceTypeId == 4)
-                                            {
-                                                <span> @Domain.Resource.Title_Designer.Purchase @Domain.Resource.Title_Designer.Return </span>
-                                            }
-                                            <span> (@Model.Response[i].RefranceCode) </span>                                        
-                                    </a>
-                                }
-                                else if ("" + Model.Response[i].RefranceTable == "transaction")
-                                {
-                                    <a href="/Transactions/Transaction/Save?id=@Model.Response[i].RefranceId&ParentId=@ViewBag.ParentId&TypeId=@Model.Response[i].RefranceTypeId">
-                                        <i class="@(TransactionsTypes.FirstOrDefault(e => e.Id == Model.Response[i].RefranceTypeId)?.Icon)"></i>
-                                        @TransactionResourceName(Model.Response[i].RefranceTypeId) <span>(@Model.Response[i].RefranceCode)</span>
-                                    </a>
-                                }
+                            </div>
+                            <div class="list-item-heading mb-0 truncate w-10">
+                                @Model.Response[i].Status
                             </div>
                             <div class="list-item-heading mb-0 truncate w-10">
                                 @(Model.Response[i].Review ? "✓" : "")

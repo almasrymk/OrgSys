@@ -25,7 +25,7 @@
                 await _rolePermissionRepository.ShiftDeleteAsync(e => ids.Contains(e.Id));
                 await _rolePermissionRepository.CreateAsync(CreateRolePermissions(request.PermissionList, ob.Id));
 
-                if (_UnitOfWork.SaveChangeAsync().Result > 0)
+                if (await _UnitOfWork.SaveChangeAsync(cancellationToken) > 0)
                 {
                     return new Result(HttpStatusCode.OK, null);
                 }

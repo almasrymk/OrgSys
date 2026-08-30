@@ -22,7 +22,7 @@
                 var ob = mapper.Map<TModel>(request);
 
                 var res = await _Repository.CreateAsync(ob);
-                if (_UnitOfWork.SaveChangeAsync().Result > 0)
+                if (await _UnitOfWork.SaveChangeAsync(cancellationToken) > 0)
                 {
                     return new Result(HttpStatusCode.OK, null);
                 }

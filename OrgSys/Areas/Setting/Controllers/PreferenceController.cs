@@ -15,6 +15,14 @@ namespace OrgSys.Areas.Setting.Controllers
     public class PreferenceController(IConfiguration configuration, IMapper mapper)
         :  MainController<PreferenceDto, CreatePreferenceCommand , UpdatePreferenceCommand>(configuration, mapper)
     {         
+        // Feeds the Droptxt/autocomplete account pickers (Setting/Account/GetList) instead of a
+        // server-rendered <select> — mirrors Model.FinancialAccountName on Financial/Save.cshtml.
+        private void SetAccountViewBag(string key, List<AccountDto> accounts, string? selectedId)
+        {
+            ViewData[$"{key}Id"] = selectedId;
+            ViewData[$"{key}Name"] = accounts.FirstOrDefault(a => "" + a.Id == selectedId)?.Name;
+        }
+
         public async Task<ActionResult> Show(string Resource = "", int type = 0)
         {
             ViewBag.Resource = Resource;
@@ -68,12 +76,12 @@ namespace OrgSys.Areas.Setting.Controllers
             ViewBag.ServiceType = new SelectList(selectListItems, "Value", "Text", Service.FirstOrDefault(e => e.Key == "DefaultServiceType")?.Value);
             ViewBag.TaxType = new SelectList(selectListItems, "Value", "Text", Service.FirstOrDefault(e => e.Key == "DefaultTaxType")?.Value);
             ViewBag.Currencys = new SelectList(await GetListApi<CurrencyDto>(), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultCurrency")?.Value);
-            ViewBag.SalesAccounts = new SelectList(Accounts, "Id", "Name", Service.FirstOrDefault(e => e.Key == "SalesAccount")?.Value);
+            SetAccountViewBag("SalesAccounts", Accounts, Service.FirstOrDefault(e => e.Key == "SalesAccount")?.Value);
             var invoiceAccountKey = type == 2 || type == 4 ? "PurchaseAccount" : "SalesAccount";
             ViewBag.InvoiceAccountLabel = type == 2 || type == 4 ? "Purchase Account" : "Sales Account";
-            ViewBag.InvoiceAccounts = new SelectList(Accounts, "Id", "Name", Service.FirstOrDefault(e => e.Key == invoiceAccountKey)?.Value);
-            ViewBag.DealerAccounts = new SelectList(Accounts, "Id", "Name", Service.FirstOrDefault(e => e.Key == "DealerAccount")?.Value);
-            ViewBag.TaxAccounts = new SelectList(Accounts, "Id", "Name", Service.FirstOrDefault(e => e.Key == "TaxAccount")?.Value);
+            SetAccountViewBag("InvoiceAccounts", Accounts, Service.FirstOrDefault(e => e.Key == invoiceAccountKey)?.Value);
+            SetAccountViewBag("DealerAccounts", Accounts, Service.FirstOrDefault(e => e.Key == "DealerAccount")?.Value);
+            SetAccountViewBag("TaxAccounts", Accounts, Service.FirstOrDefault(e => e.Key == "TaxAccount")?.Value);
 
             ViewBag.DiscountValue = Service.FirstOrDefault(e => e.Key == "DiscountValue")?.Value;
             ViewBag.ServiceValue = Service.FirstOrDefault(e => e.Key == "ServiceValue")?.Value;
@@ -113,16 +121,16 @@ namespace OrgSys.Areas.Setting.Controllers
             ViewBag.Customers = new SelectList(await GetListApi<DealerDto>(TypeId: 1), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultCustomer")?.Value);
             ViewBag.Suppliers = new SelectList(await GetListApi<DealerDto>(TypeId: 2), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultSupplier")?.Value);
             ViewBag.Stocks = new SelectList(await GetListApi<StockDto>(), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultStock")?.Value);
-            ViewBag.StockAccount = new SelectList(Accounts, "Id", "Name", Service.FirstOrDefault(e => e.Key == "StockAccount")?.Value);
-            ViewBag.SalesAccount = new SelectList(Accounts, "Id", "Name", Service.FirstOrDefault(e => e.Key == "SalesAccount")?.Value);
-            ViewBag.PurchaseReturnAccount = new SelectList(Accounts, "Id", "Name", Service.FirstOrDefault(e => e.Key == "PurchaseReturnAccount")?.Value);
-            ViewBag.PurchaseAccount = new SelectList(Accounts, "Id", "Name", Service.FirstOrDefault(e => e.Key == "PurchaseAccount")?.Value);
-            ViewBag.SalesReturnAccount = new SelectList(Accounts, "Id", "Name", Service.FirstOrDefault(e => e.Key == "SalesReturnAccount")?.Value);
-            ViewBag.OpeningBalanceAccount = new SelectList(Accounts, "Id", "Name", Service.FirstOrDefault(e => e.Key == "OpeningBalanceAccount")?.Value);
-            ViewBag.InventoryDamageExpenseAccount = new SelectList(Accounts, "Id", "Name", Service.FirstOrDefault(e => e.Key == "InventoryDamageExpenseAccount")?.Value);
-            ViewBag.SourceInventoryAccount = new SelectList(Accounts, "Id", "Name", Service.FirstOrDefault(e => e.Key == "SourceInventoryAccount")?.Value);
-            ViewBag.DestinationInventoryAccount = new SelectList(Accounts, "Id", "Name", Service.FirstOrDefault(e => e.Key == "DestinationInventoryAccount")?.Value);
-            ViewBag.TransitAccount = new SelectList(Accounts, "Id", "Name", Service.FirstOrDefault(e => e.Key == "TransitAccount")?.Value);
+            SetAccountViewBag("StockAccount", Accounts, Service.FirstOrDefault(e => e.Key == "StockAccount")?.Value);
+            SetAccountViewBag("SalesAccount", Accounts, Service.FirstOrDefault(e => e.Key == "SalesAccount")?.Value);
+            SetAccountViewBag("PurchaseReturnAccount", Accounts, Service.FirstOrDefault(e => e.Key == "PurchaseReturnAccount")?.Value);
+            SetAccountViewBag("PurchaseAccount", Accounts, Service.FirstOrDefault(e => e.Key == "PurchaseAccount")?.Value);
+            SetAccountViewBag("SalesReturnAccount", Accounts, Service.FirstOrDefault(e => e.Key == "SalesReturnAccount")?.Value);
+            SetAccountViewBag("OpeningBalanceAccount", Accounts, Service.FirstOrDefault(e => e.Key == "OpeningBalanceAccount")?.Value);
+            SetAccountViewBag("InventoryDamageExpenseAccount", Accounts, Service.FirstOrDefault(e => e.Key == "InventoryDamageExpenseAccount")?.Value);
+            SetAccountViewBag("SourceInventoryAccount", Accounts, Service.FirstOrDefault(e => e.Key == "SourceInventoryAccount")?.Value);
+            SetAccountViewBag("DestinationInventoryAccount", Accounts, Service.FirstOrDefault(e => e.Key == "DestinationInventoryAccount")?.Value);
+            SetAccountViewBag("TransitAccount", Accounts, Service.FirstOrDefault(e => e.Key == "TransitAccount")?.Value);
 
             List<SelectListItem> selectListItems = new List<SelectListItem>();
             selectListItems.Add(new SelectListItem { Value = "1", Text = "Data after product" });
@@ -205,7 +213,7 @@ namespace OrgSys.Areas.Setting.Controllers
             ViewBag.Outlays = new SelectList(await GetListApi<OutlayDto>(), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultOutlay")?.Value);
             // Opening Balance (FinancialTypeId 1) only: the GL account each Opening Balance's Journal is
             // balanced against — see PostFinancialOpeningBalanceCommandHandler.
-            ViewBag.OpeningBalanceEquityAccount = new SelectList(await GetListApi<AccountDto>(), "Id", "Name", Service.FirstOrDefault(e => e.Key == "OpeningBalanceEquityAccountId")?.Value);
+            SetAccountViewBag("OpeningBalanceEquityAccount", await GetListApi<AccountDto>(), Service.FirstOrDefault(e => e.Key == "OpeningBalanceEquityAccountId")?.Value);
 
             List<SelectListItem> selectListItems = new List<SelectListItem>();
             selectListItems.Add(new SelectListItem { Value = "1", Text = "Data after product" });

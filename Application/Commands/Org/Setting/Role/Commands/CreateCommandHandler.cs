@@ -22,11 +22,11 @@
                 var ob = mapper.Map<Domain.Entities.Role>(request);
                 var res = await _Repository.CreateAsync(ob);
 
-                if (_UnitOfWork.SaveChangeAsync().Result > 0)
+                if (await _UnitOfWork.SaveChangeAsync(cancellationToken) > 0)
                 {
                     await _rolePermissionRepository.CreateAsync(CreateRolePermissions(request.PermissionList, res.Id));
 
-                    if (_UnitOfWork.SaveChangeAsync().Result > 0)
+                    if (await _UnitOfWork.SaveChangeAsync(cancellationToken) > 0)
                     {
                         return new Result(HttpStatusCode.OK, null);
                     }

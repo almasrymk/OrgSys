@@ -92,7 +92,8 @@ namespace OrgSys.Areas.Financial.Controllers
             if (model.Id == 0 && inOut != 0)
                 model.Direction = inOut > 0 ? FinancialTransactionDirection.In : FinancialTransactionDirection.Out;
 
-            ViewBag.CounterAccountId = new SelectList(await GetListApi<AccountDto>(), "Id", "Name", model.CounterAccountId);
+            if (model.CounterAccountId > 0)
+                model.CounterAccountName = (await GetObApi<AccountDto>($"GetById?Id={model.CounterAccountId}"))?.Name;
             ViewBag.CurrencyId = new SelectList(await GetListApi<CurrencyDto>() , "Id", "Name", model.CurrencyId);
 
             if (currentFinancialTypeId == 1)

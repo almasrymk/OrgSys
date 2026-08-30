@@ -24,6 +24,8 @@ namespace Application.DTOs
 
         public long CounterAccountId { get; set; }
 
+        public string? CounterAccountName { get; set; }
+
         // Opening Balance (FinancialTypeId 1) only — a view-only convenience for picking a fiscal year in
         // the UI, never persisted on the Financial entity/table. The actual fiscal year/period is resolved
         // from Date (via IAccountingPeriodService) at Post time, exactly like every other Financial type;

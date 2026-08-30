@@ -24,7 +24,7 @@
                 var res = await _Repository.UpdateAsync(ob);
                 var resDetails = await SaveDetials(request);
 
-                if (res && resDetails && _UnitOfWork.SaveChangeAsync().Result > 0)
+                if (res && resDetails && await _UnitOfWork.SaveChangeAsync(cancellationToken) > 0)
                 {
                     return new Result(HttpStatusCode.OK, null);
                 }

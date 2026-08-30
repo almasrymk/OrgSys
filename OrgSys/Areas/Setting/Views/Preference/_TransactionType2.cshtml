@@ -120,23 +120,29 @@
 <div class="form-row WarehouseIntegration" style="display:none;">
     <div class="form-group col-md-4">
         <label>Stock Account</label>
-        <div class="input-group">
+        <div class="input-group DropAutoComplete">
             <div class="input-group-prepend"><span class="input-group-text"><i class="iconsminds-financial"></i></span></div>
-            @Html.DropDownList("StockAccount", null, "...", new { @class = "form-control" })
+            <input type="text" class="form-control Droptxt" id="txtStockAccount" value="@ViewBag.StockAccountName" autocomplete="off" />
+            <input type="hidden" id="StockAccount" name="StockAccount" value="@ViewBag.StockAccountId" />
+            <div class="input-group-prepend Dropbtn"><span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span></div>
         </div>
     </div>
     <div class="form-group col-md-4">
         <label>Sales Account</label>
-        <div class="input-group">
+        <div class="input-group DropAutoComplete">
             <div class="input-group-prepend"><span class="input-group-text"><i class="iconsminds-financial"></i></span></div>
-            @Html.DropDownList("SalesAccount", null, "...", new { @class = "form-control" })
+            <input type="text" class="form-control Droptxt" id="txtSalesAccount" value="@ViewBag.SalesAccountName" autocomplete="off" />
+            <input type="hidden" id="SalesAccount" name="SalesAccount" value="@ViewBag.SalesAccountId" />
+            <div class="input-group-prepend Dropbtn"><span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span></div>
         </div>
     </div>
     <div class="form-group col-md-4">
         <label>Purchase Return Account</label>
-        <div class="input-group">
+        <div class="input-group DropAutoComplete">
             <div class="input-group-prepend"><span class="input-group-text"><i class="iconsminds-financial"></i></span></div>
-            @Html.DropDownList("PurchaseReturnAccount", null, "...", new { @class = "form-control" })
+            <input type="text" class="form-control Droptxt" id="txtPurchaseReturnAccount" value="@ViewBag.PurchaseReturnAccountName" autocomplete="off" />
+            <input type="hidden" id="PurchaseReturnAccount" name="PurchaseReturnAccount" value="@ViewBag.PurchaseReturnAccountId" />
+            <div class="input-group-prepend Dropbtn"><span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span></div>
         </div>
     </div>
 </div>

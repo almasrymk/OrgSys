@@ -87,9 +87,12 @@
                             </div>
                             <div class="form-group col-md-4">
                                 <label>Financial Account</label>
-                                <select asp-for="FinancialAccountId" asp-items="ViewBag.FinancialAccountId" class="form-control">
-                                    <option value="">Select financial account</option>
-                                </select>
+                                <div class="input-group DropAutoComplete">
+                                    <div class="input-group-prepend"><span class="input-group-text"><i class="iconsminds-coins"></i></span></div>
+                                    <input type="text" class="form-control Droptxt" id="txtFinancialAccountId" value="@Model.FinancialAccountName" autocomplete="off" />
+                                    <input type="hidden" asp-for="FinancialAccountId" />
+                                    <div class="input-group-prepend Dropbtn"><span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span></div>
+                                </div>
                                 <span asp-validation-for="FinancialAccountId" class="text-danger"></span>
                             </div>
                         </div>
@@ -140,9 +143,12 @@
                             </div>
                             <div class="form-group col-md-4">
                                 <label>Financial Account</label>
-                                <select asp-for="FinancialAccountId" asp-items="ViewBag.FinancialAccountId" class="form-control">
-                                    <option value="">Select financial account</option>
-                                </select>
+                                <div class="input-group DropAutoComplete">
+                                    <div class="input-group-prepend"><span class="input-group-text"><i class="iconsminds-coins"></i></span></div>
+                                    <input type="text" class="form-control Droptxt" id="txtFinancialAccountId" value="@Model.FinancialAccountName" autocomplete="off" />
+                                    <input type="hidden" asp-for="FinancialAccountId" />
+                                    <div class="input-group-prepend Dropbtn"><span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span></div>
+                                </div>
                                 <span asp-validation-for="FinancialAccountId" class="text-danger"></span>
                             </div>
                             <div class="form-group col-md-4">
@@ -173,9 +179,12 @@
                             </div>
                             <div class="form-group col-md-3">
                                 <label>Counter GL Account</label>
-                                <select asp-for="CounterAccountId" asp-items="ViewBag.CounterAccountId" class="form-control">
-                                    <option value="">Select counter account</option>
-                                </select>
+                                <div class="input-group DropAutoComplete">
+                                    <div class="input-group-prepend"><span class="input-group-text"><i class="simple-icon-wallet"></i></span></div>
+                                    <input type="text" class="form-control Droptxt" id="txtCounterAccountId" value="@Model.CounterAccountName" autocomplete="off" />
+                                    <input type="hidden" asp-for="CounterAccountId" />
+                                    <div class="input-group-prepend Dropbtn"><span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span></div>
+                                </div>
                                 <span asp-validation-for="CounterAccountId" class="text-danger"></span>
                             </div>
                         </div>
@@ -258,7 +267,43 @@
 </div>
 
 <script src="~/js/vendor/jquery-3.3.1.min.js"></script>
+<link href="~/css/jquery-ui.css" rel="stylesheet" />
+<script src="~/js/jquery-ui.js"></script>
 <script>
+    function accountPicker(txtSelector, hiddenSelector, url) {
+        $(txtSelector).autocomplete({
+            minLength: 0,
+            source: function (request, response) {
+                var searchPhrase = $(txtSelector).val();
+                if (searchPhrase === "...") searchPhrase = "";
+                $.ajax({
+                    url: url,
+                    type: "Get",
+                    dataType: "json",
+                    data: { txtSearch: searchPhrase, page: 1, pageSize: 20 },
+                    success: function (data) {
+                        if (!data.length) data = [{ name: "NoResultsFound" }];
+                        response($.map(data, function (item) {
+                            return { label: item.name, value: item.name, id: item.id };
+                        }));
+                    }
+                });
+            },
+            select: function (event, ui) {
+                if (ui.item.label === "NoResultsFound") { event.preventDefault(); return; }
+                $(hiddenSelector).val(ui.item.id);
+            }
+        });
+    }
+    accountPicker("#txtFinancialAccountId", "#FinancialAccountId", "/Setting/FinancialAccount/GetList");
+    accountPicker("#txtCounterAccountId", "#CounterAccountId", "/Setting/Account/GetList");
+    $(".Droptxt").click(function () {
+        if ($(this).val() === "" || $(this).val() === "...") $(this).autocomplete("search", "");
+    });
+    $(".Dropbtn").click(function () {
+        $(this).parent().find(".Droptxt").autocomplete("search", "");
+    });
+
     @if (financialTypeId == 1)
     {
         <text>

@@ -51,11 +51,15 @@
                         <div class="form-group col-md-4">
                             <label>Opening Balance Equity Account</label>
                             <div id="divOpeningBalanceEquityAccount">
-                                <div class="input-group">
+                                <div class="input-group DropAutoComplete">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="iconsminds-financial"></i></span>
                                     </div>
-                                    @Html.DropDownList("OpeningBalanceEquityAccount", null, null, new { @class = "form-control" })
+                                    <input type="text" class="form-control Droptxt" id="txtOpeningBalanceEquityAccount" value="@ViewBag.OpeningBalanceEquityAccountName" autocomplete="off" />
+                                    <input type="hidden" id="OpeningBalanceEquityAccount" name="OpeningBalanceEquityAccount" value="@ViewBag.OpeningBalanceEquityAccountId" />
+                                    <div class="input-group-prepend Dropbtn">
+                                        <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
