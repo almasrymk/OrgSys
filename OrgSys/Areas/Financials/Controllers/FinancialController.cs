@@ -75,7 +75,10 @@ namespace OrgSys.Areas.Financial.Controllers
             accountsResponse.EnsureSuccessStatusCode();
             var accountsResult = JsonConvert.DeserializeObject<ResultCollection<FinancialAccountDto>>(
                 await accountsResponse.Content.ReadAsStringAsync());
-            ViewBag.FinancialAccountId = new SelectList(accountsResult?.Response ?? [], "Id", "Name", model.FinancialAccountId);
+            // Droptxt autocomplete needs the display name, not a SelectList — GetByIdFinancialQuery
+            // deliberately doesn't include the FinancialAccount nav (see its CreateInclude comment), so
+            // without this the field renders blank on edit even though FinancialAccountId is set.
+            model.FinancialAccountName = accountsResult?.Response?.FirstOrDefault(a => a.Id == model.FinancialAccountId)?.Name;
 
             var currentFinancialTypeId = model.FinancialTypeId ?? model.TypeId;
             ViewBag.FinancialTypeName = ResolveFinancialTypeName(currentFinancialTypeId);

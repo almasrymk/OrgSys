@@ -159,9 +159,10 @@ function SavePreference() {
         });
     }
     [
-        "OpeningBalanceEquityAccount", "StockAccount", "PurchaseAccount", "SalesReturnAccount",
-        "SalesAccount", "PurchaseReturnAccount", "SourceInventoryAccount", "TransitAccount",
-        "DestinationInventoryAccount", "OpeningBalanceAccount", "InventoryDamageExpenseAccount",
+        "OpeningBalanceEquityAccount", "CashBoxAccount", "BankAccount", "StockAccount",
+        "PurchaseAccount", "SalesReturnAccount", "SalesAccount", "PurchaseReturnAccount",
+        "SourceInventoryAccount", "TransitAccount", "DestinationInventoryAccount",
+        "OpeningBalanceAccount", "InventoryDamageExpenseAccount",
         "SalesAccounts", "DealerAccounts", "TaxAccounts", "InvoiceAccounts"
     ].forEach(function (key) {
         if ($("#txt" + key).length) accountPicker("#txt" + key, "#" + key);
@@ -437,6 +438,19 @@ function SavePreference() {
             });
         }
 
+        // CashBoxAccount / BankAccount (Financial > Opening Balance, under Accounts Integration)
+        ["CashBoxAccount", "BankAccount"].forEach(function (key) {
+            if ($("#" + key).length) {
+                list.push({
+                    Id: 2,
+                    Key: key,
+                    Value: $("#" + key).val(),
+                    Reference: '@ViewBag.Resource',
+                    TypeId: Number('@ViewBag.type'),
+                });
+            }
+        });
+
          // DefaultCashBox
         if ($("#CashBoxes").length) {
             var OrderTabe = {
@@ -573,6 +587,7 @@ function SavePreference() {
 
     ShowHide('AccountsIntegration','SalesIntegration');
     ShowHide('AccountsIntegration','WarehouseIntegration');
+    ShowHide('AccountsIntegration','FinancialIntegration');
     function ShowHide(controlName , controlClass)
     {
         if($("#" + controlName).is(":checked"))

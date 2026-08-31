@@ -211,9 +211,18 @@ namespace OrgSys.Areas.Setting.Controllers
             ViewBag.PaymentTypes = new SelectList(await GetListApi<PaymentTypeDto>(), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultPaymentType")?.Value);
             ViewBag.Currencys = new SelectList(await GetListApi<CurrencyDto>(), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultCurrency")?.Value);
             ViewBag.Outlays = new SelectList(await GetListApi<OutlayDto>(), "Id", "Name", Service.FirstOrDefault(e => e.Key == "DefaultOutlay")?.Value);
-            // Opening Balance (FinancialTypeId 1) only: the GL account each Opening Balance's Journal is
-            // balanced against — see PostFinancialOpeningBalanceCommandHandler.
-            SetAccountViewBag("OpeningBalanceEquityAccount", await GetListApi<AccountDto>(), Service.FirstOrDefault(e => e.Key == "OpeningBalanceEquityAccountId")?.Value);
+
+            // Opening Balance (FinancialTypeId 1) only, gated behind the same "Accounts Integration"
+            // toggle Invoice/Transaction use. OpeningBalanceEquityAccount is the GL account each Opening
+            // Balance's Journal is balanced against — see PostFinancialOpeningBalanceCommandHandler.
+            // CashBoxAccount/BankAccount are the default GL accounts for Cash Box vs Bank financial
+            // accounts (not yet consumed by a Post handler, same as several other preference fields here).
+            ViewBag.AccountsIntegration = Service.FirstOrDefault(e => e.Key == "AccountsIntegration")?.Value == "1";
+            var financialAccounts = await GetListApi<AccountDto>();
+            SetAccountViewBag("OpeningBalanceEquityAccount", financialAccounts, Service.FirstOrDefault(e => e.Key == "OpeningBalanceEquityAccountId")?.Value);
+            SetAccountViewBag("CashBoxAccount", financialAccounts, Service.FirstOrDefault(e => e.Key == "CashBoxAccount")?.Value);
+            SetAccountViewBag("BankAccount", financialAccounts, Service.FirstOrDefault(e => e.Key == "BankAccount")?.Value);
+            ViewBag.AutoCreateJournalEntry = Service.FirstOrDefault(e => e.Key == "AutoCreateJournalEntry")?.Value == "1";
 
             List<SelectListItem> selectListItems = new List<SelectListItem>();
             selectListItems.Add(new SelectListItem { Value = "1", Text = "Data after product" });

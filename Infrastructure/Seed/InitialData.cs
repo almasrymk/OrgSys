@@ -657,7 +657,9 @@ namespace Infrastructure.Seed
                new Preference { Id = 2001, Key = "AccountsIntegration", Value = "0", Reference = "Financial", TypeId = 1, Hide = false },
                new Preference { Id = 2002, Key = "AutoCreateJournalEntry", Value = "0", Reference = "Financial", TypeId = 1, Hide = false },
                new Preference { Id = 2003, Key = "AutoSave", Value = "0", Reference = "Financial", TypeId = 1, Hide = false },
-               new Preference { Id = 2004, Key = "TypeSerial", Value = "1", Reference = "Financial", TypeId = 1, Hide = false },
+               new Preference { Id = 2004, Key = "OpeningBalanceEquityAccountId", Value = "0", Reference = "Financial", TypeId = 1, Hide = false },
+               new Preference { Id = 2005, Key = "CashBoxAccount", Value = "0", Reference = "Financial", TypeId = 1, Hide = false },
+               new Preference { Id = 2006, Key = "BankAccount", Value = "0", Reference = "Financial", TypeId = 1, Hide = false },
 
                new Preference { Id = 2100, Key = "SaveLastStatusSetting", Value = "1", Reference = "Financial", TypeId = 2, Hide = false },
                new Preference { Id = 2101, Key = "AccountsIntegration", Value = "0", Reference = "Financial", TypeId = 2, Hide = false },

@@ -10,13 +10,15 @@
     using Domain.Entities;
     using Application.DTOs;
     using System.Net;
+    using MediatR;
 
     public sealed class UpdateFinancialCommand : Application.DTOs.FinancialDto, ICommand, IUpdateCommand<Result>;
     public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork,
         IRepository<Domain.Entities.Financial> _Repository ,
         IRepository<Domain.Entities.FinancialInvoice> _RepositoryFinancialInvoice,
         IRepository<Domain.Entities.Invoice> _RepositoryInvoice,
-        IMapper mapper, IServiceProvider _provider) : UpdateCommandHandler<UpdateFinancialCommand, Domain.Entities.Financial>(_UnitOfWork, _Repository , mapper , _provider)
+        IRepository<Preference> _PreferenceRepository,
+        IMapper mapper, IServiceProvider _provider, ISender sender) : UpdateCommandHandler<UpdateFinancialCommand, Domain.Entities.Financial>(_UnitOfWork, _Repository , mapper , _provider)
     {
 
         public override async Task<Result> Handle(UpdateFinancialCommand request, CancellationToken cancellationToken)
@@ -52,7 +54,21 @@
             finanicial.FinancialInvoices ??= new List<Domain.Entities.FinancialInvoice>();
             finanicial.FinancialInvoices.Clear();
             await _RepositoryFinancialInvoice.CreateAsync((request.FinancialInvoices ?? []).ToList());
-            return await base.Handle(request, cancellationToken);
+            var result = await base.Handle(request, cancellationToken);
+
+            // Opening Balance only: same Auto-Create Journal Entry preference the Create side honors —
+            // re-saving an untouched/corrected Draft posts it immediately instead of requiring a
+            // separate manual Post click.
+            if (result.StatusCode == HttpStatusCode.OK
+                && request.FinancialTypeId == (long)Domain.Enums.FinancialTransactionType.OpeningBalance)
+            {
+                var autoPost = await _PreferenceRepository.GetByFilterAsync(
+                    e => e.Reference == "Financial" && e.TypeId == request.TypeId && e.Key == "AutoCreateJournalEntry", "");
+                if (autoPost?.Value == "1")
+                    return await sender.Send(new PostFinancialOpeningBalanceCommand(request.Id, request.ModifyUserId ?? request.CreateUserId), cancellationToken);
+            }
+
+            return result;
         }
 
     }

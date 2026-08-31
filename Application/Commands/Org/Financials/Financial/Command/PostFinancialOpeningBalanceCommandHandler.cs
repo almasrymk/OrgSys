@@ -50,12 +50,32 @@ namespace Application.Commands.Org.Financials.Financial.Commands
             var account = await accountRepository.GetByFilterAsync(e => e.Id == financial.FinancialAccountId, "");
             if (account is null || !account.IsActive)
                 return new Result(HttpStatusCode.BadRequest, [new Error("Financial account is invalid or inactive.")]);
-            if (account.AccountId is not > 0)
-                return new Result(HttpStatusCode.BadRequest, [new Error("Financial account must be linked to a general-ledger account.")]);
 
-            var equityAccountIdRaw = (await preferenceRepository.GetListByFilterAsync(
-                e => e.Reference == "Financial" && e.Key == "OpeningBalanceEquityAccountId"))
-                ?.FirstOrDefault()?.Value;
+            var preferences = (await preferenceRepository.GetListByFilterAsync(
+                e => e.Reference == "Financial" && e.TypeId == (long)FinancialTransactionType.OpeningBalance))?.ToList() ?? [];
+
+            // Accounts Integration on: Debit the preference-configured Cash Box/Bank GL account (by the
+            // FinancialAccount's own type) instead of requiring each Cash Box/Bank record to carry its
+            // own linked GL account — same "default account per scenario" idea Invoice/Transaction
+            // preferences already use. Off (or unconfigured): fall back to the FinancialAccount's own
+            // AccountId, the original behavior.
+            long debitAccountId;
+            if (preferences.FirstOrDefault(e => e.Key == "AccountsIntegration")?.Value == "1")
+            {
+                var isBank = account.FinancialAccountType == FinancialAccountType.Bank;
+                var integrationAccountRaw = preferences.FirstOrDefault(e => e.Key == (isBank ? "BankAccount" : "CashBoxAccount"))?.Value;
+                if (!long.TryParse(integrationAccountRaw, out debitAccountId) || debitAccountId <= 0)
+                    return new Result(HttpStatusCode.BadRequest, [new Error(
+                        $"Accounts Integration is enabled but the {(isBank ? "Bank" : "Cash Box")} Account is not configured (Preferences > Financial > Opening Balance).")]);
+            }
+            else
+            {
+                if (account.AccountId is not > 0)
+                    return new Result(HttpStatusCode.BadRequest, [new Error("Financial account must be linked to a general-ledger account.")]);
+                debitAccountId = account.AccountId.Value;
+            }
+
+            var equityAccountIdRaw = preferences.FirstOrDefault(e => e.Key == "OpeningBalanceEquityAccountId")?.Value;
             if (!long.TryParse(equityAccountIdRaw, out var equityAccountId) || equityAccountId <= 0)
                 return new Result(HttpStatusCode.BadRequest, [new Error("Opening Balance equity account is not configured (Preferences > Financial > Opening Balance Equity Account).")]);
 
@@ -107,7 +127,7 @@ namespace Application.Commands.Org.Financials.Financial.Commands
                     Status = Status.Approved,
                     JournalItems =
                     [
-                        new JournalItem { AccountId = account.AccountId!.Value, Debit = financial.Amount, Note = financial.Notes },
+                        new JournalItem { AccountId = debitAccountId, Debit = financial.Amount, Note = financial.Notes },
                         new JournalItem { AccountId = equityAccountId, Credit = financial.Amount, Note = financial.Notes }
                     ]
                 };
