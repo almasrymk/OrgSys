@@ -26,6 +26,11 @@ namespace Application.DTOs
 
         public string? CounterAccountName { get; set; }
 
+        // Display text for the currently-selected ReferenceId on edit (Droptxt autocomplete needs a
+        // label, not just the raw Id) — resolved per-ReferenceType in FinancialController.LoadViewBag,
+        // same idea as FinancialAccountName/CounterAccountName above.
+        public string? ReferenceName { get; set; }
+
         // Opening Balance (FinancialTypeId 1) only — a view-only convenience for picking a fiscal year in
         // the UI, never persisted on the Financial entity/table. The actual fiscal year/period is resolved
         // from Date (via IAccountingPeriodService) at Post time, exactly like every other Financial type;

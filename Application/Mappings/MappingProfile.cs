@@ -53,8 +53,9 @@ public partial class MappingProfile : Profile
 
         PreferenceMappingProfile();
 
-        PaymentTypeMappingProfile();      
+        PaymentTypeMappingProfile();
         TransactionTypeMappingProfile();
         FinancialTypeMappingProfile();
+        ReferenceTypeMappingProfile();
     }
 }

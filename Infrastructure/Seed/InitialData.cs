@@ -24,6 +24,7 @@ namespace Infrastructure.Seed
             InitialTransactionType(orgContext);
             InitialFinancialType(orgContext);
             InitialPaymentType(orgContext);
+            InitialReferenceType(orgContext);
             InitialAccountType(orgContext);
             InitialAccount(orgContext);
             InitialRole(orgContext);
@@ -877,6 +878,35 @@ namespace Infrastructure.Seed
                     orgContext.Set<PaymentType>().Add(ob);
                 else
                     orgContext.Entry<PaymentType>(orgContext.Set<PaymentType>().Find(ob.Id)).CurrentValues.SetValues(ob);
+            }
+            orgContext.SaveChanges();
+        }
+
+        // Ids mirror Domain.Enums.FinancialReferenceType 1:1 so Financial.ReferenceType (still an int
+        // enum column) can resolve its display name against this table without a separate mapping.
+        public void InitialReferenceType(OrgContext orgContext)
+        {
+            List<ReferenceType> list = new List<ReferenceType> {
+                  new ReferenceType { Id = 0, Name = "Other", Hide = false },
+                  new ReferenceType { Id = 1, Name = "Customer", Hide = false },
+                  new ReferenceType { Id = 2, Name = "Supplier", Hide = false },
+                  new ReferenceType { Id = 3, Name = "Employee", Hide = false },
+                  new ReferenceType { Id = 4, Name = "Expense", Hide = false },
+                  new ReferenceType { Id = 5, Name = "Income", Hide = false },
+                  new ReferenceType { Id = 6, Name = "Invoice", Hide = false },
+                  new ReferenceType { Id = 7, Name = "Payment", Hide = false },
+                  new ReferenceType { Id = 8, Name = "Loan", Hide = false },
+                  new ReferenceType { Id = 9, Name = "Cheque", Hide = false },
+                  new ReferenceType { Id = 10, Name = "Payment Gateway", Hide = false },
+                  new ReferenceType { Id = 11, Name = "Transfer", Hide = false }
+            };
+
+            foreach (var ob in list)
+            {
+                if (!orgContext.ReferenceTypes.Any(e => e.Id == ob.Id))
+                    orgContext.Set<ReferenceType>().Add(ob);
+                else
+                    orgContext.Entry<ReferenceType>(orgContext.Set<ReferenceType>().Find(ob.Id)).CurrentValues.SetValues(ob);
             }
             orgContext.SaveChanges();
         }

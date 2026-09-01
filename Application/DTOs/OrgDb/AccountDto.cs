@@ -20,5 +20,7 @@ namespace Application.DTOs
         public string? AccountTypeName { get; set; }
 
         public string? ParentName { get; set; }
+
+        public virtual bool IsPostable { get; set; } = true;
     }
 }

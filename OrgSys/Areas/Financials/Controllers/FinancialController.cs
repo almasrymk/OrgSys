@@ -98,6 +98,17 @@ namespace OrgSys.Areas.Financial.Controllers
             if (model.CounterAccountId > 0)
                 model.CounterAccountName = (await GetObApi<AccountDto>($"GetById?Id={model.CounterAccountId}"))?.Name;
             ViewBag.CurrencyId = new SelectList(await GetListApi<CurrencyDto>() , "Id", "Name", model.CurrencyId);
+            ViewBag.ReferenceTypeList = new SelectList(await GetListApi<ReferenceTypeDto>(), "Id", "Name", (long)model.ReferenceType);
+
+            // Receipt/Payment only: resolve the currently-selected Reference's display name for the
+            // Droptxt autocomplete on edit (mirrors FinancialAccountName/CounterAccountName above) —
+            // the account itself is already carried on CounterAccountId/CounterAccountName, set by
+            // FixReferenceAccount at Save time.
+            if ((currentFinancialTypeId == (long)FinancialTransactionType.Receipt || currentFinancialTypeId == (long)FinancialTransactionType.Payment)
+                && model.ReferenceId is > 0)
+            {
+                model.ReferenceName = await ResolveReferenceName(model.ReferenceType, model.ReferenceId.Value);
+            }
 
             if (currentFinancialTypeId == 1)
             {
@@ -275,7 +286,123 @@ namespace OrgSys.Areas.Financial.Controllers
             return Redirect("/Financials/Financial/Index?ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" + (res.StatusCode == HttpStatusCode.OK ? ResultStatus.success : ResultStatus.error) + "&MsgError=Success");
         }
 
+        // Receipt/Payment's Reference picker (Droptxt autocomplete): the source table is chosen by
+        // referenceType, reusing the same GetListApi<> calls the rest of the app already uses for these
+        // entities — no new table, no new AppService. accountId/accountName (when the reference has one)
+        // let the client auto-fill the readonly Account field without a second round-trip; the server
+        // still re-resolves and validates this authoritatively at Post time (PostTransactionCommandHandler),
+        // this is UI convenience only. Employee/Loan/Cheque/PaymentGateway have no backing entity in this
+        // codebase yet, so they fall through to an empty list — same as an unrecognized referenceType.
+        public async Task<JsonResult> GetReferenceList(int referenceType, string txtSearch = "")
+        {
+            txtSearch = (txtSearch ?? "").Trim();
+            var list = new List<object>();
 
+            switch ((FinancialReferenceType)referenceType)
+            {
+                case FinancialReferenceType.Customer:
+                case FinancialReferenceType.Supplier:
+                {
+                    var dealerTypeId = (FinancialReferenceType)referenceType == FinancialReferenceType.Customer ? 1 : 2;
+                    var dealers = await GetListApi<DealerDto>(TypeId: dealerTypeId, TextSearch: txtSearch, PageSize: 20);
+                    list = dealers.Select(d => (object)new
+                    {
+                        id = d.Id,
+                        name = $"{d.Code} - {d.Name}",
+                        accountId = d.AccountId,
+                        accountName = d.AccountId is > 0 ? $"{d.AccountCode} - {d.AccountName}" : null
+                    }).ToList();
+                    break;
+                }
+
+                case FinancialReferenceType.Expense:
+                case FinancialReferenceType.Income:
+                {
+                    var expectedTypeName = (FinancialReferenceType)referenceType == FinancialReferenceType.Expense ? "Expense" : "Revenue";
+                    var accounts = await GetListApi<AccountDto>(TextSearch: txtSearch, PageSize: 200);
+                    list = accounts
+                        .Where(a => a.IsPostable && string.Equals(a.AccountTypeName, expectedTypeName, StringComparison.OrdinalIgnoreCase))
+                        .Take(20)
+                        .Select(a => (object)new { id = a.Id, name = $"{a.Code} - {a.Name}", accountId = (long?)a.Id, accountName = $"{a.Code} - {a.Name}" })
+                        .ToList();
+                    break;
+                }
+
+                case FinancialReferenceType.Invoice:
+                {
+                    var invoices = await GetListApi<InvoiceDto>(TextSearch: txtSearch, PageSize: 20);
+                    var dealerNames = (await GetListApi<DealerDto>(PageSize: 5000)).ToDictionary(d => d.Id, d => d.Name);
+                    list = invoices.Select(inv => (object)new
+                    {
+                        id = inv.Id,
+                        name = $"{inv.Code} - {(dealerNames.TryGetValue(inv.DealerId, out var dn) ? dn : "")} - {inv.Credit:N2}",
+                        accountId = (long?)null,
+                        accountName = (string?)null
+                    }).ToList();
+                    break;
+                }
+
+                case FinancialReferenceType.Payment:
+                {
+                    var payments = await GetListApi<FinancialDto>(TypeId: (long)FinancialTransactionType.Payment, TextSearch: txtSearch, PageSize: 20);
+                    list = payments.Select(f => (object)new { id = f.Id, name = $"{f.Code} - {f.Amount:N2}", accountId = (long?)null, accountName = (string?)null }).ToList();
+                    break;
+                }
+
+                case FinancialReferenceType.Transfer:
+                {
+                    var transfersIn = await GetListApi<FinancialDto>(TypeId: (long)FinancialTransactionType.TransferIn, TextSearch: txtSearch, PageSize: 20);
+                    var transfersOut = await GetListApi<FinancialDto>(TypeId: (long)FinancialTransactionType.TransferOut, TextSearch: txtSearch, PageSize: 20);
+                    list = transfersIn.Concat(transfersOut)
+                        .Select(f => (object)new { id = f.Id, name = $"{f.Code} - {f.Amount:N2}", accountId = (long?)null, accountName = (string?)null })
+                        .ToList();
+                    break;
+                }
+            }
+
+            return Json(list);
+        }
+
+        // Resolves the display label for a Financial's currently-set ReferenceId on edit — mirrors
+        // GetReferenceList's per-type source, just fetching the single already-selected record.
+        private async Task<string?> ResolveReferenceName(FinancialReferenceType type, long referenceId)
+        {
+            switch (type)
+            {
+                case FinancialReferenceType.Customer:
+                case FinancialReferenceType.Supplier:
+                {
+                    var dealer = await GetObApi<DealerDto>($"GetById?Id={referenceId}");
+                    return dealer is null ? null : $"{dealer.Code} - {dealer.Name}";
+                }
+
+                case FinancialReferenceType.Expense:
+                case FinancialReferenceType.Income:
+                {
+                    var account = await GetObApi<AccountDto>($"GetById?Id={referenceId}");
+                    return account is null ? null : $"{account.Code} - {account.Name}";
+                }
+
+                case FinancialReferenceType.Invoice:
+                {
+                    var invoice = await GetObApi<InvoiceDto>($"GetById?Id={referenceId}");
+                    if (invoice is null)
+                        return null;
+                    var dealerName = invoice.DealerId > 0 ? (await GetObApi<DealerDto>($"GetById?Id={invoice.DealerId}"))?.Name : null;
+                    return $"{invoice.Code} - {dealerName} - {invoice.Credit:N2}";
+                }
+
+                case FinancialReferenceType.Payment:
+                case FinancialReferenceType.Transfer:
+                {
+                    var financial = await GetObApi<FinancialDto>($"GetById?Id={referenceId}");
+                    return financial is null ? null : $"{financial.Code} - {financial.Amount:N2}";
+                }
+
+                default:
+                    return null;
+            }
+        }
 
         [HttpPost]
         public async Task<ActionResult> AutoSave(FinancialDto ob)

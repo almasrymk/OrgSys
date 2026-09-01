@@ -178,12 +178,16 @@
                                 <input asp-for="Rate" class="form-control" />
                             </div>
                             <div class="form-group col-md-3">
-                                <label>Counter GL Account</label>
+                                @{ var isReceiptOrPayment = financialTypeId == 2 || financialTypeId == 3; }
+                                <label>@(isReceiptOrPayment ? "Account" : "Counter GL Account")</label>
                                 <div class="input-group DropAutoComplete">
                                     <div class="input-group-prepend"><span class="input-group-text"><i class="simple-icon-wallet"></i></span></div>
-                                    <input type="text" class="form-control Droptxt" id="txtCounterAccountId" value="@Model.CounterAccountName" autocomplete="off" />
+                                    <input type="text" class="form-control Droptxt" id="txtCounterAccountId" value="@Model.CounterAccountName" autocomplete="off" readonly="@isReceiptOrPayment" />
                                     <input type="hidden" asp-for="CounterAccountId" />
-                                    <div class="input-group-prepend Dropbtn"><span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span></div>
+                                    @if (!isReceiptOrPayment)
+                                    {
+                                        <div class="input-group-prepend Dropbtn"><span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span></div>
+                                    }
                                 </div>
                                 <span asp-validation-for="CounterAccountId" class="text-danger"></span>
                             </div>
@@ -192,16 +196,25 @@
                         <div class="form-row">
                             <div class="form-group col-md-4">
                                 <label>Reference Type</label>
-                                <select asp-for="ReferenceType" class="form-control">
-                                    @foreach (var value in Enum.GetValues<FinancialReferenceType>())
-                                    {
-                                        <option value="@((int)value)">@value</option>
-                                    }
-                                </select>
+                                <select asp-for="ReferenceType" asp-items="ViewBag.ReferenceTypeList" class="form-control"></select>
                             </div>
                             <div class="form-group col-md-4">
-                                <label>Reference ID</label>
-                                <input asp-for="ReferenceId" type="number" class="form-control" />
+                                @if (isReceiptOrPayment)
+                                {
+                                    <label id="lblReference">Reference</label>
+                                    <div class="input-group DropAutoComplete">
+                                        <div class="input-group-prepend"><span class="input-group-text"><i class="iconsminds-address-book-2"></i></span></div>
+                                        <input type="text" class="form-control Droptxt" id="txtReferenceId" value="@Model.ReferenceName" autocomplete="off" />
+                                        <input type="hidden" asp-for="ReferenceId" />
+                                        <div class="input-group-prepend Dropbtn"><span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span></div>
+                                    </div>
+                                    <span asp-validation-for="ReferenceId" class="text-danger"></span>
+                                }
+                                else
+                                {
+                                    <label>Reference ID</label>
+                                    <input asp-for="ReferenceId" type="number" class="form-control" />
+                                }
                             </div>
                         </div>
                     }
@@ -296,13 +309,86 @@
         });
     }
     accountPicker("#txtFinancialAccountId", "#FinancialAccountId", "/Setting/FinancialAccount/GetList");
-    accountPicker("#txtCounterAccountId", "#CounterAccountId", "/Setting/Account/GetList");
+    // Receipt/Payment: the Account field is driven by the selected Reference (see below), not
+    // independently searchable — skip wiring its own picker so it can't be typed into.
+    if (!$("#txtCounterAccountId").prop("readonly")) {
+        accountPicker("#txtCounterAccountId", "#CounterAccountId", "/Setting/Account/GetList");
+    }
     $(".Droptxt").click(function () {
         if ($(this).val() === "" || $(this).val() === "...") $(this).autocomplete("search", "");
     });
     $(".Dropbtn").click(function () {
         $(this).parent().find(".Droptxt").autocomplete("search", "");
     });
+
+    // Receipt/Payment: dynamic Reference lookup — the source table and this field's label depend on
+    // the selected Reference Type, and a matched reference (when it has one) auto-fills the readonly
+    // Account field above. Server-side re-resolves/validates this authoritatively at Post time
+    // (PostTransactionCommandHandler.ResolveReference) — this is UI convenience only.
+    if ($("#txtReferenceId").length) {
+        var referenceLabels = {
+            0: "Reference", 1: "Customer", 2: "Supplier", 3: "Employee", 4: "Expense Account",
+            5: "Income Account", 6: "Invoice", 7: "Payment", 8: "Loan", 9: "Cheque",
+            10: "Payment Gateway", 11: "Transfer"
+        };
+        // Employee/Loan/Cheque/PaymentGateway have no backing table in this codebase yet —
+        // GetReferenceList always returns an empty list for them, so disable the field instead of
+        // offering a lookup that can never find anything.
+        var referenceDisabledTypes = [3, 8, 9, 10];
+
+        $("#txtReferenceId").autocomplete({
+            minLength: 0,
+            source: function (request, response) {
+                var searchPhrase = $("#txtReferenceId").val();
+                if (searchPhrase === "...") searchPhrase = "";
+                $.ajax({
+                    url: "/Financials/Financial/GetReferenceList",
+                    type: "Get",
+                    dataType: "json",
+                    data: { referenceType: $("#ReferenceType").val(), txtSearch: searchPhrase },
+                    success: function (data) {
+                        if (!data.length) data = [{ name: "NoResultsFound" }];
+                        response($.map(data, function (item) {
+                            return { label: item.name, value: item.name, id: item.id, accountId: item.accountId, accountName: item.accountName };
+                        }));
+                    }
+                });
+            },
+            select: function (event, ui) {
+                if (ui.item.label === "NoResultsFound") { event.preventDefault(); return; }
+                $("#ReferenceId").val(ui.item.id);
+                if (ui.item.accountId) {
+                    $("#CounterAccountId").val(ui.item.accountId);
+                    $("#txtCounterAccountId").val(ui.item.accountName || "");
+                } else {
+                    $("#CounterAccountId").val("");
+                    $("#txtCounterAccountId").val("");
+                }
+            }
+        });
+
+        function currentReferenceType() {
+            return parseInt($("#ReferenceType").val(), 10) || 0;
+        }
+
+        $("#ReferenceType").on("change", function () {
+            var type = currentReferenceType();
+            $("#lblReference").text(referenceLabels[type] || "Reference");
+            // The Reference Type changed meaning — the previously-selected Reference (and the Account
+            // it auto-filled) no longer applies.
+            $("#txtReferenceId").val("");
+            $("#ReferenceId").val("");
+            $("#CounterAccountId").val("");
+            $("#txtCounterAccountId").val("");
+            $("#txtReferenceId").prop("disabled", type === 0 || referenceDisabledTypes.indexOf(type) !== -1);
+        });
+
+        // Initial render (including edit mode, where ReferenceType/ReferenceName/Account already came
+        // from the saved record) just needs the label and disabled state applied, not a reset.
+        var initialType = currentReferenceType();
+        $("#lblReference").text(referenceLabels[initialType] || "Reference");
+        $("#txtReferenceId").prop("disabled", initialType === 0 || referenceDisabledTypes.indexOf(initialType) !== -1);
+    }
 
     @if (financialTypeId == 1)
     {
