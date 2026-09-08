@@ -24,7 +24,7 @@
                 {
                     var resDetails = await RemoveDetails(request);
                     var res = await _Repository.ShiftDeleteAsync(CreateFilter(request));
-                    if (_UnitOfWork.SaveChangeAsync().Result > 0)
+                    if (await _UnitOfWork.SaveChangeAsync(cancellationToken) > 0)
                     {
                         await _UnitOfWork.CommitAsync();
                         return new Result(HttpStatusCode.OK, null);
@@ -32,13 +32,13 @@
                     else
                     {
                         var res2 = await _Repository.DeleteAsync(CreateFilter(request));
-                        if (_UnitOfWork.SaveChangeAsync().Result > 0)
+                        if (await _UnitOfWork.SaveChangeAsync(cancellationToken) > 0)
                         {
                             await _UnitOfWork.CommitAsync();
                             return new Result(HttpStatusCode.OK, null);
                         }
                     }
-                     
+
                     return new Result(
                         HttpStatusCode.InternalServerError,
                     new List<Error> { new Error("Error") });
@@ -47,7 +47,7 @@
                 {
                     _UnitOfWork.ResetDbContextState();
                     var res2 = await _Repository.DeleteAsync(CreateFilter(request));
-                    if (_UnitOfWork.SaveChangeAsync().Result > 0)
+                    if (await _UnitOfWork.SaveChangeAsync(cancellationToken) > 0)
                     {
                         await _UnitOfWork.CommitAsync();
                         return new Result(HttpStatusCode.OK, null);

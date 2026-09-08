@@ -124,6 +124,8 @@
         //public virtual DbSet<Order> Orders { get; set; }
         //public virtual DbSet<OrderProduct> OrderProducts { get; set; }
         public virtual DbSet<PaymentType> PaymentTypes { get; set; }
+
+        public virtual DbSet<ReferenceType> ReferenceTypes { get; set; }
         //public virtual DbSet<LogSys> LogSys { get; set; }
         //public virtual DbSet<ProductRecipe> ProductRecipes { get; set; }
         //public virtual DbSet<PropertyElement> PropertyElements { get; set; }

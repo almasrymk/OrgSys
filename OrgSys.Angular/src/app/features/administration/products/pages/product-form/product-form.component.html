@@ -1,0 +1,112 @@
+<app-page-header
+  [title]="(id() ? 'Product ' + (code() ?? '') : 'New Product')"
+  [breadcrumbs]="[{ label: 'Home', route: '/' }, { label: 'Products', route: '/administration/products' }, { label: id() ? 'Edit' : 'New' }]"
+></app-page-header>
+
+<div class="card">
+  <div class="card-body">
+    <div class="d-flex justify-content-end mb-3">
+      <a routerLink="/administration/products" class="btn btn-primary">
+        <i class="bi bi-arrow-return-left"></i> Back
+      </a>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+      <div class="row">
+        <div class="form-group col-12 col-md-4">
+          <label>Name</label>
+          <input type="text" class="form-control" formControlName="name" placeholder="Name" />
+          <div class="text-danger mt-1" *ngIf="form.controls.name.touched && form.controls.name.invalid">
+            Name is required.
+          </div>
+        </div>
+
+        <div class="form-group col-12 col-md-4">
+          <label>Nickname</label>
+          <input type="text" class="form-control" formControlName="nickname" placeholder="Nickname" />
+        </div>
+
+        <div class="form-group col-12 col-md-4">
+          <label>Barcode</label>
+          <input type="text" class="form-control" formControlName="barcode" placeholder="Barcode" />
+        </div>
+
+        <div class="form-group col-12 col-md-4">
+          <label>Classification</label>
+          <select class="form-control" formControlName="classificationId">
+            <option [ngValue]="0" disabled>Select a classification</option>
+            <option *ngFor="let c of classifications()" [ngValue]="c.id">{{ c.name }}</option>
+          </select>
+          <div class="text-danger mt-1" *ngIf="form.controls.classificationId.touched && form.controls.classificationId.invalid">
+            Classification is required.
+          </div>
+        </div>
+
+        <div class="form-group col-12 col-md-4">
+          <label>Dealer (supplier)</label>
+          <select class="form-control" formControlName="dealerId">
+            <option [ngValue]="0">(None)</option>
+            <option *ngFor="let dealer of dealers()" [ngValue]="dealer.id">{{ dealer.code }} {{ dealer.name }}</option>
+          </select>
+        </div>
+
+        <div class="form-group col-12 col-md-2">
+          <label>Price</label>
+          <input type="number" step="0.01" class="form-control" formControlName="price" />
+        </div>
+
+        <div class="form-group col-12 col-md-2">
+          <label>Cost</label>
+          <input type="number" step="0.01" class="form-control" formControlName="cost" />
+        </div>
+
+        <div class="form-group col-12">
+          <label>Description</label>
+          <textarea class="form-control" formControlName="description" rows="2" placeholder="Description"></textarea>
+        </div>
+      </div>
+
+      <hr />
+
+      <table class="table table-sm" formArrayName="productUnits">
+        <thead>
+          <tr>
+            <th style="width: 40%;">Unit</th>
+            <th>Conversion rate</th>
+            <th class="text-center">Default</th>
+            <th style="width: 40px;"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let unit of productUnits.controls; let i = index" [formGroupName]="i">
+            <td>
+              <select class="form-control" formControlName="unitId">
+                <option [ngValue]="0" disabled>Select a unit</option>
+                <option *ngFor="let u of units()" [ngValue]="u.id">{{ u.name }}</option>
+              </select>
+            </td>
+            <td><input type="number" step="0.0001" class="form-control" formControlName="rate" /></td>
+            <td class="text-center align-middle">
+              <input type="radio" [checked]="unit.value.defaultUnit" (change)="setDefaultUnit(i)" />
+            </td>
+            <td class="text-center align-middle">
+              <a href="javascript:void(0)" (click)="removeUnit(i)">
+                <i class="bi bi-trash text-danger"></i>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <button type="button" class="btn btn-outline-secondary btn-sm mb-3" (click)="addUnit()">
+        <i class="bi bi-plus-lg"></i> Add unit
+      </button>
+
+      <div class="mt-3">
+        <button type="submit" class="btn btn-primary" [disabled]="saving()">
+          {{ saving() ? 'Saving...' : 'Save' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

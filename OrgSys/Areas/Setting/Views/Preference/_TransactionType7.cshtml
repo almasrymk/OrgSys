@@ -73,16 +73,20 @@
 <div class="form-row WarehouseIntegration" style="display:none;">
     <div class="form-group col-md-4">
         <label>Stock Account</label>
-        <div class="input-group">
+        <div class="input-group DropAutoComplete">
             <div class="input-group-prepend"><span class="input-group-text"><i class="iconsminds-financial"></i></span></div>
-            @Html.DropDownList("StockAccount", null, "...", new { @class = "form-control" })
+            <input type="text" class="form-control Droptxt" id="txtStockAccount" value="@ViewBag.StockAccountName" autocomplete="off" />
+            <input type="hidden" id="StockAccount" name="StockAccount" value="@ViewBag.StockAccountId" />
+            <div class="input-group-prepend Dropbtn"><span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span></div>
         </div>
     </div>
     <div class="form-group col-md-4">
         <label>Opening Balance Account</label>
-        <div class="input-group">
+        <div class="input-group DropAutoComplete">
             <div class="input-group-prepend"><span class="input-group-text"><i class="iconsminds-financial"></i></span></div>
-            @Html.DropDownList("OpeningBalanceAccount", null, "...", new { @class = "form-control" })
+            <input type="text" class="form-control Droptxt" id="txtOpeningBalanceAccount" value="@ViewBag.OpeningBalanceAccountName" autocomplete="off" />
+            <input type="hidden" id="OpeningBalanceAccount" name="OpeningBalanceAccount" value="@ViewBag.OpeningBalanceAccountId" />
+            <div class="input-group-prepend Dropbtn"><span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span></div>
         </div>
     </div>
 </div>

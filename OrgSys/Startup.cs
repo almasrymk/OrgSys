@@ -105,9 +105,10 @@ namespace OrgSys
                 options.LogoutPath = "/Home/logout";
             });
 
-            services.AddMvc(options => { 
+            services.AddMvc(options => {
                 var p = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
                 options.Filters.Add(new AuthorizeFilter(p));
+                options.Filters.Add<OrgSys.Filters.ApiUnauthorizedFilter>();
             }).AddXmlSerializerFormatters();
             //services.AddAutoMapper(cfg => { cfg.AddProfile<MapperConfig>(); });
             services.AddAutoMapper(cfg => { cfg.AddProfile<MappingProfile>(); });

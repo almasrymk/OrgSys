@@ -1,0 +1,74 @@
+<app-page-header title="Stock &amp; Product Balance" [breadcrumbs]="[{ label: 'Home', route: '/' }, { label: 'Reports' }, { label: 'Balance' }]"></app-page-header>
+
+<div class="card mb-3">
+  <div class="card-body">
+    <div class="row align-items-end">
+      <div class="form-group col-6 col-md-2">
+        <label>As of date</label>
+        <input type="date" class="form-control" [ngModel]="toDate()" (ngModelChange)="toDate.set($event)" />
+      </div>
+      <div class="form-group col-6 col-md-3">
+        <label>Warehouse</label>
+        <select class="form-control" [ngModel]="stockId()" (ngModelChange)="stockId.set($event)">
+          <option [ngValue]="0">All warehouses</option>
+          <option *ngFor="let stock of stocks()" [ngValue]="stock.id">{{ stock.name }}</option>
+        </select>
+      </div>
+      <div class="form-group col-6 col-md-3">
+        <label>Product</label>
+        <select class="form-control" [ngModel]="productId()" (ngModelChange)="productId.set($event)">
+          <option [ngValue]="0">All products</option>
+          <option *ngFor="let product of products()" [ngValue]="product.id">{{ product.code }} {{ product.name }}</option>
+        </select>
+      </div>
+      <div class="form-group col-6 col-md-2">
+        <label>Classification</label>
+        <select class="form-control" [ngModel]="classificationId()" (ngModelChange)="classificationId.set($event)">
+          <option [ngValue]="0">All</option>
+          <option *ngFor="let c of classifications()" [ngValue]="c.id">{{ c.name }}</option>
+        </select>
+      </div>
+      <div class="form-group col-6 col-md-1">
+        <label>Sort by</label>
+        <select class="form-control" [ngModel]="sortByStock()" (ngModelChange)="sortByStock.set($event)">
+          <option [ngValue]="true">Stock</option>
+          <option [ngValue]="false">Product</option>
+        </select>
+      </div>
+      <div class="form-group col-12 col-md-1">
+        <button type="button" class="btn btn-primary w-100" (click)="search()">Search</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-body p-0">
+    <table class="table table-hover m-0" *ngIf="rows().length; else emptyState">
+      <thead>
+        <tr>
+          <th>Warehouse</th>
+          <th>Product</th>
+          <th>Classification</th>
+          <th class="text-right">Balance</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of rows()">
+          <td>{{ row.stockName }}</td>
+          <td>{{ row.productName }}</td>
+          <td>{{ row.classificationName }}</td>
+          <td class="text-right" [class.text-danger]="row.balance < 0">{{ row.balance | number: '1.2-2' }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <ng-template #emptyState>
+      <p class="text-center text-muted p-4 mb-0">{{ loading() ? 'Loading...' : 'No balance found for this filter.' }}</p>
+    </ng-template>
+  </div>
+</div>
+
+<div class="mt-3">
+  <app-pagination [page]="page()" [pageCount]="pageCount()" (pageChange)="onPageChange($event)"></app-pagination>
+</div>

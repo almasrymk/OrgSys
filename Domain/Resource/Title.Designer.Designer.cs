@@ -1733,7 +1733,97 @@ namespace Domain.Resource {
                 return ResourceManager.GetString("Payment", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Opening Balance.
+        /// </summary>
+        public static string OpeningBalance {
+            get {
+                return ResourceManager.GetString("OpeningBalance", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Receipt.
+        /// </summary>
+        public static string Receipt {
+            get {
+                return ResourceManager.GetString("Receipt", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Deposit.
+        /// </summary>
+        public static string Deposit {
+            get {
+                return ResourceManager.GetString("Deposit", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Withdrawal.
+        /// </summary>
+        public static string Withdrawal {
+            get {
+                return ResourceManager.GetString("Withdrawal", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Fee.
+        /// </summary>
+        public static string Fee {
+            get {
+                return ResourceManager.GetString("Fee", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Interest.
+        /// </summary>
+        public static string Interest {
+            get {
+                return ResourceManager.GetString("Interest", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Cheque.
+        /// </summary>
+        public static string Cheque {
+            get {
+                return ResourceManager.GetString("Cheque", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Adjustment.
+        /// </summary>
+        public static string Adjustment {
+            get {
+                return ResourceManager.GetString("Adjustment", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Transfer In.
+        /// </summary>
+        public static string TransferIn {
+            get {
+                return ResourceManager.GetString("TransferIn", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Transfer Out.
+        /// </summary>
+        public static string TransferOut {
+            get {
+                return ResourceManager.GetString("TransferOut", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Payment Types.
         /// </summary>

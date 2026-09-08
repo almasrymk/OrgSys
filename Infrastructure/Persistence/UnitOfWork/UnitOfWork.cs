@@ -8,7 +8,7 @@
        
         public async Task<int> SaveChangeAsync(CancellationToken cancellationToken = default)
         {
-            return dbContext.SaveChangesAsync(cancellationToken).Result;
+            return await dbContext.SaveChangesAsync(cancellationToken);
         }
 
         public void Dispose()

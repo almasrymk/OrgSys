@@ -16,5 +16,8 @@ namespace Application.Common.Services
 
         /// <summary>Validates that <paramref name="dealerId"/> is an active Client dealer with a valid receivable account.</summary>
         Task<(Dealer? Dealer, Account? Account, List<Error> Errors)> ValidateCustomerAsync(long dealerId, CancellationToken cancellationToken = default);
+
+        /// <summary>Validates that <paramref name="dealerId"/> is an active Supplier dealer with a valid payable account.</summary>
+        Task<(Dealer? Dealer, Account? Account, List<Error> Errors)> ValidateSupplierAsync(long dealerId, CancellationToken cancellationToken = default);
     }
 }

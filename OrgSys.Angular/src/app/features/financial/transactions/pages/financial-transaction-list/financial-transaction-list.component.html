@@ -1,0 +1,63 @@
+<app-page-header [title]="title()" [breadcrumbs]="[{ label: 'Home', route: '/' }, { label: 'Financial' }, { label: title() }]">
+  <div class="d-flex justify-content-between align-items-center flex-wrap">
+    <a *appHasPermission="'Financial.Add'" [routerLink]="['../', financialTypeId, 'new']" class="btn btn-outline-primary">
+      <i class="bi bi-plus-lg"></i> Add
+    </a>
+
+    <div class="search-text" style="max-width: 260px;">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Search..."
+        [ngModel]="keySearch()"
+        (ngModelChange)="keySearch.set($event)"
+        (keyup.enter)="onSearch()"
+      />
+    </div>
+  </div>
+</app-page-header>
+
+<div class="card">
+  <div class="card-body p-0">
+    <table class="table table-hover m-0" *ngIf="transactions().length; else emptyState">
+      <thead>
+        <tr>
+          <th>Code</th>
+          <th>Date</th>
+          <th>Account</th>
+          <th>Reference</th>
+          <th>Amount</th>
+          <th>Status</th>
+          <th style="width: 60px;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let t of transactions()" [class.text-muted]="t.status === Status.Cancel">
+          <td>{{ t.code }}</td>
+          <td>{{ t.date | date: 'yyyy-MM-dd' }}</td>
+          <td>{{ t.financialAccountName }}</td>
+          <td>{{ t.referenceName || t.referenceNumber }}</td>
+          <td>{{ t.amount | number: '1.2-2' }}</td>
+          <td>
+            <span *ngIf="t.status === Status.Reversed" class="badge badge-secondary">Reversed</span>
+            <span *ngIf="t.status !== Status.Reversed && t.posted" class="badge badge-success">Posted</span>
+            <span *ngIf="t.status !== Status.Reversed && !t.posted" class="badge badge-light">Draft</span>
+          </td>
+          <td class="text-right">
+            <a *ngIf="canReverse(t)" href="javascript:void(0)" title="Reverse" (click)="reverse(t)">
+              <i class="bi bi-arrow-repeat text-danger"></i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <ng-template #emptyState>
+      <p class="text-center text-muted p-4 mb-0">{{ loading() ? 'Loading...' : 'No transactions found.' }}</p>
+    </ng-template>
+  </div>
+</div>
+
+<div class="mt-3">
+  <app-pagination [page]="page()" [pageCount]="pageCount()" (pageChange)="onPageChange($event)"></app-pagination>
+</div>

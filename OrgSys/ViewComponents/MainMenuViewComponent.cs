@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace OrgSys.ViewComponents;
@@ -18,6 +19,11 @@ public sealed class MainMenuViewComponent(IConfiguration configuration, IHttpCli
         try
         {
             using var client = httpClientFactory.CreateClient();
+
+            var token = HttpContext.User?.GetApiToken();
+            if (!string.IsNullOrEmpty(token))
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
             var response = await client.GetAsync($"{configuration["ApiUrl"]}/FinancialType/GetList?ParentId=0&TypeId=0&Page=1&PageSize=100");
             if (response.IsSuccessStatusCode)
             {

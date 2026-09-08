@@ -823,9 +823,6 @@ namespace Infrastructure.Migrations
                     b.Property<long?>("FinancialAccountId")
                         .HasColumnType("bigint");
 
-                    b.Property<int?>("FinancialTransactionType")
-                        .HasColumnType("int");
-
                     b.Property<long?>("FinancialTransferId")
                         .HasColumnType("bigint");
 
@@ -2637,6 +2634,44 @@ namespace Infrastructure.Migrations
                     b.HasIndex("PropertyId");
 
                     b.ToTable("PropertyElement");
+                });
+
+            modelBuilder.Entity("Domain.Entities.ReferenceType", b =>
+                {
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ReferenceType");
                 });
 
             modelBuilder.Entity("Domain.Entities.Role", b =>

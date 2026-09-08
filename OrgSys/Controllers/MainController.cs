@@ -12,14 +12,16 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Newtonsoft.Json;
+    using OrgSys;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
     using System.Net.Http;
+    using System.Net.Http.Headers;
     using System.Net.Http.Json;
     using System.Threading.Tasks;
-    
+
     [Authorize]
     public class MainController<TDto, TCreate, TUpdate>(IConfiguration configuration, IMapper mapper) : Controller
         where TCreate : ICreateCommand<Domain.Shared.Result>
@@ -31,8 +33,16 @@
 
         protected IConfiguration Configuration => configuration;
 
-        protected HttpClient CreateClient() =>
-            HttpContext.RequestServices.GetRequiredService<IHttpClientFactory>().CreateClient();
+        protected HttpClient CreateClient()
+        {
+            var client = HttpContext.RequestServices.GetRequiredService<IHttpClientFactory>().CreateClient();
+
+            var token = HttpContext.User?.GetApiToken();
+            if (!string.IsNullOrEmpty(token))
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            return client;
+        }
 
         public virtual async Task<HttpResponseMessage> ApiMethod(ApiMethodType apiMethodType, string NameActionAndParamenter, object Ob = null)
         {

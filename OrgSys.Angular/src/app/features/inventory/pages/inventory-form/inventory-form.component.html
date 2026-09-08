@@ -1,0 +1,101 @@
+<app-page-header
+  [title]="id() ? 'Inventory Count ' + (code() ?? '') : 'New Inventory Count'"
+  [breadcrumbs]="[{ label: 'Home', route: '/' }, { label: 'Inventory Counts', route: '/inventory' }, { label: id() ? 'Edit' : 'New' }]"
+></app-page-header>
+
+<div class="card">
+  <div class="card-body">
+    <div class="d-flex justify-content-end mb-3">
+      <a [routerLink]="['/inventory']" class="btn btn-primary">
+        <i class="bi bi-arrow-return-left"></i> Back
+      </a>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+      <div class="row align-items-end">
+        <div class="form-group col-12 col-md-4">
+          <label>Warehouse</label>
+          <select class="form-control" formControlName="stockId">
+            <option [ngValue]="0" disabled>Select a warehouse</option>
+            <option *ngFor="let stock of stocks()" [ngValue]="stock.id">{{ stock.name }}</option>
+          </select>
+          <div class="text-danger mt-1" *ngIf="form.controls.stockId.touched && form.controls.stockId.invalid">
+            A warehouse is required.
+          </div>
+        </div>
+
+        <div class="form-group col-12 col-md-4">
+          <label>Date</label>
+          <input type="date" class="form-control" formControlName="date" />
+        </div>
+
+        <div class="form-group col-12 col-md-4">
+          <button type="button" class="btn btn-outline-secondary" [disabled]="loadingProducts()" (click)="loadWarehouseProducts()">
+            <i class="bi bi-cloud-download"></i> {{ loadingProducts() ? 'Loading...' : 'Load warehouse products' }}
+          </button>
+        </div>
+      </div>
+
+      <hr />
+
+      <table class="table table-sm" formArrayName="inventoryProductList">
+        <thead>
+          <tr>
+            <th style="width: 30%;">Product</th>
+            <th style="width: 15%;">Unit</th>
+            <th>System balance</th>
+            <th>Counted balance</th>
+            <th>Difference</th>
+            <th>Notes</th>
+            <th style="width: 40px;"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let line of lines.controls; let i = index" [formGroupName]="i">
+            <td>
+              <select class="form-control" formControlName="productId">
+                <option [ngValue]="0" disabled>Select a product</option>
+                <option *ngFor="let product of products()" [ngValue]="product.id">{{ product.code }} {{ product.name }}</option>
+              </select>
+            </td>
+            <td>
+              <select class="form-control" formControlName="unitId">
+                <option [ngValue]="0" disabled>Unit</option>
+                <option *ngFor="let unit of units()" [ngValue]="unit.id">{{ unit.name }}</option>
+              </select>
+            </td>
+            <td><input type="number" step="0.0001" class="form-control" formControlName="calcBalance" (input)="recomputeLine(i)" /></td>
+            <td><input type="number" step="0.0001" class="form-control" formControlName="actualBalance" (input)="recomputeLine(i)" /></td>
+            <td class="align-middle" [class.text-danger]="line.value.diffQuantity && line.value.diffQuantity !== 0">
+              {{ line.value.diffQuantity | number: '1.2-2' }}
+            </td>
+            <td><input type="text" class="form-control" formControlName="notes" /></td>
+            <td class="text-center align-middle">
+              <a href="javascript:void(0)" (click)="removeLine(i)">
+                <i class="bi bi-trash text-danger"></i>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <button type="button" class="btn btn-outline-secondary btn-sm" (click)="addLine()">
+          <i class="bi bi-plus-lg"></i> Add line
+        </button>
+        <span class="text-muted" *ngIf="diffCount() > 0">{{ diffCount() }} line(s) with a counted difference</span>
+      </div>
+
+      <div class="form-group">
+        <label>Notes</label>
+        <input type="text" class="form-control" formControlName="notes" placeholder="Notes" />
+      </div>
+
+      <div class="mt-3">
+        <button type="submit" class="btn btn-primary" [disabled]="saving()">
+          {{ saving() ? 'Saving...' : 'Save' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

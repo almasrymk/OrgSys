@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "orgsys-angular",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "start", "--prefix", "OrgSys.Angular"],
+      "port": 4200
+    }
+  ]
+}

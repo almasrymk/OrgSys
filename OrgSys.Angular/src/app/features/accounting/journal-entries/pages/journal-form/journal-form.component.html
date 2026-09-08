@@ -1,0 +1,113 @@
+<app-page-header
+  [title]="id() ? 'Journal Entry ' + (code() ?? '') : 'New Journal Entry'"
+  [breadcrumbs]="[{ label: 'Home', route: '/' }, { label: 'Journal Entries', route: '/accounting/journal-entries' }, { label: id() ? 'Edit' : 'New' }]"
+></app-page-header>
+
+<div class="card">
+  <div class="card-body">
+    <div class="d-flex justify-content-end mb-3">
+      <a routerLink="/accounting/journal-entries" class="btn btn-primary">
+        <i class="bi bi-arrow-return-left"></i> Back
+      </a>
+    </div>
+
+    <div class="alert alert-info" *ngIf="readOnly()">
+      This journal entry is
+      <strong>{{
+        journal()?.refranceTable ? 'controlled by another resource' : journal()?.posted ? 'posted' : journal()?.status === Status.Reversed ? 'reversed' : 'cancelled'
+      }}</strong>
+      and cannot be edited{{ journal()?.posted ? ' — reverse it from the list instead.' : '.' }}
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+      <div class="row">
+        <div class="form-group col-12 col-md-3">
+          <label>Date</label>
+          <input type="date" class="form-control" formControlName="date" />
+        </div>
+
+        <div class="form-group col-12 col-md-3">
+          <label>Journal type</label>
+          <select class="form-control" formControlName="journalTypeId">
+            <option [ngValue]="0" disabled>Select a type</option>
+            <option *ngFor="let type of journalTypes()" [ngValue]="type.id">{{ type.name }}</option>
+          </select>
+        </div>
+
+        <div class="form-group col-12 col-md-3">
+          <label>Currency</label>
+          <select class="form-control" formControlName="currencyId" (change)="onCurrencyChange(form.controls.currencyId.value)">
+            <option [ngValue]="0" disabled>Select a currency</option>
+            <option *ngFor="let currency of currencies()" [ngValue]="currency.id">{{ currency.name }}</option>
+          </select>
+        </div>
+
+        <div class="form-group col-12 col-md-3">
+          <label>Rate</label>
+          <input type="number" step="0.0001" class="form-control" formControlName="rate" />
+        </div>
+
+        <div class="form-group col-12">
+          <label>Note</label>
+          <input type="text" class="form-control" formControlName="note" placeholder="Note" />
+        </div>
+      </div>
+
+      <hr />
+
+      <table class="table table-sm" formArrayName="journalItems">
+        <thead>
+          <tr>
+            <th style="width: 35%;">Account</th>
+            <th style="width: 20%;">Debit</th>
+            <th style="width: 20%;">Credit</th>
+            <th>Note</th>
+            <th style="width: 40px;"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let line of lines.controls; let i = index" [formGroupName]="i">
+            <td>
+              <select class="form-control" formControlName="accountId">
+                <option [ngValue]="0" disabled>Select an account</option>
+                <option *ngFor="let account of accounts()" [ngValue]="account.id">{{ account.code }} {{ account.name }}</option>
+              </select>
+            </td>
+            <td>
+              <input type="number" step="0.01" class="form-control" formControlName="debit" (input)="onLineAmountChange()" />
+            </td>
+            <td>
+              <input type="number" step="0.01" class="form-control" formControlName="credit" (input)="onLineAmountChange()" />
+            </td>
+            <td>
+              <input type="text" class="form-control" formControlName="note" placeholder="Note" />
+            </td>
+            <td class="text-center align-middle">
+              <a *ngIf="!readOnly()" href="javascript:void(0)" (click)="removeLine(i)">
+                <i class="bi bi-trash text-danger"></i>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr class="font-weight-bold" [class.text-danger]="!isBalanced()">
+            <td>Total</td>
+            <td>{{ totalDebit() | number: '1.2-2' }}</td>
+            <td>{{ totalCredit() | number: '1.2-2' }}</td>
+            <td colspan="2">{{ isBalanced() ? '' : 'Debit and Credit must be equal before posting.' }}</td>
+          </tr>
+        </tfoot>
+      </table>
+
+      <button *ngIf="!readOnly()" type="button" class="btn btn-outline-secondary btn-sm mb-3" (click)="addLine()">
+        <i class="bi bi-plus-lg"></i> Add line
+      </button>
+
+      <div *ngIf="!readOnly()">
+        <button type="submit" class="btn btn-primary" [disabled]="saving()">
+          {{ saving() ? 'Saving...' : 'Save' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,30 @@
+<app-page-header
+  [title]="(id() ? 'Edit ' : 'New ') + title.slice(0, -1)"
+  [breadcrumbs]="[{ label: 'Home', route: '/' }, { label: title, route: basePath }, { label: id() ? 'Edit' : 'New' }]"
+></app-page-header>
+
+<div class="card">
+  <div class="card-body">
+    <div class="d-flex justify-content-end mb-3">
+      <a [routerLink]="basePath" class="btn btn-primary">
+        <i class="bi bi-arrow-return-left"></i> Back
+      </a>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+      <div class="form-group col-12 col-md-6 p-0">
+        <label>Name</label>
+        <input type="text" class="form-control" formControlName="name" placeholder="Name" />
+        <div class="text-danger mt-1" *ngIf="form.controls.name.touched && form.controls.name.invalid">
+          Name is required (3-150 characters).
+        </div>
+      </div>
+
+      <div class="mt-3">
+        <button type="submit" class="btn btn-primary" [disabled]="saving()">
+          {{ saving() ? 'Saving...' : 'Save' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

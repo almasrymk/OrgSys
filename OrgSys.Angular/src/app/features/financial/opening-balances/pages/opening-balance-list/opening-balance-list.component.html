@@ -1,0 +1,53 @@
+<app-page-header title="Opening Balances" [breadcrumbs]="[{ label: 'Home', route: '/' }, { label: 'Financial' }, { label: 'Opening Balances' }]">
+  <a *appHasPermission="'Financial.Add'" routerLink="new" class="btn btn-outline-primary">
+    <i class="bi bi-plus-lg"></i> Add
+  </a>
+</app-page-header>
+
+<div class="card">
+  <div class="card-body p-0">
+    <table class="table table-hover m-0" *ngIf="rows().length; else emptyState">
+      <thead>
+        <tr>
+          <th>Code</th>
+          <th>Date</th>
+          <th>Account</th>
+          <th>Amount</th>
+          <th>Status</th>
+          <th style="width: 140px;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of rows()" [class.text-muted]="row.status === Status.Cancel">
+          <td>{{ row.code }}</td>
+          <td>{{ row.date | date: 'yyyy-MM-dd' }}</td>
+          <td>{{ row.financialAccountName }}</td>
+          <td>{{ row.amount | number: '1.2-2' }}</td>
+          <td>
+            <span *ngIf="row.status === Status.Reversed" class="badge badge-secondary">Reversed</span>
+            <span *ngIf="row.status !== Status.Reversed && row.posted" class="badge badge-success">Posted</span>
+            <span *ngIf="row.status !== Status.Reversed && !row.posted" class="badge badge-light">Draft</span>
+          </td>
+          <td class="text-right text-nowrap">
+            <a *ngIf="isDraft(row)" [routerLink]="[row.id, 'edit']" class="mr-2" title="Edit">
+              <i class="bi bi-pencil-square text-success"></i>
+            </a>
+            <a *ngIf="canPost(row)" href="javascript:void(0)" class="mr-2" title="Post" (click)="post(row)">
+              <i class="bi bi-check2-circle text-primary"></i>
+            </a>
+            <a *ngIf="canReverse(row)" href="javascript:void(0)" class="mr-2" title="Reverse" (click)="reverse(row)">
+              <i class="bi bi-arrow-repeat text-danger"></i>
+            </a>
+            <a *ngIf="canDelete(row)" href="javascript:void(0)" title="Delete" (click)="onDelete(row)">
+              <i class="bi bi-trash text-danger"></i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <ng-template #emptyState>
+      <p class="text-center text-muted p-4 mb-0">{{ loading() ? 'Loading...' : 'No opening balances found.' }}</p>
+    </ng-template>
+  </div>
+</div>

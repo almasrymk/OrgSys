@@ -1,0 +1,19 @@
+<ng-container *ngIf="dialogService.state() as state">
+  <div class="modal d-block" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">{{ state.title }}</h5>
+        </div>
+        <div class="modal-body">
+          <p class="mb-0">{{ state.message }}</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" (click)="dialogService.respond(false)">Cancel</button>
+          <button type="button" class="btn btn-danger" (click)="dialogService.respond(true)">Ok</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-backdrop show"></div>
+</ng-container>

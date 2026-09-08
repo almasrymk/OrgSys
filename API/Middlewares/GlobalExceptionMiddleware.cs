@@ -11,6 +11,15 @@ namespace API.Middlewares
     {
         private readonly RequestDelegate _next;
 
+        // Every normal controller response goes through AddControllers().AddJsonOptions() in
+        // Program.cs, which uses the default camelCase naming policy. JsonSerializer.Serialize()
+        // called directly here (for exceptions that escape a handler's own try/catch — notably
+        // FluentValidationFilter's pipeline-level AppValidationException) does NOT pick that up on
+        // its own and previously fell back to PascalCase, silently breaking every camelCase-based
+        // client-side error read (e.g. `result.errors[0].messageError`) for exactly the responses
+        // meant to explain *why* a save failed.
+        private static readonly JsonSerializerOptions SerializerOptions = new(JsonSerializerDefaults.Web);
+
         public GlobalExceptionMiddleware(RequestDelegate next)
         {
             _next = next;
@@ -67,7 +76,7 @@ namespace API.Middlewares
             var result = new Result(statusCode, errors);
 
             await context.Response.WriteAsync(
-                JsonSerializer.Serialize(result)
+                JsonSerializer.Serialize(result, SerializerOptions)
             );
         }
     }

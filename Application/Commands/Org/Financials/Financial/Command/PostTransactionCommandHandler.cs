@@ -17,7 +17,9 @@ namespace Application.Commands.Org.Financials.Financial.Commands
         IRepository<FinancialType> typeRepository,
         IRepository<Account> glRepository,
         IRepository<Domain.Entities.Financial> transactionRepository,
+        IRepository<Domain.Entities.Invoice> invoiceRepository,
         IRepository<Journal> journalRepository,
+        Application.Common.Services.IReceivableAccountValidator referenceValidator,
         Application.Common.Services.IAccountingPeriodService accountingPeriodService) : ICommandHandler<PostFinancialTransactionCommand>
     {
         public async Task<Result> Handle(PostFinancialTransactionCommand request, CancellationToken cancellationToken)
@@ -26,10 +28,27 @@ namespace Application.Commands.Org.Financials.Financial.Commands
             if (dto.Amount <= 0 || dto.ExchangeRate <= 0)
                 return BadRequest("Amount and exchange rate must be greater than zero.");
             var account = await accountRepository.GetByFilterAsync(e => e.Id == dto.FinancialAccountId, string.Empty);
-            var type = await typeRepository.GetByFilterAsync(e => e.Id == dto.FinancialTypeId, string.Empty);
+            var type = await typeRepository.GetByFilterAsync(e => e.Id == (long)dto.FinancialTypeId, string.Empty);
+            if (account is null || !account.IsActive || account.AccountId is not > 0 || type is null)
+                return BadRequest("Financial account and transaction type must be valid.");
+
+            // Receipt/Payment only: the Counter GL Account is driven by the selected Reference (Customer/
+            // Supplier/Expense/Income Account) instead of being freely typed in — re-resolve it here from
+            // the reference's own linked account rather than trusting whatever CounterAccountId the client
+            // posted, and verify the reference actually exists in its real table (not just a non-empty Id).
+            // Invoice/Payment/Transfer references have no linked account (by design, see the DTOs' own
+            // comments) so CounterAccountId still comes from the client for those; Employee/Loan/Cheque/
+            // PaymentGateway have no backing table in this codebase yet, so they're left unvalidated.
+            if (dto.FinancialTypeId is FinancialTransactionType.Receipt or FinancialTransactionType.Payment)
+            {
+                var referenceError = await ResolveReference(dto, cancellationToken);
+                if (referenceError is not null)
+                    return BadRequest(referenceError);
+            }
+
             var counter = await glRepository.GetByFilterAsync(e => e.Id == dto.CounterAccountId, string.Empty);
-            if (account is null || !account.IsActive || account.AccountId is not > 0 || type is null || counter is null)
-                return BadRequest("Financial account, transaction type, and counter account must be valid.");
+            if (counter is null)
+                return BadRequest("Counter account must be valid.");
 
             var resolution = await accountingPeriodService.ResolveAndValidateAsync(dto.TransactionDate, cancellationToken);
             if (!resolution.Success)
@@ -42,8 +61,11 @@ namespace Application.Commands.Org.Financials.Financial.Commands
                 var transaction = new Domain.Entities.Financial
                 {
                     FinancialAccountId = account.Id,
-                    FinancialTypeId = type.Id,
-                    FinancialTransactionType = dto.FinancialTransactionType,
+                    FinancialTypeId = (long)dto.FinancialTypeId,
+                    // Financial.PaymentTypeId is a required FK with no equivalent field on
+                    // PostFinancialTransactionDto — default to Cash (Id=1), the same convention
+                    // already used for Opening Balance (see PostFinancialOpeningBalanceCommandHandler).
+                    PaymentTypeId = 1,
                     Direction = dto.Direction,
                     ReferenceType = dto.ReferenceType,
                     ReferenceId = dto.ReferenceId,
@@ -99,6 +121,105 @@ namespace Application.Commands.Org.Financials.Financial.Commands
             {
                 await unitOfWork.RollbackAsync();
                 return new Result(HttpStatusCode.InternalServerError, [new Error(ex.Message)]);
+            }
+        }
+
+        // Resolves and validates dto.ReferenceId against its real backing table for the given
+        // ReferenceType, overriding dto.CounterAccountId with the reference's own linked account where
+        // the domain defines one (Customer/Supplier/Expense/Income). Returns an error message, or null
+        // on success. Employee/Loan/Cheque/PaymentGateway have no backing entity in this codebase yet, so
+        // they fall through unvalidated — the UI never offers them a reference to pick in the first place.
+        private async Task<string?> ResolveReference(PostFinancialTransactionDto dto, CancellationToken cancellationToken)
+        {
+            switch (dto.ReferenceType)
+            {
+                case FinancialReferenceType.Other:
+                    return null;
+
+                case FinancialReferenceType.Customer:
+                {
+                    if (dto.ReferenceId is not > 0)
+                        return "A customer reference is required.";
+                    var (_, refAccount, errors) = await referenceValidator.ValidateCustomerAsync(dto.ReferenceId.Value, cancellationToken);
+                    if (errors.Count > 0)
+                        return string.Join(" ", errors.Select(e => e.MessageError));
+                    dto.CounterAccountId = refAccount!.Id;
+                    return null;
+                }
+
+                case FinancialReferenceType.Supplier:
+                {
+                    if (dto.ReferenceId is not > 0)
+                        return "A supplier reference is required.";
+                    var (_, refAccount, errors) = await referenceValidator.ValidateSupplierAsync(dto.ReferenceId.Value, cancellationToken);
+                    if (errors.Count > 0)
+                        return string.Join(" ", errors.Select(e => e.MessageError));
+                    dto.CounterAccountId = refAccount!.Id;
+                    return null;
+                }
+
+                case FinancialReferenceType.Expense:
+                case FinancialReferenceType.Income:
+                {
+                    var isExpense = dto.ReferenceType == FinancialReferenceType.Expense;
+                    if (dto.ReferenceId is not > 0)
+                        return isExpense ? "An expense account reference is required." : "An income account reference is required.";
+
+                    // Needs AccountType.Name for the Expense/Revenue classification check — the shared
+                    // validator doesn't load that nav, so this queries directly instead of via ValidateAccountAsync.
+                    var refAccount = await glRepository.GetByFilterAsync(e => e.Id == dto.ReferenceId, "AccountType");
+                    if (refAccount is null || refAccount.Status == Status.Deleted || refAccount.Hide)
+                        return "The selected account does not exist or is not active.";
+                    if (!refAccount.IsPostable)
+                        return $"Account '{refAccount.Name}' is a parent/group account and cannot receive postings.";
+
+                    var expectedTypeName = isExpense ? "Expense" : "Revenue";
+                    if (!string.Equals(refAccount.AccountType?.Name, expectedTypeName, StringComparison.OrdinalIgnoreCase))
+                        return isExpense
+                            ? $"Account '{refAccount.Name}' is not classified as an expense account."
+                            : $"Account '{refAccount.Name}' is not classified as a revenue account.";
+
+                    dto.CounterAccountId = refAccount.Id;
+                    return null;
+                }
+
+                case FinancialReferenceType.Invoice:
+                {
+                    if (dto.ReferenceId is not > 0)
+                        return "An invoice reference is required.";
+                    var invoice = await invoiceRepository.GetByFilterAsync(e => e.Id == dto.ReferenceId, string.Empty);
+                    if (invoice is null || invoice.Status == Status.Deleted || invoice.Hide)
+                        return "The selected invoice does not exist.";
+                    // No linked GL account on an invoice reference — CounterAccountId stays client-supplied.
+                    return null;
+                }
+
+                case FinancialReferenceType.Payment:
+                {
+                    if (dto.ReferenceId is not > 0)
+                        return "A payment reference is required.";
+                    var exists = await transactionRepository.AnyAsync(e =>
+                        e.Id == dto.ReferenceId && e.FinancialTypeId == (long)FinancialTransactionType.Payment, cancellationToken);
+                    if (!exists)
+                        return "The selected payment reference does not exist.";
+                    return null;
+                }
+
+                case FinancialReferenceType.Transfer:
+                {
+                    if (dto.ReferenceId is not > 0)
+                        return "A transfer reference is required.";
+                    var exists = await transactionRepository.AnyAsync(e =>
+                        e.Id == dto.ReferenceId
+                        && (e.FinancialTypeId == (long)FinancialTransactionType.TransferIn || e.FinancialTypeId == (long)FinancialTransactionType.TransferOut),
+                        cancellationToken);
+                    if (!exists)
+                        return "The selected transfer reference does not exist.";
+                    return null;
+                }
+
+                default:
+                    return null;
             }
         }
 

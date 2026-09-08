@@ -191,23 +191,29 @@
                 <div class="form-row SalesIntegration" style="display:none;">
                     <div class="form-group col-md-4">
                         <label>@ViewBag.InvoiceAccountLabel</label>
-                        <div class="input-group">
+                        <div class="input-group DropAutoComplete">
                             <div class="input-group-prepend"><span class="input-group-text"><i class="iconsminds-financial"></i></span></div>
-                            @Html.DropDownList("InvoiceAccounts", null, "...", new { @class = "form-control" })
+                            <input type="text" class="form-control Droptxt" id="txtInvoiceAccounts" value="@ViewBag.InvoiceAccountsName" autocomplete="off" />
+                            <input type="hidden" id="InvoiceAccounts" name="InvoiceAccounts" value="@ViewBag.InvoiceAccountsId" />
+                            <div class="input-group-prepend Dropbtn"><span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span></div>
                         </div>
                     </div>
                     <div class="form-group col-md-4">
                         <label>Dealer Account</label>
-                        <div class="input-group">
+                        <div class="input-group DropAutoComplete">
                             <div class="input-group-prepend"><span class="input-group-text"><i class="iconsminds-financial"></i></span></div>
-                            @Html.DropDownList("DealerAccounts", null, "...", new { @class = "form-control" })
+                            <input type="text" class="form-control Droptxt" id="txtDealerAccounts" value="@ViewBag.DealerAccountsName" autocomplete="off" />
+                            <input type="hidden" id="DealerAccounts" name="DealerAccounts" value="@ViewBag.DealerAccountsId" />
+                            <div class="input-group-prepend Dropbtn"><span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span></div>
                         </div>
                     </div>
                     <div class="form-group col-md-4">
                         <label>Tax Account</label>
-                        <div class="input-group">
+                        <div class="input-group DropAutoComplete">
                             <div class="input-group-prepend"><span class="input-group-text"><i class="iconsminds-financial"></i></span></div>
-                            @Html.DropDownList("TaxAccounts", null, "...", new { @class = "form-control" })
+                            <input type="text" class="form-control Droptxt" id="txtTaxAccounts" value="@ViewBag.TaxAccountsName" autocomplete="off" />
+                            <input type="hidden" id="TaxAccounts" name="TaxAccounts" value="@ViewBag.TaxAccountsId" />
+                            <div class="input-group-prepend Dropbtn"><span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span></div>
                         </div>
                     </div>
                 </div>

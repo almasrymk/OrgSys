@@ -600,6 +600,36 @@
   <data name="Payment" xml:space="preserve">
     <value>Payment</value>
   </data>
+  <data name="OpeningBalance" xml:space="preserve">
+    <value>Opening Balance</value>
+  </data>
+  <data name="Receipt" xml:space="preserve">
+    <value>Receipt</value>
+  </data>
+  <data name="Deposit" xml:space="preserve">
+    <value>Deposit</value>
+  </data>
+  <data name="Withdrawal" xml:space="preserve">
+    <value>Withdrawal</value>
+  </data>
+  <data name="Fee" xml:space="preserve">
+    <value>Fee</value>
+  </data>
+  <data name="Interest" xml:space="preserve">
+    <value>Interest</value>
+  </data>
+  <data name="Cheque" xml:space="preserve">
+    <value>Cheque</value>
+  </data>
+  <data name="Adjustment" xml:space="preserve">
+    <value>Adjustment</value>
+  </data>
+  <data name="TransferIn" xml:space="preserve">
+    <value>Transfer In</value>
+  </data>
+  <data name="TransferOut" xml:space="preserve">
+    <value>Transfer Out</value>
+  </data>
   <data name="PaymentTypes" xml:space="preserve">
     <value>Payment Types</value>
   </data>

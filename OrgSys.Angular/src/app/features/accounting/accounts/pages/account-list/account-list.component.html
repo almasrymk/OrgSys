@@ -1,0 +1,21 @@
+<app-page-header title="Chart of Accounts" [breadcrumbs]="[{ label: 'Home', route: '/' }, { label: 'Accounting' }, { label: 'Chart of Accounts' }]">
+  <a *appHasPermission="'Accounts.Add'" routerLink="new" class="btn btn-outline-primary">
+    <i class="bi bi-plus-lg"></i> Add root account
+  </a>
+</app-page-header>
+
+<div class="card">
+  <div class="card-body">
+    <p *ngIf="loading()" class="text-muted mb-0">Loading...</p>
+    <p *ngIf="!loading() && !tree().length" class="text-muted mb-0">No accounts found.</p>
+
+    <app-tree-view
+      *ngIf="!loading() && tree().length"
+      [nodes]="tree()"
+      [canAddChild]="permissionService.can('Accounts.Add')"
+      [canEdit]="permissionService.can('Accounts.Edit')"
+      [canDelete]="permissionService.can('Accounts.Delete')"
+      (action)="onTreeAction($event)"
+    ></app-tree-view>
+  </div>
+</div>

@@ -1,114 +1,219 @@
 @model List<Application.DTOs.PreferenceDto>
 
-                <div class="form-row">
-                    @if (ViewBag.type == 2)
-                    {
-                        <div class="form-group col-md-4">
-                            <label>@Domain.Resource.Title_Designer.DefaultClient</label>
-                            <div id="divStockId">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="iconsminds-clothing-Stock"></i></span>
-                                    </div>
-                                    @Html.DropDownList("Clients", null, null, new { @class = "form-control" })
-                                </div>
-                                @* <small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
-                            </div>
-                        </div>
-                    }
-                    else if (ViewBag.type == 3)
-                    {
-                        <div class="form-group col-md-4">
-                            <label>@Domain.Resource.Title_Designer.DefaultSupplier</label>
-                            <div id="divStockId">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="iconsminds-clothing-Stock"></i></span>
-                                    </div>
-                                    @Html.DropDownList("Suppliers", null, null, new { @class = "form-control" })
-                                </div>
-                                @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
-                            </div>
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="form-group col-md-4">
-                            <label>@Domain.Resource.Title_Designer.DefaultOutlay</label>
-                            <div id="divStockId">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="iconsminds-clothing-Stock"></i></span>
-                                    </div>
-                                    @Html.DropDownList("Outlays", null, null, new { @class = "form-control" })
-                                </div>
-                                @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
-                            </div>
-                        </div>
-                    }
-                    <div class="form-group col-md-4">
-                        <label> @Domain.Resource.Title_Designer.DefaultCashBox</label>
-                        <div id="divPaymentTypeId">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="iconsminds-financial"></i></span>
-                                </div>
-                                @Html.DropDownList("CashBoxes", null, null, new { @class = "form-control" })
-                            </div>
-                            @* <small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
-                        </div>
+@if (ViewBag.type == 1)
+{
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label>@Domain.Resource.Title_Designer.DefaultCurrency</label>
+            <div id="divPaymentTypeId">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="iconsminds-financial"></i></span>
                     </div>
-                    <div class="form-group col-md-4">
-                        <label>@Domain.Resource.Title_Designer.DefaultCurrency</label>
-                        <div id="divPaymentTypeId">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="iconsminds-financial"></i></span>
-                                </div>
-                                @Html.DropDownList("Currencys", null, null, new { @class = "form-control" })
-                            </div>
-                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
-                        </div>
+                    @Html.DropDownList("Currencys", null, null, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+        <div class="form-group col-md-4">
+            <label>@Domain.Resource.Title_Designer.AutoSave</label>
+            <div id="divPaymentTypeId">
+                <div class="input-group mt-2">
+                    <div id="divAutoSave" class="custom-switch custom-switch-primary-inverse custom-switch-small">
+                        <input class="custom-switch-input" id="AutoSave" name="AutoSave" type="checkbox" checked="@ViewBag.AutoSave">
+                        <label class="custom-switch-btn" for="AutoSave"></label>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
 
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label>@Domain.Resource.Title_Designer.DefaultPaymentType</label>
-                        <div id="divStockId">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="iconsminds-clothing-Stock"></i></span>
-                                </div>
-                                @Html.DropDownList("PaymentTypes", null, null, new { @class = "form-control" })
-                            </div>
-                            @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
-                        </div>
-                    </div>
-
-                    <div class="form-group col-md-4">
-                        <label>@Domain.Resource.Title_Designer.TypeSerial</label>
-                        <div id="divPaymentTypeId">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="iconsminds-financial"></i></span>
-                                </div>
-                                @Html.DropDownList("TypeSerial", null, null, new { @class = "form-control" })
-                            </div>
-                            @* <small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
-                        </div>
-                    </div>
-
-                    <div class="form-group col-md-4">
-                        <label>@Domain.Resource.Title_Designer.AutoSave</label>
-                        <div id="divPaymentTypeId">
-                            <div class="input-group mt-2">
-                                <div id="divAutoSave" class="custom-switch custom-switch-primary-inverse custom-switch-small">
-                                    <input class="custom-switch-input" id="AutoSave" name="AutoSave" type="checkbox" checked="@ViewBag.AutoSave">
-                                    <label class="custom-switch-btn" for="AutoSave"></label>
-                                </div>
-                            </div>
-                            @* <small class="form-text text-muted" style="margin-top:12px;"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
-                        </div>
+    <hr class="FinancialIntegration" style="display:none;">
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label>Accounts Integration</label>
+            <div id="divAccountsIntegrationId">
+                <div class="input-group mt-2">
+                    <div id="divAccountsIntegration" class="custom-switch custom-switch-primary-inverse custom-switch-small">
+                        <input class="custom-switch-input" id="AccountsIntegration" name="AccountsIntegration" type="checkbox" checked="@ViewBag.AccountsIntegration" onclick="ShowHide('AccountsIntegration','FinancialIntegration')">
+                        <label class="custom-switch-btn" for="AccountsIntegration"></label>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-row FinancialIntegration" style="display:none;">
+        <div class="form-group col-md-4">
+            <label>Opening Balance Account</label>
+            <div id="divOpeningBalanceEquityAccount">
+                <div class="input-group DropAutoComplete">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="iconsminds-financial"></i></span>
+                    </div>
+                    <input type="text" class="form-control Droptxt" id="txtOpeningBalanceEquityAccount" value="@ViewBag.OpeningBalanceEquityAccountName" autocomplete="off" />
+                    <input type="hidden" id="OpeningBalanceEquityAccount" name="OpeningBalanceEquityAccount" value="@ViewBag.OpeningBalanceEquityAccountId" />
+                    <div class="input-group-prepend Dropbtn">
+                        <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group col-md-4">
+            <label>Cash Box Account</label>
+            <div id="divCashBoxAccount">
+                <div class="input-group DropAutoComplete">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="iconsminds-financial"></i></span>
+                    </div>
+                    <input type="text" class="form-control Droptxt" id="txtCashBoxAccount" value="@ViewBag.CashBoxAccountName" autocomplete="off" />
+                    <input type="hidden" id="CashBoxAccount" name="CashBoxAccount" value="@ViewBag.CashBoxAccountId" />
+                    <div class="input-group-prepend Dropbtn">
+                        <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group col-md-4">
+            <label>Bank Account</label>
+            <div id="divBankAccount">
+                <div class="input-group DropAutoComplete">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="iconsminds-financial"></i></span>
+                    </div>
+                    <input type="text" class="form-control Droptxt" id="txtBankAccount" value="@ViewBag.BankAccountName" autocomplete="off" />
+                    <input type="hidden" id="BankAccount" name="BankAccount" value="@ViewBag.BankAccountId" />
+                    <div class="input-group-prepend Dropbtn">
+                        <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-row FinancialIntegration" style="display:none;">
+        <div class="form-group col-md-4">
+            <label> Auto-Create Journal Entry </label>
+            <div id="divAutoCreateJournalEntryeId">
+                <div class="input-group mt-2">
+                    <div id="divAutoCreateJournalEntry" class="custom-switch custom-switch-primary-inverse custom-switch-small">
+                        <input class="custom-switch-input" id="AutoCreateJournalEntry" name="AutoCreateJournalEntry" type="checkbox" checked="@ViewBag.AutoCreateJournalEntry">
+                        <label class="custom-switch-btn" for="AutoCreateJournalEntry"></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="form-row">
+        @if (ViewBag.type == 2)
+        {
+            <div class="form-group col-md-4">
+                <label>@Domain.Resource.Title_Designer.DefaultClient</label>
+                <div id="divStockId">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="iconsminds-clothing-Stock"></i></span>
+                        </div>
+                        @Html.DropDownList("Clients", null, null, new { @class = "form-control" })
+                    </div>
+                    @* <small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                </div>
+            </div>
+        }
+        else if (ViewBag.type == 3)
+        {
+            <div class="form-group col-md-4">
+                <label>@Domain.Resource.Title_Designer.DefaultSupplier</label>
+                <div id="divStockId">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="iconsminds-clothing-Stock"></i></span>
+                        </div>
+                        @Html.DropDownList("Suppliers", null, null, new { @class = "form-control" })
+                    </div>
+                    @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="form-group col-md-4">
+                <label>@Domain.Resource.Title_Designer.DefaultOutlay</label>
+                <div id="divStockId">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="iconsminds-clothing-Stock"></i></span>
+                        </div>
+                        @Html.DropDownList("Outlays", null, null, new { @class = "form-control" })
+                    </div>
+                    @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                </div>
+            </div>
+        }
+        <div class="form-group col-md-4">
+            <label> @Domain.Resource.Title_Designer.DefaultCashBox</label>
+            <div id="divPaymentTypeId">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="iconsminds-financial"></i></span>
+                    </div>
+                    @Html.DropDownList("CashBoxes", null, null, new { @class = "form-control" })
+                </div>
+                @* <small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+            </div>
+        </div>
+        <div class="form-group col-md-4">
+            <label>@Domain.Resource.Title_Designer.DefaultCurrency</label>
+            <div id="divPaymentTypeId">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="iconsminds-financial"></i></span>
+                    </div>
+                    @Html.DropDownList("Currencys", null, null, new { @class = "form-control" })
+                </div>
+                @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+            </div>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label>@Domain.Resource.Title_Designer.DefaultPaymentType</label>
+            <div id="divStockId">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="iconsminds-clothing-Stock"></i></span>
+                    </div>
+                    @Html.DropDownList("PaymentTypes", null, null, new { @class = "form-control" })
+                </div>
+                @*<small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+            </div>
+        </div>
+
+        <div class="form-group col-md-4">
+            <label>@Domain.Resource.Title_Designer.TypeSerial</label>
+            <div id="divPaymentTypeId">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="iconsminds-financial"></i></span>
+                    </div>
+                    @Html.DropDownList("TypeSerial", null, null, new { @class = "form-control" })
+                </div>
+                @* <small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+            </div>
+        </div>
+
+        <div class="form-group col-md-4">
+            <label>@Domain.Resource.Title_Designer.AutoSave</label>
+            <div id="divPaymentTypeId">
+                <div class="input-group mt-2">
+                    <div id="divAutoSave" class="custom-switch custom-switch-primary-inverse custom-switch-small">
+                        <input class="custom-switch-input" id="AutoSave" name="AutoSave" type="checkbox" checked="@ViewBag.AutoSave">
+                        <label class="custom-switch-btn" for="AutoSave"></label>
+                    </div>
+                </div>
+                @* <small class="form-text text-muted" style="margin-top:12px;"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+            </div>
+        </div>
+    </div>
+}

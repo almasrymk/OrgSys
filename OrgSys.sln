@@ -1,4 +1,4 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
 VisualStudioVersion = 18.0.11222.15
@@ -23,6 +23,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{0AB3BF05
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.Tests", "Tests\Application.Tests\Application.Tests.csproj", "{2F031FCE-EFF6-4BBA-A684-54698C21E59F}"
 EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "OrgSys.Angular", "OrgSys.Angular\OrgSys.Angular.esproj", "{6DCC8AB2-B1C9-4B60-9CC6-814AB6CA69B0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,18 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6DCC8AB2-B1C9-4B60-9CC6-814AB6CA69B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6DCC8AB2-B1C9-4B60-9CC6-814AB6CA69B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6DCC8AB2-B1C9-4B60-9CC6-814AB6CA69B0}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{6DCC8AB2-B1C9-4B60-9CC6-814AB6CA69B0}.Debug|x64.Build.0 = Debug|Any CPU
+		{6DCC8AB2-B1C9-4B60-9CC6-814AB6CA69B0}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6DCC8AB2-B1C9-4B60-9CC6-814AB6CA69B0}.Debug|x86.Build.0 = Debug|Any CPU
+		{6DCC8AB2-B1C9-4B60-9CC6-814AB6CA69B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6DCC8AB2-B1C9-4B60-9CC6-814AB6CA69B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6DCC8AB2-B1C9-4B60-9CC6-814AB6CA69B0}.Release|x64.ActiveCfg = Release|Any CPU
+		{6DCC8AB2-B1C9-4B60-9CC6-814AB6CA69B0}.Release|x64.Build.0 = Release|Any CPU
+		{6DCC8AB2-B1C9-4B60-9CC6-814AB6CA69B0}.Release|x86.ActiveCfg = Release|Any CPU
+		{6DCC8AB2-B1C9-4B60-9CC6-814AB6CA69B0}.Release|x86.Build.0 = Release|Any CPU
 		{53CF4721-C898-4E4C-AEB2-697CB8A26BB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{53CF4721-C898-4E4C-AEB2-697CB8A26BB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{53CF4721-C898-4E4C-AEB2-697CB8A26BB9}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -110,6 +124,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{6DCC8AB2-B1C9-4B60-9CC6-814AB6CA69B0} = {AE724F3A-A5F0-469C-9F9F-207F0E4A7451}
 		{53CF4721-C898-4E4C-AEB2-697CB8A26BB9} = {AE724F3A-A5F0-469C-9F9F-207F0E4A7451}
 		{03A41DB2-01A7-4590-8C98-A450E48A14DD} = {C73526F2-A966-4314-9CE0-F8DE47F015D5}
 		{4868B891-DDA4-4CEA-A281-C9645F3C54C6} = {C73526F2-A966-4314-9CE0-F8DE47F015D5}
