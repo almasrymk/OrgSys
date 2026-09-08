@@ -159,14 +159,18 @@ namespace OrgSys.Controllers
         {
 
             {
-                //ModelState.AddModelError("", "Invalid username or password.");
-                //return View(_user);
-                //}
+                var login = (await PostAsync<OrgSys.Models.LoginResponseDto>("api/auth/login", new LoginCommand(_user.UserName, _user.Password)))?.Response;
 
-                var user = (await PostAsync<UserDto>("api/auth/login", new LoginCommand(_user.UserName, _user.Password)))?.Response;
+                // The API always answers with HTTP 200 here, even on bad credentials or a failed
+                // login handler - the failure shows up as a null Response/User inside the body. Guard
+                // it explicitly instead of dereferencing null, which previously crashed the request.
+                if (login?.User == null)
+                {
+                    ModelState.AddModelError("", "Invalid username or password.");
+                    return View(_user);
+                }
 
-
-                user!.SignIn(HttpContext, "org", _user.KeepLoggedIn);
+                login.User.SignIn(HttpContext, "org", _user.KeepLoggedIn, login.Token);
 
                 if (!string.IsNullOrWhiteSpace(ReturnUrl))
                     return LocalRedirect(ReturnUrl);

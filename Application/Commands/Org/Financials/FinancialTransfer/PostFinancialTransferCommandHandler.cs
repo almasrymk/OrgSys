@@ -177,6 +177,9 @@ public sealed class PostFinancialTransferCommandHandler(
         FinancialAccountId = accountId,
         ContraFinancialAccountId = contraId,
         FinancialTypeId = (long)transactionType,
+        // Financial.PaymentTypeId is a required FK with no equivalent field here — default to Cash
+        // (Id=1), same fix and same convention as PostTransactionCommandHandler (see that file).
+        PaymentTypeId = 1,
         FinancialTransferId = transfer.Id,
         Direction = direction,
         ReferenceType = FinancialReferenceType.Transfer,

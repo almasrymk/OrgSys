@@ -17,5 +17,7 @@ namespace Application.Report
         public string? CurrencyName { get; set; }
         public string? SafeImgPath { get; set; }
 
+        /// <summary>Populated by GetSafeBalanceReportQueryHandler (running balance as of a date) — unused by the never-finished legacy MVC report this DTO originally supported.</summary>
+        public decimal Balance { get; set; }
     }
 }

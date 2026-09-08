@@ -1,0 +1,39 @@
+<ul class="list-unstyled mb-0" [class.pl-4]="false">
+  <li *ngFor="let node of nodes()" class="py-1">
+    <div class="d-flex align-items-center">
+      <details [open]="true" *ngIf="node.children.length; else leafIcon" class="mr-1">
+        <summary style="cursor: pointer; list-style: none;">
+          <i class="bi bi-folder2-open"></i>
+        </summary>
+      </details>
+      <ng-template #leafIcon><i class="bi bi-file-earmark mr-1" style="width: 1rem;"></i></ng-template>
+
+      <span class="flex-grow-1">
+        {{ node.label }}
+        <small class="text-muted" *ngIf="node.sublabel">({{ node.sublabel }})</small>
+      </span>
+
+      <span class="text-nowrap">
+        <a *ngIf="canAddChild()" href="javascript:void(0)" class="mr-2" title="Add child" (click)="onAction('add-child', node)">
+          <i class="bi bi-plus-circle text-primary"></i>
+        </a>
+        <a *ngIf="canEdit()" href="javascript:void(0)" class="mr-2" title="Edit" (click)="onAction('edit', node)">
+          <i class="bi bi-pencil-square text-success"></i>
+        </a>
+        <a *ngIf="canDelete()" href="javascript:void(0)" title="Delete" (click)="onAction('delete', node)">
+          <i class="bi bi-trash text-danger"></i>
+        </a>
+      </span>
+    </div>
+
+    <div class="pl-4" *ngIf="node.children.length">
+      <app-tree-view
+        [nodes]="node.children"
+        [canEdit]="canEdit()"
+        [canDelete]="canDelete()"
+        [canAddChild]="canAddChild()"
+        (action)="onChildAction($event)"
+      ></app-tree-view>
+    </div>
+  </li>
+</ul>

@@ -1,0 +1,58 @@
+<app-page-header title="Currencies" [breadcrumbs]="[{ label: 'Home', route: '/' }, { label: 'Settings' }, { label: 'Currencies' }]">
+  <div class="d-flex justify-content-between align-items-center flex-wrap">
+    <a *appHasPermission="'Currencies.Add'" routerLink="new" class="btn btn-outline-primary">
+      <i class="bi bi-plus-lg"></i> Add
+    </a>
+
+    <div class="search-text" style="max-width: 260px;">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Search..."
+        [ngModel]="keySearch()"
+        (ngModelChange)="keySearch.set($event)"
+        (keyup.enter)="onSearch()"
+      />
+    </div>
+  </div>
+</app-page-header>
+
+<div class="card">
+  <div class="card-body p-0">
+    <table class="table table-hover m-0" *ngIf="currencies().length; else emptyState">
+      <thead>
+        <tr>
+          <th class="text-center" style="width: 60px;">#</th>
+          <th>Name</th>
+          <th>Rate</th>
+          <th>Default</th>
+          <th style="width: 120px;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let currency of currencies(); let i = index" [class.text-muted]="currency.status === Status.Cancel">
+          <td class="text-center">{{ (page() - 1) * 20 + i + 1 }}</td>
+          <td>{{ currency.name }}</td>
+          <td>{{ currency.rate }}</td>
+          <td><i class="bi" [class.bi-check-lg]="currency.isDefault" [class.text-success]="currency.isDefault"></i></td>
+          <td class="text-right">
+            <a *appHasPermission="'Currencies.Edit'" [routerLink]="[currency.id, 'edit']" class="mr-2">
+              <i class="bi bi-pencil-square text-success"></i>
+            </a>
+            <a *appHasPermission="'Currencies.Delete'" href="javascript:void(0)" (click)="onDelete(currency)">
+              <i class="bi bi-trash text-danger"></i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <ng-template #emptyState>
+      <p class="text-center text-muted p-4 mb-0">{{ loading() ? 'Loading...' : 'No currencies found.' }}</p>
+    </ng-template>
+  </div>
+</div>
+
+<div class="mt-3">
+  <app-pagination [page]="page()" [pageCount]="pageCount()" (pageChange)="onPageChange($event)"></app-pagination>
+</div>

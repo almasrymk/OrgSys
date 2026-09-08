@@ -1,0 +1,57 @@
+<app-page-header [title]="title()" [breadcrumbs]="[{ label: 'Home', route: '/' }, { label: 'Reports' }, { label: title() }]"></app-page-header>
+
+<div class="card mb-3">
+  <div class="card-body">
+    <div class="row align-items-end">
+      <div class="form-group col-6 col-md-3">
+        <label>As of date</label>
+        <input type="date" class="form-control" [ngModel]="toDate()" (ngModelChange)="toDate.set($event)" />
+      </div>
+      <div class="form-group col-6 col-md-6">
+        <label>Dealer</label>
+        <select class="form-control" [ngModel]="dealerId()" (ngModelChange)="dealerId.set($event)">
+          <option [ngValue]="0">All dealers</option>
+          <option *ngFor="let dealer of dealers()" [ngValue]="dealer.id">{{ dealer.code }} {{ dealer.name }}</option>
+        </select>
+      </div>
+      <div class="form-group col-12 col-md-3">
+        <button type="button" class="btn btn-primary w-100" (click)="search()">Search</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-body p-0">
+    <table class="table table-hover m-0" *ngIf="rows().length; else emptyState">
+      <thead>
+        <tr>
+          <th>Dealer</th>
+          <th class="text-right">Invoices</th>
+          <th class="text-right">Returns</th>
+          <th class="text-right">Credit</th>
+          <th class="text-right">Paid</th>
+          <th class="text-right">Balance</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of rows()">
+          <td>{{ row.dealerName }}</td>
+          <td class="text-right">{{ row.totalInvoice | number: '1.2-2' }}</td>
+          <td class="text-right">{{ row.totalReturnInvoice | number: '1.2-2' }}</td>
+          <td class="text-right">{{ row.totalCreditInvoice | number: '1.2-2' }}</td>
+          <td class="text-right">{{ row.totalPaidInvoice | number: '1.2-2' }}</td>
+          <td class="text-right font-weight-bold" [class.text-danger]="row.balance < 0">{{ row.balance | number: '1.2-2' }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <ng-template #emptyState>
+      <p class="text-center text-muted p-4 mb-0">{{ loading() ? 'Loading...' : 'No balance found for this filter.' }}</p>
+    </ng-template>
+  </div>
+</div>
+
+<div class="mt-3">
+  <app-pagination [page]="page()" [pageCount]="pageCount()" (pageChange)="onPageChange($event)"></app-pagination>
+</div>

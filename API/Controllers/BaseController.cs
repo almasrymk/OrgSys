@@ -1,11 +1,13 @@
 ﻿using Application.Interfaces.CQRS;
 using Domain.Shared;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
 namespace API.Controllers
 {
+    [Authorize]
     public class CoreController<TGetById, TSearch, TList, TResponse>(ISender sender) : ControllerBase
         where TGetById : IGetByIdQuery<Result<TResponse>>
         where TSearch : ISearchQuery<ResultPagination<TResponse>>
@@ -33,6 +35,7 @@ namespace API.Controllers
         }
     }
 
+    [Authorize]
     public class CoreController<TGetById, TSearch, TList, TCreate, TUpdate, TDelete, TDeleteList, TResponse>(ISender sender) : ControllerBase
         where TGetById : IGetByIdQuery<Result<TResponse>>
         where TSearch : ISearchQuery<ResultPagination<TResponse>>

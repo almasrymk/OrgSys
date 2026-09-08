@@ -1,0 +1,14 @@
+/* Global styles: Bootstrap 4 utility/component classes are reused verbatim from OrgSys.App's
+   Razor views (card, btn, breadcrumb, form-group, custom-control, table ...) so migrated
+   screens keep the same class names and visual structure as their MVC counterparts. */
+@import "bootstrap/dist/css/bootstrap.min.css";
+@import "bootstrap-icons/font/bootstrap-icons.css";
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: #f5f5f7;
+}

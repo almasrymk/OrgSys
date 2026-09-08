@@ -31,7 +31,8 @@
 
         public override string CreateInclude()
         {
-            return "DealerGroup,Account";
+            // See SearchQueryHandler.CreateInclude for why Country/City/District were added.
+            return "DealerGroup,Account,Country,City,District";
         }
     }
 }

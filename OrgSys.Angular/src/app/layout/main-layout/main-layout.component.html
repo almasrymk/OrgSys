@@ -1,0 +1,11 @@
+<div class="d-flex">
+  <app-sidebar></app-sidebar>
+  <div class="flex-grow-1 min-width-zero">
+    <app-header></app-header>
+    <main class="container-fluid py-4">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>
+<app-toast-container></app-toast-container>
+<app-confirm-dialog></app-confirm-dialog>

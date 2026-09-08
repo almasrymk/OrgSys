@@ -1,0 +1,31 @@
+<nav class="sidebar bg-dark text-white" style="width: 240px; min-height: 100vh;">
+  <ul class="nav flex-column p-2">
+    <ng-container *ngFor="let item of menu">
+      <li class="nav-item" *appHasPermission="item.permissionKeys ?? ''">
+        <a
+          *ngIf="item.route"
+          class="nav-link text-white"
+          [routerLink]="item.route"
+          routerLinkActive="active bg-primary rounded"
+        >
+          <i class="bi {{ item.icon }} mr-2"></i>{{ item.labelKey }}
+        </a>
+
+        <ng-container *ngIf="!item.route">
+          <div class="nav-link text-white-50 small text-uppercase mt-2 mb-1">
+            <i class="bi {{ item.icon }} mr-2"></i>{{ item.labelKey }}
+          </div>
+          <ul class="nav flex-column pl-3">
+            <li class="nav-item" *ngFor="let child of item.children">
+              <ng-container *appHasPermission="child.permissionKeys ?? ''">
+                <a class="nav-link text-white" [routerLink]="child.route" routerLinkActive="active bg-primary rounded">
+                  <i class="bi {{ child.icon }} mr-2"></i>{{ child.labelKey }}
+                </a>
+              </ng-container>
+            </li>
+          </ul>
+        </ng-container>
+      </li>
+    </ng-container>
+  </ul>
+</nav>

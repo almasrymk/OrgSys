@@ -1,5 +1,4 @@
-﻿using Application.Commands.Org.Accounts.Account.Queries;
-using Application.Commands.Org.Setting.Product.Commands;
+﻿using Application.Commands.Org.Setting.Product.Commands;
 using Application.Commands.Org.Setting.Product.Queries;
 using Domain.Shared;
 using Application.DTOs;
@@ -10,7 +9,7 @@ namespace API.Controllers.Org.Setting
 {
     [ApiController]
     [Route("[controller]")]
-    public class ProductController(ISender sender) : BaseController<GetByIdProductQuery, SearchProductQuery , GetListProductQuery, CreateProductCommand, UpdateProductCommand, DeleteProductCommand, DeleteListProductCommand , GetMaxAccountQuery , ProductDto>(sender)
+    public class ProductController(ISender sender) : BaseController<GetByIdProductQuery, SearchProductQuery , GetListProductQuery, CreateProductCommand, UpdateProductCommand, DeleteProductCommand, DeleteListProductCommand , GetMaxProductQuery , ProductDto>(sender)
     {
         [HttpGet("GetAllByBalance")]
         public virtual async Task<ResultCollection<ProductDto>> GetAllByBalance(long StockId, DateTime date, CancellationToken cancellationToken)

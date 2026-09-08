@@ -1,0 +1,40 @@
+<app-page-header
+  [title]="id() ? 'Edit Bank' : 'New Bank'"
+  [breadcrumbs]="[{ label: 'Home', route: '/' }, { label: 'Banks', route: '/administration/banks' }, { label: id() ? 'Edit' : 'New' }]"
+></app-page-header>
+
+<div class="card">
+  <div class="card-body">
+    <div class="d-flex justify-content-end mb-3">
+      <a routerLink="/administration/banks" class="btn btn-primary">
+        <i class="bi bi-arrow-return-left"></i> Back
+      </a>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+      <div class="row">
+        <div class="form-group col-12 col-md-6">
+          <label>Name</label>
+          <input type="text" class="form-control" formControlName="name" placeholder="Name" />
+          <div class="text-danger mt-1" *ngIf="form.controls.name.touched && form.controls.name.invalid">
+            Name is required (3-150 characters).
+          </div>
+        </div>
+
+        <div class="form-group col-12 col-md-6">
+          <label>Country</label>
+          <select class="form-control" formControlName="countryId">
+            <option [ngValue]="0">(None)</option>
+            <option *ngFor="let country of countries()" [ngValue]="country.id">{{ country.name }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="mt-3">
+        <button type="submit" class="btn btn-primary" [disabled]="saving()">
+          {{ saving() ? 'Saving...' : 'Save' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

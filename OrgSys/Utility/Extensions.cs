@@ -153,6 +153,19 @@ namespace OrgSys
             return "" + identityClaims;
         }
 
+        public static string GetApiToken(this ClaimsPrincipal ob)
+        {
+            var identity = ob;
+
+            if (identity == null)
+            {
+                return "";
+            }
+
+            var identityClaims = identity.Claims.FirstOrDefault(c => c.Type == "ApiToken")?.Value;
+            return "" + identityClaims;
+        }
+
         public static string GetImage(this ClaimsPrincipal ob)
         {
             var identity = ob;
@@ -193,10 +206,15 @@ namespace OrgSys
             }
         }
 
-        public static bool SignIn(this UserDto us, HttpContext httpContext , string Schema , bool KeepMeLoggedin = true)
+        public static bool SignIn(this UserDto us, HttpContext httpContext , string Schema , bool KeepMeLoggedin = true, string ApiToken = null)
         {
             try
             {
+                // Re-sign-in flows (e.g. after a profile/permissions update) call this without a
+                // fresh ApiToken, so carry the token issued at login forward instead of dropping it -
+                // losing it here would make every subsequent API call fail with 401.
+                var token = string.IsNullOrEmpty(ApiToken) ? httpContext.User.GetApiToken() : ApiToken;
+
                 var claims = new List<Claim>()
                     {
                       new Claim("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name", "" + us.Name ),
@@ -210,6 +228,7 @@ namespace OrgSys
                       new Claim(ClaimTypes.Webpage, us.RoleId == 1 ? "" :  string.Join(",",  us.Permissions.Select(r=>r.Key).ToList())),
                       new Claim("Id", us.Id.ToString()),
                       new Claim("ImgPath", "" + us.ImgPath),
+                      new Claim("ApiToken", "" + token),
                    };
 
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

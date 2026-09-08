@@ -62,6 +62,10 @@ namespace Application.Commands.Org.Financials.Financial.Commands
                 {
                     FinancialAccountId = account.Id,
                     FinancialTypeId = (long)dto.FinancialTypeId,
+                    // Financial.PaymentTypeId is a required FK with no equivalent field on
+                    // PostFinancialTransactionDto — default to Cash (Id=1), the same convention
+                    // already used for Opening Balance (see PostFinancialOpeningBalanceCommandHandler).
+                    PaymentTypeId = 1,
                     Direction = dto.Direction,
                     ReferenceType = dto.ReferenceType,
                     ReferenceId = dto.ReferenceId,

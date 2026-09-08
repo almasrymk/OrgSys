@@ -1,0 +1,7 @@
+<nav class="navbar navbar-light bg-white shadow-sm px-3 d-flex justify-content-between">
+  <span class="navbar-brand mb-0 h1">OrgSys</span>
+  <div class="d-flex align-items-center" *ngIf="auth.currentUser() as user">
+    <span class="mr-3">{{ user.name }} <small class="text-muted">({{ user.roleName }})</small></span>
+    <button type="button" class="btn btn-outline-secondary btn-sm" (click)="logout()">Logout</button>
+  </div>
+</nav>

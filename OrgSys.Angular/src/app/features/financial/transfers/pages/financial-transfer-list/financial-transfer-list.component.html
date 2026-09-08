@@ -1,0 +1,43 @@
+<app-page-header title="Transfers" [breadcrumbs]="[{ label: 'Home', route: '/' }, { label: 'Financial' }, { label: 'Transfers' }]">
+  <a *appHasPermission="'Financial.Add'" routerLink="new" class="btn btn-outline-primary">
+    <i class="bi bi-plus-lg"></i> Add
+  </a>
+</app-page-header>
+
+<div class="card">
+  <div class="card-body p-0">
+    <table class="table table-hover m-0" *ngIf="transfers().length; else emptyState">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>From</th>
+          <th>To</th>
+          <th>Amount</th>
+          <th>Status</th>
+          <th style="width: 60px;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let t of transfers()" [class.text-muted]="t.status === Status.Cancel">
+          <td>{{ t.transactionDate | date: 'yyyy-MM-dd' }}</td>
+          <td>{{ t.fromFinancialAccountName }}</td>
+          <td>{{ t.toFinancialAccountName }}</td>
+          <td>{{ t.amount | number: '1.2-2' }}</td>
+          <td>
+            <span *ngIf="t.status === Status.Reversed" class="badge badge-secondary">Reversed</span>
+            <span *ngIf="t.status !== Status.Reversed" class="badge badge-success">Posted</span>
+          </td>
+          <td class="text-right">
+            <a *ngIf="canReverse(t)" href="javascript:void(0)" title="Reverse" (click)="reverse(t)">
+              <i class="bi bi-arrow-repeat text-danger"></i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <ng-template #emptyState>
+      <p class="text-center text-muted p-4 mb-0">{{ loading() ? 'Loading...' : 'No transfers found.' }}</p>
+    </ng-template>
+  </div>
+</div>

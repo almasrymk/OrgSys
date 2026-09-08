@@ -1,0 +1,58 @@
+<app-page-header title="Districts" [breadcrumbs]="[{ label: 'Home', route: '/' }, { label: 'Settings' }, { label: 'Districts' }]">
+  <div class="d-flex justify-content-between align-items-center flex-wrap">
+    <a *appHasPermission="'Districts.Add'" routerLink="new" class="btn btn-outline-primary">
+      <i class="bi bi-plus-lg"></i> Add
+    </a>
+
+    <div class="search-text" style="max-width: 260px;">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Search..."
+        [ngModel]="keySearch()"
+        (ngModelChange)="keySearch.set($event)"
+        (keyup.enter)="onSearch()"
+      />
+    </div>
+  </div>
+</app-page-header>
+
+<div class="card">
+  <div class="card-body p-0">
+    <table class="table table-hover m-0" *ngIf="districts().length; else emptyState">
+      <thead>
+        <tr>
+          <th class="text-center" style="width: 60px;">#</th>
+          <th>Name</th>
+          <th>City</th>
+          <th>Country</th>
+          <th style="width: 120px;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let district of districts(); let i = index" [class.text-muted]="district.status === Status.Cancel">
+          <td class="text-center">{{ (page() - 1) * 20 + i + 1 }}</td>
+          <td>{{ district.name }}</td>
+          <td>{{ district.cityName }}</td>
+          <td>{{ district.countryName }}</td>
+          <td class="text-right">
+            <a *appHasPermission="'Districts.Edit'" [routerLink]="[district.id, 'edit']" class="mr-2">
+              <i class="bi bi-pencil-square text-success"></i>
+            </a>
+            <a *appHasPermission="'Districts.Delete'" href="javascript:void(0)" (click)="onDelete(district)">
+              <i class="bi bi-trash text-danger"></i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <ng-template #emptyState>
+      <p class="text-center text-muted p-4 mb-0">{{ loading() ? 'Loading...' : 'No districts found.' }}</p>
+    </ng-template>
+  </div>
+</div>
+
+<div class="mt-3">
+  <app-pagination [page]="page()" [pageCount]="pageCount()" (pageChange)="onPageChange($event)"></app-pagination>
+</div>

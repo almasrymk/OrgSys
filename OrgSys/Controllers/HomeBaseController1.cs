@@ -2,8 +2,10 @@
 using Domain.Shared;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Http;
+using OrgSys;
 using System;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 
@@ -15,6 +17,11 @@ public class HomeBaseController(IHttpClientFactory httpClientFactory) : Controll
     {
         var client = httpClientFactory.CreateClient();
         client.BaseAddress = new Uri(LocalHost);
+
+        var token = HttpContext?.User?.GetApiToken();
+        if (!string.IsNullOrEmpty(token))
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
         return client;
     }
 

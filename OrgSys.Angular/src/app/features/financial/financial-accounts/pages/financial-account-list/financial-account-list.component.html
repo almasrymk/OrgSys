@@ -1,0 +1,62 @@
+<app-page-header [title]="title" [breadcrumbs]="[{ label: 'Home', route: '/' }, { label: 'Financial' }, { label: title }]">
+  <div class="d-flex justify-content-between align-items-center flex-wrap">
+    <a *appHasPermission="permissionPrefix + '.Add'" [routerLink]="basePath + '/new'" class="btn btn-outline-primary">
+      <i class="bi bi-plus-lg"></i> Add
+    </a>
+
+    <div class="search-text" style="max-width: 260px;">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Search..."
+        [ngModel]="keySearch()"
+        (ngModelChange)="keySearch.set($event)"
+        (keyup.enter)="onSearch()"
+      />
+    </div>
+  </div>
+</app-page-header>
+
+<div class="card">
+  <div class="card-body p-0">
+    <table class="table table-hover m-0" *ngIf="accounts().length; else emptyState">
+      <thead>
+        <tr>
+          <th>Code</th>
+          <th>Name</th>
+          <th *ngIf="isBank()">Bank</th>
+          <th>GL Account</th>
+          <th>Currency</th>
+          <th>Active</th>
+          <th style="width: 100px;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let account of accounts()" [class.text-muted]="account.status === Status.Cancel">
+          <td>{{ account.code }}</td>
+          <td>{{ account.name }}</td>
+          <td *ngIf="isBank()">{{ account.bankName }} <small class="text-muted" *ngIf="account.bankBranchDisplayName">/ {{ account.bankBranchDisplayName }}</small></td>
+          <td>{{ account.accountCode }} {{ account.accountName }}</td>
+          <td>{{ account.currencyName }}</td>
+          <td><i class="bi" [class.bi-check-lg]="account.isActive" [class.text-success]="account.isActive"></i></td>
+          <td class="text-right">
+            <a *appHasPermission="permissionPrefix + '.Edit'" [routerLink]="[basePath, account.id, 'edit']" class="mr-2">
+              <i class="bi bi-pencil-square text-success"></i>
+            </a>
+            <a *appHasPermission="permissionPrefix + '.Delete'" href="javascript:void(0)" (click)="onDelete(account)">
+              <i class="bi bi-trash text-danger"></i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <ng-template #emptyState>
+      <p class="text-center text-muted p-4 mb-0">{{ loading() ? 'Loading...' : 'None found.' }}</p>
+    </ng-template>
+  </div>
+</div>
+
+<div class="mt-3">
+  <app-pagination [page]="page()" [pageCount]="pageCount()" (pageChange)="onPageChange($event)"></app-pagination>
+</div>

@@ -31,7 +31,10 @@
 
         public override string CreateInclude()
         {
-            return "DealerGroup,Account";
+            // Country/City/District added — DealerDto exposes CountryName/CityName/DistrictName but
+            // this handler wasn't loading those navigations, so they always came back null even
+            // though CountryId/CityId/DistrictId themselves save and read back correctly.
+            return "DealerGroup,Account,Country,City,District";
         }
     }
 }

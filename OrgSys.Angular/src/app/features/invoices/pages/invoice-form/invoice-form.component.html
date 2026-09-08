@@ -1,0 +1,166 @@
+<app-page-header
+  [title]="(id() ? 'Invoice ' + (code() ?? '') : 'New Invoice') + (invoiceType()?.name ? ' — ' + invoiceType()!.name : '')"
+  [breadcrumbs]="[{ label: 'Home', route: '/' }, { label: 'Invoices', route: '/invoices/' + typeId }, { label: id() ? 'Edit' : 'New' }]"
+></app-page-header>
+
+<div class="card">
+  <div class="card-body">
+    <div class="d-flex justify-content-end mb-3">
+      <a [routerLink]="['/invoices', typeId]" class="btn btn-primary">
+        <i class="bi bi-arrow-return-left"></i> Back
+      </a>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+      <div class="row">
+        <div class="form-group col-12 col-md-4">
+          <label>Dealer</label>
+          <select class="form-control" formControlName="dealerId">
+            <option [ngValue]="0" disabled>Select a dealer</option>
+            <option *ngFor="let dealer of dealers()" [ngValue]="dealer.id">{{ dealer.code }} {{ dealer.name }}</option>
+          </select>
+          <div class="text-danger mt-1" *ngIf="form.controls.dealerId.touched && form.controls.dealerId.invalid">
+            A dealer is required.
+          </div>
+        </div>
+
+        <div class="form-group col-12 col-md-4">
+          <label>Date</label>
+          <input type="date" class="form-control" formControlName="date" />
+        </div>
+
+        <div class="form-group col-12 col-md-4">
+          <label>Payment type</label>
+          <select class="form-control" formControlName="paymentTypeId">
+            <option [ngValue]="0" disabled>Select a payment type</option>
+            <option *ngFor="let pt of paymentTypes()" [ngValue]="pt.id">{{ pt.name }}</option>
+          </select>
+          <div class="text-danger mt-1" *ngIf="form.controls.paymentTypeId.touched && form.controls.paymentTypeId.invalid">
+            A payment type is required.
+          </div>
+        </div>
+
+        <div class="form-group col-12 col-md-4">
+          <label>Warehouse</label>
+          <select class="form-control" formControlName="stockId">
+            <option [ngValue]="0" disabled>Select a warehouse</option>
+            <option *ngFor="let stock of stocks()" [ngValue]="stock.id">{{ stock.name }}</option>
+          </select>
+          <div class="text-danger mt-1" *ngIf="form.controls.stockId.touched && form.controls.stockId.invalid">
+            A warehouse is required.
+          </div>
+        </div>
+
+        <div class="form-group col-12 col-md-4">
+          <label>Currency</label>
+          <select class="form-control" formControlName="currencyId">
+            <option [ngValue]="0" disabled>Select a currency</option>
+            <option *ngFor="let currency of currencies()" [ngValue]="currency.id">{{ currency.name }}</option>
+          </select>
+        </div>
+
+        <div class="form-group col-12 col-md-4">
+          <label>Exchange rate</label>
+          <input type="number" step="0.0001" class="form-control" formControlName="rate" />
+        </div>
+      </div>
+
+      <hr />
+
+      <table class="table table-sm" formArrayName="invoiceProductList">
+        <thead>
+          <tr>
+            <th style="width: 25%;">Product</th>
+            <th style="width: 15%;">Unit</th>
+            <th>Qty</th>
+            <th>Price</th>
+            <th>Discount</th>
+            <th>Tax</th>
+            <th>Service</th>
+            <th>Net</th>
+            <th style="width: 40px;"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let line of lines.controls; let i = index" [formGroupName]="i">
+            <td>
+              <select class="form-control" formControlName="productId" (change)="onProductChange(i, line.value.productId!)">
+                <option [ngValue]="0" disabled>Select a product</option>
+                <option *ngFor="let product of products()" [ngValue]="product.id">{{ product.code }} {{ product.name }}</option>
+              </select>
+            </td>
+            <td>
+              <select class="form-control" formControlName="unitId">
+                <option [ngValue]="0" disabled>Unit</option>
+                <option *ngFor="let unit of units()" [ngValue]="unit.id">{{ unit.name }}</option>
+              </select>
+            </td>
+            <td><input type="number" step="0.0001" class="form-control" formControlName="quantity" (input)="recomputeLine(i)" /></td>
+            <td><input type="number" step="0.01" class="form-control" formControlName="price" (input)="recomputeLine(i)" /></td>
+            <td><input type="number" step="0.01" class="form-control" formControlName="discount" (input)="recomputeLine(i)" /></td>
+            <td><input type="number" step="0.01" class="form-control" formControlName="tax" (input)="recomputeLine(i)" /></td>
+            <td><input type="number" step="0.01" class="form-control" formControlName="service" (input)="recomputeLine(i)" /></td>
+            <td class="align-middle">{{ line.value.net | number: '1.2-2' }}</td>
+            <td class="text-center align-middle">
+              <a href="javascript:void(0)" (click)="removeLine(i)">
+                <i class="bi bi-trash text-danger"></i>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <button type="button" class="btn btn-outline-secondary btn-sm mb-3" (click)="addLine()">
+        <i class="bi bi-plus-lg"></i> Add line
+      </button>
+
+      <div class="row">
+        <div class="col-12 col-md-6">
+          <div class="form-group">
+            <label>Notes</label>
+            <input type="text" class="form-control" formControlName="notes" placeholder="Notes" />
+          </div>
+        </div>
+
+        <div class="col-12 col-md-6">
+          <table class="table table-sm table-borderless mb-0">
+            <tbody>
+              <tr>
+                <td>Lines total</td>
+                <td class="text-right">{{ linesTotal() | number: '1.2-2' }}</td>
+              </tr>
+              <tr>
+                <td>Discount</td>
+                <td class="text-right" style="width: 140px;">
+                  <input type="number" step="0.01" class="form-control form-control-sm" formControlName="discount" />
+                </td>
+              </tr>
+              <tr>
+                <td>Tax</td>
+                <td class="text-right">
+                  <input type="number" step="0.01" class="form-control form-control-sm" formControlName="tax" />
+                </td>
+              </tr>
+              <tr>
+                <td>Service</td>
+                <td class="text-right">
+                  <input type="number" step="0.01" class="form-control form-control-sm" formControlName="service" />
+                </td>
+              </tr>
+              <tr class="font-weight-bold">
+                <td>Net total</td>
+                <td class="text-right">{{ grandTotal() | number: '1.2-2' }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="mt-3">
+        <button type="submit" class="btn btn-primary" [disabled]="saving()">
+          {{ saving() ? 'Saving...' : 'Save' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

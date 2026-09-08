@@ -1,0 +1,14 @@
+<div class="mb-2">
+  <h1>{{ title() }}</h1>
+  <nav *ngIf="breadcrumbs().length" class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
+    <ol class="breadcrumb pt-0">
+      <li class="breadcrumb-item" *ngFor="let crumb of breadcrumbs()">
+        <a *ngIf="crumb.route; else plain" [routerLink]="crumb.route">{{ crumb.label }}</a>
+        <ng-template #plain><span>{{ crumb.label }}</span></ng-template>
+      </li>
+    </ol>
+  </nav>
+</div>
+<div class="mb-3">
+  <ng-content></ng-content>
+</div>
