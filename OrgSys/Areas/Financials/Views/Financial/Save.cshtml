@@ -1,4 +1,4 @@
-@model Application.DTOs.FinancialDto
+@model Treasury.Application.FinancialDto
 @using Domain.Enums
 @using OrgSys
 @{
@@ -242,7 +242,7 @@
                 </div>
                 <div class="row">
                     <div class="col-7">
-                        @if (financialTypeId == 1 && Model.Status == Domain.Enums.Status.Reversed)
+                        @if (financialTypeId == 1 && Model.Status == OrgSys.SharedKernel.Status.Reversed)
                         {
                             <span class="badge badge-secondary ml-4 mr-4 mb-4" style="font-size:1rem;padding:10px 16px;">Reversed — read only</span>
                         }
@@ -408,7 +408,7 @@
         </text>
     }
 
-    @if (financialTypeId == 1 && (Model.Posted || Model.Status == Domain.Enums.Status.Reversed))
+    @if (financialTypeId == 1 && (Model.Posted || Model.Status == OrgSys.SharedKernel.Status.Reversed))
     {
         @: // A Posted/Reversed Opening Balance is immutable — the backend already rejects edits,
         @: // this just keeps the UI from inviting an edit attempt that would only fail server-side.

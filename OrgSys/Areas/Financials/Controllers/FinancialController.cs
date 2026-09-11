@@ -1,7 +1,6 @@
-﻿using Application.Commands.Org.Financials.Financial.Commands;
+﻿using Treasury.Application.Financials.Commands;
 using AutoMapper;
 using Domain.Enums;
-using Domain.Shared;
 using Application.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -171,7 +170,7 @@ namespace OrgSys.Areas.Financial.Controllers
             // only persists it (FixData + the generic Create/Update dispatch from MainController<>.Save,
             // same path AutoSave already uses) — no Journal, no Posted. Posting happens separately via the
             // Post action/PostFinancialOpeningBalanceCommand, mirroring Journal's own Draft/Post/Reverse flow.
-            if (ob.FinancialTypeId == (long)Domain.Enums.FinancialTransactionType.OpeningBalance)
+            if (ob.FinancialTypeId == (long)Treasury.Domain.FinancialTransactionType.OpeningBalance)
                 return await SaveOpeningBalanceDraft(ob);
 
             if (ob.FinancialAccountId is null or <= 0)
@@ -188,7 +187,7 @@ namespace OrgSys.Areas.Financial.Controllers
                 var command = new PostFinancialTransactionDto
                 {
                     FinancialAccountId = ob.FinancialAccountId!.Value,
-                    FinancialTypeId = (Domain.Enums.FinancialTransactionType)ob.FinancialTypeId!.Value,
+                    FinancialTypeId = (Treasury.Domain.FinancialTransactionType)ob.FinancialTypeId!.Value,
                     Direction = ob.Direction ?? FinancialTransactionDirection.In,
                     Amount = ob.Amount,
                     CurrencyId = ob.CurrencyId,
@@ -241,7 +240,7 @@ namespace OrgSys.Areas.Financial.Controllers
 
             var response = await ApiMethod(ApiMethodType.Put, $"Post?Id={id}&UserId={User.GetUserId()}");
             var data = await response.Content.ReadAsStringAsync();
-            var res = JsonConvert.DeserializeObject<Domain.Shared.Result>(data);
+            var res = JsonConvert.DeserializeObject<OrgSys.SharedKernel.Result>(data);
 
             if (res?.StatusCode == HttpStatusCode.OK)
                 return Redirect($"/Financials/Financial/Index?ParentId={ParentId}&TypeId={TypeId}&status={ResultStatus.success}&MsgError=Success");
@@ -257,7 +256,7 @@ namespace OrgSys.Areas.Financial.Controllers
 
             var response = await ApiMethod(ApiMethodType.Put, $"Reverse?Id={id}");
             var data = await response.Content.ReadAsStringAsync();
-            var res = JsonConvert.DeserializeObject<Domain.Shared.Result>(data);
+            var res = JsonConvert.DeserializeObject<OrgSys.SharedKernel.Result>(data);
 
             if (res?.StatusCode == HttpStatusCode.OK)
                 return Redirect($"/Financials/Financial/Index?ParentId={ParentId}&TypeId={TypeId}&status={ResultStatus.success}&MsgError=Success");
@@ -271,7 +270,7 @@ namespace OrgSys.Areas.Financial.Controllers
             var response = await ApiMethod(ApiMethodType.Put, $"Cancel?Id={id}");
             response.EnsureSuccessStatusCode();
             var data = await response.Content.ReadAsStringAsync();
-            var res = JsonConvert.DeserializeObject<Domain.Shared.Result>(data);
+            var res = JsonConvert.DeserializeObject<OrgSys.SharedKernel.Result>(data);
 
             return Redirect("/Financials/Financial/Index?ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" + (res.StatusCode == HttpStatusCode.OK ? ResultStatus.success : ResultStatus.error) + "&MsgError=Success");
         }
@@ -281,7 +280,7 @@ namespace OrgSys.Areas.Financial.Controllers
             var response = await ApiMethod(ApiMethodType.Put, $"Redo?Id={id}");
             response.EnsureSuccessStatusCode();
             var data = await response.Content.ReadAsStringAsync();
-            var res = JsonConvert.DeserializeObject<Domain.Shared.Result>(data);
+            var res = JsonConvert.DeserializeObject<OrgSys.SharedKernel.Result>(data);
 
             return Redirect("/Financials/Financial/Index?ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" + (res.StatusCode == HttpStatusCode.OK ? ResultStatus.success : ResultStatus.error) + "&MsgError=Success");
         }

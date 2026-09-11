@@ -1,7 +1,6 @@
-﻿using Application.Commands.Org.Accounts.Account.Queries;
-using Application.Commands.Org.Dealers.Dealer.Queries;
-using Application.Commands.Org.Setting.Account.Commands;
-using Application.Commands.Org.Setting.Account.Queries;
+using Sales.Application.Dealers.Queries;
+using Accounting.Application.Accounts.Commands;
+using Accounting.Application.Accounts.Queries;
 using Application.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

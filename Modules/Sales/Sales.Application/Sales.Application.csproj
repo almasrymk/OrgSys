@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../Sales.Domain/Sales.Domain.csproj" />
+    <ProjectReference Include="../Sales.Contracts/Sales.Contracts.csproj" />
+    <ProjectReference Include="../../../BuildingBlocks/OrgSys.EventBus/OrgSys.EventBus.csproj" />
+    <ProjectReference Include="../../MasterData/MasterData.Application/MasterData.Application.csproj" />
+    <!-- Invoice delete/update handlers touch the linked Financial (Treasury) and Transaction
+         (Inventory) records directly, and invoice creation triggers CreateTransactionByInvoiceCommand;
+         see GlobalUsings.cs. Inventory.Application does not reference Sales.Application, so this
+         stays one-directional. -->
+    <ProjectReference Include="../../Treasury/Treasury.Domain/Treasury.Domain.csproj" />
+    <ProjectReference Include="../../Inventory/Inventory.Domain/Inventory.Domain.csproj" />
+    <ProjectReference Include="../../Inventory/Inventory.Application/Inventory.Application.csproj" />
+    <!-- Preference and Application.Commands.Org.Financials.Integration.JournalInvoice (the
+         Invoice->Journal posting bridge) haven't been extracted from the monolith yet. -->
+    <ProjectReference Include="../../../Domain/Domain.csproj" />
+    <ProjectReference Include="../../../Application/Application.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="14.1.0" />
+    <PackageReference Include="AutoMapper" Version="16.1.1" />
+    <PackageReference Include="FluentValidation" Version="12.1.1" />
+  </ItemGroup>
+
+</Project>

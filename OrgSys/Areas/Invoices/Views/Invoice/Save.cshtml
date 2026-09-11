@@ -1,7 +1,7 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @using Microsoft.AspNetCore.Mvc.Localization
 @using System.Globalization
-@model Application.DTOs.InvoiceDto
+@model Sales.Application.InvoiceDto
 @using OrgSys
 
 @{
@@ -151,10 +151,10 @@
                                                 var productUnits = InvoiceProduct.Product?.ProductUnits?
                                                     .Where(e => e.Unit != null)
                                                     .Select(e => e.Unit!)
-                                                    .ToList() ?? new List<Domain.Entities.Unit>();
+                                                    .ToList() ?? new List<MasterData.Domain.Unit>();
                                                 if (productUnits.Count == 0 && InvoiceProduct.UnitId > 0)
                                                 {
-                                                    productUnits.Add(new Domain.Entities.Unit
+                                                    productUnits.Add(new MasterData.Domain.Unit
                                                     {
                                                         Id = InvoiceProduct.UnitId,
                                                         Name = InvoiceProduct.UnitName ?? InvoiceProduct.UnitId.ToString()
@@ -582,7 +582,7 @@
                                     <i class="@transactionIcon"></i> @transactionName (@Model.Transaction?.Code)
                                 </a>
                             }
-                            else if (Model.TransactionId is not > 0 && Model.Status != Domain.Enums.Status.Cancel && AllowCreateTransaction)
+                            else if (Model.TransactionId is not > 0 && Model.Status != OrgSys.SharedKernel.Status.Cancel && AllowCreateTransaction)
                             {
                                 <a href="/Invoices/Invoice/CreateTransaction?id=@Model.Id&ParentId=@Model.ParentId&TypeId=@Model.TypeId&dir=Save" class="btn btn-primary mr-4 mb-4">
                                     <i class="iconsminds-add"></i> Create Transaction
@@ -595,7 +595,7 @@
                                     <i class="simple-icon-basket-loaded"></i> Journal (@Model.JournalCode)
                                 </a>
                             }
-                            else if (Model.JournalId is not > 0 && Model.Status != Domain.Enums.Status.Cancel && User.IsAllowed("Journal.Add"))
+                            else if (Model.JournalId is not > 0 && Model.Status != OrgSys.SharedKernel.Status.Cancel && User.IsAllowed("Journal.Add"))
                             {
                                 <a href="/Invoices/Invoice/CreateJournal?id=@Model.Id&ParentId=@Model.ParentId&TypeId=@Model.TypeId&dir=Save" class="btn btn-primary mr-4 mb-4">
                                     <i class="iconsminds-add"></i> Create Journal

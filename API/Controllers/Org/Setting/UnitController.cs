@@ -1,8 +1,7 @@
 ﻿using Application.Commands.Org.Setting.Preference.Queries;
-using Application.Commands.Org.Setting.Unit.Commands;
-using Application.Commands.Org.Setting.Unit.Queries;
-using Application.Interfaces.CQRS;
-using Domain.Shared;
+using MasterData.Application.Units.Commands;
+using MasterData.Application.Units.Queries;
+using OrgSys.SharedKernel;
 using Application.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

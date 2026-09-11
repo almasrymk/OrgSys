@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../../../BuildingBlocks/OrgSys.SharedKernel/OrgSys.SharedKernel.csproj" />
+    <ProjectReference Include="../../MasterData/MasterData.Domain/MasterData.Domain.csproj" />
+    <ProjectReference Include="../../Organization/Organization.Domain/Organization.Domain.csproj" />
+    <ProjectReference Include="../../Administration/Administration.Domain/Administration.Domain.csproj" />
+    <ProjectReference Include="../../Accounting/Accounting.Domain/Accounting.Domain.csproj" />
+    <!-- Financial.DealerId and FinancialInvoice.InvoiceId keep their existing EF navigation to
+         Dealer/Invoice (Sales.Domain) — see docs/modular-monolith-analysis.md §21/§22 and the
+         ModuleDependencyTests exceptions for why this one-directional edge is accepted. -->
+    <ProjectReference Include="../../Sales/Sales.Domain/Sales.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

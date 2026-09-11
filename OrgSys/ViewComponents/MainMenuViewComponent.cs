@@ -1,5 +1,4 @@
 using Application.DTOs;
-using Domain.Shared;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;

@@ -1,4 +1,4 @@
-@model Application.DTOs.JournalDto
+@model Accounting.Application.JournalDto
 @using System.Globalization
 @using OrgSys
 @{
@@ -11,8 +11,8 @@
     var AllowPreference = User.IsAllowed("Journal.Preference");
     var AllowReverse = User.IsAllowed("Journal.Reverse");
     var formateDate = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "{0:yyyy/MM/dd}" : "{0:dd/MM/yyyy}";
-    List<Application.DTOs.InvoiceTypeDto> InvoicesTypes = ViewBag.InvoicesTypes ?? new List<Application.DTOs.InvoiceTypeDto>();
-    List<Application.DTOs.TransactionTypeDto> TransactionsTypes = ViewBag.TransactionsTypes ?? new List<Application.DTOs.TransactionTypeDto>();
+    List<Sales.Application.InvoiceTypeDto> InvoicesTypes = ViewBag.InvoicesTypes ?? new List<Sales.Application.InvoiceTypeDto>();
+    List<Inventory.Application.TransactionTypeDto> TransactionsTypes = ViewBag.TransactionsTypes ?? new List<Inventory.Application.TransactionTypeDto>();
     var SourceResourceName = "";
     if (Model.RefranceTable == "invoice")
     {
@@ -349,7 +349,7 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="simple-icon-lock"></i></span>
                                                 </div>
-                                                <input type="text" class="form-control" value="@(Model.Status == Domain.Enums.Status.Reversed ? "Reversed" : "Posted")" readonly style="background-color:transparent" />
+                                                <input type="text" class="form-control" value="@(Model.Status == OrgSys.SharedKernel.Status.Reversed ? "Reversed" : "Posted")" readonly style="background-color:transparent" />
                                             </div>
                                         </div>
                                     }
@@ -427,7 +427,7 @@
                         @if (Model.Posted)
                         {
                             <span class="badge badge-success ml-4 mr-4 mb-4" style="font-size:1rem;padding:10px 16px;">Posted — read only</span>
-                            @if (AllowReverse && Model.Status != Domain.Enums.Status.Reversed && string.IsNullOrEmpty(Model.ReversalJournalCode) && string.IsNullOrEmpty(Model.RefranceTable))
+                            @if (AllowReverse && Model.Status != OrgSys.SharedKernel.Status.Reversed && string.IsNullOrEmpty(Model.ReversalJournalCode) && string.IsNullOrEmpty(Model.RefranceTable))
                             {
                                 <a href="/@ViewBag.area/@ViewBag.PageTitle/Reverse?id=@Model.Id&ParentId=@Model.ParentId&TypeId=@Model.TypeId" class="btn btn-outline-danger ml-4 mr-4 mb-4" onclick="return confirm('Reverse this posted journal entry? This will create a new reversing entry.');">
                                     <i class="simple-icon-action-undo"></i>

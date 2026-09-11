@@ -1,0 +1,24 @@
+﻿namespace Inventory.Application.Products.Queries
+{
+    using OrgSys.SharedKernel;
+    using OrgSys.SharedKernel;
+    using OrgSys.SharedKernel;
+    using OrgSys.SharedKernel;
+    using AutoMapper;
+    using System.Linq.Expressions;
+
+    public sealed record GetByIdProductQuery(long Id) : ICommand<ProductDto> , IGetByIdQuery<Result<ProductDto>>;
+
+    public sealed class GetByIdQueryHandler(IRepository<Inventory.Domain.Product> _Repository, IMapper mapper) : GetCommandHandler<GetByIdProductQuery, Inventory.Domain.Product, ProductDto>(_Repository, mapper)
+    {
+        public override Expression<Func<Inventory.Domain.Product, bool>> CreateFilter(GetByIdProductQuery request)
+        {           
+            return e => e.Id == request.Id && e.Status !=OrgSys.SharedKernel.Status.Deleted && e.Hide != true;
+        }
+
+        public override string CreateInclude()
+        {
+            return "Classification,Dealer,ProductUnits,ProductUnits.Unit,ProductRecipes,ProductPropertyElements";
+        }
+    }
+}

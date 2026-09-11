@@ -1,5 +1,4 @@
 ﻿using Domain.Entities;
-using Domain.Shared;
 using Infrastructure.Persistence.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -882,7 +881,7 @@ namespace Infrastructure.Seed
             orgContext.SaveChanges();
         }
 
-        // Ids mirror Domain.Enums.FinancialReferenceType 1:1 so Financial.ReferenceType (still an int
+        // Ids mirror Treasury.Domain.FinancialReferenceType 1:1 so Financial.ReferenceType (still an int
         // enum column) can resolve its display name against this table without a separate mapping.
         public void InitialReferenceType(OrgContext orgContext)
         {

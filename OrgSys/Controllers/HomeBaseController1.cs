@@ -1,5 +1,4 @@
 ﻿#nullable enable annotations
-using Domain.Shared;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Http;
 using OrgSys;

@@ -25,7 +25,7 @@ namespace Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Domain.Entities.Account", b =>
+            modelBuilder.Entity("Accounting.Domain.Account", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -80,7 +80,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("Account");
                 });
 
-            modelBuilder.Entity("Domain.Entities.AccountType", b =>
+            modelBuilder.Entity("Accounting.Domain.AccountType", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -124,7 +124,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("AccountType");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Bank", b =>
+            modelBuilder.Entity("Treasury.Domain.Bank", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -165,7 +165,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("Bank");
                 });
 
-            modelBuilder.Entity("Domain.Entities.BankAccount", b =>
+            modelBuilder.Entity("Treasury.Domain.BankAccount", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -250,7 +250,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("BankAccount");
                 });
 
-            modelBuilder.Entity("Domain.Entities.BankBranch", b =>
+            modelBuilder.Entity("Treasury.Domain.BankBranch", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -311,7 +311,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("BankBranch");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Branch", b =>
+            modelBuilder.Entity("Organization.Domain.Branch", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -352,7 +352,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("Branch");
                 });
 
-            modelBuilder.Entity("Domain.Entities.City", b =>
+            modelBuilder.Entity("MasterData.Domain.City", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -398,7 +398,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("City");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Classification", b =>
+            modelBuilder.Entity("MasterData.Domain.Classification", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -449,7 +449,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("Classification");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Country", b =>
+            modelBuilder.Entity("MasterData.Domain.Country", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -490,7 +490,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("Country");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Currency", b =>
+            modelBuilder.Entity("MasterData.Domain.Currency", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -537,7 +537,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("Currency");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Dealer", b =>
+            modelBuilder.Entity("Sales.Domain.Dealer", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -615,7 +615,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("Dealer");
                 });
 
-            modelBuilder.Entity("Domain.Entities.DealerGroup", b =>
+            modelBuilder.Entity("Sales.Domain.DealerGroup", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -656,7 +656,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("DealerGroup");
                 });
 
-            modelBuilder.Entity("Domain.Entities.District", b =>
+            modelBuilder.Entity("MasterData.Domain.District", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -707,7 +707,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("District");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Financial", b =>
+            modelBuilder.Entity("Treasury.Domain.Financial", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -861,7 +861,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("Financial");
                 });
 
-            modelBuilder.Entity("Domain.Entities.FinancialAccount", b =>
+            modelBuilder.Entity("Treasury.Domain.FinancialAccount", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -919,7 +919,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("FinancialAccount");
                 });
 
-            modelBuilder.Entity("Domain.Entities.FinancialInvoice", b =>
+            modelBuilder.Entity("Treasury.Domain.FinancialInvoice", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -972,7 +972,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("FinancialInvoice");
                 });
 
-            modelBuilder.Entity("Domain.Entities.FinancialTransfer", b =>
+            modelBuilder.Entity("Treasury.Domain.FinancialTransfer", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -1072,7 +1072,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("FinancialTransfer");
                 });
 
-            modelBuilder.Entity("Domain.Entities.FinancialType", b =>
+            modelBuilder.Entity("Treasury.Domain.FinancialType", b =>
                 {
                     b.Property<long>("Id")
                         .HasColumnType("bigint");
@@ -1116,7 +1116,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("FinancialType");
                 });
 
-            modelBuilder.Entity("Domain.Entities.FiscalPeriod", b =>
+            modelBuilder.Entity("Accounting.Domain.FiscalPeriod", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -1174,7 +1174,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("FiscalPeriod");
                 });
 
-            modelBuilder.Entity("Domain.Entities.FiscalYear", b =>
+            modelBuilder.Entity("Accounting.Domain.FiscalYear", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -1227,7 +1227,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("FiscalYear");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Inventory", b =>
+            modelBuilder.Entity("Inventory.Domain.Inventory", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -1322,7 +1322,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("Inventory");
                 });
 
-            modelBuilder.Entity("Domain.Entities.InventoryProduct", b =>
+            modelBuilder.Entity("Inventory.Domain.InventoryProduct", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -1389,7 +1389,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("InventoryProduct");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Invoice", b =>
+            modelBuilder.Entity("Sales.Domain.Invoice", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -1535,7 +1535,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("Invoice");
                 });
 
-            modelBuilder.Entity("Domain.Entities.InvoiceProduct", b =>
+            modelBuilder.Entity("Sales.Domain.InvoiceProduct", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -1619,7 +1619,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("InvoiceProduct");
                 });
 
-            modelBuilder.Entity("Domain.Entities.InvoiceType", b =>
+            modelBuilder.Entity("Sales.Domain.InvoiceType", b =>
                 {
                     b.Property<long>("Id")
                         .HasColumnType("bigint");
@@ -1666,7 +1666,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("InvoiceType");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Journal", b =>
+            modelBuilder.Entity("Accounting.Domain.Journal", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -1789,7 +1789,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("Journal");
                 });
 
-            modelBuilder.Entity("Domain.Entities.JournalItem", b =>
+            modelBuilder.Entity("Accounting.Domain.JournalItem", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -1845,7 +1845,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("JournalItem");
                 });
 
-            modelBuilder.Entity("Domain.Entities.JournalType", b =>
+            modelBuilder.Entity("Accounting.Domain.JournalType", b =>
                 {
                     b.Property<long>("Id")
                         .HasColumnType("bigint");
@@ -1892,7 +1892,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("JournalType");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Order", b =>
+            modelBuilder.Entity("Sales.Domain.Order", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -2013,7 +2013,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("Order");
                 });
 
-            modelBuilder.Entity("Domain.Entities.OrderProduct", b =>
+            modelBuilder.Entity("Sales.Domain.OrderProduct", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -2092,7 +2092,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("OrderProduct");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Outlay", b =>
+            modelBuilder.Entity("Treasury.Domain.Outlay", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -2133,7 +2133,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("Outlay");
                 });
 
-            modelBuilder.Entity("Domain.Entities.PaymentType", b =>
+            modelBuilder.Entity("MasterData.Domain.PaymentType", b =>
                 {
                     b.Property<long>("Id")
                         .HasColumnType("bigint");
@@ -2171,7 +2171,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("PaymentType");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Permission", b =>
+            modelBuilder.Entity("Administration.Domain.Permission", b =>
                 {
                     b.Property<long>("Id")
                         .HasColumnType("bigint");
@@ -2257,7 +2257,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("Preference");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Product", b =>
+            modelBuilder.Entity("Inventory.Domain.Product", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -2326,7 +2326,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("Product");
                 });
 
-            modelBuilder.Entity("Domain.Entities.ProductPropertyElement", b =>
+            modelBuilder.Entity("Inventory.Domain.ProductPropertyElement", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -2381,7 +2381,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("ProductPropertyElement");
                 });
 
-            modelBuilder.Entity("Domain.Entities.ProductRecipe", b =>
+            modelBuilder.Entity("Inventory.Domain.ProductRecipe", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -2432,7 +2432,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("ProductRecipe");
                 });
 
-            modelBuilder.Entity("Domain.Entities.ProductUnit", b =>
+            modelBuilder.Entity("Inventory.Domain.ProductUnit", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -2485,7 +2485,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("ProductUnit");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Property", b =>
+            modelBuilder.Entity("Inventory.Domain.Property", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -2526,7 +2526,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("Property");
                 });
 
-            modelBuilder.Entity("Domain.Entities.PropertyElement", b =>
+            modelBuilder.Entity("Inventory.Domain.PropertyElement", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -2573,7 +2573,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("PropertyElement");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Role", b =>
+            modelBuilder.Entity("Administration.Domain.Role", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -2614,7 +2614,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("Role");
                 });
 
-            modelBuilder.Entity("Domain.Entities.RolePermission", b =>
+            modelBuilder.Entity("Administration.Domain.RolePermission", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -2724,7 +2724,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("Safe");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Shift", b =>
+            modelBuilder.Entity("Organization.Domain.Shift", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -2771,7 +2771,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("Shift");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Stock", b =>
+            modelBuilder.Entity("Inventory.Domain.Stock", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -2822,7 +2822,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("Stock");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Table", b =>
+            modelBuilder.Entity("Organization.Domain.Table", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -2869,7 +2869,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("Table");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Transaction", b =>
+            modelBuilder.Entity("Inventory.Domain.Transaction", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -2976,7 +2976,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("Transaction");
                 });
 
-            modelBuilder.Entity("Domain.Entities.TransactionProduct", b =>
+            modelBuilder.Entity("Inventory.Domain.TransactionProduct", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -3048,7 +3048,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("TransactionProduct");
                 });
 
-            modelBuilder.Entity("Domain.Entities.TransactionType", b =>
+            modelBuilder.Entity("Inventory.Domain.TransactionType", b =>
                 {
                     b.Property<long>("Id")
                         .HasColumnType("bigint");
@@ -3092,7 +3092,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("TransactionType");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Unit", b =>
+            modelBuilder.Entity("MasterData.Domain.Unit", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -3133,7 +3133,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("Unit");
                 });
 
-            modelBuilder.Entity("Domain.Entities.User", b =>
+            modelBuilder.Entity("Administration.Domain.User", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -3194,9 +3194,9 @@ namespace Infrastructure.Migrations
                     b.ToTable("User");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Account", b =>
+            modelBuilder.Entity("Accounting.Domain.Account", b =>
                 {
-                    b.HasOne("Domain.Entities.AccountType", "AccountType")
+                    b.HasOne("Accounting.Domain.AccountType", "AccountType")
                         .WithMany()
                         .HasForeignKey("AccountTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3205,25 +3205,25 @@ namespace Infrastructure.Migrations
                     b.Navigation("AccountType");
                 });
 
-            modelBuilder.Entity("Domain.Entities.BankAccount", b =>
+            modelBuilder.Entity("Treasury.Domain.BankAccount", b =>
                 {
-                    b.HasOne("Domain.Entities.Account", "Account")
+                    b.HasOne("Accounting.Domain.Account", "Account")
                         .WithMany()
                         .HasForeignKey("AccountId");
 
-                    b.HasOne("Domain.Entities.BankBranch", "BankBranch")
+                    b.HasOne("Treasury.Domain.BankBranch", "BankBranch")
                         .WithMany()
                         .HasForeignKey("BankBranchd");
 
-                    b.HasOne("Domain.Entities.Bank", "Bank")
+                    b.HasOne("Treasury.Domain.Bank", "Bank")
                         .WithMany()
                         .HasForeignKey("BankId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.FinancialAccount", "FinancialAccount")
+                    b.HasOne("Treasury.Domain.FinancialAccount", "FinancialAccount")
                         .WithOne("BankAccount")
-                        .HasForeignKey("Domain.Entities.BankAccount", "FinancialAccountId")
+                        .HasForeignKey("Treasury.Domain.BankAccount", "FinancialAccountId")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Account");
@@ -3235,27 +3235,27 @@ namespace Infrastructure.Migrations
                     b.Navigation("FinancialAccount");
                 });
 
-            modelBuilder.Entity("Domain.Entities.BankBranch", b =>
+            modelBuilder.Entity("Treasury.Domain.BankBranch", b =>
                 {
-                    b.HasOne("Domain.Entities.Bank", "Bank")
+                    b.HasOne("Treasury.Domain.Bank", "Bank")
                         .WithMany()
                         .HasForeignKey("BankId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.City", "City")
+                    b.HasOne("MasterData.Domain.City", "City")
                         .WithMany()
                         .HasForeignKey("CityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.Country", "Country")
+                    b.HasOne("MasterData.Domain.Country", "Country")
                         .WithMany()
                         .HasForeignKey("CountryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.District", "District")
+                    b.HasOne("MasterData.Domain.District", "District")
                         .WithMany()
                         .HasForeignKey("DistrictId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3270,34 +3270,34 @@ namespace Infrastructure.Migrations
                     b.Navigation("District");
                 });
 
-            modelBuilder.Entity("Domain.Entities.City", b =>
+            modelBuilder.Entity("MasterData.Domain.City", b =>
                 {
-                    b.HasOne("Domain.Entities.Country", "Country")
+                    b.HasOne("MasterData.Domain.Country", "Country")
                         .WithMany()
                         .HasForeignKey("CountryId");
 
                     b.Navigation("Country");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Dealer", b =>
+            modelBuilder.Entity("Sales.Domain.Dealer", b =>
                 {
-                    b.HasOne("Domain.Entities.Account", "Account")
+                    b.HasOne("Accounting.Domain.Account", "Account")
                         .WithMany()
                         .HasForeignKey("AccountId");
 
-                    b.HasOne("Domain.Entities.City", "City")
+                    b.HasOne("MasterData.Domain.City", "City")
                         .WithMany()
                         .HasForeignKey("CityId");
 
-                    b.HasOne("Domain.Entities.Country", "Country")
+                    b.HasOne("MasterData.Domain.Country", "Country")
                         .WithMany()
                         .HasForeignKey("CountryId");
 
-                    b.HasOne("Domain.Entities.DealerGroup", "DealerGroup")
+                    b.HasOne("Sales.Domain.DealerGroup", "DealerGroup")
                         .WithMany()
                         .HasForeignKey("DealerGroupId");
 
-                    b.HasOne("Domain.Entities.District", "District")
+                    b.HasOne("MasterData.Domain.District", "District")
                         .WithMany()
                         .HasForeignKey("DistrictId");
 
@@ -3312,13 +3312,13 @@ namespace Infrastructure.Migrations
                     b.Navigation("District");
                 });
 
-            modelBuilder.Entity("Domain.Entities.District", b =>
+            modelBuilder.Entity("MasterData.Domain.District", b =>
                 {
-                    b.HasOne("Domain.Entities.City", "City")
+                    b.HasOne("MasterData.Domain.City", "City")
                         .WithMany()
                         .HasForeignKey("CityId");
 
-                    b.HasOne("Domain.Entities.Country", "Country")
+                    b.HasOne("MasterData.Domain.Country", "Country")
                         .WithMany()
                         .HasForeignKey("CountryId");
 
@@ -3327,59 +3327,59 @@ namespace Infrastructure.Migrations
                     b.Navigation("Country");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Financial", b =>
+            modelBuilder.Entity("Treasury.Domain.Financial", b =>
                 {
-                    b.HasOne("Domain.Entities.Branch", "Branch")
+                    b.HasOne("Organization.Domain.Branch", "Branch")
                         .WithMany()
                         .HasForeignKey("BranchId");
 
-                    b.HasOne("Domain.Entities.FinancialAccount", "ContraFinancialAccount")
+                    b.HasOne("Treasury.Domain.FinancialAccount", "ContraFinancialAccount")
                         .WithMany()
                         .HasForeignKey("ContraFinancialAccountId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("Domain.Entities.User", "CreateUser")
+                    b.HasOne("Administration.Domain.User", "CreateUser")
                         .WithMany()
                         .HasForeignKey("CreateUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.Currency", "Currency")
+                    b.HasOne("MasterData.Domain.Currency", "Currency")
                         .WithMany()
                         .HasForeignKey("CurrencyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.Dealer", "Dealer")
+                    b.HasOne("Sales.Domain.Dealer", "Dealer")
                         .WithMany()
                         .HasForeignKey("DealerId");
 
-                    b.HasOne("Domain.Entities.FinancialAccount", "FinancialAccount")
+                    b.HasOne("Treasury.Domain.FinancialAccount", "FinancialAccount")
                         .WithMany()
                         .HasForeignKey("FinancialAccountId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("Domain.Entities.FinancialTransfer", "FinancialTransfer")
+                    b.HasOne("Treasury.Domain.FinancialTransfer", "FinancialTransfer")
                         .WithMany("Transactions")
                         .HasForeignKey("FinancialTransferId");
 
-                    b.HasOne("Domain.Entities.FinancialType", "FinancialType")
+                    b.HasOne("Treasury.Domain.FinancialType", "FinancialType")
                         .WithMany()
                         .HasForeignKey("FinancialTypeId");
 
-                    b.HasOne("Domain.Entities.Journal", "Journal")
+                    b.HasOne("Accounting.Domain.Journal", "Journal")
                         .WithMany()
                         .HasForeignKey("JournalId");
 
-                    b.HasOne("Domain.Entities.User", "ModifyUser")
+                    b.HasOne("Administration.Domain.User", "ModifyUser")
                         .WithMany()
                         .HasForeignKey("ModifyUserId");
 
-                    b.HasOne("Domain.Entities.Outlay", "Outlay")
+                    b.HasOne("Treasury.Domain.Outlay", "Outlay")
                         .WithMany()
                         .HasForeignKey("OutlayId");
 
-                    b.HasOne("Domain.Entities.PaymentType", "PaymentType")
+                    b.HasOne("MasterData.Domain.PaymentType", "PaymentType")
                         .WithMany()
                         .HasForeignKey("PaymentTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3391,7 +3391,7 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.Shift", "Shift")
+                    b.HasOne("Organization.Domain.Shift", "Shift")
                         .WithMany()
                         .HasForeignKey("ShiftId");
 
@@ -3424,13 +3424,13 @@ namespace Infrastructure.Migrations
                     b.Navigation("Shift");
                 });
 
-            modelBuilder.Entity("Domain.Entities.FinancialAccount", b =>
+            modelBuilder.Entity("Treasury.Domain.FinancialAccount", b =>
                 {
-                    b.HasOne("Domain.Entities.Account", "Account")
+                    b.HasOne("Accounting.Domain.Account", "Account")
                         .WithMany()
                         .HasForeignKey("AccountId");
 
-                    b.HasOne("Domain.Entities.Currency", "Currency")
+                    b.HasOne("MasterData.Domain.Currency", "Currency")
                         .WithMany()
                         .HasForeignKey("CurrencyId");
 
@@ -3439,15 +3439,15 @@ namespace Infrastructure.Migrations
                     b.Navigation("Currency");
                 });
 
-            modelBuilder.Entity("Domain.Entities.FinancialInvoice", b =>
+            modelBuilder.Entity("Treasury.Domain.FinancialInvoice", b =>
                 {
-                    b.HasOne("Domain.Entities.Financial", "Financial")
+                    b.HasOne("Treasury.Domain.Financial", "Financial")
                         .WithMany("FinancialInvoices")
                         .HasForeignKey("FinancialId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.Invoice", "Invoice")
+                    b.HasOne("Sales.Domain.Invoice", "Invoice")
                         .WithMany()
                         .HasForeignKey("InvoiceId");
 
@@ -3456,39 +3456,39 @@ namespace Infrastructure.Migrations
                     b.Navigation("Invoice");
                 });
 
-            modelBuilder.Entity("Domain.Entities.FinancialTransfer", b =>
+            modelBuilder.Entity("Treasury.Domain.FinancialTransfer", b =>
                 {
-                    b.HasOne("Domain.Entities.Branch", "Branch")
+                    b.HasOne("Organization.Domain.Branch", "Branch")
                         .WithMany()
                         .HasForeignKey("BranchId");
 
-                    b.HasOne("Domain.Entities.User", "CreateUser")
+                    b.HasOne("Administration.Domain.User", "CreateUser")
                         .WithMany()
                         .HasForeignKey("CreateUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.Currency", "Currency")
+                    b.HasOne("MasterData.Domain.Currency", "Currency")
                         .WithMany()
                         .HasForeignKey("CurrencyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.FinancialAccount", "FromFinancialAccount")
+                    b.HasOne("Treasury.Domain.FinancialAccount", "FromFinancialAccount")
                         .WithMany()
                         .HasForeignKey("FromFinancialAccountId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.User", "ModifyUser")
+                    b.HasOne("Administration.Domain.User", "ModifyUser")
                         .WithMany()
                         .HasForeignKey("ModifyUserId");
 
-                    b.HasOne("Domain.Entities.Shift", "Shift")
+                    b.HasOne("Organization.Domain.Shift", "Shift")
                         .WithMany()
                         .HasForeignKey("ShiftId");
 
-                    b.HasOne("Domain.Entities.FinancialAccount", "ToFinancialAccount")
+                    b.HasOne("Treasury.Domain.FinancialAccount", "ToFinancialAccount")
                         .WithMany()
                         .HasForeignKey("ToFinancialAccountId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -3509,9 +3509,9 @@ namespace Infrastructure.Migrations
                     b.Navigation("ToFinancialAccount");
                 });
 
-            modelBuilder.Entity("Domain.Entities.FiscalPeriod", b =>
+            modelBuilder.Entity("Accounting.Domain.FiscalPeriod", b =>
                 {
-                    b.HasOne("Domain.Entities.FiscalYear", "FiscalYear")
+                    b.HasOne("Accounting.Domain.FiscalYear", "FiscalYear")
                         .WithMany("Periods")
                         .HasForeignKey("FiscalYearId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3520,31 +3520,31 @@ namespace Infrastructure.Migrations
                     b.Navigation("FiscalYear");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Inventory", b =>
+            modelBuilder.Entity("Inventory.Domain.Inventory", b =>
                 {
-                    b.HasOne("Domain.Entities.Branch", "Branch")
+                    b.HasOne("Organization.Domain.Branch", "Branch")
                         .WithMany()
                         .HasForeignKey("BranchId");
 
-                    b.HasOne("Domain.Entities.User", "CreateUser")
+                    b.HasOne("Administration.Domain.User", "CreateUser")
                         .WithMany()
                         .HasForeignKey("CreateUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.User", "ModifyUser")
+                    b.HasOne("Administration.Domain.User", "ModifyUser")
                         .WithMany()
                         .HasForeignKey("ModifyUserId");
 
-                    b.HasOne("Domain.Entities.Shift", "Shift")
+                    b.HasOne("Organization.Domain.Shift", "Shift")
                         .WithMany()
                         .HasForeignKey("ShiftId");
 
-                    b.HasOne("Domain.Entities.Stock", "Stock")
+                    b.HasOne("Inventory.Domain.Stock", "Stock")
                         .WithMany()
                         .HasForeignKey("StockId");
 
-                    b.HasOne("Domain.Entities.User", "User")
+                    b.HasOne("Administration.Domain.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
 
@@ -3561,21 +3561,21 @@ namespace Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Domain.Entities.InventoryProduct", b =>
+            modelBuilder.Entity("Inventory.Domain.InventoryProduct", b =>
                 {
-                    b.HasOne("Domain.Entities.Inventory", "Inventory")
+                    b.HasOne("Inventory.Domain.Inventory", "Inventory")
                         .WithMany("InventoryProducts")
                         .HasForeignKey("InventoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.Product", "Product")
+                    b.HasOne("Inventory.Domain.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.Unit", "Unit")
+                    b.HasOne("MasterData.Domain.Unit", "Unit")
                         .WithMany()
                         .HasForeignKey("UnitId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3588,49 +3588,49 @@ namespace Infrastructure.Migrations
                     b.Navigation("Unit");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Invoice", b =>
+            modelBuilder.Entity("Sales.Domain.Invoice", b =>
                 {
-                    b.HasOne("Domain.Entities.Branch", "Branch")
+                    b.HasOne("Organization.Domain.Branch", "Branch")
                         .WithMany()
                         .HasForeignKey("BranchId");
 
-                    b.HasOne("Domain.Entities.User", "CreateUser")
+                    b.HasOne("Administration.Domain.User", "CreateUser")
                         .WithMany()
                         .HasForeignKey("CreateUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.Currency", "Currency")
+                    b.HasOne("MasterData.Domain.Currency", "Currency")
                         .WithMany()
                         .HasForeignKey("CurrencyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.Dealer", "Dealer")
+                    b.HasOne("Sales.Domain.Dealer", "Dealer")
                         .WithMany()
                         .HasForeignKey("DealerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.User", "ModifyUser")
+                    b.HasOne("Administration.Domain.User", "ModifyUser")
                         .WithMany()
                         .HasForeignKey("ModifyUserId");
 
-                    b.HasOne("Domain.Entities.PaymentType", "PaymentType")
+                    b.HasOne("MasterData.Domain.PaymentType", "PaymentType")
                         .WithMany()
                         .HasForeignKey("PaymentTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.Shift", "Shift")
+                    b.HasOne("Organization.Domain.Shift", "Shift")
                         .WithMany()
                         .HasForeignKey("ShiftId");
 
-                    b.HasOne("Domain.Entities.Stock", "Stock")
+                    b.HasOne("Inventory.Domain.Stock", "Stock")
                         .WithMany()
                         .HasForeignKey("StockId");
 
-                    b.HasOne("Domain.Entities.Transaction", "Transaction")
+                    b.HasOne("Inventory.Domain.Transaction", "Transaction")
                         .WithMany()
                         .HasForeignKey("TransactionId");
 
@@ -3653,25 +3653,25 @@ namespace Infrastructure.Migrations
                     b.Navigation("Transaction");
                 });
 
-            modelBuilder.Entity("Domain.Entities.InvoiceProduct", b =>
+            modelBuilder.Entity("Sales.Domain.InvoiceProduct", b =>
                 {
-                    b.HasOne("Domain.Entities.Invoice", "Invoice")
+                    b.HasOne("Sales.Domain.Invoice", "Invoice")
                         .WithMany("InvoiceProducts")
                         .HasForeignKey("InvoiceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.Product", "Product")
+                    b.HasOne("Inventory.Domain.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.Stock", "Stock")
+                    b.HasOne("Inventory.Domain.Stock", "Stock")
                         .WithMany()
                         .HasForeignKey("StockId");
 
-                    b.HasOne("Domain.Entities.Unit", "Unit")
+                    b.HasOne("MasterData.Domain.Unit", "Unit")
                         .WithMany()
                         .HasForeignKey("UnitId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3686,52 +3686,52 @@ namespace Infrastructure.Migrations
                     b.Navigation("Unit");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Journal", b =>
+            modelBuilder.Entity("Accounting.Domain.Journal", b =>
                 {
-                    b.HasOne("Domain.Entities.Branch", "Branch")
+                    b.HasOne("Organization.Domain.Branch", "Branch")
                         .WithMany()
                         .HasForeignKey("BranchId");
 
-                    b.HasOne("Domain.Entities.User", "CreateUser")
+                    b.HasOne("Administration.Domain.User", "CreateUser")
                         .WithMany()
                         .HasForeignKey("CreateUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.Currency", "Currency")
+                    b.HasOne("MasterData.Domain.Currency", "Currency")
                         .WithMany()
                         .HasForeignKey("CurrencyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.FiscalPeriod", "FiscalPeriod")
+                    b.HasOne("Accounting.Domain.FiscalPeriod", "FiscalPeriod")
                         .WithMany()
                         .HasForeignKey("FiscalPeriodId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.FiscalYear", "FiscalYear")
+                    b.HasOne("Accounting.Domain.FiscalYear", "FiscalYear")
                         .WithMany()
                         .HasForeignKey("FiscalYearId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.JournalType", "JournalType")
+                    b.HasOne("Accounting.Domain.JournalType", "JournalType")
                         .WithMany()
                         .HasForeignKey("JournalTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.User", "ModifyUser")
+                    b.HasOne("Administration.Domain.User", "ModifyUser")
                         .WithMany()
                         .HasForeignKey("ModifyUserId");
 
-                    b.HasOne("Domain.Entities.Journal", "OriginalJournal")
+                    b.HasOne("Accounting.Domain.Journal", "OriginalJournal")
                         .WithOne("ReversalJournal")
-                        .HasForeignKey("Domain.Entities.Journal", "OriginalJournalId")
+                        .HasForeignKey("Accounting.Domain.Journal", "OriginalJournalId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("Domain.Entities.Shift", "Shift")
+                    b.HasOne("Organization.Domain.Shift", "Shift")
                         .WithMany()
                         .HasForeignKey("ShiftId");
 
@@ -3754,15 +3754,15 @@ namespace Infrastructure.Migrations
                     b.Navigation("Shift");
                 });
 
-            modelBuilder.Entity("Domain.Entities.JournalItem", b =>
+            modelBuilder.Entity("Accounting.Domain.JournalItem", b =>
                 {
-                    b.HasOne("Domain.Entities.Account", "Account")
+                    b.HasOne("Accounting.Domain.Account", "Account")
                         .WithMany()
                         .HasForeignKey("AccountId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.Journal", "Journal")
+                    b.HasOne("Accounting.Domain.Journal", "Journal")
                         .WithMany("JournalItems")
                         .HasForeignKey("JournalId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3773,35 +3773,35 @@ namespace Infrastructure.Migrations
                     b.Navigation("Journal");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Order", b =>
+            modelBuilder.Entity("Sales.Domain.Order", b =>
                 {
-                    b.HasOne("Domain.Entities.Branch", "Branch")
+                    b.HasOne("Organization.Domain.Branch", "Branch")
                         .WithMany()
                         .HasForeignKey("BranchId");
 
-                    b.HasOne("Domain.Entities.User", "CreateUser")
+                    b.HasOne("Administration.Domain.User", "CreateUser")
                         .WithMany()
                         .HasForeignKey("CreateUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.Dealer", "Dealer")
+                    b.HasOne("Sales.Domain.Dealer", "Dealer")
                         .WithMany()
                         .HasForeignKey("DealerId");
 
-                    b.HasOne("Domain.Entities.Invoice", "Invoice")
+                    b.HasOne("Sales.Domain.Invoice", "Invoice")
                         .WithMany()
                         .HasForeignKey("InvoiceId");
 
-                    b.HasOne("Domain.Entities.User", "ModifyUser")
+                    b.HasOne("Administration.Domain.User", "ModifyUser")
                         .WithMany()
                         .HasForeignKey("ModifyUserId");
 
-                    b.HasOne("Domain.Entities.Shift", "Shift")
+                    b.HasOne("Organization.Domain.Shift", "Shift")
                         .WithMany()
                         .HasForeignKey("ShiftId");
 
-                    b.HasOne("Domain.Entities.Table", "Table")
+                    b.HasOne("Organization.Domain.Table", "Table")
                         .WithMany()
                         .HasForeignKey("TableId");
 
@@ -3820,21 +3820,21 @@ namespace Infrastructure.Migrations
                     b.Navigation("Table");
                 });
 
-            modelBuilder.Entity("Domain.Entities.OrderProduct", b =>
+            modelBuilder.Entity("Sales.Domain.OrderProduct", b =>
                 {
-                    b.HasOne("Domain.Entities.Order", "Order")
+                    b.HasOne("Sales.Domain.Order", "Order")
                         .WithMany("OrderProducts")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.Product", "Product")
+                    b.HasOne("Inventory.Domain.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.Unit", "Unit")
+                    b.HasOne("MasterData.Domain.Unit", "Unit")
                         .WithMany()
                         .HasForeignKey("UnitId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3847,15 +3847,15 @@ namespace Infrastructure.Migrations
                     b.Navigation("Unit");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Product", b =>
+            modelBuilder.Entity("Inventory.Domain.Product", b =>
                 {
-                    b.HasOne("Domain.Entities.Classification", "Classification")
+                    b.HasOne("MasterData.Domain.Classification", "Classification")
                         .WithMany()
                         .HasForeignKey("ClassificationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.Dealer", "Dealer")
+                    b.HasOne("Sales.Domain.Dealer", "Dealer")
                         .WithMany()
                         .HasForeignKey("DealerId");
 
@@ -3864,17 +3864,17 @@ namespace Infrastructure.Migrations
                     b.Navigation("Dealer");
                 });
 
-            modelBuilder.Entity("Domain.Entities.ProductPropertyElement", b =>
+            modelBuilder.Entity("Inventory.Domain.ProductPropertyElement", b =>
                 {
-                    b.HasOne("Domain.Entities.Product", "Product")
+                    b.HasOne("Inventory.Domain.Product", "Product")
                         .WithMany("ProductPropertyElements")
                         .HasForeignKey("ProductId");
 
-                    b.HasOne("Domain.Entities.PropertyElement", "PropertyElement")
+                    b.HasOne("Inventory.Domain.PropertyElement", "PropertyElement")
                         .WithMany()
                         .HasForeignKey("PropertyElementId");
 
-                    b.HasOne("Domain.Entities.Property", "Property")
+                    b.HasOne("Inventory.Domain.Property", "Property")
                         .WithMany()
                         .HasForeignKey("PropertyId");
 
@@ -3885,24 +3885,24 @@ namespace Infrastructure.Migrations
                     b.Navigation("PropertyElement");
                 });
 
-            modelBuilder.Entity("Domain.Entities.ProductRecipe", b =>
+            modelBuilder.Entity("Inventory.Domain.ProductRecipe", b =>
                 {
-                    b.HasOne("Domain.Entities.Product", null)
+                    b.HasOne("Inventory.Domain.Product", null)
                         .WithMany("ProductRecipes")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Domain.Entities.ProductUnit", b =>
+            modelBuilder.Entity("Inventory.Domain.ProductUnit", b =>
                 {
-                    b.HasOne("Domain.Entities.Product", "Product")
+                    b.HasOne("Inventory.Domain.Product", "Product")
                         .WithMany("ProductUnits")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.Unit", "Unit")
+                    b.HasOne("MasterData.Domain.Unit", "Unit")
                         .WithMany()
                         .HasForeignKey("UnitId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3913,9 +3913,9 @@ namespace Infrastructure.Migrations
                     b.Navigation("Unit");
                 });
 
-            modelBuilder.Entity("Domain.Entities.PropertyElement", b =>
+            modelBuilder.Entity("Inventory.Domain.PropertyElement", b =>
                 {
-                    b.HasOne("Domain.Entities.Property", "Property")
+                    b.HasOne("Inventory.Domain.Property", "Property")
                         .WithMany("PropertyElements")
                         .HasForeignKey("PropertyId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3924,15 +3924,15 @@ namespace Infrastructure.Migrations
                     b.Navigation("Property");
                 });
 
-            modelBuilder.Entity("Domain.Entities.RolePermission", b =>
+            modelBuilder.Entity("Administration.Domain.RolePermission", b =>
                 {
-                    b.HasOne("Domain.Entities.Permission", "Permission")
+                    b.HasOne("Administration.Domain.Permission", "Permission")
                         .WithMany()
                         .HasForeignKey("PermissionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.Role", "Role")
+                    b.HasOne("Administration.Domain.Role", "Role")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3945,20 +3945,20 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.Safe", b =>
                 {
-                    b.HasOne("Domain.Entities.Account", "Account")
+                    b.HasOne("Accounting.Domain.Account", "Account")
                         .WithMany()
                         .HasForeignKey("AccountId");
 
-                    b.HasOne("Domain.Entities.Branch", "Branch")
+                    b.HasOne("Organization.Domain.Branch", "Branch")
                         .WithMany()
                         .HasForeignKey("BranchId");
 
-                    b.HasOne("Domain.Entities.FinancialAccount", "FinancialAccount")
+                    b.HasOne("Treasury.Domain.FinancialAccount", "FinancialAccount")
                         .WithOne("CashBox")
                         .HasForeignKey("Domain.Entities.Safe", "FinancialAccountId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("Domain.Entities.User", "KeeperUser")
+                    b.HasOne("Administration.Domain.User", "KeeperUser")
                         .WithMany()
                         .HasForeignKey("KeeperUserId");
 
@@ -3971,13 +3971,13 @@ namespace Infrastructure.Migrations
                     b.Navigation("KeeperUser");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Stock", b =>
+            modelBuilder.Entity("Inventory.Domain.Stock", b =>
                 {
-                    b.HasOne("Domain.Entities.Account", "Account")
+                    b.HasOne("Accounting.Domain.Account", "Account")
                         .WithMany()
                         .HasForeignKey("AccountId");
 
-                    b.HasOne("Domain.Entities.Branch", "Branch")
+                    b.HasOne("Organization.Domain.Branch", "Branch")
                         .WithMany()
                         .HasForeignKey("BranchId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3988,43 +3988,43 @@ namespace Infrastructure.Migrations
                     b.Navigation("Branch");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Transaction", b =>
+            modelBuilder.Entity("Inventory.Domain.Transaction", b =>
                 {
-                    b.HasOne("Domain.Entities.Branch", "Branch")
+                    b.HasOne("Organization.Domain.Branch", "Branch")
                         .WithMany()
                         .HasForeignKey("BranchId");
 
-                    b.HasOne("Domain.Entities.User", "CreateUser")
+                    b.HasOne("Administration.Domain.User", "CreateUser")
                         .WithMany()
                         .HasForeignKey("CreateUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.Dealer", "Dealer")
+                    b.HasOne("Sales.Domain.Dealer", "Dealer")
                         .WithMany()
                         .HasForeignKey("DealerId");
 
-                    b.HasOne("Domain.Entities.Inventory", "Inventory")
+                    b.HasOne("Inventory.Domain.Inventory", "Inventory")
                         .WithMany("Transactions")
                         .HasForeignKey("InventoryId");
 
-                    b.HasOne("Domain.Entities.User", "ModifyUser")
+                    b.HasOne("Administration.Domain.User", "ModifyUser")
                         .WithMany()
                         .HasForeignKey("ModifyUserId");
 
-                    b.HasOne("Domain.Entities.Order", "Order")
+                    b.HasOne("Sales.Domain.Order", "Order")
                         .WithMany()
                         .HasForeignKey("OrderId");
 
-                    b.HasOne("Domain.Entities.Shift", "Shift")
+                    b.HasOne("Organization.Domain.Shift", "Shift")
                         .WithMany()
                         .HasForeignKey("ShiftId");
 
-                    b.HasOne("Domain.Entities.Stock", "Stock")
+                    b.HasOne("Inventory.Domain.Stock", "Stock")
                         .WithMany()
                         .HasForeignKey("StockId");
 
-                    b.HasOne("Domain.Entities.Stock", "ToStock")
+                    b.HasOne("Inventory.Domain.Stock", "ToStock")
                         .WithMany()
                         .HasForeignKey("ToStockId");
 
@@ -4047,25 +4047,25 @@ namespace Infrastructure.Migrations
                     b.Navigation("ToStock");
                 });
 
-            modelBuilder.Entity("Domain.Entities.TransactionProduct", b =>
+            modelBuilder.Entity("Inventory.Domain.TransactionProduct", b =>
                 {
-                    b.HasOne("Domain.Entities.Product", "Product")
+                    b.HasOne("Inventory.Domain.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.Stock", "Stock")
+                    b.HasOne("Inventory.Domain.Stock", "Stock")
                         .WithMany()
                         .HasForeignKey("StockId");
 
-                    b.HasOne("Domain.Entities.Transaction", "Transaction")
+                    b.HasOne("Inventory.Domain.Transaction", "Transaction")
                         .WithMany("TransactionProducts")
                         .HasForeignKey("TransactionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.Unit", "Unit")
+                    b.HasOne("MasterData.Domain.Unit", "Unit")
                         .WithMany()
                         .HasForeignKey("UnitId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -4080,13 +4080,13 @@ namespace Infrastructure.Migrations
                     b.Navigation("Unit");
                 });
 
-            modelBuilder.Entity("Domain.Entities.User", b =>
+            modelBuilder.Entity("Administration.Domain.User", b =>
                 {
-                    b.HasOne("Domain.Entities.Branch", "Branch")
+                    b.HasOne("Organization.Domain.Branch", "Branch")
                         .WithMany()
                         .HasForeignKey("BranchId");
 
-                    b.HasOne("Domain.Entities.Role", "Role")
+                    b.HasOne("Administration.Domain.Role", "Role")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -4097,53 +4097,53 @@ namespace Infrastructure.Migrations
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Financial", b =>
+            modelBuilder.Entity("Treasury.Domain.Financial", b =>
                 {
                     b.Navigation("FinancialInvoices");
                 });
 
-            modelBuilder.Entity("Domain.Entities.FinancialAccount", b =>
+            modelBuilder.Entity("Treasury.Domain.FinancialAccount", b =>
                 {
                     b.Navigation("BankAccount");
 
                     b.Navigation("CashBox");
                 });
 
-            modelBuilder.Entity("Domain.Entities.FinancialTransfer", b =>
+            modelBuilder.Entity("Treasury.Domain.FinancialTransfer", b =>
                 {
                     b.Navigation("Transactions");
                 });
 
-            modelBuilder.Entity("Domain.Entities.FiscalYear", b =>
+            modelBuilder.Entity("Accounting.Domain.FiscalYear", b =>
                 {
                     b.Navigation("Periods");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Inventory", b =>
+            modelBuilder.Entity("Inventory.Domain.Inventory", b =>
                 {
                     b.Navigation("InventoryProducts");
 
                     b.Navigation("Transactions");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Invoice", b =>
+            modelBuilder.Entity("Sales.Domain.Invoice", b =>
                 {
                     b.Navigation("InvoiceProducts");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Journal", b =>
+            modelBuilder.Entity("Accounting.Domain.Journal", b =>
                 {
                     b.Navigation("JournalItems");
 
                     b.Navigation("ReversalJournal");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Order", b =>
+            modelBuilder.Entity("Sales.Domain.Order", b =>
                 {
                     b.Navigation("OrderProducts");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Product", b =>
+            modelBuilder.Entity("Inventory.Domain.Product", b =>
                 {
                     b.Navigation("ProductPropertyElements");
 
@@ -4152,12 +4152,12 @@ namespace Infrastructure.Migrations
                     b.Navigation("ProductUnits");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Property", b =>
+            modelBuilder.Entity("Inventory.Domain.Property", b =>
                 {
                     b.Navigation("PropertyElements");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Transaction", b =>
+            modelBuilder.Entity("Inventory.Domain.Transaction", b =>
                 {
                     b.Navigation("TransactionProducts");
                 });

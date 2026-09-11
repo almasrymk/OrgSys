@@ -1,6 +1,6 @@
 ﻿namespace OrgSys.Areas.Setting.Controllers
 {
-    using Application.Commands.Org.Setting.Role.Commands;
+    using Administration.Application.Roles.Commands;
     using AutoMapper;
     using Application.DTOs;
     using Microsoft.AspNetCore.Mvc;

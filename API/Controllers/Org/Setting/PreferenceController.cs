@@ -1,7 +1,7 @@
-﻿using Application.Commands.Org.Setting.PaymentType.Queries;
+﻿using MasterData.Application.PaymentTypes.Queries;
 using Application.Commands.Org.Setting.Preference.Commands;
 using Application.Commands.Org.Setting.Preference.Queries;
-using Application.Interfaces.CQRS;
+using OrgSys.SharedKernel;
 using Application.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

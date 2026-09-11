@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../Payables.Domain/Payables.Domain.csproj" />
+    <ProjectReference Include="../Payables.Contracts/Payables.Contracts.csproj" />
+    <ProjectReference Include="../../../BuildingBlocks/OrgSys.EventBus/OrgSys.EventBus.csproj" />
+    <!-- Supplier opening balance posts into the standard Journal/JournalType workflow and reuses
+         IPayableAccountValidator/IAccountingPeriodService (Accounting) plus IReceivableAccountValidator
+         (Receivables) for the shared clearing-account check. -->
+    <ProjectReference Include="../../Accounting/Accounting.Application/Accounting.Application.csproj" />
+    <ProjectReference Include="../../Receivables/Receivables.Application/Receivables.Application.csproj" />
+    <!-- Preference hasn't been extracted from the monolith yet. -->
+    <ProjectReference Include="../../../Domain/Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="14.1.0" />
+    <PackageReference Include="AutoMapper" Version="16.1.1" />
+    <PackageReference Include="FluentValidation" Version="12.1.1" />
+  </ItemGroup>
+
+</Project>

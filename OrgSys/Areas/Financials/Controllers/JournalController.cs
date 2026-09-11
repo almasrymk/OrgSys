@@ -1,10 +1,9 @@
 namespace OrgSys.Areas.Financial.Controllers
 {
-    using Application.Commands.Org.Financials.Journal.Commands;
+    using Accounting.Application.Journals.Commands;
     using Application.DTOs;
     using AutoMapper;
     using Domain.Enums;
-    using Domain.Shared;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.Extensions.Configuration;

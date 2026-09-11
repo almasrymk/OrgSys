@@ -1,6 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
 @using System.Globalization
-@model X.PagedList.IPagedList<Application.DTOs.OrderDto>
+@model X.PagedList.IPagedList<Sales.Application.OrderDto>
 @using OrgSys
 @using Service
 @{
@@ -86,7 +86,7 @@
                 <tbody>
                     @for (int i = 0, x = ((Model.PageNumber - 1) * Model.PageSize) + 1; i < Model.Count; i++, x++)
                     {
-                        <tr style="@(Model[i].Status == Domain.Enums.Status.Cancel ? "color:#a8a7a7;background:repeating-linear-gradient(60deg, transparent, transparent 5px, gainsboro 5px, gainsboro 6px);" : "")">
+                        <tr style="@(Model[i].Status == OrgSys.SharedKernel.Status.Cancel ? "color:#a8a7a7;background:repeating-linear-gradient(60deg, transparent, transparent 5px, gainsboro 5px, gainsboro 6px);" : "")">
                             <td class="text-center align-middle" style="width:50px;">
                                 <p class="list-item-heading">@x</p>
                             </td>
@@ -117,7 +117,7 @@
                             <td class="w-10 text-center align-middle">
                                 @if (Model[i].Invoice == null || "" + Model[i].Invoice.Code == "")
                                 {
-                                    if (Model[i].Status != Domain.Enums.Status.Cancel && User.IsAllowed("SalesInvoices.Add"))
+                                    if (Model[i].Status != OrgSys.SharedKernel.Status.Cancel && User.IsAllowed("SalesInvoices.Add"))
                                     {
                                         <a href="/@ViewBag.area/@ViewBag.PageTitle/CreateInvoice?id=@Model[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.PageNumber"> <i class="simple-icon-basket-loaded"></i>  </a>
                                     }
@@ -139,7 +139,7 @@
                             @if (AllowEdit || AllowCancel || AllowDelete)
                             {
                         <td class="w-15 @TextAlign2 align-middle">
-                            @if (Model[i].Status == Domain.Enums.Status.Cancel)
+                            @if (Model[i].Status == OrgSys.SharedKernel.Status.Cancel)
                             {
                                 if (openTables)
                                 {
@@ -189,7 +189,7 @@
                             @if (AllowDelete)
                             {
                                 <td class="align-middle @TextAlign2" style="width:30px">
-                                    @if ((Model[i].Invoice == null || "" + Model[i].Invoice.Code == "") && Model[i].Status != Domain.Enums.Status.Cancel)
+                                    @if ((Model[i].Invoice == null || "" + Model[i].Invoice.Code == "") && Model[i].Status != OrgSys.SharedKernel.Status.Cancel)
                                     {
                                         <label class="custom-control custom-checkbox pt-2">
                                             <input id="chk_@Model[i].Id" type="checkbox" class="custom-control-input chk">
@@ -211,7 +211,7 @@
             @for (int i = 0, x = ((Model.PageNumber - 1) * Model.PageSize) + 1; i < Model.Count; i++, x++)
             {
                 <div class="card d-flex flex-row mb-2">
-                    <div class="d-flex flex-grow-1 min-width-zero" style="border-radius:15px; height:60px; @(Model[i].Status == Domain.Enums.Status.Cancel ? "color:#a8a7a7;background:repeating-linear-gradient(60deg, transparent, transparent 5px, gainsboro 5px, gainsboro 6px);" : "")">
+                    <div class="d-flex flex-grow-1 min-width-zero" style="border-radius:15px; height:60px; @(Model[i].Status == OrgSys.SharedKernel.Status.Cancel ? "color:#a8a7a7;background:repeating-linear-gradient(60deg, transparent, transparent 5px, gainsboro 5px, gainsboro 6px);" : "")">
                         <div class="list-thumbnail  border-0 card-img-left badge-theme-1" style="height:60px; width:60px; font-size:x-large; text-align:center; padding:10px;">
                             <i class="@ViewBag.OrdersIcon"></i>
                         </div>
@@ -239,7 +239,7 @@
                             <div class="w-10">
                                 @if ("" + Model[i].Invoice?.Code == "")
                                 {
-                                    if (Model[i].Status != Domain.Enums.Status.Cancel && User.IsAllowed("SalesInvoices.Add"))
+                                    if (Model[i].Status != OrgSys.SharedKernel.Status.Cancel && User.IsAllowed("SalesInvoices.Add"))
                                     {
                                         <a href="/@ViewBag.area/@ViewBag.PageTitle/CreateInvoice?id=@Model[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.PageNumber"> <i class="simple-icon-basket-loaded"></i>  </a>
                                     }
@@ -259,7 +259,7 @@
                                 }
                             </div>
                             <div class="w-15 @TextAlign2">
-                                @if (Model[i].Status == Domain.Enums.Status.Cancel)
+                                @if (Model[i].Status == OrgSys.SharedKernel.Status.Cancel)
                                 {
                                     if (openTables)
                                     {
@@ -309,7 +309,7 @@
                         <div style="width:30px;">
                             @if (AllowDelete)
                             {
-                                @if ((Model[i].Invoice == null || "" + Model[i].Invoice.Code == "") && Model[i].Status != Domain.Enums.Status.Cancel)
+                                @if ((Model[i].Invoice == null || "" + Model[i].Invoice.Code == "") && Model[i].Status != OrgSys.SharedKernel.Status.Cancel)
                                 {
                                     <label class="custom-control custom-checkbox pt-3">
                                         <input id="chk_@Model[i].Id" type="checkbox" class="custom-control-input chk">

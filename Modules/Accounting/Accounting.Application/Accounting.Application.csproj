@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../Accounting.Domain/Accounting.Domain.csproj" />
+    <ProjectReference Include="../Accounting.Contracts/Accounting.Contracts.csproj" />
+    <ProjectReference Include="../../../BuildingBlocks/OrgSys.EventBus/OrgSys.EventBus.csproj" />
+    <!-- IReceivableAccountValidator/IPayableAccountValidator (ReceivablesPayablesAccountValidation/)
+         need Dealer (Sales.Domain). Kept here rather than moved into Receivables.Application/
+         Payables.Application: Sales.Application (Dealer create/update) and Treasury.Application
+         (FinancialAccount, PostTransaction) both already consume these interfaces, so moving them
+         would add new Sales->Receivables/Payables and Treasury->Receivables/Payables edges for no
+         behavioral benefit. Accounting is the natural home — it owns the Chart of Accounts these
+         validators check against, and Receivables.Application/Payables.Application (opening
+         balance commands) simply consume it like every other module does. -->
+    <ProjectReference Include="../../Sales/Sales.Domain/Sales.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="14.1.0" />
+    <PackageReference Include="AutoMapper" Version="16.1.1" />
+    <PackageReference Include="FluentValidation" Version="12.1.1" />
+  </ItemGroup>
+
+</Project>

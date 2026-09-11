@@ -1,6 +1,6 @@
-﻿using Application.Commands.Org.Setting.TransactionType.Queries;
-using Application.Commands.Org.Transactions.TransactionType.Commands;
-using Application.Commands.Org.Transactions.TransactionType.Queries;
+﻿using Inventory.Application.TransactionTypes.Queries;
+using Inventory.Application.TransactionTypes.Commands;
+using Inventory.Application.TransactionTypes.Queries;
 using Application.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Http;

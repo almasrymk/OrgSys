@@ -1,7 +1,6 @@
-﻿using Application.Commands.Org.Setting.City.Commands;
-using Application.Commands.Org.Setting.City.Queries;
-using Application.Interfaces.CQRS;
-using Domain.Shared;
+﻿using MasterData.Application.Cities.Commands;
+using MasterData.Application.Cities.Queries;
+using OrgSys.SharedKernel;
 using Application.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

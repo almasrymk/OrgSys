@@ -1,5 +1,5 @@
 ﻿@{
-    var financialTypes = Model as IReadOnlyList<Application.DTOs.FinancialTypeDto> ?? [];
+    var financialTypes = Model as IReadOnlyList<Treasury.Application.FinancialTypeDto> ?? [];
     var collapseOrganization = (new[] { "Branch", "Stock", "Table" }).Any(c => c.Equals(ViewContext.RouteData.Values["controller"].ToString()));
 }
 

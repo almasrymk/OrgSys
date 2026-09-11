@@ -1,9 +1,8 @@
-﻿using Application.Commands.Org.Financials.Financial.Command;
-using Application.Commands.Org.Invoices.Invoice.Commands;
-using Application.Commands.Org.Invoices.Invoice.Queries;
-using Application.Commands.Org.Setting.Invoice.Queries;
-using Application.Interfaces.CQRS;
-using Domain.Shared;
+﻿using Treasury.Application.Financials.Command;
+using Sales.Application.Invoices.Commands;
+using Sales.Application.Invoices.Queries;
+using Inventory.Application.Transactions.Commands;
+using OrgSys.SharedKernel;
 using Application.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

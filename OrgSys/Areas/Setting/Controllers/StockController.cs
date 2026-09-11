@@ -1,6 +1,6 @@
 ﻿namespace OrgSys.Areas.Setting.Controllers
 {
-    using Application.Commands.Org.Setting.Stock.Commands;
+    using global::Inventory.Application.Stocks.Commands;
     using AutoMapper;
     using Application.DTOs;
     using Microsoft.AspNetCore.Mvc;

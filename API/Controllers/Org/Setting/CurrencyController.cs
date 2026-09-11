@@ -1,8 +1,7 @@
-﻿using Application.Commands.Org.Setting.Country.Queries;
-using Application.Commands.Org.Setting.Currency.Commands;
-using Application.Commands.Org.Setting.Currency.Queries;
-using Application.Interfaces.CQRS;
-using Domain.Shared;
+﻿using MasterData.Application.Countries.Queries;
+using MasterData.Application.Currencies.Commands;
+using MasterData.Application.Currencies.Queries;
+using OrgSys.SharedKernel;
 using Application.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

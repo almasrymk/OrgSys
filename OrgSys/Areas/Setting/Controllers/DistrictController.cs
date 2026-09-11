@@ -1,6 +1,6 @@
 ﻿namespace OrgSys.Areas.Setting.Controllers
 {
-    using Application.Commands.Org.Setting.District.Commands;
+    using MasterData.Application.Districts.Commands;
     using AutoMapper;
     using Application.DTOs;
     using Microsoft.AspNetCore.Mvc;

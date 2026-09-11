@@ -1,5 +1,5 @@
 <div class="mb-2">
-  <h1>{{ title() }}</h1>
+  <h1><i *ngIf="icon()" [class]="icon() + ' rounded-circle badge-theme-1 p-1'"></i> {{ title() }}</h1>
   <nav *ngIf="breadcrumbs().length" class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
     <ol class="breadcrumb pt-0">
       <li class="breadcrumb-item" *ngFor="let crumb of breadcrumbs()">

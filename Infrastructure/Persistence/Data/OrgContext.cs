@@ -88,6 +88,61 @@
                 .HasIndex(e => e.OriginalJournalId)
                 .IsUnique()
                 .HasFilter("[OriginalJournalId] IS NOT NULL");
+
+            // MovementModel dropped its CreateUser/ModifyUser/Shift/Branch navigation properties
+            // when it moved to SharedKernel (see BuildingBlocks/OrgSys.SharedKernel/MovementModel.cs
+            // for why) — these Fluent "no navigation" relationships keep the exact same FK columns
+            // and constraints every MovementModel-derived entity had before, verified with
+            // `dotnet ef migrations has-pending-model-changes`.
+            foreach (var movementEntityType in new[]
+                     {
+                         typeof(Financial), typeof(FinancialTransfer), typeof(Invoice),
+                         typeof(Journal), typeof(Order), typeof(Transaction), typeof(global::Inventory.Domain.Inventory)
+                     })
+            {
+                modelBuilder.Entity(movementEntityType)
+                    .HasOne(typeof(User)).WithMany()
+                    .HasForeignKey("CreateUserId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
+                modelBuilder.Entity(movementEntityType)
+                    .HasOne(typeof(User)).WithMany()
+                    .HasForeignKey("ModifyUserId");
+                modelBuilder.Entity(movementEntityType)
+                    .HasOne(typeof(Shift)).WithMany()
+                    .HasForeignKey("ShiftId");
+                modelBuilder.Entity(movementEntityType)
+                    .HasOne(typeof(Branch)).WithMany()
+                    .HasForeignKey("BranchId");
+            }
+
+            // Invoice/InvoiceProduct/OrderProduct dropped their Stock/Product navigation
+            // properties for the same Sales/Inventory module-boundary reason (Invoice.Transaction
+            // too, confirmed dead) — these Fluent "no navigation" relationships keep the exact
+            // same FK columns and constraints, verified with `dotnet ef migrations
+            // has-pending-model-changes`. See docs/modular-monolith-analysis.md §21.
+            modelBuilder.Entity<Invoice>()
+                .HasOne(typeof(Stock)).WithMany()
+                .HasForeignKey("StockId");
+            modelBuilder.Entity<Invoice>()
+                .HasOne(typeof(Transaction)).WithMany()
+                .HasForeignKey("TransactionId");
+            modelBuilder.Entity<InvoiceProduct>()
+                .HasOne(typeof(Product)).WithMany()
+                .HasForeignKey("ProductId")
+                .OnDelete(DeleteBehavior.Cascade)
+                .IsRequired();
+            modelBuilder.Entity<InvoiceProduct>()
+                .HasOne(typeof(Stock)).WithMany()
+                .HasForeignKey("StockId");
+            modelBuilder.Entity<OrderProduct>()
+                .HasOne(typeof(Product)).WithMany()
+                .HasForeignKey("ProductId")
+                .OnDelete(DeleteBehavior.Cascade)
+                .IsRequired();
+            modelBuilder.Entity<global::Inventory.Domain.Inventory>()
+                .HasOne(typeof(User)).WithMany()
+                .HasForeignKey("UserId");
         }
 
         public Task BeginTransactionAsync()
@@ -134,7 +189,7 @@
         public virtual DbSet<TransactionType> TransactionTypes { get; set; }
         public virtual DbSet<Transaction> Transactions { get; set; }
         public virtual DbSet<TransactionProduct> TransactionProducts { get; set; }
-        public virtual DbSet<Inventory> Inventories { get; set; }
+        public virtual DbSet<global::Inventory.Domain.Inventory> Inventories { get; set; }
         public virtual DbSet<InventoryProduct> InventoryProducts { get; set; }
         //public virtual DbSet<OrderType> OrderTypes { get; set; }
         public virtual DbSet<Table> Tables { get; set; }

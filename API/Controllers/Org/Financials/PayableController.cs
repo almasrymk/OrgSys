@@ -1,5 +1,4 @@
-using Application.Commands.Org.Financials.Payable.Commands;
-using Domain.Shared;
+using Payables.Application.OpeningBalance.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

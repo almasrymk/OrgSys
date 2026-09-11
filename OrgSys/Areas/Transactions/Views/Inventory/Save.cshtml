@@ -1,4 +1,4 @@
-﻿@model Application.DTOs.InventoryDto
+﻿@model Inventory.Application.InventoryDto
 @using System.Globalization
 @{
     ViewData["Title_Designer"] = "Index";
@@ -248,7 +248,7 @@
                                 <i class="iconsminds-up-1"></i> @Domain.Resource.Title_Designer.Issue @Domain.Resource.Title_Designer.Stock (@Model.AdjustmentOutTransactionCode)
                             </a>
                         }
-                        @if (Model.Id > 0 && !Model.HasAdjustment && Model.Status != Domain.Enums.Status.Cancel)
+                        @if (Model.Id > 0 && !Model.HasAdjustment && Model.Status != OrgSys.SharedKernel.Status.Cancel)
                         {
                             <a href="/Transactions/Inventory/CreateAdjustment?id=@Model.Id&ParentId=@Model.ParentId&TypeId=@Model.TypeId&dir=Save" class="btn btn-primary mr-4 mb-4" title="Create Adjustment">
                                 <i class="iconsminds-add"></i> Create Adjustment

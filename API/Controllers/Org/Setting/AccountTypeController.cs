@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using Application.DTOs;
 using Microsoft.AspNetCore.Mvc;
-using Application.Commands.Org.Setting.AccountType.Queries;
-using Application.Commands.Org.Setting.AccountType.Commands;
+using Accounting.Application.AccountTypes.Queries;
+using Accounting.Application.AccountTypes.Commands;
 
 namespace API.Controllers.Org.Setting
 {

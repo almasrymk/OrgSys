@@ -1,8 +1,7 @@
 ﻿using Application.Commands.Org.Setting.Preference.Queries;
-using Application.Commands.Org.Setting.Shift.Commands;
-using Application.Commands.Org.Setting.Shift.Queries;
-using Application.Interfaces.CQRS;
-using Domain.Shared;
+using Organization.Application.Shifts.Commands;
+using Organization.Application.Shifts.Queries;
+using OrgSys.SharedKernel;
 using Application.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

@@ -30,6 +30,17 @@
     <ProjectReference Include="..\Application\Application.csproj" />
     <ProjectReference Include="..\Domain\Domain.csproj" />
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
+    <ProjectReference Include="..\Modules\MasterData\MasterData.Infrastructure\MasterData.Infrastructure.csproj" />
+    <ProjectReference Include="..\Modules\Organization\Organization.Infrastructure\Organization.Infrastructure.csproj" />
+    <ProjectReference Include="..\Modules\Administration\Administration.Infrastructure\Administration.Infrastructure.csproj" />
+    <ProjectReference Include="..\Modules\Accounting\Accounting.Infrastructure\Accounting.Infrastructure.csproj" />
+    <ProjectReference Include="..\Modules\Treasury\Treasury.Infrastructure\Treasury.Infrastructure.csproj" />
+    <ProjectReference Include="..\Modules\Sales\Sales.Infrastructure\Sales.Infrastructure.csproj" />
+    <ProjectReference Include="..\Modules\Inventory\Inventory.Infrastructure\Inventory.Infrastructure.csproj" />
+    <ProjectReference Include="..\Modules\Purchasing\Purchasing.Infrastructure\Purchasing.Infrastructure.csproj" />
+    <ProjectReference Include="..\Modules\Receivables\Receivables.Infrastructure\Receivables.Infrastructure.csproj" />
+    <ProjectReference Include="..\Modules\Payables\Payables.Infrastructure\Payables.Infrastructure.csproj" />
+    <ProjectReference Include="..\Modules\Reporting\Reporting.Infrastructure\Reporting.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,6 +1,6 @@
 ﻿namespace OrgSys.Areas.Setting.Controllers
 {
-    using Application.Commands.Org.Setting.Product.Commands;
+    using global::Inventory.Application.Products.Commands;
     using AutoMapper;
     using Application.DTOs;
     using Microsoft.AspNetCore.Mvc;
@@ -8,7 +8,6 @@
     using Microsoft.Extensions.Configuration;
     using OrgSys.Controllers;
     using Domain.Enums;
-    using Domain.Shared;
     using Newtonsoft.Json;
     
     using System;

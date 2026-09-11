@@ -1,11 +1,10 @@
 ﻿namespace Application.Commands.Org.Setting.Preference.Commands
 {
-    using Application.Abstraction.Command;
-    using Application.Common.Commands;
-    using Application.Interfaces.CQRS;
+    using OrgSys.SharedKernel;
+    using OrgSys.SharedKernel;
+    using OrgSys.SharedKernel;
     using AutoMapper;
     using Domain.Abstraction;
-    using Domain.Shared;
     using Application.DTOs;
     using System.Linq.Expressions;
 
@@ -15,7 +14,7 @@
     {
         public override Expression<Func<Domain.Entities.Preference, bool>> CreateFilter(DeleteListPreferenceCommand request)
         {
-            return e => request.Ids.Contains(e.Id) && e.Status != Domain.Enums.Status.Deleted && e.Hide != true;
+            return e => request.Ids.Contains(e.Id) && e.Status != OrgSys.SharedKernel.Status.Deleted && e.Hide != true;
         }
     }
 }

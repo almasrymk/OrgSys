@@ -1,7 +1,7 @@
-﻿using Application.Commands.Org.Setting.InvoiceType.Queries;
-using Application.Commands.Org.Setting.PaymentType.Commands;
-using Application.Commands.Org.Setting.PaymentType.Queries;
-using Application.Interfaces.CQRS;
+﻿using Sales.Application.InvoiceTypes.Queries;
+using MasterData.Application.PaymentTypes.Commands;
+using MasterData.Application.PaymentTypes.Queries;
+using OrgSys.SharedKernel;
 using Application.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

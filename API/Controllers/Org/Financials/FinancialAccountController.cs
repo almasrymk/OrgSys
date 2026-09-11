@@ -1,7 +1,6 @@
-using Application.Commands.Org.Setting.FinancialAccount.Commands;
-using Application.Commands.Org.Setting.FinancialAccount.Queries;
+using Treasury.Application.FinancialAccounts.Commands;
+using Treasury.Application.FinancialAccounts.Queries;
 using Application.DTOs;
-using Domain.Shared;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

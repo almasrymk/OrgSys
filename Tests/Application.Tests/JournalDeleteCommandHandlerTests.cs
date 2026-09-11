@@ -1,4 +1,4 @@
-using Application.Commands.Org.Financials.Journal.Commands;
+using Accounting.Application.Journals.Commands;
 using Domain.Abstraction;
 using Domain.Entities;
 using Moq;

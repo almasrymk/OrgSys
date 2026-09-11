@@ -1,6 +1,5 @@
-using Application.Commands.Org.Reports.Warehouse.Queries;
-using Application.Report;
-using Domain.Shared;
+using Reporting.Application.Warehouse.Queries;
+using Reporting.Application;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

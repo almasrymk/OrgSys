@@ -1,6 +1,6 @@
 @using Microsoft.AspNetCore.Mvc.Localization
 @using System.Globalization
-@model Domain.Shared.ResultPagination<Application.DTOs.FinancialDto>
+@model OrgSys.SharedKernel.ResultPagination<Treasury.Application.FinancialDto>
 @using OrgSys
 @{
     Layout = null;
@@ -54,7 +54,7 @@
                 <tbody>
                     @for (int i = 0, x = ((Model.Page - 1) * Model.PageSize) + 1; i < Model.Response.Count; i++, x++)
                     {
-                        <tr style="@(Model.Response[i].Status == Domain.Enums.Status.Cancel ? "color:#a8a7a7;background:repeating-linear-gradient(60deg, transparent, transparent 5px, gainsboro 5px, gainsboro 6px);" : "")">
+                        <tr style="@(Model.Response[i].Status == OrgSys.SharedKernel.Status.Cancel ? "color:#a8a7a7;background:repeating-linear-gradient(60deg, transparent, transparent 5px, gainsboro 5px, gainsboro 6px);" : "")">
                             <td class="text-center align-middle">@x</td>
                             <td class="text-center align-middle" style="width:50px;">
                                 <div class="list-thumbnail  border-0 rounded-circle badge-theme-1 m-0" style="height:40px;width:40px;font-size:17px;text-align:center;padding:9px;">
@@ -73,7 +73,7 @@
                                 <td class="@TextAlign2 align-middle">
                                     @if ("" + Model.Response[i].RefranceTable == "")
                                     {
-                                        @if (Model.Response[i].Status == Domain.Enums.Status.Cancel)
+                                        @if (Model.Response[i].Status == OrgSys.SharedKernel.Status.Cancel)
                                         {
                                             if (AllowRedo)
                                             {
@@ -116,7 +116,7 @@
                                     {
                                         <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"><i class="simple-icon-eye" style="color:green"></i></a>
                                     }
-                                    @if (Model.Response[i].Status != Domain.Enums.Status.Cancel)
+                                    @if (Model.Response[i].Status != OrgSys.SharedKernel.Status.Cancel)
                                     {
                                         @if ((("" + Model.Response[i].RefranceTable) == "" && (AllowEdit || AllowCancel || AllowRedo || AllowDelete)) || ("" + Model.Response[i].RefranceTable) != "")
                                         {
@@ -129,7 +129,7 @@
                             @if (AllowDelete)
                             {
                                 <td class="align-middle @TextAlign2" style="width:30px">
-                                    @if (("" + Model.Response[i].RefranceTable) == "" && Model.Response[i].Status != Domain.Enums.Status.Cancel)
+                                    @if (("" + Model.Response[i].RefranceTable) == "" && Model.Response[i].Status != OrgSys.SharedKernel.Status.Cancel)
                                     {
                                         <label class="custom-control custom-checkbox pt-2">
                                             <input id="chk_@Model.Response[i].Id" type="checkbox" class="custom-control-input chk">
@@ -185,7 +185,7 @@
             @for (int i = 0, x = ((Model.Page - 1) * Model.PageSize) + 1; i < Model.Response.Count; i++, x++)
             {
                 <div class="card d-flex flex-row mb-2">
-                    <div class="d-flex flex-grow-1 min-width-zero" style="border-radius:15px; height:60px; @(Model.Response[i].Status == Domain.Enums.Status.Cancel ? "color:#a8a7a7;background:repeating-linear-gradient(60deg, transparent, transparent 5px, gainsboro 5px, gainsboro 6px);" : "")">
+                    <div class="d-flex flex-grow-1 min-width-zero" style="border-radius:15px; height:60px; @(Model.Response[i].Status == OrgSys.SharedKernel.Status.Cancel ? "color:#a8a7a7;background:repeating-linear-gradient(60deg, transparent, transparent 5px, gainsboro 5px, gainsboro 6px);" : "")">
                         <div class="list-thumbnail  border-0 card-img-left badge-theme-1" style="height:60px; width:60px; font-size:x-large; text-align:center; padding:14px;">
                             <i class="@ViewBag.FinancialTypeIcon"></i>
                         </div>
@@ -214,7 +214,7 @@
                             <div class="w-20 @TextAlign2">
                                 @if ("" + Model.Response[i].RefranceTable == "")
                                 {
-                                    @if (Model.Response[i].Status == Domain.Enums.Status.Cancel)
+                                    @if (Model.Response[i].Status == OrgSys.SharedKernel.Status.Cancel)
                                     {
                                         if (AllowRedo)
                                         {
@@ -259,7 +259,7 @@
                                 else
                                 {
                                     <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="simple-icon-eye" style="color:green"></i> </a>
-                                    @if (Model.Response[i].Status != Domain.Enums.Status.Cancel)
+                                    @if (Model.Response[i].Status != OrgSys.SharedKernel.Status.Cancel)
                                     {
                                         <span>&nbsp; | &nbsp;</span>
                                         <a href="/@ViewBag.area/@ViewBag.PageTitle/Print?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.Page" target="_blank"> <i class="fa fa-print text-info"></i> </a>
@@ -272,7 +272,7 @@
                             {
                                 @if (Model.Response[i].RefranceTable == "")
                                 {
-                                    @if (Model.Response[i].Status != Domain.Enums.Status.Cancel)
+                                    @if (Model.Response[i].Status != OrgSys.SharedKernel.Status.Cancel)
                                     {
                                         <label class="custom-control custom-checkbox pt-3">
                                             <input id="chk_@Model.Response[i].Id" type="checkbox" class="custom-control-input chk">
@@ -292,4 +292,4 @@
     </div>
 }
 
-@Html.Partial("ToPagedList", new Domain.Shared.Pagination(Model.Page, Model.PageSize, Model.PageCount))
+@Html.Partial("ToPagedList", new OrgSys.SharedKernel.Pagination(Model.Page, Model.PageSize, Model.PageCount))

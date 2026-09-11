@@ -1,7 +1,6 @@
-using Application.Commands.Org.Setting.FiscalYear.Commands;
-using Application.Commands.Org.Setting.FiscalYear.Queries;
-using Application.Interfaces.CQRS;
-using Domain.Shared;
+using Accounting.Application.FiscalYears.Commands;
+using Accounting.Application.FiscalYears.Queries;
+using OrgSys.SharedKernel;
 using Application.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

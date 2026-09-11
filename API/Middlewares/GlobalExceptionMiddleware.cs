@@ -1,5 +1,4 @@
-﻿using Application.Validators;
-using Domain.Shared;
+﻿using OrgSys.SharedKernel;
 using FluentValidation;
 using System.Linq;
 using System.Net;

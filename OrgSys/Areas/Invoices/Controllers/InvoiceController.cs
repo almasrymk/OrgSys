@@ -1,7 +1,6 @@
-﻿using Application.Commands.Org.Invoices.Invoice.Commands;
+﻿using Sales.Application.Invoices.Commands;
 using AutoMapper;
 using Domain.Enums;
-using Domain.Shared;
 using Application.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -200,7 +199,7 @@ namespace OrgSys.Areas.Invoices.Controllers
             var response = await ApiMethod(ApiMethodType.Put, $"Cancel?Id={id}");
             response.EnsureSuccessStatusCode();
             var data = await response.Content.ReadAsStringAsync();
-            var res = JsonConvert.DeserializeObject<Domain.Shared.Result>(data);
+            var res = JsonConvert.DeserializeObject<OrgSys.SharedKernel.Result>(data);
 
             return Redirect("/Invoices/Invoice/Index?ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" + (res.StatusCode == HttpStatusCode.OK ? ResultStatus.success : ResultStatus.error) + "&MsgError=Success");
         }
@@ -210,7 +209,7 @@ namespace OrgSys.Areas.Invoices.Controllers
             var response = await ApiMethod(ApiMethodType.Put, $"Redo?Id={id}");
             response.EnsureSuccessStatusCode();
             var data = await response.Content.ReadAsStringAsync();
-            var res = JsonConvert.DeserializeObject<Domain.Shared.Result>(data);
+            var res = JsonConvert.DeserializeObject<OrgSys.SharedKernel.Result>(data);
 
             return Redirect("/Invoices/Invoice/Index?ParentId=" + ParentId + "&TypeId=" + TypeId + "&page=" + page + "&status=" + (res.StatusCode == HttpStatusCode.OK ? ResultStatus.success : ResultStatus.error) + "&MsgError=Success");
         }
