@@ -7,7 +7,7 @@
     using System.Linq.Expressions;
     using static System.Net.WebRequestMethods;
 
-    public class Repository<TEntity> : IRepository<TEntity> where TEntity : Domain.Entities.BaseModel //BaseEntity
+    public class Repository<TEntity> : IRepository<TEntity> where TEntity : OrgSys.SharedKernel.BaseModel //BaseEntity
     {
         private readonly IOrgContext dbContext;
        
@@ -45,7 +45,7 @@
             {
                 foreach (var Ob in ObList)
                 {
-                    Ob.Status = Domain.Enums.Status.Deleted;
+                    Ob.Status = OrgSys.SharedKernel.Status.Deleted;
                     dbEntity.Entry(dbEntity.Find(Ob.Id)!).CurrentValues.SetValues(Ob);
                 }
                 return true;
@@ -82,11 +82,11 @@
 
             if (orderBy != null)
             {
-                return await orderBy(query.Where(e => e.Status != Domain.Enums.Status.Deleted && e.Hide != true)).AsQueryable().ToListAsync();
+                return await orderBy(query.Where(e => e.Status != OrgSys.SharedKernel.Status.Deleted && e.Hide != true)).AsQueryable().ToListAsync();
             }
             else
             {
-                return await query.Where(e => e.Status != Domain.Enums.Status.Deleted && e.Hide != true).AsQueryable().ToListAsync();
+                return await query.Where(e => e.Status != OrgSys.SharedKernel.Status.Deleted && e.Hide != true).AsQueryable().ToListAsync();
             }
         }
 
@@ -100,11 +100,11 @@
 
             if (orderBy != null)
             {
-                return await orderBy(query.Where(e => e.Status != Domain.Enums.Status.Deleted && e.Hide != true)).AsQueryable().Skip((Page - 1) * PageSize).Take(PageSize).ToListAsync();
+                return await orderBy(query.Where(e => e.Status != OrgSys.SharedKernel.Status.Deleted && e.Hide != true)).AsQueryable().Skip((Page - 1) * PageSize).Take(PageSize).ToListAsync();
             }
             else
             {
-                return await query.Where(e => e.Status != Domain.Enums.Status.Deleted && e.Hide != true).AsQueryable().Skip((Page - 1) * PageSize).Take(PageSize).ToListAsync();
+                return await query.Where(e => e.Status != OrgSys.SharedKernel.Status.Deleted && e.Hide != true).AsQueryable().Skip((Page - 1) * PageSize).Take(PageSize).ToListAsync();
             }
         }
 
@@ -112,14 +112,14 @@
         {
             var query = dbEntity.Where(Filter).AsQueryable();
 
-            return await query.Where(e => e.Status != Domain.Enums.Status.Deleted && e.Hide != true).AsQueryable().ToListAsync();
+            return await query.Where(e => e.Status != OrgSys.SharedKernel.Status.Deleted && e.Hide != true).AsQueryable().ToListAsync();
         }
 
         public virtual async ValueTask<IEnumerable<TEntity>?> GetListByFilterAsync(Expression<Func<TEntity, bool>> Filter, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy)
         {
             var query = dbEntity.Where(Filter).AsQueryable();
 
-            return await query.Where(e => e.Status != Domain.Enums.Status.Deleted && e.Hide != true).AsQueryable().ToListAsync();
+            return await query.Where(e => e.Status != OrgSys.SharedKernel.Status.Deleted && e.Hide != true).AsQueryable().ToListAsync();
         }
 
         public virtual async ValueTask<IEnumerable<TEntity>?> GetListByFilterAsync(string includeProperties)
@@ -130,7 +130,7 @@
                 query = query.Include(includeProperty);
             }
 
-            return await query.Where(e => e.Status != Domain.Enums.Status.Deleted && e.Hide != true).AsQueryable().ToListAsync();
+            return await query.Where(e => e.Status != OrgSys.SharedKernel.Status.Deleted && e.Hide != true).AsQueryable().ToListAsync();
         }
 
         public virtual async ValueTask<IEnumerable<TEntity>?> GetListByFilterAsync(Expression<Func<TEntity, bool>> Filter, string includeProperties)
@@ -141,7 +141,7 @@
                 query = query.Include(includeProperty);
             }
 
-            return await query.Where(e => e.Status != Domain.Enums.Status.Deleted && e.Hide != true).AsQueryable().ToListAsync();
+            return await query.Where(e => e.Status != OrgSys.SharedKernel.Status.Deleted && e.Hide != true).AsQueryable().ToListAsync();
         }
 
         public virtual async ValueTask<SizeAwarePaginationResult<TEntity>?> GetPaginationByFilterAsync(Expression<Func<TEntity, bool>> Filter, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy , string includeProperties , int Page , int PageSize)
@@ -154,11 +154,11 @@
 
             if (orderBy != null)
             {
-                return await orderBy(query.Where(e => e.Status != Domain.Enums.Status.Deleted  && e.Hide != true)).AsQueryable().PaginateAsync(Page, PageSize);
+                return await orderBy(query.Where(e => e.Status != OrgSys.SharedKernel.Status.Deleted  && e.Hide != true)).AsQueryable().PaginateAsync(Page, PageSize);
             }
             else
             {
-                return await query.Where(e => e.Status != Domain.Enums.Status.Deleted  && e.Hide != true).AsQueryable().PaginateAsync(Page, PageSize);
+                return await query.Where(e => e.Status != OrgSys.SharedKernel.Status.Deleted  && e.Hide != true).AsQueryable().PaginateAsync(Page, PageSize);
             }
         }
 

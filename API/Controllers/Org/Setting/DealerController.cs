@@ -1,8 +1,7 @@
-﻿using Application.Commands.Org.Dealers.Dealer.Queries;
-using Application.Commands.Org.Setting.Dealer.Commands;
-using Application.Commands.Org.Setting.Dealer.Queries;
+﻿using Sales.Application.Dealers.Queries;
+using Sales.Application.Dealers.Commands;
+using Sales.Application.Dealers.Queries;
 using Application.DTOs;
-using Domain.Shared;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

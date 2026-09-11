@@ -1,5 +1,5 @@
 ﻿@using System.Globalization
-@model Domain.Shared.ResultPagination<Application.DTOs.StockDto>
+@model OrgSys.SharedKernel.ResultPagination<Inventory.Application.StockDto>
 @using OrgSys
 @{
     Layout = null;
@@ -50,7 +50,7 @@
                 <tbody>
                     @for (int i = 0, x = ((Model.Page - 1) * Model.PageSize) + 1; i < Model.Response.Count; i++, x++)
                     {
-                        <tr style="@(Model.Response[i].Status == Domain.Enums.Status.Cancel ? "color:#a8a7a7;background:repeating-linear-gradient(60deg, transparent, transparent 5px, gainsboro 5px, gainsboro 6px);" : "")">
+                        <tr style="@(Model.Response[i].Status == OrgSys.SharedKernel.Status.Cancel ? "color:#a8a7a7;background:repeating-linear-gradient(60deg, transparent, transparent 5px, gainsboro 5px, gainsboro 6px);" : "")">
                             <td class="text-center align-middle" style="width:50px;">
                                 <p class="list-item-heading">@x</p>
                             </td>
@@ -87,7 +87,7 @@
                             @if (AllowDelete)
                             {
                                 <td class="align-middle @TextAlign2" style="width:30px">
-                                    @if (Model.Response[i].Status != Domain.Enums.Status.Cancel)
+                                    @if (Model.Response[i].Status != OrgSys.SharedKernel.Status.Cancel)
                                     {
                                         <label class="custom-control custom-checkbox pt-2">
                                             <input id="chk_@Model.Response[i].Id" type="checkbox" class="custom-control-input chk">
@@ -131,7 +131,7 @@
             @for (int i = 0, x = ((Model.Page - 1) * Model.PageSize) + 1; i < Model.Response.Count; i++, x++)
             {
                 <div class="card d-flex flex-row mb-2">
-                    <div class="d-flex flex-grow-1 min-width-zero" style="border-radius:15px; height:60px; @(Model.Response[i].Status == Domain.Enums.Status.Cancel ? "color:#a8a7a7;background:repeating-linear-gradient(60deg, transparent, transparent 5px, gainsboro 5px, gainsboro 6px);" : "")">
+                    <div class="d-flex flex-grow-1 min-width-zero" style="border-radius:15px; height:60px; @(Model.Response[i].Status == OrgSys.SharedKernel.Status.Cancel ? "color:#a8a7a7;background:repeating-linear-gradient(60deg, transparent, transparent 5px, gainsboro 5px, gainsboro 6px);" : "")">
                         <div class="list-thumbnail  border-0 card-img-left badge-theme-1" style="height:60px; width:60px; font-size:x-large; text-align:center; padding:14px;">
                             <i class="simple-icon-layers"></i>
                         </div>
@@ -164,7 +164,7 @@
                         <div style="width:30px;">
                             @if (AllowDelete)
                             {
-                                @if (Model.Response[i].Status != Domain.Enums.Status.Cancel)
+                                @if (Model.Response[i].Status != OrgSys.SharedKernel.Status.Cancel)
                                 {
                                     <label class="custom-control custom-checkbox pt-3">
                                         <input id="chk_@Model.Response[i].Id" type="checkbox" class="custom-control-input chk">
@@ -182,4 +182,4 @@
     </div>
 }
 
-@await Html.PartialAsync("ToPagedList", new Domain.Shared.Pagination(Model.Page, Model.PageSize, Model.PageCount))
+@await Html.PartialAsync("ToPagedList", new OrgSys.SharedKernel.Pagination(Model.Page, Model.PageSize, Model.PageCount))

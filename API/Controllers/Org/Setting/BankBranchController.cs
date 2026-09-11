@@ -1,8 +1,7 @@
 ﻿using Application.Commands.Org.Setting.Preference.Queries;
-using Application.Commands.Org.Setting.BankBranch.Commands;
-using Application.Commands.Org.Setting.BankBranch.Queries;
-using Application.Interfaces.CQRS;
-using Domain.Shared;
+using Treasury.Application.BankBranches.Commands;
+using Treasury.Application.BankBranches.Queries;
+using OrgSys.SharedKernel;
 using Application.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

@@ -1,4 +1,4 @@
-using Application.Commands.Org.Financials.Journal.Commands;
+using Accounting.Application.Journals.Commands;
 using AutoMapper;
 using Domain.Abstraction;
 using Domain.Entities;
@@ -16,7 +16,7 @@ public class JournalRedoCommandHandlerTests
     {
         var services = new ServiceCollection();
         services.AddLogging();
-        services.AddAutoMapper(cfg => cfg.AddProfile<global::MappingProfile>());
+        services.AddAutoMapper(cfg => { cfg.AddProfile<global::MappingProfile>(); cfg.AddProfile<Accounting.Application.MappingProfile>(); });
         return services.BuildServiceProvider().GetRequiredService<IMapper>();
     }
 

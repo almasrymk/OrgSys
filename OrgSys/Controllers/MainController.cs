@@ -1,10 +1,9 @@
 ﻿namespace OrgSys.Controllers
 {
-    using Application.Interfaces.CQRS;
+    using OrgSys.SharedKernel;
     using AutoMapper;
     using Domain.Entities;
     using Domain.Enums;
-    using Domain.Shared; 
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Filters;
@@ -24,8 +23,8 @@
 
     [Authorize]
     public class MainController<TDto, TCreate, TUpdate>(IConfiguration configuration, IMapper mapper) : Controller
-        where TCreate : ICreateCommand<Domain.Shared.Result>
-        where TUpdate : IUpdateCommand<Domain.Shared.Result>
+        where TCreate : ICreateCommand<OrgSys.SharedKernel.Result>
+        where TUpdate : IUpdateCommand<OrgSys.SharedKernel.Result>
         where TDto : BaseModel
     {
         string AreaName = "";
@@ -167,7 +166,7 @@
         public virtual async Task<ActionResult> Save( TDto ob)
         {
             //return null;
-            Domain.Shared.Result res = null;
+            OrgSys.SharedKernel.Result res = null;
             if (ModelState.IsValid)
             {
                 ob = await FixData(ob);
@@ -184,7 +183,7 @@
                 }
 
                 var data = await response.Content.ReadAsStringAsync();
-                res = JsonConvert.DeserializeObject<Domain.Shared.Result>(data);
+                res = JsonConvert.DeserializeObject<OrgSys.SharedKernel.Result>(data);
 
                 // The API's Create/Update actions return a plain Result object rather than an
                 // IActionResult, so ASP.NET Core always wraps it as a transport-level HTTP 200 —
@@ -264,14 +263,14 @@
                     var response = await ApiMethod(ApiMethodType.Delete, $"DeleteList?{query}");
 
                     if (response.IsSuccessStatusCode)
-                        return new Domain.Shared.Result(HttpStatusCode.OK , null);
+                        return new OrgSys.SharedKernel.Result(HttpStatusCode.OK , null);
                 }
             }
             catch (Exception ex)
             {
-                return new Domain.Shared.Result(HttpStatusCode.InternalServerError, new List<Error> { new Error (ex.Message , "")  } );
+                return new OrgSys.SharedKernel.Result(HttpStatusCode.InternalServerError, new List<Error> { new Error (ex.Message , "")  } );
             }
-            return new Domain.Shared.Result(HttpStatusCode.BadRequest, new List<Error> { new Error("Error", "") } );
+            return new OrgSys.SharedKernel.Result(HttpStatusCode.BadRequest, new List<Error> { new Error("Error", "") } );
         }
 
         public virtual async Task LoadViewBag(TDto model)

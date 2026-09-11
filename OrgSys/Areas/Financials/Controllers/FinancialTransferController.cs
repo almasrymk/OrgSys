@@ -1,5 +1,4 @@
 using Application.DTOs;
-using Domain.Shared;
 using Domain.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

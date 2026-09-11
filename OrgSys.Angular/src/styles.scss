@@ -1,14 +1,38 @@
-/* Global styles: Bootstrap 4 utility/component classes are reused verbatim from OrgSys.App's
-   Razor views (card, btn, breadcrumb, form-group, custom-control, table ...) so migrated
-   screens keep the same class names and visual structure as their MVC counterparts. */
+/* Global styles: reproduces OrgSys.App's Dore-template <head> load order (see
+   OrgSys/Views/Shared/_Layout.cshtml) so migrated screens keep the same visual language —
+   Bootstrap 4 classes, the Dore "bluenavy" skin, and the iconsminds/simple-line-icons/Font
+   Awesome icon fonts the MVC menus and screens use. Bootstrap Icons stays available for any
+   screen not yet converted to Dore's icon classes (see follow-up in the migration report). */
 @import "bootstrap/dist/css/bootstrap.min.css";
+@import "assets/dore/font/iconsmind-s/css/iconsminds.css";
+@import "assets/dore/font/simple-line-icons/css/simple-line-icons.css";
+@import "assets/dore/fontawesome/css/all.min.css";
+@import "assets/dore/css/dore.light.bluenavy.min.css";
+@import "assets/dore/css/main.css";
 @import "bootstrap-icons/font/bootstrap-icons.css";
 
+/* The following mirrors the inline <style> blocks in _Layout.cshtml verbatim. */
 html, body {
   height: 100%;
 }
 
 body {
-  margin: 0;
-  background-color: #f5f5f7;
+  font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif !important;
+  font-size: 16px !important;
+}
+
+.page-link {
+  font-size: 12px !important;
+}
+
+.page-item {
+  padding: 5px;
+}
+
+.card, .navbar, .menu .sub-menu {
+  box-shadow: 0 1px 10px rgb(0 0 0 / 2%), 0 1px 3px rgb(0 0 0 / 2%) !important;
+}
+
+.menu .main-menu ul li a {
+  height: 80px !important;
 }

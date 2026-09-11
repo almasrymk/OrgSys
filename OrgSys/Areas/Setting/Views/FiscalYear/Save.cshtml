@@ -1,4 +1,4 @@
-@model Application.DTOs.FiscalYearDto
+@model Accounting.Application.FiscalYearDto
 @using System.Globalization
 @using OrgSys
 @{
@@ -6,7 +6,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var IsRightToLeft = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft;
     var formateDate = IsRightToLeft ? "{0:yyyy/MM/dd}" : "{0:dd/MM/yyyy}";
-    var periodStatusList = Html.GetEnumSelectList<Domain.Enums.FiscalPeriodStatus>();
+    var periodStatusList = Html.GetEnumSelectList<Accounting.Domain.FiscalPeriodStatus>();
 }
 
 <div id="HPage" class="container-fluid">
@@ -83,7 +83,7 @@
                                     <div class="form-row">
                                         <div class="form-group col-md-4">
                                             <label>@Domain.Resource.Title_Designer.Status</label>
-                                            @Html.DropDownListFor(model => model.FiscalYearStatus, Html.GetEnumSelectList<Domain.Enums.FiscalYearStatus>(), new { @class = "form-control" })
+                                            @Html.DropDownListFor(model => model.FiscalYearStatus, Html.GetEnumSelectList<Accounting.Domain.FiscalYearStatus>(), new { @class = "form-control" })
                                             @Html.ValidationMessageFor(model => model.FiscalYearStatus, "", new { @class = "text-danger" })
                                         </div>
                                         <div class="form-group col-md-4">

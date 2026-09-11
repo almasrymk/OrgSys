@@ -1,61 +1,32 @@
-﻿using AutoMapper;
+using AutoMapper;
 
 public partial class MappingProfile : Profile
 {
     public MappingProfile()
     {
         // 1- Data
-        // 1-1- Organization
-        BranchMappingProfile();
-        StockMappingProfile();
+        // 1-1- Organization: Organization.Application.MappingProfile (Branch, Shift, Table)
+        // Stock, Product, ProductUnit, Property, Transaction, TransactionType, Inventory ->
+        // Inventory.Application.MappingProfile
 
-        // 1-2- Security
-        RoleMappingProfile();
-        UserMappingProfile();
+        // 1-2- Security: Administration.Application.MappingProfile (Role, User)
 
-        // 1-3- Products
-        ProductUnitMappingProfile();
-        ProductMappingProfile();
-        ClassificationMappingProfile();
-        UnitMappingProfile();
+        // 1-3- Products: Classification, Unit -> MasterData.Application.MappingProfile
 
-        // 1-4- Dealers
-        DealerGroupMappingProfile();
-        DealerMappingProfile();
+        // 1-4- Dealers, Invoices: Sales.Application.MappingProfile (DealerGroup, Dealer,
+        // InvoiceType, Invoice)
 
-        // 1-5- Financial
-        AccountTypeMappingProfile();
-        AccountMappingProfile();
-        CashBoxMappingProfile();
-        BankBranchMappingProfile();
-        BankMappingProfile();
-        FinancialAccountMappingProfile();
-        CurrencyMappingProfile();
-        FiscalPeriodMappingProfile();
-        FiscalYearMappingProfile();
+        // 1-5- Financial: AccountType, Account, FiscalPeriod, FiscalYear -> Accounting.Application.MappingProfile
+        // CashBox, BankBranch, Bank, FinancialAccount -> Treasury.Application.MappingProfile
+        // Currency: MasterData.Application.MappingProfile
 
-        // 1-6- Location
-        CountryMappingProfile();
-        CityMappingProfile();
-        DistrictMappingProfile();
+        // 1-6- Location: MasterData.Application.MappingProfile (Country, City, District)
 
-        // 2-Invoices
-        InvoiceTypeMappingProfile();
-        InvoiceMappingProfile();
-
-        // 3-Transactions
-        TransactionMappingProfile();
-        InventoryMappingProfile();
-
-        // 4-Financials
-        JournalMappingProfile();
-        FinancialMappingProfile();
+        // 4-Financials: Journal -> Accounting.Application.MappingProfile; Financial -> Treasury.Application.MappingProfile
 
         PreferenceMappingProfile();
 
-        PaymentTypeMappingProfile();
-        TransactionTypeMappingProfile();
-        FinancialTypeMappingProfile();
-        ReferenceTypeMappingProfile();
+        // PaymentType, ReferenceType: MasterData.Application.MappingProfile
+        // FinancialType: Treasury.Application.MappingProfile
     }
 }

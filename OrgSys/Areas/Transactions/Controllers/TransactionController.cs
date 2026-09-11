@@ -1,9 +1,8 @@
-﻿using Application.Commands.Org.Setting.Product.Commands;
-using Application.Commands.Org.Transactions.Transaction.Commands;
-using Application.Commands.Org.Transactions.TransactionType.Commands;
+﻿using Inventory.Application.Products.Commands;
+using Inventory.Application.Transactions.Commands;
+using Inventory.Application.TransactionTypes.Commands;
 using AutoMapper;
 using Domain.Enums;
-using Domain.Shared;
 using Application.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;

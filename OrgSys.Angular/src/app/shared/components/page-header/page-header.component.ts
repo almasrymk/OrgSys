@@ -17,4 +17,7 @@ export interface Breadcrumb {
 export class PageHeaderComponent {
   title = input.required<string>();
   breadcrumbs = input<Breadcrumb[]>([]);
+  /** Dore icon class (e.g. 'iconsminds-coins'), matching the icon shown next to the <h1> on the
+   * equivalent OrgSys.App view (see ViewBag.FinancialTypeIcon in Areas/Financials/Views). */
+  icon = input<string>();
 }

@@ -4,7 +4,7 @@ using Domain.Abstraction;
 using Domain.Entities;
 using Microsoft.Extensions.DependencyInjection;
 
-internal sealed class TransactionJournalIntegration(IServiceProvider provider)
+public sealed class TransactionJournalIntegration(IServiceProvider provider)
 {
     private const string ReferenceTable = "transaction";
 
@@ -125,7 +125,7 @@ internal sealed class TransactionJournalIntegration(IServiceProvider provider)
             await DeleteAsync(journal, journalRepository, journalItemRepository);
     }
 
-    public async Task SetStatusByTransactionIdAsync(long transactionId, Domain.Enums.Status status)
+    public async Task SetStatusByTransactionIdAsync(long transactionId, OrgSys.SharedKernel.Status status)
     {
         var journalRepository = provider.GetRequiredService<IRepository<Journal>>();
         var journals = await journalRepository.GetListByFilterAsync(

@@ -1,8 +1,7 @@
-﻿using Application.Commands.Org.Setting.Dealer.Queries;
-using Application.Commands.Org.Setting.InvoiceType.Commands;
-using Application.Commands.Org.Setting.InvoiceType.Queries;
-using Application.Interfaces.CQRS;
-using Domain.Shared;
+﻿using Sales.Application.Dealers.Queries;
+using Sales.Application.InvoiceTypes.Commands;
+using Sales.Application.InvoiceTypes.Queries;
+using OrgSys.SharedKernel;
 using Application.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

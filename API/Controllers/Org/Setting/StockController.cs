@@ -1,8 +1,7 @@
 ﻿using Application.Commands.Org.Setting.Preference.Queries;
-using Application.Commands.Org.Setting.Stock.Commands;
-using Application.Commands.Org.Setting.Stock.Queries;
-using Application.Interfaces.CQRS;
-using Domain.Shared;
+using Inventory.Application.Stocks.Commands;
+using Inventory.Application.Stocks.Queries;
+using OrgSys.SharedKernel;
 using Application.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

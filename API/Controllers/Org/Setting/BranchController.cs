@@ -1,8 +1,7 @@
 ﻿using Application.Commands.Org.Setting.Preference.Queries;
-using Application.Commands.Org.Setting.Branch.Commands;
-using Application.Commands.Org.Setting.Branch.Queries;
-using Application.Interfaces.CQRS;
-using Domain.Shared;
+using Organization.Application.Branches.Commands;
+using Organization.Application.Branches.Queries;
+using OrgSys.SharedKernel;
 using Application.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

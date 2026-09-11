@@ -1,5 +1,4 @@
-﻿using Application.Interfaces.CQRS;
-using Domain.Shared;
+﻿using OrgSys.SharedKernel;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

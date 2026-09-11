@@ -7,22 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Contracts\**" />
-    <Compile Remove="Features\**" />
-    <Compile Remove="Profiles\**" />
-    <EmbeddedResource Remove="Contracts\**" />
-    <EmbeddedResource Remove="Features\**" />
-    <EmbeddedResource Remove="Profiles\**" />
-    <None Remove="Contracts\**" />
-    <None Remove="Features\**" />
-    <None Remove="Profiles\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="Validators\ValidationFilter.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="16.1.1" />
     <PackageReference Include="FluentValidation" Version="12.1.1" />
     <PackageReference Include="MediatR" Version="14.1.0" />
@@ -30,6 +14,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Domain\Domain.csproj" />
+    <ProjectReference Include="..\Modules\MasterData\MasterData.Application\MasterData.Application.csproj" />
+    <ProjectReference Include="..\Modules\Organization\Organization.Application\Organization.Application.csproj" />
+    <ProjectReference Include="..\Modules\Administration\Administration.Application\Administration.Application.csproj" />
+    <ProjectReference Include="..\Modules\Accounting\Accounting.Application\Accounting.Application.csproj" />
+    <ProjectReference Include="..\Modules\Treasury\Treasury.Application\Treasury.Application.csproj" />
+    <ProjectReference Include="..\Modules\Sales\Sales.Domain\Sales.Domain.csproj" />
+    <ProjectReference Include="..\Modules\Inventory\Inventory.Domain\Inventory.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>

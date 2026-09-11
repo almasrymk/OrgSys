@@ -11,11 +11,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Aggregate\" />
-    <Folder Include="Interfaces\" />
-    <Folder Include="Events\" />
-    <Folder Include="Exceptions\" />
-    <Folder Include="ValueObjects\" />
+    <ProjectReference Include="..\BuildingBlocks\OrgSys.SharedKernel\OrgSys.SharedKernel.csproj" />
+    <ProjectReference Include="..\Modules\MasterData\MasterData.Domain\MasterData.Domain.csproj" />
+    <ProjectReference Include="..\Modules\Organization\Organization.Domain\Organization.Domain.csproj" />
+    <ProjectReference Include="..\Modules\Administration\Administration.Domain\Administration.Domain.csproj" />
+    <ProjectReference Include="..\Modules\Accounting\Accounting.Domain\Accounting.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>

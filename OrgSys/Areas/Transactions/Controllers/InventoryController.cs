@@ -1,7 +1,6 @@
-﻿using Application.Commands.Org.Transactions.Inventory.Commands;
+﻿using Inventory.Application.Inventories.Commands;
 using AutoMapper;
 using Domain.Enums;
-using Domain.Shared;
 using Application.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;

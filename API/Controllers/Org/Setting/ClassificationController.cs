@@ -1,8 +1,7 @@
 ﻿using Application.Commands.Org.Setting.Preference.Queries;
-using Application.Commands.Org.Setting.Classification.Commands;
-using Application.Commands.Org.Setting.Classification.Queries;
-using Application.Interfaces.CQRS;
-using Domain.Shared;
+using MasterData.Application.Classifications.Commands;
+using MasterData.Application.Classifications.Queries;
+using OrgSys.SharedKernel;
 using Application.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

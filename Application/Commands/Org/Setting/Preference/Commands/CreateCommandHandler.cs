@@ -1,11 +1,10 @@
 ﻿namespace Application.Commands.Org.Setting.Preference.Commands
 {
-    using Application.Abstraction.Command;
-    using Application.Common.Commands;
-    using Application.Interfaces.CQRS;
+    using OrgSys.SharedKernel;
+    using OrgSys.SharedKernel;
+    using OrgSys.SharedKernel;
     using AutoMapper;
     using Domain.Abstraction;
-    using Domain.Shared;
     using Application.DTOs;
 
     public sealed class CreatePreferenceCommand : Application.DTOs.PreferenceDto, ICommand , ICreateCommand<Result>;

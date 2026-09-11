@@ -1,0 +1,24 @@
+﻿namespace Inventory.Domain
+{
+    [Table("ProductUnit")]
+    public class ProductUnit : BaseModel
+    {
+        //public ProductUnit() { }
+
+        [ForeignKey("Product")]
+        public virtual long ProductId { get; set; }
+
+        public virtual Product? Product { get; set; }
+
+        [ForeignKey("Unit")]
+        public virtual long UnitId { get; set; }
+
+        public virtual Unit? Unit { get; set; }
+
+        [Required]
+        [Column(TypeName = "decimal(18,2)")]
+        public virtual decimal Rate { get; set; }
+
+        public virtual bool DefaultUnit { get; set; }
+    }
+}

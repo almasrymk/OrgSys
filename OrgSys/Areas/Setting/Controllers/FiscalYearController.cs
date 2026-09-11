@@ -1,6 +1,6 @@
 namespace OrgSys.Areas.Setting.Controllers
 {
-    using Application.Commands.Org.Setting.FiscalYear.Commands;
+    using Accounting.Application.FiscalYears.Commands;
     using AutoMapper;
     using Application.DTOs;
     using Microsoft.AspNetCore.Mvc;

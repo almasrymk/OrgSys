@@ -1,6 +1,5 @@
-using Application.Commands.Org.Financials.FinancialTransfer.Commands;
+using Treasury.Application.FinancialTransfers.Commands;
 using Application.DTOs;
-using Domain.Shared;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

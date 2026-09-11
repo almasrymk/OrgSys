@@ -1,7 +1,43 @@
-<nav class="navbar navbar-light bg-white shadow-sm px-3 d-flex justify-content-between">
-  <span class="navbar-brand mb-0 h1">OrgSys</span>
-  <div class="d-flex align-items-center" *ngIf="auth.currentUser() as user">
-    <span class="mr-3">{{ user.name }} <small class="text-muted">({{ user.roleName }})</small></span>
-    <button type="button" class="btn btn-outline-secondary btn-sm" (click)="logout()">Logout</button>
+<nav class="navbar fixed-top" style="padding:0px;margin:0px;">
+  <div class="d-flex align-items-center navbar-left" style="padding:0px;margin:0px;">
+    <a href="#" class="menu-button d-none d-md-block" (click)="layout.toggleDesktopMenu(); $event.preventDefault()">
+      <svg class="main" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 9 17">
+        <rect x="0.48" y="0.5" width="7" height="1" />
+        <rect x="0.48" y="7.5" width="7" height="1" />
+        <rect x="0.48" y="15.5" width="7" height="1" />
+      </svg>
+      <svg class="sub" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 17">
+        <rect x="1.56" y="0.5" width="16" height="1" />
+        <rect x="1.56" y="7.5" width="16" height="1" />
+        <rect x="1.56" y="15.5" width="16" height="1" />
+      </svg>
+    </a>
+
+    <a href="#" class="menu-button-mobile d-xs-block d-sm-block d-md-none" (click)="layout.toggleMobileMenu(); $event.preventDefault()">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 17">
+        <rect x="0.5" y="0.5" width="25" height="1" />
+        <rect x="0.5" y="7.5" width="25" height="1" />
+        <rect x="0.5" y="15.5" width="25" height="1" />
+      </svg>
+    </a>
+
+    <div style="padding:0px;margin:0px;">
+      <img style="width:90px !important;padding:0px;margin:0px;" src="assets/dore/logos/logos22.svg" alt="OrgSys" />
+    </div>
+  </div>
+
+  <div class="navbar-right" *ngIf="auth.currentUser() as user">
+    <div class="user header-icons d-inline-block align-middle ml-0 mr-0 pl-0 pr-0">
+      <a class="header-icon btn btn-empty d-none d-sm-inline-block" style="vertical-align:middle;">
+        <img class="rounded-circle badge-theme-1 m-2" style="height:35px;width:35px;" [src]="user.imgPath || defaultAvatar" alt="" />
+        <span class="name" style="font-size:15px;">{{ user.name }}</span>
+      </a>
+    </div>
+    <span>|</span>
+    <div class="header-icons d-inline-block align-middle">
+      <button type="button" class="header-icon btn btn-empty d-none d-sm-inline-block" (click)="logout()">
+        <i class="fa fa-power-off"></i>
+      </button>
+    </div>
   </div>
 </nav>

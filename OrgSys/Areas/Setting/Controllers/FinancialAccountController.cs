@@ -1,9 +1,8 @@
 #nullable enable annotations
-using Application.Commands.Org.Setting.FinancialAccount.Commands;
+using Treasury.Application.FinancialAccounts.Commands;
 using Application.DTOs;
 using AutoMapper;
 using Domain.Enums;
-using Domain.Shared;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;

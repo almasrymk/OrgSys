@@ -1,6 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
 @using System.Globalization
-@model Domain.Shared.ResultPagination<Application.DTOs.TransactionDto>
+@model OrgSys.SharedKernel.ResultPagination<Inventory.Application.TransactionDto>
 @using OrgSys
 @{
     Layout = null;
@@ -18,7 +18,7 @@
     var AllowCancel = false;
     var AllowRedo = false;
     var AllowInvoice = false;
-    List<Application.DTOs.InvoiceTypeDto> InvoicesTypes = ViewBag.InvoicesTypes ?? new List<Application.DTOs.InvoiceTypeDto>();
+    List<Sales.Application.InvoiceTypeDto> InvoicesTypes = ViewBag.InvoicesTypes ?? new List<Sales.Application.InvoiceTypeDto>();
     Func<long?, string> InvoiceResourceName = typeId => typeId switch
     {
         1 => $"{Domain.Resource.Title_Designer.Sales} {Domain.Resource.Title_Designer.Invoice}",
@@ -138,7 +138,7 @@
                     @for (int i = 0, x = ((Model.Page - 1) * Model.PageSize) + 1; i < Model.Response.Count; i++, x++)
                     {
 
-                        <tr style="@(@Model.Response[i].Status == Domain.Enums.Status.Cancel ? "color:#a8a7a7;background:repeating-linear-gradient(60deg, transparent, transparent 5px, gainsboro 5px, gainsboro 6px);" : "")">
+                        <tr style="@(@Model.Response[i].Status == OrgSys.SharedKernel.Status.Cancel ? "color:#a8a7a7;background:repeating-linear-gradient(60deg, transparent, transparent 5px, gainsboro 5px, gainsboro 6px);" : "")">
                             <td class="text-center align-middle" style="width:50px;">
                                 <p class="list-item-heading">@x</p>
                             </td>
@@ -193,7 +193,7 @@
                                         <i class="simple-icon-basket-loaded"></i> Journal (@Model.Response[i].JournalCode)
                                     </a>
                                 }
-                                else if (Model.Response[i].TypeId is >= 1 and <= 6 && Model.Response[i].Status != Domain.Enums.Status.Cancel && User.IsAllowed("Journal.Add"))
+                                else if (Model.Response[i].TypeId is >= 1 and <= 6 && Model.Response[i].Status != OrgSys.SharedKernel.Status.Cancel && User.IsAllowed("Journal.Add"))
                                 {
                                     <a href="/Transactions/Transaction/CreateJournal?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.Page" title="Create Journal">
                                         <i class="iconsminds-add"></i> Create
@@ -210,7 +210,7 @@
                                             @Domain.Resource.Title_Designer.Received (@Model.Response[i].ParentCode)
                                         </a>
                                     }
-                                    else if (Model.Response[i].Status != Domain.Enums.Status.Cancel && User.IsAllowed("Received.Add"))
+                                    else if (Model.Response[i].Status != OrgSys.SharedKernel.Status.Cancel && User.IsAllowed("Received.Add"))
                                     {
                                         <a href="/@ViewBag.area/@ViewBag.PageTitle/CreateReceived?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=3&page=@Model.Page" title="Create Received">
                                             <i class="iconsminds-add"></i> Create
@@ -240,7 +240,7 @@
                                         <span>&nbsp; | &nbsp;</span>
                                         <a href="/@ViewBag.area/@ViewBag.PageTitle/Print?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.Page" target="_blank"><i class="fa fa-print text-info"></i></a>
                                     }
-                                    else if (Model.Response[i].Status == Domain.Enums.Status.Cancel)
+                                    else if (Model.Response[i].Status == OrgSys.SharedKernel.Status.Cancel)
                                     {
                                         if (AllowRedo)
                                         {
@@ -285,7 +285,7 @@
                             @if (AllowDelete)
                             {
                                 <td class="align-middle @TextAlign2" style="width:30px">
-                                    @if (Model.Response[i].Status != Domain.Enums.Status.Cancel && Model.Response[i].SourceInvoiceId is not > 0 && Model.Response[i].InventoryId is not > 0)
+                                    @if (Model.Response[i].Status != OrgSys.SharedKernel.Status.Cancel && Model.Response[i].SourceInvoiceId is not > 0 && Model.Response[i].InventoryId is not > 0)
                                     {
                                         <label class="custom-control custom-checkbox pt-2">
                                             <input id="chk_@Model.Response[i].Id" type="checkbox" class="custom-control-input chk">
@@ -366,7 +366,7 @@
             {
 
                 <div class="card d-flex flex-row mb-2">
-                    <div class="d-flex flex-grow-1 min-width-zero" style="border-radius:15px; height:60px; @(Model.Response[i].Status == Domain.Enums.Status.Cancel ? "color:#a8a7a7;background:repeating-linear-gradient(60deg, transparent, transparent 5px, gainsboro 5px, gainsboro 6px);" : "")">
+                    <div class="d-flex flex-grow-1 min-width-zero" style="border-radius:15px; height:60px; @(Model.Response[i].Status == OrgSys.SharedKernel.Status.Cancel ? "color:#a8a7a7;background:repeating-linear-gradient(60deg, transparent, transparent 5px, gainsboro 5px, gainsboro 6px);" : "")">
                         <div class="list-thumbnail  border-0 card-img-left badge-theme-1" style="height:60px; width:60px; font-size:x-large; text-align:center; padding:14px;">
                             <i class="@ViewBag.TransactionsIcon"></i>
                         </div>
@@ -418,7 +418,7 @@
                                         <i class="iconsminds-address-book-2"></i> Journal (@Model.Response[i].JournalCode)
                                     </a>
                                 }
-                                else if (Model.Response[i].TypeId is >= 1 and <= 6 && Model.Response[i].Status != Domain.Enums.Status.Cancel && User.IsAllowed("Journal.Add"))
+                                else if (Model.Response[i].TypeId is >= 1 and <= 6 && Model.Response[i].Status != OrgSys.SharedKernel.Status.Cancel && User.IsAllowed("Journal.Add"))
                                 {
                                     <a href="/Transactions/Transaction/CreateJournal?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.Page" title="Create Journal">
                                         <i class="iconsminds-add"></i> Create
@@ -435,7 +435,7 @@
                                             @Domain.Resource.Title_Designer.Received (@Model.Response[i].ParentCode)
                                         </a>
                                     }
-                                    else if (Model.Response[i].Status != Domain.Enums.Status.Cancel && User.IsAllowed("Received.Add"))
+                                    else if (Model.Response[i].Status != OrgSys.SharedKernel.Status.Cancel && User.IsAllowed("Received.Add"))
                                     {
                                         <a href="/@ViewBag.area/@ViewBag.PageTitle/CreateReceived?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=3&page=@Model.Page" title="Create Received">
                                             <i class="iconsminds-add"></i> Create
@@ -463,7 +463,7 @@
                                     <span>&nbsp; | &nbsp;</span>
                                     <a href="/@ViewBag.area/@ViewBag.PageTitle/Print?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.Page" target="_blank"><i class="fa fa-print text-info"></i></a>
                                 }
-                                else if (Model.Response[i].Status == Domain.Enums.Status.Cancel)
+                                else if (Model.Response[i].Status == OrgSys.SharedKernel.Status.Cancel)
                                 {
                                     if (AllowRedo)
                                     {
@@ -509,7 +509,7 @@
                         <div style="width:30px;">
                             @if (AllowDelete)
                             {
-                                @if (Model.Response[i].Status != Domain.Enums.Status.Cancel && Model.Response[i].SourceInvoiceId is not > 0 && Model.Response[i].InventoryId is not > 0)
+                                @if (Model.Response[i].Status != OrgSys.SharedKernel.Status.Cancel && Model.Response[i].SourceInvoiceId is not > 0 && Model.Response[i].InventoryId is not > 0)
                                 {
                                     <label class="custom-control custom-checkbox pt-3">
                                         <input id="chk_@Model.Response[i].Id" type="checkbox" class="custom-control-input chk">
@@ -533,7 +533,7 @@
 
             <div href="#" class="card m-2 p-1">
                 <label class="custom-control custom-checkbox mr-1 ml-1">
-                    @* @if (Model.Response[i].Status == Domain.Enums.Status.All)
+                    @* @if (Model.Response[i].Status == OrgSys.SharedKernel.Status.All)
                     {
                         <input id="chk_@@Model.Response[i].Id" type="checkbox" class="custom-control-input chk">
                         <input type="hidden" value="@Model.Response[i].Id" />
@@ -566,4 +566,4 @@
     </div>
 }
 
-@Html.Partial("ToPagedList", new Domain.Shared.Pagination(Model.Page, Model.PageSize, Model.PageCount))
+@Html.Partial("ToPagedList", new OrgSys.SharedKernel.Pagination(Model.Page, Model.PageSize, Model.PageCount))

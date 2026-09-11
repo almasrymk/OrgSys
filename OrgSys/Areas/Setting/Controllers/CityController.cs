@@ -8,7 +8,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
     using Microsoft.AspNetCore.Mvc.Rendering;
-    using Application.Commands.Org.Setting.City.Commands;
+    using MasterData.Application.Cities.Commands;
 
     [Area("Setting")]
     public class CityController(IConfiguration configuration, IMapper mapper) : MainController<CityDto, CreateCityCommand, UpdateCityCommand>(configuration, mapper)

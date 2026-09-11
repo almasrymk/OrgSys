@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../Treasury.Domain/Treasury.Domain.csproj" />
+    <ProjectReference Include="../Treasury.Contracts/Treasury.Contracts.csproj" />
+    <ProjectReference Include="../../../BuildingBlocks/OrgSys.EventBus/OrgSys.EventBus.csproj" />
+    <!-- Financial's Post/Reverse handlers need IAccountingPeriodService and the AR/AP account
+         validators, all currently hosted in Accounting.Application (see that project's own
+         comment for the validators' temporary-home rationale). -->
+    <ProjectReference Include="../../Accounting/Accounting.Application/Accounting.Application.csproj" />
+    <!-- Preference hasn't been extracted from the monolith yet — see this project's
+         GlobalUsings.cs for the full rationale. -->
+    <ProjectReference Include="../../../Domain/Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="14.1.0" />
+    <PackageReference Include="AutoMapper" Version="16.1.1" />
+    <PackageReference Include="FluentValidation" Version="12.1.1" />
+  </ItemGroup>
+
+</Project>

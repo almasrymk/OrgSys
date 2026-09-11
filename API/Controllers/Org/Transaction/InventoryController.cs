@@ -1,11 +1,10 @@
-﻿using Application.Commands.Org.Transaction.Inventory.Queries;
-using Application.Commands.Org.Transactions.Inventory.Commands;
-using Application.Commands.Org.Transactions.Inventory.Queries;
+﻿using Inventory.Application.Inventories.Queries;
+using Inventory.Application.Inventories.Commands;
+using Inventory.Application.Inventories.Queries;
 using Application.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Domain.Shared;
 
 namespace API.Controllers.Org.Transaction
 {

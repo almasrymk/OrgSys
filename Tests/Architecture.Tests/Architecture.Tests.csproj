@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NetArchTest.Rules" Version="1.3.2" />
+    <PackageReference Include="xunit" Version="2.9.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.5" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.15.0" />
+  </ItemGroup>
+
+  <!--
+    Project references are added module-by-module as each module's Domain/Application
+    projects gain real code (NetArchTest loads assemblies by reflection, so an empty
+    module assembly is a legal, trivially-passing input — see docs/modular-monolith-analysis.md
+    §20 on why this test is written now, in Phase 1, before any business code has moved).
+  -->
+  <ItemGroup>
+    <ProjectReference Include="..\..\BuildingBlocks\OrgSys.SharedKernel\OrgSys.SharedKernel.csproj" />
+    <ProjectReference Include="..\..\BuildingBlocks\OrgSys.EventBus\OrgSys.EventBus.csproj" />
+    <ProjectReference Include="..\..\Modules\Sales\Sales.Domain\Sales.Domain.csproj" />
+    <ProjectReference Include="..\..\Modules\Purchasing\Purchasing.Domain\Purchasing.Domain.csproj" />
+    <ProjectReference Include="..\..\Modules\Inventory\Inventory.Domain\Inventory.Domain.csproj" />
+    <ProjectReference Include="..\..\Modules\Treasury\Treasury.Domain\Treasury.Domain.csproj" />
+    <ProjectReference Include="..\..\Modules\Accounting\Accounting.Domain\Accounting.Domain.csproj" />
+    <ProjectReference Include="..\..\Modules\Receivables\Receivables.Domain\Receivables.Domain.csproj" />
+    <ProjectReference Include="..\..\Modules\Payables\Payables.Domain\Payables.Domain.csproj" />
+    <ProjectReference Include="..\..\Modules\Administration\Administration.Domain\Administration.Domain.csproj" />
+    <ProjectReference Include="..\..\Modules\Organization\Organization.Domain\Organization.Domain.csproj" />
+    <ProjectReference Include="..\..\Modules\MasterData\MasterData.Domain\MasterData.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

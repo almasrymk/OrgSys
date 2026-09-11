@@ -1,10 +1,9 @@
-﻿using Application.Commands.Org.Financials.Financial.Commands;
-using Application.Commands.Org.Financials.Financial.Queries;
-using Application.Commands.Org.Financials.Receivable.Commands;
-using Application.Commands.Org.Setting.FinancialAccount.Commands;
-using Application.Commands.Org.Setting.FinancialAccount.Queries;
+﻿using Treasury.Application.Financials.Commands;
+using Treasury.Application.Financials.Queries;
+using Receivables.Application.OpeningBalance.Commands;
+using Treasury.Application.FinancialAccounts.Commands;
+using Treasury.Application.FinancialAccounts.Queries;
 using AutoMapper;
-using Domain.Shared;
 using Application.DTOs;
 using Domain.Enums;
 using MediatR;

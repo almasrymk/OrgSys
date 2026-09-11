@@ -1,5 +1,5 @@
 @using System.Globalization
-@model Domain.Shared.ResultPagination<Application.DTOs.FinancialAccountDto>
+@model OrgSys.SharedKernel.ResultPagination<Treasury.Application.FinancialAccountDto>
 @using Domain.Enums
 @using OrgSys
 @{
@@ -200,4 +200,4 @@
     </div>
 }
 
-@await Html.PartialAsync("ToPagedList", new Domain.Shared.Pagination(Model.Page, Model.PageSize, Model.PageCount))
+@await Html.PartialAsync("ToPagedList", new OrgSys.SharedKernel.Pagination(Model.Page, Model.PageSize, Model.PageCount))

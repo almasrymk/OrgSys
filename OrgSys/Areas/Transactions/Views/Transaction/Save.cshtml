@@ -1,4 +1,4 @@
-﻿@model Application.DTOs.TransactionDto
+﻿@model Inventory.Application.TransactionDto
 @using System.Globalization
 @using OrgSys
 @{
@@ -7,7 +7,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var BorderAlign = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "border-top:none;border-bottom:none;border-left:none;" : "border-top:none;border-bottom:none;border-right:none;";
     var formateDate = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "{0:yyyy/MM/dd}" : "{0:dd/MM/yyyy}";
-    List<Application.DTOs.InvoiceTypeDto> InvoicesTypes = ViewBag.InvoicesTypes ?? new List<Application.DTOs.InvoiceTypeDto>();
+    List<Sales.Application.InvoiceTypeDto> InvoicesTypes = ViewBag.InvoicesTypes ?? new List<Sales.Application.InvoiceTypeDto>();
     var SourceInvoiceName = Model.SourceInvoiceTypeId switch
     {
         1 => $"{Domain.Resource.Title_Designer.Sales} {Domain.Resource.Title_Designer.Invoice}",
@@ -454,7 +454,7 @@
                                     <i class="iconsminds-address-book-2"></i> Journal (@Model.JournalCode)
                                 </a>
                             }
-                            else if (Model.JournalId is not > 0 && Model.Status != Domain.Enums.Status.Cancel && User.IsAllowed("Journal.Add"))
+                            else if (Model.JournalId is not > 0 && Model.Status != OrgSys.SharedKernel.Status.Cancel && User.IsAllowed("Journal.Add"))
                             {
                                 <a href="/Transactions/Transaction/CreateJournal?id=@Model.Id&ParentId=@Model.ParentId&TypeId=@Model.TypeId&dir=Save" class="btn btn-primary mr-4 mb-4">
                                     <i class="iconsminds-add"></i> Create Journal

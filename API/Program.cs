@@ -1,18 +1,27 @@
 ﻿using API.Authentication;
 using API.Middlewares;
-using Application.Validators;
+using OrgSys.SharedKernel;
 using Domain.Abstraction;
 using FluentValidation;
 using Infrastructure.Persistence.UnitOfWork;
+using Accounting.Infrastructure.DependencyInjection;
+using Administration.Infrastructure.DependencyInjection;
+using MasterData.Infrastructure.DependencyInjection;
 using MediatR;
+using Organization.Infrastructure.DependencyInjection;
+using Treasury.Infrastructure.DependencyInjection;
+using Sales.Infrastructure.DependencyInjection;
+using Inventory.Infrastructure.DependencyInjection;
+using Purchasing.Infrastructure.DependencyInjection;
+using Receivables.Infrastructure.DependencyInjection;
+using Payables.Infrastructure.DependencyInjection;
+using Reporting.Infrastructure.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddControllers();
 
 const string AngularClientCorsPolicy = "AngularClient";
 
@@ -62,6 +71,7 @@ builder.Services.AddSwaggerGen(c =>
     {
         [new Microsoft.OpenApi.OpenApiSecuritySchemeReference("Bearer", document, null)] = new List<string>()
     });
+    c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
 });
 
 builder.Services.AddHttpsRedirection(options =>
@@ -73,32 +83,40 @@ builder.Services.AddDbContext<Infrastructure.Persistence.Data.OrgContext>(option
 
 builder.Services.AddScoped<IOrgContext>(provider => provider.GetRequiredService<Infrastructure.Persistence.Data.OrgContext>());
 
-builder.Services.AddMediatR(cfg => { cfg.RegisterServicesFromAssembly(typeof(MappingProfile).Assembly); });
+// Single Application-assembly anchor for MediatR/AutoMapper/FluentValidation scanning.
+// MappingProfile and FluentValidationFilter<,> both live in Application, so the two
+// AddMediatR calls this used to make were scanning the same assembly twice — collapsed here.
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(MappingProfile).Assembly));
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
-builder.Services.AddScoped<Application.Common.Services.IAccountingPeriodService, Application.Common.Services.AccountingPeriodService>();
+// IAccountingPeriodService, IReceivableAccountValidator, IPayableAccountValidator are all
+// registered by AddAccountingModule() below.
+builder.Services.AddAutoMapper(cfg => cfg.AddProfile<MappingProfile>());
 
-builder.Services.AddScoped<Application.Common.Services.IReceivableAccountValidator, Application.Common.Services.ReceivableAccountValidator>();
-
-builder.Services.AddScoped<Application.Common.Services.IPayableAccountValidator, Application.Common.Services.PayableAccountValidator>();
-
-builder.Services.AddAutoMapper(cfg => { cfg.AddProfile<MappingProfile>(); });
-
-builder.Services.AddSwaggerGen(c => { c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First()); });
-
-builder.Services.AddControllers().AddJsonOptions(options => { options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles; });
+builder.Services.AddControllers()
+    .AddJsonOptions(options => options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles);
 
 builder.Services.AddValidatorsFromAssembly(typeof(MappingProfile).Assembly);
 
-builder.Services.AddMediatR(cfg =>
-{
-    cfg.RegisterServicesFromAssembly(typeof(FluentValidationFilter<,>).Assembly);
-});
-
 builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(FluentValidationFilter<,>));
+
+// Extracted modules register their own MediatR/AutoMapper/FluentValidation slice here — see
+// docs/modular-monolith-target-architecture.md §9. Country/City/District/Unit/Classification/
+// Currency/ReferenceType/PaymentType moved out of Application into MasterData in this pass.
+builder.Services.AddMasterDataModule();
+builder.Services.AddOrganizationModule();
+builder.Services.AddAdministrationModule();
+builder.Services.AddAccountingModule();
+builder.Services.AddTreasuryModule();
+builder.Services.AddSalesModule();
+builder.Services.AddInventoryModule();
+builder.Services.AddPurchasingModule();
+builder.Services.AddReceivablesModule();
+builder.Services.AddPayablesModule();
+builder.Services.AddReportingModule();
 
 var app = builder.Build();
 
@@ -109,6 +127,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+// Moved ahead of auth/routing so it wraps the whole request pipeline, including exceptions
+// thrown by authentication/authorization handlers — it used to run after MapControllers(),
+// which meant it never actually surrounded those stages (see docs/modular-monolith-analysis.md §9).
+app.UseMiddleware<GlobalExceptionMiddleware>();
+
 app.UseHttpsRedirection();
 
 app.UseCors(AngularClientCorsPolicy);
@@ -118,7 +141,5 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-
-app.UseMiddleware<GlobalExceptionMiddleware>();
 
 app.Run();

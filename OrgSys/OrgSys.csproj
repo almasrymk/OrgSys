@@ -408,6 +408,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
+    <!-- DealerDto/InvoiceDto/ProductDto/etc. and their Commands moved out of the monolith
+         Application project into these modules; this legacy MVC frontend still references
+         them directly (see docs/modular-monolith-analysis.md §9). -->
+    <ProjectReference Include="..\Modules\Sales\Sales.Application\Sales.Application.csproj" />
+    <ProjectReference Include="..\Modules\Inventory\Inventory.Application\Inventory.Application.csproj" />
   </ItemGroup>
 
   <ItemGroup>

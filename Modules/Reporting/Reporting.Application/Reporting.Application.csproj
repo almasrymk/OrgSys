@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../Reporting.Contracts/Reporting.Contracts.csproj" />
+    <ProjectReference Include="../../../BuildingBlocks/OrgSys.EventBus/OrgSys.EventBus.csproj" />
+    <!-- Reporting is a pure read-side aggregator (docs/modular-monolith-target-architecture.md §3):
+         it has no Domain of its own and legitimately reads every module's Domain directly. -->
+    <ProjectReference Include="../../Sales/Sales.Domain/Sales.Domain.csproj" />
+    <ProjectReference Include="../../Treasury/Treasury.Domain/Treasury.Domain.csproj" />
+    <ProjectReference Include="../../Inventory/Inventory.Domain/Inventory.Domain.csproj" />
+    <!-- Preference and IOrgContext haven't been extracted from the monolith yet. -->
+    <ProjectReference Include="../../../Domain/Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="14.1.0" />
+    <PackageReference Include="AutoMapper" Version="16.1.1" />
+    <PackageReference Include="FluentValidation" Version="12.1.1" />
+  </ItemGroup>
+
+</Project>

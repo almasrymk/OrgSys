@@ -1,10 +1,9 @@
 ﻿namespace OrgSys.Areas.Setting.Controllers
 {
-    using Application.Commands.Org.Setting.Dealer.Commands;
+    using Sales.Application.Dealers.Commands;
     using AutoMapper;
     using Application.DTOs;
     using Domain.Enums;
-    using Domain.Shared;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.Extensions.Configuration;

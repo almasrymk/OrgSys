@@ -1,10 +1,9 @@
-﻿using Application.Commands.Authentication.Commands;
-using Application.Commands.Org.Auth.Queries;
+﻿using Administration.Application.Auth.Commands;
+using Administration.Application.Auth.Queries;
 using Application.DTOs;
 using Application.DTOs.OrgDb;
 using Domain.Enums;
 using Domain.Entities;
-using Domain.Shared;
 using Infrastructure.Persistence.Data;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;

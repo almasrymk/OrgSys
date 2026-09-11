@@ -1,6 +1,6 @@
-using Application.Commands.Org.Setting.ReferenceType.Commands;
-using Application.Commands.Org.Setting.ReferenceType.Queries;
-using Application.Interfaces.CQRS;
+using MasterData.Application.ReferenceTypes.Commands;
+using MasterData.Application.ReferenceTypes.Queries;
+using OrgSys.SharedKernel;
 using Application.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

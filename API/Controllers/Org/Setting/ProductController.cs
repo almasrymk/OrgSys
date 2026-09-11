@@ -1,6 +1,5 @@
-﻿using Application.Commands.Org.Setting.Product.Commands;
-using Application.Commands.Org.Setting.Product.Queries;
-using Domain.Shared;
+﻿using Inventory.Application.Products.Commands;
+using Inventory.Application.Products.Queries;
 using Application.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

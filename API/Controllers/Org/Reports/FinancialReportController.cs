@@ -1,6 +1,5 @@
-using Application.Commands.Org.Reports.Financial.Queries;
-using Application.Report;
-using Domain.Shared;
+using Reporting.Application.Financial.Queries;
+using Reporting.Application;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

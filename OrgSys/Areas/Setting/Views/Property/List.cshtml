@@ -1,4 +1,4 @@
-﻿@model Domain.Shared.ResultPagination<Application.DTOs.PropertyDto>
+﻿@model OrgSys.SharedKernel.ResultPagination<Inventory.Application.PropertyDto>
 @{
     Layout = null;
 }
@@ -37,7 +37,7 @@
                                 <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Domain.Resource.Message_Designer.DeleteConfirmation' , '@Domain.Resource.Message_Designer.DoYouWantDeleteFile' , '@Domain.Resource.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash"></i> @Domain.Resource.Title_Designer.Delete</a>
                             </td>
                             <td style="width:40px;text-align:center;vertical-align: middle;">
-                                @if (Model.Response[i].Status == Domain.Enums.Status.All)
+                                @if (Model.Response[i].Status == OrgSys.SharedKernel.Status.All)
                                 {
                                     <label class="custom-control custom-checkbox">
                                         <input id="chk_@Model.Response[i].Id" type="checkbox" class="custom-control-input chk">
@@ -75,7 +75,7 @@
                         </div>
 
                         <label class="custom-control custom-checkbox mb-1 align-self-center pr-4">
-                            @if (Model.Response[i].Status == Domain.Enums.Status.All)
+                            @if (Model.Response[i].Status == OrgSys.SharedKernel.Status.All)
                             {
                                 <input id="chk_@Model.Response[i].Id" type="checkbox" class="custom-control-input chk">
                                 <input type="hidden" value="@Model.Response[i].Id" />
@@ -94,7 +94,7 @@
         {
             <div href="#" class="card m-2 p-1">
                 <label class="custom-control custom-checkbox mr-1 ml-1">
-                    @if (Model.Response[i].Status == Domain.Enums.Status.All)
+                    @if (Model.Response[i].Status == OrgSys.SharedKernel.Status.All)
                     {
                         <input id="chk_@Model.Response[i].Id" type="checkbox" class="custom-control-input chk">
                         <input type="hidden" value="@Model.Response[i].Id" />
@@ -126,4 +126,4 @@
     </div>
 }
 
-@Html.Partial("ToPagedList", new Domain.Shared.Pagination(Model.Page, Model.PageSize, Model.PageCount))
+@Html.Partial("ToPagedList", new OrgSys.SharedKernel.Pagination(Model.Page, Model.PageSize, Model.PageCount))
