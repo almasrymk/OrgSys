@@ -8,9 +8,7 @@
     using System.Threading;
     using System.Threading.Tasks;
     using global::Application.Commands.Org.Financials.Integration.JournalTransaction;
-
-    public record CreateTransactionByInvoiceCommand(long Id, bool RespectAutoCreatePreference = false)
-    : ICommand, ICreateCommand<Result>;
+    using Inventory.Contracts.Transactions;
 
     public sealed class CreateTransactionByInvoiceCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Transaction> _Repository,
         IRepository<Invoice> _InvoiceRepository, IRepository<Preference> preferenceRepository, IMapper mapper,

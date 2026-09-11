@@ -4,11 +4,13 @@
     using OrgSys.SharedKernel;
     using OrgSys.SharedKernel;
     using AutoMapper;
+    using MediatR;
     using System.Linq.Expressions;
+    using Inventory.Contracts.Stocks;
 
     public sealed record SearchInvoiceQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandPagination<InvoiceDto> ,ISearchQuery<ResultPagination<InvoiceDto>>;
 
-    public sealed class SearchQueryHandler(IRepository<Sales.Domain.Invoice> _Repository, IRepository<Accounting.Domain.Journal> journalRepository, IRepository<Inventory.Domain.Stock> stockRepository, IMapper mapper) : SearchCommandHandler<SearchInvoiceQuery, Sales.Domain.Invoice, InvoiceDto>(_Repository, mapper)
+    public sealed class SearchQueryHandler(IRepository<Sales.Domain.Invoice> _Repository, IRepository<Accounting.Domain.Journal> journalRepository, ISender sender, IMapper mapper) : SearchCommandHandler<SearchInvoiceQuery, Sales.Domain.Invoice, InvoiceDto>(_Repository, mapper)
     {
         public override async Task<ResultPagination<InvoiceDto>> Handle(SearchInvoiceQuery request, CancellationToken cancellationToken)
         {
@@ -32,10 +34,11 @@
             var stockIds = result.Response.Where(e => e.StockId.HasValue).Select(e => e.StockId!.Value).Distinct().ToList();
             if (stockIds.Count > 0)
             {
-                var stocks = await stockRepository.GetListByFilterAsync(e => stockIds.Contains(e.Id));
+                var namesResult = await sender.Send(new GetStockNamesQuery(stockIds), cancellationToken);
+                var names = namesResult.Response ?? [];
                 foreach (var invoice in result.Response)
                 {
-                    invoice.StockName = stocks?.FirstOrDefault(e => e.Id == invoice.StockId)?.Name;
+                    invoice.StockName = invoice.StockId.HasValue ? names.GetValueOrDefault(invoice.StockId.Value) : null;
                 }
             }
 

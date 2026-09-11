@@ -11,13 +11,13 @@ using System.Net;
 using System.Text;
 using System.Transactions;
 using Application.Commands.Org.Financials.Integration.JournalInvoice;
-using Application.Commands.Org.Financials.Integration.JournalTransaction;
+using Inventory.Contracts.Transactions;
 
 namespace Sales.Application.Invoices.Commands
 {
     public record CancelInvoiceCommand(long Id) : ICommand, IUpdateCommand<Result>;
 
-    public class CancelInvoiceCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Sales.Domain.Invoice> _Repository, IMapper mapper, IServiceProvider _provider) : UpdateCommandHandler<CancelInvoiceCommand, Sales.Domain.Invoice>(_UnitOfWork, _Repository, mapper, _provider)
+    public class CancelInvoiceCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Sales.Domain.Invoice> _Repository, IMapper mapper, IServiceProvider _provider, ISender sender) : UpdateCommandHandler<CancelInvoiceCommand, Sales.Domain.Invoice>(_UnitOfWork, _Repository, mapper, _provider)
     {
 
         public override async Task<Result> Handle(CancelInvoiceCommand request, CancellationToken cancellationToken)
@@ -40,19 +40,15 @@ namespace Sales.Application.Invoices.Commands
 
                 if (invoice.TransactionId > 0)
                 {
-                    var transactionRepo = _provider.GetRequiredService<IRepository<Inventory.Domain.Transaction>>();
+                    var transactionResult = await sender.Send(
+                        new SetTransactionStatusCommand(invoice.TransactionId.Value, OrgSys.SharedKernel.Status.Cancel),
+                        cancellationToken);
 
-                    var transaction = await transactionRepo.GetByFilterAsync(x => x.Id == invoice.TransactionId, await CreateInclude());
-
-                    if (transaction == null)
+                    if (transactionResult.StatusCode != HttpStatusCode.OK)
                     {
                         await _UnitOfWork.RollbackAsync();
-                        return new Result(HttpStatusCode.InternalServerError, new List<Error> { new Error("Transaction not found") });
+                        return transactionResult;
                     }
-
-                    transaction.Status = OrgSys.SharedKernel.Status.Cancel;
-                    await new TransactionJournalIntegration(_provider)
-                        .SetStatusByTransactionIdAsync(transaction.Id, OrgSys.SharedKernel.Status.Cancel);
                 }
 
                 var saved = await _UnitOfWork.SaveChangeAsync(cancellationToken);

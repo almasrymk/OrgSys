@@ -7,11 +7,13 @@
     using Microsoft.Extensions.DependencyInjection;
     using System.Linq.Expressions;
     using global::Application.Commands.Org.Financials.Integration.JournalInvoice;
-    using global::Application.Commands.Org.Financials.Integration.JournalTransaction;
+    using Inventory.Contracts.Transactions;
+    using Treasury.Contracts.Financials;
+    using MediatR;
 
-    public sealed record DeleteListInvoiceCommand(List<long> Ids) : ICommand, IDeleteListCommand<Result>;   
+    public sealed record DeleteListInvoiceCommand(List<long> Ids) : ICommand, IDeleteListCommand<Result>;
 
-    public sealed class DeleteListCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Sales.Domain.Invoice> _Repository, IServiceProvider _provider) : DeleteCommandHandler<DeleteListInvoiceCommand, Sales.Domain.Invoice>(_UnitOfWork, _Repository , _provider)
+    public sealed class DeleteListCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Sales.Domain.Invoice> _Repository, IServiceProvider _provider, ISender sender) : DeleteCommandHandler<DeleteListInvoiceCommand, Sales.Domain.Invoice>(_UnitOfWork, _Repository , _provider)
     {
         public override Expression<Func<Sales.Domain.Invoice, bool>> CreateFilter(DeleteListInvoiceCommand request)
         {
@@ -21,9 +23,6 @@
 
         public override async Task<bool> RemoveDetails(DeleteListInvoiceCommand request)
         {
-            var financialRepo = _provider.GetRequiredService<IRepository<Financial>>();
-            var transactionRepo = _provider.GetRequiredService<IRepository<Transaction>>();
-
             foreach (var invoiceId in request.Ids)
             {
                 var invoice = await _Repository.GetByFilterAsync(i => i.Id == invoiceId,"InvoiceProducts");
@@ -34,22 +33,10 @@
                 await new InvoiceJournalIntegration(_provider).DeleteByInvoiceIdAsync(invoiceId);
                 invoice.InvoiceProducts!.Clear();
 
-                var financial = await financialRepo
-                    .GetByFilterAsync(e => e.FinancialInvoices!.Select(f => f.InvoiceId)
-                    .Contains(invoiceId),"FinancialInvoices");
+                await sender.Send(new DeleteFinancialsByInvoiceCommand(invoiceId));
 
-                if (financial != null)
-                    await financialRepo.ShiftDeleteAsync(f => f.Id == financial.Id);
-                
-                var transaction = await transactionRepo
-                    .GetByFilterAsync(e => e.Id == invoice.TransactionId,"TransactionProducts");
-
-                if (transaction != null)
-                {
-                    await new TransactionJournalIntegration(_provider).DeleteByTransactionIdAsync(transaction.Id);
-                    transaction.TransactionProducts?.Clear();
-                    await transactionRepo.ShiftDeleteAsync(t => t.Id == transaction.Id);
-                }
+                if (invoice.TransactionId is > 0)
+                    await sender.Send(new DeleteTransactionByInvoiceCommand(invoice.TransactionId.Value));
             }
 
             // The base delete handler deletes the invoices and persists the complete

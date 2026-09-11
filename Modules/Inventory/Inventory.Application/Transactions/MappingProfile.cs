@@ -2,6 +2,7 @@ namespace Inventory.Application;
 
 using Inventory.Application.Transactions.Commands;
 using Inventory.Application.TransactionTypes.Commands;
+using Inventory.Contracts.Transactions;
 using AutoMapper;
 
 public partial class MappingProfile : Profile

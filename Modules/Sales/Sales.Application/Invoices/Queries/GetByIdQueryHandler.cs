@@ -5,11 +5,13 @@
     using OrgSys.SharedKernel;
     using OrgSys.SharedKernel;
     using AutoMapper;
+    using MediatR;
     using System.Linq.Expressions;
+    using Inventory.Contracts.Products;
 
     public sealed record GetByIdInvoiceQuery(long Id) : ICommand<InvoiceDto> , IGetByIdQuery<Result<InvoiceDto>>;
 
-    public sealed class GetByIdQueryHandler(IRepository<Sales.Domain.Invoice> _Repository, IRepository<Accounting.Domain.Journal> journalRepository, IRepository<Inventory.Domain.Product> productRepository, IMapper mapper) : GetCommandHandler<GetByIdInvoiceQuery, Sales.Domain.Invoice, InvoiceDto>(_Repository, mapper)
+    public sealed class GetByIdQueryHandler(IRepository<Sales.Domain.Invoice> _Repository, IRepository<Accounting.Domain.Journal> journalRepository, ISender sender, IMapper mapper) : GetCommandHandler<GetByIdInvoiceQuery, Sales.Domain.Invoice, InvoiceDto>(_Repository, mapper)
     {
         public override async Task<Result<InvoiceDto>> Handle(GetByIdInvoiceQuery request, CancellationToken cancellationToken)
         {
@@ -32,10 +34,11 @@
             if (lineItems is { Count: > 0 })
             {
                 var productIds = lineItems.Select(e => e.ProductId).Distinct().ToList();
-                var products = await productRepository.GetListByFilterAsync(e => productIds.Contains(e.Id));
+                var namesResult = await sender.Send(new GetProductNamesQuery(productIds), cancellationToken);
+                var names = namesResult.Response ?? [];
                 foreach (var line in lineItems)
                 {
-                    line.ProductName = products?.FirstOrDefault(e => e.Id == line.ProductId)?.Name;
+                    line.ProductName = names.GetValueOrDefault(line.ProductId);
                 }
             }
 

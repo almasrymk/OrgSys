@@ -33,6 +33,17 @@
     <ProjectReference Include="..\..\Modules\Administration\Administration.Domain\Administration.Domain.csproj" />
     <ProjectReference Include="..\..\Modules\Organization\Organization.Domain\Organization.Domain.csproj" />
     <ProjectReference Include="..\..\Modules\MasterData\MasterData.Domain\MasterData.Domain.csproj" />
+    <ProjectReference Include="..\..\Modules\Sales\Sales.Application\Sales.Application.csproj" />
+    <ProjectReference Include="..\..\Modules\Purchasing\Purchasing.Application\Purchasing.Application.csproj" />
+    <ProjectReference Include="..\..\Modules\Inventory\Inventory.Application\Inventory.Application.csproj" />
+    <ProjectReference Include="..\..\Modules\Treasury\Treasury.Application\Treasury.Application.csproj" />
+    <ProjectReference Include="..\..\Modules\Accounting\Accounting.Application\Accounting.Application.csproj" />
+    <ProjectReference Include="..\..\Modules\Receivables\Receivables.Application\Receivables.Application.csproj" />
+    <ProjectReference Include="..\..\Modules\Payables\Payables.Application\Payables.Application.csproj" />
+    <ProjectReference Include="..\..\Modules\Administration\Administration.Application\Administration.Application.csproj" />
+    <ProjectReference Include="..\..\Modules\Organization\Organization.Application\Organization.Application.csproj" />
+    <ProjectReference Include="..\..\Modules\MasterData\MasterData.Application\MasterData.Application.csproj" />
+    <ProjectReference Include="..\..\Modules\Reporting\Reporting.Application\Reporting.Application.csproj" />
   </ItemGroup>
 
 </Project>

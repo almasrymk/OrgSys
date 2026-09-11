@@ -7,14 +7,16 @@
     using Microsoft.Extensions.DependencyInjection;
     using System.Linq.Expressions;
     using global::Application.Commands.Org.Financials.Integration.JournalInvoice;
-    using global::Application.Commands.Org.Financials.Integration.JournalTransaction;
+    using Inventory.Contracts.Transactions;
+    using Treasury.Contracts.Financials;
+    using MediatR;
 
     public sealed record DeleteInvoiceCommand(long Id) : ICommand, IDeleteCommand<Result>;
 
     public sealed class DeleteCommandHandler(IUnitOfWork _UnitOfWork,
         IRepository<Invoice> _Repository,
-        IRepository<Financial> _FinancialRepo,
-        IServiceProvider _provider) : DeleteCommandHandler<DeleteInvoiceCommand,Invoice>(_UnitOfWork, _Repository, _provider)
+        IServiceProvider _provider,
+        ISender sender) : DeleteCommandHandler<DeleteInvoiceCommand,Invoice>(_UnitOfWork, _Repository, _provider)
     {
         public override Expression<Func<Sales.Domain.Invoice, bool>> CreateFilter(DeleteInvoiceCommand request)
         {
@@ -30,26 +32,10 @@
             await new InvoiceJournalIntegration(_provider).DeleteByInvoiceIdAsync(request.Id);
             invoice.InvoiceProducts!.Clear();
 
-            //var financialRepo = _provider.GetRequiredService<IRepository<Financial>>();
+            await sender.Send(new DeleteFinancialsByInvoiceCommand(request.Id));
 
-            var financial = await _FinancialRepo.GetByFilterAsync(e => e.FinancialInvoices.Select(f => f.InvoiceId).Contains(request.Id), "FinancialInvoices");
-            if (financial != null)
-            {
-                //financial.FinancialInvoices.Clear();
-                await _FinancialRepo.ShiftDeleteAsync(f => f.Id == financial.Id);
-
-            }
-
-            var transactionRepo = _provider.GetRequiredService<IRepository<Transaction>>();
-
-            var transaction = await transactionRepo.GetByFilterAsync(e => e.Id == invoice.TransactionId, "TransactionProducts");
-
-            if (transaction != null)
-            {
-                await new TransactionJournalIntegration(_provider).DeleteByTransactionIdAsync(transaction.Id);
-                transaction.TransactionProducts?.Clear();
-                await transactionRepo.ShiftDeleteAsync(t => t.Id == transaction.Id);
-            }
+            if (invoice.TransactionId is > 0)
+                await sender.Send(new DeleteTransactionByInvoiceCommand(invoice.TransactionId.Value));
 
             // The base delete handler deletes the invoice and saves all staged changes
             // together. Saving here would try to delete the referenced transaction

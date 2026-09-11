@@ -11,13 +11,11 @@
     <ProjectReference Include="../Sales.Contracts/Sales.Contracts.csproj" />
     <ProjectReference Include="../../../BuildingBlocks/OrgSys.EventBus/OrgSys.EventBus.csproj" />
     <ProjectReference Include="../../MasterData/MasterData.Application/MasterData.Application.csproj" />
-    <!-- Invoice delete/update handlers touch the linked Financial (Treasury) and Transaction
-         (Inventory) records directly, and invoice creation triggers CreateTransactionByInvoiceCommand;
-         see GlobalUsings.cs. Inventory.Application does not reference Sales.Application, so this
-         stays one-directional. -->
-    <ProjectReference Include="../../Treasury/Treasury.Domain/Treasury.Domain.csproj" />
-    <ProjectReference Include="../../Inventory/Inventory.Domain/Inventory.Domain.csproj" />
-    <ProjectReference Include="../../Inventory/Inventory.Application/Inventory.Application.csproj" />
+    <!-- Invoice delete/cancel/redo/create handlers reach Inventory (linked Transaction) and
+         Treasury (linked Financial) through Contracts only — see docs/dependency-rules.md.
+         No Inventory.Domain, Inventory.Application, or Treasury.Domain reference here anymore. -->
+    <ProjectReference Include="../../Treasury/Treasury.Contracts/Treasury.Contracts.csproj" />
+    <ProjectReference Include="../../Inventory/Inventory.Contracts/Inventory.Contracts.csproj" />
     <!-- Preference and Application.Commands.Org.Financials.Integration.JournalInvoice (the
          Invoice->Journal posting bridge) haven't been extracted from the monolith yet. -->
     <ProjectReference Include="../../../Domain/Domain.csproj" />

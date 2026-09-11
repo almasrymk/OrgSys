@@ -6,7 +6,7 @@
     using AutoMapper;
     using System.Net;
     using global::Application.Commands.Org.Financials.Integration.JournalInvoice;
-    using Inventory.Application.Transactions.Commands;
+    using Inventory.Contracts.Transactions;
     using MediatR;
 
     public sealed class CreateInvoiceCommand : InvoiceDto, ICommand , ICreateCommand<Result>;

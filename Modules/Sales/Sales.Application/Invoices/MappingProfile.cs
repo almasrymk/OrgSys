@@ -42,14 +42,7 @@ public partial class MappingProfile : Profile
 
         CreateMap<InvoiceProductDto, InvoiceProduct>();
 
-
-        CreateMap<Product, ProductDto>();
-        CreateMap<ProductDto, Product>();
-
-        CreateMap<ProductUnit, ProductUnitDto>();
-        CreateMap<ProductUnitDto, ProductUnit>();
-
-        CreateMap<Unit, UnitDto>();           
+        CreateMap<Unit, UnitDto>();
         CreateMap<UnitDto, Unit>();           
         #endregion
     }
