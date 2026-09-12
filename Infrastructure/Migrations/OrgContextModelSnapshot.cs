@@ -121,6 +121,2713 @@ namespace Infrastructure.Migrations
                     b.ToTable("AccountType");
                 });
 
+            modelBuilder.Entity("Accounting.Domain.FiscalPeriod", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("FiscalPeriodStatus")
+                        .HasColumnType("int");
+
+                    b.Property<long>("FiscalYearId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("PeriodNumber")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FiscalYearId");
+
+                    b.ToTable("FiscalPeriod");
+                });
+
+            modelBuilder.Entity("Accounting.Domain.FiscalYear", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("FiscalYearStatus")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsCurrent")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FiscalYear");
+                });
+
+            modelBuilder.Entity("Accounting.Domain.Journal", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long?>("BranchId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("CreateUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("CurrencyId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("FiscalPeriodId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("FiscalYearId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("HasJournal")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("JournalTypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifyDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("ModifyUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("OriginalJournalId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Posted")
+                        .HasColumnType("bit");
+
+                    b.Property<decimal>("Rate")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("RefranceCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("RefranceId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("RefranceTable")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("RefranceTypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Review")
+                        .HasColumnType("bit");
+
+                    b.Property<long?>("ShiftId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BranchId");
+
+                    b.HasIndex("CreateUserId");
+
+                    b.HasIndex("CurrencyId");
+
+                    b.HasIndex("Date");
+
+                    b.HasIndex("FiscalPeriodId");
+
+                    b.HasIndex("FiscalYearId");
+
+                    b.HasIndex("JournalTypeId");
+
+                    b.HasIndex("ModifyUserId");
+
+                    b.HasIndex("OriginalJournalId")
+                        .IsUnique()
+                        .HasFilter("[OriginalJournalId] IS NOT NULL");
+
+                    b.HasIndex("ShiftId");
+
+                    b.ToTable("Journal");
+                });
+
+            modelBuilder.Entity("Accounting.Domain.JournalItem", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("AccountId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("Credit")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Debit")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("JournalId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccountId");
+
+                    b.HasIndex("JournalId");
+
+                    b.ToTable("JournalItem");
+                });
+
+            modelBuilder.Entity("Accounting.Domain.JournalType", b =>
+                {
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Group")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Icon")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsOpeningBlance")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("JournalType");
+                });
+
+            modelBuilder.Entity("Administration.Domain.Permission", b =>
+                {
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Key")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Permission");
+                });
+
+            modelBuilder.Entity("Administration.Domain.Role", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Role");
+                });
+
+            modelBuilder.Entity("Administration.Domain.RolePermission", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("PermissionId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("RoleId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PermissionId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("RolePermission");
+                });
+
+            modelBuilder.Entity("Administration.Domain.User", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long?>("BranchId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("LoginUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("RoleId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BranchId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("User");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Preference", b =>
+                {
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Key")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Reference")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Preference");
+                });
+
+            modelBuilder.Entity("Inventory.Domain.Inventory", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long?>("BranchId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Closed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("CreateUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("HasAdjustment")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("HasJournal")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifyDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("ModifyUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Posted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Review")
+                        .HasColumnType("bit");
+
+                    b.Property<long?>("ShiftId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long?>("StockId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BranchId");
+
+                    b.HasIndex("CreateUserId");
+
+                    b.HasIndex("ModifyUserId");
+
+                    b.HasIndex("ShiftId");
+
+                    b.HasIndex("StockId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Inventory");
+                });
+
+            modelBuilder.Entity("Inventory.Domain.InventoryProduct", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<decimal>("ActualBalance")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("CalcBalance")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("DiffQuantity")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("InventoryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("RowNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("UnitId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InventoryId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("UnitId");
+
+                    b.ToTable("InventoryProduct");
+                });
+
+            modelBuilder.Entity("Inventory.Domain.Product", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Barcode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ClassificationId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("Cost")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long?>("DealerId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Nickname")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Recipe")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClassificationId");
+
+                    b.HasIndex("DealerId");
+
+                    b.ToTable("Product");
+                });
+
+            modelBuilder.Entity("Inventory.Domain.ProductPropertyElement", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsChecked")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("PropertyElementId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("PropertyId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("PropertyElementId");
+
+                    b.HasIndex("PropertyId");
+
+                    b.ToTable("ProductPropertyElement");
+                });
+
+            modelBuilder.Entity("Inventory.Domain.ProductRecipe", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("Quantity")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long>("RecipeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("UnitId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductRecipe");
+                });
+
+            modelBuilder.Entity("Inventory.Domain.ProductUnit", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("DefaultUnit")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("Rate")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("UnitId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("UnitId");
+
+                    b.ToTable("ProductUnit");
+                });
+
+            modelBuilder.Entity("Inventory.Domain.Property", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Property");
+                });
+
+            modelBuilder.Entity("Inventory.Domain.PropertyElement", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("PropertyId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PropertyId");
+
+                    b.ToTable("PropertyElement");
+                });
+
+            modelBuilder.Entity("Inventory.Domain.Stock", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long?>("AccountId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("BranchId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccountId");
+
+                    b.HasIndex("BranchId");
+
+                    b.ToTable("Stock");
+                });
+
+            modelBuilder.Entity("Inventory.Domain.Transaction", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long?>("BranchId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("CreateUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("DealerId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("HasJournal")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("InventoryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifyDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("ModifyUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<long?>("OrderId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Posted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Review")
+                        .HasColumnType("bit");
+
+                    b.Property<long?>("ShiftId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long?>("StockId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("ToStockId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("Total")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BranchId");
+
+                    b.HasIndex("CreateUserId");
+
+                    b.HasIndex("DealerId");
+
+                    b.HasIndex("InventoryId");
+
+                    b.HasIndex("ModifyUserId");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("ShiftId");
+
+                    b.HasIndex("StockId");
+
+                    b.HasIndex("ToStockId");
+
+                    b.ToTable("Transaction");
+                });
+
+            modelBuilder.Entity("Inventory.Domain.TransactionProduct", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("Cost")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("Quantity")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long>("RowNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long?>("StockId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("Total")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long>("TransactionId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("UnitId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("StockId");
+
+                    b.HasIndex("TransactionId");
+
+                    b.HasIndex("UnitId");
+
+                    b.ToTable("TransactionProduct");
+                });
+
+            modelBuilder.Entity("Inventory.Domain.TransactionType", b =>
+                {
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Icon")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("InOut")
+                        .HasColumnType("int");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TransactionType");
+                });
+
+            modelBuilder.Entity("MasterData.Domain.City", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("CountryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CountryId");
+
+                    b.ToTable("City");
+                });
+
+            modelBuilder.Entity("MasterData.Domain.Classification", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<bool>("BeManufactured")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("BePurchased")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("BeSold")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Classification");
+                });
+
+            modelBuilder.Entity("MasterData.Domain.Country", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Country");
+                });
+
+            modelBuilder.Entity("MasterData.Domain.Currency", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDefault")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("Rate")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Currency");
+                });
+
+            modelBuilder.Entity("MasterData.Domain.District", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long?>("CityId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("CountryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CityId");
+
+                    b.HasIndex("CountryId");
+
+                    b.ToTable("District");
+                });
+
+            modelBuilder.Entity("MasterData.Domain.PaymentType", b =>
+                {
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PaymentType");
+                });
+
+            modelBuilder.Entity("MasterData.Domain.ReferenceType", b =>
+                {
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ReferenceType");
+                });
+
+            modelBuilder.Entity("MasterData.Domain.Unit", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Unit");
+                });
+
+            modelBuilder.Entity("Organization.Domain.Branch", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Branch");
+                });
+
+            modelBuilder.Entity("Organization.Domain.Shift", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<TimeSpan>("End")
+                        .HasColumnType("time");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<TimeSpan>("Start")
+                        .HasColumnType("time");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Shift");
+                });
+
+            modelBuilder.Entity("Organization.Domain.Table", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("NumberOfPeople")
+                        .HasColumnType("int");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Table");
+                });
+
+            modelBuilder.Entity("Parties.Domain.Dealer", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long?>("AccountId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Address")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<long?>("CityId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("CountryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("DealerGroupId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("DistrictId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Phone")
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccountId");
+
+                    b.HasIndex("CityId");
+
+                    b.HasIndex("CountryId");
+
+                    b.HasIndex("DealerGroupId");
+
+                    b.HasIndex("DistrictId");
+
+                    b.ToTable("Dealer");
+                });
+
+            modelBuilder.Entity("Parties.Domain.DealerGroup", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DealerGroup");
+                });
+
+            modelBuilder.Entity("Purchasing.Domain.PurchaseOrder", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long?>("BranchId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("CreateUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("DealerId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("Discount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("DiscountType")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("HasJournal")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("InvoiceId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifyDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("ModifyUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("Net")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Posted")
+                        .HasColumnType("bit");
+
+                    b.Property<long?>("PurchaseRequisitionId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Review")
+                        .HasColumnType("bit");
+
+                    b.Property<long?>("ShiftId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Tax")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("TaxType")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Total")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DealerId");
+
+                    b.HasIndex("PurchaseRequisitionId");
+
+                    b.ToTable("PurchaseOrder");
+                });
+
+            modelBuilder.Entity("Purchasing.Domain.PurchaseOrderProduct", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("PurchaseOrderId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("Quantity")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long>("RowNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Total")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("UnitId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PurchaseOrderId");
+
+                    b.HasIndex("UnitId");
+
+                    b.ToTable("PurchaseOrderProduct");
+                });
+
+            modelBuilder.Entity("Purchasing.Domain.PurchaseRequisition", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long?>("BranchId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("CreateUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("HasJournal")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifyDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("ModifyUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Posted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Review")
+                        .HasColumnType("bit");
+
+                    b.Property<long?>("ShiftId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PurchaseRequisition");
+                });
+
+            modelBuilder.Entity("Purchasing.Domain.PurchaseRequisitionProduct", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("PurchaseRequisitionId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("Quantity")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long>("RowNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("UnitId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PurchaseRequisitionId");
+
+                    b.HasIndex("UnitId");
+
+                    b.ToTable("PurchaseRequisitionProduct");
+                });
+
+            modelBuilder.Entity("Sales.Domain.Invoice", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long?>("BranchId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("CreateUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("Credit")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("CreditByDefaultCurrency")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long>("CurrencyId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("DealerId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("Discount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("DiscountType")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("HasJournal")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifyDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("ModifyUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("Net")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("NetByDefaultCurrency")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<decimal>("Paid")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("PaymentTypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Posted")
+                        .HasColumnType("bit");
+
+                    b.Property<decimal>("Rate")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Remaining")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<bool>("Review")
+                        .HasColumnType("bit");
+
+                    b.Property<decimal>("Service")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("ServiceType")
+                        .HasColumnType("int");
+
+                    b.Property<long?>("ShiftId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long?>("StockId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("Tax")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("TaxType")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Total")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long?>("TransactionId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BranchId");
+
+                    b.HasIndex("CreateUserId");
+
+                    b.HasIndex("CurrencyId");
+
+                    b.HasIndex("DealerId");
+
+                    b.HasIndex("ModifyUserId");
+
+                    b.HasIndex("PaymentTypeId");
+
+                    b.HasIndex("ShiftId");
+
+                    b.HasIndex("StockId");
+
+                    b.HasIndex("TransactionId");
+
+                    b.ToTable("Invoice");
+                });
+
+            modelBuilder.Entity("Sales.Domain.InvoiceProduct", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("Discount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("InvoiceId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Net")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("Quantity")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long>("RowNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("Service")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long?>("StockId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("Tax")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Total")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("UnitId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InvoiceId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("StockId");
+
+                    b.HasIndex("UnitId");
+
+                    b.ToTable("InvoiceProduct");
+                });
+
+            modelBuilder.Entity("Sales.Domain.InvoiceType", b =>
+                {
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Group")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Icon")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("InOut")
+                        .HasColumnType("int");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("InvoiceType");
+                });
+
+            modelBuilder.Entity("Sales.Domain.Order", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long?>("BranchId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("CloseTable")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("CreateUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("DealerId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("Discount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("DiscountType")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("HasJournal")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("InvoiceId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifyDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("ModifyUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("Net")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Posted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Review")
+                        .HasColumnType("bit");
+
+                    b.Property<decimal>("Service")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("ServiceType")
+                        .HasColumnType("int");
+
+                    b.Property<long?>("ShiftId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long?>("TableId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("Tax")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("TaxType")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Total")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BranchId");
+
+                    b.HasIndex("CreateUserId");
+
+                    b.HasIndex("DealerId");
+
+                    b.HasIndex("InvoiceId");
+
+                    b.HasIndex("ModifyUserId");
+
+                    b.HasIndex("ShiftId");
+
+                    b.HasIndex("TableId");
+
+                    b.ToTable("Order");
+                });
+
+            modelBuilder.Entity("Sales.Domain.OrderProduct", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("Discount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Net")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("OrderId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("Quantity")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long>("RowNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("Service")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Tax")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Total")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("UnitId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("UnitId");
+
+                    b.ToTable("OrderProduct");
+                });
+
             modelBuilder.Entity("Treasury.Domain.Bank", b =>
                 {
                     b.Property<long>("Id")
@@ -314,47 +3021,6 @@ namespace Infrastructure.Migrations
                     b.ToTable("BankBranch");
                 });
 
-            modelBuilder.Entity("Organization.Domain.Branch", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("CodeNumber")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("Hide")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ImgPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MaskText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<long>("ParentId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<long>("TypeId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Branch");
-                });
-
             modelBuilder.Entity("Treasury.Domain.CashBox", b =>
                 {
                     b.Property<long>("Id")
@@ -416,361 +3082,6 @@ namespace Infrastructure.Migrations
                     b.HasIndex("KeeperUserId");
 
                     b.ToTable("CashBox");
-                });
-
-            modelBuilder.Entity("MasterData.Domain.City", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("CodeNumber")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("CountryId")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("Hide")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ImgPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MaskText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<long>("ParentId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<long>("TypeId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CountryId");
-
-                    b.ToTable("City");
-                });
-
-            modelBuilder.Entity("MasterData.Domain.Classification", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<bool>("BeManufactured")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("BePurchased")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("BeSold")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("CodeNumber")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("Hide")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ImgPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MaskText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<long>("ParentId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<long>("TypeId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Classification");
-                });
-
-            modelBuilder.Entity("MasterData.Domain.Country", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("CodeNumber")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("Hide")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ImgPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MaskText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<long>("ParentId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<long>("TypeId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Country");
-                });
-
-            modelBuilder.Entity("MasterData.Domain.Currency", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("CodeNumber")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("Hide")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ImgPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsDefault")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("MaskText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<long>("ParentId")
-                        .HasColumnType("bigint");
-
-                    b.Property<decimal>("Rate")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<long>("TypeId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Currency");
-                });
-
-            modelBuilder.Entity("Sales.Domain.Dealer", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<long?>("AccountId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Address")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<long?>("CityId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("CodeNumber")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("CountryId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("DealerGroupId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("DistrictId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.Property<bool>("Hide")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ImgPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MaskText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("ParentId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Phone")
-                        .HasMaxLength(25)
-                        .HasColumnType("nvarchar(25)");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<long>("TypeId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AccountId");
-
-                    b.HasIndex("CityId");
-
-                    b.HasIndex("CountryId");
-
-                    b.HasIndex("DealerGroupId");
-
-                    b.HasIndex("DistrictId");
-
-                    b.ToTable("Dealer");
-                });
-
-            modelBuilder.Entity("Sales.Domain.DealerGroup", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("CodeNumber")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("Hide")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ImgPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MaskText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<long>("ParentId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<long>("TypeId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DealerGroup");
-                });
-
-            modelBuilder.Entity("MasterData.Domain.District", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<long?>("CityId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("CodeNumber")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("CountryId")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("Hide")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ImgPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MaskText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<long>("ParentId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<long>("TypeId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CityId");
-
-                    b.HasIndex("CountryId");
-
-                    b.ToTable("District");
                 });
 
             modelBuilder.Entity("Treasury.Domain.Financial", b =>
@@ -1174,982 +3485,6 @@ namespace Infrastructure.Migrations
                     b.ToTable("FinancialType");
                 });
 
-            modelBuilder.Entity("Accounting.Domain.FiscalPeriod", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("CodeNumber")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("FiscalPeriodStatus")
-                        .HasColumnType("int");
-
-                    b.Property<long>("FiscalYearId")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("Hide")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ImgPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MaskText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("ParentId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("PeriodNumber")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<long>("TypeId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FiscalYearId");
-
-                    b.ToTable("FiscalPeriod");
-                });
-
-            modelBuilder.Entity("Accounting.Domain.FiscalYear", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("CodeNumber")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("FiscalYearStatus")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Hide")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ImgPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsCurrent")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("MaskText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("ParentId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<long>("TypeId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("FiscalYear");
-                });
-
-            modelBuilder.Entity("Inventory.Domain.Inventory", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<long?>("BranchId")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("Closed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("CodeNumber")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long>("CreateUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("HasAdjustment")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("HasJournal")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Hide")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ImgPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MaskText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("ModifyDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long?>("ModifyUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Notes")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<long>("ParentId")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("Posted")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Review")
-                        .HasColumnType("bit");
-
-                    b.Property<long?>("ShiftId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<long?>("StockId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("TypeId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("UserId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BranchId");
-
-                    b.HasIndex("CreateUserId");
-
-                    b.HasIndex("ModifyUserId");
-
-                    b.HasIndex("ShiftId");
-
-                    b.HasIndex("StockId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Inventory");
-                });
-
-            modelBuilder.Entity("Inventory.Domain.InventoryProduct", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<decimal>("ActualBalance")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("CalcBalance")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("CodeNumber")
-                        .HasColumnType("bigint");
-
-                    b.Property<decimal>("DiffQuantity")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<bool>("Hide")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ImgPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("InventoryId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("MaskText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Notes")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("ParentId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("ProductId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("RowNumber")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<long>("TypeId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("UnitId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("InventoryId");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasIndex("UnitId");
-
-                    b.ToTable("InventoryProduct");
-                });
-
-            modelBuilder.Entity("Sales.Domain.Invoice", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<long?>("BranchId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("CodeNumber")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long>("CreateUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<decimal>("Credit")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("CreditByDefaultCurrency")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<long>("CurrencyId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long>("DealerId")
-                        .HasColumnType("bigint");
-
-                    b.Property<decimal>("Discount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("DiscountType")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("HasJournal")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Hide")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ImgPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MaskText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("ModifyDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long?>("ModifyUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<decimal>("Net")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("NetByDefaultCurrency")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Notes")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<decimal>("Paid")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<long>("ParentId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("PaymentTypeId")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("Posted")
-                        .HasColumnType("bit");
-
-                    b.Property<decimal>("Rate")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("Remaining")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<bool>("Review")
-                        .HasColumnType("bit");
-
-                    b.Property<decimal>("Service")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("ServiceType")
-                        .HasColumnType("int");
-
-                    b.Property<long?>("ShiftId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<long?>("StockId")
-                        .HasColumnType("bigint");
-
-                    b.Property<decimal>("Tax")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("TaxType")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Total")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<long?>("TransactionId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("TypeId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BranchId");
-
-                    b.HasIndex("CreateUserId");
-
-                    b.HasIndex("CurrencyId");
-
-                    b.HasIndex("DealerId");
-
-                    b.HasIndex("ModifyUserId");
-
-                    b.HasIndex("PaymentTypeId");
-
-                    b.HasIndex("ShiftId");
-
-                    b.HasIndex("StockId");
-
-                    b.HasIndex("TransactionId");
-
-                    b.ToTable("Invoice");
-                });
-
-            modelBuilder.Entity("Sales.Domain.InvoiceProduct", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("CodeNumber")
-                        .HasColumnType("bigint");
-
-                    b.Property<decimal>("Discount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<bool>("Hide")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ImgPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("InvoiceId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("MaskText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Net")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Notes")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("ParentId")
-                        .HasColumnType("bigint");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<long>("ProductId")
-                        .HasColumnType("bigint");
-
-                    b.Property<decimal>("Quantity")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<long>("RowNumber")
-                        .HasColumnType("bigint");
-
-                    b.Property<decimal>("Service")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<long?>("StockId")
-                        .HasColumnType("bigint");
-
-                    b.Property<decimal>("Tax")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("Total")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<long>("TypeId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("UnitId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("InvoiceId");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasIndex("StockId");
-
-                    b.HasIndex("UnitId");
-
-                    b.ToTable("InvoiceProduct");
-                });
-
-            modelBuilder.Entity("Sales.Domain.InvoiceType", b =>
-                {
-                    b.Property<long>("Id")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("CodeNumber")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Group")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Hide")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Icon")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ImgPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("InOut")
-                        .HasColumnType("int");
-
-                    b.Property<string>("MaskText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<long>("ParentId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<long>("TypeId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("InvoiceType");
-                });
-
-            modelBuilder.Entity("Accounting.Domain.Journal", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<long?>("BranchId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("CodeNumber")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long>("CreateUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("CurrencyId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long>("FiscalPeriodId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("FiscalYearId")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("HasJournal")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Hide")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ImgPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("JournalTypeId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("MaskText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("ModifyDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long?>("ModifyUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Note")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long?>("OriginalJournalId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("ParentId")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("Posted")
-                        .HasColumnType("bit");
-
-                    b.Property<decimal>("Rate")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("RefranceCode")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("RefranceId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("RefranceTable")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("RefranceTypeId")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("Review")
-                        .HasColumnType("bit");
-
-                    b.Property<long?>("ShiftId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<long>("TypeId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BranchId");
-
-                    b.HasIndex("CreateUserId");
-
-                    b.HasIndex("CurrencyId");
-
-                    b.HasIndex("Date");
-
-                    b.HasIndex("FiscalPeriodId");
-
-                    b.HasIndex("FiscalYearId");
-
-                    b.HasIndex("JournalTypeId");
-
-                    b.HasIndex("ModifyUserId");
-
-                    b.HasIndex("OriginalJournalId")
-                        .IsUnique()
-                        .HasFilter("[OriginalJournalId] IS NOT NULL");
-
-                    b.HasIndex("ShiftId");
-
-                    b.ToTable("Journal");
-                });
-
-            modelBuilder.Entity("Accounting.Domain.JournalItem", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<long>("AccountId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("CodeNumber")
-                        .HasColumnType("bigint");
-
-                    b.Property<decimal>("Credit")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("Debit")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<bool>("Hide")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ImgPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("JournalId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("MaskText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Note")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("ParentId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<long>("TypeId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AccountId");
-
-                    b.HasIndex("JournalId");
-
-                    b.ToTable("JournalItem");
-                });
-
-            modelBuilder.Entity("Accounting.Domain.JournalType", b =>
-                {
-                    b.Property<long>("Id")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("CodeNumber")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Group")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Hide")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Icon")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ImgPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsOpeningBlance")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("MaskText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<long>("ParentId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<long>("TypeId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("JournalType");
-                });
-
-            modelBuilder.Entity("Sales.Domain.Order", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<long?>("BranchId")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("CloseTable")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("CodeNumber")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long>("CreateUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long?>("DealerId")
-                        .HasColumnType("bigint");
-
-                    b.Property<decimal>("Discount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("DiscountType")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("HasJournal")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Hide")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ImgPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long?>("InvoiceId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("MaskText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("ModifyDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long?>("ModifyUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<decimal>("Net")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Notes")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<long>("ParentId")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("Posted")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Review")
-                        .HasColumnType("bit");
-
-                    b.Property<decimal>("Service")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("ServiceType")
-                        .HasColumnType("int");
-
-                    b.Property<long?>("ShiftId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<long?>("TableId")
-                        .HasColumnType("bigint");
-
-                    b.Property<decimal>("Tax")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("TaxType")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Total")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<long>("TypeId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BranchId");
-
-                    b.HasIndex("CreateUserId");
-
-                    b.HasIndex("DealerId");
-
-                    b.HasIndex("InvoiceId");
-
-                    b.HasIndex("ModifyUserId");
-
-                    b.HasIndex("ShiftId");
-
-                    b.HasIndex("TableId");
-
-                    b.ToTable("Order");
-                });
-
-            modelBuilder.Entity("Sales.Domain.OrderProduct", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("CodeNumber")
-                        .HasColumnType("bigint");
-
-                    b.Property<decimal>("Discount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<bool>("Hide")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ImgPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MaskText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Net")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Notes")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("OrderId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("ParentId")
-                        .HasColumnType("bigint");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<long>("ProductId")
-                        .HasColumnType("bigint");
-
-                    b.Property<decimal>("Quantity")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<long>("RowNumber")
-                        .HasColumnType("bigint");
-
-                    b.Property<decimal>("Service")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Tax")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("Total")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<long>("TypeId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("UnitId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrderId");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasIndex("UnitId");
-
-                    b.ToTable("OrderProduct");
-                });
-
             modelBuilder.Entity("Treasury.Domain.Outlay", b =>
                 {
                     b.Property<long>("Id")
@@ -2191,1042 +3526,6 @@ namespace Infrastructure.Migrations
                     b.ToTable("Outlay");
                 });
 
-            modelBuilder.Entity("MasterData.Domain.PaymentType", b =>
-                {
-                    b.Property<long>("Id")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("CodeNumber")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("Hide")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ImgPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MaskText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<long>("ParentId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<long>("TypeId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("PaymentType");
-                });
-
-            modelBuilder.Entity("Administration.Domain.Permission", b =>
-                {
-                    b.Property<long>("Id")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("CodeNumber")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("Hide")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ImgPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Key")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MaskText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("ParentId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<long>("TypeId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Permission");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Preference", b =>
-                {
-                    b.Property<long>("Id")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("CodeNumber")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("Hide")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ImgPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Key")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MaskText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("ParentId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Reference")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<long>("TypeId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("UserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Value")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Preference");
-                });
-
-            modelBuilder.Entity("Inventory.Domain.Product", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("Barcode")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("ClassificationId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("CodeNumber")
-                        .HasColumnType("bigint");
-
-                    b.Property<decimal>("Cost")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<long?>("DealerId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Hide")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ImgPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MaskText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Nickname")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("ParentId")
-                        .HasColumnType("bigint");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Recipe")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<long>("TypeId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ClassificationId");
-
-                    b.HasIndex("DealerId");
-
-                    b.ToTable("Product");
-                });
-
-            modelBuilder.Entity("Inventory.Domain.ProductPropertyElement", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("CodeNumber")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("Hide")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ImgPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsChecked")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("MaskText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("ParentId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("ProductId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("PropertyElementId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("PropertyId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<long>("TypeId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasIndex("PropertyElementId");
-
-                    b.HasIndex("PropertyId");
-
-                    b.ToTable("ProductPropertyElement");
-                });
-
-            modelBuilder.Entity("Inventory.Domain.ProductRecipe", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("CodeNumber")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("Hide")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ImgPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MaskText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("ParentId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("ProductId")
-                        .HasColumnType("bigint");
-
-                    b.Property<decimal>("Quantity")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<long>("RecipeId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<long>("TypeId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("UnitId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("ProductRecipe");
-                });
-
-            modelBuilder.Entity("Inventory.Domain.ProductUnit", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("CodeNumber")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("DefaultUnit")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Hide")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ImgPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MaskText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("ParentId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("ProductId")
-                        .HasColumnType("bigint");
-
-                    b.Property<decimal>("Rate")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<long>("TypeId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("UnitId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasIndex("UnitId");
-
-                    b.ToTable("ProductUnit");
-                });
-
-            modelBuilder.Entity("Inventory.Domain.Property", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("CodeNumber")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("Hide")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ImgPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MaskText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<long>("ParentId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<long>("TypeId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Property");
-                });
-
-            modelBuilder.Entity("Inventory.Domain.PropertyElement", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("CodeNumber")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("Hide")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ImgPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MaskText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<long>("ParentId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("PropertyId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<long>("TypeId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PropertyId");
-
-                    b.ToTable("PropertyElement");
-                });
-
-            modelBuilder.Entity("MasterData.Domain.ReferenceType", b =>
-                {
-                    b.Property<long>("Id")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("CodeNumber")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("Hide")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ImgPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MaskText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<long>("ParentId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<long>("TypeId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ReferenceType");
-                });
-
-            modelBuilder.Entity("Administration.Domain.Role", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("CodeNumber")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("Hide")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ImgPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MaskText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<long>("ParentId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<long>("TypeId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Role");
-                });
-
-            modelBuilder.Entity("Administration.Domain.RolePermission", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("CodeNumber")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("Hide")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ImgPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MaskText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("ParentId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("PermissionId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("RoleId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<long>("TypeId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PermissionId");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("RolePermission");
-                });
-
-            modelBuilder.Entity("Organization.Domain.Shift", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("CodeNumber")
-                        .HasColumnType("bigint");
-
-                    b.Property<TimeSpan>("End")
-                        .HasColumnType("time");
-
-                    b.Property<bool>("Hide")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ImgPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MaskText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<long>("ParentId")
-                        .HasColumnType("bigint");
-
-                    b.Property<TimeSpan>("Start")
-                        .HasColumnType("time");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<long>("TypeId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Shift");
-                });
-
-            modelBuilder.Entity("Inventory.Domain.Stock", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<long?>("AccountId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("BranchId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("CodeNumber")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("Hide")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ImgPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MaskText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<long>("ParentId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<long>("TypeId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AccountId");
-
-                    b.HasIndex("BranchId");
-
-                    b.ToTable("Stock");
-                });
-
-            modelBuilder.Entity("Organization.Domain.Table", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("CodeNumber")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Hide")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ImgPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MaskText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<int>("NumberOfPeople")
-                        .HasColumnType("int");
-
-                    b.Property<long>("ParentId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<long>("TypeId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Table");
-                });
-
-            modelBuilder.Entity("Inventory.Domain.Transaction", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<long?>("BranchId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("CodeNumber")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long>("CreateUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long?>("DealerId")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("HasJournal")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Hide")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ImgPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long?>("InventoryId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("MaskText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("ModifyDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long?>("ModifyUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Notes")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<long?>("OrderId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("ParentId")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("Posted")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Review")
-                        .HasColumnType("bit");
-
-                    b.Property<long?>("ShiftId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<long?>("StockId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("ToStockId")
-                        .HasColumnType("bigint");
-
-                    b.Property<decimal>("Total")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<long>("TypeId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BranchId");
-
-                    b.HasIndex("CreateUserId");
-
-                    b.HasIndex("DealerId");
-
-                    b.HasIndex("InventoryId");
-
-                    b.HasIndex("ModifyUserId");
-
-                    b.HasIndex("OrderId");
-
-                    b.HasIndex("ShiftId");
-
-                    b.HasIndex("StockId");
-
-                    b.HasIndex("ToStockId");
-
-                    b.ToTable("Transaction");
-                });
-
-            modelBuilder.Entity("Inventory.Domain.TransactionProduct", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("CodeNumber")
-                        .HasColumnType("bigint");
-
-                    b.Property<decimal>("Cost")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<bool>("Hide")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ImgPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MaskText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Notes")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("ParentId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("ProductId")
-                        .HasColumnType("bigint");
-
-                    b.Property<decimal>("Quantity")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<long>("RowNumber")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<long?>("StockId")
-                        .HasColumnType("bigint");
-
-                    b.Property<decimal>("Total")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<long>("TransactionId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("TypeId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("UnitId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasIndex("StockId");
-
-                    b.HasIndex("TransactionId");
-
-                    b.HasIndex("UnitId");
-
-                    b.ToTable("TransactionProduct");
-                });
-
-            modelBuilder.Entity("Inventory.Domain.TransactionType", b =>
-                {
-                    b.Property<long>("Id")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("CodeNumber")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("Hide")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Icon")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ImgPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("InOut")
-                        .HasColumnType("int");
-
-                    b.Property<string>("MaskText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<long>("ParentId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<long>("TypeId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TransactionType");
-                });
-
-            modelBuilder.Entity("MasterData.Domain.Unit", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("CodeNumber")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("Hide")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ImgPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MaskText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<long>("ParentId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<long>("TypeId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Unit");
-                });
-
-            modelBuilder.Entity("Administration.Domain.User", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<long?>("BranchId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("CodeNumber")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("Hide")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ImgPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("LoginUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("MaskText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("ParentId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Password")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("RoleId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<long>("TypeId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BranchId");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("User");
-                });
-
             modelBuilder.Entity("Accounting.Domain.Account", b =>
                 {
                     b.HasOne("Accounting.Domain.AccountType", "AccountType")
@@ -3236,6 +3535,626 @@ namespace Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("AccountType");
+                });
+
+            modelBuilder.Entity("Accounting.Domain.FiscalPeriod", b =>
+                {
+                    b.HasOne("Accounting.Domain.FiscalYear", "FiscalYear")
+                        .WithMany("Periods")
+                        .HasForeignKey("FiscalYearId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("FiscalYear");
+                });
+
+            modelBuilder.Entity("Accounting.Domain.Journal", b =>
+                {
+                    b.HasOne("Organization.Domain.Branch", null)
+                        .WithMany()
+                        .HasForeignKey("BranchId");
+
+                    b.HasOne("Administration.Domain.User", null)
+                        .WithMany()
+                        .HasForeignKey("CreateUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MasterData.Domain.Currency", "Currency")
+                        .WithMany()
+                        .HasForeignKey("CurrencyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Accounting.Domain.FiscalPeriod", "FiscalPeriod")
+                        .WithMany()
+                        .HasForeignKey("FiscalPeriodId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Accounting.Domain.FiscalYear", "FiscalYear")
+                        .WithMany()
+                        .HasForeignKey("FiscalYearId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Accounting.Domain.JournalType", "JournalType")
+                        .WithMany()
+                        .HasForeignKey("JournalTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Administration.Domain.User", null)
+                        .WithMany()
+                        .HasForeignKey("ModifyUserId");
+
+                    b.HasOne("Accounting.Domain.Journal", "OriginalJournal")
+                        .WithOne("ReversalJournal")
+                        .HasForeignKey("Accounting.Domain.Journal", "OriginalJournalId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Organization.Domain.Shift", null)
+                        .WithMany()
+                        .HasForeignKey("ShiftId");
+
+                    b.Navigation("Currency");
+
+                    b.Navigation("FiscalPeriod");
+
+                    b.Navigation("FiscalYear");
+
+                    b.Navigation("JournalType");
+
+                    b.Navigation("OriginalJournal");
+                });
+
+            modelBuilder.Entity("Accounting.Domain.JournalItem", b =>
+                {
+                    b.HasOne("Accounting.Domain.Account", "Account")
+                        .WithMany()
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Accounting.Domain.Journal", "Journal")
+                        .WithMany("JournalItems")
+                        .HasForeignKey("JournalId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Account");
+
+                    b.Navigation("Journal");
+                });
+
+            modelBuilder.Entity("Administration.Domain.RolePermission", b =>
+                {
+                    b.HasOne("Administration.Domain.Permission", "Permission")
+                        .WithMany()
+                        .HasForeignKey("PermissionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Administration.Domain.Role", "Role")
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Permission");
+
+                    b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("Administration.Domain.User", b =>
+                {
+                    b.HasOne("Organization.Domain.Branch", "Branch")
+                        .WithMany()
+                        .HasForeignKey("BranchId");
+
+                    b.HasOne("Administration.Domain.Role", "Role")
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Branch");
+
+                    b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("Inventory.Domain.Inventory", b =>
+                {
+                    b.HasOne("Organization.Domain.Branch", null)
+                        .WithMany()
+                        .HasForeignKey("BranchId");
+
+                    b.HasOne("Administration.Domain.User", null)
+                        .WithMany()
+                        .HasForeignKey("CreateUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Administration.Domain.User", null)
+                        .WithMany()
+                        .HasForeignKey("ModifyUserId");
+
+                    b.HasOne("Organization.Domain.Shift", null)
+                        .WithMany()
+                        .HasForeignKey("ShiftId");
+
+                    b.HasOne("Inventory.Domain.Stock", "Stock")
+                        .WithMany()
+                        .HasForeignKey("StockId");
+
+                    b.HasOne("Administration.Domain.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Stock");
+                });
+
+            modelBuilder.Entity("Inventory.Domain.InventoryProduct", b =>
+                {
+                    b.HasOne("Inventory.Domain.Inventory", "Inventory")
+                        .WithMany("InventoryProducts")
+                        .HasForeignKey("InventoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Inventory.Domain.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MasterData.Domain.Unit", "Unit")
+                        .WithMany()
+                        .HasForeignKey("UnitId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Inventory");
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Unit");
+                });
+
+            modelBuilder.Entity("Inventory.Domain.Product", b =>
+                {
+                    b.HasOne("MasterData.Domain.Classification", "Classification")
+                        .WithMany()
+                        .HasForeignKey("ClassificationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Parties.Domain.Dealer", "Dealer")
+                        .WithMany()
+                        .HasForeignKey("DealerId");
+
+                    b.Navigation("Classification");
+
+                    b.Navigation("Dealer");
+                });
+
+            modelBuilder.Entity("Inventory.Domain.ProductPropertyElement", b =>
+                {
+                    b.HasOne("Inventory.Domain.Product", "Product")
+                        .WithMany("ProductPropertyElements")
+                        .HasForeignKey("ProductId");
+
+                    b.HasOne("Inventory.Domain.PropertyElement", "PropertyElement")
+                        .WithMany()
+                        .HasForeignKey("PropertyElementId");
+
+                    b.HasOne("Inventory.Domain.Property", "Property")
+                        .WithMany()
+                        .HasForeignKey("PropertyId");
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Property");
+
+                    b.Navigation("PropertyElement");
+                });
+
+            modelBuilder.Entity("Inventory.Domain.ProductRecipe", b =>
+                {
+                    b.HasOne("Inventory.Domain.Product", null)
+                        .WithMany("ProductRecipes")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Inventory.Domain.ProductUnit", b =>
+                {
+                    b.HasOne("Inventory.Domain.Product", "Product")
+                        .WithMany("ProductUnits")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MasterData.Domain.Unit", "Unit")
+                        .WithMany()
+                        .HasForeignKey("UnitId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Unit");
+                });
+
+            modelBuilder.Entity("Inventory.Domain.PropertyElement", b =>
+                {
+                    b.HasOne("Inventory.Domain.Property", "Property")
+                        .WithMany("PropertyElements")
+                        .HasForeignKey("PropertyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Property");
+                });
+
+            modelBuilder.Entity("Inventory.Domain.Stock", b =>
+                {
+                    b.HasOne("Accounting.Domain.Account", "Account")
+                        .WithMany()
+                        .HasForeignKey("AccountId");
+
+                    b.HasOne("Organization.Domain.Branch", "Branch")
+                        .WithMany()
+                        .HasForeignKey("BranchId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Account");
+
+                    b.Navigation("Branch");
+                });
+
+            modelBuilder.Entity("Inventory.Domain.Transaction", b =>
+                {
+                    b.HasOne("Organization.Domain.Branch", null)
+                        .WithMany()
+                        .HasForeignKey("BranchId");
+
+                    b.HasOne("Administration.Domain.User", null)
+                        .WithMany()
+                        .HasForeignKey("CreateUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Parties.Domain.Dealer", "Dealer")
+                        .WithMany()
+                        .HasForeignKey("DealerId");
+
+                    b.HasOne("Inventory.Domain.Inventory", "Inventory")
+                        .WithMany("Transactions")
+                        .HasForeignKey("InventoryId");
+
+                    b.HasOne("Administration.Domain.User", null)
+                        .WithMany()
+                        .HasForeignKey("ModifyUserId");
+
+                    b.HasOne("Sales.Domain.Order", "Order")
+                        .WithMany()
+                        .HasForeignKey("OrderId");
+
+                    b.HasOne("Organization.Domain.Shift", null)
+                        .WithMany()
+                        .HasForeignKey("ShiftId");
+
+                    b.HasOne("Inventory.Domain.Stock", "Stock")
+                        .WithMany()
+                        .HasForeignKey("StockId");
+
+                    b.HasOne("Inventory.Domain.Stock", "ToStock")
+                        .WithMany()
+                        .HasForeignKey("ToStockId");
+
+                    b.Navigation("Dealer");
+
+                    b.Navigation("Inventory");
+
+                    b.Navigation("Order");
+
+                    b.Navigation("Stock");
+
+                    b.Navigation("ToStock");
+                });
+
+            modelBuilder.Entity("Inventory.Domain.TransactionProduct", b =>
+                {
+                    b.HasOne("Inventory.Domain.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Inventory.Domain.Stock", "Stock")
+                        .WithMany()
+                        .HasForeignKey("StockId");
+
+                    b.HasOne("Inventory.Domain.Transaction", "Transaction")
+                        .WithMany("TransactionProducts")
+                        .HasForeignKey("TransactionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MasterData.Domain.Unit", "Unit")
+                        .WithMany()
+                        .HasForeignKey("UnitId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Stock");
+
+                    b.Navigation("Transaction");
+
+                    b.Navigation("Unit");
+                });
+
+            modelBuilder.Entity("MasterData.Domain.City", b =>
+                {
+                    b.HasOne("MasterData.Domain.Country", "Country")
+                        .WithMany()
+                        .HasForeignKey("CountryId");
+
+                    b.Navigation("Country");
+                });
+
+            modelBuilder.Entity("MasterData.Domain.District", b =>
+                {
+                    b.HasOne("MasterData.Domain.City", "City")
+                        .WithMany()
+                        .HasForeignKey("CityId");
+
+                    b.HasOne("MasterData.Domain.Country", "Country")
+                        .WithMany()
+                        .HasForeignKey("CountryId");
+
+                    b.Navigation("City");
+
+                    b.Navigation("Country");
+                });
+
+            modelBuilder.Entity("Parties.Domain.Dealer", b =>
+                {
+                    b.HasOne("Accounting.Domain.Account", "Account")
+                        .WithMany()
+                        .HasForeignKey("AccountId");
+
+                    b.HasOne("MasterData.Domain.City", "City")
+                        .WithMany()
+                        .HasForeignKey("CityId");
+
+                    b.HasOne("MasterData.Domain.Country", "Country")
+                        .WithMany()
+                        .HasForeignKey("CountryId");
+
+                    b.HasOne("Parties.Domain.DealerGroup", "DealerGroup")
+                        .WithMany()
+                        .HasForeignKey("DealerGroupId");
+
+                    b.HasOne("MasterData.Domain.District", "District")
+                        .WithMany()
+                        .HasForeignKey("DistrictId");
+
+                    b.Navigation("Account");
+
+                    b.Navigation("City");
+
+                    b.Navigation("Country");
+
+                    b.Navigation("DealerGroup");
+
+                    b.Navigation("District");
+                });
+
+            modelBuilder.Entity("Purchasing.Domain.PurchaseOrder", b =>
+                {
+                    b.HasOne("Parties.Domain.Dealer", "Dealer")
+                        .WithMany()
+                        .HasForeignKey("DealerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Purchasing.Domain.PurchaseRequisition", "PurchaseRequisition")
+                        .WithMany()
+                        .HasForeignKey("PurchaseRequisitionId");
+
+                    b.Navigation("Dealer");
+
+                    b.Navigation("PurchaseRequisition");
+                });
+
+            modelBuilder.Entity("Purchasing.Domain.PurchaseOrderProduct", b =>
+                {
+                    b.HasOne("Purchasing.Domain.PurchaseOrder", "PurchaseOrder")
+                        .WithMany("PurchaseOrderProducts")
+                        .HasForeignKey("PurchaseOrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MasterData.Domain.Unit", "Unit")
+                        .WithMany()
+                        .HasForeignKey("UnitId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PurchaseOrder");
+
+                    b.Navigation("Unit");
+                });
+
+            modelBuilder.Entity("Purchasing.Domain.PurchaseRequisitionProduct", b =>
+                {
+                    b.HasOne("Purchasing.Domain.PurchaseRequisition", "PurchaseRequisition")
+                        .WithMany("PurchaseRequisitionProducts")
+                        .HasForeignKey("PurchaseRequisitionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MasterData.Domain.Unit", "Unit")
+                        .WithMany()
+                        .HasForeignKey("UnitId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PurchaseRequisition");
+
+                    b.Navigation("Unit");
+                });
+
+            modelBuilder.Entity("Sales.Domain.Invoice", b =>
+                {
+                    b.HasOne("Organization.Domain.Branch", null)
+                        .WithMany()
+                        .HasForeignKey("BranchId");
+
+                    b.HasOne("Administration.Domain.User", null)
+                        .WithMany()
+                        .HasForeignKey("CreateUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MasterData.Domain.Currency", "Currency")
+                        .WithMany()
+                        .HasForeignKey("CurrencyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Parties.Domain.Dealer", "Dealer")
+                        .WithMany()
+                        .HasForeignKey("DealerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Administration.Domain.User", null)
+                        .WithMany()
+                        .HasForeignKey("ModifyUserId");
+
+                    b.HasOne("MasterData.Domain.PaymentType", "PaymentType")
+                        .WithMany()
+                        .HasForeignKey("PaymentTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Organization.Domain.Shift", null)
+                        .WithMany()
+                        .HasForeignKey("ShiftId");
+
+                    b.HasOne("Inventory.Domain.Stock", null)
+                        .WithMany()
+                        .HasForeignKey("StockId");
+
+                    b.HasOne("Inventory.Domain.Transaction", null)
+                        .WithMany()
+                        .HasForeignKey("TransactionId");
+
+                    b.Navigation("Currency");
+
+                    b.Navigation("Dealer");
+
+                    b.Navigation("PaymentType");
+                });
+
+            modelBuilder.Entity("Sales.Domain.InvoiceProduct", b =>
+                {
+                    b.HasOne("Sales.Domain.Invoice", "Invoice")
+                        .WithMany("InvoiceProducts")
+                        .HasForeignKey("InvoiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Inventory.Domain.Product", null)
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Inventory.Domain.Stock", null)
+                        .WithMany()
+                        .HasForeignKey("StockId");
+
+                    b.HasOne("MasterData.Domain.Unit", "Unit")
+                        .WithMany()
+                        .HasForeignKey("UnitId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Invoice");
+
+                    b.Navigation("Unit");
+                });
+
+            modelBuilder.Entity("Sales.Domain.Order", b =>
+                {
+                    b.HasOne("Organization.Domain.Branch", null)
+                        .WithMany()
+                        .HasForeignKey("BranchId");
+
+                    b.HasOne("Administration.Domain.User", null)
+                        .WithMany()
+                        .HasForeignKey("CreateUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Parties.Domain.Dealer", "Dealer")
+                        .WithMany()
+                        .HasForeignKey("DealerId");
+
+                    b.HasOne("Sales.Domain.Invoice", "Invoice")
+                        .WithMany()
+                        .HasForeignKey("InvoiceId");
+
+                    b.HasOne("Administration.Domain.User", null)
+                        .WithMany()
+                        .HasForeignKey("ModifyUserId");
+
+                    b.HasOne("Organization.Domain.Shift", null)
+                        .WithMany()
+                        .HasForeignKey("ShiftId");
+
+                    b.HasOne("Organization.Domain.Table", "Table")
+                        .WithMany()
+                        .HasForeignKey("TableId");
+
+                    b.Navigation("Dealer");
+
+                    b.Navigation("Invoice");
+
+                    b.Navigation("Table");
+                });
+
+            modelBuilder.Entity("Sales.Domain.OrderProduct", b =>
+                {
+                    b.HasOne("Sales.Domain.Order", "Order")
+                        .WithMany("OrderProducts")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Inventory.Domain.Product", null)
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MasterData.Domain.Unit", "Unit")
+                        .WithMany()
+                        .HasForeignKey("UnitId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+
+                    b.Navigation("Unit");
                 });
 
             modelBuilder.Entity("Treasury.Domain.Bank", b =>
@@ -3346,66 +4265,9 @@ namespace Infrastructure.Migrations
                     b.Navigation("KeeperUser");
                 });
 
-            modelBuilder.Entity("MasterData.Domain.City", b =>
-                {
-                    b.HasOne("MasterData.Domain.Country", "Country")
-                        .WithMany()
-                        .HasForeignKey("CountryId");
-
-                    b.Navigation("Country");
-                });
-
-            modelBuilder.Entity("Sales.Domain.Dealer", b =>
-                {
-                    b.HasOne("Accounting.Domain.Account", "Account")
-                        .WithMany()
-                        .HasForeignKey("AccountId");
-
-                    b.HasOne("MasterData.Domain.City", "City")
-                        .WithMany()
-                        .HasForeignKey("CityId");
-
-                    b.HasOne("MasterData.Domain.Country", "Country")
-                        .WithMany()
-                        .HasForeignKey("CountryId");
-
-                    b.HasOne("Sales.Domain.DealerGroup", "DealerGroup")
-                        .WithMany()
-                        .HasForeignKey("DealerGroupId");
-
-                    b.HasOne("MasterData.Domain.District", "District")
-                        .WithMany()
-                        .HasForeignKey("DistrictId");
-
-                    b.Navigation("Account");
-
-                    b.Navigation("City");
-
-                    b.Navigation("Country");
-
-                    b.Navigation("DealerGroup");
-
-                    b.Navigation("District");
-                });
-
-            modelBuilder.Entity("MasterData.Domain.District", b =>
-                {
-                    b.HasOne("MasterData.Domain.City", "City")
-                        .WithMany()
-                        .HasForeignKey("CityId");
-
-                    b.HasOne("MasterData.Domain.Country", "Country")
-                        .WithMany()
-                        .HasForeignKey("CountryId");
-
-                    b.Navigation("City");
-
-                    b.Navigation("Country");
-                });
-
             modelBuilder.Entity("Treasury.Domain.Financial", b =>
                 {
-                    b.HasOne("Organization.Domain.Branch", "Branch")
+                    b.HasOne("Organization.Domain.Branch", null)
                         .WithMany()
                         .HasForeignKey("BranchId");
 
@@ -3414,7 +4276,7 @@ namespace Infrastructure.Migrations
                         .HasForeignKey("ContraFinancialAccountId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("Administration.Domain.User", "CreateUser")
+                    b.HasOne("Administration.Domain.User", null)
                         .WithMany()
                         .HasForeignKey("CreateUserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3426,7 +4288,7 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Sales.Domain.Dealer", "Dealer")
+                    b.HasOne("Parties.Domain.Dealer", "Dealer")
                         .WithMany()
                         .HasForeignKey("DealerId");
 
@@ -3447,7 +4309,7 @@ namespace Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("JournalId");
 
-                    b.HasOne("Administration.Domain.User", "ModifyUser")
+                    b.HasOne("Administration.Domain.User", null)
                         .WithMany()
                         .HasForeignKey("ModifyUserId");
 
@@ -3461,15 +4323,11 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Organization.Domain.Shift", "Shift")
+                    b.HasOne("Organization.Domain.Shift", null)
                         .WithMany()
                         .HasForeignKey("ShiftId");
 
-                    b.Navigation("Branch");
-
                     b.Navigation("ContraFinancialAccount");
-
-                    b.Navigation("CreateUser");
 
                     b.Navigation("Currency");
 
@@ -3483,13 +4341,9 @@ namespace Infrastructure.Migrations
 
                     b.Navigation("Journal");
 
-                    b.Navigation("ModifyUser");
-
                     b.Navigation("Outlay");
 
                     b.Navigation("PaymentType");
-
-                    b.Navigation("Shift");
                 });
 
             modelBuilder.Entity("Treasury.Domain.FinancialAccount", b =>
@@ -3526,11 +4380,11 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Treasury.Domain.FinancialTransfer", b =>
                 {
-                    b.HasOne("Organization.Domain.Branch", "Branch")
+                    b.HasOne("Organization.Domain.Branch", null)
                         .WithMany()
                         .HasForeignKey("BranchId");
 
-                    b.HasOne("Administration.Domain.User", "CreateUser")
+                    b.HasOne("Administration.Domain.User", null)
                         .WithMany()
                         .HasForeignKey("CreateUserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3548,11 +4402,11 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Administration.Domain.User", "ModifyUser")
+                    b.HasOne("Administration.Domain.User", null)
                         .WithMany()
                         .HasForeignKey("ModifyUserId");
 
-                    b.HasOne("Organization.Domain.Shift", "Shift")
+                    b.HasOne("Organization.Domain.Shift", null)
                         .WithMany()
                         .HasForeignKey("ShiftId");
 
@@ -3562,613 +4416,16 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Branch");
-
-                    b.Navigation("CreateUser");
-
                     b.Navigation("Currency");
 
                     b.Navigation("FromFinancialAccount");
 
-                    b.Navigation("ModifyUser");
-
-                    b.Navigation("Shift");
-
                     b.Navigation("ToFinancialAccount");
-                });
-
-            modelBuilder.Entity("Accounting.Domain.FiscalPeriod", b =>
-                {
-                    b.HasOne("Accounting.Domain.FiscalYear", "FiscalYear")
-                        .WithMany("Periods")
-                        .HasForeignKey("FiscalYearId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("FiscalYear");
-                });
-
-            modelBuilder.Entity("Inventory.Domain.Inventory", b =>
-                {
-                    b.HasOne("Organization.Domain.Branch", "Branch")
-                        .WithMany()
-                        .HasForeignKey("BranchId");
-
-                    b.HasOne("Administration.Domain.User", "CreateUser")
-                        .WithMany()
-                        .HasForeignKey("CreateUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Administration.Domain.User", "ModifyUser")
-                        .WithMany()
-                        .HasForeignKey("ModifyUserId");
-
-                    b.HasOne("Organization.Domain.Shift", "Shift")
-                        .WithMany()
-                        .HasForeignKey("ShiftId");
-
-                    b.HasOne("Inventory.Domain.Stock", "Stock")
-                        .WithMany()
-                        .HasForeignKey("StockId");
-
-                    b.HasOne("Administration.Domain.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("Branch");
-
-                    b.Navigation("CreateUser");
-
-                    b.Navigation("ModifyUser");
-
-                    b.Navigation("Shift");
-
-                    b.Navigation("Stock");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Inventory.Domain.InventoryProduct", b =>
-                {
-                    b.HasOne("Inventory.Domain.Inventory", "Inventory")
-                        .WithMany("InventoryProducts")
-                        .HasForeignKey("InventoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Inventory.Domain.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MasterData.Domain.Unit", "Unit")
-                        .WithMany()
-                        .HasForeignKey("UnitId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Inventory");
-
-                    b.Navigation("Product");
-
-                    b.Navigation("Unit");
-                });
-
-            modelBuilder.Entity("Sales.Domain.Invoice", b =>
-                {
-                    b.HasOne("Organization.Domain.Branch", "Branch")
-                        .WithMany()
-                        .HasForeignKey("BranchId");
-
-                    b.HasOne("Administration.Domain.User", "CreateUser")
-                        .WithMany()
-                        .HasForeignKey("CreateUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MasterData.Domain.Currency", "Currency")
-                        .WithMany()
-                        .HasForeignKey("CurrencyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Sales.Domain.Dealer", "Dealer")
-                        .WithMany()
-                        .HasForeignKey("DealerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Administration.Domain.User", "ModifyUser")
-                        .WithMany()
-                        .HasForeignKey("ModifyUserId");
-
-                    b.HasOne("MasterData.Domain.PaymentType", "PaymentType")
-                        .WithMany()
-                        .HasForeignKey("PaymentTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Organization.Domain.Shift", "Shift")
-                        .WithMany()
-                        .HasForeignKey("ShiftId");
-
-                    b.HasOne("Inventory.Domain.Stock", "Stock")
-                        .WithMany()
-                        .HasForeignKey("StockId");
-
-                    b.HasOne("Inventory.Domain.Transaction", "Transaction")
-                        .WithMany()
-                        .HasForeignKey("TransactionId");
-
-                    b.Navigation("Branch");
-
-                    b.Navigation("CreateUser");
-
-                    b.Navigation("Currency");
-
-                    b.Navigation("Dealer");
-
-                    b.Navigation("ModifyUser");
-
-                    b.Navigation("PaymentType");
-
-                    b.Navigation("Shift");
-
-                    b.Navigation("Stock");
-
-                    b.Navigation("Transaction");
-                });
-
-            modelBuilder.Entity("Sales.Domain.InvoiceProduct", b =>
-                {
-                    b.HasOne("Sales.Domain.Invoice", "Invoice")
-                        .WithMany("InvoiceProducts")
-                        .HasForeignKey("InvoiceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Inventory.Domain.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Inventory.Domain.Stock", "Stock")
-                        .WithMany()
-                        .HasForeignKey("StockId");
-
-                    b.HasOne("MasterData.Domain.Unit", "Unit")
-                        .WithMany()
-                        .HasForeignKey("UnitId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Invoice");
-
-                    b.Navigation("Product");
-
-                    b.Navigation("Stock");
-
-                    b.Navigation("Unit");
-                });
-
-            modelBuilder.Entity("Accounting.Domain.Journal", b =>
-                {
-                    b.HasOne("Organization.Domain.Branch", "Branch")
-                        .WithMany()
-                        .HasForeignKey("BranchId");
-
-                    b.HasOne("Administration.Domain.User", "CreateUser")
-                        .WithMany()
-                        .HasForeignKey("CreateUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MasterData.Domain.Currency", "Currency")
-                        .WithMany()
-                        .HasForeignKey("CurrencyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Accounting.Domain.FiscalPeriod", "FiscalPeriod")
-                        .WithMany()
-                        .HasForeignKey("FiscalPeriodId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Accounting.Domain.FiscalYear", "FiscalYear")
-                        .WithMany()
-                        .HasForeignKey("FiscalYearId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Accounting.Domain.JournalType", "JournalType")
-                        .WithMany()
-                        .HasForeignKey("JournalTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Administration.Domain.User", "ModifyUser")
-                        .WithMany()
-                        .HasForeignKey("ModifyUserId");
-
-                    b.HasOne("Accounting.Domain.Journal", "OriginalJournal")
-                        .WithOne("ReversalJournal")
-                        .HasForeignKey("Accounting.Domain.Journal", "OriginalJournalId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Organization.Domain.Shift", "Shift")
-                        .WithMany()
-                        .HasForeignKey("ShiftId");
-
-                    b.Navigation("Branch");
-
-                    b.Navigation("CreateUser");
-
-                    b.Navigation("Currency");
-
-                    b.Navigation("FiscalPeriod");
-
-                    b.Navigation("FiscalYear");
-
-                    b.Navigation("JournalType");
-
-                    b.Navigation("ModifyUser");
-
-                    b.Navigation("OriginalJournal");
-
-                    b.Navigation("Shift");
-                });
-
-            modelBuilder.Entity("Accounting.Domain.JournalItem", b =>
-                {
-                    b.HasOne("Accounting.Domain.Account", "Account")
-                        .WithMany()
-                        .HasForeignKey("AccountId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Accounting.Domain.Journal", "Journal")
-                        .WithMany("JournalItems")
-                        .HasForeignKey("JournalId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Account");
-
-                    b.Navigation("Journal");
-                });
-
-            modelBuilder.Entity("Sales.Domain.Order", b =>
-                {
-                    b.HasOne("Organization.Domain.Branch", "Branch")
-                        .WithMany()
-                        .HasForeignKey("BranchId");
-
-                    b.HasOne("Administration.Domain.User", "CreateUser")
-                        .WithMany()
-                        .HasForeignKey("CreateUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Sales.Domain.Dealer", "Dealer")
-                        .WithMany()
-                        .HasForeignKey("DealerId");
-
-                    b.HasOne("Sales.Domain.Invoice", "Invoice")
-                        .WithMany()
-                        .HasForeignKey("InvoiceId");
-
-                    b.HasOne("Administration.Domain.User", "ModifyUser")
-                        .WithMany()
-                        .HasForeignKey("ModifyUserId");
-
-                    b.HasOne("Organization.Domain.Shift", "Shift")
-                        .WithMany()
-                        .HasForeignKey("ShiftId");
-
-                    b.HasOne("Organization.Domain.Table", "Table")
-                        .WithMany()
-                        .HasForeignKey("TableId");
-
-                    b.Navigation("Branch");
-
-                    b.Navigation("CreateUser");
-
-                    b.Navigation("Dealer");
-
-                    b.Navigation("Invoice");
-
-                    b.Navigation("ModifyUser");
-
-                    b.Navigation("Shift");
-
-                    b.Navigation("Table");
-                });
-
-            modelBuilder.Entity("Sales.Domain.OrderProduct", b =>
-                {
-                    b.HasOne("Sales.Domain.Order", "Order")
-                        .WithMany("OrderProducts")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Inventory.Domain.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MasterData.Domain.Unit", "Unit")
-                        .WithMany()
-                        .HasForeignKey("UnitId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Order");
-
-                    b.Navigation("Product");
-
-                    b.Navigation("Unit");
-                });
-
-            modelBuilder.Entity("Inventory.Domain.Product", b =>
-                {
-                    b.HasOne("MasterData.Domain.Classification", "Classification")
-                        .WithMany()
-                        .HasForeignKey("ClassificationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Sales.Domain.Dealer", "Dealer")
-                        .WithMany()
-                        .HasForeignKey("DealerId");
-
-                    b.Navigation("Classification");
-
-                    b.Navigation("Dealer");
-                });
-
-            modelBuilder.Entity("Inventory.Domain.ProductPropertyElement", b =>
-                {
-                    b.HasOne("Inventory.Domain.Product", "Product")
-                        .WithMany("ProductPropertyElements")
-                        .HasForeignKey("ProductId");
-
-                    b.HasOne("Inventory.Domain.PropertyElement", "PropertyElement")
-                        .WithMany()
-                        .HasForeignKey("PropertyElementId");
-
-                    b.HasOne("Inventory.Domain.Property", "Property")
-                        .WithMany()
-                        .HasForeignKey("PropertyId");
-
-                    b.Navigation("Product");
-
-                    b.Navigation("Property");
-
-                    b.Navigation("PropertyElement");
-                });
-
-            modelBuilder.Entity("Inventory.Domain.ProductRecipe", b =>
-                {
-                    b.HasOne("Inventory.Domain.Product", null)
-                        .WithMany("ProductRecipes")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Inventory.Domain.ProductUnit", b =>
-                {
-                    b.HasOne("Inventory.Domain.Product", "Product")
-                        .WithMany("ProductUnits")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MasterData.Domain.Unit", "Unit")
-                        .WithMany()
-                        .HasForeignKey("UnitId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-
-                    b.Navigation("Unit");
-                });
-
-            modelBuilder.Entity("Inventory.Domain.PropertyElement", b =>
-                {
-                    b.HasOne("Inventory.Domain.Property", "Property")
-                        .WithMany("PropertyElements")
-                        .HasForeignKey("PropertyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Property");
-                });
-
-            modelBuilder.Entity("Administration.Domain.RolePermission", b =>
-                {
-                    b.HasOne("Administration.Domain.Permission", "Permission")
-                        .WithMany()
-                        .HasForeignKey("PermissionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Administration.Domain.Role", "Role")
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Permission");
-
-                    b.Navigation("Role");
-                });
-
-            modelBuilder.Entity("Inventory.Domain.Stock", b =>
-                {
-                    b.HasOne("Accounting.Domain.Account", "Account")
-                        .WithMany()
-                        .HasForeignKey("AccountId");
-
-                    b.HasOne("Organization.Domain.Branch", "Branch")
-                        .WithMany()
-                        .HasForeignKey("BranchId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Account");
-
-                    b.Navigation("Branch");
-                });
-
-            modelBuilder.Entity("Inventory.Domain.Transaction", b =>
-                {
-                    b.HasOne("Organization.Domain.Branch", "Branch")
-                        .WithMany()
-                        .HasForeignKey("BranchId");
-
-                    b.HasOne("Administration.Domain.User", "CreateUser")
-                        .WithMany()
-                        .HasForeignKey("CreateUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Sales.Domain.Dealer", "Dealer")
-                        .WithMany()
-                        .HasForeignKey("DealerId");
-
-                    b.HasOne("Inventory.Domain.Inventory", "Inventory")
-                        .WithMany("Transactions")
-                        .HasForeignKey("InventoryId");
-
-                    b.HasOne("Administration.Domain.User", "ModifyUser")
-                        .WithMany()
-                        .HasForeignKey("ModifyUserId");
-
-                    b.HasOne("Sales.Domain.Order", "Order")
-                        .WithMany()
-                        .HasForeignKey("OrderId");
-
-                    b.HasOne("Organization.Domain.Shift", "Shift")
-                        .WithMany()
-                        .HasForeignKey("ShiftId");
-
-                    b.HasOne("Inventory.Domain.Stock", "Stock")
-                        .WithMany()
-                        .HasForeignKey("StockId");
-
-                    b.HasOne("Inventory.Domain.Stock", "ToStock")
-                        .WithMany()
-                        .HasForeignKey("ToStockId");
-
-                    b.Navigation("Branch");
-
-                    b.Navigation("CreateUser");
-
-                    b.Navigation("Dealer");
-
-                    b.Navigation("Inventory");
-
-                    b.Navigation("ModifyUser");
-
-                    b.Navigation("Order");
-
-                    b.Navigation("Shift");
-
-                    b.Navigation("Stock");
-
-                    b.Navigation("ToStock");
-                });
-
-            modelBuilder.Entity("Inventory.Domain.TransactionProduct", b =>
-                {
-                    b.HasOne("Inventory.Domain.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Inventory.Domain.Stock", "Stock")
-                        .WithMany()
-                        .HasForeignKey("StockId");
-
-                    b.HasOne("Inventory.Domain.Transaction", "Transaction")
-                        .WithMany("TransactionProducts")
-                        .HasForeignKey("TransactionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MasterData.Domain.Unit", "Unit")
-                        .WithMany()
-                        .HasForeignKey("UnitId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-
-                    b.Navigation("Stock");
-
-                    b.Navigation("Transaction");
-
-                    b.Navigation("Unit");
-                });
-
-            modelBuilder.Entity("Administration.Domain.User", b =>
-                {
-                    b.HasOne("Organization.Domain.Branch", "Branch")
-                        .WithMany()
-                        .HasForeignKey("BranchId");
-
-                    b.HasOne("Administration.Domain.Role", "Role")
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Branch");
-
-                    b.Navigation("Role");
-                });
-
-            modelBuilder.Entity("Treasury.Domain.Financial", b =>
-                {
-                    b.Navigation("FinancialInvoices");
-                });
-
-            modelBuilder.Entity("Treasury.Domain.FinancialAccount", b =>
-                {
-                    b.Navigation("BankAccount");
-
-                    b.Navigation("CashBox");
-                });
-
-            modelBuilder.Entity("Treasury.Domain.FinancialTransfer", b =>
-                {
-                    b.Navigation("Transactions");
                 });
 
             modelBuilder.Entity("Accounting.Domain.FiscalYear", b =>
                 {
                     b.Navigation("Periods");
-                });
-
-            modelBuilder.Entity("Inventory.Domain.Inventory", b =>
-                {
-                    b.Navigation("InventoryProducts");
-
-                    b.Navigation("Transactions");
-                });
-
-            modelBuilder.Entity("Sales.Domain.Invoice", b =>
-                {
-                    b.Navigation("InvoiceProducts");
                 });
 
             modelBuilder.Entity("Accounting.Domain.Journal", b =>
@@ -4178,9 +4435,11 @@ namespace Infrastructure.Migrations
                     b.Navigation("ReversalJournal");
                 });
 
-            modelBuilder.Entity("Sales.Domain.Order", b =>
+            modelBuilder.Entity("Inventory.Domain.Inventory", b =>
                 {
-                    b.Navigation("OrderProducts");
+                    b.Navigation("InventoryProducts");
+
+                    b.Navigation("Transactions");
                 });
 
             modelBuilder.Entity("Inventory.Domain.Product", b =>
@@ -4200,6 +4459,43 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Inventory.Domain.Transaction", b =>
                 {
                     b.Navigation("TransactionProducts");
+                });
+
+            modelBuilder.Entity("Purchasing.Domain.PurchaseOrder", b =>
+                {
+                    b.Navigation("PurchaseOrderProducts");
+                });
+
+            modelBuilder.Entity("Purchasing.Domain.PurchaseRequisition", b =>
+                {
+                    b.Navigation("PurchaseRequisitionProducts");
+                });
+
+            modelBuilder.Entity("Sales.Domain.Invoice", b =>
+                {
+                    b.Navigation("InvoiceProducts");
+                });
+
+            modelBuilder.Entity("Sales.Domain.Order", b =>
+                {
+                    b.Navigation("OrderProducts");
+                });
+
+            modelBuilder.Entity("Treasury.Domain.Financial", b =>
+                {
+                    b.Navigation("FinancialInvoices");
+                });
+
+            modelBuilder.Entity("Treasury.Domain.FinancialAccount", b =>
+                {
+                    b.Navigation("BankAccount");
+
+                    b.Navigation("CashBox");
+                });
+
+            modelBuilder.Entity("Treasury.Domain.FinancialTransfer", b =>
+                {
+                    b.Navigation("Transactions");
                 });
 #pragma warning restore 612, 618
         }

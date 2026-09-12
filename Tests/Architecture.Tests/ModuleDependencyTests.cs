@@ -16,6 +16,7 @@ public class ModuleDependencyTests
     private static readonly (string Module, Assembly Domain)[] ModuleDomains =
     [
         ("Sales", typeof(Sales.Domain.AssemblyMarker).Assembly),
+        ("Parties", typeof(Parties.Domain.AssemblyMarker).Assembly),
         ("Purchasing", typeof(Purchasing.Domain.AssemblyMarker).Assembly),
         ("Inventory", typeof(Inventory.Domain.AssemblyMarker).Assembly),
         ("Treasury", typeof(Treasury.Domain.AssemblyMarker).Assembly),
@@ -42,14 +43,20 @@ public class ModuleDependencyTests
         ("Treasury", "Organization", "CashBox/BankAccount keep their existing EF navigation to Branch."),
         ("Treasury", "Administration", "CashBox.KeeperUserId keeps its existing EF navigation to User."),
         ("Treasury", "Accounting", "CashBox/BankAccount/FinancialAccount keep their existing EF navigation to Account; Financial keeps its existing EF navigation to Journal."),
-        ("Inventory", "Sales", "Product.Dealer, Transaction.Dealer, and Transaction.Order keep their existing EF navigations. Sales and Inventory had a genuine bidirectional coupling (Invoice.Stock/InvoiceProduct.Product on one side, Product.Dealer/Transaction.Dealer on the other); the Sales-side navigations were dropped in favor of manual batch lookups so only this one direction survives."),
-        ("Treasury", "Sales", "Financial.Dealer and FinancialInvoice.Invoice keep their existing EF navigations to Dealer/Invoice."),
-        ("Sales", "Accounting", "Invoice/Order keep their existing EF navigation to Account (e.g. Dealer/Invoice account linkage) via the shared MovementModel-derived FKs."),
+        ("Inventory", "Sales", "Transaction.Order keeps its existing EF navigation. Sales and Inventory had a genuine bidirectional coupling (Invoice.Stock/InvoiceProduct.Product on one side, Product.Dealer/Transaction.Dealer on the other); the Sales-side navigations were dropped in favor of manual batch lookups so only this one direction survives."),
+        ("Inventory", "Parties", "Product.Dealer and Transaction.Dealer keep their existing EF navigations to Dealer, now owned by Parties (relocated from Sales.Domain — see docs/modular-monolith-target-architecture.md §13)."),
+        ("Treasury", "Sales", "FinancialInvoice.Invoice keeps its existing EF navigation to Invoice."),
+        ("Treasury", "Parties", "Financial.Dealer keeps its existing EF navigation to Dealer, now owned by Parties (relocated from Sales.Domain)."),
         ("Sales", "Organization", "Invoice/Order/Dealer keep their existing EF navigations to Branch/Shift/CompanyProfile."),
-        ("Sales", "MasterData", "Dealer/Invoice/Order keep their existing EF navigations to Country/City/District/Currency/Classification/PaymentType."),
+        ("Sales", "MasterData", "Invoice keeps its existing EF navigations to Currency/PaymentType."),
+        ("Sales", "Parties", "Invoice.Dealer and Order.Dealer keep their existing EF navigation to Dealer, now owned by Parties (relocated from this project)."),
+        ("Parties", "MasterData", "Dealer keeps its existing EF navigations to Country/City/District."),
+        ("Parties", "Accounting", "Dealer.AccountId keeps its existing EF navigation to Account (GL account link)."),
         ("Inventory", "Accounting", "Product/Transaction keep their existing EF navigation to Account."),
         ("Inventory", "Organization", "Stock/Transaction/Inventory keep their existing EF navigations to Branch/Shift."),
         ("Inventory", "MasterData", "Product/ProductUnit/Stock/Transaction keep their existing EF navigations to Unit/Classification/Country/City/District/Currency."),
+        ("Purchasing", "Parties", "PurchaseOrder.Dealer (the supplier) keeps an EF navigation to Parties.Domain.Dealer, same convention as every other module's Dealer reference."),
+        ("Purchasing", "MasterData", "PurchaseRequisitionProduct.Unit / PurchaseOrderProduct.Unit keep an EF navigation to MasterData.Unit, same convention as Sales.Domain.InvoiceProduct/OrderProduct."),
     ];
 
     public static IEnumerable<object[]> AllModulePairs()

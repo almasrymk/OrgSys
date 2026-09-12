@@ -14,6 +14,10 @@
     <ProjectReference Include="../../Sales/Sales.Domain/Sales.Domain.csproj" />
     <ProjectReference Include="../../Treasury/Treasury.Domain/Treasury.Domain.csproj" />
     <ProjectReference Include="../../Inventory/Inventory.Domain/Inventory.Domain.csproj" />
+    <!-- Dealer/Dealer.TypeId reports (GetDealerBalanceReportQueryHandler/
+         GetDealerStatementReportQueryHandler) read Parties.Domain.Dealer directly — same
+         read-only-aggregator reasoning as the other Domain references above. -->
+    <ProjectReference Include="../../Parties/Parties.Domain/Parties.Domain.csproj" />
     <!-- Preference and IOrgContext haven't been extracted from the monolith yet. -->
     <ProjectReference Include="../../../Domain/Domain.csproj" />
   </ItemGroup>

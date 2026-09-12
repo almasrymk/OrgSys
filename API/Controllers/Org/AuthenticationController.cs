@@ -1,7 +1,7 @@
 ﻿using API.Authentication;
+using Administration.Application.Auth;
 using Administration.Application.Auth.Commands;
 using Administration.Application.Auth.Queries;
-using Application.DTOs.OrgDb;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;

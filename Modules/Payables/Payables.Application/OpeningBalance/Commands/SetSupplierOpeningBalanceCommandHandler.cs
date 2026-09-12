@@ -1,10 +1,12 @@
 namespace Payables.Application.OpeningBalance.Commands
 {
+    using MediatR;
     using OrgSys.SharedKernel;
     using Accounting.Application;
     using global::Domain.Abstraction;
     using global::Domain.Entities;
-    using Sales.Domain;
+    using MasterData.Contracts.Currencies;
+    using Parties.Contracts.Dealers;
     using System.Net;
 
     /// <summary>Records/updates a supplier's opening payable balance by adding (or updating) this
@@ -28,7 +30,7 @@ namespace Payables.Application.OpeningBalance.Commands
         IRepository<JournalType> _JournalTypeRepository,
         IRepository<Journal> _JournalRepository,
         IRepository<JournalItem> _JournalItemRepository,
-        IRepository<Currency> _CurrencyRepository,
+        ISender _Sender,
         IPayableAccountValidator _Validator,
         IReceivableAccountValidator _AccountValidator,
         IAccountingPeriodService _AccountingPeriodService) : ICommandHandler<SetSupplierOpeningBalanceCommand>
@@ -92,7 +94,8 @@ namespace Payables.Application.OpeningBalance.Commands
                         return new Result(HttpStatusCode.BadRequest, obErrors);
                     }
 
-                    var currency = await _CurrencyRepository.GetByFilterAsync(e => e.IsDefault, string.Empty);
+                    var currencyResult = await _Sender.Send(new GetDefaultCurrencyQuery(), cancellationToken);
+                    var currency = currencyResult.Response;
                     if (currency is null)
                     {
                         await _UnitOfWork.RollbackAsync();

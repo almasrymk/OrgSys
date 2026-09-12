@@ -106,7 +106,16 @@ resolve together with the Administration/AdminDb question).
 
 ### Purchasing
 `Invoice`+`InvoiceProduct` where `InvoiceType ∈ {Purchase Invoice, Purchase Return}`, the
-"Supplier" view of `Dealer`/`DealerGroup` (see §4), future `Purchase Requisition`.
+"Supplier" view of `Dealer`/`DealerGroup` (see §4). **Update (2026-09-12)**: Purchasing is no
+longer an empty shell — it now owns `PurchaseRequisition`+`PurchaseRequisitionProduct`
+(Status.New → UnderReview → Approved, no formal approval gate) and
+`PurchaseOrder`+`PurchaseOrderProduct` (`Dealer` = supplier, optional `PurchaseRequisitionId`
+provenance link, optional `InvoiceId` set only by a manual `LinkInvoiceCommand` once a Purchase
+Invoice has been created the normal way through Sales — no automatic Invoice/Journal/Transaction
+generation happens anywhere in this module). See `Modules/Purchasing/Purchasing.Domain/Entities`
+and the `PurchaseRequisitionController`/`PurchaseOrderController` API surface. Migration
+`20260912074112_AddPurchasingModule` creates the four new tables; **not yet applied to any
+database** — needs `dotnet ef database update` when the team is ready.
 
 ### Inventory
 `Product`, `ProductUnit`, `ProductRecipe`, `Property`/`PropertyElement`/`ProductPropertyElement`
@@ -128,17 +137,23 @@ a new `Cheque` child-entity referencing `Financial`, not a parallel transaction 
 `Account`, `AccountType`, `Journal`+`JournalItem`+`JournalType`, `FiscalYear`, `FiscalPeriod`.
 
 ### Receivables
-No dedicated tables today (per analysis §18). Owns: customer balance/aging/settlement
-**application logic and read models**, built as queries over `Accounting.Contracts` (Journal/
-JournalItem read access) and `Sales.Contracts` (Dealer/Customer identity), *not* new customer
-master data. `SetCustomerOpeningBalanceCommand` (currently in `Financials/Receivable`) moves here.
+No dedicated tables — by design (2026-09-12 decision, see below). Owns: customer balance/aging
+**application logic and read models**, built live over the existing Journal/JournalItem ledger
+(no separate OpenItem/Allocation persistence) plus `Parties.Contracts`/`IReceivableAccountValidator`
+for dealer identity, *not* new customer master data. `SetCustomerOpeningBalanceCommand` already
+lives here. **Update**: `GetCustomerBalanceQuery`/`GetCustomerAgingQuery` (`Receivables.Contracts.
+Balances`) now give Receivables its own real "Outstanding Balance"/"Aging" surface — aging is
+computed by FIFO-matching each Journal debit (charge) against later credits (receipts) on the
+customer's receivable account, since there is no per-invoice open-item ledger to age directly.
+Exposed via `ReceivableController` (`GET /Receivable/{dealerId}/Balance`, `.../Aging`).
 
 ### Payables
-Mirror of Receivables for suppliers, consuming `Accounting.Contracts` + `Purchasing.Contracts`.
-`SetSupplierOpeningBalanceCommand` moves here. `PayableAccountValidator`'s duplicated logic (per
-analysis §5) is resolved by having Payables call a single shared validation contract exposed by
-Accounting (`Accounting.Contracts.IAccountValidationApi.ValidatePostable(accountId)`), with
-Payables/Receivables each owning only their own dealer-type-specific checks.
+Mirror of Receivables for suppliers, consuming `Accounting.Application`'s validators +
+`Parties.Contracts`. `SetSupplierOpeningBalanceCommand` already lives here. **Update**: mirrors
+Receivables' Balance/Aging addition — `GetSupplierBalanceQuery`/`GetSupplierAgingQuery`
+(`Payables.Contracts.Balances`), Debit/Credit roles swapped (a payable account's "charge" posts as
+Credit, its "payment" as Debit). Exposed via `PayableController` (`GET /Payable/{dealerId}/Balance`,
+`.../Aging`), alongside the existing `OpeningBalance` endpoint.
 
 ### Reporting
 `Commands/Org/Reports/*` and `DTOs/Report/*` move here wholesale, re-pointed at each module's
@@ -485,3 +500,27 @@ below everything as pure reference data with no outbound module dependencies of 
   natural side effect of this restructuring, not as a separate unrelated change.
 - **No module accesses another module's internals** — enforced by project references plus an
   architecture-test project, written in Phase 1 per §6 above.
+
+---
+
+## 13. Addendum — Parties / Catalog / CommercialDocuments / ReferenceData evaluation
+
+A later, differently-scoped brief asked specifically whether shared business concepts should be
+split out of Sales/Inventory/MasterData into four new modules: `Parties`, `Catalog`,
+`CommercialDocuments`, `ReferenceData`. Full evidence is in
+[`docs/shared-business-capabilities-review.md`](./shared-business-capabilities-review.md) and
+[`docs/masterdata-decomposition.md`](./masterdata-decomposition.md); this section records the
+resulting decision so it doesn't get re-litigated without new evidence.
+
+| Proposed module | Decision | Why |
+|---|---|---|
+| **Parties** | **Done.** `Dealer`/`DealerGroup`/`DealerType` relocated from `Sales.Domain`/`Sales.Application` to a new `Modules/Parties/{Parties.Domain,.Application,.Contracts,.Infrastructure}` (same `[Table("Dealer")]`/`[Table("DealerGroup")]` mapping — confirmed zero schema change via `dotnet ef migrations has-pending-model-changes`). Consumers (Accounting, Treasury, Inventory, Receivables, Payables, Reporting, plus Sales itself, root `Application`/`Infrastructure`, and the legacy `OrgSys` MVC app) now reference `Parties.Domain`/`Parties.Application` directly, in the same style as their pre-existing direct references to `Sales.Domain` — this relocation fixes *ownership*, not the pre-existing lack-of-Contracts pattern; `Parties.Contracts` is scaffolded but still empty, matching `Sales.Contracts`/`MasterData.Contracts`'s current state. Architecture.Tests' accepted-exception tables were updated to point at `Parties` wherever they previously pointed at `Sales` for Dealer-related reasons; all 740 tests pass. This supersedes §3's "Dealer/Invoice cross-cutting resolution", which assigned `Dealer` to Sales alongside `Invoice` — that pairing was reasonable when the only question was layer-boundary hardening, but doesn't hold once the question is "does this concept have independent business ownership" (brief §20's test): `Invoice` passes as a Sales workflow artifact, `Dealer` did not (6-module fan-out, none of it Sales-specific). **Update**: `Parties.Contracts` now has a real surface (`DealerType`, `DealerLookupDto`, `GetDealerByIdQuery`, `GetDealerNamesQuery`). `Accounting.Application`'s AR/AP validators, and `Receivables.Application`/`Payables.Application`'s opening-balance handlers, were migrated off direct `Parties.Domain` access onto this Contracts surface — those 3 modules now have **zero** Application-layer dependency on `Parties.Domain`. **Still not done, and deliberately deferred**: `Treasury.Application`/`Domain`, `Inventory.Application`/`Domain`, `Reporting.Application`, and `Sales.Domain` itself still reach `Parties.Domain.Dealer` directly via EF navigation (`Financial.Dealer`, `Product.Dealer`/`Transaction.Dealer`, `Invoice.Dealer`/`Order.Dealer`) — removing those means dropping Domain-level navigation properties, the same higher-risk, one-navigation-at-a-time work this doc already scopes as Phase 9 for every other module's identical Country/City/Currency/Account/Branch/Shift navigations. Not attempted here to keep this change consistent with how the rest of the codebase is currently phased. |
+| **Catalog** | **Not justified — do not add.** `Product` already has exactly one owner (`Inventory.Domain`), `Classification`/`Unit` are correctly owned by MasterData and referenced by FK, and Sales/Purchasing already reference `Product` by ID only (no navigation, no duplication). No `ProductCategory`/`ProductGroup`/`Barcode`-entity/`PriceList` exists to give a new module real content. |
+| **CommercialDocuments** | **Not justified — do not add.** `Invoice`/`InvoiceProduct`/`InvoiceType` already has exactly one owner (`Sales.Domain`), one physical table set, and a working, production-proven `InvoiceType` discriminator (already branches Sales vs. Purchase GL postings today). `Purchasing` has zero domain code to protect from duplication. The real gap — `Sales.Contracts` being empty — is already tracked in §4 above and doesn't require a new module to fix. |
+| **ReferenceData** | **Content is already correct; rename is optional.** All 8 `MasterData.Domain` entities (`Country, City, District, Currency, Classification, PaymentType, ReferenceType, Unit`) are genuine lightweight reference data — nothing business-aggregate-shaped is hiding there. **Update**: `MasterData.Contracts` now has its first real entry (`CurrencyLookupDto`/`GetDefaultCurrencyQuery`), and `Receivables.Application`/`Payables.Application` were migrated off `IRepository<Currency>` onto it. The three DTOs that leaked the domain entity by inheritance (`CountryDto : Country`, `PaymentTypeDto : PaymentType`, `ReferenceTypeDto : ReferenceType`) were also fixed to extend `BaseModel` like every other MasterData DTO. Still open: Country/City/District/Classification/PaymentType/Unit/ReferenceType Contracts entries, and the wider Domain-level navigation coupling (Bank.Country, Journal.Currency, Invoice.Currency, etc.) — same deferred-to-Phase-9 reasoning as Parties. Renaming `MasterData` → `ReferenceData` is still cosmetic/optional. |
+
+Net effect on §1's target solution structure: add one new module, `Modules/Parties/
+{Parties.Domain, .Application, .Infrastructure, .Contracts}`, positioned at the same
+reference-data tier as MasterData/Organization/Administration in §11's dependency diagram (it has
+no outbound dependencies of its own, and Sales/Purchasing/Treasury/Inventory/Accounting/
+Receivables/Payables/Reporting all depend on `Parties.Contracts`). No other module count changes.

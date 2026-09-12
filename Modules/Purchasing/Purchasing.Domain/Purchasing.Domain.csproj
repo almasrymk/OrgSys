@@ -8,6 +8,12 @@
 
   <ItemGroup>
     <ProjectReference Include="../../../BuildingBlocks/OrgSys.SharedKernel/OrgSys.SharedKernel.csproj" />
+    <!-- PurchaseRequisitionProduct.Unit / PurchaseOrderProduct.Unit keep an EF navigation to
+         MasterData.Unit, same convention as Sales.Domain.InvoiceProduct/OrderProduct. -->
+    <ProjectReference Include="../../MasterData/MasterData.Domain/MasterData.Domain.csproj" />
+    <!-- PurchaseOrder.Dealer (the supplier) keeps an EF navigation to Parties.Domain.Dealer, same
+         convention as every other module's Dealer reference. -->
+    <ProjectReference Include="../../Parties/Parties.Domain/Parties.Domain.csproj" />
   </ItemGroup>
 
 </Project>

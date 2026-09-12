@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../Parties.Domain/Parties.Domain.csproj" />
+    <ProjectReference Include="../Parties.Contracts/Parties.Contracts.csproj" />
+    <ProjectReference Include="../../../BuildingBlocks/OrgSys.EventBus/OrgSys.EventBus.csproj" />
+    <!-- Dealer create/update GL-account provisioning (DealerPayableAccountProvisioning/
+         DealerReceivableAccountProvisioning) uses IReceivableAccountValidator, owned by
+         Accounting — moved here unchanged from Sales.Application, see that project's history. -->
+    <ProjectReference Include="../../Accounting/Accounting.Application/Accounting.Application.csproj" />
+    <!-- Preference hasn't been extracted from the monolith yet. -->
+    <ProjectReference Include="../../../Domain/Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="14.1.0" />
+    <PackageReference Include="AutoMapper" Version="16.1.1" />
+    <PackageReference Include="FluentValidation" Version="12.1.1" />
+  </ItemGroup>
+
+</Project>

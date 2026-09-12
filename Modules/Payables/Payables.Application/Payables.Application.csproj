@@ -15,6 +15,9 @@
          (Receivables) for the shared clearing-account check. -->
     <ProjectReference Include="../../Accounting/Accounting.Application/Accounting.Application.csproj" />
     <ProjectReference Include="../../Receivables/Receivables.Application/Receivables.Application.csproj" />
+    <!-- GetDefaultCurrencyQuery — resolves the default Currency for a new Opening Balance journal
+         without an IRepository<Currency> injection across the module boundary. -->
+    <ProjectReference Include="../../MasterData/MasterData.Contracts/MasterData.Contracts.csproj" />
     <!-- Preference hasn't been extracted from the monolith yet. -->
     <ProjectReference Include="../../../Domain/Domain.csproj" />
   </ItemGroup>

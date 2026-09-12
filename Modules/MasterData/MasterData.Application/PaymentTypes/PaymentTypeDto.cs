@@ -1,8 +1,7 @@
-
 namespace MasterData.Application
 {
-    public class PaymentTypeDto : PaymentType
+    public class PaymentTypeDto : BaseModel
     {
-        
+        public string? Name { get; set; }
     }
 }

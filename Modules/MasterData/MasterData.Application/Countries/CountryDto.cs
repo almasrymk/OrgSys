@@ -1,8 +1,7 @@
-
 namespace MasterData.Application
 {
-    public class CountryDto : Country
+    public class CountryDto : BaseModel
     {
-       
+        public string? Name { get; set; }
     }
 }

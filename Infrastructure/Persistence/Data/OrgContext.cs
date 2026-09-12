@@ -178,6 +178,10 @@
         public virtual DbSet<InvoiceType> InvoiceTypes { get; set; }
         //public virtual DbSet<Order> Orders { get; set; }
         //public virtual DbSet<OrderProduct> OrderProducts { get; set; }
+        public virtual DbSet<Purchasing.Domain.PurchaseRequisition> PurchaseRequisitions { get; set; }
+        public virtual DbSet<Purchasing.Domain.PurchaseRequisitionProduct> PurchaseRequisitionProducts { get; set; }
+        public virtual DbSet<Purchasing.Domain.PurchaseOrder> PurchaseOrders { get; set; }
+        public virtual DbSet<Purchasing.Domain.PurchaseOrderProduct> PurchaseOrderProducts { get; set; }
         public virtual DbSet<PaymentType> PaymentTypes { get; set; }
 
         public virtual DbSet<ReferenceType> ReferenceTypes { get; set; }

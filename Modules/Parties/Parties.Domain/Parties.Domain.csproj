@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../../../BuildingBlocks/OrgSys.SharedKernel/OrgSys.SharedKernel.csproj" />
+    <!-- Dealer.Country/City/District keep their existing EF navigations to MasterData. -->
+    <ProjectReference Include="../../MasterData/MasterData.Domain/MasterData.Domain.csproj" />
+    <!-- Dealer.AccountId/Account keeps its existing EF navigation to Accounting (GL account link). -->
+    <ProjectReference Include="../../Accounting/Accounting.Domain/Accounting.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

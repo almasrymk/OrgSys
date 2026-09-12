@@ -11,14 +11,16 @@
     <ProjectReference Include="../Accounting.Contracts/Accounting.Contracts.csproj" />
     <ProjectReference Include="../../../BuildingBlocks/OrgSys.EventBus/OrgSys.EventBus.csproj" />
     <!-- IReceivableAccountValidator/IPayableAccountValidator (ReceivablesPayablesAccountValidation/)
-         need Dealer (Sales.Domain). Kept here rather than moved into Receivables.Application/
-         Payables.Application: Sales.Application (Dealer create/update) and Treasury.Application
-         (FinancialAccount, PostTransaction) both already consume these interfaces, so moving them
-         would add new Sales->Receivables/Payables and Treasury->Receivables/Payables edges for no
-         behavioral benefit. Accounting is the natural home — it owns the Chart of Accounts these
-         validators check against, and Receivables.Application/Payables.Application (opening
-         balance commands) simply consume it like every other module does. -->
-    <ProjectReference Include="../../Sales/Sales.Domain/Sales.Domain.csproj" />
+         need Dealer/DealerType, resolved via Parties.Contracts (GetDealerByIdQuery) rather than a
+         direct Parties.Domain reference. Kept here rather than moved into
+         Receivables.Application/Payables.Application: Parties.Application (Dealer create/update)
+         and Treasury.Application (FinancialAccount, PostTransaction) both already consume these
+         interfaces, so moving them would add new Parties->Receivables/Payables and
+         Treasury->Receivables/Payables edges for no behavioral benefit. Accounting is the natural
+         home — it owns the Chart of Accounts these validators check against, and
+         Receivables.Application/Payables.Application (opening balance commands) simply consume it
+         like every other module does. -->
+    <ProjectReference Include="../../Parties/Parties.Contracts/Parties.Contracts.csproj" />
   </ItemGroup>
 
   <ItemGroup>

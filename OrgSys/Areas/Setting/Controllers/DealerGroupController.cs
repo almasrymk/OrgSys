@@ -1,6 +1,6 @@
 ﻿namespace OrgSys.Areas.Setting.Controllers
 {
-    using Sales.Application.DealerGroups.Commands;
+    using Parties.Application.DealerGroups.Commands;
     using AutoMapper;
     using Application.DTOs;
     using Microsoft.AspNetCore.Mvc;

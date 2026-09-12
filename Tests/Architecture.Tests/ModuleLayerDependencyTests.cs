@@ -16,6 +16,7 @@ public class ModuleLayerDependencyTests
     private static readonly (string Module, Assembly Application)[] ModuleApplications =
     [
         ("Sales", typeof(Sales.Application.MappingProfile).Assembly),
+        ("Parties", typeof(Parties.Application.AssemblyMarker).Assembly),
         ("Purchasing", typeof(Purchasing.Application.AssemblyMarker).Assembly),
         ("Inventory", typeof(Inventory.Application.MappingProfile).Assembly),
         ("Treasury", typeof(Treasury.Application.MappingProfile).Assembly),
@@ -31,6 +32,7 @@ public class ModuleLayerDependencyTests
     private static readonly (string Module, Assembly Domain)[] ModuleDomains =
     [
         ("Sales", typeof(Sales.Domain.AssemblyMarker).Assembly),
+        ("Parties", typeof(Parties.Domain.AssemblyMarker).Assembly),
         ("Purchasing", typeof(Purchasing.Domain.AssemblyMarker).Assembly),
         ("Inventory", typeof(Inventory.Domain.AssemblyMarker).Assembly),
         ("Treasury", typeof(Treasury.Domain.AssemblyMarker).Assembly),
@@ -50,27 +52,30 @@ public class ModuleLayerDependencyTests
     /// </summary>
     private static readonly (string Module, string DependsOnModule, string Reason)[] AcceptedApplicationDomainExceptions =
     [
-        ("Accounting", "Sales", "IReceivableAccountValidator/IPayableAccountValidator need Dealer/DealerType; see Accounting.Application.csproj comment."),
-        ("Sales", "Accounting", "Invoice/Dealer Get/Search handlers populate JournalId/JournalCode and GL-account provisioning by reading Accounting.Domain.Journal/Account directly — the exact reference Phase 4 (\"Fix Sales -> Accounting integration\") replaces with Accounting.Contracts."),
+        ("Sales", "Accounting", "Invoice Get/Search handlers populate JournalId/JournalCode by reading Accounting.Domain.Journal directly — the exact reference Phase 4 (\"Fix Sales -> Accounting integration\") replaces with Accounting.Contracts."),
         ("Sales", "MasterData", "MappingProfile Unit/UnitDto mapping support."),
-        ("Inventory", "Sales", "Transaction Get/Search/Create/Delete/Update handlers and MappingProfile read Dealer/Order (the resolved Sales<->Inventory circular coupling — see Sales.Domain/Inventory.Domain accepted exception above, now also visible at the Application layer via the same navigations)."),
+        ("Sales", "Parties", "GetCreditAllByDealerIdQueryHandler reads Invoice.Dealer.Name directly (Dealer now owned by Parties, relocated from this project)."),
+        ("Parties", "MasterData", "DealerMappingProfile maps Country/City/District names directly (Dealer.Country/City/District navigations)."),
+        ("Parties", "Accounting", "Dealer create/update GL-account provisioning (DealerPayableAccountProvisioning/DealerReceivableAccountProvisioning, relocated from Sales.Application) reads Accounting.Domain.Account directly."),
+        ("Inventory", "Sales", "Transaction Get/Search handlers and MappingProfile read Order directly (Transaction.Order — the resolved Sales<->Inventory circular coupling, now also visible at the Application layer)."),
+        ("Inventory", "Parties", "Transaction/Product Get/Search/Create/Delete/Update handlers and MappingProfile read Dealer directly (Product.Dealer/Transaction.Dealer, now owned by Parties — relocated from Sales.Domain)."),
         ("Inventory", "Accounting", "Transaction Get/Search handlers populate JournalId/JournalCode the same way Sales' Invoice handlers do — same Phase 4-class debt, scoped to Inventory's own future accounting-integration cleanup."),
         ("Inventory", "Organization", "MappingProfile Branch/Shift mapping support."),
         ("Inventory", "MasterData", "MappingProfile Unit/Classification mapping support."),
-        ("Treasury", "Sales", "Financial Create/Update/Delete/Cancel/Redo/PostTransaction handlers and MappingProfile read Dealer directly (Financial.Dealer — same navigation as the existing Treasury.Domain -> Sales.Domain exception, now also visible at the Application layer)."),
+        ("Treasury", "Sales", "CreateFinancialPaidInvoiceCommandHandler reads Invoice directly."),
+        ("Treasury", "Parties", "Financial Create/Update/Delete/Cancel/Redo/PostTransaction handlers and MappingProfile read Dealer directly (Financial.Dealer, now owned by Parties — relocated from Sales.Domain)."),
         ("Treasury", "Accounting", "FinancialTransfer/Financial Post/Reverse handlers and validators read Account/Journal directly — Phase-4-class debt for Treasury's own future accounting-integration cleanup."),
         ("Treasury", "MasterData", "MappingProfile and CreateFinancialPaidInvoiceCommandHandler read Currency directly."),
-        ("Receivables", "Accounting", "SetCustomerOpeningBalanceCommandHandler reads Journal/JournalType/Currency directly (see Accounting.Application.csproj comment on why the validators stayed in Accounting)."),
-        ("Receivables", "Sales", "Same handler reads DealerType."),
-        ("Receivables", "MasterData", "Same handler reads Currency."),
-        ("Payables", "Accounting", "SetSupplierOpeningBalanceCommandHandler reads Journal/JournalType/Currency directly."),
-        ("Payables", "Sales", "Same handler reads DealerType."),
-        ("Payables", "MasterData", "Same handler reads Currency."),
+        ("Receivables", "Accounting", "SetCustomerOpeningBalanceCommandHandler reads Journal/JournalType directly (see Accounting.Application.csproj comment on why the validators stayed in Accounting)."),
+        ("Payables", "Accounting", "SetSupplierOpeningBalanceCommandHandler reads Journal/JournalType directly."),
         ("Administration", "Organization", "MappingProfile reads Branch (User.BranchId) directly — mirrors the existing Administration.Domain -> Organization.Domain exception."),
         ("Reporting", "Sales", "Reporting is a read-only cross-module aggregator by design (no Reporting.Domain) — reads Invoice/InvoiceType directly rather than duplicating a read model."),
+        ("Reporting", "Parties", "Same reasoning — Dealer balance/statement reports read Dealer/DealerType directly (now owned by Parties, relocated from Sales.Domain)."),
         ("Reporting", "Treasury", "Same reasoning — reads Financial/FinancialType directly."),
         ("Reporting", "Inventory", "Same reasoning — reads TransactionProduct/TransactionType directly."),
         ("Reporting", "MasterData", "Same reasoning — Warehouse/Financial report queries read Classification/Currency directly."),
+        ("Purchasing", "Sales", "LinkInvoiceCommandHandler reads Sales.Domain.Invoice directly to verify the target invoice exists and is a Purchase-side invoice (TypeId 2/4) before linking it to a PurchaseOrder."),
+        ("Purchasing", "Parties", "PurchaseOrder Create/Update/Get/Search handlers and MappingProfile read Dealer directly (PurchaseOrder.Dealer navigation, same as the existing Purchasing.Domain -> Parties.Domain exception, now also visible at the Application layer)."),
     ];
 
     /// <summary>
@@ -81,7 +86,7 @@ public class ModuleLayerDependencyTests
     private static readonly (string Module, string DependsOnModule, string Reason)[] AcceptedApplicationApplicationExceptions =
     [
         ("Sales", "MasterData", "UnitDto mapping support."),
-        ("Sales", "Accounting", "Dealer create/update GL-account provisioning (DealerPayableAccountProvisioning/DealerReceivableAccountProvisioning) uses IPayableAccountValidator/IReceivableAccountValidator — same Phase 4-class debt as the Domain-level Sales -> Accounting exception above."),
+        ("Parties", "Accounting", "Dealer create/update GL-account provisioning (DealerPayableAccountProvisioning/DealerReceivableAccountProvisioning, relocated from Sales.Application) uses IPayableAccountValidator/IReceivableAccountValidator — same Phase 4-class debt as the Domain-level Parties -> Accounting exception above."),
         ("Inventory", "MasterData", "UnitDto/ProductDto mapping support."),
         ("Payables", "Accounting", "IPayableAccountValidator/IAccountingPeriodService."),
         ("Payables", "Receivables", "Shared IReceivableAccountValidator clearing-account check."),

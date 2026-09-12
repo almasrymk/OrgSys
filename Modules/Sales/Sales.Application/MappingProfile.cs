@@ -6,8 +6,6 @@ public partial class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        DealerGroupMappingProfile();
-        DealerMappingProfile();
         InvoiceTypeMappingProfile();
         InvoiceMappingProfile();
     }

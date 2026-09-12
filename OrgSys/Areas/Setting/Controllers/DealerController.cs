@@ -1,6 +1,6 @@
 ﻿namespace OrgSys.Areas.Setting.Controllers
 {
-    using Sales.Application.Dealers.Commands;
+    using Parties.Application.Dealers.Commands;
     using AutoMapper;
     using Application.DTOs;
     using Domain.Enums;

@@ -13,6 +13,9 @@
     <!-- Customer opening balance posts into the standard Journal/JournalType workflow and reuses
          IReceivableAccountValidator/IAccountingPeriodService, all owned by Accounting. -->
     <ProjectReference Include="../../Accounting/Accounting.Application/Accounting.Application.csproj" />
+    <!-- GetDefaultCurrencyQuery — resolves the default Currency for a new Opening Balance journal
+         without an IRepository<Currency> injection across the module boundary. -->
+    <ProjectReference Include="../../MasterData/MasterData.Contracts/MasterData.Contracts.csproj" />
     <!-- Preference hasn't been extracted from the monolith yet. -->
     <ProjectReference Include="../../../Domain/Domain.csproj" />
   </ItemGroup>

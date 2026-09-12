@@ -1,4 +1,4 @@
-using Sales.Application.Dealers.Queries;
+using Parties.Application.Dealers.Queries;
 using Accounting.Application.Accounts.Commands;
 using Accounting.Application.Accounts.Queries;
 using Application.DTOs;

@@ -10,7 +10,6 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using Application.DTOs.OrgDb;
 
     [Area("Setting")]
     public class AccountController(IConfiguration configuration, IMapper mapper) : MainController<AccountDto, CreateAccountCommand, UpdateAccountCommand>(configuration, mapper)

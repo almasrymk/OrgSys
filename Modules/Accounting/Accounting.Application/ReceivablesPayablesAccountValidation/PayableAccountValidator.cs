@@ -1,22 +1,25 @@
 namespace Accounting.Application
 {
+    using MediatR;
+    using Parties.Contracts.Dealers;
 
     public sealed class PayableAccountValidator(
         IReceivableAccountValidator _AccountValidator,
-        IRepository<Dealer> _DealerRepository) : IPayableAccountValidator
+        ISender _Sender) : IPayableAccountValidator
     {
-        public async Task<(Dealer? Dealer, Account? Account, List<Error> Errors)> ValidateSupplierAsync(long dealerId, CancellationToken cancellationToken = default)
+        public async Task<(DealerLookupDto? Dealer, Account? Account, List<Error> Errors)> ValidateSupplierAsync(long dealerId, CancellationToken cancellationToken = default)
         {
             var errors = new List<Error>();
 
-            var dealer = await _DealerRepository.GetByFilterAsync(e => e.Id == dealerId, string.Empty);
-            if (dealer is null || dealer.Status == Status.Deleted || dealer.Hide)
+            var dealerResult = await _Sender.Send(new GetDealerByIdQuery(dealerId), cancellationToken);
+            var dealer = dealerResult.Response;
+            if (dealer is null || dealer.IsDeleted || dealer.Hide)
             {
                 errors.Add(new Error("The selected supplier does not exist or is not active."));
                 return (null, null, errors);
             }
 
-            if (dealer.TypeId != (long)Sales.Domain.DealerType.Supplier)
+            if (dealer.TypeId != (long)DealerType.Supplier)
             {
                 errors.Add(new Error($"'{dealer.Name}' is not a supplier."));
                 return (dealer, null, errors);

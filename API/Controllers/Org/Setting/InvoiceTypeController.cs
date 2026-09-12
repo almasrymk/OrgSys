@@ -1,4 +1,4 @@
-﻿using Sales.Application.Dealers.Queries;
+﻿using Parties.Application.Dealers.Queries;
 using Sales.Application.InvoiceTypes.Commands;
 using Sales.Application.InvoiceTypes.Queries;
 using OrgSys.SharedKernel;

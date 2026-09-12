@@ -10,6 +10,10 @@
     <ProjectReference Include="../Purchasing.Domain/Purchasing.Domain.csproj" />
     <ProjectReference Include="../Purchasing.Contracts/Purchasing.Contracts.csproj" />
     <ProjectReference Include="../../../BuildingBlocks/OrgSys.EventBus/OrgSys.EventBus.csproj" />
+    <!-- LinkInvoiceCommand verifies the target Invoice exists and is a Purchase-side invoice
+         (TypeId 2/4) before linking it to a PurchaseOrder — same Application->Sales.Domain
+         accepted-exception pattern used by Treasury/Inventory elsewhere in this codebase. -->
+    <ProjectReference Include="../../Sales/Sales.Domain/Sales.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>

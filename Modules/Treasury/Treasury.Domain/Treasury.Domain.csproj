@@ -12,10 +12,13 @@
     <ProjectReference Include="../../Organization/Organization.Domain/Organization.Domain.csproj" />
     <ProjectReference Include="../../Administration/Administration.Domain/Administration.Domain.csproj" />
     <ProjectReference Include="../../Accounting/Accounting.Domain/Accounting.Domain.csproj" />
-    <!-- Financial.DealerId and FinancialInvoice.InvoiceId keep their existing EF navigation to
-         Dealer/Invoice (Sales.Domain) — see docs/modular-monolith-analysis.md §21/§22 and the
-         ModuleDependencyTests exceptions for why this one-directional edge is accepted. -->
+    <!-- FinancialInvoice.InvoiceId keeps its existing EF navigation to Invoice (Sales.Domain) —
+         see docs/modular-monolith-analysis.md §21/§22 and the ModuleDependencyTests exceptions
+         for why this one-directional edge is accepted. -->
     <ProjectReference Include="../../Sales/Sales.Domain/Sales.Domain.csproj" />
+    <!-- Financial.DealerId keeps its existing EF navigation to Dealer, now owned by Parties
+         (relocated from Sales.Domain — see docs/modular-monolith-target-architecture.md §13). -->
+    <ProjectReference Include="../../Parties/Parties.Domain/Parties.Domain.csproj" />
   </ItemGroup>
 
 </Project>

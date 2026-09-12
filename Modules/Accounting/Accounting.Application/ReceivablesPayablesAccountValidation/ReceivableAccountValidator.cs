@@ -1,9 +1,11 @@
 namespace Accounting.Application
 {
+    using MediatR;
+    using Parties.Contracts.Dealers;
 
     public sealed class ReceivableAccountValidator(
         IRepository<Account> _AccountRepository,
-        IRepository<Dealer> _DealerRepository) : IReceivableAccountValidator
+        ISender _Sender) : IReceivableAccountValidator
     {
         public async Task<(Account? Account, List<Error> Errors)> ValidateAccountAsync(long accountId, CancellationToken cancellationToken = default)
         {
@@ -28,18 +30,19 @@ namespace Accounting.Application
             return (account, errors);
         }
 
-        public async Task<(Dealer? Dealer, Account? Account, List<Error> Errors)> ValidateCustomerAsync(long dealerId, CancellationToken cancellationToken = default)
+        public async Task<(DealerLookupDto? Dealer, Account? Account, List<Error> Errors)> ValidateCustomerAsync(long dealerId, CancellationToken cancellationToken = default)
         {
             var errors = new List<Error>();
 
-            var dealer = await _DealerRepository.GetByFilterAsync(e => e.Id == dealerId, string.Empty);
-            if (dealer is null || dealer.Status == Status.Deleted || dealer.Hide)
+            var dealerResult = await _Sender.Send(new GetDealerByIdQuery(dealerId), cancellationToken);
+            var dealer = dealerResult.Response;
+            if (dealer is null || dealer.IsDeleted || dealer.Hide)
             {
                 errors.Add(new Error("The selected customer does not exist or is not active."));
                 return (null, null, errors);
             }
 
-            if (dealer.TypeId != (long)Sales.Domain.DealerType.Client)
+            if (dealer.TypeId != (long)DealerType.Client)
             {
                 errors.Add(new Error($"'{dealer.Name}' is not a customer."));
                 return (dealer, null, errors);
@@ -56,18 +59,19 @@ namespace Accounting.Application
             return (dealer, account, errors);
         }
 
-        public async Task<(Dealer? Dealer, Account? Account, List<Error> Errors)> ValidateSupplierAsync(long dealerId, CancellationToken cancellationToken = default)
+        public async Task<(DealerLookupDto? Dealer, Account? Account, List<Error> Errors)> ValidateSupplierAsync(long dealerId, CancellationToken cancellationToken = default)
         {
             var errors = new List<Error>();
 
-            var dealer = await _DealerRepository.GetByFilterAsync(e => e.Id == dealerId, string.Empty);
-            if (dealer is null || dealer.Status == Status.Deleted || dealer.Hide)
+            var dealerResult = await _Sender.Send(new GetDealerByIdQuery(dealerId), cancellationToken);
+            var dealer = dealerResult.Response;
+            if (dealer is null || dealer.IsDeleted || dealer.Hide)
             {
                 errors.Add(new Error("The selected supplier does not exist or is not active."));
                 return (null, null, errors);
             }
 
-            if (dealer.TypeId != (long)Sales.Domain.DealerType.Supplier)
+            if (dealer.TypeId != (long)DealerType.Supplier)
             {
                 errors.Add(new Error($"'{dealer.Name}' is not a supplier."));
                 return (dealer, null, errors);

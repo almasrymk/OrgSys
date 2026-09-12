@@ -21,6 +21,9 @@
     <ProjectReference Include="..\Modules\Treasury\Treasury.Application\Treasury.Application.csproj" />
     <ProjectReference Include="..\Modules\Sales\Sales.Domain\Sales.Domain.csproj" />
     <ProjectReference Include="..\Modules\Inventory\Inventory.Domain\Inventory.Domain.csproj" />
+    <!-- InvoiceJournalIntegration reads Dealer directly (IRepository<Dealer>), now owned by
+         Parties (relocated from Sales.Domain). -->
+    <ProjectReference Include="..\Modules\Parties\Parties.Domain\Parties.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>

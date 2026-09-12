@@ -1,7 +1,7 @@
-﻿using Administration.Application.Auth.Commands;
+﻿using Administration.Application.Auth;
+using Administration.Application.Auth.Commands;
 using Administration.Application.Auth.Queries;
 using Application.DTOs;
-using Application.DTOs.OrgDb;
 using Domain.Enums;
 using Domain.Entities;
 using Infrastructure.Persistence.Data;
