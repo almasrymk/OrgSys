@@ -2,7 +2,8 @@
 using API.Middlewares;
 using OrgSys.SharedKernel;
 using FluentValidation;
-using Infrastructure.Persistence.UnitOfWork;
+using OrgSys.Infrastructure.Persistence;
+using OrgSys.DatabaseMigrator.Persistence;
 using Accounting.Infrastructure.DependencyInjection;
 using Administration.Infrastructure.DependencyInjection;
 using MasterData.Infrastructure.DependencyInjection;
@@ -80,9 +81,9 @@ builder.Services.AddHttpsRedirection(options =>
     options.HttpsPort = 44300;
 });
 
-builder.Services.AddDbContext<Infrastructure.Persistence.Data.OrgContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("OrgConnection")));
+builder.Services.AddDbContext<OrgContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("OrgConnection")));
 
-builder.Services.AddScoped<IOrgContext>(provider => provider.GetRequiredService<Infrastructure.Persistence.Data.OrgContext>());
+builder.Services.AddScoped<IOrgContext>(provider => provider.GetRequiredService<OrgContext>());
 
 // Single Application-assembly anchor for MediatR/AutoMapper/FluentValidation scanning.
 // MappingProfile and FluentValidationFilter<,> both live in Application, so the two

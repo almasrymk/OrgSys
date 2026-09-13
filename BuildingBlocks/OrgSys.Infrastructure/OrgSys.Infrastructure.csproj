@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Repository<T>/UnitOfWork are generic, business-neutral technical infrastructure — they
+         implement OrgSys.SharedKernel's IRepository<T>/IUnitOfWork/IOrgContext against EF Core's
+         Set<TEntity>() only, with zero business/module-specific logic. See
+         docs/modular-monolith-analysis.md and the Infrastructure-elimination report. -->
+    <ProjectReference Include="../OrgSys.SharedKernel/OrgSys.SharedKernel.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.9" />
+    <PackageReference Include="CorePagination" Version="0.6.0" />
+  </ItemGroup>
+
+</Project>

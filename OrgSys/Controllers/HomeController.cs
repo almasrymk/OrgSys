@@ -2,7 +2,7 @@
 using Administration.Application.Auth.Commands;
 using Administration.Application.Auth.Queries;
 using OrgSys.Models;
-using Infrastructure.Persistence.Data;
+using OrgSys.DatabaseMigrator.Persistence;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;

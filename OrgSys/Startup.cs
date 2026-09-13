@@ -1,6 +1,6 @@
 using AutoMapper;
-using Infrastructure.Persistence.Data;
-using Infrastructure.Persistence.UnitOfWork;
+using OrgSys.DatabaseMigrator.Persistence;
+using OrgSys.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -75,9 +75,9 @@ namespace OrgSys
 
             //services.AddDbContext<Repository.OrgContext>(options => options.UseSqlServer(Configuration.GetConnectionString("OrgConnection"), x => x.MigrationsHistoryTable("__MigrationsHistory", "org")).ReplaceService<IModelCacheKeyFactory, Repository.DbSchemaAwareModelCacheKeyFactory>().ReplaceService<IMigrationsAssembly, Repository.DbSchemaAwareMigrationAssembly>());
             //services.AddDbContext<OrgContext>(options => options.UseSqlServer(Configuration.GetConnectionString("OrgConnection"), x => x.MigrationsAssembly(assemblyName)).ReplaceService<IModelCacheKeyFactory, DbSchemaAwareModelCacheKeyFactory>().ReplaceService<IMigrationsAssembly, DbSchemaAwareMigrationAssembly>());
-            services.AddDbContext<Infrastructure.Persistence.Data.OrgContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
+            services.AddDbContext<OrgContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
 
-            services.AddScoped<IOrgContext>(provider => provider.GetRequiredService<Infrastructure.Persistence.Data.OrgContext>());
+            services.AddScoped<IOrgContext>(provider => provider.GetRequiredService<OrgContext>());
             //services.AddScoped(provider => provider.GetRequiredService<Repository.OrgContext>());
             services.ConfigureApplicationCookie(options =>
             {

@@ -1,6 +1,6 @@
 namespace Treasury.Domain;
 
-// One-to-one with the seeded Infrastructure/Seed/InitialData.cs FinancialType rows —
+// One-to-one with the seeded Treasury.Infrastructure.Seeding.TreasuryDataSeeder FinancialType rows —
 // this enum IS the FinancialType table's Id space, not a separate classification.
 // Financial.FinancialTypeId is typed as this enum and doubles as the FK to FinancialType.
 public enum FinancialTransactionType : long

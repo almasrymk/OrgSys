@@ -15,7 +15,7 @@ namespace OrgSys.SharedKernel;
 ///     had nothing to flatten from, since the navigation was never loaded).
 /// The FK *columns* (and their DB constraints) are preserved exactly via Fluent API
 /// "no navigation" relationships added to OrgContext.OnModelCreating for each derived entity —
-/// see Infrastructure/Persistence/Data/OrgContext.cs. This keeps the schema byte-for-byte
+/// see BuildingBlocks/OrgSys.DatabaseMigrator/Persistence/OrgContext.cs. This keeps the schema byte-for-byte
 /// identical (verified with `dotnet ef migrations has-pending-model-changes`).
 /// </summary>
 public class MovementModel : BaseModel

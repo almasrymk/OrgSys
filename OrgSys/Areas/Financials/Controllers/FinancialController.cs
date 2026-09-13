@@ -82,7 +82,7 @@ namespace OrgSys.Areas.Financial.Controllers
             ViewBag.FinancialTypeName = ResolveFinancialTypeName(currentFinancialTypeId);
 
             // FinancialType.InOut is the real business rule for direction (1 = In-only, -1 = Out-only,
-            // 0 = either) — see Infrastructure/Seed/InitialData.cs. Lock Direction to it on new records
+            // 0 = either) — see Treasury.Infrastructure.Seeding.TreasuryDataSeeder. Lock Direction to it on new records
             // instead of leaving it an open user choice; only types with InOut == 0 (Transfer/Cheque/
             // Adjustment) genuinely need the user to pick.
             var financialTypes = await GetListApi<FinancialTypeDto>();

@@ -37,7 +37,7 @@ namespace Treasury.Domain
         public virtual FinancialAccount? FinancialAccount { get; set; }
 
         // Numerically identical to FinancialTransactionType (Domain/Enums/FinancialTransactionType.cs) —
-        // that enum and the FinancialType table share one Id space (see InitialData.cs), so callers can
+        // that enum and the FinancialType table share one Id space (see the module DataSeeders under Modules/*/*.Infrastructure/Seeding), so callers can
         // freely cast between them. Kept as long? rather than the enum itself: EF Core cannot map an
         // enum-typed FK against a long-typed principal key, even with a value converter.
         [ForeignKey(nameof(FinancialType))]
