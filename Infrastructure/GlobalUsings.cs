@@ -5,5 +5,6 @@ global using Administration.Domain;
 global using Accounting.Domain;
 global using Treasury.Domain;
 global using Sales.Domain;
+global using CommercialDocuments.Domain;
 global using Parties.Domain;
 global using Inventory.Domain;

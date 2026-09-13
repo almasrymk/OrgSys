@@ -1,6 +1,6 @@
 ﻿using Treasury.Application.Financials.Command;
-using Sales.Application.Invoices.Commands;
-using Sales.Application.Invoices.Queries;
+using CommercialDocuments.Application.Invoices.Commands;
+using CommercialDocuments.Application.Invoices.Queries;
 using Inventory.Contracts.Transactions;
 using OrgSys.SharedKernel;
 using Application.DTOs;

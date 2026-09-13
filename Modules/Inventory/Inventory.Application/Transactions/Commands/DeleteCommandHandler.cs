@@ -27,7 +27,7 @@
             if (sourceTransaction?.InventoryId is > 0)
                 throw new InvalidOperationException("A transaction created from an inventory cannot be deleted");
 
-            var sourceInvoice = await _provider.GetRequiredService<IRepository<Sales.Domain.Invoice>>()
+            var sourceInvoice = await _provider.GetRequiredService<IRepository<CommercialDocuments.Domain.Invoice>>()
                 .GetByFilterAsync(e => e.TransactionId == request.Id, string.Empty);
             if (sourceInvoice != null)
                 throw new InvalidOperationException("A transaction created from an invoice cannot be deleted");

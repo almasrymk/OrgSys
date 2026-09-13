@@ -11,9 +11,10 @@
     <ProjectReference Include="../Purchasing.Contracts/Purchasing.Contracts.csproj" />
     <ProjectReference Include="../../../BuildingBlocks/OrgSys.EventBus/OrgSys.EventBus.csproj" />
     <!-- LinkInvoiceCommand verifies the target Invoice exists and is a Purchase-side invoice
-         (TypeId 2/4) before linking it to a PurchaseOrder — same Application->Sales.Domain
-         accepted-exception pattern used by Treasury/Inventory elsewhere in this codebase. -->
-    <ProjectReference Include="../../Sales/Sales.Domain/Sales.Domain.csproj" />
+         (TypeId 2/4) before linking it to a PurchaseOrder, resolved through
+         CommercialDocuments.Contracts (GetInvoiceReferenceQuery) — no Domain-level reference to
+         CommercialDocuments or Sales needed. See docs/commercial-documents-module.md. -->
+    <ProjectReference Include="../../CommercialDocuments/CommercialDocuments.Contracts/CommercialDocuments.Contracts.csproj" />
   </ItemGroup>
 
   <ItemGroup>

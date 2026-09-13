@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../../../BuildingBlocks/OrgSys.SharedKernel/OrgSys.SharedKernel.csproj" />
+    <!-- Invoice keeps its existing EF navigations to Currency/PaymentType. -->
+    <ProjectReference Include="../../MasterData/MasterData.Domain/MasterData.Domain.csproj" />
+    <!-- Invoice.Dealer keeps its existing EF navigation to Dealer, owned by Parties (relocated
+         from Sales.Domain — see docs/modular-monolith-target-architecture.md §13). -->
+    <ProjectReference Include="../../Parties/Parties.Domain/Parties.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -20,7 +20,7 @@ namespace Reporting.Application.Dealer.Queries
     public sealed class GetDealerBalanceReportQueryHandler(
         IRepository<Invoice> invoiceRepository,
         IRepository<Financial> financialRepository,
-        IRepository<global::Sales.Domain.InvoiceType> invoiceTypeRepository)
+        IRepository<global::CommercialDocuments.Domain.InvoiceType> invoiceTypeRepository)
         : ICommandPaginationHandler<GetDealerBalanceReportQuery, DealerBalance>
     {
         public async Task<ResultPagination<DealerBalance>> Handle(GetDealerBalanceReportQuery request, CancellationToken cancellationToken)

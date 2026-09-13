@@ -8,7 +8,7 @@ public sealed class InvoiceJournalIntegration(IServiceProvider provider)
 {
     private const string ReferenceTable = "invoice";
 
-    public async Task SyncAsync(Sales.Domain.Invoice invoice, bool force = false)
+    public async Task SyncAsync(CommercialDocuments.Domain.Invoice invoice, bool force = false)
     {
         var journalRepository = provider.GetRequiredService<IRepository<Journal>>();
         var journalItemRepository = provider.GetRequiredService<IRepository<JournalItem>>();
@@ -162,7 +162,7 @@ public sealed class InvoiceJournalIntegration(IServiceProvider provider)
     private static long ParseAccountId(IEnumerable<Preference> preferences, string key) =>
         long.TryParse(preferences.FirstOrDefault(e => e.Key == key)?.Value, out var id) ? id : 0;
 
-    private static decimal CalculateTaxAmount(Sales.Domain.Invoice invoice)
+    private static decimal CalculateTaxAmount(CommercialDocuments.Domain.Invoice invoice)
     {
         if (invoice.Tax == 0)
             return 0;

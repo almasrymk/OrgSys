@@ -19,7 +19,10 @@
     <ProjectReference Include="..\Modules\Administration\Administration.Application\Administration.Application.csproj" />
     <ProjectReference Include="..\Modules\Accounting\Accounting.Application\Accounting.Application.csproj" />
     <ProjectReference Include="..\Modules\Treasury\Treasury.Application\Treasury.Application.csproj" />
-    <ProjectReference Include="..\Modules\Sales\Sales.Domain\Sales.Domain.csproj" />
+    <!-- InvoiceJournalIntegration (the Invoice->Journal posting bridge) reads Invoice directly,
+         now owned by CommercialDocuments (relocated from Sales.Domain — see
+         docs/commercial-documents-module.md). -->
+    <ProjectReference Include="..\Modules\CommercialDocuments\CommercialDocuments.Domain\CommercialDocuments.Domain.csproj" />
     <ProjectReference Include="..\Modules\Inventory\Inventory.Domain\Inventory.Domain.csproj" />
     <!-- InvoiceJournalIntegration reads Dealer directly (IRepository<Dealer>), now owned by
          Parties (relocated from Sales.Domain). -->

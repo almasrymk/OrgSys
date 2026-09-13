@@ -20,7 +20,7 @@
 
         public override async Task<bool> RemoveDetails(DeleteListTransactionCommand request)
         {
-            var invoiceRepository = _provider.GetRequiredService<IRepository<Sales.Domain.Invoice>>();
+            var invoiceRepository = _provider.GetRequiredService<IRepository<CommercialDocuments.Domain.Invoice>>();
             var sourceInvoices = await invoiceRepository.GetListByFilterAsync(e => e.TransactionId.HasValue && request.Ids.Contains(e.TransactionId.Value));
             if (sourceInvoices?.Any() == true)
                 throw new InvalidOperationException("Transactions created from invoices cannot be deleted");

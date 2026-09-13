@@ -1,5 +1,4 @@
 ﻿using Parties.Application.DealerGroups.Queries;
-using Sales.Application.Invoices.Queries;
 using Parties.Application.DealerGroups.Commands;
 using Parties.Application.DealerGroups.Queries;
 using Application.Commands.Org.Setting.Preference.Queries;

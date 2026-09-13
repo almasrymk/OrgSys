@@ -12,7 +12,7 @@
     public sealed class DeleteListCommandHandler(IUnitOfWork _UnitOfWork, 
         IRepository<Treasury.Domain.Financial> _Repository, 
         IRepository<Treasury.Domain.FinancialInvoice> _RepositoryFinancialInvoice, 
-        IRepository<Sales.Domain.Invoice> _RepositoryInvoice, 
+        IRepository<CommercialDocuments.Domain.Invoice> _RepositoryInvoice, 
         IServiceProvider _provider) : DeleteCommandHandler<DeleteListFinancialCommand, Treasury.Domain.Financial>(_UnitOfWork, _Repository , _provider)
     {
 

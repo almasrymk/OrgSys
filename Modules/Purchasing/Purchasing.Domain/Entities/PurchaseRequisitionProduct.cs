@@ -12,7 +12,7 @@ namespace Purchasing.Domain
         public virtual PurchaseRequisition? PurchaseRequisition { get; set; }
 
         // Product navigation dropped — Purchasing/Catalog(Inventory) module boundary, same
-        // convention as Sales.Domain.InvoiceProduct/OrderProduct.
+        // convention as CommercialDocuments.Domain.InvoiceProduct/Sales.Domain.OrderProduct.
         public virtual long ProductId { get; set; }
 
         [ForeignKey("Unit")]

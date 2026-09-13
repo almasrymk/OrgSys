@@ -7,7 +7,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var BorderAlign = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "border-top:none;border-bottom:none;border-left:none;" : "border-top:none;border-bottom:none;border-right:none;";
     var formateDate = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "{0:yyyy/MM/dd}" : "{0:dd/MM/yyyy}";
-    List<Sales.Application.InvoiceTypeDto> InvoicesTypes = ViewBag.InvoicesTypes ?? new List<Sales.Application.InvoiceTypeDto>();
+    List<CommercialDocuments.Application.InvoiceTypeDto> InvoicesTypes = ViewBag.InvoicesTypes ?? new List<CommercialDocuments.Application.InvoiceTypeDto>();
     var SourceInvoiceName = Model.SourceInvoiceTypeId switch
     {
         1 => $"{Domain.Resource.Title_Designer.Sales} {Domain.Resource.Title_Designer.Invoice}",

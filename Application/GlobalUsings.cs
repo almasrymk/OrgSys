@@ -14,6 +14,6 @@ global using Accounting.Domain;
 global using Accounting.Application;
 global using Treasury.Domain;
 global using Treasury.Application;
-global using Sales.Domain;
+global using CommercialDocuments.Domain;
 global using Parties.Domain;
 global using Inventory.Domain;

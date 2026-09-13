@@ -9,7 +9,7 @@
 
     public sealed record GetByIdTransactionQuery(long Id) : ICommand<TransactionDto> , IGetByIdQuery<Result<TransactionDto>>;
 
-    public sealed class GetByIdQueryHandler(IRepository<Inventory.Domain.Transaction> _Repository, IRepository<Sales.Domain.Invoice> invoiceRepository, IRepository<Accounting.Domain.Journal> journalRepository, IMapper mapper) : GetCommandHandler<GetByIdTransactionQuery, Inventory.Domain.Transaction, TransactionDto>(_Repository, mapper)
+    public sealed class GetByIdQueryHandler(IRepository<Inventory.Domain.Transaction> _Repository, IRepository<CommercialDocuments.Domain.Invoice> invoiceRepository, IRepository<Accounting.Domain.Journal> journalRepository, IMapper mapper) : GetCommandHandler<GetByIdTransactionQuery, Inventory.Domain.Transaction, TransactionDto>(_Repository, mapper)
     {
         public override async Task<Result<TransactionDto>> Handle(GetByIdTransactionQuery request, CancellationToken cancellationToken)
         {

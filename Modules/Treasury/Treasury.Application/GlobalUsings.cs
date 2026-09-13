@@ -4,7 +4,7 @@ global using Treasury.Application;
 global using MasterData.Domain;
 global using Accounting.Domain;
 global using Accounting.Application;
-global using Sales.Domain;
+global using CommercialDocuments.Domain;
 global using Parties.Domain;
 // Preference hasn't been extracted from the monolith yet (docs/modular-monolith-analysis.md
 // §13 — stays a generic cross-cutting entity for now). "Domain.Entities" would normally resolve

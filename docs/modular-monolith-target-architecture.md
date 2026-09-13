@@ -30,6 +30,7 @@ OrgSys.sln
 │   ├── Organization/    {Organization.Domain, .Application, .Infrastructure, .Contracts}
 │   ├── MasterData/      {MasterData.Domain, .Application, .Infrastructure, .Contracts}
 │   ├── Sales/           {Sales.Domain, .Application, .Infrastructure, .Contracts}
+│   ├── CommercialDocuments/ {CommercialDocuments.Domain, .Application, .Infrastructure, .Contracts}  (added 2026-09-13 — see §14; owns Invoice/InvoiceProduct/InvoiceType, shared by Sales and Purchasing)
 │   ├── Purchasing/      {Purchasing.Domain, .Application, .Infrastructure, .Contracts}
 │   ├── Inventory/       {Inventory.Domain, .Application, .Infrastructure, .Contracts}
 │   ├── Receivables/     {Receivables.Domain, .Application, .Infrastructure, .Contracts}
@@ -516,7 +517,7 @@ resulting decision so it doesn't get re-litigated without new evidence.
 |---|---|---|
 | **Parties** | **Done.** `Dealer`/`DealerGroup`/`DealerType` relocated from `Sales.Domain`/`Sales.Application` to a new `Modules/Parties/{Parties.Domain,.Application,.Contracts,.Infrastructure}` (same `[Table("Dealer")]`/`[Table("DealerGroup")]` mapping — confirmed zero schema change via `dotnet ef migrations has-pending-model-changes`). Consumers (Accounting, Treasury, Inventory, Receivables, Payables, Reporting, plus Sales itself, root `Application`/`Infrastructure`, and the legacy `OrgSys` MVC app) now reference `Parties.Domain`/`Parties.Application` directly, in the same style as their pre-existing direct references to `Sales.Domain` — this relocation fixes *ownership*, not the pre-existing lack-of-Contracts pattern; `Parties.Contracts` is scaffolded but still empty, matching `Sales.Contracts`/`MasterData.Contracts`'s current state. Architecture.Tests' accepted-exception tables were updated to point at `Parties` wherever they previously pointed at `Sales` for Dealer-related reasons; all 740 tests pass. This supersedes §3's "Dealer/Invoice cross-cutting resolution", which assigned `Dealer` to Sales alongside `Invoice` — that pairing was reasonable when the only question was layer-boundary hardening, but doesn't hold once the question is "does this concept have independent business ownership" (brief §20's test): `Invoice` passes as a Sales workflow artifact, `Dealer` did not (6-module fan-out, none of it Sales-specific). **Update**: `Parties.Contracts` now has a real surface (`DealerType`, `DealerLookupDto`, `GetDealerByIdQuery`, `GetDealerNamesQuery`). `Accounting.Application`'s AR/AP validators, and `Receivables.Application`/`Payables.Application`'s opening-balance handlers, were migrated off direct `Parties.Domain` access onto this Contracts surface — those 3 modules now have **zero** Application-layer dependency on `Parties.Domain`. **Still not done, and deliberately deferred**: `Treasury.Application`/`Domain`, `Inventory.Application`/`Domain`, `Reporting.Application`, and `Sales.Domain` itself still reach `Parties.Domain.Dealer` directly via EF navigation (`Financial.Dealer`, `Product.Dealer`/`Transaction.Dealer`, `Invoice.Dealer`/`Order.Dealer`) — removing those means dropping Domain-level navigation properties, the same higher-risk, one-navigation-at-a-time work this doc already scopes as Phase 9 for every other module's identical Country/City/Currency/Account/Branch/Shift navigations. Not attempted here to keep this change consistent with how the rest of the codebase is currently phased. |
 | **Catalog** | **Not justified — do not add.** `Product` already has exactly one owner (`Inventory.Domain`), `Classification`/`Unit` are correctly owned by MasterData and referenced by FK, and Sales/Purchasing already reference `Product` by ID only (no navigation, no duplication). No `ProductCategory`/`ProductGroup`/`Barcode`-entity/`PriceList` exists to give a new module real content. |
-| **CommercialDocuments** | **Not justified — do not add.** `Invoice`/`InvoiceProduct`/`InvoiceType` already has exactly one owner (`Sales.Domain`), one physical table set, and a working, production-proven `InvoiceType` discriminator (already branches Sales vs. Purchase GL postings today). `Purchasing` has zero domain code to protect from duplication. The real gap — `Sales.Contracts` being empty — is already tracked in §4 above and doesn't require a new module to fix. |
+| **CommercialDocuments** | **Superseded — done, 2026-09-13.** The 2026-09-12 "not justified" conclusion held only while `Purchasing` had zero domain code; once `Purchasing.Application.LinkInvoiceCommandHandler` started reading `Sales.Domain.Invoice` directly (real `Purchasing.Application → Sales.Domain` coupling), the "Purchasing has zero domain code to protect from duplication" premise no longer applied. See §14 for the full implementation record. |
 | **ReferenceData** | **Content is already correct; rename is optional.** All 8 `MasterData.Domain` entities (`Country, City, District, Currency, Classification, PaymentType, ReferenceType, Unit`) are genuine lightweight reference data — nothing business-aggregate-shaped is hiding there. **Update**: `MasterData.Contracts` now has its first real entry (`CurrencyLookupDto`/`GetDefaultCurrencyQuery`), and `Receivables.Application`/`Payables.Application` were migrated off `IRepository<Currency>` onto it. The three DTOs that leaked the domain entity by inheritance (`CountryDto : Country`, `PaymentTypeDto : PaymentType`, `ReferenceTypeDto : ReferenceType`) were also fixed to extend `BaseModel` like every other MasterData DTO. Still open: Country/City/District/Classification/PaymentType/Unit/ReferenceType Contracts entries, and the wider Domain-level navigation coupling (Bank.Country, Journal.Currency, Invoice.Currency, etc.) — same deferred-to-Phase-9 reasoning as Parties. Renaming `MasterData` → `ReferenceData` is still cosmetic/optional. |
 
 Net effect on §1's target solution structure: add one new module, `Modules/Parties/
@@ -524,3 +525,61 @@ Net effect on §1's target solution structure: add one new module, `Modules/Part
 reference-data tier as MasterData/Organization/Administration in §11's dependency diagram (it has
 no outbound dependencies of its own, and Sales/Purchasing/Treasury/Inventory/Accounting/
 Receivables/Payables/Reporting all depend on `Parties.Contracts`). No other module count changes.
+
+---
+
+## 14. Addendum — CommercialDocuments implementation (2026-09-13)
+
+Full detail in [`docs/commercial-documents-module.md`](./commercial-documents-module.md). Summary
+of what changed and why, so §13's table doesn't need re-litigating:
+
+**Trigger**: `Purchasing.Application.LinkInvoiceCommandHandler` had grown a real
+`IRepository<Sales.Domain.Invoice>` injection (`Purchasing.Application → Sales.Domain`), the exact
+"Application depends on another module's Domain merely because both use Invoice" problem the
+brief's architecture rules exist to prevent. This made the 2026-09-12 "Invoice already has exactly
+one clean owner, no new module needed" conclusion stale — Purchasing now had real domain code
+depending on Sales' Invoice, not zero.
+
+**What moved**: `Invoice`, `InvoiceProduct`, `InvoiceType` relocated from `Sales.Domain` to a new
+`Modules/CommercialDocuments/{CommercialDocuments.Domain, .Application, .Contracts,
+.Infrastructure}` (same `[Table("Invoice")]`/`[Table("InvoiceProduct")]`/`[Table("InvoiceType")]`
+mapping — confirmed zero schema change via `dotnet ef migrations has-pending-model-changes`, no
+new migration needed at all). The Invoice/InvoiceType CQRS handlers, DTOs and AutoMapper profile
+(`Sales.Application/Invoices/*`, `Sales.Application/InvoiceTypes/*` — 26 files) moved with it into
+`CommercialDocuments.Application`, unchanged in behavior. `Sales.Application` is left owning only
+`OrderDto`/`OrderProductDto` (Order has no CQRS surface yet) — Sales Order/Quotation workflow
+remains entirely Sales' own, per §3.
+
+**Purchasing decoupled for real**: `LinkInvoiceCommandHandler` no longer injects
+`IRepository<Invoice>` at all. It resolves the target invoice through a new
+`CommercialDocuments.Contracts.Invoices.GetInvoiceReferenceQuery` (same `IQuery<T>`/MediatR pattern
+already used by `Parties.Contracts.GetDealerByIdQuery`), handled by
+`CommercialDocuments.Application.GetInvoiceReferenceQueryHandler`. `Purchasing.Application.csproj`
+no longer references `Sales.Domain` or `CommercialDocuments.Domain` — only
+`CommercialDocuments.Contracts`. The old `TypeId is 2 or 4` magic-number check became
+`CommercialDocuments.Contracts.Invoices.InvoiceTypeId.Purchase`/`.PurchaseReturn` (existing DB IDs
+1–4 preserved exactly, per brief §9).
+
+**Other consumers repointed, not rewritten**: `Treasury.Domain`/`.Application` (`FinancialInvoice.
+Invoice` navigation + 6 handlers), `Inventory.Application` (5 Transaction handlers),
+`Reporting.Application` (2 report handlers, `InvoiceType`-only), `Sales.Domain` itself (`Order.
+Invoice` navigation), and the legacy root `Application` project's `InvoiceJournalIntegration`
+bridge all had their `Sales.Domain.Invoice`/`InvoiceType` references mechanically repointed to
+`CommercialDocuments.Domain` — same direct-repository-injection shape as before, just against the
+new owner. **Deliberately not done in this pass**: rewriting those 6 Treasury handlers (which both
+read *and mutate* Invoice.Paid/Credit) onto a Contracts-based command is out of scope for an
+ownership-correction change — same "Phase 4-class debt, tracked not fixed" reasoning this doc
+already applies to Sales→Accounting's JournalId/JournalCode reads and Inventory's equivalent. All
+now appear as documented `AcceptedApplicationDomainExceptions`/`AcceptedDomainExceptions` entries in
+`Tests/Architecture.Tests`, retargeted from `Sales`/`CommercialDocuments` instead of introducing new
+technical debt.
+
+**Verification**: `dotnet build` (0 errors), `dotnet test` (887/887 architecture tests + 66/66
+application tests, including 7 new tests for `GetInvoiceReferenceQueryHandler`/
+`LinkInvoiceCommandHandler`), `dotnet ef migrations has-pending-model-changes` → "No changes have
+been made to the model since the last migration."
+
+Net effect on §1: add `Modules/CommercialDocuments/{CommercialDocuments.Domain, .Application,
+.Contracts, .Infrastructure}`, sitting between Sales and Purchasing in §11's dependency diagram —
+both depend on `CommercialDocuments.Contracts`, neither depends on the other's Domain because of
+Invoice anymore.

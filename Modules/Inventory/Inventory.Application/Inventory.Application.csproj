@@ -11,6 +11,10 @@
     <ProjectReference Include="../Inventory.Contracts/Inventory.Contracts.csproj" />
     <ProjectReference Include="../../../BuildingBlocks/OrgSys.EventBus/OrgSys.EventBus.csproj" />
     <ProjectReference Include="../../MasterData/MasterData.Application/MasterData.Application.csproj" />
+    <!-- Delete/Update/GetById/Search Transaction handlers read the linked Invoice directly
+         (IRepository<Invoice>), now owned by CommercialDocuments (relocated from Sales.Domain —
+         see docs/commercial-documents-module.md). -->
+    <ProjectReference Include="../../CommercialDocuments/CommercialDocuments.Domain/CommercialDocuments.Domain.csproj" />
     <!-- Preference and Application.Commands.Org.Financials.Integration.JournalTransaction (the
          Transaction->Journal posting bridge) haven't been extracted from the monolith yet. -->
     <ProjectReference Include="../../../Domain/Domain.csproj" />

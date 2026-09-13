@@ -3,4 +3,3 @@ global using Purchasing.Domain;
 global using Purchasing.Application;
 global using MasterData.Domain;
 global using Parties.Domain;
-global using Sales.Domain;

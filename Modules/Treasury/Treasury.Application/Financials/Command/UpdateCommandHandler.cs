@@ -11,7 +11,7 @@
     public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork,
         IRepository<Treasury.Domain.Financial> _Repository ,
         IRepository<Treasury.Domain.FinancialInvoice> _RepositoryFinancialInvoice,
-        IRepository<Sales.Domain.Invoice> _RepositoryInvoice,
+        IRepository<CommercialDocuments.Domain.Invoice> _RepositoryInvoice,
         IRepository<Preference> _PreferenceRepository,
         IMapper mapper, IServiceProvider _provider, ISender sender) : UpdateCommandHandler<UpdateFinancialCommand, Treasury.Domain.Financial>(_UnitOfWork, _Repository , mapper , _provider)
     {

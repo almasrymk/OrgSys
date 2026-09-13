@@ -1,6 +1,6 @@
 ﻿using Parties.Application.Dealers.Queries;
-using Sales.Application.InvoiceTypes.Commands;
-using Sales.Application.InvoiceTypes.Queries;
+using CommercialDocuments.Application.InvoiceTypes.Commands;
+using CommercialDocuments.Application.InvoiceTypes.Queries;
 using OrgSys.SharedKernel;
 using Application.DTOs;
 using MediatR;

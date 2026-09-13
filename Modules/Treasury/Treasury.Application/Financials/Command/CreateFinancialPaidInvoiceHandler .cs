@@ -31,7 +31,7 @@ namespace Treasury.Application.Financials.Command
 
             try
             {
-                var invoiceRepo = _Provider.GetRequiredService<IRepository<Sales.Domain.Invoice>>();
+                var invoiceRepo = _Provider.GetRequiredService<IRepository<CommercialDocuments.Domain.Invoice>>();
 
                 var invoice = await invoiceRepo.GetByFilterAsync(x => x.Id == request.InvoiceId, "");
 

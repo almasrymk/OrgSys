@@ -10,9 +10,12 @@
     <ProjectReference Include="../../../BuildingBlocks/OrgSys.SharedKernel/OrgSys.SharedKernel.csproj" />
     <ProjectReference Include="../../MasterData/MasterData.Domain/MasterData.Domain.csproj" />
     <ProjectReference Include="../../Organization/Organization.Domain/Organization.Domain.csproj" />
-    <!-- Invoice.Dealer and Order.Dealer keep their existing EF navigation to Dealer, now owned
-         by Parties (relocated from this project — see docs/modular-monolith-target-architecture.md §13). -->
+    <!-- Order.Dealer keeps its existing EF navigation to Dealer, now owned by Parties (relocated
+         from this project — see docs/modular-monolith-target-architecture.md §13). -->
     <ProjectReference Include="../../Parties/Parties.Domain/Parties.Domain.csproj" />
+    <!-- Order.Invoice keeps its existing EF navigation to Invoice, now owned by CommercialDocuments
+         (relocated from this project — see docs/commercial-documents-module.md). -->
+    <ProjectReference Include="../../CommercialDocuments/CommercialDocuments.Domain/CommercialDocuments.Domain.csproj" />
   </ItemGroup>
 
 </Project>

@@ -24,7 +24,7 @@ namespace Reporting.Application.Dealer.Queries
     public sealed class GetDealerStatementReportQueryHandler(
         IRepository<Invoice> invoiceRepository,
         IRepository<Financial> financialRepository,
-        IRepository<global::Sales.Domain.InvoiceType> invoiceTypeRepository)
+        IRepository<global::CommercialDocuments.Domain.InvoiceType> invoiceTypeRepository)
         : ICommandPaginationHandler<GetDealerStatementReportQuery, DealerStatment>
     {
         private sealed record Row(long DealerId, string? DealerName, string? DealerImgPath, DateTime Date, int Type, string? TypeName, string? Code, long? ReferenceId, decimal DisplayAmount, int DisplayInOut, decimal SignedAmount);

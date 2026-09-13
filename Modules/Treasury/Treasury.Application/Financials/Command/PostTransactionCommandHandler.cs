@@ -12,7 +12,7 @@ namespace Treasury.Application.Financials.Commands
         IRepository<FinancialType> typeRepository,
         IRepository<Account> glRepository,
         IRepository<Treasury.Domain.Financial> transactionRepository,
-        IRepository<Sales.Domain.Invoice> invoiceRepository,
+        IRepository<CommercialDocuments.Domain.Invoice> invoiceRepository,
         IRepository<Journal> journalRepository,
         Accounting.Application.IReceivableAccountValidator referenceValidator,
         Accounting.Application.IAccountingPeriodService accountingPeriodService) : ICommandHandler<PostFinancialTransactionCommand>

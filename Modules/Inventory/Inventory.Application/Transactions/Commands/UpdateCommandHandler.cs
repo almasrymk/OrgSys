@@ -20,7 +20,7 @@
             if (transaction?.InventoryId is > 0)
                 return new Result(System.Net.HttpStatusCode.Forbidden, [new Error("A transaction created from an inventory is read-only")]);
 
-            var sourceInvoice = await _provider.GetRequiredService<IRepository<Sales.Domain.Invoice>>()
+            var sourceInvoice = await _provider.GetRequiredService<IRepository<CommercialDocuments.Domain.Invoice>>()
                 .GetByFilterAsync(e => e.TransactionId == request.Id, string.Empty);
             if (sourceInvoice != null)
                 return new Result(System.Net.HttpStatusCode.Forbidden, [new Error("A transaction created from an invoice is read-only")]);

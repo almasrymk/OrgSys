@@ -3,7 +3,7 @@ namespace Purchasing.Domain
     /// <summary>
     /// A confirmed order to a specific supplier — the Purchasing-owned counterpart to Sales'
     /// <c>Order</c>. Stays open (Status.New) until someone manually creates the resulting Purchase
-    /// Invoice (Sales.Domain.Invoice, InvoiceType=Purchase) and links it here via
+    /// Invoice (CommercialDocuments.Domain.Invoice, InvoiceType=Purchase) and links it here via
     /// LinkInvoiceCommand, at which point Status becomes Approved. No automatic Invoice generation
     /// is performed — see LinkInvoiceCommandHandler.
     /// </summary>
@@ -21,9 +21,9 @@ namespace Purchasing.Domain
         public virtual PurchaseRequisition? PurchaseRequisition { get; set; }
 
         /// <summary>Set once a Purchase Invoice has been created and manually linked — see
-        /// LinkInvoiceCommand. No EF navigation to Sales.Domain.Invoice: resolved via
-        /// Sales.Contracts/a batch lookup if a display name is ever needed, same boundary
-        /// discipline as InvoiceProduct.ProductId.</summary>
+        /// LinkInvoiceCommand. No EF navigation to CommercialDocuments.Domain.Invoice: resolved via
+        /// CommercialDocuments.Contracts (GetInvoiceReferenceQuery)/a batch lookup if a display name
+        /// is ever needed, same boundary discipline as InvoiceProduct.ProductId.</summary>
         public virtual long? InvoiceId { get; set; }
 
         [Column(TypeName = "decimal(18,2)")]

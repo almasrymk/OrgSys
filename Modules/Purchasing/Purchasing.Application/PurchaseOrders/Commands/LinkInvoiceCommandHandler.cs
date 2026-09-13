@@ -1,22 +1,25 @@
 namespace Purchasing.Application.PurchaseOrders.Commands
 {
+    using CommercialDocuments.Contracts.Invoices;
     using MediatR;
     using OrgSys.SharedKernel;
     using System.Net;
 
     /// <summary>
-    /// Manually links an already-created Purchase Invoice (Sales.Domain.Invoice, TypeId 2/4 —
-    /// same "Purchase"/"Purchase Return" discriminator InvoiceJournalIntegration already branches
-    /// on) to a PurchaseOrder, marking the order Approved. No automatic Invoice creation happens
-    /// anywhere in this module — the Invoice is created the normal way (Sales' own Invoice
-    /// endpoints) and then linked here.
+    /// Manually links an already-created Purchase Invoice (CommercialDocuments.Domain.Invoice,
+    /// TypeId 2/4 — same "Purchase"/"Purchase Return" discriminator InvoiceJournalIntegration
+    /// already branches on) to a PurchaseOrder, marking the order Approved. No automatic Invoice
+    /// creation happens anywhere in this module — the Invoice is created the normal way (via
+    /// CommercialDocuments' own Invoice endpoints) and then linked here. Resolves the invoice
+    /// through CommercialDocuments.Contracts (not IRepository&lt;Invoice&gt;) so this module has
+    /// no dependency on CommercialDocuments.Domain, let alone Sales.Domain.
     /// </summary>
     public sealed record LinkInvoiceCommand(long PurchaseOrderId, long InvoiceId) : IRequest<Result>;
 
     public sealed class LinkInvoiceCommandHandler(
         IUnitOfWork _UnitOfWork,
         IRepository<PurchaseOrder> _OrderRepository,
-        IRepository<Sales.Domain.Invoice> _InvoiceRepository) : IRequestHandler<LinkInvoiceCommand, Result>
+        ISender _Sender) : IRequestHandler<LinkInvoiceCommand, Result>
     {
         public async Task<Result> Handle(LinkInvoiceCommand request, CancellationToken cancellationToken)
         {
@@ -27,11 +30,12 @@ namespace Purchasing.Application.PurchaseOrders.Commands
             if (order.InvoiceId is > 0)
                 return new Result(HttpStatusCode.BadRequest, [new Error("This purchase order is already linked to an invoice.")]);
 
-            var invoice = await _InvoiceRepository.GetByFilterAsync(e => e.Id == request.InvoiceId, string.Empty);
-            if (invoice is null || invoice.Status == Status.Deleted)
+            var invoiceResult = await _Sender.Send(new GetInvoiceReferenceQuery(request.InvoiceId), cancellationToken);
+            var invoice = invoiceResult.Response;
+            if (invoice is null || invoice.IsDeleted)
                 return new Result(HttpStatusCode.NotFound, [new Error("Invoice not found.")]);
 
-            if (invoice.TypeId is not (2 or 4))
+            if (invoice.TypeId is not (InvoiceTypeId.Purchase or InvoiceTypeId.PurchaseReturn))
                 return new Result(HttpStatusCode.BadRequest, [new Error("The linked invoice must be a Purchase invoice or Purchase return.")]);
 
             order.InvoiceId = invoice.Id;

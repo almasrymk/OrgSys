@@ -1,5 +1,4 @@
-﻿using Sales.Application.InvoiceTypes.Queries;
-using MasterData.Application.PaymentTypes.Commands;
+﻿using MasterData.Application.PaymentTypes.Commands;
 using MasterData.Application.PaymentTypes.Queries;
 using OrgSys.SharedKernel;
 using Application.DTOs;

@@ -25,6 +25,7 @@
     <ProjectReference Include="..\..\BuildingBlocks\OrgSys.EventBus\OrgSys.EventBus.csproj" />
     <ProjectReference Include="..\..\Modules\Sales\Sales.Domain\Sales.Domain.csproj" />
     <ProjectReference Include="..\..\Modules\Parties\Parties.Domain\Parties.Domain.csproj" />
+    <ProjectReference Include="..\..\Modules\CommercialDocuments\CommercialDocuments.Domain\CommercialDocuments.Domain.csproj" />
     <ProjectReference Include="..\..\Modules\Purchasing\Purchasing.Domain\Purchasing.Domain.csproj" />
     <ProjectReference Include="..\..\Modules\Inventory\Inventory.Domain\Inventory.Domain.csproj" />
     <ProjectReference Include="..\..\Modules\Treasury\Treasury.Domain\Treasury.Domain.csproj" />
@@ -36,6 +37,7 @@
     <ProjectReference Include="..\..\Modules\MasterData\MasterData.Domain\MasterData.Domain.csproj" />
     <ProjectReference Include="..\..\Modules\Sales\Sales.Application\Sales.Application.csproj" />
     <ProjectReference Include="..\..\Modules\Parties\Parties.Application\Parties.Application.csproj" />
+    <ProjectReference Include="..\..\Modules\CommercialDocuments\CommercialDocuments.Application\CommercialDocuments.Application.csproj" />
     <ProjectReference Include="..\..\Modules\Purchasing\Purchasing.Application\Purchasing.Application.csproj" />
     <ProjectReference Include="..\..\Modules\Inventory\Inventory.Application\Inventory.Application.csproj" />
     <ProjectReference Include="..\..\Modules\Treasury\Treasury.Application\Treasury.Application.csproj" />

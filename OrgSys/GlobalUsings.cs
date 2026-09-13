@@ -11,6 +11,8 @@ global using Treasury.Domain;
 global using Treasury.Application;
 global using Sales.Domain;
 global using Sales.Application;
+global using CommercialDocuments.Domain;
+global using CommercialDocuments.Application;
 global using Parties.Domain;
 global using Parties.Application;
 global using Inventory.Domain;

@@ -8,7 +8,7 @@
 
     public sealed record SearchTransactionQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandPagination<TransactionDto> ,ISearchQuery<ResultPagination<TransactionDto>>;
 
-    public sealed class SearchQueryHandler(IRepository<Inventory.Domain.Transaction> _Repository, IRepository<Sales.Domain.Invoice> invoiceRepository, IRepository<Accounting.Domain.Journal> journalRepository, IMapper mapper) : SearchCommandHandler<SearchTransactionQuery, Inventory.Domain.Transaction, TransactionDto>(_Repository, mapper)
+    public sealed class SearchQueryHandler(IRepository<Inventory.Domain.Transaction> _Repository, IRepository<CommercialDocuments.Domain.Invoice> invoiceRepository, IRepository<Accounting.Domain.Journal> journalRepository, IMapper mapper) : SearchCommandHandler<SearchTransactionQuery, Inventory.Domain.Transaction, TransactionDto>(_Repository, mapper)
     {
         public override async Task<ResultPagination<TransactionDto>> Handle(SearchTransactionQuery request, CancellationToken cancellationToken)
         {

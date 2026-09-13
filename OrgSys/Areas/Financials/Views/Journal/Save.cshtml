@@ -11,7 +11,7 @@
     var AllowPreference = User.IsAllowed("Journal.Preference");
     var AllowReverse = User.IsAllowed("Journal.Reverse");
     var formateDate = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "{0:yyyy/MM/dd}" : "{0:dd/MM/yyyy}";
-    List<Sales.Application.InvoiceTypeDto> InvoicesTypes = ViewBag.InvoicesTypes ?? new List<Sales.Application.InvoiceTypeDto>();
+    List<CommercialDocuments.Application.InvoiceTypeDto> InvoicesTypes = ViewBag.InvoicesTypes ?? new List<CommercialDocuments.Application.InvoiceTypeDto>();
     List<Inventory.Application.TransactionTypeDto> TransactionsTypes = ViewBag.TransactionsTypes ?? new List<Inventory.Application.TransactionTypeDto>();
     var SourceResourceName = "";
     if (Model.RefranceTable == "invoice")

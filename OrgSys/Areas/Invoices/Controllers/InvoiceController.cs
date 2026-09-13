@@ -1,4 +1,4 @@
-﻿using Sales.Application.Invoices.Commands;
+﻿using CommercialDocuments.Application.Invoices.Commands;
 using AutoMapper;
 using Domain.Enums;
 using Application.DTOs;
