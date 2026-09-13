@@ -21,7 +21,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Application\Application.csproj" />
-    <ProjectReference Include="..\..\Domain\Domain.csproj" />
     <ProjectReference Include="..\..\Modules\CommercialDocuments\CommercialDocuments.Application\CommercialDocuments.Application.csproj" />
     <ProjectReference Include="..\..\Modules\CommercialDocuments\CommercialDocuments.Contracts\CommercialDocuments.Contracts.csproj" />
     <ProjectReference Include="..\..\Modules\Purchasing\Purchasing.Application\Purchasing.Application.csproj" />

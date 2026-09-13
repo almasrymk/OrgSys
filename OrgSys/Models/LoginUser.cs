@@ -1,11 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
-namespace Domain.Entities
+namespace OrgSys.Models
 {
-    [Table("LoginUser", Schema = "admin")]
     public class LoginUser : BaseModel
-    {     
+    {
         [Required]
         public virtual string UserName { get; set; } = null!;
 

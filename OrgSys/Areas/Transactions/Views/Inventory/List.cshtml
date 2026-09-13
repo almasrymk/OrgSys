@@ -36,9 +36,9 @@
                 <tr>
                     <th class="text-center">#</th>
                     <th style="text-align: center; width:10px"></th>
-                    <th class="text-center">@Domain.Resource.Title_Designer.Code</th>
-                    <th class="@TextAlign">@Domain.Resource.Title_Designer.Stock</th>
-                    <th class="text-center">@Domain.Resource.Title_Designer.Date</th>
+                    <th class="text-center">@OrgSys.Localization.Title_Designer.Code</th>
+                    <th class="@TextAlign">@OrgSys.Localization.Title_Designer.Stock</th>
+                    <th class="text-center">@OrgSys.Localization.Title_Designer.Date</th>
                     <th class="@TextAlign">Resource</th>
                     <th colspan="3"></th>
                 </tr>
@@ -70,13 +70,13 @@
                                 if (Model.Response[i].AdjustmentInTransactionId > 0)
                                 {
                                     <a class="badge badge-success" href="/Transactions/Transaction/Save?id=@Model.Response[i].AdjustmentInTransactionId&ParentId=0&TypeId=5" title="Adjustment In">
-                                        <i class="iconsminds-down-1"></i> @Domain.Resource.Title_Designer.Addition @Domain.Resource.Title_Designer.Stock (@Model.Response[i].AdjustmentInTransactionCode)
+                                        <i class="iconsminds-down-1"></i> @OrgSys.Localization.Title_Designer.Addition @OrgSys.Localization.Title_Designer.Stock (@Model.Response[i].AdjustmentInTransactionCode)
                                     </a>
                                 }
                                 if (Model.Response[i].AdjustmentOutTransactionId > 0)
                                 {
                                     <a class="badge badge-danger" href="/Transactions/Transaction/Save?id=@Model.Response[i].AdjustmentOutTransactionId&ParentId=0&TypeId=6" title="Adjustment Out">
-                                        <i class="iconsminds-up-1"></i> @Domain.Resource.Title_Designer.Issue @Domain.Resource.Title_Designer.Stock (@Model.Response[i].AdjustmentOutTransactionCode)
+                                        <i class="iconsminds-up-1"></i> @OrgSys.Localization.Title_Designer.Issue @OrgSys.Localization.Title_Designer.Stock (@Model.Response[i].AdjustmentOutTransactionCode)
                                     </a>
                                 }
                             }
@@ -105,7 +105,7 @@
                                         {
                                             <span>&nbsp; | &nbsp;</span>
                                         }
-                                        <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Domain.Resource.Message_Designer.DeleteConfirmation' , '@Domain.Resource.Message_Designer.DoYouWantDeleteFile' , '@Domain.Resource.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
+                                        <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@OrgSys.Localization.Message_Designer.DeleteConfirmation' , '@OrgSys.Localization.Message_Designer.DoYouWantDeleteFile' , '@OrgSys.Localization.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
                                     }
                                 }
                                 else
@@ -128,7 +128,7 @@
                                     }
                                     if (AllowDelete)
                                     {
-                                        <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Domain.Resource.Message_Designer.DeleteConfirmation' , '@Domain.Resource.Message_Designer.DoYouWantDeleteFile' , '@Domain.Resource.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
+                                        <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@OrgSys.Localization.Message_Designer.DeleteConfirmation' , '@OrgSys.Localization.Message_Designer.DoYouWantDeleteFile' , '@OrgSys.Localization.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
                                     }
                                     <span>&nbsp; | &nbsp;</span>
                                     <a href="/@ViewBag.area/@ViewBag.PageTitle/Print?id=@Model.Response[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.Page" target="_blank"> <i class="fa fa-print text-info"></i> </a>
@@ -163,13 +163,13 @@
                     </div>
                     <div class="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
                         <div class="list-item-heading mb-0 truncate w-10 w-xs-100 d-inline-block" href="Pages.Product.Detail.html">
-                            <small>@Domain.Resource.Title_Designer.Code</small>
+                            <small>@OrgSys.Localization.Title_Designer.Code</small>
                         </div>
                         <div class="list-item-heading mb-0 truncate w-30 w-xs-100 d-inline-block" href="Pages.Product.Detail.html">
-                            <small>@Domain.Resource.Title_Designer.Stock</small>
+                            <small>@OrgSys.Localization.Title_Designer.Stock</small>
                         </div>
                         <div class="list-item-heading mb-0 truncate w-15 w-xs-100 d-inline-block" href="Pages.Product.Detail.html">
-                            <small>@Domain.Resource.Title_Designer.Date</small>
+                            <small>@OrgSys.Localization.Title_Designer.Date</small>
                         </div>
                         <div class="list-item-heading mb-0 truncate w-25 w-xs-100 d-inline-block">
                             <small>Resource</small>
@@ -205,11 +205,11 @@
                                 {
                                     if (Model.Response[i].AdjustmentInTransactionId > 0)
                                     {
-                                        <a class="badge badge-success" href="/Transactions/Transaction/Save?id=@Model.Response[i].AdjustmentInTransactionId&ParentId=0&TypeId=5"><i class="iconsminds-down-1"></i> @Domain.Resource.Title_Designer.Addition @Domain.Resource.Title_Designer.Stock (@Model.Response[i].AdjustmentInTransactionCode)</a>
+                                        <a class="badge badge-success" href="/Transactions/Transaction/Save?id=@Model.Response[i].AdjustmentInTransactionId&ParentId=0&TypeId=5"><i class="iconsminds-down-1"></i> @OrgSys.Localization.Title_Designer.Addition @OrgSys.Localization.Title_Designer.Stock (@Model.Response[i].AdjustmentInTransactionCode)</a>
                                     }
                                     if (Model.Response[i].AdjustmentOutTransactionId > 0)
                                     {
-                                        <a class="badge badge-danger" href="/Transactions/Transaction/Save?id=@Model.Response[i].AdjustmentOutTransactionId&ParentId=0&TypeId=6"><i class="iconsminds-up-1"></i> @Domain.Resource.Title_Designer.Issue @Domain.Resource.Title_Designer.Stock (@Model.Response[i].AdjustmentOutTransactionCode)</a>
+                                        <a class="badge badge-danger" href="/Transactions/Transaction/Save?id=@Model.Response[i].AdjustmentOutTransactionId&ParentId=0&TypeId=6"><i class="iconsminds-up-1"></i> @OrgSys.Localization.Title_Designer.Issue @OrgSys.Localization.Title_Designer.Stock (@Model.Response[i].AdjustmentOutTransactionCode)</a>
                                     }
                                 }
                                 else
@@ -233,7 +233,7 @@
                                         {
                                             <span>&nbsp; | &nbsp;</span>
                                         }
-                                        <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Domain.Resource.Message_Designer.DeleteConfirmation' , '@Domain.Resource.Message_Designer.DoYouWantDeleteFile' , '@Domain.Resource.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
+                                        <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@OrgSys.Localization.Message_Designer.DeleteConfirmation' , '@OrgSys.Localization.Message_Designer.DoYouWantDeleteFile' , '@OrgSys.Localization.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
                                     }
                                 }
                                 else
@@ -256,7 +256,7 @@
                                     }
                                     if (AllowDelete)
                                     {
-                                        <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Domain.Resource.Message_Designer.DeleteConfirmation' , '@Domain.Resource.Message_Designer.DoYouWantDeleteFile' , '@Domain.Resource.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
+                                        <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@OrgSys.Localization.Message_Designer.DeleteConfirmation' , '@OrgSys.Localization.Message_Designer.DoYouWantDeleteFile' , '@OrgSys.Localization.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
                                     }
 
                                     <span>&nbsp; | &nbsp;</span>

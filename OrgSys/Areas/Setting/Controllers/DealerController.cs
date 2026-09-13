@@ -2,8 +2,8 @@
 {
     using Parties.Application.Dealers.Commands;
     using AutoMapper;
-    using Application.DTOs;
-    using Domain.Enums;
+    using System.Net.Http;
+    using OrgSys.Models;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.Extensions.Configuration;
@@ -40,7 +40,7 @@
 
             if (ob.Id > 0 && ob.AccountId is > 0)
             {
-                var balanceResponse = await ApiMethod(ApiMethodType.Get, $"Balance?Id={ob.Id}");
+                var balanceResponse = await ApiMethod(HttpMethod.Get, $"Balance?Id={ob.Id}");
                 if (balanceResponse.IsSuccessStatusCode)
                 {
                     var balanceData = await balanceResponse.Content.ReadAsStringAsync();

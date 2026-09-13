@@ -2,8 +2,8 @@
 using Inventory.Application.Transactions.Commands;
 using Inventory.Application.TransactionTypes.Commands;
 using AutoMapper;
-using Domain.Enums;
-using Application.DTOs;
+using System.Net.Http;
+using OrgSys.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
@@ -54,27 +54,27 @@ namespace OrgSys.Areas.Transaction.Controllers
 
         public async Task<ActionResult> Cancel(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1)
         {
-            var response = await ApiMethod(ApiMethodType.Put, $"Cancel?Id={id}");
+            var response = await ApiMethod(HttpMethod.Put, $"Cancel?Id={id}");
             response.EnsureSuccessStatusCode();
             return Redirect($"/Transactions/Transaction/Index?ParentId={ParentId}&TypeId={TypeId}&page={page}&status={ResultStatus.success}&MsgError=Success");
         }
 
         public async Task<ActionResult> Redo(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1)
         {
-            var response = await ApiMethod(ApiMethodType.Put, $"Redo?Id={id}");
+            var response = await ApiMethod(HttpMethod.Put, $"Redo?Id={id}");
             response.EnsureSuccessStatusCode();
             return Redirect($"/Transactions/Transaction/Index?ParentId={ParentId}&TypeId={TypeId}&page={page}&status={ResultStatus.success}&MsgError=Success");
         }
 
         public async Task<ActionResult> CreateReceived(long id, long ParentId = 0, long TypeId = 3, int page = 1)
         {
-            var response = await ApiMethod(ApiMethodType.Post, $"CreateReceived?TransferId={id}");
+            var response = await ApiMethod(HttpMethod.Post, $"CreateReceived?TransferId={id}");
             return Redirect($"/Transactions/Transaction/Index?ParentId={ParentId}&TypeId={TypeId}&page={page}&status={(response.IsSuccessStatusCode ? ResultStatus.success : ResultStatus.error)}&MsgError={(response.IsSuccessStatusCode ? "Success" : "Error")}");
         }
 
         public async Task<ActionResult> CreateJournal(long id, long ParentId = 0, long TypeId = 0, int page = 1, string dir = "Index")
         {
-            var response = await ApiMethod(ApiMethodType.Post, $"CreateJournal?TransactionId={id}");
+            var response = await ApiMethod(HttpMethod.Post, $"CreateJournal?TransactionId={id}");
             if (dir == "Save")
                 return Redirect($"/Transactions/Transaction/Save?id={id}&ParentId={ParentId}&TypeId={TypeId}&status={(response.IsSuccessStatusCode ? ResultStatus.success : ResultStatus.error)}&MsgError={(response.IsSuccessStatusCode ? "Success" : "Unable to create journal. Check account integration settings.")}");
             return Redirect($"/Transactions/Transaction/Index?ParentId={ParentId}&TypeId={TypeId}&page={page}&status={(response.IsSuccessStatusCode ? ResultStatus.success : ResultStatus.error)}&MsgError={(response.IsSuccessStatusCode ? "Success" : "Unable to create journal. Check account integration settings.")}");
@@ -134,7 +134,7 @@ namespace OrgSys.Areas.Transaction.Controllers
             {
 
                 var key = ob.GetType().GetProperty("Code")?.GetValue(ob, null);
-                var searchResp = await ApiMethod(ApiMethodType.Get, $"Search?KeySearch={key}&ParentId={ob.ParentId}&TypeId={ob.TypeId}&Page=1&PageSize=1");
+                var searchResp = await ApiMethod(HttpMethod.Get, $"Search?KeySearch={key}&ParentId={ob.ParentId}&TypeId={ob.TypeId}&Page=1&PageSize=1");
                 if (searchResp != null && searchResp.IsSuccessStatusCode)
                 {
                     var searchData = await searchResp.Content.ReadAsStringAsync();

@@ -1,9 +1,9 @@
 @model Treasury.Application.FinancialAccountDto
-@using Domain.Enums
+@using OrgSys.Models
 @using OrgSys
 @{
     var isBank = Model.FinancialAccountType == FinancialAccountType.Bank;
-    var title = isBank ? Domain.Resource.Title_Designer.BankAccounts : Domain.Resource.Title_Designer.CashBoxes;
+    var title = isBank ? OrgSys.Localization.Title_Designer.BankAccounts : OrgSys.Localization.Title_Designer.CashBoxes;
     ViewData["Title_Designer"] = title;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -16,13 +16,13 @@
                 <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
                     <ol class="breadcrumb pt-0">
                         <li class="breadcrumb-item">
-                            <a href="/">@Domain.Resource.Title_Designer.Home</a>
+                            <a href="/">@OrgSys.Localization.Title_Designer.Home</a>
                         </li>
                         <li class="breadcrumb-item">
-                            <span>@Domain.Resource.Title_Designer.Settings</span>
+                            <span>@OrgSys.Localization.Title_Designer.Settings</span>
                         </li>
                         <li class="breadcrumb-item">
-                            @Domain.Resource.Title_Designer.Financial
+                            @OrgSys.Localization.Title_Designer.Financial
                         </li>
                     </ol>
                 </nav>
@@ -38,15 +38,15 @@
                         <h3 class="mr-4 mb-2 ml-4 d-inline-block float-md-left">
                             @if (Model.Id == 0)
                             {
-                                <span class="mb-4"> @Domain.Resource.Title_Designer.New ...</span>
+                                <span class="mb-4"> @OrgSys.Localization.Title_Designer.New ...</span>
                             }
                             else
                             {
-                                <span class="mb-4"> @Domain.Resource.Title_Designer.Edit ...</span>
+                                <span class="mb-4"> @OrgSys.Localization.Title_Designer.Edit ...</span>
                             }
                         </h3>
                         <div class="position-absolute card-top-buttons">
-                            <a href="/@ViewBag.area/@ViewBag.PageTitle?TypeId=@ViewBag.TypeId" class="btn btn-primary"><i class="simple-icon-action-undo"></i>  @Domain.Resource.Title_Designer.Back</a>
+                            <a href="/@ViewBag.area/@ViewBag.PageTitle?TypeId=@ViewBag.TypeId" class="btn btn-primary"><i class="simple-icon-action-undo"></i>  @OrgSys.Localization.Title_Designer.Back</a>
                         </div>
                     </div>
 
@@ -61,20 +61,20 @@
 
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <label>@Domain.Resource.Title_Designer.Code</label>
-                                    @Html.TextBoxFor(model => model.Code, new { @class = "form-control", @placeholder = @Domain.Resource.Title_Designer.Code })
+                                    <label>@OrgSys.Localization.Title_Designer.Code</label>
+                                    @Html.TextBoxFor(model => model.Code, new { @class = "form-control", @placeholder = @OrgSys.Localization.Title_Designer.Code })
                                     @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger " })
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label>@Domain.Resource.Title_Designer.Name</label>
-                                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @placeholder = @Domain.Resource.Title_Designer.Name })
+                                    <label>@OrgSys.Localization.Title_Designer.Name</label>
+                                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @placeholder = @OrgSys.Localization.Title_Designer.Name })
                                     @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                                 </div>
                             </div>
 
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <label>@Domain.Resource.Title_Designer.Account</label>
+                                    <label>@OrgSys.Localization.Title_Designer.Account</label>
                                     <div id="divAccountName">
                                         <div class="input-group DropAutoComplete">
                                             <div class="input-group-prepend">
@@ -90,9 +90,9 @@
                                     @Html.ValidationMessageFor(model => model.AccountId, "", new { @class = "text-danger " })
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label>@Domain.Resource.Title_Designer.Currency</label>
+                                    <label>@OrgSys.Localization.Title_Designer.Currency</label>
                                     <select asp-for="CurrencyId" asp-items="@ViewBag.CurrencyList" class="form-control">
-                                        <option value="">@Domain.Resource.Title_Designer.Select...</option>
+                                        <option value="">@OrgSys.Localization.Title_Designer.Select...</option>
                                     </select>
                                     @Html.ValidationMessageFor(model => model.CurrencyId, "", new { @class = "text-danger " })
                                 </div>
@@ -102,7 +102,7 @@
                             {
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
-                                        <label>@Domain.Resource.Title_Designer.Bank</label>
+                                        <label>@OrgSys.Localization.Title_Designer.Bank</label>
                                         <div class="input-group DropAutoComplete">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="iconsminds-bank"></i></span>
@@ -116,7 +116,7 @@
                                         @Html.ValidationMessageFor(model => model.BankId, "", new { @class = "text-danger " })
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label>@Domain.Resource.Title_Designer.BankBranch</label>
+                                        <label>@OrgSys.Localization.Title_Designer.BankBranch</label>
                                         <div class="input-group DropAutoComplete">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="iconsminds-shop-4"></i></span>
@@ -132,23 +132,23 @@
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
-                                        <label>@Domain.Resource.Title_Designer.AccountNumber</label>
+                                        <label>@OrgSys.Localization.Title_Designer.AccountNumber</label>
                                         @Html.TextBoxFor(model => model.AccountNumber, new { @class = "form-control" })
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label>@Domain.Resource.Title_Designer.IBAN</label>
+                                        <label>@OrgSys.Localization.Title_Designer.IBAN</label>
                                         @Html.TextBoxFor(model => model.IBAN, new { @class = "form-control" })
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
-                                        <label>@Domain.Resource.Title_Designer.SwiftCode</label>
+                                        <label>@OrgSys.Localization.Title_Designer.SwiftCode</label>
                                         @Html.TextBoxFor(model => model.SwiftCode, new { @class = "form-control" })
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label>@Domain.Resource.Title_Designer.Branch</label>
+                                        <label>@OrgSys.Localization.Title_Designer.Branch</label>
                                         <select asp-for="BranchId" asp-items="@ViewBag.BranchList" class="form-control">
-                                            <option value="">@Domain.Resource.Title_Designer.Select...</option>
+                                            <option value="">@OrgSys.Localization.Title_Designer.Select...</option>
                                         </select>
                                     </div>
                                 </div>
@@ -157,15 +157,15 @@
                             {
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
-                                        <label>@Domain.Resource.Title_Designer.Branch</label>
+                                        <label>@OrgSys.Localization.Title_Designer.Branch</label>
                                         <select asp-for="BranchId" asp-items="@ViewBag.BranchList" class="form-control">
-                                            <option value="">@Domain.Resource.Title_Designer.Select...</option>
+                                            <option value="">@OrgSys.Localization.Title_Designer.Select...</option>
                                         </select>
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label>@Domain.Resource.Title_Designer.KeeperUser</label>
+                                        <label>@OrgSys.Localization.Title_Designer.KeeperUser</label>
                                         <select asp-for="KeeperUserId" asp-items="@ViewBag.UserList" class="form-control">
-                                            <option value="">@Domain.Resource.Title_Designer.Select...</option>
+                                            <option value="">@OrgSys.Localization.Title_Designer.Select...</option>
                                         </select>
                                     </div>
                                 </div>
@@ -175,13 +175,13 @@
                                 <div class="form-group col-md-6 pt-4">
                                     <label class="custom-control custom-checkbox">
                                         @Html.CheckBoxFor(model => model.IsActive, new { @class = "custom-control-input" })
-                                        <span class="custom-control-label">@Domain.Resource.Title_Designer.Active</span>
+                                        <span class="custom-control-label">@OrgSys.Localization.Title_Designer.Active</span>
                                     </label>
                                 </div>
                                 @if (Model.Id > 0 && ViewBag.Balance != null)
                                 {
                                     <div class="form-group col-md-6">
-                                        <label>@Domain.Resource.Title_Designer.Balance</label>
+                                        <label>@OrgSys.Localization.Title_Designer.Balance</label>
                                         <div class="form-control-plaintext">@(((decimal)ViewBag.Balance).ToString("N2"))</div>
                                     </div>
                                 }
@@ -190,7 +190,7 @@
                             <hr />
                             @if (User.IsAllowed($"{(isBank ? "BankAccounts" : "CashBoxes")}.{(Model.Id == 0 ? "Add" : "Edit")}"))
                             {
-                                <button type="submit" class="btn btn-primary mb-0">@Domain.Resource.Title_Designer.Save</button>
+                                <button type="submit" class="btn btn-primary mb-0">@OrgSys.Localization.Title_Designer.Save</button>
                             }
                         </form>
                     </div>

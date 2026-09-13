@@ -31,8 +31,8 @@
                     <tr>
                         <th class="text-center">#</th>
                         <th style="text-align:center"></th>
-                        <th class="@TextAlign align-middle">@Domain.Resource.Title_Designer.Name</th>
-                        <th class="@TextAlign align-middle">@Domain.Resource.Title_Designer.Branch</th>
+                        <th class="@TextAlign align-middle">@OrgSys.Localization.Title_Designer.Name</th>
+                        <th class="@TextAlign align-middle">@OrgSys.Localization.Title_Designer.Branch</th>
                         @if (AllowEdit || AllowCancel || AllowDelete)
                         {
                             <th>
@@ -80,7 +80,7 @@
                                     }
                                     @if (AllowDelete)
                                     {
-                                        <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Domain.Resource.Message_Designer.DeleteConfirmation' , '@Domain.Resource.Message_Designer.DoYouWantDeleteFile' , '@Domain.Resource.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
+                                        <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@OrgSys.Localization.Message_Designer.DeleteConfirmation' , '@OrgSys.Localization.Message_Designer.DoYouWantDeleteFile' , '@OrgSys.Localization.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
                                     }
                                 </td>
                             }
@@ -112,10 +112,10 @@
                     </div>
                     <div class="card-body align-self-center d-flex flex-column flex-md-row  align-items-md-center">
                         <div class="list-item-heading mb-0 w-80">
-                            <small>@Domain.Resource.Title_Designer.Name</small>
+                            <small>@OrgSys.Localization.Title_Designer.Name</small>
                         </div>
                         <div class="list-item-heading mb-0 w-40">
-                            <small>@Domain.Resource.Title_Designer.Branch</small>
+                            <small>@OrgSys.Localization.Title_Designer.Branch</small>
                         </div>
                         <div class="w-15 @TextAlign2">
 
@@ -156,7 +156,7 @@
                                 }
                                 @if (AllowDelete)
                                 {
-                                    <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Domain.Resource.Message_Designer.DeleteConfirmation' , '@Domain.Resource.Message_Designer.DoYouWantDeleteFile' , '@Domain.Resource.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
+                                    <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@OrgSys.Localization.Message_Designer.DeleteConfirmation' , '@OrgSys.Localization.Message_Designer.DoYouWantDeleteFile' , '@OrgSys.Localization.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
                                 }
                             </div>
                         </div>

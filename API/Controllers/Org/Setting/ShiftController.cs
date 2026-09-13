@@ -1,7 +1,6 @@
 using Organization.Application.Shifts.Commands;
 using Organization.Application.Shifts.Queries;
 using OrgSys.SharedKernel;
-using Application.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

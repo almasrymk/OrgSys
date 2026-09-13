@@ -31,7 +31,7 @@
                     <tr>
                         <th class="text-center">#</th>
                         <th style="text-align:center"></th>
-                        <th class="@TextAlign align-middle">@Domain.Resource.Title_Designer.Name</th>
+                        <th class="@TextAlign align-middle">@OrgSys.Localization.Title_Designer.Name</th>
                         <th class="@TextAlign align-middle">Group</th>
                         <th class="@TextAlign align-middle">Phone</th>
                         <th class="@TextAlign align-middle">Email</th>
@@ -96,7 +96,7 @@
                                             if (AllowDelete)
                                             {
                                                 <span>&nbsp; | &nbsp;</span>
-                                                <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Domain.Resource.Message_Designer.DeleteConfirmation' , '@Domain.Resource.Message_Designer.DoYouWantDeleteFile' , '@Domain.Resource.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
+                                                <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@OrgSys.Localization.Message_Designer.DeleteConfirmation' , '@OrgSys.Localization.Message_Designer.DoYouWantDeleteFile' , '@OrgSys.Localization.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
                                             }
                                         }
                                         else
@@ -111,7 +111,7 @@
                                             }
                                             if (AllowDelete)
                                             {
-                                                <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Domain.Resource.Message_Designer.DeleteConfirmation' , '@Domain.Resource.Message_Designer.DoYouWantDeleteFile' , '@Domain.Resource.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
+                                                <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@OrgSys.Localization.Message_Designer.DeleteConfirmation' , '@OrgSys.Localization.Message_Designer.DoYouWantDeleteFile' , '@OrgSys.Localization.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
                                             }
                                         }
                                     </td>
@@ -178,7 +178,7 @@
                                         if (AllowDelete)
                                         {
                                             <span>&nbsp; | &nbsp;</span>
-                                            <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Domain.Resource.Message_Designer.DeleteConfirmation' , '@Domain.Resource.Message_Designer.DoYouWantDeleteFile' , '@Domain.Resource.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
+                                            <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@OrgSys.Localization.Message_Designer.DeleteConfirmation' , '@OrgSys.Localization.Message_Designer.DoYouWantDeleteFile' , '@OrgSys.Localization.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
                                         }
                                     }
                                     else
@@ -193,7 +193,7 @@
                                         }
                                         if (AllowDelete)
                                         {
-                                            <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Domain.Resource.Message_Designer.DeleteConfirmation' , '@Domain.Resource.Message_Designer.DoYouWantDeleteFile' , '@Domain.Resource.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
+                                            <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@OrgSys.Localization.Message_Designer.DeleteConfirmation' , '@OrgSys.Localization.Message_Designer.DoYouWantDeleteFile' , '@OrgSys.Localization.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
                                         }
                                     }
                                 </div>
@@ -257,9 +257,9 @@
                     </div>
                     <div class="card-footer text-center m-0 p-2">
                         <div class="m-0 p-0" style="font-size:12px;">
-                            <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit"></i> @Domain.Resource.Title_Designer.Edit</a>
+                            <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit"></i> @OrgSys.Localization.Title_Designer.Edit</a>
                             <span> &nbsp; | &nbsp; </span>
-                            <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Domain.Resource.Message_Designer.DeleteConfirmation' , '@Domain.Resource.Message_Designer.DoYouWantDeleteFile' , '@Domain.Resource.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash"></i> @Domain.Resource.Title_Designer.Delete</a>
+                            <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@OrgSys.Localization.Message_Designer.DeleteConfirmation' , '@OrgSys.Localization.Message_Designer.DoYouWantDeleteFile' , '@OrgSys.Localization.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash"></i> @OrgSys.Localization.Title_Designer.Delete</a>
                         </div>
                     </div>
                 </div>

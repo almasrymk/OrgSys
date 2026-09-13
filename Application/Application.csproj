@@ -13,7 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Domain\Domain.csproj" />
     <ProjectReference Include="..\Modules\MasterData\MasterData.Application\MasterData.Application.csproj" />
     <ProjectReference Include="..\Modules\Organization\Organization.Application\Organization.Application.csproj" />
     <ProjectReference Include="..\Modules\Administration\Administration.Application\Administration.Application.csproj" />

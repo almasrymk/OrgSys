@@ -1,6 +1,5 @@
 ﻿namespace Infrastructure.Persistence.UnitOfWork
 {
-    using Domain.Abstraction;
     using System.Threading.Tasks;
 
     public class UnitOfWork(IOrgContext dbContext) : IUnitOfWork

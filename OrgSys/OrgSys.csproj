@@ -193,11 +193,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Areas\Orders\Controllers\OrderController.cs" />
-    <Compile Remove="Controllers\BaseController.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="SQLFiles\DealerListSql.sql" />
     <None Remove="SQLFiles\DealersBalance1Sql.sql" />
     <None Remove="SQLFiles\DealersBalanceSql.sql" />
@@ -415,6 +410,7 @@
     <ProjectReference Include="..\Modules\CommercialDocuments\CommercialDocuments.Application\CommercialDocuments.Application.csproj" />
     <ProjectReference Include="..\Modules\Parties\Parties.Application\Parties.Application.csproj" />
     <ProjectReference Include="..\Modules\Inventory\Inventory.Application\Inventory.Application.csproj" />
+    <ProjectReference Include="..\BuildingBlocks\OrgSys.Localization\OrgSys.Localization.csproj" />
   </ItemGroup>
 
   <ItemGroup>

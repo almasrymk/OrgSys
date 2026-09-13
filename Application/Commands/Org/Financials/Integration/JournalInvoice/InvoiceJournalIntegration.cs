@@ -1,7 +1,5 @@
 namespace Application.Commands.Org.Financials.Integration.JournalInvoice;
 
-using Domain.Abstraction;
-using Domain.Entities;
 using Microsoft.Extensions.DependencyInjection;
 
 public sealed class InvoiceJournalIntegration(IServiceProvider provider)

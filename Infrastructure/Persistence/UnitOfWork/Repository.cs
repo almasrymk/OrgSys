@@ -2,7 +2,6 @@
 {
     using CorePagination.Extensions;
     using CorePagination.Paginators.SizeAwarePaginator;
-    using Domain.Abstraction;   
     using Microsoft.EntityFrameworkCore;
     using System.Linq.Expressions;
     using static System.Net.WebRequestMethods;

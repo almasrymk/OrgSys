@@ -2,7 +2,6 @@
 {
     using AutoMapper;
     using System.Linq;
-    using Application.DTOs;
     using OrgSys.Controllers;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;

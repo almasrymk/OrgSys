@@ -1,38 +1,38 @@
 @model Treasury.Application.FinancialTransferDto
 @using System.Globalization
 @{
-    ViewData["Title_Designer"] = Domain.Resource.Title_Designer.FinancialTransfers;
+    ViewData["Title_Designer"] = OrgSys.Localization.Title_Designer.FinancialTransfers;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var readOnly = Model.Id > 0;
     var dateFormat = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "yyyy/MM/dd" : "dd/MM/yyyy";
 }
 <div id="HPage" class="container-fluid">
  <div class="row"><div class="col-12"><div class="mb-3">
-  <h1><i class="simple-icon-shuffle rounded-circle badge-theme-1 p-1"></i> @(readOnly ? Domain.Resource.Title_Designer.FinancialTransfers : Domain.Resource.Title_Designer.New + " " + Domain.Resource.Title_Designer.FinancialTransfers)</h1>
-  <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block"><ol class="breadcrumb pt-0"><li class="breadcrumb-item"><a href="/">@Domain.Resource.Title_Designer.Home</a></li><li class="breadcrumb-item">@Domain.Resource.Title_Designer.Financial</li><li class="breadcrumb-item">@Domain.Resource.Title_Designer.FinancialTransfers</li></ol></nav>
+  <h1><i class="simple-icon-shuffle rounded-circle badge-theme-1 p-1"></i> @(readOnly ? OrgSys.Localization.Title_Designer.FinancialTransfers : OrgSys.Localization.Title_Designer.New + " " + OrgSys.Localization.Title_Designer.FinancialTransfers)</h1>
+  <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block"><ol class="breadcrumb pt-0"><li class="breadcrumb-item"><a href="/">@OrgSys.Localization.Title_Designer.Home</a></li><li class="breadcrumb-item">@OrgSys.Localization.Title_Designer.Financial</li><li class="breadcrumb-item">@OrgSys.Localization.Title_Designer.FinancialTransfers</li></ol></nav>
  </div></div></div>
  <div class="card"><div class="card pl-1 pr-1"><form asp-action="Save" method="post" class="tooltip-label-right" novalidate>
   <div class="d-md-block"><div class="card-body">
    <input asp-for="Id" type="hidden"/><input asp-for="CreateUserId" type="hidden"/><input asp-for="BranchId" type="hidden"/><input asp-for="ShiftId" type="hidden"/>
    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-   <div class="position-absolute card-top-buttons"><a href="/Financials/FinancialTransfer" class="btn btn-primary"><i class="simple-icon-action-undo"></i> @Domain.Resource.Title_Designer.Back</a></div>
+   <div class="position-absolute card-top-buttons"><a href="/Financials/FinancialTransfer" class="btn btn-primary"><i class="simple-icon-action-undo"></i> @OrgSys.Localization.Title_Designer.Back</a></div>
    <div class="m-3 mt-5">
     <div class="form-row">
-     <div class="form-group col-md-4"><label>@Domain.Resource.Title_Designer.Date</label><div class="input-group"><div class="input-group-prepend"><span class="input-group-text"><i class="simple-icon-calendar"></i></span></div>
+     <div class="form-group col-md-4"><label>@OrgSys.Localization.Title_Designer.Date</label><div class="input-group"><div class="input-group-prepend"><span class="input-group-text"><i class="simple-icon-calendar"></i></span></div>
       @if(readOnly){<input value="@Model.TransactionDate.ToString(dateFormat,new CultureInfo("en-US"))" class="form-control" readonly/>}<else><input asp-for="TransactionDate" type="date" class="form-control datepicker"/>}
      </div></div>
-     <div class="form-group col-md-4"><label>@Domain.Resource.Title_Designer.From @Domain.Resource.Title_Designer.FinancialAccount</label><div class="input-group DropAutoComplete"><div class="input-group-prepend"><span class="input-group-text"><i class="iconsminds-coins"></i></span></div><input id="fromName" value="@Model.FromFinancialAccountName" class="form-control Droptxt" autocomplete="off" readonly="@readOnly"/><input asp-for="FromFinancialAccountId" type="hidden"/><div class="input-group-prepend Dropbtn"><span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span></div></div></div>
-     <div class="form-group col-md-4"><label>@Domain.Resource.Title_Designer.To @Domain.Resource.Title_Designer.FinancialAccount</label><div class="input-group DropAutoComplete"><div class="input-group-prepend"><span class="input-group-text"><i class="iconsminds-coins"></i></span></div><input id="toName" value="@Model.ToFinancialAccountName" class="form-control Droptxt" autocomplete="off" readonly="@readOnly"/><input asp-for="ToFinancialAccountId" type="hidden"/><div class="input-group-prepend Dropbtn"><span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span></div></div></div>
+     <div class="form-group col-md-4"><label>@OrgSys.Localization.Title_Designer.From @OrgSys.Localization.Title_Designer.FinancialAccount</label><div class="input-group DropAutoComplete"><div class="input-group-prepend"><span class="input-group-text"><i class="iconsminds-coins"></i></span></div><input id="fromName" value="@Model.FromFinancialAccountName" class="form-control Droptxt" autocomplete="off" readonly="@readOnly"/><input asp-for="FromFinancialAccountId" type="hidden"/><div class="input-group-prepend Dropbtn"><span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span></div></div></div>
+     <div class="form-group col-md-4"><label>@OrgSys.Localization.Title_Designer.To @OrgSys.Localization.Title_Designer.FinancialAccount</label><div class="input-group DropAutoComplete"><div class="input-group-prepend"><span class="input-group-text"><i class="iconsminds-coins"></i></span></div><input id="toName" value="@Model.ToFinancialAccountName" class="form-control Droptxt" autocomplete="off" readonly="@readOnly"/><input asp-for="ToFinancialAccountId" type="hidden"/><div class="input-group-prepend Dropbtn"><span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span></div></div></div>
     </div>
     <div class="form-row">
-     <div class="form-group col-md-4"><label>@Domain.Resource.Title_Designer.Currency</label><div class="input-group"><div class="input-group-prepend"><span class="input-group-text"><i class="iconsminds-financial"></i></span></div><input asp-for="CurrencyId" type="number" class="form-control" readonly="@readOnly"/></div></div>
-     <div class="form-group col-md-4"><label>@Domain.Resource.Title_Designer.Rate</label><input asp-for="ExchangeRate" class="form-control" readonly="@readOnly"/></div>
-     <div class="form-group col-md-4"><label>@Domain.Resource.Title_Designer.Amount</label><input asp-for="Amount" class="form-control" placeholder="0.0" readonly="@readOnly"/></div>
+     <div class="form-group col-md-4"><label>@OrgSys.Localization.Title_Designer.Currency</label><div class="input-group"><div class="input-group-prepend"><span class="input-group-text"><i class="iconsminds-financial"></i></span></div><input asp-for="CurrencyId" type="number" class="form-control" readonly="@readOnly"/></div></div>
+     <div class="form-group col-md-4"><label>@OrgSys.Localization.Title_Designer.Rate</label><input asp-for="ExchangeRate" class="form-control" readonly="@readOnly"/></div>
+     <div class="form-group col-md-4"><label>@OrgSys.Localization.Title_Designer.Amount</label><input asp-for="Amount" class="form-control" placeholder="0.0" readonly="@readOnly"/></div>
     </div>
-    <div class="form-row"><div class="form-group col-md-12"><label>@Domain.Resource.Title_Designer.Notes</label><div class="input-group"><div class="input-group-prepend"><span class="input-group-text"><i class="simple-icon-notebook"></i></span></div><input asp-for="Description" class="form-control" readonly="@readOnly"/></div></div></div>
-    <br/><div class="card"><div class="card-body p-0"><table class="table table-hover m-0"><thead><tr><th class="text-center">Direction</th><th>@Domain.Resource.Title_Designer.FinancialAccount</th><th class="text-center">@Domain.Resource.Title_Designer.Debit</th><th class="text-center">@Domain.Resource.Title_Designer.Credit</th></tr></thead><tbody><tr><td class="text-center"><span class="badge badge-success">IN</span></td><td id="postingTo">@Model.ToFinancialAccountName</td><td class="text-center">@Model.Amount</td><td class="text-center">0</td></tr><tr><td class="text-center"><span class="badge badge-danger">OUT</span></td><td id="postingFrom">@Model.FromFinancialAccountName</td><td class="text-center">0</td><td class="text-center">@Model.Amount</td></tr></tbody></table></div></div>
+    <div class="form-row"><div class="form-group col-md-12"><label>@OrgSys.Localization.Title_Designer.Notes</label><div class="input-group"><div class="input-group-prepend"><span class="input-group-text"><i class="simple-icon-notebook"></i></span></div><input asp-for="Description" class="form-control" readonly="@readOnly"/></div></div></div>
+    <br/><div class="card"><div class="card-body p-0"><table class="table table-hover m-0"><thead><tr><th class="text-center">Direction</th><th>@OrgSys.Localization.Title_Designer.FinancialAccount</th><th class="text-center">@OrgSys.Localization.Title_Designer.Debit</th><th class="text-center">@OrgSys.Localization.Title_Designer.Credit</th></tr></thead><tbody><tr><td class="text-center"><span class="badge badge-success">IN</span></td><td id="postingTo">@Model.ToFinancialAccountName</td><td class="text-center">@Model.Amount</td><td class="text-center">0</td></tr><tr><td class="text-center"><span class="badge badge-danger">OUT</span></td><td id="postingFrom">@Model.FromFinancialAccountName</td><td class="text-center">0</td><td class="text-center">@Model.Amount</td></tr></tbody></table></div></div>
    </div>
-   <hr/>@if(!readOnly){<button type="submit" class="btn btn-primary mb-0"><i class="simple-icon-check"></i> @Domain.Resource.Title_Designer.Save</button>}@if(readOnly && Model.JournalId.HasValue){<a href="/Financials/Journal/Save?id=@Model.JournalId&ParentId=0&TypeId=2" class="btn btn-outline-primary"><i class="iconsminds-file"></i> @Domain.Resource.Title_Designer.Journal</a>}
+   <hr/>@if(!readOnly){<button type="submit" class="btn btn-primary mb-0"><i class="simple-icon-check"></i> @OrgSys.Localization.Title_Designer.Save</button>}@if(readOnly && Model.JournalId.HasValue){<a href="/Financials/Journal/Save?id=@Model.JournalId&ParentId=0&TypeId=2" class="btn btn-outline-primary"><i class="iconsminds-file"></i> @OrgSys.Localization.Title_Designer.Journal</a>}
   </div></div>
  </form></div></div>
 </div>

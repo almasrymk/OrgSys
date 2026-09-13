@@ -1,4 +1,3 @@
-@using Application.DTOs
 @using Microsoft.AspNetCore.Mvc.Localization
 @using System.Globalization
 @model OrgSys.SharedKernel.ResultPagination<Accounting.Application.JournalDto>
@@ -33,12 +32,12 @@
     List<TransactionTypeDto> TransactionsTypes = ViewBag.TransactionsTypes;
     Func<long, string> TransactionResourceName = typeId => typeId switch
     {
-        1 => $"{Domain.Resource.Title_Designer.Addition} {Domain.Resource.Title_Designer.Stock}",
-        2 => $"{Domain.Resource.Title_Designer.Issue} {Domain.Resource.Title_Designer.Stock}",
-        3 => $"{Domain.Resource.Title_Designer.Transfer} {Domain.Resource.Title_Designer.Stock}",
-        4 => $"{Domain.Resource.Title_Designer.Received} {Domain.Resource.Title_Designer.Stock}",
-        5 => $"{Domain.Resource.Title_Designer.Addition} {Domain.Resource.Title_Designer.Stock}",
-        6 => $"{Domain.Resource.Title_Designer.Issue} {Domain.Resource.Title_Designer.Stock}",
+        1 => $"{OrgSys.Localization.Title_Designer.Addition} {OrgSys.Localization.Title_Designer.Stock}",
+        2 => $"{OrgSys.Localization.Title_Designer.Issue} {OrgSys.Localization.Title_Designer.Stock}",
+        3 => $"{OrgSys.Localization.Title_Designer.Transfer} {OrgSys.Localization.Title_Designer.Stock}",
+        4 => $"{OrgSys.Localization.Title_Designer.Received} {OrgSys.Localization.Title_Designer.Stock}",
+        5 => $"{OrgSys.Localization.Title_Designer.Addition} {OrgSys.Localization.Title_Designer.Stock}",
+        6 => $"{OrgSys.Localization.Title_Designer.Issue} {OrgSys.Localization.Title_Designer.Stock}",
         _ => "Transaction"
     };
 }
@@ -52,9 +51,9 @@
                     <tr>
                         <th class="text-center">#</th>
                         <th class="@TextAlign">Journal Type</th>
-                        <th class="text-center">@Domain.Resource.Title_Designer.Code</th>
-                        <th class="text-center">@Domain.Resource.Title_Designer.Date</th>
-                        <th class="@TextAlign">@Domain.Resource.Title_Designer.Currency</th>
+                        <th class="text-center">@OrgSys.Localization.Title_Designer.Code</th>
+                        <th class="text-center">@OrgSys.Localization.Title_Designer.Date</th>
+                        <th class="@TextAlign">@OrgSys.Localization.Title_Designer.Currency</th>
                         <th class="@TextAlign">Fiscal Year</th>
                         <th class="@TextAlign">Reference</th>
                         <th class="text-center">Review</th>
@@ -86,19 +85,19 @@
                                     <span> &nbsp; </span>
                                     @if (Model.Response[i].RefranceTypeId == 1)
                                     {
-                                        <span> @Domain.Resource.Title_Designer.Sales @Domain.Resource.Title_Designer.Invoice </span>                                        
+                                        <span> @OrgSys.Localization.Title_Designer.Sales @OrgSys.Localization.Title_Designer.Invoice </span>                                        
                                     }
                                     else if (Model.Response[i].RefranceTypeId == 2)
                                     {
-                                        <span> @Domain.Resource.Title_Designer.Purchase @Domain.Resource.Title_Designer.Invoice </span>
+                                        <span> @OrgSys.Localization.Title_Designer.Purchase @OrgSys.Localization.Title_Designer.Invoice </span>
                                     }
                                     else if (Model.Response[i].RefranceTypeId == 3)
                                     {
-                                        <span> @Domain.Resource.Title_Designer.Sales @Domain.Resource.Title_Designer.Return </span>
+                                        <span> @OrgSys.Localization.Title_Designer.Sales @OrgSys.Localization.Title_Designer.Return </span>
                                     }
                                     else if (Model.Response[i].RefranceTypeId == 4)
                                     {
-                                        <span> @Domain.Resource.Title_Designer.Purchase @Domain.Resource.Title_Designer.Return </span>
+                                        <span> @OrgSys.Localization.Title_Designer.Purchase @OrgSys.Localization.Title_Designer.Return </span>
                                     }
                                     <span> &nbsp; (@Model.Response[i].RefranceCode) </span>
                                     
@@ -130,7 +129,7 @@
                                                 {
                                                     <span>&nbsp; | &nbsp;</span>
                                                 }
-                                                <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash', '@Domain.Resource.Message_Designer.DeleteConfirmation', '@Domain.Resource.Message_Designer.DoYouWantDeleteFile', '@Domain.Resource.Title_Designer.Ok', @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i></a>
+                                                <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash', '@OrgSys.Localization.Message_Designer.DeleteConfirmation', '@OrgSys.Localization.Message_Designer.DoYouWantDeleteFile', '@OrgSys.Localization.Title_Designer.Ok', @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i></a>
                                             }
                                         }
                                         else if (Model.Response[i].Status == OrgSys.SharedKernel.Status.Reversed)
@@ -182,7 +181,7 @@
                                                 {
                                                     <span>&nbsp; | &nbsp;</span>
                                                 }
-                                                <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash', '@Domain.Resource.Message_Designer.DeleteConfirmation', '@Domain.Resource.Message_Designer.DoYouWantDeleteFile', '@Domain.Resource.Title_Designer.Ok', @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i></a>
+                                                <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash', '@OrgSys.Localization.Message_Designer.DeleteConfirmation', '@OrgSys.Localization.Message_Designer.DoYouWantDeleteFile', '@OrgSys.Localization.Title_Designer.Ok', @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i></a>
                                             }
                                         }
                                     }
@@ -232,13 +231,13 @@
                             <small>Journal Type</small>
                         </div>
                         <div class="list-item-heading mb-0  w-10  ">
-                            <small>@Domain.Resource.Title_Designer.Code</small>
+                            <small>@OrgSys.Localization.Title_Designer.Code</small>
                         </div>
                         <div class="list-item-heading mb-0 truncate w-15 ">
-                            <small>@Domain.Resource.Title_Designer.Date</small>
+                            <small>@OrgSys.Localization.Title_Designer.Date</small>
                         </div>
                         <div class="w-20">
-                            <small>@Domain.Resource.Title_Designer.Currency</small>
+                            <small>@OrgSys.Localization.Title_Designer.Currency</small>
                         </div>
                         <div class="w-20">
                             <small>Fiscal Year</small>
@@ -297,19 +296,19 @@
                                         <span> &nbsp; </span>
                                             @if (Model.Response[i].RefranceTypeId == 1)
                                             {
-                                                <span> @Domain.Resource.Title_Designer.Sales @Domain.Resource.Title_Designer.Invoice </span>
+                                                <span> @OrgSys.Localization.Title_Designer.Sales @OrgSys.Localization.Title_Designer.Invoice </span>
                                             }
                                             else if (Model.Response[i].RefranceTypeId == 2)
                                             {
-                                                <span> @Domain.Resource.Title_Designer.Purchase @Domain.Resource.Title_Designer.Invoice </span>
+                                                <span> @OrgSys.Localization.Title_Designer.Purchase @OrgSys.Localization.Title_Designer.Invoice </span>
                                             }
                                             else if (Model.Response[i].RefranceTypeId == 3)
                                             {
-                                                <span> @Domain.Resource.Title_Designer.Sales @Domain.Resource.Title_Designer.Return </span>
+                                                <span> @OrgSys.Localization.Title_Designer.Sales @OrgSys.Localization.Title_Designer.Return </span>
                                             }
                                             else if (Model.Response[i].RefranceTypeId == 4)
                                             {
-                                                <span> @Domain.Resource.Title_Designer.Purchase @Domain.Resource.Title_Designer.Return </span>
+                                                <span> @OrgSys.Localization.Title_Designer.Purchase @OrgSys.Localization.Title_Designer.Return </span>
                                             }
                                             <span> (@Model.Response[i].RefranceCode) </span>                                        
                                     </a>
@@ -343,7 +342,7 @@
                                             {
                                                 <span>&nbsp; | &nbsp;</span>
                                             }
-                                            <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Domain.Resource.Message_Designer.DeleteConfirmation' , '@Domain.Resource.Message_Designer.DoYouWantDeleteFile' , '@Domain.Resource.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
+                                            <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@OrgSys.Localization.Message_Designer.DeleteConfirmation' , '@OrgSys.Localization.Message_Designer.DoYouWantDeleteFile' , '@OrgSys.Localization.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
                                         }
                                     }
                                     else if (Model.Response[i].Status == OrgSys.SharedKernel.Status.Reversed)
@@ -399,7 +398,7 @@
                                         }
                                         if (AllowDelete)
                                         {
-                                            <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Domain.Resource.Message_Designer.DeleteConfirmation' , '@Domain.Resource.Message_Designer.DoYouWantDeleteFile' , '@Domain.Resource.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
+                                            <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@OrgSys.Localization.Message_Designer.DeleteConfirmation' , '@OrgSys.Localization.Message_Designer.DoYouWantDeleteFile' , '@OrgSys.Localization.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
                                         }
 
                                         <span>&nbsp; | &nbsp;</span>

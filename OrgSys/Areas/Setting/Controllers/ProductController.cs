@@ -2,12 +2,12 @@
 {
     using global::Inventory.Application.Products.Commands;
     using AutoMapper;
-    using Application.DTOs;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.Extensions.Configuration;
     using OrgSys.Controllers;
-    using Domain.Enums;
+    using System.Net.Http;
+    using OrgSys.Models;
     using Newtonsoft.Json;
     
     using System;
@@ -52,7 +52,7 @@
             ViewBag.index = index;
             var encodedSearch = Uri.EscapeDataString(txt ?? string.Empty);
             var response = await ApiMethod(
-                ApiMethodType.Get,
+                HttpMethod.Get,
                 $"Search?KeySearch={encodedSearch}&ParentId=0&TypeId=0&Page={page}&PageSize=20");
 
             response.EnsureSuccessStatusCode();
@@ -94,11 +94,11 @@
                 {
                     _.Id,
                     _.Name,
-                    Barcode = phrase == _.Barcode ? Domain.Resource.Title_Designer.Barcode + " " + _.Barcode : "",
+                    Barcode = phrase == _.Barcode ? OrgSys.Localization.Title_Designer.Barcode + " " + _.Barcode : "",
                     _.Price,
                     _.Cost,
                     quantity = Quantity,
-                    Code = phrase == _.Code ? Domain.Resource.Title_Designer.Code + " " + _.Code : "",
+                    Code = phrase == _.Code ? OrgSys.Localization.Title_Designer.Code + " " + _.Code : "",
                     ClassificationName = "" + phrase != "" && _.ClassificationName.ToLower().Contains("" + phrase) ? _.ClassificationName : ""
                 })
                 .ToList();

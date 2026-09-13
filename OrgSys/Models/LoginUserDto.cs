@@ -1,6 +1,4 @@
-﻿using Domain.Entities;
-
-namespace Application.DTOs
+namespace OrgSys.Models
 {
     public class LoginUserDto : LoginUser
     {

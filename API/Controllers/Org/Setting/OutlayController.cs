@@ -1,7 +1,6 @@
 using Treasury.Application.Outlays.Commands;
 using Treasury.Application.Outlays.Queries;
 using OrgSys.SharedKernel;
-using Application.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

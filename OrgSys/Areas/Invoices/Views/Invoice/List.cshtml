@@ -20,8 +20,8 @@
     Func<long, long> TransactionTypeId = invoiceTypeId => invoiceTypeId is 2 or 3 ? 1 : 2;
     Func<long, string> TransactionIcon = transactionTypeId => transactionTypeId == 1 ? "iconsminds-down-1" : "iconsminds-up-1";
     Func<long, string> TransactionName = transactionTypeId => transactionTypeId == 1
-        ? $"{Domain.Resource.Title_Designer.Addition} {Domain.Resource.Title_Designer.Transactions}"
-        : $"{Domain.Resource.Title_Designer.Issue} {Domain.Resource.Title_Designer.Transactions}";
+        ? $"{OrgSys.Localization.Title_Designer.Addition} {OrgSys.Localization.Title_Designer.Transactions}"
+        : $"{OrgSys.Localization.Title_Designer.Issue} {OrgSys.Localization.Title_Designer.Transactions}";
     if (ViewBag.TypeId == 1)
     {
         AllowView = User.IsAllowed("SalesInvoices.View");
@@ -74,31 +74,31 @@
                         <th class="text-center">#</th>
                         <th style="text-align:center"></th>
                         <th class="text-center align-middle">
-                            @Domain.Resource.Title_Designer.Code
+                            @OrgSys.Localization.Title_Designer.Code
                         </th>
                         <th class="@TextAlign align-middle">
                             @if (ViewBag.TypeId == 1 || ViewBag.TypeId == 3)
                             {
-                                <span> @Domain.Resource.Title_Designer.Client </span>
+                                <span> @OrgSys.Localization.Title_Designer.Client </span>
                             }
                             else
                             {
-                                <span> @Domain.Resource.Title_Designer.Supplier </span>
+                                <span> @OrgSys.Localization.Title_Designer.Supplier </span>
                             }
                         </th>
-                        <th class="text-center">@Domain.Resource.Title_Designer.Date</th>
-                        <th class="text-center">@Domain.Resource.Title_Designer.Amount</th>
+                        <th class="text-center">@OrgSys.Localization.Title_Designer.Date</th>
+                        <th class="text-center">@OrgSys.Localization.Title_Designer.Amount</th>
                         <th class="text-center">
                             @if (ViewBag.TypeId == 1 || ViewBag.TypeId == 4)
                             {
-                                @Domain.Resource.Title_Designer.Collect
+                                @OrgSys.Localization.Title_Designer.Collect
                             }
                             else
                             {
-                                @Domain.Resource.Title_Designer.Paid
+                                @OrgSys.Localization.Title_Designer.Paid
                             }
                         </th>
-                        <th class="text-center">@Domain.Resource.Title_Designer.Transactions</th>
+                        <th class="text-center">@OrgSys.Localization.Title_Designer.Transactions</th>
                         <th class="text-center">Journal</th>
                         @if (AllowEdit || AllowCancel || AllowDelete)
                         {
@@ -222,7 +222,7 @@
                                         if (AllowDelete)
                                         {
                                             <span>&nbsp; | &nbsp;</span>
-                                            <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Domain.Resource.Message_Designer.DeleteConfirmation' , '@Domain.Resource.Message_Designer.DoYouWantDeleteFile' , '@Domain.Resource.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
+                                            <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@OrgSys.Localization.Message_Designer.DeleteConfirmation' , '@OrgSys.Localization.Message_Designer.DoYouWantDeleteFile' , '@OrgSys.Localization.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
                                         }
                                     }
                                     else
@@ -245,7 +245,7 @@
                                         }
                                         if (AllowDelete)
                                         {
-                                            <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Domain.Resource.Message_Designer.DeleteConfirmation' , '@Domain.Resource.Message_Designer.DoYouWantDeleteFile' , '@Domain.Resource.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
+                                            <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@OrgSys.Localization.Message_Designer.DeleteConfirmation' , '@OrgSys.Localization.Message_Designer.DoYouWantDeleteFile' , '@OrgSys.Localization.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
                                         }
                                         <span>&nbsp; | &nbsp;</span>
                                         <a href="/@ViewBag.area/@ViewBag.PageTitle/Print?id=@Model.Response[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.Page" target="_blank"> <i class="fa fa-print text-info"></i> </a>
@@ -280,36 +280,36 @@
                     </div>
                     <div class="card-body align-self-center d-flex flex-column flex-md-row  align-items-md-center">
                         <div class="list-item-heading mb-0  w-10  ">
-                            <small>@Domain.Resource.Title_Designer.Code</small>
+                            <small>@OrgSys.Localization.Title_Designer.Code</small>
                         </div>
                         <div class="list-item-heading mb-0  w-20">
                             @if (ViewBag.TypeId == 1 || ViewBag.TypeId == 3)
                             {
-                                <small> @Domain.Resource.Title_Designer.Client </small>
+                                <small> @OrgSys.Localization.Title_Designer.Client </small>
                             }
                             else
                             {
-                                <small> @Domain.Resource.Title_Designer.Supplier </small>
+                                <small> @OrgSys.Localization.Title_Designer.Supplier </small>
                             }
                         </div>
                         <div class="list-item-heading mb-0 truncate w-15 ">
-                            <small>@Domain.Resource.Title_Designer.Date</small>
+                            <small>@OrgSys.Localization.Title_Designer.Date</small>
                         </div>
                         <div class="w-10">
-                            <small>@Domain.Resource.Title_Designer.Amount</small>
+                            <small>@OrgSys.Localization.Title_Designer.Amount</small>
                         </div>
                         <div class="w-20">
                             @if (ViewBag.TypeId == 1 || ViewBag.TypeId == 4)
                             {
-                                <small>@Domain.Resource.Title_Designer.Collect</small>
+                                <small>@OrgSys.Localization.Title_Designer.Collect</small>
                             }
                             else
                             {
-                                <small>@Domain.Resource.Title_Designer.Paid</small>
+                                <small>@OrgSys.Localization.Title_Designer.Paid</small>
                             }
                         </div>
                         <div class="w-20">
-                            <small>@Domain.Resource.Title_Designer.Transactions</small>
+                            <small>@OrgSys.Localization.Title_Designer.Transactions</small>
                         </div>
                         <div class="w-20">
                             <small> Journal</small>
@@ -424,7 +424,7 @@
                                     if (AllowDelete)
                                     {
                                         <span>&nbsp; | &nbsp;</span>
-                                        <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Domain.Resource.Message_Designer.DeleteConfirmation' , '@Domain.Resource.Message_Designer.DoYouWantDeleteFile' , '@Domain.Resource.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
+                                        <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@OrgSys.Localization.Message_Designer.DeleteConfirmation' , '@OrgSys.Localization.Message_Designer.DoYouWantDeleteFile' , '@OrgSys.Localization.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
                                     }
                                 }
                                 else
@@ -447,7 +447,7 @@
                                     }
                                     if (AllowDelete)
                                     {
-                                        <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Domain.Resource.Message_Designer.DeleteConfirmation' , '@Domain.Resource.Message_Designer.DoYouWantDeleteFile' , '@Domain.Resource.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
+                                        <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@OrgSys.Localization.Message_Designer.DeleteConfirmation' , '@OrgSys.Localization.Message_Designer.DoYouWantDeleteFile' , '@OrgSys.Localization.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
                                     }
 
                                     <span>&nbsp; | &nbsp;</span>

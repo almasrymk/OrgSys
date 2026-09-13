@@ -2,7 +2,6 @@
 {
     using Parties.Application.DealerGroups.Commands;
     using AutoMapper;
-    using Application.DTOs;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
     using OrgSys.Controllers;

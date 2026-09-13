@@ -1,4 +1,4 @@
-namespace Domain.Enums
+namespace OrgSys.Models
 {
     public enum ResultStatus
     {

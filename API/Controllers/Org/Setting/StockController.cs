@@ -1,7 +1,6 @@
 using Inventory.Application.Stocks.Commands;
 using Inventory.Application.Stocks.Queries;
 using OrgSys.SharedKernel;
-using Application.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

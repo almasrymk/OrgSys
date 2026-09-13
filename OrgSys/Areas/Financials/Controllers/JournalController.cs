@@ -1,9 +1,9 @@
 namespace OrgSys.Areas.Financial.Controllers
 {
     using Accounting.Application.Journals.Commands;
-    using Application.DTOs;
     using AutoMapper;
-    using Domain.Enums;
+    using System.Net.Http;
+    using OrgSys.Models;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.Extensions.Configuration;
@@ -79,28 +79,28 @@ namespace OrgSys.Areas.Financial.Controllers
 
         public async Task<ActionResult> Cancel(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1)
         {
-            var response = await ApiMethod(ApiMethodType.Put, $"Cancel?Id={id}");
+            var response = await ApiMethod(HttpMethod.Put, $"Cancel?Id={id}");
             response.EnsureSuccessStatusCode();
             return Redirect($"/Financials/Journal/Index?ParentId={ParentId}&TypeId={TypeId}&page={page}&status={ResultStatus.success}&MsgError=Success");
         }
 
         public async Task<ActionResult> Redo(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1)
         {
-            var response = await ApiMethod(ApiMethodType.Put, $"Redo?Id={id}");
+            var response = await ApiMethod(HttpMethod.Put, $"Redo?Id={id}");
             response.EnsureSuccessStatusCode();
             return Redirect($"/Financials/Journal/Index?ParentId={ParentId}&TypeId={TypeId}&page={page}&status={ResultStatus.success}&MsgError=Success");
         }
 
         public async Task<ActionResult> Post(long id, long ParentId = 0, long TypeId = 0, int page = 1)
         {
-            var response = await ApiMethod(ApiMethodType.Put, $"Post?Id={id}");
+            var response = await ApiMethod(HttpMethod.Put, $"Post?Id={id}");
             response.EnsureSuccessStatusCode();
             return Redirect($"/Financials/Journal/Index?ParentId={ParentId}&TypeId={TypeId}&page={page}&status={ResultStatus.success}&MsgError=Success");
         }
 
         public async Task<ActionResult> Reverse(long id, long ParentId = 0, long TypeId = 0, int page = 1)
         {
-            var response = await ApiMethod(ApiMethodType.Put, $"Reverse?Id={id}");
+            var response = await ApiMethod(HttpMethod.Put, $"Reverse?Id={id}");
             response.EnsureSuccessStatusCode();
             return Redirect($"/Financials/Journal/Index?ParentId={ParentId}&TypeId={TypeId}&page={page}&status={ResultStatus.success}&MsgError=Success");
         }
@@ -113,7 +113,7 @@ namespace OrgSys.Areas.Financial.Controllers
             {
 
                 var key = ob.GetType().GetProperty("Code")?.GetValue(ob, null);
-                var searchResp = await ApiMethod(ApiMethodType.Get, $"Search?KeySearch={key}&ParentId={ob.ParentId}&TypeId={ob.TypeId}&Page=1&PageSize=1");
+                var searchResp = await ApiMethod(HttpMethod.Get, $"Search?KeySearch={key}&ParentId={ob.ParentId}&TypeId={ob.TypeId}&Page=1&PageSize=1");
                 if (searchResp != null && searchResp.IsSuccessStatusCode)
                 {
                     var searchData = await searchResp.Content.ReadAsStringAsync();

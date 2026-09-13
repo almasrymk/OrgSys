@@ -1,7 +1,6 @@
 using Administration.Application.Users.Commands;
 using Administration.Application.Users.Queries;
 using OrgSys.SharedKernel;
-using Application.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

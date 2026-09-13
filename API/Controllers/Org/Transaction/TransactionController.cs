@@ -2,7 +2,6 @@
 using Inventory.Application.Transactions.Commands;
 using Inventory.Application.Transactions.Queries;
 using Inventory.Application.TransactionTypes.Commands;
-using Application.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

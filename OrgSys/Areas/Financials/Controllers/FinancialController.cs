@@ -1,7 +1,6 @@
 ﻿using Treasury.Application.Financials.Commands;
 using AutoMapper;
-using Domain.Enums;
-using Application.DTOs;
+using OrgSys.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.DotNet.Scaffolding.Shared.Project;
@@ -29,18 +28,18 @@ namespace OrgSys.Areas.Financial.Controllers
         // (and the same convention Invoice/FinancialAccount already use for their own dynamic titles).
         private static string ResolveFinancialTypeName(long typeId) => typeId switch
         {
-            1 => Domain.Resource.Title_Designer.OpeningBalance,
-            2 => Domain.Resource.Title_Designer.Receipt,
-            3 => Domain.Resource.Title_Designer.Payment,
-            4 => Domain.Resource.Title_Designer.TransferIn,
-            5 => Domain.Resource.Title_Designer.Deposit,
-            6 => Domain.Resource.Title_Designer.Withdrawal,
-            7 => Domain.Resource.Title_Designer.Fee,
-            8 => Domain.Resource.Title_Designer.Interest,
-            9 => Domain.Resource.Title_Designer.Cheque,
-            10 => Domain.Resource.Title_Designer.Adjustment,
-            11 => Domain.Resource.Title_Designer.TransferOut,
-            _ => Domain.Resource.Title_Designer.Financial
+            1 => OrgSys.Localization.Title_Designer.OpeningBalance,
+            2 => OrgSys.Localization.Title_Designer.Receipt,
+            3 => OrgSys.Localization.Title_Designer.Payment,
+            4 => OrgSys.Localization.Title_Designer.TransferIn,
+            5 => OrgSys.Localization.Title_Designer.Deposit,
+            6 => OrgSys.Localization.Title_Designer.Withdrawal,
+            7 => OrgSys.Localization.Title_Designer.Fee,
+            8 => OrgSys.Localization.Title_Designer.Interest,
+            9 => OrgSys.Localization.Title_Designer.Cheque,
+            10 => OrgSys.Localization.Title_Designer.Adjustment,
+            11 => OrgSys.Localization.Title_Designer.TransferOut,
+            _ => OrgSys.Localization.Title_Designer.Financial
         };
 
         public override async Task LoadViewBagIndex(long ParentId = 0, long TypeId = 0)
@@ -238,7 +237,7 @@ namespace OrgSys.Areas.Financial.Controllers
             if (!User.IsAllowed("Financial.Post"))
                 return Forbid();
 
-            var response = await ApiMethod(ApiMethodType.Put, $"Post?Id={id}&UserId={User.GetUserId()}");
+            var response = await ApiMethod(HttpMethod.Put, $"Post?Id={id}&UserId={User.GetUserId()}");
             var data = await response.Content.ReadAsStringAsync();
             var res = JsonConvert.DeserializeObject<OrgSys.SharedKernel.Result>(data);
 
@@ -254,7 +253,7 @@ namespace OrgSys.Areas.Financial.Controllers
             if (!User.IsAllowed("Financial.Reverse"))
                 return Forbid();
 
-            var response = await ApiMethod(ApiMethodType.Put, $"Reverse?Id={id}");
+            var response = await ApiMethod(HttpMethod.Put, $"Reverse?Id={id}");
             var data = await response.Content.ReadAsStringAsync();
             var res = JsonConvert.DeserializeObject<OrgSys.SharedKernel.Result>(data);
 
@@ -267,7 +266,7 @@ namespace OrgSys.Areas.Financial.Controllers
 
         public async Task<ActionResult> Cancel(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1)
         {
-            var response = await ApiMethod(ApiMethodType.Put, $"Cancel?Id={id}");
+            var response = await ApiMethod(HttpMethod.Put, $"Cancel?Id={id}");
             response.EnsureSuccessStatusCode();
             var data = await response.Content.ReadAsStringAsync();
             var res = JsonConvert.DeserializeObject<OrgSys.SharedKernel.Result>(data);
@@ -277,7 +276,7 @@ namespace OrgSys.Areas.Financial.Controllers
 
         public async Task<ActionResult> Redo(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1)
         {
-            var response = await ApiMethod(ApiMethodType.Put, $"Redo?Id={id}");
+            var response = await ApiMethod(HttpMethod.Put, $"Redo?Id={id}");
             response.EnsureSuccessStatusCode();
             var data = await response.Content.ReadAsStringAsync();
             var res = JsonConvert.DeserializeObject<OrgSys.SharedKernel.Result>(data);
@@ -411,7 +410,7 @@ namespace OrgSys.Areas.Financial.Controllers
             {
 
                 var key = ob.GetType().GetProperty("Code")?.GetValue(ob, null);
-                var searchResp = await ApiMethod(ApiMethodType.Get, $"Search?KeySearch={key}&ParentId={ob.ParentId}&TypeId={ob.TypeId}&Page=1&PageSize=1");
+                var searchResp = await ApiMethod(HttpMethod.Get, $"Search?KeySearch={key}&ParentId={ob.ParentId}&TypeId={ob.TypeId}&Page=1&PageSize=1");
                 if (searchResp != null && searchResp.IsSuccessStatusCode)
                 {
                     var searchData = await searchResp.Content.ReadAsStringAsync();

@@ -10,11 +10,8 @@
     <ProjectReference Include="../Administration.Domain/Administration.Domain.csproj" />
     <ProjectReference Include="../Administration.Contracts/Administration.Contracts.csproj" />
     <ProjectReference Include="../../../BuildingBlocks/OrgSys.EventBus/OrgSys.EventBus.csproj" />
-    <!-- Domain.Resource.Translate (Role's permission-tree localization) depends on embedded
-         .resx resources that still live in the legacy Domain project. Moving the resource
-         files is a separate, higher-risk pass — see docs/modular-monolith-analysis.md §21.
-         This is a deliberate, temporary exception to "modules don't depend on the monolith". -->
-    <ProjectReference Include="../../../Domain/Domain.csproj" />
+    <!-- OrgSys.Localization.Translate (Role's permission-tree localization). -->
+    <ProjectReference Include="../../../BuildingBlocks/OrgSys.Localization/OrgSys.Localization.csproj" />
   </ItemGroup>
 
   <ItemGroup>

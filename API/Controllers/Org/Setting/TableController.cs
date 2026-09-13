@@ -1,7 +1,6 @@
 using Organization.Application.Tables.Commands;
 using Organization.Application.Tables.Queries;
 using OrgSys.SharedKernel;
-using Application.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

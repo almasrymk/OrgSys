@@ -1,7 +1,6 @@
 using Treasury.Application.CashBoxes.Commands;
 using Treasury.Application.CashBoxes.Queries;
 using OrgSys.SharedKernel;
-using Application.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

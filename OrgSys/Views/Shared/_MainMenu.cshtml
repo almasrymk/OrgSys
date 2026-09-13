@@ -10,7 +10,7 @@
                 <li class="@("Home".Equals(ViewContext.RouteData.Values["controller"].ToString()) ? "active" : "")">
                     <a href="/Home/Dashboard">
                         <i class="iconsminds-home-3"></i>
-                        <span>@Domain.Resource.Title_Designer.Home</span>
+                        <span>@OrgSys.Localization.Title_Designer.Home</span>
                     </a>
                 </li>
                 @if (User.IsAllowed("Branchs.All,Stocks.All,Tables.All,Roles.All,Users.All,Shifts.All,Products.All,Classifications.All,UnitsMeasure.All,Clients.All,Suppliers.All,OutlayTerms.All,Currencies.All,Accounts.All,FiscalYears.All,"))
@@ -18,7 +18,7 @@
                     <li>
                         <a href="#setting">
                             <i class="iconsminds-big-data"></i>
-                            <span>@Domain.Resource.Title_Designer.Data</span>
+                            <span>@OrgSys.Localization.Title_Designer.Data</span>
                         </a>
                     </li>
                 }
@@ -27,7 +27,7 @@
                     <li>
                         <a href="#Purchases">
                             <i class="iconsminds-add-cart"></i>
-                            <span>@Domain.Resource.Title_Designer.Purchases</span>
+                            <span>@OrgSys.Localization.Title_Designer.Purchases</span>
                         </a>
                     </li>
                 }
@@ -36,7 +36,7 @@
                     <li>
                         <a href="#Sales">
                             <i class="iconsminds-remove-cart"></i>
-                            <span>@Domain.Resource.Title_Designer.Sales</span>
+                            <span>@OrgSys.Localization.Title_Designer.Sales</span>
                         </a>
                     </li>
                 }
@@ -52,7 +52,7 @@
                 {
                     <li>
                         <a href="#Financial">
-                            <i class="iconsminds-coins"></i> @Domain.Resource.Title_Designer.Financial
+                            <i class="iconsminds-coins"></i> @OrgSys.Localization.Title_Designer.Financial
                         </a>
                     </li>
                 }
@@ -69,7 +69,7 @@
                         <li>
                             <a href="#" data-toggle="collapse" data-target="#collapseOrganization" aria-expanded="true"
                                aria-controls="collapseOrganization" class="rotate-arrow-icon opacity-50 @(collapseOrganization ? "" : "collapsed")">
-                                <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.Organization</span>
+                                <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@OrgSys.Localization.Title_Designer.Organization</span>
                             </a>
                             <div id="collapseOrganization" class="collapse @(collapseOrganization ? "show" : "")">
                                 <ul class="list-unstyled inner-level-menu">
@@ -77,7 +77,7 @@
                                     {
                                         <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Branch" ? "active" : "")">
                                             <a href="/Setting/Branch">
-                                                <i class="simple-icon-share"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.Branchs</span>
+                                                <i class="simple-icon-share"></i> <span class="d-inline-block">@OrgSys.Localization.Title_Designer.Branchs</span>
                                             </a>
                                         </li>
                                     }
@@ -86,7 +86,7 @@
                                         <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Stock" ? "active" : "")">
                                             <a href="/Setting/Stock">
                                                 <i class="simple-icon-layers"></i>
-                                                <span class="d-inline-block">@Domain.Resource.Title_Designer.Stocks</span>
+                                                <span class="d-inline-block">@OrgSys.Localization.Title_Designer.Stocks</span>
                                             </a>
                                         </li>
                                     }
@@ -100,7 +100,7 @@
                         <li>
                             <a href="#" data-toggle="collapse" data-target="#collapseSecurity" aria-expanded="false"
                                aria-controls="collapseSecurity" class="rotate-arrow-icon opacity-50 @("Role,User,Shift".Contains(ViewContext.RouteData.Values["controller"].ToString()) ? "" : "collapsed")">
-                                <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.Security</span>
+                                <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@OrgSys.Localization.Title_Designer.Security</span>
                             </a>
                             <div id="collapseSecurity" class="collapse @("Role,User,Shift".Contains(ViewContext.RouteData.Values["controller"].ToString()) ? "show" : "")">
                                 <ul class="list-unstyled inner-level-menu">
@@ -108,7 +108,7 @@
                                     {
                                         <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Role" ? "active" : "")">
                                             <a href="/Setting/Role">
-                                                <i class="simple-icon-lock-open"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.Roles</span>
+                                                <i class="simple-icon-lock-open"></i> <span class="d-inline-block">@OrgSys.Localization.Title_Designer.Roles</span>
                                             </a>
                                         </li>
                                     }
@@ -116,7 +116,7 @@
                                     {
                                         <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "User" ? "active" : "")">
                                             <a href="/Setting/User">
-                                                <i class="iconsminds-add-user"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.Users</span>
+                                                <i class="iconsminds-add-user"></i> <span class="d-inline-block">@OrgSys.Localization.Title_Designer.Users</span>
                                             </a>
                                         </li>
                                     }
@@ -130,7 +130,7 @@
                         <li>
                             <a href="#" data-toggle="collapse" data-target="#collapseProduct" aria-expanded="false"
                                aria-controls="collapseProduct" class="rotate-arrow-icon opacity-50 @("Product,Classification,Unit".Contains(ViewContext.RouteData.Values["controller"].ToString()) ? "" : "collapsed")">
-                                <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.Products</span>
+                                <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@OrgSys.Localization.Title_Designer.Products</span>
                             </a>
                             <div id="collapseProduct" class="collapse @("Product,Classification,Unit".Contains(ViewContext.RouteData.Values["controller"].ToString()) ? "show" : "")">
                                 <ul class="list-unstyled inner-level-menu">
@@ -138,7 +138,7 @@
                                     {
                                         <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Product" ? "active" : "")">
                                             <a href="/Setting/Product">
-                                                <i class="iconsminds-shopping-basket"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.Products</span>
+                                                <i class="iconsminds-shopping-basket"></i> <span class="d-inline-block">@OrgSys.Localization.Title_Designer.Products</span>
                                             </a>
                                         </li>
                                     }
@@ -146,7 +146,7 @@
                                     {
                                         <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Classification" ? "active" : "")">
                                             <a href="/Setting/Classification">
-                                                <i class="simple-icon-layers"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.Classifications</span>
+                                                <i class="simple-icon-layers"></i> <span class="d-inline-block">@OrgSys.Localization.Title_Designer.Classifications</span>
                                             </a>
                                         </li>
                                     }
@@ -154,7 +154,7 @@
                                     {
                                         <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Unit" ? "active" : "")">
                                             <a href="/Setting/Unit">
-                                                <i class="simple-icon-pie-chart"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.UnitsMeasure</span>
+                                                <i class="simple-icon-pie-chart"></i> <span class="d-inline-block">@OrgSys.Localization.Title_Designer.UnitsMeasure</span>
                                             </a>
                                         </li>
                                     }
@@ -169,7 +169,7 @@
                         <li>
                             <a href="#" data-toggle="collapse" data-target="#collapseDealers" aria-expanded="false"
                                aria-controls="collapseDealers" class="rotate-arrow-icon opacity-50  @("DealerGroup,Dealer".Contains(ViewContext.RouteData.Values["controller"].ToString()) ? "" : "collapsed")">
-                                <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.Dealers</span>
+                                <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@OrgSys.Localization.Title_Designer.Dealers</span>
                             </a>
                             <div id="collapseDealers" class="collapse @("DealerGroup,Dealer".Contains(ViewContext.RouteData.Values["controller"].ToString()) ? "show" : "")">
                                 <ul class="list-unstyled inner-level-menu">
@@ -177,7 +177,7 @@
                                     {
                                         <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "DealerGroup" && "" + ViewBag.TypeId == "1" ? "active" : "")">
                                             <a href="/Setting/DealerGroup?TypeId=1">
-                                                <i class="iconsminds-conference"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.ClientGroups</span>
+                                                <i class="iconsminds-conference"></i> <span class="d-inline-block">@OrgSys.Localization.Title_Designer.ClientGroups</span>
                                             </a>
                                         </li>
                                     }
@@ -185,7 +185,7 @@
                                     {
                                         <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Dealer" && "" + ViewBag.TypeId == "1" ? "active" : "")">
                                             <a href="/Setting/Dealer?TypeId=1">
-                                                <i class="iconsminds-business-man-woman"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.Clients</span>
+                                                <i class="iconsminds-business-man-woman"></i> <span class="d-inline-block">@OrgSys.Localization.Title_Designer.Clients</span>
                                             </a>
                                         </li>
                                     }
@@ -193,7 +193,7 @@
                                     {
                                         <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "DealerGroup" && "" + ViewBag.TypeId == "2" ? "active" : "")">
                                             <a href="/Setting/DealerGroup?TypeId=2">
-                                                <i class="iconsminds-network"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.SupplierGroups</span>
+                                                <i class="iconsminds-network"></i> <span class="d-inline-block">@OrgSys.Localization.Title_Designer.SupplierGroups</span>
                                             </a>
                                         </li>
                                     }
@@ -201,7 +201,7 @@
                                     {
                                         <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Dealer" && "" + ViewBag.TypeId == "2" ? "active" : "")">
                                             <a href="/Setting/Dealer?TypeId=2">
-                                                <i class="iconsminds-business-mens"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.Suppliers</span>
+                                                <i class="iconsminds-business-mens"></i> <span class="d-inline-block">@OrgSys.Localization.Title_Designer.Suppliers</span>
                                             </a>
                                         </li>
                                     }
@@ -215,7 +215,7 @@
                         <li>
                             <a href="#" data-toggle="collapse" data-target="#collapseDataFinancials" aria-expanded="false"
                                aria-controls="collapseDataFinancials" class="rotate-arrow-icon opacity-50 @("Account,Bank,BankBranch,FinancialAccount,SafeTerm,Currency,FiscalYear".Contains(ViewContext.RouteData.Values["controller"].ToString()) ? "" : "collapsed")">
-                                <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.Financial</span>
+                                <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@OrgSys.Localization.Title_Designer.Financial</span>
                             </a>
                             <div id="collapseDataFinancials" class="collapse @("Account,Bank,BankBranch,FinancialAccount,SafeTerm,Currency,FiscalYear".Contains(ViewContext.RouteData.Values["controller"].ToString()) ? "show" : "")">
                                 <ul class="list-unstyled inner-level-menu">
@@ -223,7 +223,7 @@
                                     {
                                         <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Account" ? "active" : "")">
                                             <a href="/Setting/Account">
-                                                <i class="iconsminds-wallet"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.Accounts</span>
+                                                <i class="iconsminds-wallet"></i> <span class="d-inline-block">@OrgSys.Localization.Title_Designer.Accounts</span>
                                             </a>
                                         </li>
                                     }
@@ -231,7 +231,7 @@
                                     {
                                         <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Outlay" ? "active" : "")">
                                             <a href="/Setting/SafeTerm">
-                                                <i class="simple-icon-grid"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.SafeTerms</span>
+                                                <i class="simple-icon-grid"></i> <span class="d-inline-block">@OrgSys.Localization.Title_Designer.SafeTerms</span>
                                             </a>
                                         </li>
                                     }
@@ -239,7 +239,7 @@
                                     {
                                         <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Bank" ? "active" : "")">
                                             <a href="/Setting/Bank">
-                                                <i class="iconsminds-bank"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.Banks</span>
+                                                <i class="iconsminds-bank"></i> <span class="d-inline-block">@OrgSys.Localization.Title_Designer.Banks</span>
                                             </a>
                                         </li>
                                     }
@@ -247,7 +247,7 @@
                                     {
                                         <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "BankBranch" ? "active" : "")">
                                             <a href="/Setting/BankBranch">
-                                                <i class="iconsminds-hotel"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.BankBranchs</span>
+                                                <i class="iconsminds-hotel"></i> <span class="d-inline-block">@OrgSys.Localization.Title_Designer.BankBranchs</span>
                                             </a>
                                         </li>
                                     }
@@ -255,7 +255,7 @@
                                     {
                                         <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "FinancialAccount" && Context.Request.Query["TypeId"] != "2" ? "active" : "")">
                                             <a href="/Setting/FinancialAccount?TypeId=1">
-                                                <i class="iconsminds-coins"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.CashBoxes</span>
+                                                <i class="iconsminds-coins"></i> <span class="d-inline-block">@OrgSys.Localization.Title_Designer.CashBoxes</span>
                                             </a>
                                         </li>
                                     }
@@ -263,7 +263,7 @@
                                     {
                                         <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "FinancialAccount" && Context.Request.Query["TypeId"] == "2" ? "active" : "")">
                                             <a href="/Setting/FinancialAccount?TypeId=2">
-                                                <i class="iconsminds-safe-box"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.BankAccounts</span>
+                                                <i class="iconsminds-safe-box"></i> <span class="d-inline-block">@OrgSys.Localization.Title_Designer.BankAccounts</span>
                                             </a>
                                         </li>
                                     }
@@ -271,7 +271,7 @@
                                     {
                                         <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Currency" ? "active" : "")">
                                             <a href="/Setting/Currency">
-                                                <i class="iconsminds-coins"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.Currencies</span>
+                                                <i class="iconsminds-coins"></i> <span class="d-inline-block">@OrgSys.Localization.Title_Designer.Currencies</span>
                                             </a>
                                         </li>
                                     }
@@ -279,7 +279,7 @@
                                     {
                                         <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "FiscalYear" ? "active" : "")">
                                             <a href="/Setting/FiscalYear">
-                                                <i class="iconsminds-calendar-4"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.FiscalYears</span>
+                                                <i class="iconsminds-calendar-4"></i> <span class="d-inline-block">@OrgSys.Localization.Title_Designer.FiscalYears</span>
                                             </a>
                                         </li>
                                     }
@@ -293,7 +293,7 @@
                         <li>
                             <a href="#" data-toggle="collapse" data-target="#collapseAreas" aria-expanded="false"
                                aria-controls="collapseAreas" class="rotate-arrow-icon opacity-50 @("Country,City,District".Contains(ViewContext.RouteData.Values["controller"].ToString()) ? "" : "collapsed")">
-                                <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.Areas</span>
+                                <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@OrgSys.Localization.Title_Designer.Areas</span>
                             </a>
                             <div id="collapseAreas" class="collapse  @("Country,City,District".Contains(ViewContext.RouteData.Values["controller"].ToString()) ? "show" : "")">
                                 <ul class="list-unstyled inner-level-menu">
@@ -301,7 +301,7 @@
                                     {
                                         <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Country" ? "active" : "")">
                                             <a href="/Setting/Country">
-                                                <i class="iconsminds-globe-2"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.Countries</span>
+                                                <i class="iconsminds-globe-2"></i> <span class="d-inline-block">@OrgSys.Localization.Title_Designer.Countries</span>
                                             </a>
                                         </li>
                                     }
@@ -309,7 +309,7 @@
                                     {
                                         <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "City" ? "active" : "")">
                                             <a href="/Setting/City">
-                                                <i class="iconsminds-map2"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.Cities</span>
+                                                <i class="iconsminds-map2"></i> <span class="d-inline-block">@OrgSys.Localization.Title_Designer.Cities</span>
                                             </a>
                                         </li>
                                     }
@@ -317,7 +317,7 @@
                                     {
                                         <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "District" ? "active" : "")">
                                             <a href="/Setting/District">
-                                                <i class="iconsminds-location-2"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.Districts</span>
+                                                <i class="iconsminds-location-2"></i> <span class="d-inline-block">@OrgSys.Localization.Title_Designer.Districts</span>
                                             </a>
                                         </li>
                                     }
@@ -334,7 +334,7 @@
                     <li>
                         <a href="#" data-toggle="collapse" data-target="#collapsePurchases" aria-expanded="false"
                            aria-controls="collapsePurchases" class="rotate-arrow-icon opacity-50 @("Invoices".Equals(ViewContext.RouteData.Values["controller"].ToString()) && ("" + ViewBag.TypeId == "2" || "" + ViewBag.TypeId == "4") ? "collapsed" : "")">
-                            <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.Invoices</span>
+                            <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@OrgSys.Localization.Title_Designer.Invoices</span>
                         </a>
                         <div id="collapsePurchases" class="collapse @("Invoices".Equals(ViewContext.RouteData.Values["controller"].ToString()) && ("" + ViewBag.TypeId == "2" || "" + ViewBag.TypeId == "4") ? "show" : "")">
                             <ul class="list-unstyled inner-level-menu">
@@ -343,7 +343,7 @@
                                     <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Invoices" && "" + ViewBag.TypeId == "2" ? "active" : "")">
                                         <a href="/Invoices/Invoice?TypeId=2">
                                             <i class="simple-icon-basket-loaded"></i> <span class="d-inline-block">
-                                                @Domain.Resource.Title_Designer.Invoices
+                                                @OrgSys.Localization.Title_Designer.Invoices
                                             </span>
                                         </a>
                                     </li>
@@ -353,7 +353,7 @@
                                     <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Invoices" && "" + ViewBag.TypeId == "4" ? "active" : "")">
                                         <a href="/Invoices/Invoice?TypeId=4">
                                             <i class="simple-icon-action-undo"></i> <span class="d-inline-block">
-                                                @Domain.Resource.Title_Designer.Returns
+                                                @OrgSys.Localization.Title_Designer.Returns
                                             </span>
                                         </a>
                                     </li>
@@ -364,23 +364,23 @@
                     <li>
                         <a href="#" data-toggle="collapse" data-target="#collapsePurchasesReports" aria-expanded="false"
                            aria-controls="collapsePurchasesReports" class="rotate-arrow-icon opacity-50 collapsed">
-                            <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.Report</span>
+                            <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@OrgSys.Localization.Title_Designer.Report</span>
                         </a>
                         <div id="collapsePurchasesReports" class="collapse">
                             <ul class="list-unstyled inner-level-menu">                              
                                 <li>
                                     <a href="/Reports/Lookups/Suppliers">
-                                        <i class="glyph-icon iconsminds-letter-open"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.Suppliers</span>
+                                        <i class="glyph-icon iconsminds-letter-open"></i> <span class="d-inline-block">@OrgSys.Localization.Title_Designer.Suppliers</span>
                                     </a>
                                 </li>                              
                                 <li>
                                     <a href="/Reports/Purchases/SuppliersStatment">
-                                        <i class="glyph-icon iconsminds-files"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.SuppliersStatement</span>
+                                        <i class="glyph-icon iconsminds-files"></i> <span class="d-inline-block">@OrgSys.Localization.Title_Designer.SuppliersStatement</span>
                                     </a>
                                 </li>                                                              
                                 <li>
                                     <a href="/Reports/Purchases/SuppliersBalance">
-                                        <i class="glyph-icon iconsminds-notepad"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.SuppliersBalances</span>
+                                        <i class="glyph-icon iconsminds-notepad"></i> <span class="d-inline-block">@OrgSys.Localization.Title_Designer.SuppliersBalances</span>
                                     </a>
                                 </li>
                             </ul>
@@ -394,7 +394,7 @@
                     <li>
                         <a href="#" data-toggle="collapse" data-target="#collapseSales" aria-expanded="false"
                            aria-controls="collapseSales" class="rotate-arrow-icon opacity-50 @("Invoices".Equals(ViewContext.RouteData.Values["controller"].ToString()) && ("" + ViewBag.TypeId == "1" || "" + ViewBag.TypeId == "3") ? "collapsed" : "")">
-                            <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.Invoices</span>
+                            <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@OrgSys.Localization.Title_Designer.Invoices</span>
                         </a>
                         <div id="collapseSales" class="collapse @("Invoices".Equals(ViewContext.RouteData.Values["controller"].ToString()) && ("" + ViewBag.TypeId == "1" || "" + ViewBag.TypeId == "3") ? "show" : "")">
                             <ul class="list-unstyled inner-level-menu">
@@ -403,7 +403,7 @@
                                     <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Invoices" && "" + ViewBag.TypeId == "1" ? "active" : "")">
                                         <a href="/Invoices/Invoice?TypeId=1">
                                             <i class="simple-icon-basket-loaded"></i> <span class="d-inline-block">
-                                                @Domain.Resource.Title_Designer.Invoices
+                                                @OrgSys.Localization.Title_Designer.Invoices
                                             </span>
                                         </a>
                                     </li>
@@ -413,7 +413,7 @@
                                     <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Invoices" && "" + ViewBag.TypeId == "3" ? "active" : "")">
                                         <a href="/Invoices/Invoice?TypeId=3">
                                             <i class="simple-icon-action-undo"></i> <span class="d-inline-block">
-                                                @Domain.Resource.Title_Designer.Returns
+                                                @OrgSys.Localization.Title_Designer.Returns
                                             </span>
                                         </a>
                                     </li>
@@ -424,33 +424,33 @@
                     <li>
                         <a href="#" data-toggle="collapse" data-target="#collapsePurchasesReports" aria-expanded="false"
                            aria-controls="collapsePurchasesReports" class="rotate-arrow-icon opacity-50 collapsed">
-                            <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.Report</span>
+                            <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@OrgSys.Localization.Title_Designer.Report</span>
                         </a>
                         <div id="collapsePurchasesReports" class="collapse">
                             <ul class="list-unstyled inner-level-menu">
                                 <li>
                                     <a href="/Reports/Lookups/Clients">
-                                        <i class="glyph-icon iconsminds-letter-open"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.Clients</span>
+                                        <i class="glyph-icon iconsminds-letter-open"></i> <span class="d-inline-block">@OrgSys.Localization.Title_Designer.Clients</span>
                                     </a>
                                 </li>                              
                                 <li>
                                     <a href="/Reports/Sales/ClientsStatment">
-                                        <i class="glyph-icon iconsminds-letter-open"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.ClientsStatement</span>
+                                        <i class="glyph-icon iconsminds-letter-open"></i> <span class="d-inline-block">@OrgSys.Localization.Title_Designer.ClientsStatement</span>
                                     </a>
                                 </li>    
                                 <li>
                                     <a href="/Reports/Sales/ClientsBalance">
-                                        <i class="glyph-icon iconsminds-profile"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.ClientsBalances</span>
+                                        <i class="glyph-icon iconsminds-profile"></i> <span class="d-inline-block">@OrgSys.Localization.Title_Designer.ClientsBalances</span>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="/Reports/Sales/SalesClient">
-                                        <i class="glyph-icon iconsminds-profile"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.SalesClient</span>
+                                        <i class="glyph-icon iconsminds-profile"></i> <span class="d-inline-block">@OrgSys.Localization.Title_Designer.SalesClient</span>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="/Reports/Sales/SalesBalance">
-                                        <i class="glyph-icon iconsminds-profile"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.SalesBalance</span>
+                                        <i class="glyph-icon iconsminds-profile"></i> <span class="d-inline-block">@OrgSys.Localization.Title_Designer.SalesBalance</span>
                                     </a>
                                 </li>
                                                            
@@ -465,7 +465,7 @@
                     <li>
                         <a href="#" data-toggle="collapse" data-target="#collapseTransaction" aria-expanded="true"
                            aria-controls="collapseTransaction" class="rotate-arrow-icon opacity-50 collapsed">
-                            <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.TransactionNotices</span>
+                            <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@OrgSys.Localization.Title_Designer.TransactionNotices</span>
                         </a>
                         <div id="collapseTransaction" class="collapse">
                             <ul class="list-unstyled inner-level-menu">                              
@@ -482,7 +482,7 @@
                                     <li>
                                         <a href="/Transactions/Transaction?TypeId=1">
                                             <i class="iconsminds-down-1"></i> <span class="d-inline-block">
-                                                @Domain.Resource.Title_Designer.Addition
+                                                @OrgSys.Localization.Title_Designer.Addition
                                             </span>
                                         </a>
                                     </li>
@@ -492,7 +492,7 @@
                                     <li>
                                         <a href="/Transactions/Transaction?TypeId=2">
                                             <i class="iconsminds-up-1"></i> <span class="d-inline-block">
-                                                @Domain.Resource.Title_Designer.Issue
+                                                @OrgSys.Localization.Title_Designer.Issue
                                             </span>
                                         </a>
                                     </li>
@@ -502,7 +502,7 @@
                                     <li>
                                         <a href="/Transactions/Transaction?TypeId=3">
                                             <i class="iconsminds-shuffle-1"></i> <span class="d-inline-block">
-                                                @Domain.Resource.Title_Designer.Transfer
+                                                @OrgSys.Localization.Title_Designer.Transfer
                                             </span>
                                         </a>
                                     </li>
@@ -512,7 +512,7 @@
                                     <li>
                                         <a href="/Transactions/Transaction?TypeId=4">
                                             <i class="iconsminds-file-edit"></i> <span class="d-inline-block">
-                                                @Domain.Resource.Title_Designer.Received
+                                                @OrgSys.Localization.Title_Designer.Received
                                             </span>
                                         </a>
                                     </li>
@@ -522,7 +522,7 @@
                                     <li>
                                         <a href="/Transactions/Inventory">
                                             <i class="iconsminds-check"></i> <span class="d-inline-block">
-                                                @Domain.Resource.Title_Designer.Inventory
+                                                @OrgSys.Localization.Title_Designer.Inventory
                                             </span>
                                         </a>
                                     </li>
@@ -541,26 +541,26 @@
                     <li>
                         <a href="#" data-toggle="collapse" data-target="#collapseReportTransaction" aria-expanded="false"
                            aria-controls="collapseReportTransaction" class="rotate-arrow-icon opacity-50 collapsed">
-                            <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.Report</span>
+                            <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@OrgSys.Localization.Title_Designer.Report</span>
                         </a>
                         <div id="collapseReportTransaction" class="collapse">
                             <a href="/Reports/Lookups/Products">
-                                <i class="simple-icon-list"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.ProductList</span>
+                                <i class="simple-icon-list"></i> <span class="d-inline-block">@OrgSys.Localization.Title_Designer.ProductList</span>
                             </a>
                             <a href="/Reports/Lookups/Stocks">
-                                <i class="simple-icon-list"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.StocksList</span>
+                                <i class="simple-icon-list"></i> <span class="d-inline-block">@OrgSys.Localization.Title_Designer.StocksList</span>
                             </a>
                             <a href="/Reports/Warehouses/StockMovement">
-                                <i class="iconsminds-orientation-1"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.StockMovement</span>
+                                <i class="iconsminds-orientation-1"></i> <span class="d-inline-block">@OrgSys.Localization.Title_Designer.StockMovement</span>
                             </a>
                             <a href="/Reports/Warehouses/StockBalance">
-                                <i class="iconsminds-data-center"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.StockBalance</span>
+                                <i class="iconsminds-data-center"></i> <span class="d-inline-block">@OrgSys.Localization.Title_Designer.StockBalance</span>
                             </a>
                             <a href="/Reports/Warehouses/ProductMovement">
-                                <i class="iconsminds-synchronize"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.ProductMovement</span>
+                                <i class="iconsminds-synchronize"></i> <span class="d-inline-block">@OrgSys.Localization.Title_Designer.ProductMovement</span>
                             </a>
                             <a href="/Reports/Warehouses/ProductBalance">
-                                <i class="iconsminds-box-with-folders"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.ProductBalance</span>
+                                <i class="iconsminds-box-with-folders"></i> <span class="d-inline-block">@OrgSys.Localization.Title_Designer.ProductBalance</span>
                             </a>
                         </div>
                     </li>
@@ -580,7 +580,7 @@
                                 {
                                     <li>
                                         <a href="/Financials/Financial?TypeId=1">
-                                            <i class="iconsminds-start-2"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.OpeningBalance</span>
+                                            <i class="iconsminds-start-2"></i> <span class="d-inline-block">@OrgSys.Localization.Title_Designer.OpeningBalance</span>
                                         </a>
                                     </li>
                                 }
@@ -588,7 +588,7 @@
                                 {
                                     <li>
                                         <a href="/Financials/Financial?TypeId=2">
-                                            <i class="iconsminds-financial"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.Receipt</span>
+                                            <i class="iconsminds-financial"></i> <span class="d-inline-block">@OrgSys.Localization.Title_Designer.Receipt</span>
                                         </a>
                                     </li>
                                 }
@@ -596,7 +596,7 @@
                                 {
                                     <li>
                                         <a href="/Financials/Financial?TypeId=3">
-                                            <i class="iconsminds-handshake"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.Payment</span>
+                                            <i class="iconsminds-handshake"></i> <span class="d-inline-block">@OrgSys.Localization.Title_Designer.Payment</span>
                                         </a>
                                     </li>
                                 }
@@ -604,7 +604,7 @@
                                 {
                                     <li>
                                         <a href="/Financials/FinancialTransfer">
-                                            <i class="simple-icon-shuffle"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.Transfer</span>
+                                            <i class="simple-icon-shuffle"></i> <span class="d-inline-block">@OrgSys.Localization.Title_Designer.Transfer</span>
                                         </a>
                                     </li>
                                 }
@@ -612,7 +612,7 @@
                                 {
                                     <li>
                                         <a href="/Financials/Financial?TypeId=5">
-                                            <i class="iconsminds-down-1"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.Deposit</span>
+                                            <i class="iconsminds-down-1"></i> <span class="d-inline-block">@OrgSys.Localization.Title_Designer.Deposit</span>
                                         </a>
                                     </li>
                                 }
@@ -620,7 +620,7 @@
                                 {
                                     <li>
                                         <a href="/Financials/Financial?TypeId=6">
-                                            <i class="iconsminds-up-1"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.Withdrawal</span>
+                                            <i class="iconsminds-up-1"></i> <span class="d-inline-block">@OrgSys.Localization.Title_Designer.Withdrawal</span>
                                         </a>
                                     </li>
                                 }
@@ -628,7 +628,7 @@
                                 {
                                     <li>
                                         <a href="/Financials/Financial?TypeId=7">
-                                            <i class="iconsminds-receipt-4"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.Fee</span>
+                                            <i class="iconsminds-receipt-4"></i> <span class="d-inline-block">@OrgSys.Localization.Title_Designer.Fee</span>
                                         </a>
                                     </li>
                                 }
@@ -636,7 +636,7 @@
                                 {
                                     <li>
                                         <a href="/Financials/Financial?TypeId=8">
-                                            <i class="iconsminds-line-chart-1"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.Interest</span>
+                                            <i class="iconsminds-line-chart-1"></i> <span class="d-inline-block">@OrgSys.Localization.Title_Designer.Interest</span>
                                         </a>
                                     </li>
                                 }
@@ -644,7 +644,7 @@
                                 {
                                     <li>
                                         <a href="/Financials/Financial?TypeId=9">
-                                            <i class="iconsminds-check"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.Cheque</span>
+                                            <i class="iconsminds-check"></i> <span class="d-inline-block">@OrgSys.Localization.Title_Designer.Cheque</span>
                                         </a>
                                     </li>
                                 }
@@ -652,7 +652,7 @@
                                 {
                                     <li>
                                         <a href="/Financials/Financial?TypeId=10">
-                                            <i class="iconsminds-gear"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.Adjustment</span>
+                                            <i class="iconsminds-gear"></i> <span class="d-inline-block">@OrgSys.Localization.Title_Designer.Adjustment</span>
                                         </a>
                                     </li>
                                 }
@@ -682,11 +682,11 @@
                     <li>
                         <a href="#" data-toggle="collapse" data-target="#collapseFinancial3" aria-expanded="false"
                            aria-controls="collapseFinancial" class="rotate-arrow-icon opacity-50 collapsed">
-                            <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.Report</span>
+                            <i class="simple-icon-arrow-down"></i> <span class="d-inline-block">@OrgSys.Localization.Title_Designer.Report</span>
                         </a>
                         <div id="collapseFinancial3" class="collapse">
                             <a href="/Reports/Finances/SafeMovement">
-                                <i class="simple-icon-list"></i> <span class="d-inline-block">@Domain.Resource.Title_Designer.SafeMovement</span>
+                                <i class="simple-icon-list"></i> <span class="d-inline-block">@OrgSys.Localization.Title_Designer.SafeMovement</span>
                             </a>
                         </div>
                     </li>

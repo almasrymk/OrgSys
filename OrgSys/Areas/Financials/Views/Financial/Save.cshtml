@@ -1,5 +1,4 @@
 @model Treasury.Application.FinancialDto
-@using Domain.Enums
 @using OrgSys
 @{
     ViewData["Title_Designer"] = ViewBag.FinancialTypeName ?? "Financial Transaction";
@@ -30,8 +29,8 @@
                 <h1><i class="@ViewBag.FinancialTypeIcon"></i>  @ViewBag.FinancialTypeName</h1>              
                 <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
                     <ol class="breadcrumb pt-0">
-                        <li class="breadcrumb-item"><a href="/">@Domain.Resource.Title_Designer.Home</a></li>
-                        <li class="breadcrumb-item">@Domain.Resource.Title_Designer.Financial</li>
+                        <li class="breadcrumb-item"><a href="/">@OrgSys.Localization.Title_Designer.Home</a></li>
+                        <li class="breadcrumb-item">@OrgSys.Localization.Title_Designer.Financial</li>
                         <li class="breadcrumb-item">@ViewBag.FinancialTypeName</li>
                     </ol>
                 </nav>
@@ -79,7 +78,7 @@
                                 <span asp-validation-for="FiscalYearId" class="text-danger"></span>
                             </div>
                             <div class="form-group col-md-4">
-                                <label>@Domain.Resource.Title_Designer.Date</label>
+                                <label>@OrgSys.Localization.Title_Designer.Date</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend"><span class="input-group-text"><i class="simple-icon-calendar"></i></span></div>
                                     <input asp-for="Date" type="date" class="form-control" value="@Model.Date.ToString("yyyy-MM-dd")" readonly title="Opening Balance is always dated to the fiscal year's start date." />
@@ -104,7 +103,7 @@
                                 <span asp-validation-for="Amount" class="text-danger"></span>
                             </div>
                             <div class="form-group col-md-3">
-                                <label>@Domain.Resource.Title_Designer.Currency</label>
+                                <label>@OrgSys.Localization.Title_Designer.Currency</label>
                                 <select asp-for="CurrencyId" asp-items="ViewBag.CurrencyId" class="form-control"></select>
                             </div>
                             <div class="form-group col-md-3">
@@ -135,7 +134,7 @@
                     {
                         <div class="form-row">
                             <div class="form-group col-md-4">
-                                <label>@Domain.Resource.Title_Designer.Date</label>
+                                <label>@OrgSys.Localization.Title_Designer.Date</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend"><span class="input-group-text"><i class="simple-icon-calendar"></i></span></div>
                                     <input asp-for="Date" type="date" class="form-control" value="@Model.Date.ToString("yyyy-MM-dd")" />
@@ -152,7 +151,7 @@
                                 <span asp-validation-for="FinancialAccountId" class="text-danger"></span>
                             </div>
                             <div class="form-group col-md-4">
-                                <label>@Domain.Resource.Title_Designer.Amount</label>
+                                <label>@OrgSys.Localization.Title_Designer.Amount</label>
                                 <input asp-for="Amount" class="form-control" />
                                 <span asp-validation-for="Amount" class="text-danger"></span>
                             </div>
@@ -170,11 +169,11 @@
                                 </div>
                             }
                             <div class="form-group col-md-3">
-                                <label>@Domain.Resource.Title_Designer.Currency</label>
+                                <label>@OrgSys.Localization.Title_Designer.Currency</label>
                                 <select asp-for="CurrencyId" asp-items="ViewBag.CurrencyId" class="form-control"></select>
                             </div>
                             <div class="form-group col-md-3">
-                                <label>@Domain.Resource.Title_Designer.Rate</label>
+                                <label>@OrgSys.Localization.Title_Designer.Rate</label>
                                 <input asp-for="Rate" class="form-control" />
                             </div>
                             <div class="form-group col-md-3">
@@ -220,7 +219,7 @@
                     }
 
                     <div class="form-group">
-                        <label>@Domain.Resource.Title_Designer.Notes</label>
+                        <label>@OrgSys.Localization.Title_Designer.Notes</label>
                         <textarea asp-for="Notes" class="form-control" rows="3"></textarea>
                     </div>
                 </div>
@@ -231,12 +230,12 @@
                         {
                             <a id="ShowPreference" href="javascript::" class="btn btn-primary .ShowPreference" data-toggle="modal" data-target=".Preference">
                                 <i class="iconsminds-gear-2"></i>
-                                @Domain.Resource.Title_Designer.Preference
+                                @OrgSys.Localization.Title_Designer.Preference
                             </a>
                         }
                         <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId" class="btn btn-primary ">
                             <i class="simple-icon-action-undo"> </i>
-                            @Domain.Resource.Title_Designer.Back
+                            @OrgSys.Localization.Title_Designer.Back
                         </a>
                     </span>
                 </div>
@@ -259,7 +258,7 @@
                         }
                         else
                         {
-                            <button id="btn" type="submit" class="btn btn-primary ml-4 mr-4 mb-4">@Domain.Resource.Title_Designer.Save</button>
+                            <button id="btn" type="submit" class="btn btn-primary ml-4 mr-4 mb-4">@OrgSys.Localization.Title_Designer.Save</button>
                             @if (financialTypeId == 1 && Model.Id > 0 && (bool)(ViewBag.AllowPost ?? false))
                             {
                                 <a href="/@ViewBag.area/@ViewBag.PageTitle/Post?id=@Model.Id&ParentId=@Model.ParentId&TypeId=@Model.TypeId" class="btn btn-success ml-4 mr-4 mb-4" onclick="return confirm('Post this Opening Balance? This will create the Journal Entry and it can no longer be edited or deleted.');">

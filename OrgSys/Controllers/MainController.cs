@@ -2,8 +2,7 @@
 {
     using OrgSys.SharedKernel;
     using AutoMapper;
-    using Domain.Entities;
-    using Domain.Enums;
+    using OrgSys.Models;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Filters;
@@ -43,24 +42,19 @@
             return client;
         }
 
-        public virtual async Task<HttpResponseMessage> ApiMethod(ApiMethodType apiMethodType, string NameActionAndParamenter, object Ob = null)
+        public virtual async Task<HttpResponseMessage> ApiMethod(HttpMethod apiMethodType, string NameActionAndParamenter, object Ob = null)
         {
             string ApiUrl = configuration["ApiUrl"];
-            HttpClient httpClient = CreateClient();           
+            HttpClient httpClient = CreateClient();
             string ApiControllerName = typeof(TDto).Name.Replace("ModelView", "").Replace("Dto", "");
-            switch (apiMethodType)
-            {
-                case ApiMethodType.Get:
-                    return await httpClient.GetAsync($"{ApiUrl}/{ApiControllerName}/{NameActionAndParamenter}");
-                case ApiMethodType.Post:
-                    return await httpClient.PostAsJsonAsync($"{ApiUrl}/{ApiControllerName}/{NameActionAndParamenter}", Ob);
-                case ApiMethodType.Put:
-                    return await httpClient.PutAsJsonAsync($"{ApiUrl}/{ApiControllerName}/{NameActionAndParamenter}", Ob);
-                case ApiMethodType.Delete:
-                    return await httpClient.DeleteAsync($"{ApiUrl}/{ApiControllerName}/{NameActionAndParamenter}");
-                default:
-                    break;
-            }
+            if (apiMethodType == HttpMethod.Get)
+                return await httpClient.GetAsync($"{ApiUrl}/{ApiControllerName}/{NameActionAndParamenter}");
+            if (apiMethodType == HttpMethod.Post)
+                return await httpClient.PostAsJsonAsync($"{ApiUrl}/{ApiControllerName}/{NameActionAndParamenter}", Ob);
+            if (apiMethodType == HttpMethod.Put)
+                return await httpClient.PutAsJsonAsync($"{ApiUrl}/{ApiControllerName}/{NameActionAndParamenter}", Ob);
+            if (apiMethodType == HttpMethod.Delete)
+                return await httpClient.DeleteAsync($"{ApiUrl}/{ApiControllerName}/{NameActionAndParamenter}");
             return null;
         }
 
@@ -135,7 +129,7 @@
             await LoadViewBagIndex(ParentId, TypeId);
             //if (string.IsNullOrEmpty(search))
             //    search = "0";
-            var response = await ApiMethod(ApiMethodType.Get, $"Search?KeySearch={search}&ParentId={ParentId}&TypeId={TypeId}&Page={page}&PageSize={pageSize}");
+            var response = await ApiMethod(HttpMethod.Get, $"Search?KeySearch={search}&ParentId={ParentId}&TypeId={TypeId}&Page={page}&PageSize={pageSize}");
             response.EnsureSuccessStatusCode();
             var data = await response.Content.ReadAsStringAsync();
             var dataList = JsonConvert.DeserializeObject<ResultPagination<TDto>>(data);
@@ -148,7 +142,7 @@
             ViewBag.TypeId = TypeId;
             var ob = (TDto)Activator.CreateInstance(typeof(TDto));
           
-            var response = await ApiMethod(ApiMethodType.Get, $"GetById?Id={id}");
+            var response = await ApiMethod(HttpMethod.Get, $"GetById?Id={id}");
             response.EnsureSuccessStatusCode();
             var data = await response.Content.ReadAsStringAsync();
             var res = JsonConvert.DeserializeObject<Result<TDto>>(data);
@@ -174,12 +168,12 @@
                 if (ob.Id == 0)
                 {
                     var CreateOb = mapper.Map<TCreate>(ob);
-                    response = await ApiMethod(ApiMethodType.Post, $"Create", CreateOb);
+                    response = await ApiMethod(HttpMethod.Post, $"Create", CreateOb);
                 }
                 else
                 {
                     var UpdateOb = mapper.Map<TUpdate>(ob);
-                    response = await ApiMethod(ApiMethodType.Put, $"Update", UpdateOb);
+                    response = await ApiMethod(HttpMethod.Put, $"Update", UpdateOb);
                 }
 
                 var data = await response.Content.ReadAsStringAsync();
@@ -230,7 +224,7 @@
 
         public virtual async Task<Result> Delete(long id)
         {
-            var ob = await ApiMethod(ApiMethodType.Get, $"GetById?Id={id}");
+            var ob = await ApiMethod(HttpMethod.Get, $"GetById?Id={id}");
             ob.EnsureSuccessStatusCode();
             var data = await ob.Content.ReadAsStringAsync();
             var res = JsonConvert.DeserializeObject<Result<TDto>>(data);
@@ -238,7 +232,7 @@
             {
                 if (res.Response != null && res.Response.Id > 0)
                 {
-                    var response = await ApiMethod(ApiMethodType.Delete, $"Delete?Id={id}");
+                    var response = await ApiMethod(HttpMethod.Delete, $"Delete?Id={id}");
 
                     if (response.IsSuccessStatusCode)
                         return new Result(HttpStatusCode.OK , null);
@@ -260,7 +254,7 @@
                 if (ids != null && ids.Length > 0)
                 {
                     var query = string.Join("&", ids.Select(i => $"ids={i}"));
-                    var response = await ApiMethod(ApiMethodType.Delete, $"DeleteList?{query}");
+                    var response = await ApiMethod(HttpMethod.Delete, $"DeleteList?{query}");
 
                     if (response.IsSuccessStatusCode)
                         return new OrgSys.SharedKernel.Result(HttpStatusCode.OK , null);

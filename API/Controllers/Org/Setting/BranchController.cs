@@ -1,7 +1,6 @@
 using Organization.Application.Branches.Commands;
 using Organization.Application.Branches.Queries;
 using OrgSys.SharedKernel;
-using Application.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

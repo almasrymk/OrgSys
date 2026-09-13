@@ -1,7 +1,7 @@
 ﻿using Inventory.Application.Inventories.Commands;
 using AutoMapper;
-using Domain.Enums;
-using Application.DTOs;
+using System.Net.Http;
+using OrgSys.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
@@ -62,7 +62,7 @@ namespace OrgSys.Areas.Inventory.Controllers
 
         public async Task<ActionResult> Cancel(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1)
         {
-            var response = await ApiMethod(ApiMethodType.Put, $"Cancel?Id={id}");
+            var response = await ApiMethod(HttpMethod.Put, $"Cancel?Id={id}");
             response.EnsureSuccessStatusCode();
             var data = await response.Content.ReadAsStringAsync();
             var res = JsonConvert.DeserializeObject<Result>(data);
@@ -73,7 +73,7 @@ namespace OrgSys.Areas.Inventory.Controllers
 
         public async Task<ActionResult> Redo(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1)
         {
-            var response = await ApiMethod(ApiMethodType.Put, $"Redo?Id={id}");
+            var response = await ApiMethod(HttpMethod.Put, $"Redo?Id={id}");
             response.EnsureSuccessStatusCode();
             var data = await response.Content.ReadAsStringAsync();
             var res = JsonConvert.DeserializeObject<Result>(data);
@@ -84,7 +84,7 @@ namespace OrgSys.Areas.Inventory.Controllers
 
         public async Task<ActionResult> CreateAdjustment(long id, long ParentId = 0, long TypeId = 0, int page = 1, string dir = "Index")
         {
-            var response = await ApiMethod(ApiMethodType.Post, $"CreateAdjustment?InventoryId={id}");
+            var response = await ApiMethod(HttpMethod.Post, $"CreateAdjustment?InventoryId={id}");
             var target = 
                 //dir == "Save"
                 //? $"/Transactions/Inventory/Save?id={id}&ParentId={ParentId}&TypeId={TypeId}"
@@ -102,7 +102,7 @@ namespace OrgSys.Areas.Inventory.Controllers
             {
 
                 var key = ob.GetType().GetProperty("Code")?.GetValue(ob, null);
-                var searchResp = await ApiMethod(ApiMethodType.Get, $"Search?KeySearch={key}&ParentId={ob.ParentId}&TypeId={ob.TypeId}&Page=1&PageSize=1");
+                var searchResp = await ApiMethod(HttpMethod.Get, $"Search?KeySearch={key}&ParentId={ob.ParentId}&TypeId={ob.TypeId}&Page=1&PageSize=1");
                 if (searchResp != null && searchResp.IsSuccessStatusCode)
                 {
                     var searchData = await searchResp.Content.ReadAsStringAsync();

@@ -102,96 +102,96 @@
             <div class="fadeIn first">
                 <img src="~/logos/Logo.png" style="width:150px !important" id="icon" alt="User Icon" />
             </div>
-            <h2 class="active"> @Domain.Resource.Title_Designer.Login </h2>
+            <h2 class="active"> @OrgSys.Localization.Title_Designer.Login </h2>
             <form action="/Home/LogIn" method="post">
                 <input type="hidden" name="Email" id="Email" />
                 <input type="hidden" name="KeepLoggedIn" id="KeepLoggedIn" />
 
                 <div id="dvEmail" style="padding-left: 40px; padding-right: 40px;">
-                    <input type="text" name="UserName" id="MyEmail" style="background-color:#f8f8f8 !important;" placeholder="@Domain.Resource.Title_Designer.Email" autocomplete="off">
+                    <input type="text" name="UserName" id="MyEmail" style="background-color:#f8f8f8 !important;" placeholder="@OrgSys.Localization.Title_Designer.Email" autocomplete="off">
                     <div id="EmailRequired" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                        <span>@Domain.Resource.Message_Designer.EmailRequired</span>
+                        <span>@OrgSys.Localization.Message_Designer.EmailRequired</span>
                     </div>
                     <div id="EmailError" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                        <span>@Domain.Resource.Message_Designer.EmailNotValid</span>
+                        <span>@OrgSys.Localization.Message_Designer.EmailNotValid</span>
                     </div>
                     <div class="">
                         <div style="padding-top: 15px;">
-                            <input id="btEmail" type="button" value="@Domain.Resource.Title_Designer.Next" onclick="Next()" class="fadeIn second" tabindex="-1" />
+                            <input id="btEmail" type="button" value="@OrgSys.Localization.Title_Designer.Next" onclick="Next()" class="fadeIn second" tabindex="-1" />
                         </div>
                     </div>
                 </div>
 
                 <div id="dvPassword" style="display: none; padding-left: 40px; padding-right: 40px;">
-                    <input type="text" name="UserName" id="TheEmail" style="background-color:#f8f8f8 !important;" placeholder="@Domain.Resource.Title_Designer.Email" readonly="readonly">
-                    <input type="Password" name="Password" id="Password" style="background-color:#f8f8f8 !important;" placeholder="@Domain.Resource.Title_Designer.Password" class="fadeIn" autocomplete="off">
+                    <input type="text" name="UserName" id="TheEmail" style="background-color:#f8f8f8 !important;" placeholder="@OrgSys.Localization.Title_Designer.Email" readonly="readonly">
+                    <input type="Password" name="Password" id="Password" style="background-color:#f8f8f8 !important;" placeholder="@OrgSys.Localization.Title_Designer.Password" class="fadeIn" autocomplete="off">
                     <div id="PasswordRequired" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                        <span>@Domain.Resource.Message_Designer.PasswordRequired</span>
+                        <span>@OrgSys.Localization.Message_Designer.PasswordRequired</span>
                     </div>
                     <div id="PasswordError" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                        <span>@Domain.Resource.Message_Designer.PasswordNotValid</span>
+                        <span>@OrgSys.Localization.Message_Designer.PasswordNotValid</span>
                     </div>
                     <div class="">
                         <div>
                             <small>
-                                <input type="checkbox" class="fadeIn" onclick="Check(this)" />&nbsp;@Domain.Resource.Title_Designer.KeepMeLoggedIn
+                                <input type="checkbox" class="fadeIn" onclick="Check(this)" />&nbsp;@OrgSys.Localization.Title_Designer.KeepMeLoggedIn
                             </small>
                             <span> &nbsp; | &nbsp;</span>
                             <small>
-                                <a class="underlineHover" href="javascript::" onclick="Back()"> <i class="fa fa-undo"></i> @Domain.Resource.Title_Designer.AnotherUser</a>
+                                <a class="underlineHover" href="javascript::" onclick="Back()"> <i class="fa fa-undo"></i> @OrgSys.Localization.Title_Designer.AnotherUser</a>
                             </small>
                         </div>
                         <small>
-                            <a class="underlineHover" href="#">@Domain.Resource.Title_Designer.ForgotPassword?</a>
+                            <a class="underlineHover" href="#">@OrgSys.Localization.Title_Designer.ForgotPassword?</a>
                         </small>
                         <div style="padding-top:10px;padding-bottom:5px;">
-                            <input id="btPassword" type="button" value="@Domain.Resource.Title_Designer.Login" onclick="Login()" class="fadeIn" />
+                            <input id="btPassword" type="button" value="@OrgSys.Localization.Title_Designer.Login" onclick="Login()" class="fadeIn" />
                         </div>
                     </div>
                 </div>
 
                 <div id="dvNewPassword" style="display: none; padding-left: 40px; padding-right: 40px; ">
                     <br />
-                    <input type="text" name="TheEmail" id="TheEmail2" style="background-color:#f8f8f8 !important;" placeholder="@Domain.Resource.Title_Designer.Email" readonly="readonly">
+                    <input type="text" name="TheEmail" id="TheEmail2" style="background-color:#f8f8f8 !important;" placeholder="@OrgSys.Localization.Title_Designer.Email" readonly="readonly">
 
-                    <input type="Password" name="NewPassword" id="NewPassword" style="background-color:#f8f8f8 !important;" placeholder="@Domain.Resource.Title_Designer.NewPassword" />
+                    <input type="Password" name="NewPassword" id="NewPassword" style="background-color:#f8f8f8 !important;" placeholder="@OrgSys.Localization.Title_Designer.NewPassword" />
                     <div id="NewPasswordRequired" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                        <span>@Domain.Resource.Message_Designer.PasswordRequired</span>
+                        <span>@OrgSys.Localization.Message_Designer.PasswordRequired</span>
                     </div>
                     <div id="NewPasswordError" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                        <span>@Domain.Resource.Message_Designer.PasswordNotValid</span>
+                        <span>@OrgSys.Localization.Message_Designer.PasswordNotValid</span>
                     </div>
 
-                    <input type="Password" name="ConfirmPassword" id="ConfirmPassword" placeholder="@Domain.Resource.Title_Designer.ConfirmPassword">
+                    <input type="Password" name="ConfirmPassword" id="ConfirmPassword" placeholder="@OrgSys.Localization.Title_Designer.ConfirmPassword">
                     <div id="ConfirmPasswordRequired" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                        <span>@Domain.Resource.Message_Designer.ConfirmPasswordRequired</span>
+                        <span>@OrgSys.Localization.Message_Designer.ConfirmPasswordRequired</span>
                     </div>
                     <div id="ConfirmPasswordError" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                        <span>@Domain.Resource.Message_Designer.ConfirmPasswordNotValid</span>
+                        <span>@OrgSys.Localization.Message_Designer.ConfirmPasswordNotValid</span>
                     </div>
                     <div id="ConfirmPasswordNotMatch" class="fadeInDown" style="display: none; color: red; padding-top: 10px;">
-                        <span>@Domain.Resource.Message_Designer.NotMatch</span>
+                        <span>@OrgSys.Localization.Message_Designer.NotMatch</span>
                     </div>
 
                     <div>
                         <div>
                             <small>
-                                <input type="checkbox" class="fadeIn" onclick="Check(this)" />&nbsp;@Domain.Resource.Title_Designer.KeepMeLoggedIn
+                                <input type="checkbox" class="fadeIn" onclick="Check(this)" />&nbsp;@OrgSys.Localization.Title_Designer.KeepMeLoggedIn
                             </small>
                             <span> &nbsp; | &nbsp;</span>
                             <small>
-                                <a class="underlineHover" href="javascript::" onclick="Back()"> <i class="fa fa-undo"></i> @Domain.Resource.Title_Designer.AnotherUser</a>
+                                <a class="underlineHover" href="javascript::" onclick="Back()"> <i class="fa fa-undo"></i> @OrgSys.Localization.Title_Designer.AnotherUser</a>
                             </small>
                         </div>
                         <div style="padding-top:10px;padding-bottom:5px;">
-                            <input id="btNewPassword" type="button" value="@Domain.Resource.Title_Designer.Login" onclick="LoginByNewPassword()" class="fadeIn" />
+                            <input id="btNewPassword" type="button" value="@OrgSys.Localization.Title_Designer.Login" onclick="LoginByNewPassword()" class="fadeIn" />
                         </div>
                     </div>
                 </div>
 
             </form>
             <div id="formFooter" style="padding:10px;">
-                <a class="underlineHover" href="/Home/RequestReg">@Domain.Resource.Title_Designer.SignUp</a>
+                <a class="underlineHover" href="/Home/RequestReg">@OrgSys.Localization.Title_Designer.SignUp</a>
             </div>
         </div>
     </div>

@@ -2,7 +2,6 @@
 {
     using Accounting.Application.Accounts.Commands;
     using AutoMapper;
-    using Application.DTOs;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.Extensions.Configuration;
@@ -96,7 +95,7 @@
                     _.Name,
                     _.Debit,
                     _.Credit,                   
-                    Code = phrase == _.Code ? Domain.Resource.Title_Designer.Code + " " + _.Code : "",
+                    Code = phrase == _.Code ? OrgSys.Localization.Title_Designer.Code + " " + _.Code : "",
                     ParentName = "" + phrase != "" && _.ParentName.ToLower().Contains("" + phrase) ? _.ParentName : ""
                 })
                 .ToList();

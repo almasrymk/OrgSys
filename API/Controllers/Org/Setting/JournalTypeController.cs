@@ -1,5 +1,4 @@
 using Accounting.Application.JournalTypes.Queries;
-using Application.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

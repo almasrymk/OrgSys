@@ -9,18 +9,18 @@
 
 <div class="container-fluid disable-text-selection">
     <div class="col-12">
-        <h1> <i class="glyph-icon iconsminds-business-mens rounded-circle badge-theme-1  p-1"></i> @Domain.Resource.Title_Designer.Suppliers</h1>
+        <h1> <i class="glyph-icon iconsminds-business-mens rounded-circle badge-theme-1  p-1"></i> @OrgSys.Localization.Title_Designer.Suppliers</h1>
 
         <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
             <ol class="breadcrumb pt-0">
                 <li class="breadcrumb-item">
-                    <a href="/">@Domain.Resource.Title_Designer.Home</a>
+                    <a href="/">@OrgSys.Localization.Title_Designer.Home</a>
                 </li>
                 <li class="breadcrumb-item">
-                    <span>@Domain.Resource.Title_Designer.Invoice</span>
+                    <span>@OrgSys.Localization.Title_Designer.Invoice</span>
                 </li>
                 <li class="breadcrumb-item">
-                    @Domain.Resource.Title_Designer.Suppliers
+                    @OrgSys.Localization.Title_Designer.Suppliers
                 </li>
             </ol>
         </nav>
@@ -30,18 +30,18 @@
     
     <div class="card mb-3">
         <div class="card-body p-3">
-            <h5 class="mb-3">@Domain.Resource.Title_Designer.KeySearch</h5>
+            <h5 class="mb-3">@OrgSys.Localization.Title_Designer.KeySearch</h5>
             <div class="row p-0 m-0">
                 <div class="form-group pl-1 pr-1">
                     <div id="divDate">
                         <div class="input-group  ">
-                            @Html.TextBox("txtSearch", null, new { @class = "form-control", @placeholder = @Domain.Resource.Title_Designer.Search, @onkeyup = "change(event , 1)" })
+                            @Html.TextBox("txtSearch", null, new { @class = "form-control", @placeholder = @OrgSys.Localization.Title_Designer.Search, @onkeyup = "change(event , 1)" })
                         </div>
                     </div>
                 </div> 
             </div>
             <button class="btn btn-primary @pull_dir" onclick="search(1)">
-                <i class="glyph-icon iconsminds-magnifi-glass">  </i> @Domain.Resource.Title_Designer.Search
+                <i class="glyph-icon iconsminds-magnifi-glass">  </i> @OrgSys.Localization.Title_Designer.Search
             </button>
         </div>       
     </div> 

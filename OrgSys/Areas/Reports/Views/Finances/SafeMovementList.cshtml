@@ -36,7 +36,7 @@
         </div>
     </div>
 
-    <h5 class="mb-4">@Domain.Resource.Title_Designer.SearchResults</h5>
+    <h5 class="mb-4">@OrgSys.Localization.Title_Designer.SearchResults</h5>
     <div class="col-12 m-0 p-0" data-check-all="checkAll">
         @if (ViewBag.SafeId == 1 || ViewBag.SafeId == 0)
         {
@@ -46,13 +46,13 @@
                         <th class="text-center">#</th>
                         @*                        <th style="text-align:center"></th>
                 *@
-                        <th class="@TextAlign align-middle">@Domain.Resource.Title_Designer.SafeName</th>
-                        <th class="align-middle" style="text-align:center">@Domain.Resource.Title_Designer.FinancialType</th>
-                        <th class="align-middle" style="text-align:center">@Domain.Resource.Title_Designer.Date</th>
-                        <th class="align-middle" style="@TextAlign">   @Domain.Resource.Title_Designer.MotionCode</th>
-                        <th class="@TextAlign align-middle">@Domain.Resource.Title_Designer.Dealer</th>
-                        <th class="text-center align-middle">@Domain.Resource.Title_Designer.Amount</th>
-                        <th class="text-center align-middle">@Domain.Resource.Title_Designer.Currency</th>
+                        <th class="@TextAlign align-middle">@OrgSys.Localization.Title_Designer.SafeName</th>
+                        <th class="align-middle" style="text-align:center">@OrgSys.Localization.Title_Designer.FinancialType</th>
+                        <th class="align-middle" style="text-align:center">@OrgSys.Localization.Title_Designer.Date</th>
+                        <th class="align-middle" style="@TextAlign">   @OrgSys.Localization.Title_Designer.MotionCode</th>
+                        <th class="@TextAlign align-middle">@OrgSys.Localization.Title_Designer.Dealer</th>
+                        <th class="text-center align-middle">@OrgSys.Localization.Title_Designer.Amount</th>
+                        <th class="text-center align-middle">@OrgSys.Localization.Title_Designer.Currency</th>
 
 
                     </tr>
@@ -117,21 +117,21 @@
             </div>
             @*  <div class="card card-body row mb-1">
     <div class="row">
-    <h4> @Domain.Resource.Title_Designer.Client :  @Model.Data.DealerName </h4>
+    <h4> @OrgSys.Localization.Title_Designer.Client :  @Model.Data.DealerName </h4>
     /
-    <h4> @Domain.Resource.Title_Designer.Client :  @Model.Data.DealerName </h4>
+    <h4> @OrgSys.Localization.Title_Designer.Client :  @Model.Data.DealerName </h4>
     </div>
     </div>*@
             <table class="table table-hover table-striped responsive alert-success nowrap m-0 " style="background-color:transparent;" data-order="[[ 1, &quot;desc&quot; ]]">
                 <thead>
                     <tr>
                         <th class="text-center">#</th>
-                        <th class="align-middle" style="@TextAlign">@Domain.Resource.Title_Designer.FinancialType</th>
-                        <th class="align-middle" style="text-align:center">@Domain.Resource.Title_Designer.Date</th>
-                        <th class="align-middle" style="@TextAlign">@Domain.Resource.Title_Designer.MotionCode</th>
-                        <th class="@TextAlign align-middle">@Domain.Resource.Title_Designer.Dealer</th>
-                        <th class="text-center align-middle">@Domain.Resource.Title_Designer.Amount</th>
-                        <th class="text-center align-middle">@Domain.Resource.Title_Designer.Currency</th>
+                        <th class="align-middle" style="@TextAlign">@OrgSys.Localization.Title_Designer.FinancialType</th>
+                        <th class="align-middle" style="text-align:center">@OrgSys.Localization.Title_Designer.Date</th>
+                        <th class="align-middle" style="@TextAlign">@OrgSys.Localization.Title_Designer.MotionCode</th>
+                        <th class="@TextAlign align-middle">@OrgSys.Localization.Title_Designer.Dealer</th>
+                        <th class="text-center align-middle">@OrgSys.Localization.Title_Designer.Amount</th>
+                        <th class="text-center align-middle">@OrgSys.Localization.Title_Designer.Currency</th>
 
                     </tr>
                 </thead>
@@ -175,9 +175,9 @@
 else
 {
 
-    <h5 class="mb-4">@Domain.Resource.Title_Designer.SearchResults</h5>
+    <h5 class="mb-4">@OrgSys.Localization.Title_Designer.SearchResults</h5>
     <div class="col-12 m-0 p-0 text-center" data-check-all="checkAll">
-        <h3 class="text-danger"> @Domain.Resource.Message_Designer.NoResults </h3>
+        <h3 class="text-danger"> @OrgSys.Localization.Message_Designer.NoResults </h3>
     </div>
 
 }

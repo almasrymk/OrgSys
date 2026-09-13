@@ -1,7 +1,5 @@
 using Accounting.Application.Journals.Commands;
 using AutoMapper;
-using Domain.Abstraction;
-using Domain.Entities;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using System.Net;

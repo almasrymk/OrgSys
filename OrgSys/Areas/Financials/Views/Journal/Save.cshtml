@@ -18,21 +18,21 @@
     {
         SourceResourceName = Model.RefranceTypeId switch
         {
-            1 => $"{Domain.Resource.Title_Designer.Sales} {Domain.Resource.Title_Designer.Invoice}",
-            2 => $"{Domain.Resource.Title_Designer.Purchase} {Domain.Resource.Title_Designer.Invoice}",
-            3 => $"{Domain.Resource.Title_Designer.Sales} {Domain.Resource.Title_Designer.Return}",
-            4 => $"{Domain.Resource.Title_Designer.Purchase} {Domain.Resource.Title_Designer.Return}",
-            _ => Domain.Resource.Title_Designer.Invoice
+            1 => $"{OrgSys.Localization.Title_Designer.Sales} {OrgSys.Localization.Title_Designer.Invoice}",
+            2 => $"{OrgSys.Localization.Title_Designer.Purchase} {OrgSys.Localization.Title_Designer.Invoice}",
+            3 => $"{OrgSys.Localization.Title_Designer.Sales} {OrgSys.Localization.Title_Designer.Return}",
+            4 => $"{OrgSys.Localization.Title_Designer.Purchase} {OrgSys.Localization.Title_Designer.Return}",
+            _ => OrgSys.Localization.Title_Designer.Invoice
         };
     }
     else if (Model.RefranceTable == "transaction")
     {
         SourceResourceName = Model.RefranceTypeId switch
         {
-            1 => $"{Domain.Resource.Title_Designer.Addition} {Domain.Resource.Title_Designer.Stock}",
-            2 => $"{Domain.Resource.Title_Designer.Issue} {Domain.Resource.Title_Designer.Stock}",
-            3 => $"{Domain.Resource.Title_Designer.Transfer} {Domain.Resource.Title_Designer.Stock}",
-            4 => $"{Domain.Resource.Title_Designer.Received} {Domain.Resource.Title_Designer.Stock}",
+            1 => $"{OrgSys.Localization.Title_Designer.Addition} {OrgSys.Localization.Title_Designer.Stock}",
+            2 => $"{OrgSys.Localization.Title_Designer.Issue} {OrgSys.Localization.Title_Designer.Stock}",
+            3 => $"{OrgSys.Localization.Title_Designer.Transfer} {OrgSys.Localization.Title_Designer.Stock}",
+            4 => $"{OrgSys.Localization.Title_Designer.Received} {OrgSys.Localization.Title_Designer.Stock}",
             _ => "Transaction"
         };
     }
@@ -45,8 +45,8 @@
                 <h1>Journal</h1>
                 <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
                     <ol class="breadcrumb pt-0">
-                        <li class="breadcrumb-item"><a href="/">@Domain.Resource.Title_Designer.Home</a></li>
-                        <li class="breadcrumb-item">@Domain.Resource.Title_Designer.Financial</li>
+                        <li class="breadcrumb-item"><a href="/">@OrgSys.Localization.Title_Designer.Home</a></li>
+                        <li class="breadcrumb-item">@OrgSys.Localization.Title_Designer.Financial</li>
                         <li class="breadcrumb-item">Journal</li>
                     </ol>
                 </nav>
@@ -119,7 +119,7 @@
                                                 <th scope="col">Account</th>
                                                 <th scope="col">Debit</th>
                                                 <th scope="col">Credit</th>
-                                                <th scope="col">@Domain.Resource.Title_Designer.Notes</th>
+                                                <th scope="col">@OrgSys.Localization.Title_Designer.Notes</th>
                                                 <th></th>
                                             </tr>
                                         </thead>
@@ -141,9 +141,9 @@
                                                                    autocomplete="off" style="@BorderAlign" value="@JournalItem.AccountName">
                                                             <input type="hidden" id="AccountId" name="AccountId" class="AccountId" value="@JournalItem.AccountId" />
                                                             <div class="text-center align-middle">
-                                                                <i id="RepeatedDanger" class="badge badge-danger mb-1 text-center align-middle" style="width: 60px;  height: 25px; display: none; margin: 6px;">@Domain.Resource.Title_Designer.Repeated</i>
-                                                                <i id="RepeatedWarning" class="badge badge-warning mb-1 text-center align-middle" style="width: 60px;  height: 25px; display: none; margin: 6px; ">@Domain.Resource.Title_Designer.Repeated</i>
-                                                                <i id="RepeatedPrimary" class="badge badge-primary mb-1 text-center align-middle" style="width: 60px; height: 25px; display: none; margin: 6px; ">@Domain.Resource.Title_Designer.Repeated</i>
+                                                                <i id="RepeatedDanger" class="badge badge-danger mb-1 text-center align-middle" style="width: 60px;  height: 25px; display: none; margin: 6px;">@OrgSys.Localization.Title_Designer.Repeated</i>
+                                                                <i id="RepeatedWarning" class="badge badge-warning mb-1 text-center align-middle" style="width: 60px;  height: 25px; display: none; margin: 6px; ">@OrgSys.Localization.Title_Designer.Repeated</i>
+                                                                <i id="RepeatedPrimary" class="badge badge-primary mb-1 text-center align-middle" style="width: 60px; height: 25px; display: none; margin: 6px; ">@OrgSys.Localization.Title_Designer.Repeated</i>
                                                             </div>
                                                             <div class="input-group-prepend Dropbtn2  ">
                                                                 <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
@@ -184,9 +184,9 @@
                                                                        autocomplete="off" style="@BorderAlign">
                                                                 <input type="hidden" id="AccountId" name="AccountId" class="AccountId" />
                                                                 <div class="text-center align-middle">
-                                                                    <i id="RepeatedDanger" class="badge badge-danger mb-1 text-center align-middle" style="width: 60px;  height: 25px; display: none; margin: 6px;">@Domain.Resource.Title_Designer.Repeated</i>
-                                                                    <i id="RepeatedWarning" class="badge badge-warning mb-1 text-center align-middle" style="width: 60px;  height: 25px; display: none; margin: 6px; ">@Domain.Resource.Title_Designer.Repeated</i>
-                                                                    <i id="RepeatedPrimary" class="badge badge-primary mb-1 text-center align-middle" style="width: 60px; height: 25px; display: none; margin: 6px; ">@Domain.Resource.Title_Designer.Repeated</i>
+                                                                    <i id="RepeatedDanger" class="badge badge-danger mb-1 text-center align-middle" style="width: 60px;  height: 25px; display: none; margin: 6px;">@OrgSys.Localization.Title_Designer.Repeated</i>
+                                                                    <i id="RepeatedWarning" class="badge badge-warning mb-1 text-center align-middle" style="width: 60px;  height: 25px; display: none; margin: 6px; ">@OrgSys.Localization.Title_Designer.Repeated</i>
+                                                                    <i id="RepeatedPrimary" class="badge badge-primary mb-1 text-center align-middle" style="width: 60px; height: 25px; display: none; margin: 6px; ">@OrgSys.Localization.Title_Designer.Repeated</i>
                                                                 </div>
                                                                 <div class="input-group-prepend Dropbtn2  ">
                                                                     <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
@@ -224,9 +224,9 @@
                                                                autocomplete="off" style="@BorderAlign">
                                                         <input type="hidden" id="AccountId" name="AccountId" class="AccountId" />
                                                         <div class="text-center align-middle">
-                                                            <i id="RepeatedDanger" class="badge badge-danger mb-1 text-center align-middle" style="width: 60px; height: 25px; display: none; margin: 6px;">@Domain.Resource.Title_Designer.Repeated</i>
-                                                            <i id="RepeatedWarning" class="badge badge-warning mb-1 text-center align-middle" style="width: 60px; height: 25px; display: none; margin: 6px; ">@Domain.Resource.Title_Designer.Repeated</i>
-                                                            <i id="RepeatedPrimary" class="badge badge-primary mb-1 text-center align-middle" style="width: 60px;  height: 25px; display: none; margin: 6px; ">@Domain.Resource.Title_Designer.Repeated</i>
+                                                            <i id="RepeatedDanger" class="badge badge-danger mb-1 text-center align-middle" style="width: 60px; height: 25px; display: none; margin: 6px;">@OrgSys.Localization.Title_Designer.Repeated</i>
+                                                            <i id="RepeatedWarning" class="badge badge-warning mb-1 text-center align-middle" style="width: 60px; height: 25px; display: none; margin: 6px; ">@OrgSys.Localization.Title_Designer.Repeated</i>
+                                                            <i id="RepeatedPrimary" class="badge badge-primary mb-1 text-center align-middle" style="width: 60px;  height: 25px; display: none; margin: 6px; ">@OrgSys.Localization.Title_Designer.Repeated</i>
                                                         </div>
                                                         <div class="input-group-prepend Dropbtn2  ">
                                                             <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
@@ -272,21 +272,21 @@
                                         @Html.ValidationMessageFor(model => model.JournalTypeId, "", new { @class = "text-danger " })
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <label>@Domain.Resource.Title_Designer.Code</label>
+                                        <label>@OrgSys.Localization.Title_Designer.Code</label>
                                         <div id="divCode">
                                             @if (ViewBag.TypeSerial == 1)
                                             {
-                                                @Html.TextBoxFor(model => model.Code, new { @class = "form-control", @placeholder = @Domain.Resource.Title_Designer.Code })
+                                                @Html.TextBoxFor(model => model.Code, new { @class = "form-control", @placeholder = @OrgSys.Localization.Title_Designer.Code })
                                             }
                                             else
                                             {
-                                                @Html.TextBoxFor(model => model.Code, new { @class = "form-control", @readonly = "true", @style = "background-color:transparent", @placeholder = @Domain.Resource.Title_Designer.Code })
+                                                @Html.TextBoxFor(model => model.Code, new { @class = "form-control", @readonly = "true", @style = "background-color:transparent", @placeholder = @OrgSys.Localization.Title_Designer.Code })
                                             }
                                         </div>
                                         @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger " })
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <label>@Domain.Resource.Title_Designer.Date</label>
+                                        <label>@OrgSys.Localization.Title_Designer.Date</label>
                                         <div id="divDate">
                                             <div class="input-group ">
                                                 <div class="input-group-prepend ">
@@ -297,7 +297,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <label>@Domain.Resource.Title_Designer.Currency</label>
+                                        <label>@OrgSys.Localization.Title_Designer.Currency</label>
                                         <div id="divCurrencyId">
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
@@ -309,13 +309,13 @@
                                         @Html.ValidationMessageFor(model => model.CurrencyId, "", new { @class = "text-danger " })
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <label>@Domain.Resource.Title_Designer.Rate</label>
+                                        <label>@OrgSys.Localization.Title_Designer.Rate</label>
                                         <div id="divPaymentTypeId">
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="iconsminds-financial"></i></span>
                                                 </div>
-                                                @Html.TextBoxFor(model => model.Rate, new { @class = "form-control", @placeholder = @Domain.Resource.Title_Designer.Rate })
+                                                @Html.TextBoxFor(model => model.Rate, new { @class = "form-control", @placeholder = @OrgSys.Localization.Title_Designer.Rate })
                                             </div>
                                         </div>
                                         @Html.ValidationMessageFor(model => model.Rate, "", new { @class = "text-danger " })
@@ -378,13 +378,13 @@
                                         </div>
                                     }
                                     <div class="form-group col-md-12">
-                                        <label>@Domain.Resource.Title_Designer.Notes</label>
+                                        <label>@OrgSys.Localization.Title_Designer.Notes</label>
                                         <div id="divNote">
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="simple-icon-notebook"></i></span>
                                                 </div>
-                                                @Html.TextAreaFor(model => model.Note, new { @class = "form-control HNote", @placeholder = @Domain.Resource.Title_Designer.Notes })
+                                                @Html.TextAreaFor(model => model.Note, new { @class = "form-control HNote", @placeholder = @OrgSys.Localization.Title_Designer.Notes })
                                             </div>
                                         </div>
                                         @Html.ValidationMessageFor(model => model.Note, "", new { @class = "text-danger " })
@@ -395,12 +395,12 @@
 
                             <div class="form-row">
                                 <div class="form-group col-md-12">
-                                    <label>@Domain.Resource.Title_Designer.Notes</label>
+                                    <label>@OrgSys.Localization.Title_Designer.Notes</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="simple-icon-notebook"></i></span>
                                         </div>
-                                        @Html.TextBoxFor(model => model.Note, new { @class = "form-control", @placeholder = Domain.Resource.Title_Designer.Notes })
+                                        @Html.TextBoxFor(model => model.Note, new { @class = "form-control", @placeholder = OrgSys.Localization.Title_Designer.Notes })
                                     </div>
                                 </div>
                             </div>
@@ -413,12 +413,12 @@
                         {
                             <a id="ShowPreference" href="javascript::" class="btn btn-primary .ShowPreference" data-toggle="modal" data-target=".Preference">
                                 <i class="iconsminds-gear-2"></i>
-                                @Domain.Resource.Title_Designer.Preference
+                                @OrgSys.Localization.Title_Designer.Preference
                             </a>
                         }
                         <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId" class="btn btn-primary ">
                             <i class="simple-icon-action-undo"> </i>
-                            @Domain.Resource.Title_Designer.Back
+                            @OrgSys.Localization.Title_Designer.Back
                         </a>
                     </span>
                 </div>
@@ -437,7 +437,7 @@
                         }
                         else if ("" + Model.RefranceTable == "")
                         {
-                            <button id="btn" type="button" class="btn btn-primary ml-4 mr-4 mb-4">@Domain.Resource.Title_Designer.Save</button>
+                            <button id="btn" type="button" class="btn btn-primary ml-4 mr-4 mb-4">@OrgSys.Localization.Title_Designer.Save</button>
                         }
                         else if (Model.RefranceTable == "invoice")
                         {
@@ -788,13 +788,13 @@
             if (CheckRowCountWithVal("tbl", "AccountId", "divAccount", 'Select Account'))
                 Valid = false;
             else {
-                if (CheckRequired("Code", "divCode", '@Domain.Resource.Message_Designer.CodeRequired'))
+                if (CheckRequired("Code", "divCode", '@OrgSys.Localization.Message_Designer.CodeRequired'))
                     Valid = false;
              
-                if (CheckRequired("Date", "divDate", '@Domain.Resource.Message_Designer.DateRequired'))
+                if (CheckRequired("Date", "divDate", '@OrgSys.Localization.Message_Designer.DateRequired'))
                     Valid = false;
 
-                if (CheckRequired("CurrencyId", "divCurrencyId", '@Domain.Resource.Message_Designer.CustomerRequired'))
+                if (CheckRequired("CurrencyId", "divCurrencyId", '@OrgSys.Localization.Message_Designer.CustomerRequired'))
                     Valid = false;
 
                 if (CheckRequired("JournalTypeId", "divJournalTypeId", 'Select Journal Type'))

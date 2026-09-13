@@ -1,6 +1,4 @@
 using Accounting.Application.Journals.Commands;
-using Domain.Abstraction;
-using Domain.Entities;
 using Moq;
 using System.Net;
 using Xunit;

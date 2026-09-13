@@ -1,8 +1,8 @@
 #nullable enable annotations
 using Treasury.Application.FinancialAccounts.Commands;
-using Application.DTOs;
 using AutoMapper;
-using Domain.Enums;
+using System.Net.Http;
+using OrgSys.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
@@ -53,7 +53,7 @@ public sealed class FinancialAccountController(IConfiguration configuration, IMa
         }
         else
         {
-            var response = await ApiMethod(ApiMethodType.Get, $"{ob.Id}/Balance");
+            var response = await ApiMethod(HttpMethod.Get, $"{ob.Id}/Balance");
             if (response.IsSuccessStatusCode)
                 ViewBag.Balance = JsonConvert.DeserializeObject<Result<decimal>>(
                     await response.Content.ReadAsStringAsync())?.Response;

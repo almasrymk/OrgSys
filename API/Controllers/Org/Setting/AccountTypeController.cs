@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using Application.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Accounting.Application.AccountTypes.Queries;
 using Accounting.Application.AccountTypes.Commands;

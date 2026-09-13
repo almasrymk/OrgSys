@@ -1,8 +1,6 @@
 ﻿namespace Infrastructure.Persistence.Data
 {
-    using Domain.Entities;
     using System.Reflection;
-    using Domain.Abstraction;
     using System.Threading.Tasks;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;

@@ -1,4 +1,3 @@
-using Application.DTOs;
 
 namespace API.Authentication
 {

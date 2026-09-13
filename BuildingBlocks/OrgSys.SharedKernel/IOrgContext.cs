@@ -1,4 +1,4 @@
-namespace Domain.Abstraction
+namespace OrgSys.SharedKernel
 {
     using Microsoft.EntityFrameworkCore;
 

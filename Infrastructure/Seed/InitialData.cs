@@ -1,5 +1,4 @@
-﻿using Domain.Entities;
-using Infrastructure.Persistence.Data;
+﻿using Infrastructure.Persistence.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 

@@ -1,7 +1,6 @@
 ﻿using Parties.Application.Dealers.Queries;
 using Parties.Application.Dealers.Commands;
 using Parties.Application.Dealers.Queries;
-using Application.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

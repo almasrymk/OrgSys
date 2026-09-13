@@ -1,7 +1,7 @@
 ﻿using CommercialDocuments.Application.Invoices.Commands;
 using AutoMapper;
-using Domain.Enums;
-using Application.DTOs;
+using System.Net.Http;
+using OrgSys.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
@@ -33,8 +33,8 @@ namespace OrgSys.Areas.Invoices.Controllers
             ViewBag.PaymentTypeId = new SelectList(await GetListApi<PaymentTypeDto>(), "Id", "Name", model.PaymentTypeId);
 
             List<SelectListItem> selectListItems = new List<SelectListItem>();
-            selectListItems.Add(new SelectListItem { Value = "1", Text = Domain.Resource.Translate.GetTranslate("Amount") });
-            selectListItems.Add(new SelectListItem { Value = "2", Text = Domain.Resource.Translate.GetTranslate("Ratio") });
+            selectListItems.Add(new SelectListItem { Value = "1", Text = OrgSys.Localization.Translate.GetTranslate("Amount") });
+            selectListItems.Add(new SelectListItem { Value = "2", Text = OrgSys.Localization.Translate.GetTranslate("Ratio") });
 
             ViewBag.DiscountType = new SelectList(selectListItems, "Value", "Text");
             ViewBag.ServiceType = new SelectList(selectListItems, "Value", "Text");
@@ -118,7 +118,7 @@ namespace OrgSys.Areas.Invoices.Controllers
 
         public async Task<ActionResult> CreateTransaction(long id, long ParentId = 0, long TypeId = 0, int page = 1, string dir = "Index")
         {
-            var response = await ApiMethod(ApiMethodType.Post, $"CreateTransactionInvoice?InvoiceId={id}");
+            var response = await ApiMethod(HttpMethod.Post, $"CreateTransactionInvoice?InvoiceId={id}");
             //if (dir == "Save")
             //    return Redirect($"/Invoices/Invoice/Save?id={id}&ParentId={ParentId}&TypeId={TypeId}&status={(response.IsSuccessStatusCode ? ResultStatus.success : ResultStatus.error)}&MsgError={(response.IsSuccessStatusCode ? "Success" : "Unable to create transaction")}");
             return Redirect($"/Invoices/Invoice/Index?ParentId={ParentId}&TypeId={TypeId}&page={page}&status={(response.IsSuccessStatusCode ? ResultStatus.success : ResultStatus.error)}&MsgError={(response.IsSuccessStatusCode ? "Success" : "Unable to create transaction")}");
@@ -126,7 +126,7 @@ namespace OrgSys.Areas.Invoices.Controllers
 
         public async Task<ActionResult> CreateJournal(long id, long ParentId = 0, long TypeId = 0, int page = 1, string dir = "Index")
         {
-            var response = await ApiMethod(ApiMethodType.Post, $"CreateJournal?InvoiceId={id}");
+            var response = await ApiMethod(HttpMethod.Post, $"CreateJournal?InvoiceId={id}");
             //if (dir == "Save")
             //    return Redirect($"/Invoices/Invoice/Save?id={id}&ParentId={ParentId}&TypeId={TypeId}&status={(response.IsSuccessStatusCode ? ResultStatus.success : ResultStatus.error)}&MsgError={(response.IsSuccessStatusCode ? "Success" : "Unable to create journal. Check account integration settings.")}");
             return Redirect($"/Invoices/Invoice/Index?ParentId={ParentId}&TypeId={TypeId}&page={page}&status={(response.IsSuccessStatusCode ? ResultStatus.success : ResultStatus.error)}&MsgError={(response.IsSuccessStatusCode ? "Success" : "Unable to create journal. Check account integration settings.")}");
@@ -135,7 +135,7 @@ namespace OrgSys.Areas.Invoices.Controllers
         public async Task<ActionResult> CreateFinancial(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1, string dir = "Index")
         {
             //var invoice = await GetObApi<InvoiceModelView>($"GetById?Id={id}");
-            var response = await ApiMethod(ApiMethodType.Post, $"CollectPaidInvoice?InvoiceId={id}");
+            var response = await ApiMethod(HttpMethod.Post, $"CollectPaidInvoice?InvoiceId={id}");
             //var x = new InvoiceService(User.GetSchema()).Get(id);
             //new IntegrationServics(User.GetSchema()).CollectPaidInvoice(invoice);
             if (dir == "Index")
@@ -172,7 +172,7 @@ namespace OrgSys.Areas.Invoices.Controllers
             ViewBag.currencyId = currencyId;
             ViewBag.Type = Type;
             ViewBag.ids = ids;
-            var response = await ApiMethod(ApiMethodType.Get, $"SearchInvoice?KeySearch={txt}&dealerId={dealerId}&currencyId={currencyId}&typeId={typeId}&Page={page}&PageSize=10&Ids={ids}");
+            var response = await ApiMethod(HttpMethod.Get, $"SearchInvoice?KeySearch={txt}&dealerId={dealerId}&currencyId={currencyId}&typeId={typeId}&Page={page}&PageSize=10&Ids={ids}");
 
             response.EnsureSuccessStatusCode();
             var data = await response.Content.ReadAsStringAsync();
@@ -196,7 +196,7 @@ namespace OrgSys.Areas.Invoices.Controllers
 
         public async Task<ActionResult> Cancel(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1)
         {
-            var response = await ApiMethod(ApiMethodType.Put, $"Cancel?Id={id}");
+            var response = await ApiMethod(HttpMethod.Put, $"Cancel?Id={id}");
             response.EnsureSuccessStatusCode();
             var data = await response.Content.ReadAsStringAsync();
             var res = JsonConvert.DeserializeObject<OrgSys.SharedKernel.Result>(data);
@@ -206,7 +206,7 @@ namespace OrgSys.Areas.Invoices.Controllers
 
         public async Task<ActionResult> Redo(long id, string search, long ParentId = 0, long TypeId = 0, int page = 1)
         {
-            var response = await ApiMethod(ApiMethodType.Put, $"Redo?Id={id}");
+            var response = await ApiMethod(HttpMethod.Put, $"Redo?Id={id}");
             response.EnsureSuccessStatusCode();
             var data = await response.Content.ReadAsStringAsync();
             var res = JsonConvert.DeserializeObject<OrgSys.SharedKernel.Result>(data);
@@ -217,7 +217,7 @@ namespace OrgSys.Areas.Invoices.Controllers
         public async Task<JsonResult> GetProductInvoice(int Id)
         {
 
-            var responseMessage = await ApiMethod(ApiMethodType.Get, $"GetProductInvoicesNotReturn?Id={Id}");
+            var responseMessage = await ApiMethod(HttpMethod.Get, $"GetProductInvoicesNotReturn?Id={Id}");
 
             responseMessage.EnsureSuccessStatusCode();
             var dataa = await responseMessage.Content.ReadAsStringAsync();
@@ -240,7 +240,7 @@ namespace OrgSys.Areas.Invoices.Controllers
             {
 
                 var key = ob.GetType().GetProperty("Code")?.GetValue(ob, null);
-                var searchResp = await ApiMethod(ApiMethodType.Get, $"Search?KeySearch={key}&ParentId={ob.ParentId}&TypeId={ob.TypeId}&Page=1&PageSize=1");
+                var searchResp = await ApiMethod(HttpMethod.Get, $"Search?KeySearch={key}&ParentId={ob.ParentId}&TypeId={ob.TypeId}&Page=1&PageSize=1");
                 if (searchResp != null && searchResp.IsSuccessStatusCode)
                 {
                     var searchData = await searchResp.Content.ReadAsStringAsync();

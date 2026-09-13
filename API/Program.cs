@@ -1,7 +1,6 @@
 ﻿using API.Authentication;
 using API.Middlewares;
 using OrgSys.SharedKernel;
-using Domain.Abstraction;
 using FluentValidation;
 using Infrastructure.Persistence.UnitOfWork;
 using Accounting.Infrastructure.DependencyInjection;

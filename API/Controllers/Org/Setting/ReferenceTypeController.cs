@@ -1,7 +1,6 @@
 using MasterData.Application.ReferenceTypes.Commands;
 using MasterData.Application.ReferenceTypes.Queries;
 using OrgSys.SharedKernel;
-using Application.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

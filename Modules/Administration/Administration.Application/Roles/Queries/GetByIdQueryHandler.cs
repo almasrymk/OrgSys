@@ -54,7 +54,7 @@
         private RoleDto Map(Role ob , IEnumerable<RolePermission> rolePermissions , IEnumerable<Permission> permissions)
         {
             var obModel = mapper.Map<RoleDto>(ob);
-            obModel.PermissionsTree = permissions.Select(e => new TreeView { Id = e.Id, Key = e.Key, Value = global::Domain.Resource.Translate.GetTranslate(e.Name), ParentId = e.ParentId }).ToList();
+            obModel.PermissionsTree = permissions.Select(e => new TreeView { Id = e.Id, Key = e.Key, Value = global::OrgSys.Localization.Translate.GetTranslate(e.Name), ParentId = e.ParentId }).ToList();
             foreach (var item in obModel.PermissionsTree)
             {
                 if (rolePermissions.Any(e => e.PermissionId == item.Id))

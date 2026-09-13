@@ -1,6 +1,5 @@
 using Treasury.Application.FinancialAccounts.Commands;
 using Treasury.Application.FinancialAccounts.Queries;
-using Application.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

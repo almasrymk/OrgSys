@@ -2,7 +2,6 @@
 using MasterData.Application.Currencies.Commands;
 using MasterData.Application.Currencies.Queries;
 using OrgSys.SharedKernel;
-using Application.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

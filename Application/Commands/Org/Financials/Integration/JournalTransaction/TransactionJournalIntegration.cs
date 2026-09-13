@@ -1,7 +1,5 @@
 namespace Application.Commands.Org.Financials.Integration.JournalTransaction;
 
-using Domain.Abstraction;
-using Domain.Entities;
 using Microsoft.Extensions.DependencyInjection;
 
 public sealed class TransactionJournalIntegration(IServiceProvider provider)

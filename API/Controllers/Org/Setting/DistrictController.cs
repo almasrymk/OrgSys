@@ -1,6 +1,5 @@
 ﻿using MasterData.Application.Districts.Commands;
 using MasterData.Application.Districts.Queries;
-using Application.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;

@@ -1,29 +1,29 @@
 @model List<Treasury.Application.FinancialTransferDto>
 @{
-    ViewData["Title_Designer"] = Domain.Resource.Title_Designer.FinancialTransfers;
+    ViewData["Title_Designer"] = OrgSys.Localization.Title_Designer.FinancialTransfers;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="container-fluid disable-text-selection">
     <div class="row"><div class="col-12">
         <div class="mb-2">
-            <h1><i class="simple-icon-shuffle rounded-circle badge-theme-1 p-1"></i> @Domain.Resource.Title_Designer.FinancialTransfers</h1>
+            <h1><i class="simple-icon-shuffle rounded-circle badge-theme-1 p-1"></i> @OrgSys.Localization.Title_Designer.FinancialTransfers</h1>
             <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block"><ol class="breadcrumb pt-0">
-                <li class="breadcrumb-item"><a href="/">@Domain.Resource.Title_Designer.Home</a></li>
-                <li class="breadcrumb-item">@Domain.Resource.Title_Designer.Financial</li><li class="breadcrumb-item">@Domain.Resource.Title_Designer.FinancialTransfers</li>
+                <li class="breadcrumb-item"><a href="/">@OrgSys.Localization.Title_Designer.Home</a></li>
+                <li class="breadcrumb-item">@OrgSys.Localization.Title_Designer.Financial</li><li class="breadcrumb-item">@OrgSys.Localization.Title_Designer.FinancialTransfers</li>
             </ol></nav>
         </div>
         <a class="btn pt-0 pl-0 d-inline-block d-md-none" data-toggle="collapse" href="#displayOptions" aria-expanded="true">
-            @Domain.Resource.Title_Designer.DisplayOptions <i class="simple-icon-arrow-down align-middle"></i>
+            @OrgSys.Localization.Title_Designer.DisplayOptions <i class="simple-icon-arrow-down align-middle"></i>
         </a>
         <div class="collapse d-md-block" id="displayOptions">
             <div class="d-block d-md-inline-block mb-2"><span class="mr-3 mb-2 d-inline-block float-md-left">
-                <a href="/Financials/FinancialTransfer/Save" class="btn btn-outline-primary btn-add"><i class="iconsminds-folder-add--"></i> @Domain.Resource.Title_Designer.Add</a>
+                <a href="/Financials/FinancialTransfer/Save" class="btn btn-outline-primary btn-add"><i class="iconsminds-folder-add--"></i> @OrgSys.Localization.Title_Designer.Add</a>
                 &nbsp;&nbsp;&nbsp;
                 <a href="javascript:;" class="mr-2 view-icon mode-table"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19 19"><path class="view-icon-svg" d="M17.5,3H.5a.5.5,0,0,1,0-1h17a.5.5,0,0,1,0,1ZM17.5,10H.5a.5.5,0,0,1,0-1h17a.5.5,0,0,1,0,1ZM17.5,17H.5a.5.5,0,0,1,0-1h17a.5.5,0,0,1,0,1Z"></path></svg></a>
                 <a href="javascript:;" class="mr-2 view-icon mode-list"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19 19"><path class="view-icon-svg" d="M17.5,3H6.5a.5.5,0,0,1,0-1h11a.5.5,0,0,1,0,1ZM17.5,10H6.5a.5.5,0,0,1,0-1h11a.5.5,0,0,1,0,1ZM17.5,17H6.5a.5.5,0,0,1,0-1h11a.5.5,0,0,1,0,1Z"></path></svg></a>
             </span></div>
             <div class="float-md-right"><div class="navbar p-0 m-0" style="height:50px;background-color:transparent;box-shadow:none;"><div class="search-text m-0 p-0" style="box-shadow:0 1px 15px rgba(0,0,0,.04),0 1px 6px rgba(0,0,0,.04);">
-                <input id="txtSearch" value="@ViewBag.Search" placeholder="@Domain.Resource.Title_Designer.TextSearch..." onkeyup="changeTransfer(event)"><span class="search-icon" onclick="searchTransfer()"><i class="simple-icon-magnifier"></i></span>
+                <input id="txtSearch" value="@ViewBag.Search" placeholder="@OrgSys.Localization.Title_Designer.TextSearch..." onkeyup="changeTransfer(event)"><span class="search-icon" onclick="searchTransfer()"><i class="simple-icon-magnifier"></i></span>
             </div></div></div>
         </div>
     </div></div>

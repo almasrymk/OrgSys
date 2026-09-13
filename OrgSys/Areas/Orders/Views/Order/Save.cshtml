@@ -24,28 +24,28 @@
             <div class="mb-3">
                 @if (Model.TypeId == 1)
                 {
-                    <h1>@Domain.Resource.Title_Designer.InternalOrder</h1>
+                    <h1>@OrgSys.Localization.Title_Designer.InternalOrder</h1>
                 }
                 else if (Model.TypeId == 2)
                 {
-                    <h1>@Domain.Resource.Title_Designer.ExternalOrder</h1>
+                    <h1>@OrgSys.Localization.Title_Designer.ExternalOrder</h1>
                 }
 
                 <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
                     <ol class="breadcrumb pt-0">
                         <li class="breadcrumb-item">
-                            <a href="/">@Domain.Resource.Title_Designer.Home</a>
+                            <a href="/">@OrgSys.Localization.Title_Designer.Home</a>
                         </li>
                         <li class="breadcrumb-item">
-                            @Domain.Resource.Title_Designer.Orders
+                            @OrgSys.Localization.Title_Designer.Orders
                         </li>
                         @if (Model.TypeId == 1)
                         {
-                            <li class="breadcrumb-item active" aria-current="page">  <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId"> @Domain.Resource.Title_Designer.Internal</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">  <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId"> @OrgSys.Localization.Title_Designer.Internal</a></li>
                         }
                         else if (Model.TypeId == 2)
                         {
-                            <li class="breadcrumb-item active" aria-current="page">  <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId"> @Domain.Resource.Title_Designer.External</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">  <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId"> @OrgSys.Localization.Title_Designer.External</a></li>
 
                         }
 
@@ -67,13 +67,13 @@
                             <ul class="card-header">
                                 <li>
                                     <a id="tbProduct" href="#checkStep1">
-                                        @Domain.Resource.Title_Designer.OrderProducts<br />
+                                        @OrgSys.Localization.Title_Designer.OrderProducts<br />
                                         <div id="divProduct"></div>
                                     </a>
                                 </li>
                                 <li>
                                     <a id="tbHeader" href="#checkStep2">
-                                        @Domain.Resource.Title_Designer.OrderDetails<br />
+                                        @OrgSys.Localization.Title_Designer.OrderDetails<br />
                                         <div id="divHeader"></div>
                                     </a>
                                 </li>
@@ -84,13 +84,13 @@
                             <ul class="card-header">
                                 <li>
                                     <a id="tbHeader" href="#checkStep2">
-                                        @Domain.Resource.Title_Designer.OrderDetails<br />
+                                        @OrgSys.Localization.Title_Designer.OrderDetails<br />
                                         <div id="divHeader"></div>
                                     </a>
                                 </li>
                                 <li>
                                     <a id="tbProduct" href="#checkStep1">
-                                        @Domain.Resource.Title_Designer.OrderProducts<br />
+                                        @OrgSys.Localization.Title_Designer.OrderProducts<br />
                                         <div id="divProduct"></div>
                                     </a>
                                 </li>
@@ -119,11 +119,11 @@
                                         <thead>
                                             <tr>
                                                 <th scope="col">#</th>
-                                                <th scope="col">@Domain.Resource.Title_Designer.Product</th>
-                                                <th scope="col">@Domain.Resource.Title_Designer.Unit</th>
-                                                <th scope="col">@Domain.Resource.Title_Designer.Price</th>
-                                                <th scope="col">@Domain.Resource.Title_Designer.Quantity</th>
-                                                <th scope="col">@Domain.Resource.Title_Designer.Amount</th>
+                                                <th scope="col">@OrgSys.Localization.Title_Designer.Product</th>
+                                                <th scope="col">@OrgSys.Localization.Title_Designer.Unit</th>
+                                                <th scope="col">@OrgSys.Localization.Title_Designer.Price</th>
+                                                <th scope="col">@OrgSys.Localization.Title_Designer.Quantity</th>
+                                                <th scope="col">@OrgSys.Localization.Title_Designer.Amount</th>
                                                 <th scope="col"></th>
                                             </tr>
                                         </thead>
@@ -145,9 +145,9 @@
                                                                    autocomplete="off" style="@BorderAlign" value="@OrderProduct.ProductName">
                                                             <input type="hidden" id="ProductId" name="ProductId" class="ProductId" value="@OrderProduct.ProductId" />
                                                             <div class="text-center align-middle">
-                                                                <i id="RepeatedDanger" class="badge badge-danger mb-1 text-center align-middle" style="width: 60px;  height: 25px; display: none; margin: 6px;">@Domain.Resource.Title_Designer.Repeated</i>
-                                                                <i id="RepeatedWarning" class="badge badge-warning mb-1 text-center align-middle" style="width: 60px;  height: 25px; display: none; margin: 6px; ">@Domain.Resource.Title_Designer.Repeated</i>
-                                                                <i id="RepeatedPrimary" class="badge badge-primary mb-1 text-center align-middle" style="width: 60px; height: 25px; display: none; margin: 6px; ">@Domain.Resource.Title_Designer.Repeated</i>
+                                                                <i id="RepeatedDanger" class="badge badge-danger mb-1 text-center align-middle" style="width: 60px;  height: 25px; display: none; margin: 6px;">@OrgSys.Localization.Title_Designer.Repeated</i>
+                                                                <i id="RepeatedWarning" class="badge badge-warning mb-1 text-center align-middle" style="width: 60px;  height: 25px; display: none; margin: 6px; ">@OrgSys.Localization.Title_Designer.Repeated</i>
+                                                                <i id="RepeatedPrimary" class="badge badge-primary mb-1 text-center align-middle" style="width: 60px; height: 25px; display: none; margin: 6px; ">@OrgSys.Localization.Title_Designer.Repeated</i>
                                                             </div>
                                                             <div class="input-group-prepend Dropbtn2  ">
                                                                 <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
@@ -191,9 +191,9 @@
                                                                        autocomplete="off" style="@BorderAlign">
                                                                 <input type="hidden" id="ProductId" name="ProductId" class="ProductId" />
                                                                 <div class="text-center align-middle">
-                                                                    <i id="RepeatedDanger" class="badge badge-danger mb-1 text-center align-middle" style="width: 60px;  height: 25px; display: none; margin: 6px;">@Domain.Resource.Title_Designer.Repeated</i>
-                                                                    <i id="RepeatedWarning" class="badge badge-warning mb-1 text-center align-middle" style="width: 60px;  height: 25px; display: none; margin: 6px; ">@Domain.Resource.Title_Designer.Repeated</i>
-                                                                    <i id="RepeatedPrimary" class="badge badge-primary mb-1 text-center align-middle" style="width: 60px; height: 25px; display: none; margin: 6px; ">@Domain.Resource.Title_Designer.Repeated</i>
+                                                                    <i id="RepeatedDanger" class="badge badge-danger mb-1 text-center align-middle" style="width: 60px;  height: 25px; display: none; margin: 6px;">@OrgSys.Localization.Title_Designer.Repeated</i>
+                                                                    <i id="RepeatedWarning" class="badge badge-warning mb-1 text-center align-middle" style="width: 60px;  height: 25px; display: none; margin: 6px; ">@OrgSys.Localization.Title_Designer.Repeated</i>
+                                                                    <i id="RepeatedPrimary" class="badge badge-primary mb-1 text-center align-middle" style="width: 60px; height: 25px; display: none; margin: 6px; ">@OrgSys.Localization.Title_Designer.Repeated</i>
                                                                 </div>
                                                                 <div class="input-group-prepend Dropbtn2  ">
                                                                     <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
@@ -235,9 +235,9 @@
                                                                autocomplete="off" style="@BorderAlign">
                                                         <input type="hidden" id="ProductId" name="ProductId" class="ProductId" />
                                                         <div class="text-center align-middle">
-                                                            <i id="RepeatedDanger" class="badge badge-danger mb-1 text-center align-middle" style="width: 60px; height: 25px; display: none; margin: 6px;">@Domain.Resource.Title_Designer.Repeated</i>
-                                                            <i id="RepeatedWarning" class="badge badge-warning mb-1 text-center align-middle" style="width: 60px; height: 25px; display: none; margin: 6px; ">@Domain.Resource.Title_Designer.Repeated</i>
-                                                            <i id="RepeatedPrimary" class="badge badge-primary mb-1 text-center align-middle" style="width: 60px;  height: 25px; display: none; margin: 6px; ">@Domain.Resource.Title_Designer.Repeated</i>
+                                                            <i id="RepeatedDanger" class="badge badge-danger mb-1 text-center align-middle" style="width: 60px; height: 25px; display: none; margin: 6px;">@OrgSys.Localization.Title_Designer.Repeated</i>
+                                                            <i id="RepeatedWarning" class="badge badge-warning mb-1 text-center align-middle" style="width: 60px; height: 25px; display: none; margin: 6px; ">@OrgSys.Localization.Title_Designer.Repeated</i>
+                                                            <i id="RepeatedPrimary" class="badge badge-primary mb-1 text-center align-middle" style="width: 60px;  height: 25px; display: none; margin: 6px; ">@OrgSys.Localization.Title_Designer.Repeated</i>
                                                         </div>
                                                         <div class="input-group-prepend Dropbtn2  ">
                                                             <span class="input-group-text DropIcon"><i class="fas fa-angle-down"></i></span>
@@ -265,7 +265,7 @@
                                                 <td class="text-center align-middle" style="min-width:100px;padding:0px;" colspan="4">
                                                 </td>
                                                 <td class="text-center align-middle" style="width:100px;padding:0px;">
-                                                    <label>@Domain.Resource.Title_Designer.Total</label>
+                                                    <label>@OrgSys.Localization.Title_Designer.Total</label>
                                                 </td>
                                                 <td class="text-center align-middle" style="width:100px;padding:0px;">
                                                     @Html.TextBoxFor(model => model.Total, new { @id = "AllTotal", @class = "form-control", @style = @BorderAlign + "background-color:transparent;", @placeholder = "0.0", @readonly = "true" })
@@ -277,7 +277,7 @@
                                                 <td class="text-center align-middle" style="min-width:100px;padding:0px;" colspan="4">
                                                 </td>
                                                 <td class="text-center align-middle" style="width:100px;padding:0px;">
-                                                    <label>@Domain.Resource.Title_Designer.Discount</label>
+                                                    <label>@OrgSys.Localization.Title_Designer.Discount</label>
                                                 </td>
                                                 <td class="text-center align-middle" style="width:100px;padding:0px;">
                                                     @Html.TextBoxFor(model => model.Discount, new { @class = "form-control", @style = @BorderAlign, @placeholder = "0.0" })
@@ -291,7 +291,7 @@
                                                 </td>
 
                                                 <td class="text-center align-middle" style="width:100px;padding:0px;">
-                                                    <label>@Domain.Resource.Title_Designer.Tax</label>
+                                                    <label>@OrgSys.Localization.Title_Designer.Tax</label>
                                                 </td>
                                                 <td class="text-center align-middle" style="width:100px;padding:0px;">
                                                     @Html.TextBoxFor(model => model.Tax, new { @class = "form-control", @style = @BorderAlign, @placeholder = "0.0" })
@@ -305,7 +305,7 @@
                                                 </td>
 
                                                 <td class="text-center align-middle" style="width:100px;padding:0px;">
-                                                    <label>@Domain.Resource.Title_Designer.Service</label>
+                                                    <label>@OrgSys.Localization.Title_Designer.Service</label>
                                                 </td>
                                                 <td class="text-center align-middle" style="width:100px;padding:0px;">
                                                     @Html.TextBoxFor(model => model.Service, new { @class = "form-control", @style = @BorderAlign, @placeholder = "0.0" })
@@ -319,7 +319,7 @@
                                                 </td>
 
                                                 <td class="text-center align-middle" style="width:100px;padding:0px;">
-                                                    <label>@Domain.Resource.Title_Designer.Net</label>
+                                                    <label>@OrgSys.Localization.Title_Designer.Net</label>
                                                 </td>
                                                 <td class="text-center align-middle" style="width:100px;padding:0px;">
                                                     @Html.TextBoxFor(model => model.Net, new { @id = "Net", @class = "form-control", @style = @BorderAlign + "background-color:transparent;", @placeholder = "0.0", @readonly = "true" })
@@ -335,23 +335,23 @@
                                 <div class="form-row">
                                     @Html.HiddenFor(model => model.CodeNumber)
                                     <div class="form-group col-md-4">
-                                        <lable>@Domain.Resource.Title_Designer.Code</lable>
+                                        <lable>@OrgSys.Localization.Title_Designer.Code</lable>
                                         <div id="divCode">
                                             <div class="input-group mt-2">
                                                 @if (ViewBag.TypeSerial == 1)
                                                 {
-                                                    @Html.TextBoxFor(model => model.Code, new { @class = "form-control", @placeholder = @Domain.Resource.Title_Designer.Code })
+                                                    @Html.TextBoxFor(model => model.Code, new { @class = "form-control", @placeholder = @OrgSys.Localization.Title_Designer.Code })
                                                 }
                                                 else
                                                 {
-                                                    @Html.TextBoxFor(model => model.Code, new { @class = "form-control", @readonly = "true", @style = "background-color:transparent", @placeholder = @Domain.Resource.Title_Designer.Code })
+                                                    @Html.TextBoxFor(model => model.Code, new { @class = "form-control", @readonly = "true", @style = "background-color:transparent", @placeholder = @OrgSys.Localization.Title_Designer.Code })
                                                 }
                                             </div>
                                         </div>
                                         @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger " })
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <label>@Domain.Resource.Title_Designer.Date</label>
+                                        <label>@OrgSys.Localization.Title_Designer.Date</label>
                                         <div id="divDate">
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
@@ -362,7 +362,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <label>@Domain.Resource.Title_Designer.Client</label>
+                                        <label>@OrgSys.Localization.Title_Designer.Client</label>
                                         <div id="divDealerId">
                                             <div class="input-group DropAutoComplete">
                                                 <div class="input-group-prepend">
@@ -383,7 +383,7 @@
                                 {
                                     <div class="form-row">
                                         <div class="form-group col-md-4">
-                                            <label>@Domain.Resource.Title_Designer.Table</label>
+                                            <label>@OrgSys.Localization.Title_Designer.Table</label>
                                             <div id="divStockId">
                                                 <div class="input-group">
                                                     <div class="input-group-prepend">
@@ -391,7 +391,7 @@
                                                     </div>
                                                     @Html.DropDownListFor(model => model.TableId, null, " ... ", new { @class = "form-control" })
                                                 </div>
-                                                @* <small class="form-text text-muted"> @Domain.Resource.Message_Designer.SupplierFromWhomProductPurchased</small>*@
+                                                @* <small class="form-text text-muted"> @OrgSys.Localization.Message_Designer.SupplierFromWhomProductPurchased</small>*@
                                             </div>
                                             @Html.ValidationMessageFor(model => model.TableId, "", new { @class = "text-danger " })
                                         </div>
@@ -399,13 +399,13 @@
                                 }
                                 <div class="form-row">
                                     <div class="form-group col-md-12">
-                                        <label>@Domain.Resource.Title_Designer.Notes</label>
+                                        <label>@OrgSys.Localization.Title_Designer.Notes</label>
                                         <div id="divNotes">
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="simple-icon-notebook"></i></span>
                                                 </div>
-                                                @Html.TextBoxFor(model => model.Notes, new { @class = "form-control", @placeholder = Domain.Resource.Title_Designer.Notes })
+                                                @Html.TextBoxFor(model => model.Notes, new { @class = "form-control", @placeholder = OrgSys.Localization.Title_Designer.Notes })
                                             </div>
                                         </div>
                                         @Html.ValidationMessageFor(model => model.Notes, "", new { @class = "text-danger " })
@@ -422,19 +422,19 @@
                             {
                                 <a id="ShowPreference" href="javascript::" class="btn btn-primary .ShowPreference" data-toggle="modal" data-target=".Preference">
                                     <i class="iconsminds-gear-2"></i>
-                                    @Domain.Resource.Title_Designer.Preference
+                                    @OrgSys.Localization.Title_Designer.Preference
                                 </a>
                             }
                             <a href="/@ViewBag.area/@ViewBag.PageTitle?ParentId=@Model.ParentId&TypeId=@Model.TypeId" class="btn btn-primary ">
                                 <i class="simple-icon-action-undo"> </i>
-                                @Domain.Resource.Title_Designer.Back
+                                @OrgSys.Localization.Title_Designer.Back
                             </a>
                         </span>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-7">
-                        <button id="btn" type="button" class="btn btn-primary ml-4 mr-4 mb-4">@Domain.Resource.Title_Designer.Save</button>
+                        <button id="btn" type="button" class="btn btn-primary ml-4 mr-4 mb-4">@OrgSys.Localization.Title_Designer.Save</button>
                     </div>
                     <div class="col-5">
                         <span class="btn-group group-add mb-4" style="width:92%">
@@ -442,14 +442,14 @@
                             {
                                 <a href="/Setting/Product/Save" class="btn btn-primary ">
                                     <i class="iconsminds-shopping-basket"></i>
-                                    @Domain.Resource.Title_Designer.NewProduct
+                                    @OrgSys.Localization.Title_Designer.NewProduct
                                 </a>
                             }
                             @if (User.IsAllowed("Classifications.Add"))
                             {
                                 <a href="/Setting/Classification/Save" class="btn btn-primary">
                                     <i class="simple-icon-layers"></i>
-                                    @Domain.Resource.Title_Designer.NewClassification
+                                    @OrgSys.Localization.Title_Designer.NewClassification
                                 </a>
                             }
                         </span>
@@ -824,7 +824,7 @@
                         if (RowRepeated != "") {
                             $row.find("#RepeatedPrimary").css("display", "block");
                             $row.find("#RepeatedPrimary").empty();
-                            $row.find("#RepeatedPrimary").append('@Domain.Resource.Title_Designer.Repeated' + " - " + RowRepeated.find("#Index").html() + " ");
+                            $row.find("#RepeatedPrimary").append('@OrgSys.Localization.Title_Designer.Repeated' + " - " + RowRepeated.find("#Index").html() + " ");
                         }
 
                         ReIndex();
@@ -899,7 +899,7 @@
                         if (RowRepeated != "") {
                             $row.find("#RepeatedPrimary").css("display", "block");
                             $row.find("#RepeatedPrimary").empty();
-                            $row.find("#RepeatedPrimary").append('@Domain.Resource.Title_Designer.Repeated' + " - " + RowRepeated.find("#Index").html() + " ");
+                            $row.find("#RepeatedPrimary").append('@OrgSys.Localization.Title_Designer.Repeated' + " - " + RowRepeated.find("#Index").html() + " ");
                         }
 
                         ReIndex();
@@ -981,16 +981,16 @@
         Save = function () {
             var Valid = true;
 
-            if (CheckRowCountWithVal("tbl", "ProductId", "divProduct", '@Domain.Resource.Message_Designer.SelectProduct'))
+            if (CheckRowCountWithVal("tbl", "ProductId", "divProduct", '@OrgSys.Localization.Message_Designer.SelectProduct'))
                 Valid = false;
             else {
-                if (CheckRequired("Code", "divCode", '@Domain.Resource.Message_Designer.CodeRequired'))
+                if (CheckRequired("Code", "divCode", '@OrgSys.Localization.Message_Designer.CodeRequired'))
                     Valid = false;
 
-                if (CheckRequired("DealerId", "divDealerId", '@Domain.Resource.Message_Designer.CustomerRequired'))
+                if (CheckRequired("DealerId", "divDealerId", '@OrgSys.Localization.Message_Designer.CustomerRequired'))
                     Valid = false;
 
-                if (CheckRequired("Date", "divDate", '@Domain.Resource.Message_Designer.DateRequired'))
+                if (CheckRequired("Date", "divDate", '@OrgSys.Localization.Message_Designer.DateRequired'))
                     Valid = false;
 
                 if (!Valid) {

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Domain.Resource {
+namespace OrgSys.Localization {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Domain.Resource {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Domain.Resource.Message.Designer", typeof(Message_Designer).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("OrgSys.Localization.Message.Designer", typeof(Message_Designer).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

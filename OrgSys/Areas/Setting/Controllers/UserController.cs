@@ -2,7 +2,6 @@
 {
     using Administration.Application.Users.Commands;
     using AutoMapper;
-    using Application.DTOs;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.Extensions.Configuration;

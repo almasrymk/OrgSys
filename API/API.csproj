@@ -28,7 +28,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Application\Application.csproj" />
-    <ProjectReference Include="..\Domain\Domain.csproj" />
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
     <ProjectReference Include="..\Modules\MasterData\MasterData.Infrastructure\MasterData.Infrastructure.csproj" />
     <ProjectReference Include="..\Modules\Organization\Organization.Infrastructure\Organization.Infrastructure.csproj" />

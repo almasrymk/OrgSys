@@ -9,7 +9,7 @@
         <div class="input-group-prepend">
             <span class="input-group-text"><i class="simple-icon-pie-chart"></i></span>
         </div>
-        @Html.DropDownListFor(model => Model.UnitId, null, " - " + Domain.Resource.Title_Designer.SelectUnit + " - ", new { @class = "form-control select2-single", @onchange = "AddNewRowUnit(this)" })
+        @Html.DropDownListFor(model => Model.UnitId, null, " - " + OrgSys.Localization.Title_Designer.SelectUnit + " - ", new { @class = "form-control select2-single", @onchange = "AddNewRowUnit(this)" })
     </div>
 </td>
 <td style="width:150px;">
@@ -36,10 +36,10 @@
 <td style="width:100px;vertical-align:middle;">
     @if (Model != null && Model.Id >= 0)
     {
-        <a href="#" class="btn btn-danger" onclick="RemoveRow(this)">  <i class="simple-icon-trash"></i> @Domain.Resource.Title_Designer.Delete  </a>
+        <a href="#" class="btn btn-danger" onclick="RemoveRow(this)">  <i class="simple-icon-trash"></i> @OrgSys.Localization.Title_Designer.Delete  </a>
     }
     else
     {
-        <a href="#" class="btn btn-danger" onclick="RemoveRow(this)" style="display:none">  <i class="simple-icon-trash"></i> @Domain.Resource.Title_Designer.Delete </a>
+        <a href="#" class="btn btn-danger" onclick="RemoveRow(this)" style="display:none">  <i class="simple-icon-trash"></i> @OrgSys.Localization.Title_Designer.Delete </a>
     }
 </td>

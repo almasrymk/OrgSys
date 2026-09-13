@@ -21,11 +21,11 @@
     List<CommercialDocuments.Application.InvoiceTypeDto> InvoicesTypes = ViewBag.InvoicesTypes ?? new List<CommercialDocuments.Application.InvoiceTypeDto>();
     Func<long?, string> InvoiceResourceName = typeId => typeId switch
     {
-        1 => $"{Domain.Resource.Title_Designer.Sales} {Domain.Resource.Title_Designer.Invoice}",
-        2 => $"{Domain.Resource.Title_Designer.Purchase} {Domain.Resource.Title_Designer.Invoice}",
-        3 => $"{Domain.Resource.Title_Designer.Sales} {Domain.Resource.Title_Designer.Return}",
-        4 => $"{Domain.Resource.Title_Designer.Purchase} {Domain.Resource.Title_Designer.Return}",
-        _ => Domain.Resource.Title_Designer.Invoice
+        1 => $"{OrgSys.Localization.Title_Designer.Sales} {OrgSys.Localization.Title_Designer.Invoice}",
+        2 => $"{OrgSys.Localization.Title_Designer.Purchase} {OrgSys.Localization.Title_Designer.Invoice}",
+        3 => $"{OrgSys.Localization.Title_Designer.Sales} {OrgSys.Localization.Title_Designer.Return}",
+        4 => $"{OrgSys.Localization.Title_Designer.Purchase} {OrgSys.Localization.Title_Designer.Return}",
+        _ => OrgSys.Localization.Title_Designer.Invoice
     };
     if (ViewBag.TypeId == 1)
     {
@@ -97,28 +97,28 @@
                         <th class="text-center">#</th>
                         <th style="text-align:center"></th>
                         <th class="text-center align-middle">
-                            @Domain.Resource.Title_Designer.Code
+                            @OrgSys.Localization.Title_Designer.Code
                         </th>
                         @if (ViewBag.TypeId == 3)
                         {
-                            <th class="@TextAlign align-middle">@Domain.Resource.Title_Designer.FromStock</th>
-                            <th class="@TextAlign align-middle">@Domain.Resource.Title_Designer.ToStock</th>
+                            <th class="@TextAlign align-middle">@OrgSys.Localization.Title_Designer.FromStock</th>
+                            <th class="@TextAlign align-middle">@OrgSys.Localization.Title_Designer.ToStock</th>
                         }
                         else
                         {
-                            <th class="@TextAlign align-middle">@Domain.Resource.Title_Designer.Stock</th>
+                            <th class="@TextAlign align-middle">@OrgSys.Localization.Title_Designer.Stock</th>
                         }
-                        <th class="text-center">@Domain.Resource.Title_Designer.Date</th>
-                        <th class="text-center">@Domain.Resource.Title_Designer.Amount</th>
+                        <th class="text-center">@OrgSys.Localization.Title_Designer.Date</th>
+                        <th class="text-center">@OrgSys.Localization.Title_Designer.Amount</th>
                         <th class="@TextAlign" style="@ResourceDisplay">Resource</th>
                         <th class="@TextAlign">Journal</th>
                         @if (ViewBag.TypeId == 3)
                         {
-                            <th class="text-center"> @Domain.Resource.Title_Designer.Received </th>
+                            <th class="text-center"> @OrgSys.Localization.Title_Designer.Received </th>
                         }
                         @if (ViewBag.TypeId == 4)
                         {
-                            <th class="text-center">@Domain.Resource.Title_Designer.Transfer</th>
+                            <th class="text-center">@OrgSys.Localization.Title_Designer.Transfer</th>
                         }
                         @if (AllowView || AllowEdit || AllowCancel || AllowRedo || AllowDelete)
                         {
@@ -207,7 +207,7 @@
                                     {
                                         <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model.Response[i].ParentId&ParentId=@ViewBag.ParentId&TypeId=4">
                                             <i class="iconsminds-file-edit"></i>
-                                            @Domain.Resource.Title_Designer.Received (@Model.Response[i].ParentCode)
+                                            @OrgSys.Localization.Title_Designer.Received (@Model.Response[i].ParentCode)
                                         </a>
                                     }
                                     else if (Model.Response[i].Status != OrgSys.SharedKernel.Status.Cancel && User.IsAllowed("Received.Add"))
@@ -225,7 +225,7 @@
                                     {
                                         <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model.Response[i].ParentId&ParentId=@ViewBag.ParentId&TypeId=3">
                                             <i class="iconsminds-shuffle-1"></i>
-                                            @Domain.Resource.Title_Designer.Transfer @Domain.Resource.Title_Designer.Stock (@Model.Response[i].ParentCode)
+                                            @OrgSys.Localization.Title_Designer.Transfer @OrgSys.Localization.Title_Designer.Stock (@Model.Response[i].ParentCode)
                                         </a>
                                     }
 
@@ -252,7 +252,7 @@
                                             {
                                                 <span>&nbsp; | &nbsp;</span>
                                             }
-                                            <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Domain.Resource.Message_Designer.DeleteConfirmation' , '@Domain.Resource.Message_Designer.DoYouWantDeleteFile' , '@Domain.Resource.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
+                                            <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@OrgSys.Localization.Message_Designer.DeleteConfirmation' , '@OrgSys.Localization.Message_Designer.DoYouWantDeleteFile' , '@OrgSys.Localization.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
                                         }
                                     }
                                     else
@@ -275,7 +275,7 @@
                                         }
                                         if (AllowDelete)
                                         {
-                                            <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Domain.Resource.Message_Designer.DeleteConfirmation' , '@Domain.Resource.Message_Designer.DoYouWantDeleteFile' , '@Domain.Resource.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
+                                            <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@OrgSys.Localization.Message_Designer.DeleteConfirmation' , '@OrgSys.Localization.Message_Designer.DoYouWantDeleteFile' , '@OrgSys.Localization.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
                                         }
                                         <span>&nbsp; | &nbsp;</span>
                                         <a href="/@ViewBag.area/@ViewBag.PageTitle/Print?id=@Model.Response[i].Id&search=document.getElementById('txtSearch').value&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId&page=@Model.PageCount" target="_blank"> <i class="fa fa-print text-info"></i> </a>
@@ -311,28 +311,28 @@
                     </div>
                     <div class="card-body align-self-center d-flex flex-column flex-md-row  align-items-md-center">
                         <div class="list-item-heading mb-0  w-10">
-                            <small>@Domain.Resource.Title_Designer.Code</small>
+                            <small>@OrgSys.Localization.Title_Designer.Code</small>
                         </div>
                         @if (ViewBag.TypeId == 3)
                         {
                             <div class="list-item-heading mb-0  w-20">
-                                <small>@Domain.Resource.Title_Designer.Stock</small>
+                                <small>@OrgSys.Localization.Title_Designer.Stock</small>
                             </div>
                             <div class="list-item-heading mb-0  w-20">
-                                <small>@Domain.Resource.Title_Designer.ToStock</small>
+                                <small>@OrgSys.Localization.Title_Designer.ToStock</small>
                             </div>
                         }
                         else
                         {
                             <div class="list-item-heading mb-0  w-20">
-                                <small>@Domain.Resource.Title_Designer.Stock</small>
+                                <small>@OrgSys.Localization.Title_Designer.Stock</small>
                             </div>
                         }
                         <div class="list-item-heading mb-0 truncate w-15 ">
-                            <small>@Domain.Resource.Title_Designer.Date</small>
+                            <small>@OrgSys.Localization.Title_Designer.Date</small>
                         </div>
                         <div class="w-10">
-                            <small>@Domain.Resource.Title_Designer.Amount</small>
+                            <small>@OrgSys.Localization.Title_Designer.Amount</small>
                         </div>
                         <div class="w-20 @TextAlign" style="@ResourceDisplay">
                             <small>Resource</small>
@@ -343,13 +343,13 @@
                         @if (ViewBag.TypeId == 3)
                         {
                             <div class="w-20 @TextAlign">
-                                @Domain.Resource.Title_Designer.Received
+                                @OrgSys.Localization.Title_Designer.Received
                             </div>
                         }
                         @if (ViewBag.TypeId == 4)
                         {
                             <div class="w-20 @TextAlign">
-                                @Domain.Resource.Title_Designer.Transfer
+                                @OrgSys.Localization.Title_Designer.Transfer
                             </div>
                         }
                         <div class="w-20 @TextAlign2">
@@ -432,7 +432,7 @@
                                     {
                                         <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model.Response[i].ParentId&ParentId=@ViewBag.ParentId&TypeId=4">
                                             <i class="iconsminds-file-edit"></i>
-                                            @Domain.Resource.Title_Designer.Received (@Model.Response[i].ParentCode)
+                                            @OrgSys.Localization.Title_Designer.Received (@Model.Response[i].ParentCode)
                                         </a>
                                     }
                                     else if (Model.Response[i].Status != OrgSys.SharedKernel.Status.Cancel && User.IsAllowed("Received.Add"))
@@ -450,7 +450,7 @@
                                     {
                                         <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model.Response[i].ParentId&ParentId=@ViewBag.ParentId&TypeId=3">
                                             <i class="iconsminds-shuffle-1"></i>
-                                            @Domain.Resource.Title_Designer.Transfer @Domain.Resource.Title_Designer.Stock (@Model.Response[i].ParentCode)
+                                            @OrgSys.Localization.Title_Designer.Transfer @OrgSys.Localization.Title_Designer.Stock (@Model.Response[i].ParentCode)
                                         </a>
                                     }
 
@@ -475,7 +475,7 @@
                                         {
                                             <span>&nbsp; | &nbsp;</span>
                                         }
-                                        <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Domain.Resource.Message_Designer.DeleteConfirmation' , '@Domain.Resource.Message_Designer.DoYouWantDeleteFile' , '@Domain.Resource.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
+                                        <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@OrgSys.Localization.Message_Designer.DeleteConfirmation' , '@OrgSys.Localization.Message_Designer.DoYouWantDeleteFile' , '@OrgSys.Localization.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
                                     }
                                 }
                                 else
@@ -498,7 +498,7 @@
                                     }
                                     if (AllowDelete)
                                     {
-                                        <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Domain.Resource.Message_Designer.DeleteConfirmation' , '@Domain.Resource.Message_Designer.DoYouWantDeleteFile' , '@Domain.Resource.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
+                                        <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@OrgSys.Localization.Message_Designer.DeleteConfirmation' , '@OrgSys.Localization.Message_Designer.DoYouWantDeleteFile' , '@OrgSys.Localization.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash" style="color:#820404;"></i> </a>
                                     }
 
                                     <span>&nbsp; | &nbsp;</span>
@@ -555,9 +555,9 @@
                         </p>
                     </div>
                     <div class="m-0 p-0">
-                        <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit"></i> @Domain.Resource.Title_Designer.Edit</a>
+                        <a href="/@ViewBag.area/@ViewBag.PageTitle/Save?id=@Model.Response[i].Id&ParentId=@ViewBag.ParentId&TypeId=@ViewBag.TypeId"> <i class="iconsminds-folder-edit"></i> @OrgSys.Localization.Title_Designer.Edit</a>
                         <span> &nbsp; | &nbsp; </span>
-                        <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@Domain.Resource.Message_Designer.DeleteConfirmation' , '@Domain.Resource.Message_Designer.DoYouWantDeleteFile' , '@Domain.Resource.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash"></i> @Domain.Resource.Title_Designer.Delete</a>
+                        <a href="javascript:Deleted();" onclick="Delete('simple-icon-trash' , '@OrgSys.Localization.Message_Designer.DeleteConfirmation' , '@OrgSys.Localization.Message_Designer.DoYouWantDeleteFile' , '@OrgSys.Localization.Title_Designer.Ok' , @Model.Response[i].Id)" data-toggle="modal" data-target="#MsgModelId"><i class="simple-icon-trash"></i> @OrgSys.Localization.Title_Designer.Delete</a>
                     </div>
                 </div>
             </div>
