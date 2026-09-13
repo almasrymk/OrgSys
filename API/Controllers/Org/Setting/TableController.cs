@@ -1,4 +1,3 @@
-﻿using Application.Commands.Org.Setting.Preference.Queries;
 using Organization.Application.Tables.Commands;
 using Organization.Application.Tables.Queries;
 using OrgSys.SharedKernel;

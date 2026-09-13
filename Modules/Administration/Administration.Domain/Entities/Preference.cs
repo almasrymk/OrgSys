@@ -1,4 +1,4 @@
-﻿namespace Domain.Entities
+﻿namespace Administration.Domain
 {
     [Table("Preference")]
     public class Preference : BaseModel

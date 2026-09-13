@@ -1,4 +1,3 @@
-﻿using Application.Commands.Org.Setting.Preference.Queries;
 using Treasury.Application.BankBranches.Commands;
 using Treasury.Application.BankBranches.Queries;
 using OrgSys.SharedKernel;

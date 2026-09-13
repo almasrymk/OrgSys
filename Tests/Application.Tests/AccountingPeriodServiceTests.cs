@@ -1,7 +1,6 @@
 using Accounting.Application;
 using Domain.Abstraction;
 using Domain.Entities;
-using Domain.Enums;
 using Moq;
 using System.Linq.Expressions;
 using Xunit;

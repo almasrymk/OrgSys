@@ -3,7 +3,6 @@ using Accounting.Application;
 using AutoMapper;
 using Domain.Abstraction;
 using Domain.Entities;
-using Domain.Enums;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;

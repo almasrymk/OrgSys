@@ -24,7 +24,7 @@ public partial class MappingProfile : Profile
 
         // 4-Financials: Journal -> Accounting.Application.MappingProfile; Financial -> Treasury.Application.MappingProfile
 
-        PreferenceMappingProfile();
+        // Preference: Administration.Application.MappingProfile
 
         // PaymentType, ReferenceType: MasterData.Application.MappingProfile
         // FinancialType: Treasury.Application.MappingProfile

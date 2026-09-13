@@ -1,8 +1,9 @@
-﻿using Application.Commands.Org.Setting.Preference.Commands;
-using Application.Commands.Org.Setting.Preference.Queries;
+﻿namespace Administration.Application;
+
+using Administration.Application.Preferences.Commands;
+using Administration.Application.Preferences.Queries;
 using AutoMapper;
-using Domain.Entities;
-using Application.DTOs;
+using Administration.Domain;
 
 public partial class MappingProfile : Profile
 {

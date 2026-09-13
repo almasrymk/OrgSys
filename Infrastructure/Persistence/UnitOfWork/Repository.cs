@@ -7,7 +7,7 @@
     using System.Linq.Expressions;
     using static System.Net.WebRequestMethods;
 
-    public class Repository<TEntity> : IRepository<TEntity> where TEntity : OrgSys.SharedKernel.BaseModel //BaseEntity
+    public class Repository<TEntity> : IRepository<TEntity> where TEntity : OrgSys.SharedKernel.BaseModel
     {
         private readonly IOrgContext dbContext;
        

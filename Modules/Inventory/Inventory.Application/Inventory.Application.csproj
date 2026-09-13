@@ -15,9 +15,11 @@
          (IRepository<Invoice>), now owned by CommercialDocuments (relocated from Sales.Domain —
          see docs/commercial-documents-module.md). -->
     <ProjectReference Include="../../CommercialDocuments/CommercialDocuments.Domain/CommercialDocuments.Domain.csproj" />
-    <!-- Preference and Application.Commands.Org.Financials.Integration.JournalTransaction (the
-         Transaction->Journal posting bridge) haven't been extracted from the monolith yet. -->
-    <ProjectReference Include="../../../Domain/Domain.csproj" />
+    <!-- Preference now owned by Administration (relocated from the legacy root Domain/Application
+         projects). -->
+    <ProjectReference Include="../../Administration/Administration.Domain/Administration.Domain.csproj" />
+    <!-- Application.Commands.Org.Financials.Integration.JournalTransaction (the Transaction->
+         Journal posting bridge) hasn't been extracted from the monolith yet. -->
     <ProjectReference Include="../../../Application/Application.csproj" />
   </ItemGroup>
 

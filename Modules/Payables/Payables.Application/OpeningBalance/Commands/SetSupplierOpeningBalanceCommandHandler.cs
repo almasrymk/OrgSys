@@ -3,8 +3,6 @@ namespace Payables.Application.OpeningBalance.Commands
     using MediatR;
     using OrgSys.SharedKernel;
     using Accounting.Application;
-    using global::Domain.Abstraction;
-    using global::Domain.Entities;
     using MasterData.Contracts.Currencies;
     using Parties.Contracts.Dealers;
     using System.Net;

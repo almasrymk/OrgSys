@@ -8,5 +8,6 @@ public partial class MappingProfile : Profile
     {
         RoleMappingProfile();
         UserMappingProfile();
+        PreferenceMappingProfile();
     }
 }

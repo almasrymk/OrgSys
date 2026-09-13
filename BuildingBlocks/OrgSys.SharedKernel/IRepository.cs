@@ -3,7 +3,7 @@
     using System.Linq.Expressions;
     using CorePagination.Paginators.SizeAwarePaginator;
 
-    public interface IRepository<TEntity> where TEntity : BaseModel //BaseEntity
+    public interface IRepository<TEntity> where TEntity : BaseModel
     {
         ValueTask<TEntity> CreateAsync(TEntity Ob);
         ValueTask<List<TEntity>> CreateAsync(List<TEntity> Ob);

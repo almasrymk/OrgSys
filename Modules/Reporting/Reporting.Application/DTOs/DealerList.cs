@@ -1,6 +1,4 @@
-﻿using Domain.Entities;
-
-namespace Reporting.Application
+﻿namespace Reporting.Application
 {
     public class DealerList : BaseModel
     {

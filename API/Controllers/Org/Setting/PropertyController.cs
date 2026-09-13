@@ -1,4 +1,3 @@
-﻿using Application.Commands.Org.Setting.Preference.Queries;
 using Inventory.Application.Properties.Commands;
 using Inventory.Application.Properties.Queries;
 using OrgSys.SharedKernel;

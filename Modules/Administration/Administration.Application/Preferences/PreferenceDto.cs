@@ -1,6 +1,6 @@
-﻿using Domain.Entities;
+﻿using Administration.Domain;
 
-namespace Application.DTOs
+namespace Administration.Application
 {
     public class PreferenceDto : Preference
     {

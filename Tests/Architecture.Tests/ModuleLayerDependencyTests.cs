@@ -55,6 +55,12 @@ public class ModuleLayerDependencyTests
     private static readonly (string Module, string DependsOnModule, string Reason)[] AcceptedApplicationDomainExceptions =
     [
         ("Sales", "MasterData", "MappingProfile Unit/UnitDto mapping support."),
+        ("CommercialDocuments", "Administration", "CreateCommandHandler reads Preference directly (AutoCreateTransaction lookup) — Preference relocated from the legacy root Domain/Application projects to Administration (2026-09-13), same direct-repository-access shape it always had; not yet routed through an Administration.Contracts lookup."),
+        ("Inventory", "Administration", "InventoryAdjustmentIntegration/TransferReceivedIntegration/CreateTransactionByInvoiceCommandHandler read Preference directly — same relocation-not-rewrite as above."),
+        ("Treasury", "Administration", "CreateFinancialPaidInvoiceCommandHandler reads Preference directly (DefaultCashBox lookup) — same relocation-not-rewrite as above."),
+        ("Parties", "Administration", "Dealer Create/Update handlers and the GL-account provisioning helpers read Preference directly — same relocation-not-rewrite as above."),
+        ("Receivables", "Administration", "SetCustomerOpeningBalanceCommandHandler reads Preference directly — same relocation-not-rewrite as above."),
+        ("Payables", "Administration", "SetSupplierOpeningBalanceCommandHandler reads Preference directly — same relocation-not-rewrite as above."),
         ("CommercialDocuments", "Accounting", "Invoice Get/Search handlers populate JournalId/JournalCode by reading Accounting.Domain.Journal directly — the exact reference Phase 4 (\"Fix Sales -> Accounting integration\") replaces with Accounting.Contracts. Moved unchanged from Sales.Application along with Invoice ownership."),
         ("CommercialDocuments", "Parties", "GetCreditAllByDealerIdQueryHandler reads Invoice.Dealer.Name directly (Dealer owned by Parties). Moved unchanged from Sales.Application."),
         ("CommercialDocuments", "MasterData", "MappingProfile Unit/UnitDto mapping support. Moved unchanged from Sales.Application."),

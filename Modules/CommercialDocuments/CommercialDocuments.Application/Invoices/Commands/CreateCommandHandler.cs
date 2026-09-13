@@ -12,7 +12,7 @@
     public sealed class CreateInvoiceCommand : InvoiceDto, ICommand , ICreateCommand<Result>;
 
     public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<CommercialDocuments.Domain.Invoice> _Repository,
-        IRepository<global::Domain.Entities.Preference> preferenceRepository, IMapper mapper, IServiceProvider provider,
+        IRepository<Administration.Domain.Preference> preferenceRepository, IMapper mapper, IServiceProvider provider,
         ISender sender) : CreateCommandHandler<CreateInvoiceCommand, CommercialDocuments.Domain.Invoice>(_UnitOfWork, _Repository , mapper)
     {
         public override async Task<Result> Handle(CreateInvoiceCommand request, CancellationToken cancellationToken)

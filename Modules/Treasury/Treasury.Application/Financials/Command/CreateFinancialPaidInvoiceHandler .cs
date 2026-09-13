@@ -49,7 +49,7 @@ namespace Treasury.Application.Financials.Command
                     financial.CreateDate = DateTime.Now;
                     financial.TypeId = invoice.TypeId == 1 || invoice.TypeId == 4 ? 1 : 2;
 
-                    var prefRepo = _Provider.GetRequiredService<IRepository<global::Domain.Entities.Preference>>();
+                    var prefRepo = _Provider.GetRequiredService<IRepository<Administration.Domain.Preference>>();
 
                     var cashBoxPref = await prefRepo.GetByFilterAsync(
                         e => e.Key == "DefaultCashBox"

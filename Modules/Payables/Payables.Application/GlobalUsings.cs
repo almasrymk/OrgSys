@@ -4,5 +4,4 @@ global using Payables.Application;
 global using Accounting.Domain;
 global using Accounting.Application;
 global using Receivables.Application;
-// Preference hasn't been extracted from the monolith yet (docs/modular-monolith-analysis.md §21).
-global using global::Domain.Entities;
+global using Administration.Domain;

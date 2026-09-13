@@ -16,8 +16,8 @@
     <!-- GetDefaultCurrencyQuery — resolves the default Currency for a new Opening Balance journal
          without an IRepository<Currency> injection across the module boundary. -->
     <ProjectReference Include="../../MasterData/MasterData.Contracts/MasterData.Contracts.csproj" />
-    <!-- Preference hasn't been extracted from the monolith yet. -->
-    <ProjectReference Include="../../../Domain/Domain.csproj" />
+    <!-- Preference now owned by Administration (relocated from the legacy root Domain project). -->
+    <ProjectReference Include="../../Administration/Administration.Domain/Administration.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>

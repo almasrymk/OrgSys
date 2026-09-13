@@ -1,4 +1,3 @@
-﻿using Application.Commands.Org.Setting.Preference.Queries;
 using Organization.Application.Shifts.Commands;
 using Organization.Application.Shifts.Queries;
 using OrgSys.SharedKernel;

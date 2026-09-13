@@ -19,8 +19,6 @@
          GetDealerStatementReportQueryHandler) read Parties.Domain.Dealer directly — same
          read-only-aggregator reasoning as the other Domain references above. -->
     <ProjectReference Include="../../Parties/Parties.Domain/Parties.Domain.csproj" />
-    <!-- Preference and IOrgContext haven't been extracted from the monolith yet. -->
-    <ProjectReference Include="../../../Domain/Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>

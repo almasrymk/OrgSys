@@ -14,8 +14,8 @@
          DealerReceivableAccountProvisioning) uses IReceivableAccountValidator, owned by
          Accounting — moved here unchanged from Sales.Application, see that project's history. -->
     <ProjectReference Include="../../Accounting/Accounting.Application/Accounting.Application.csproj" />
-    <!-- Preference hasn't been extracted from the monolith yet. -->
-    <ProjectReference Include="../../../Domain/Domain.csproj" />
+    <!-- Preference now owned by Administration (relocated from the legacy root Domain project). -->
+    <ProjectReference Include="../../Administration/Administration.Domain/Administration.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>

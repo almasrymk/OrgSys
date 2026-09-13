@@ -14,9 +14,8 @@
          validators, all currently hosted in Accounting.Application (see that project's own
          comment for the validators' temporary-home rationale). -->
     <ProjectReference Include="../../Accounting/Accounting.Application/Accounting.Application.csproj" />
-    <!-- Preference hasn't been extracted from the monolith yet — see this project's
-         GlobalUsings.cs for the full rationale. -->
-    <ProjectReference Include="../../../Domain/Domain.csproj" />
+    <!-- Preference now owned by Administration (relocated from the legacy root Domain project). -->
+    <ProjectReference Include="../../Administration/Administration.Domain/Administration.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>

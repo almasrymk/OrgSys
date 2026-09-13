@@ -2,7 +2,6 @@ namespace Reporting.Application.Dealer.Queries
 {
     using OrgSys.SharedKernel;
     using Treasury.Domain;
-    using Domain.Enums;
     using System.Net;
 
     /// <summary>

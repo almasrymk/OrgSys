@@ -1,7 +1,6 @@
 namespace Reporting.Application.Financial.Queries
 {
     using OrgSys.SharedKernel;
-    using Domain.Enums;
     using System.Net;
 
     /// <summary>

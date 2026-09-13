@@ -1,18 +1,18 @@
-﻿namespace Application.Commands.Org.Setting.Preference.Queries
+﻿namespace Administration.Application.Preferences.Queries
 {
     using OrgSys.SharedKernel;
     using OrgSys.SharedKernel;
     using OrgSys.SharedKernel;
     using AutoMapper;
-    using Domain.Abstraction;
-    using Application.DTOs;
+    
+    
     using System.Linq.Expressions;
 
     public sealed record SearchPreferenceQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandPagination<PreferenceDto> ,ISearchQuery<ResultPagination<PreferenceDto>>;
 
-    public sealed class SearchQueryHandler(IRepository<Domain.Entities.Preference> _Repository, IMapper mapper) : SearchCommandHandler<SearchPreferenceQuery, Domain.Entities.Preference, PreferenceDto>(_Repository, mapper)
+    public sealed class SearchQueryHandler(IRepository<Administration.Domain.Preference> _Repository, IMapper mapper) : SearchCommandHandler<SearchPreferenceQuery, Administration.Domain.Preference, PreferenceDto>(_Repository, mapper)
     {
-        public override Expression<Func<Domain.Entities.Preference, bool>> CreateFilter(SearchPreferenceQuery request)
+        public override Expression<Func<Administration.Domain.Preference, bool>> CreateFilter(SearchPreferenceQuery request)
         {
             Page = request.Page;
             PageSize = request.PageSize;
@@ -24,7 +24,7 @@
             e.Status != OrgSys.SharedKernel.Status.Deleted && e.Hide != true;
         }
          
-        override public Func<IQueryable<Domain.Entities.Preference>, IOrderedQueryable<Domain.Entities.Preference>> CreateOrderBy(SearchPreferenceQuery request)
+        override public Func<IQueryable<Administration.Domain.Preference>, IOrderedQueryable<Administration.Domain.Preference>> CreateOrderBy(SearchPreferenceQuery request)
         {
             return q => q.OrderByDescending(e => e.Id);
         }

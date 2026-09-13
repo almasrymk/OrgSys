@@ -2,7 +2,6 @@ using Accounting.Application.Journals.Commands;
 using AutoMapper;
 using Domain.Abstraction;
 using Domain.Entities;
-using Domain.Enums;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using System.Net;

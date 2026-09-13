@@ -1,17 +1,17 @@
-﻿namespace Application.Commands.Org.Setting.Preference.Commands
+﻿namespace Administration.Application.Preferences.Commands
 {
     using OrgSys.SharedKernel;
     using OrgSys.SharedKernel;
     using OrgSys.SharedKernel;
     using AutoMapper;
-    using Domain.Abstraction;
-    using Domain.Entities;
-    using Application.DTOs;
+    
+    using Administration.Domain;
+    
     using System.Net;
 
-    public sealed class UpdatePreferenceCommand : Application.DTOs.PreferenceDto, ICommand, IUpdateCommand<Result>;
+    public sealed class UpdatePreferenceCommand : Administration.Application.PreferenceDto, ICommand, IUpdateCommand<Result>;
 
-    public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Domain.Entities.Preference> _Repository , IMapper mapper, IServiceProvider _provider) : UpdateCommandHandler<UpdatePreferenceCommand, Domain.Entities.Preference>(_UnitOfWork, _Repository , mapper , _provider)
+    public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Administration.Domain.Preference> _Repository , IMapper mapper, IServiceProvider _provider) : UpdateCommandHandler<UpdatePreferenceCommand, Administration.Domain.Preference>(_UnitOfWork, _Repository , mapper , _provider)
     {
 
         public override async Task<Result> Handle(UpdatePreferenceCommand request, CancellationToken cancellationToken)
@@ -29,7 +29,7 @@
                 if (ob != null)
                     ob.Value = item.Value;
                 else
-                    await _Repository.CreateAsync(new Domain.Entities.Preference
+                    await _Repository.CreateAsync(new Administration.Domain.Preference
                     {
                         Id = ++nextId,
                         Key = item.Key,

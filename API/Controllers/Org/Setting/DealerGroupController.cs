@@ -1,9 +1,7 @@
 ﻿using Parties.Application.DealerGroups.Queries;
 using Parties.Application.DealerGroups.Commands;
 using Parties.Application.DealerGroups.Queries;
-using Application.Commands.Org.Setting.Preference.Queries;
 using OrgSys.SharedKernel;
-using Application.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

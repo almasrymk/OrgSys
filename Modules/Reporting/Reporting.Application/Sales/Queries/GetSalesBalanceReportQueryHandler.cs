@@ -1,7 +1,6 @@
 namespace Reporting.Application.Sales.Queries
 {
     using OrgSys.SharedKernel;
-    using Domain.Enums;
     using System.Net;
 
     /// <summary>

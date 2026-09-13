@@ -8,7 +8,6 @@ global using Organization.Domain;
 global using Sales.Domain;
 global using CommercialDocuments.Domain;
 global using Parties.Domain;
-// Preference and the Financial/Journal integration bridges haven't been extracted from the
-// monolith yet (docs/modular-monolith-analysis.md §21). global:: anchors "Domain.Entities" to
-// the true root, bypassing the nested-namespace shadow every module hits.
-global using global::Domain.Entities;
+global using Administration.Domain;
+// The Transaction->Journal posting bridge (Application.Commands.Org.Financials.Integration.
+// JournalTransaction.TransactionJournalIntegration) hasn't been extracted from the monolith yet.

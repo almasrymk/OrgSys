@@ -1,6 +1,6 @@
-using Application.Commands.Org.Setting.Preference.Commands;
+using Administration.Application.Preferences.Commands;
 using AutoMapper;
-using Application.DTOs;
+using Administration.Application;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;

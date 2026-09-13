@@ -1,4 +1,3 @@
-﻿using Application.Commands.Org.Setting.Preference.Queries;
 using MasterData.Application.Units.Commands;
 using MasterData.Application.Units.Queries;
 using OrgSys.SharedKernel;

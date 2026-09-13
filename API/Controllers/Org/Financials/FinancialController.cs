@@ -5,7 +5,6 @@ using Treasury.Application.FinancialAccounts.Commands;
 using Treasury.Application.FinancialAccounts.Queries;
 using AutoMapper;
 using Application.DTOs;
-using Domain.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

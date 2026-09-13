@@ -20,10 +20,12 @@
          directly — the exact accepted exception this project inherits unchanged from
          Sales.Application (see docs/dependency-rules.md, "Phase 4-class" debt). -->
     <ProjectReference Include="../../Accounting/Accounting.Domain/Accounting.Domain.csproj" />
-    <!-- Preference and Application.Commands.Org.Financials.Integration.JournalInvoice (the
-         Invoice->Journal posting bridge) haven't been extracted from the monolith yet — moved
-         unchanged from Sales.Application. -->
-    <ProjectReference Include="../../../Domain/Domain.csproj" />
+    <!-- Preference now owned by Administration (relocated from the legacy root Domain/Application
+         projects — see docs/modular-monolith-analysis.md §21 history). -->
+    <ProjectReference Include="../../Administration/Administration.Domain/Administration.Domain.csproj" />
+    <!-- Application.Commands.Org.Financials.Integration.JournalInvoice (the Invoice->Journal
+         posting bridge) hasn't been extracted from the monolith yet — moved unchanged from
+         Sales.Application. -->
     <ProjectReference Include="../../../Application/Application.csproj" />
   </ItemGroup>
 
