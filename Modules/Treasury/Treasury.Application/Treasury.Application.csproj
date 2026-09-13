@@ -10,10 +10,11 @@
     <ProjectReference Include="../Treasury.Domain/Treasury.Domain.csproj" />
     <ProjectReference Include="../Treasury.Contracts/Treasury.Contracts.csproj" />
     <ProjectReference Include="../../../BuildingBlocks/OrgSys.EventBus/OrgSys.EventBus.csproj" />
-    <!-- Financial's Post/Reverse handlers need IAccountingPeriodService and the AR/AP account
-         validators, all currently hosted in Accounting.Application (see that project's own
-         comment for the validators' temporary-home rationale). -->
-    <ProjectReference Include="../../Accounting/Accounting.Application/Accounting.Application.csproj" />
+    <!-- Financial's Post/Reverse handlers reach Accounting purely through Accounting.Contracts —
+         PostAccountingEntryCommand/ReverseAccountingDocumentJournalCommand/GetAccountingDocumentJournalQuery/
+         GetFiscalYearForDateQuery/GetAccountQuery/IReceivableAccountValidator — no reference to
+         Accounting.Domain or Accounting.Application (see the Accounting DDD cleanup report). -->
+    <ProjectReference Include="../../Accounting/Accounting.Contracts/Accounting.Contracts.csproj" />
     <!-- Preference now owned by Administration (relocated from the legacy root Domain project). -->
     <ProjectReference Include="../../Administration/Administration.Domain/Administration.Domain.csproj" />
   </ItemGroup>

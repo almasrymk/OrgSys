@@ -1,8 +1,8 @@
 namespace Treasury.Application.FinancialAccounts.Commands
 {
+    using Accounting.Contracts.Accounts;
     using OrgSys.SharedKernel;
     using OrgSys.SharedKernel;
-    using Accounting.Application;
     using OrgSys.SharedKernel;
     using AutoMapper;
     using System.Net;

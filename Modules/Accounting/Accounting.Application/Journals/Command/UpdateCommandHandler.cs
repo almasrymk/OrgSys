@@ -1,23 +1,23 @@
 namespace Accounting.Application.Journals.Commands
 {
+    using Accounting.Domain.Exceptions;
     using Accounting.Domain.Repositories;
     using OrgSys.SharedKernel;
-    using AutoMapper;
     using System.Net;
 
     public sealed class UpdateJournalCommand : Accounting.Application.JournalDto, ICommand, IUpdateCommand<Result>;
 
-    public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork,
-        IRepository<Accounting.Domain.Journal> _Repository,
+    public sealed class UpdateCommandHandler(
+        IUnitOfWork _UnitOfWork,
+        IJournalRepository _JournalRepository,
         IAccountRepository _AccountRepository,
-        IAccountingPeriodService _AccountingPeriodService,
-        IMapper mapper, IServiceProvider _provider) : UpdateCommandHandler<UpdateJournalCommand, Accounting.Domain.Journal>(_UnitOfWork, _Repository, mapper, _provider)
+        IAccountingPeriodService _AccountingPeriodService) : ICommandHandler<UpdateJournalCommand>
     {
-        public override async Task<Result> Handle(UpdateJournalCommand request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(UpdateJournalCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                var journal = await _Repository.GetByFilterAsync(e => e.Id == request.Id, "JournalItems");
+                var journal = await _JournalRepository.GetByIdAsync(request.Id, cancellationToken);
                 if (journal is null)
                     return new Result(HttpStatusCode.NotFound, [new Error("Journal not found")]);
 
@@ -28,9 +28,8 @@ namespace Accounting.Application.Journals.Commands
                 if (!string.IsNullOrEmpty(journal.RefranceTable))
                     return new Result(HttpStatusCode.Forbidden, [new Error("A journal created from a resource is read-only")]);
 
-                long fiscalYearId = journal.FiscalYearId;
-                long fiscalPeriodId = journal.FiscalPeriodId;
-                Accounting.Domain.FiscalYear? fiscalYear;
+                Accounting.Domain.FiscalYear fiscalYear;
+                Accounting.Domain.FiscalPeriod? fiscalPeriod = null;
 
                 // Only re-resolve the accounting period when the journal date itself changes —
                 // editing other (non-accounting) fields on a Draft must not be blocked by a
@@ -41,40 +40,41 @@ namespace Accounting.Application.Journals.Commands
                     if (!resolution.Success)
                         return new Result(HttpStatusCode.BadRequest, resolution.Errors);
 
-                    fiscalYearId = resolution.FiscalYear!.Id;
-                    fiscalPeriodId = resolution.FiscalPeriod!.Id;
-                    fiscalYear = resolution.FiscalYear;
+                    fiscalYear = resolution.FiscalYear!;
+                    fiscalPeriod = resolution.FiscalPeriod!;
                 }
                 else
                 {
-                    fiscalYear = await _AccountingPeriodService.GetFiscalYearAsync(fiscalYearId, cancellationToken);
+                    fiscalYear = (await _AccountingPeriodService.GetFiscalYearAsync(journal.FiscalYearId, cancellationToken))!;
                 }
 
                 // Re-validated even when the date is unchanged: the JournalType itself may be switching to/from
                 // Opening Balance, which is an accounting-relevant edit that the date-unchanged fast path above must not skip.
-                var openingBalanceErrors = await _AccountingPeriodService.ValidateOpeningBalanceAsync(request.JournalTypeId, request.Date, fiscalYear!, journal.Id, cancellationToken);
+                var openingBalanceErrors = await _AccountingPeriodService.ValidateOpeningBalanceAsync(request.JournalTypeId, request.Date, fiscalYear, journal.Id, cancellationToken);
                 if (openingBalanceErrors is { Count: > 0 })
                     return new Result(HttpStatusCode.BadRequest, openingBalanceErrors);
 
-                // Header (non-invariant) fields: a plain overwrite of the tracked entity, same as
-                // every other module's generic Update — Draft journals have no header-field
-                // invariant beyond the period/opening-balance checks already run above.
-                var ob = mapper.Map<Accounting.Domain.Journal>(request);
-                ob.FiscalYearId = fiscalYearId;
-                ob.FiscalPeriodId = fiscalPeriodId;
-                // Draft edits can never flip Posted — that only ever happens via PostJournalCommand.
-                ob.Posted = false;
+                // Header (non-invariant) fields: Draft journals have no header-field invariant
+                // beyond the period/opening-balance checks already run above.
+                journal.UpdateHeader(request.JournalTypeId, request.Date, request.CurrencyId, request.Rate, request.Note, request.BranchId, request.ShiftId);
 
-                var res = await _Repository.UpdateAsync(ob);
+                if (fiscalPeriod is not null)
+                    journal.AssignFiscalPeriod(fiscalYear, fiscalPeriod);
 
                 // Lines are the protected part of the aggregate: mutated only through
                 // AddLine/UpdateLine/RemoveLine, never via a JournalItem repository directly —
-                // see Journal.JournalItems' doc comment and the GeneralLedger migration report.
+                // see Journal.JournalItems' doc comment and the Accounting DDD cleanup report.
                 var resDetails = await ApplyLineChangesAsync(journal, request, cancellationToken);
+                if (!resDetails)
+                    return new Result(HttpStatusCode.BadRequest, [new Error("One or more journal lines reference an account that could not be resolved.")]);
 
-                return res && resDetails && await _UnitOfWork.SaveChangeAsync(cancellationToken) > 0
+                return await _UnitOfWork.SaveChangeAsync(cancellationToken) > 0
                     ? new Result(HttpStatusCode.OK, null)
                     : new Result(HttpStatusCode.InternalServerError, [new Error("Error")]);
+            }
+            catch (AccountingDomainException ex)
+            {
+                return new Result(HttpStatusCode.BadRequest, [new Error(ex.Message)]);
             }
             catch (Exception ex)
             {

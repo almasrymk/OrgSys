@@ -61,23 +61,17 @@ public class ModuleLayerDependencyTests
         ("Parties", "Administration", "Dealer Create/Update handlers and the GL-account provisioning helpers read Preference directly — same relocation-not-rewrite as above."),
         ("Receivables", "Administration", "SetCustomerOpeningBalanceCommandHandler reads Preference directly — same relocation-not-rewrite as above."),
         ("Payables", "Administration", "SetSupplierOpeningBalanceCommandHandler reads Preference directly — same relocation-not-rewrite as above."),
-        ("CommercialDocuments", "Accounting", "Invoice Get/Search handlers populate JournalId/JournalCode by reading Accounting.Domain.Journal directly — the exact reference Phase 4 (\"Fix Sales -> Accounting integration\") replaces with Accounting.Contracts. Moved unchanged from Sales.Application along with Invoice ownership."),
         ("CommercialDocuments", "Parties", "GetCreditAllByDealerIdQueryHandler reads Invoice.Dealer.Name directly (Dealer owned by Parties). Moved unchanged from Sales.Application."),
         ("CommercialDocuments", "MasterData", "MappingProfile Unit/UnitDto mapping support. Moved unchanged from Sales.Application."),
         ("Parties", "MasterData", "DealerMappingProfile maps Country/City/District names directly (Dealer.Country/City/District navigations)."),
-        ("Parties", "Accounting", "Dealer create/update GL-account provisioning (DealerPayableAccountProvisioning/DealerReceivableAccountProvisioning, relocated from Sales.Application) reads Accounting.Domain.Account directly."),
         ("Inventory", "Sales", "Transaction Get/Search handlers and MappingProfile read Order directly (Transaction.Order — the resolved Sales<->Inventory circular coupling, now also visible at the Application layer)."),
         ("Inventory", "CommercialDocuments", "Transaction Delete/Update/GetById/Search handlers read the linked Invoice directly (IRepository<Invoice>), now owned by CommercialDocuments (relocated from Sales.Domain)."),
         ("Inventory", "Parties", "Transaction/Product Get/Search/Create/Delete/Update handlers and MappingProfile read Dealer directly (Product.Dealer/Transaction.Dealer, now owned by Parties — relocated from Sales.Domain)."),
-        ("Inventory", "Accounting", "Transaction Get/Search handlers populate JournalId/JournalCode the same way Sales' Invoice handlers do — same Phase 4-class debt, scoped to Inventory's own future accounting-integration cleanup."),
         ("Inventory", "Organization", "MappingProfile Branch/Shift mapping support."),
         ("Inventory", "MasterData", "MappingProfile Unit/Classification mapping support."),
-        ("Treasury", "CommercialDocuments", "CancelFinancialCommandHandler/CreateFinancialPaidInvoiceCommandHandler/DeleteListCommandHandler/PostTransactionCommandHandler/RedoInvoiceCommandHandler/UpdateCommandHandler read Invoice directly (IRepository<Invoice>), now owned by CommercialDocuments (relocated from Sales.Domain). Accepted as the same kind of interim Application->Domain debt as Treasury's existing Accounting exception below; a Contracts-based rewrite of these handlers is out of scope for the Invoice-ownership move itself."),
+        ("Treasury", "CommercialDocuments", "CancelFinancialCommandHandler/CreateFinancialPaidInvoiceCommandHandler/DeleteListCommandHandler/PostTransactionCommandHandler/RedoInvoiceCommandHandler/UpdateCommandHandler read Invoice directly (IRepository<Invoice>), now owned by CommercialDocuments (relocated from Sales.Domain). A Contracts-based rewrite of these handlers is out of scope for the Invoice-ownership move itself."),
         ("Treasury", "Parties", "Financial Create/Update/Delete/Cancel/Redo/PostTransaction handlers and MappingProfile read Dealer directly (Financial.Dealer, now owned by Parties — relocated from Sales.Domain)."),
-        ("Treasury", "Accounting", "FinancialTransfer/Financial Post/Reverse handlers and validators read Account/Journal directly — Phase-4-class debt for Treasury's own future accounting-integration cleanup."),
         ("Treasury", "MasterData", "MappingProfile and CreateFinancialPaidInvoiceCommandHandler read Currency directly."),
-        ("Receivables", "Accounting", "SetCustomerOpeningBalanceCommandHandler reads Journal/JournalType directly (see Accounting.Application.csproj comment on why the validators stayed in Accounting)."),
-        ("Payables", "Accounting", "SetSupplierOpeningBalanceCommandHandler reads Journal/JournalType directly."),
         ("Administration", "Organization", "MappingProfile reads Branch (User.BranchId) directly — mirrors the existing Administration.Domain -> Organization.Domain exception."),
         ("Reporting", "CommercialDocuments", "Reporting is a read-only cross-module aggregator by design (no Reporting.Domain) — reads Invoice/InvoiceType directly rather than duplicating a read model. Invoice/InvoiceType now owned by CommercialDocuments (relocated from Sales.Domain)."),
         ("Reporting", "Parties", "Same reasoning — Dealer balance/statement reports read Dealer/DealerType directly (now owned by Parties, relocated from Sales.Domain)."),
@@ -89,19 +83,19 @@ public class ModuleLayerDependencyTests
 
     /// <summary>
     /// Documented exceptions to "Application must not depend on another module's Application" —
-    /// see docs/dependency-rules.md §3. MasterData/Accounting are treated as safe shared
-    /// dependencies (reference data, GL validators) rather than routed through Contracts yet.
+    /// see docs/dependency-rules.md §3. MasterData is treated as a safe shared dependency
+    /// (reference data) rather than routed through Contracts yet. Accounting.Application is
+    /// deliberately NOT in this list: every module now reaches Accounting only through
+    /// Accounting.Contracts (IReceivableAccountValidator/IPayableAccountValidator/
+    /// IAccountingPeriodService-equivalent queries all live in Accounting.Contracts) — see the
+    /// Accounting DDD cleanup report.
     /// </summary>
     private static readonly (string Module, string DependsOnModule, string Reason)[] AcceptedApplicationApplicationExceptions =
     [
         ("Sales", "MasterData", "UnitDto mapping support."),
         ("CommercialDocuments", "MasterData", "UnitDto mapping support. Moved unchanged from Sales.Application."),
-        ("Parties", "Accounting", "Dealer create/update GL-account provisioning (DealerPayableAccountProvisioning/DealerReceivableAccountProvisioning, relocated from Sales.Application) uses IPayableAccountValidator/IReceivableAccountValidator — same Phase 4-class debt as the Domain-level Parties -> Accounting exception above."),
         ("Inventory", "MasterData", "UnitDto/ProductDto mapping support."),
-        ("Payables", "Accounting", "IPayableAccountValidator/IAccountingPeriodService."),
         ("Payables", "Receivables", "Shared IReceivableAccountValidator clearing-account check."),
-        ("Receivables", "Accounting", "IReceivableAccountValidator/IAccountingPeriodService."),
-        ("Treasury", "Accounting", "IAccountingPeriodService for Financial Post/Reverse."),
     ];
 
     public static IEnumerable<object[]> AllApplicationToDomainPairs()

@@ -1,5 +1,6 @@
 ﻿namespace CommercialDocuments.Application.Invoices.Queries
 {
+    using Accounting.Contracts.Postings;
     using OrgSys.SharedKernel;
     using OrgSys.SharedKernel;
     using OrgSys.SharedKernel;
@@ -11,7 +12,7 @@
 
     public sealed record GetByIdInvoiceQuery(long Id) : ICommand<InvoiceDto> , IGetByIdQuery<Result<InvoiceDto>>;
 
-    public sealed class GetByIdQueryHandler(IRepository<CommercialDocuments.Domain.Invoice> _Repository, IRepository<Accounting.Domain.Journal> journalRepository, ISender sender, IMapper mapper) : GetCommandHandler<GetByIdInvoiceQuery, CommercialDocuments.Domain.Invoice, InvoiceDto>(_Repository, mapper)
+    public sealed class GetByIdQueryHandler(IRepository<CommercialDocuments.Domain.Invoice> _Repository, ISender sender, IMapper mapper) : GetCommandHandler<GetByIdInvoiceQuery, CommercialDocuments.Domain.Invoice, InvoiceDto>(_Repository, mapper)
     {
         public override async Task<Result<InvoiceDto>> Handle(GetByIdInvoiceQuery request, CancellationToken cancellationToken)
         {
@@ -19,13 +20,9 @@
             if (result.Response == null)
                 return result;
 
-            var journal = await journalRepository.GetByFilterAsync(
-                e => e.RefranceTable == "invoice"
-                    && e.RefranceId == result.Response.Id
-                    && e.RefranceTypeId == result.Response.TypeId,
-                string.Empty);
-            result.Response.JournalId = journal?.Id;
-            result.Response.JournalCode = journal?.Code;
+            var journal = (await sender.Send(new GetAccountingDocumentJournalQuery("invoice", result.Response.Id, result.Response.TypeId), cancellationToken)).Response;
+            result.Response.JournalId = journal?.JournalId;
+            result.Response.JournalCode = journal?.JournalCode;
 
             // InvoiceProduct.Product navigation was dropped (Sales/Inventory module boundary —
             // see docs/modular-monolith-analysis.md §21) — ProductName is now populated via a

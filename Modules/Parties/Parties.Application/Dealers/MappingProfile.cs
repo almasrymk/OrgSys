@@ -11,8 +11,8 @@ public partial class MappingProfile : Profile
         // AccountCode/AccountName are no longer populated via an EF navigation (Dealer.Account was
         // removed — Parties.Domain must not reference Accounting.Domain, see the GeneralLedger
         // migration report). The Dealer query handlers patch them in after mapping, resolved
-        // through IRepository<Accounting.Domain.Account> (an already-accepted Application-layer
-        // cross-module read — see ModuleLayerDependencyTests).
+        // through Accounting.Contracts.Accounts.GetAccountQuery/GetAccountLookupsQuery — no direct
+        // reference to Accounting.Domain or Accounting.Application.
         CreateMap<Dealer, DealerDto>()
         .ForMember(dest => dest.DealerGroupName, opt => opt.MapFrom(src => src.DealerGroup.Name))
         .ForMember(dest => dest.CountryName, opt => opt.MapFrom(src => src.Country.Name))

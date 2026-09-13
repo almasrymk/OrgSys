@@ -1,7 +1,9 @@
 namespace Receivables.Application.Balances.Queries
 {
+    using Accounting.Contracts.Accounts;
+    using Accounting.Contracts.Postings;
+    using MediatR;
     using OrgSys.SharedKernel;
-    using Accounting.Application;
     using Receivables.Contracts.Balances;
     using System.Net;
 
@@ -17,7 +19,7 @@ namespace Receivables.Application.Balances.Queries
     /// </summary>
     public sealed class GetCustomerAgingQueryHandler(
         IReceivableAccountValidator _Validator,
-        IRepository<JournalItem> _JournalItemRepository) : IQueryHandler<GetCustomerAgingQuery, AgingBucketDto>
+        ISender sender) : IQueryHandler<GetCustomerAgingQuery, AgingBucketDto>
     {
         public async Task<Result<AgingBucketDto>> Handle(GetCustomerAgingQuery request, CancellationToken cancellationToken)
         {
@@ -25,19 +27,9 @@ namespace Receivables.Application.Balances.Queries
             if (errors.Count > 0 || dealer?.AccountId is not > 0)
                 return new Result<AgingBucketDto>(HttpStatusCode.BadRequest, new AgingBucketDto(0, 0, 0, 0), errors.Count > 0 ? errors : [new Error("Customer does not have a linked receivable account.")]);
 
-            var accountId = dealer.AccountId.Value;
             var asOfDate = (request.AsOfDate ?? DateTime.Now).Date;
 
-            var items = (await _JournalItemRepository.GetListByFilterAsync(e =>
-                e.AccountId == accountId &&
-                e.Journal!.Status != Status.Deleted &&
-                e.Journal!.Status != Status.Cancel &&
-                (e.Journal!.Posted || (e.Journal!.RefranceTable != null && e.Journal!.RefranceTable != "")) &&
-                e.Journal!.Date.Date <= asOfDate,
-                "Journal"))?
-                .OrderBy(e => e.Journal!.Date)
-                .ThenBy(e => e.Id)
-                .ToList() ?? [];
+            var items = (await sender.Send(new GetAccountActivityQuery(dealer.AccountId.Value, asOfDate), cancellationToken)).Response ?? [];
 
             // FIFO-match each debit "lot" (a charge) against later credits (receipts). Whatever
             // remains open in each lot at the end is what's actually aged; unmatched credit beyond
@@ -48,7 +40,7 @@ namespace Receivables.Application.Balances.Queries
             foreach (var item in items)
             {
                 if (item.Debit > 0)
-                    openLots.AddLast((item.Journal!.Date.Date, item.Debit));
+                    openLots.AddLast((item.Date.Date, item.Debit));
 
                 var credit = item.Credit;
                 while (credit > 0)

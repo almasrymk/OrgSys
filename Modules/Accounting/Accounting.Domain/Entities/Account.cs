@@ -51,6 +51,27 @@ namespace Accounting.Domain
         public void ChangeAccountType(long accountTypeId) => AccountTypeId = accountTypeId;
 
         /// <summary>
+        /// Creates a new postable detail (leaf) sub-account under an existing parent — the domain
+        /// behavior behind Accounting.Contracts.Accounts.ProvisionSubAccountCommand, used by e.g.
+        /// Parties' Dealer AR/AP sub-account auto-provisioning. <paramref name="code"/>/
+        /// <paramref name="codeNumber"/> are resolved by the caller's repository (sibling count
+        /// under the parent) — that is a persistence-shaped query, not something the parent Account
+        /// instance itself can answer since it has no navigation to its children.
+        /// </summary>
+        public static Account CreateSubAccount(Account parent, string name, string code, long codeNumber) => new()
+        {
+            Name = name,
+            Code = code,
+            CodeNumber = codeNumber,
+            ParentId = parent.Id,
+            AccountTypeId = parent.AccountTypeId,
+            IsPostable = true,
+            Hide = false,
+            Debit = 0,
+            Credit = 0
+        };
+
+        /// <summary>
         /// Enforces the "only a postable, active account may receive a journal line" rule referenced
         /// throughout the legacy posting bridges' comments but never previously checked in code —
         /// see the GeneralLedger migration report. Called by <see cref="Journal.AddLine"/>/

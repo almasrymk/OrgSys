@@ -1,7 +1,7 @@
 namespace Treasury.Application.Financials.Commands
 {
-    using OrgSys.SharedKernel;
-    using Accounting.Application;
+    using Accounting.Contracts.Postings;
+    using MediatR;
     using OrgSys.SharedKernel;
     using System.Net;
 
@@ -13,14 +13,15 @@ namespace Treasury.Application.Financials.Commands
     /// OpeningBalanceEquityAccountId — same JournalTypeId=2 "General" shape PostTransactionCommandHandler
     /// uses for Receipt/Payment/etc, so it stays outside the separate shared per-fiscal-year Opening
     /// Balance Journal that Customer/Supplier (and previously FinancialAccount) opening balances use.
+    /// Journal creation/posting itself is delegated to Accounting.Contracts.Postings.
+    /// PostAccountingEntryCommand — this handler only resolves which accounts/amounts apply.
     /// </summary>
     public sealed class PostFinancialOpeningBalanceCommandHandler(
         IUnitOfWork unitOfWork,
+        ISender sender,
         IRepository<Financial> financialRepository,
         IRepository<FinancialAccount> accountRepository,
-        IRepository<Preference> preferenceRepository,
-        IRepository<Journal> journalRepository,
-        IAccountingPeriodService accountingPeriodService) : ICommandHandler<PostFinancialOpeningBalanceCommand>
+        IRepository<Preference> preferenceRepository) : ICommandHandler<PostFinancialOpeningBalanceCommand>
     {
         public async Task<Result> Handle(PostFinancialOpeningBalanceCommand request, CancellationToken cancellationToken)
         {
@@ -75,9 +76,9 @@ namespace Treasury.Application.Financials.Commands
             if (!long.TryParse(equityAccountIdRaw, out var equityAccountId) || equityAccountId <= 0)
                 return new Result(HttpStatusCode.BadRequest, [new Error("Opening Balance equity account is not configured (Preferences > Financial > Opening Balance Equity Account).")]);
 
-            var resolution = await accountingPeriodService.ResolveAndValidateAsync(financial.Date, cancellationToken);
-            if (!resolution.Success)
-                return new Result(HttpStatusCode.BadRequest, resolution.Errors);
+            var fiscalYear = (await sender.Send(new GetFiscalYearForDateQuery(financial.Date), cancellationToken)).Response;
+            if (fiscalYear is null)
+                return new Result(HttpStatusCode.BadRequest, [new Error($"No fiscal year is configured for date {financial.Date:yyyy-MM-dd}.")]);
 
             // Re-checked here too (not just at Draft-save time) in case two Drafts were saved for the
             // same account/year before either was posted — only one may ever end up Posted.
@@ -87,7 +88,7 @@ namespace Treasury.Application.Financials.Commands
                 e.FinancialAccountId == financial.FinancialAccountId &&
                 e.Posted &&
                 e.Status != Status.Deleted && e.Status != Status.Reversed && e.Hide != true &&
-                e.Date.Date >= resolution.FiscalYear!.StartDate.Date && e.Date.Date <= resolution.FiscalYear.EndDate.Date,
+                e.Date.Date >= fiscalYear.StartDate.Date && e.Date.Date <= fiscalYear.EndDate.Date,
                 cancellationToken);
             if (duplicate)
                 return new Result(HttpStatusCode.BadRequest, [new Error("An Opening Balance has already been posted for this Financial Account in this fiscal year.")]);
@@ -96,41 +97,34 @@ namespace Treasury.Application.Financials.Commands
             try
             {
                 var now = DateTime.Now;
-                var codeNumber = await journalRepository.AnyAsync(e => e.TypeId == 2, cancellationToken)
-                    ? await journalRepository.GetMaxByFilterAsync(e => e.TypeId == 2, e => e.CodeNumber) + 1 : 1;
 
-                var journal = new Journal
-                {
-                    JournalTypeId = 2,
-                    TypeId = 2,
-                    CodeNumber = codeNumber,
-                    Code = codeNumber.ToString(),
-                    Date = financial.Date,
-                    CreateDate = now,
-                    CreateUserId = request.UserId,
-                    BranchId = financial.BranchId,
-                    ShiftId = financial.ShiftId,
-                    CurrencyId = financial.CurrencyId,
-                    Rate = financial.Rate,
-                    RefranceId = financial.Id,
-                    RefranceCode = financial.Code,
-                    RefranceTypeId = (long)FinancialTransactionType.OpeningBalance,
-                    RefranceTable = "financialtransaction",
-                    Note = financial.Notes,
-                    FiscalYearId = resolution.FiscalYear!.Id,
-                    FiscalPeriodId = resolution.FiscalPeriod!.Id,
-                    Posted = true,
-                    Status = Status.Approved,
-                    JournalItems =
+                var postResult = await sender.Send(new PostAccountingEntryCommand(
+                    ReferenceTable: "financialtransaction",
+                    SourceDocumentId: financial.Id,
+                    SourceDocumentTypeId: (long)FinancialTransactionType.OpeningBalance,
+                    SourceDocumentCode: financial.Code,
+                    JournalTypeId: 2,
+                    Date: financial.Date,
+                    CreateDate: now,
+                    CreateUserId: request.UserId,
+                    BranchId: financial.BranchId,
+                    ShiftId: financial.ShiftId,
+                    CurrencyId: financial.CurrencyId,
+                    Rate: financial.Rate,
+                    Note: financial.Notes,
+                    Lines:
                     [
-                        new JournalItem { AccountId = debitAccountId, Debit = financial.Amount, Note = financial.Notes },
-                        new JournalItem { AccountId = equityAccountId, Credit = financial.Amount, Note = financial.Notes }
-                    ]
-                };
-                await journalRepository.CreateAsync(journal);
-                await unitOfWork.SaveChangeAsync(cancellationToken);
+                        new AccountingPostingLine(debitAccountId, financial.Amount, 0, financial.Notes),
+                        new AccountingPostingLine(equityAccountId, 0, financial.Amount, financial.Notes)
+                    ]), cancellationToken);
 
-                financial.JournalId = journal.Id;
+                if (postResult.Response is null)
+                {
+                    await unitOfWork.RollbackAsync();
+                    return new Result(postResult.StatusCode, postResult.Errors);
+                }
+
+                financial.JournalId = postResult.Response.JournalId;
                 financial.HasJournal = true;
                 financial.Posted = true;
                 financial.Status = Status.Approved;

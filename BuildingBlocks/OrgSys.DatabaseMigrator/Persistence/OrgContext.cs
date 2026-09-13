@@ -73,6 +73,17 @@
                 .Property(journal => journal.Rate)
                 .HasPrecision(18, 2);
 
+            // Accounting.Domain must not reference MasterData.Domain (see the Accounting DDD
+            // cleanup report) — Journal.Currency was dropped in favor of the plain CurrencyId
+            // scalar. Fluent "no navigation" relationship, same pattern as MovementModel's
+            // CreateUser/ModifyUser/Shift/Branch, keeps the exact same FK column/constraint.
+            // No explicit OnDelete: CurrencyId is a required (non-nullable) FK, so EF's default
+            // (Cascade) matches what the dropped [ForeignKey("Currency")] attribute + convention
+            // produced before — verified with `dotnet ef migrations has-pending-model-changes`.
+            modelBuilder.Entity<Journal>()
+                .HasOne(typeof(Currency)).WithMany()
+                .HasForeignKey("CurrencyId");
+
             modelBuilder.Entity<CashBox>()
                 .HasOne(e => e.FinancialAccount).WithOne(e => e.CashBox)
                 .HasForeignKey<CashBox>(e => e.FinancialAccountId).OnDelete(DeleteBehavior.Restrict);

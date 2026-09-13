@@ -11,4 +11,14 @@ using OrgSys.SharedKernel;
 public sealed record GetAccountingDocumentJournalQuery(string ReferenceTable, long SourceDocumentId, long SourceDocumentTypeId)
     : IQuery<AccountingDocumentJournalDto?>;
 
-public sealed record AccountingDocumentJournalDto(long JournalId);
+/// <summary>
+/// Batch form of GetAccountingDocumentJournalQuery, keyed by SourceDocumentId — used by list/search
+/// screens showing JournalId/JournalCode for many source documents at once (e.g. CommercialDocuments'
+/// Invoice list, Inventory's Transaction list) instead of an IRepository&lt;Journal&gt; reference
+/// across the module boundary. Unlike the single-document form this does not filter by
+/// SourceDocumentTypeId — a source document's own type does not change, so its RefranceId alone is enough.
+/// </summary>
+public sealed record GetAccountingDocumentJournalsQuery(string ReferenceTable, IReadOnlyCollection<long> SourceDocumentIds)
+    : IQuery<Dictionary<long, AccountingDocumentJournalDto>>;
+
+public sealed record AccountingDocumentJournalDto(long JournalId, string? JournalCode);

@@ -1,7 +1,6 @@
 using Accounting.Application.Journals.Commands;
 using Accounting.Application;
-using AutoMapper;
-using Microsoft.Extensions.DependencyInjection;
+using Accounting.Domain.Repositories;
 using Moq;
 using System.Net;
 using Xunit;
@@ -10,12 +9,12 @@ namespace Application.Tests;
 
 public class JournalCreateCommandHandlerTests
 {
-    private static IMapper BuildMapper()
+    private static Mock<IAccountRepository> EmptyAccountRepository()
     {
-        var services = new ServiceCollection();
-        services.AddLogging();
-        services.AddAutoMapper(cfg => { cfg.AddProfile<Accounting.Application.MappingProfile>(); });
-        return services.BuildServiceProvider().GetRequiredService<IMapper>();
+        var repository = new Mock<IAccountRepository>();
+        repository.Setup(r => r.GetByIdsAsync(It.IsAny<IReadOnlyCollection<long>>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync((IReadOnlyList<Account>)[]);
+        return repository;
     }
 
     private static FiscalYear Year(long id = 10) => new() { Id = id, Name = "2026", StartDate = new DateTime(2026, 1, 1), EndDate = new DateTime(2026, 12, 31), FiscalYearStatus = FiscalYearStatus.Open };
@@ -43,14 +42,15 @@ public class JournalCreateCommandHandlerTests
             .ReturnsAsync(AccountingPeriodResult.Ok(year, period));
 
         Journal? created = null;
-        var repository = new Mock<IRepository<Journal>>();
-        repository.Setup(r => r.CreateAsync(It.IsAny<Journal>()))
-            .Returns((Journal j) => { created = j; return new ValueTask<Journal>(j); });
+        var repository = new Mock<IJournalRepository>();
+        repository.Setup(r => r.AddAsync(It.IsAny<Journal>(), It.IsAny<CancellationToken>()))
+            .Callback<Journal, CancellationToken>((j, _) => created = j)
+            .Returns(Task.CompletedTask);
 
         var unitOfWork = new Mock<IUnitOfWork>();
         unitOfWork.Setup(u => u.SaveChangeAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
 
-        var handler = new CreateCommandHandler(unitOfWork.Object, repository.Object, accountingPeriodService.Object, BuildMapper(), Microsoft.Extensions.Logging.Abstractions.NullLogger<CreateCommandHandler>.Instance);
+        var handler = new CreateCommandHandler(unitOfWork.Object, repository.Object, EmptyAccountRepository().Object, accountingPeriodService.Object, Microsoft.Extensions.Logging.Abstractions.NullLogger<CreateCommandHandler>.Instance);
 
         var result = await handler.Handle(ValidCommand(), CancellationToken.None);
 
@@ -58,7 +58,7 @@ public class JournalCreateCommandHandlerTests
         Assert.NotNull(created);
         Assert.Equal(year.Id, created!.FiscalYearId);
         Assert.Equal(period.Id, created.FiscalPeriodId);
-        repository.Verify(r => r.CreateAsync(It.IsAny<Journal>()), Times.Once);
+        repository.Verify(r => r.AddAsync(It.IsAny<Journal>(), It.IsAny<CancellationToken>()), Times.Once);
     }
 
     [Fact]
@@ -71,14 +71,15 @@ public class JournalCreateCommandHandlerTests
             .ReturnsAsync(AccountingPeriodResult.Ok(year, period));
 
         Journal? created = null;
-        var repository = new Mock<IRepository<Journal>>();
-        repository.Setup(r => r.CreateAsync(It.IsAny<Journal>()))
-            .Returns((Journal j) => { created = j; return new ValueTask<Journal>(j); });
+        var repository = new Mock<IJournalRepository>();
+        repository.Setup(r => r.AddAsync(It.IsAny<Journal>(), It.IsAny<CancellationToken>()))
+            .Callback<Journal, CancellationToken>((j, _) => created = j)
+            .Returns(Task.CompletedTask);
 
         var unitOfWork = new Mock<IUnitOfWork>();
         unitOfWork.Setup(u => u.SaveChangeAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
 
-        var handler = new CreateCommandHandler(unitOfWork.Object, repository.Object, accountingPeriodService.Object, BuildMapper(), Microsoft.Extensions.Logging.Abstractions.NullLogger<CreateCommandHandler>.Instance);
+        var handler = new CreateCommandHandler(unitOfWork.Object, repository.Object, EmptyAccountRepository().Object, accountingPeriodService.Object, Microsoft.Extensions.Logging.Abstractions.NullLogger<CreateCommandHandler>.Instance);
 
         // Attacker/bogus client-supplied fiscal year/period ids that do NOT match the resolver's result.
         var command = ValidCommand(clientFiscalYearId: 9999, clientFiscalPeriodId: 8888);
@@ -103,14 +104,15 @@ public class JournalCreateCommandHandlerTests
             .ReturnsAsync(AccountingPeriodResult.Ok(year, period));
 
         Journal? created = null;
-        var repository = new Mock<IRepository<Journal>>();
-        repository.Setup(r => r.CreateAsync(It.IsAny<Journal>()))
-            .Returns((Journal j) => { created = j; return new ValueTask<Journal>(j); });
+        var repository = new Mock<IJournalRepository>();
+        repository.Setup(r => r.AddAsync(It.IsAny<Journal>(), It.IsAny<CancellationToken>()))
+            .Callback<Journal, CancellationToken>((j, _) => created = j)
+            .Returns(Task.CompletedTask);
 
         var unitOfWork = new Mock<IUnitOfWork>();
         unitOfWork.Setup(u => u.SaveChangeAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
 
-        var handler = new CreateCommandHandler(unitOfWork.Object, repository.Object, accountingPeriodService.Object, BuildMapper(), Microsoft.Extensions.Logging.Abstractions.NullLogger<CreateCommandHandler>.Instance);
+        var handler = new CreateCommandHandler(unitOfWork.Object, repository.Object, EmptyAccountRepository().Object, accountingPeriodService.Object, Microsoft.Extensions.Logging.Abstractions.NullLogger<CreateCommandHandler>.Instance);
 
         var command = ValidCommand();
         command.Posted = true; // client tries to skip the Draft state entirely
@@ -132,13 +134,13 @@ public class JournalCreateCommandHandlerTests
         accountingPeriodService.Setup(r => r.ValidateOpeningBalanceAsync(It.IsAny<long>(), It.IsAny<DateTime>(), It.IsAny<FiscalYear>(), It.IsAny<long>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync([]);
 
-        var repository = new Mock<IRepository<Journal>>();
-        repository.Setup(r => r.CreateAsync(It.IsAny<Journal>())).Returns((Journal j) => new ValueTask<Journal>(j));
+        var repository = new Mock<IJournalRepository>();
+        repository.Setup(r => r.AddAsync(It.IsAny<Journal>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
 
         var unitOfWork = new Mock<IUnitOfWork>();
         unitOfWork.Setup(u => u.SaveChangeAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
 
-        var handler = new CreateCommandHandler(unitOfWork.Object, repository.Object, accountingPeriodService.Object, BuildMapper(), Microsoft.Extensions.Logging.Abstractions.NullLogger<CreateCommandHandler>.Instance);
+        var handler = new CreateCommandHandler(unitOfWork.Object, repository.Object, EmptyAccountRepository().Object, accountingPeriodService.Object, Microsoft.Extensions.Logging.Abstractions.NullLogger<CreateCommandHandler>.Instance);
 
         var result = await handler.Handle(ValidCommand(), CancellationToken.None);
 
@@ -156,16 +158,16 @@ public class JournalCreateCommandHandlerTests
         accountingPeriodService.Setup(r => r.ValidateOpeningBalanceAsync(It.IsAny<long>(), It.IsAny<DateTime>(), It.IsAny<FiscalYear>(), It.IsAny<long>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync([new Error("Opening Balance entry date must equal the fiscal year start date (2026-01-01).")]);
 
-        var repository = new Mock<IRepository<Journal>>();
+        var repository = new Mock<IJournalRepository>();
         var unitOfWork = new Mock<IUnitOfWork>();
 
-        var handler = new CreateCommandHandler(unitOfWork.Object, repository.Object, accountingPeriodService.Object, BuildMapper(), Microsoft.Extensions.Logging.Abstractions.NullLogger<CreateCommandHandler>.Instance);
+        var handler = new CreateCommandHandler(unitOfWork.Object, repository.Object, EmptyAccountRepository().Object, accountingPeriodService.Object, Microsoft.Extensions.Logging.Abstractions.NullLogger<CreateCommandHandler>.Instance);
 
         var result = await handler.Handle(ValidCommand(), CancellationToken.None);
 
         Assert.Equal(HttpStatusCode.BadRequest, result.StatusCode);
         Assert.Contains("Opening Balance entry date must equal the fiscal year start date (2026-01-01).", result.Errors!.Select(e => e.MessageError));
-        repository.Verify(r => r.CreateAsync(It.IsAny<Journal>()), Times.Never);
+        repository.Verify(r => r.AddAsync(It.IsAny<Journal>(), It.IsAny<CancellationToken>()), Times.Never);
     }
 
     [Fact]
@@ -179,16 +181,16 @@ public class JournalCreateCommandHandlerTests
         accountingPeriodService.Setup(r => r.ValidateOpeningBalanceAsync(It.IsAny<long>(), It.IsAny<DateTime>(), It.IsAny<FiscalYear>(), It.IsAny<long>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync([new Error("An Opening Balance journal already exists for fiscal year 2026.")]);
 
-        var repository = new Mock<IRepository<Journal>>();
+        var repository = new Mock<IJournalRepository>();
         var unitOfWork = new Mock<IUnitOfWork>();
 
-        var handler = new CreateCommandHandler(unitOfWork.Object, repository.Object, accountingPeriodService.Object, BuildMapper(), Microsoft.Extensions.Logging.Abstractions.NullLogger<CreateCommandHandler>.Instance);
+        var handler = new CreateCommandHandler(unitOfWork.Object, repository.Object, EmptyAccountRepository().Object, accountingPeriodService.Object, Microsoft.Extensions.Logging.Abstractions.NullLogger<CreateCommandHandler>.Instance);
 
         var result = await handler.Handle(ValidCommand(), CancellationToken.None);
 
         Assert.Equal(HttpStatusCode.BadRequest, result.StatusCode);
         Assert.Contains("An Opening Balance journal already exists for fiscal year 2026.", result.Errors!.Select(e => e.MessageError));
-        repository.Verify(r => r.CreateAsync(It.IsAny<Journal>()), Times.Never);
+        repository.Verify(r => r.AddAsync(It.IsAny<Journal>(), It.IsAny<CancellationToken>()), Times.Never);
     }
 
     [Theory]
@@ -203,15 +205,15 @@ public class JournalCreateCommandHandlerTests
         accountingPeriodService.Setup(r => r.ResolveAndValidateAsync(It.IsAny<DateTime>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(AccountingPeriodResult.Fail(errorMessage));
 
-        var repository = new Mock<IRepository<Journal>>();
+        var repository = new Mock<IJournalRepository>();
         var unitOfWork = new Mock<IUnitOfWork>();
 
-        var handler = new CreateCommandHandler(unitOfWork.Object, repository.Object, accountingPeriodService.Object, BuildMapper(), Microsoft.Extensions.Logging.Abstractions.NullLogger<CreateCommandHandler>.Instance);
+        var handler = new CreateCommandHandler(unitOfWork.Object, repository.Object, EmptyAccountRepository().Object, accountingPeriodService.Object, Microsoft.Extensions.Logging.Abstractions.NullLogger<CreateCommandHandler>.Instance);
 
         var result = await handler.Handle(ValidCommand(), CancellationToken.None);
 
         Assert.Equal(HttpStatusCode.BadRequest, result.StatusCode);
         Assert.Contains(errorMessage, result.Errors!.Select(e => e.MessageError));
-        repository.Verify(r => r.CreateAsync(It.IsAny<Journal>()), Times.Never);
+        repository.Verify(r => r.AddAsync(It.IsAny<Journal>(), It.IsAny<CancellationToken>()), Times.Never);
     }
 }

@@ -10,11 +10,11 @@
     <ProjectReference Include="../Payables.Domain/Payables.Domain.csproj" />
     <ProjectReference Include="../Payables.Contracts/Payables.Contracts.csproj" />
     <ProjectReference Include="../../../BuildingBlocks/OrgSys.EventBus/OrgSys.EventBus.csproj" />
-    <!-- Supplier opening balance posts into the standard Journal/JournalType workflow and reuses
-         IPayableAccountValidator/IAccountingPeriodService (Accounting) plus IReceivableAccountValidator
-         (Receivables) for the shared clearing-account check. -->
-    <ProjectReference Include="../../Accounting/Accounting.Application/Accounting.Application.csproj" />
-    <ProjectReference Include="../../Receivables/Receivables.Application/Receivables.Application.csproj" />
+    <!-- Supplier opening balance/balance/aging read and write through Accounting.Contracts only
+         (IPayableAccountValidator, IReceivableAccountValidator for the shared clearing-account
+         check, SetOpeningBalanceLineCommand, GetAccountActivityQuery) — no reference to
+         Accounting.Domain, Accounting.Application, or Receivables.Application (unused). -->
+    <ProjectReference Include="../../Accounting/Accounting.Contracts/Accounting.Contracts.csproj" />
     <!-- GetDefaultCurrencyQuery — resolves the default Currency for a new Opening Balance journal
          without an IRepository<Currency> injection across the module boundary. -->
     <ProjectReference Include="../../MasterData/MasterData.Contracts/MasterData.Contracts.csproj" />

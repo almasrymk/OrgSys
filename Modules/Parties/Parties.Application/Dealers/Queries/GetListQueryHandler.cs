@@ -1,14 +1,16 @@
 namespace Parties.Application.Dealers.Queries
 {
+    using Accounting.Contracts.Accounts;
     using OrgSys.SharedKernel;
     using AutoMapper;
+    using MediatR;
     using System.Linq.Expressions;
 
     public sealed record GetListDealerQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandCollection<DealerDto> , IListQuery<ResultCollection<DealerDto>>;
 
     public sealed class GetListQueryHandler(
         IRepository<Parties.Domain.Dealer> _Repository,
-        IRepository<Accounting.Domain.Account> accountRepository,
+        ISender sender,
         IMapper mapper) : ListCommandHandler<GetListDealerQuery, Parties.Domain.Dealer, DealerDto>(_Repository, mapper)
     {
         public override Expression<Func<Parties.Domain.Dealer, bool>> CreateFilter(GetListDealerQuery request)
@@ -42,7 +44,7 @@ namespace Parties.Application.Dealers.Queries
             var accountIds = result.Response.Where(e => e.AccountId is > 0).Select(e => e.AccountId!.Value).Distinct().ToList();
             if (accountIds.Count > 0)
             {
-                var accounts = (await accountRepository.GetListByFilterAsync(a => accountIds.Contains(a.Id)))?.ToDictionary(a => a.Id) ?? [];
+                var accounts = (await sender.Send(new GetAccountLookupsQuery(accountIds), cancellationToken)).Response ?? [];
                 foreach (var dto in result.Response)
                     if (dto.AccountId is > 0 && accounts.TryGetValue(dto.AccountId.Value, out var account))
                     {

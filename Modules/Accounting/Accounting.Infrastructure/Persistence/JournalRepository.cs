@@ -23,6 +23,11 @@ public sealed class JournalRepository(IRepository<Journal> repository) : IJourna
         return (journals ?? []).ToList();
     }
 
+    public async Task<Journal?> GetOpeningBalanceJournalAsync(long fiscalYearId, long journalTypeId, CancellationToken cancellationToken = default) =>
+        await repository.GetByFilterAsync(
+            j => j.FiscalYearId == fiscalYearId && j.JournalTypeId == journalTypeId && j.Status != Status.Deleted && j.Status != Status.Cancel,
+            "JournalItems");
+
     public async Task<long> GetNextCodeNumberAsync(long journalTypeId, CancellationToken cancellationToken = default) =>
         await repository.AnyAsync(j => j.TypeId == journalTypeId, cancellationToken)
             ? await repository.GetMaxByFilterAsync(j => j.TypeId == journalTypeId, j => j.CodeNumber) + 1

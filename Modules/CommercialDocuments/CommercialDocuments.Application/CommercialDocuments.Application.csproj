@@ -16,11 +16,8 @@
          Sales.Application, see docs/dependency-rules.md. -->
     <ProjectReference Include="../../Treasury/Treasury.Contracts/Treasury.Contracts.csproj" />
     <ProjectReference Include="../../Inventory/Inventory.Contracts/Inventory.Contracts.csproj" />
-    <!-- Invoice Get/Search handlers populate JournalId/JournalCode by reading Accounting.Domain.Journal
-         directly — the exact accepted exception this project inherits unchanged from
-         Sales.Application (see docs/dependency-rules.md, "Phase 4-class" debt). -->
-    <ProjectReference Include="../../Accounting/Accounting.Domain/Accounting.Domain.csproj" />
-    <!-- InvoiceJournalPostingService posts Invoice journal entries through Accounting.Contracts
+    <!-- InvoiceJournalPostingService posts Invoice journal entries, and the Invoice Get/Search
+         handlers resolve JournalId/JournalCode, through Accounting.Contracts only
          (PostAccountingDocumentCommand/DeleteAccountingDocumentJournalCommand/
          SetAccountingDocumentJournalStatusCommand/GetAccountingDocumentJournalQuery) instead of
          Accounting.Domain — replaces the legacy root Application project's

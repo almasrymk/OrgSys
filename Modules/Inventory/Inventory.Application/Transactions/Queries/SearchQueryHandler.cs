@@ -1,14 +1,16 @@
 ﻿namespace Inventory.Application.Transactions.Queries
 {
+    using Accounting.Contracts.Postings;
     using OrgSys.SharedKernel;
     using OrgSys.SharedKernel;
     using OrgSys.SharedKernel;
     using AutoMapper;
+    using MediatR;
     using System.Linq.Expressions;
 
     public sealed record SearchTransactionQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandPagination<TransactionDto> ,ISearchQuery<ResultPagination<TransactionDto>>;
 
-    public sealed class SearchQueryHandler(IRepository<Inventory.Domain.Transaction> _Repository, IRepository<CommercialDocuments.Domain.Invoice> invoiceRepository, IRepository<Accounting.Domain.Journal> journalRepository, IMapper mapper) : SearchCommandHandler<SearchTransactionQuery, Inventory.Domain.Transaction, TransactionDto>(_Repository, mapper)
+    public sealed class SearchQueryHandler(IRepository<Inventory.Domain.Transaction> _Repository, IRepository<CommercialDocuments.Domain.Invoice> invoiceRepository, ISender sender, IMapper mapper) : SearchCommandHandler<SearchTransactionQuery, Inventory.Domain.Transaction, TransactionDto>(_Repository, mapper)
     {
         public override async Task<ResultPagination<TransactionDto>> Handle(SearchTransactionQuery request, CancellationToken cancellationToken)
         {
@@ -37,13 +39,12 @@
                     transaction.ParentCode = relatedTransactions?.FirstOrDefault(e => e.Id == transaction.ParentId)?.Code;
             }
 
-            var journals = await journalRepository.GetListByFilterAsync(
-                e => e.RefranceTable == "transaction" && transactionIds.Contains(e.RefranceId));
+            var journals = (await sender.Send(new GetAccountingDocumentJournalsQuery("transaction", transactionIds), cancellationToken)).Response ?? [];
             foreach (var transaction in result.Response)
             {
-                var journal = journals?.FirstOrDefault(e => e.RefranceId == transaction.Id && e.RefranceTypeId == transaction.TypeId);
-                transaction.JournalId = journal?.Id;
-                transaction.JournalCode = journal?.Code;
+                var journal = journals.GetValueOrDefault(transaction.Id);
+                transaction.JournalId = journal?.JournalId;
+                transaction.JournalCode = journal?.JournalCode;
             }
             return result;
         }

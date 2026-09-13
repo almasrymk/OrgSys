@@ -1,20 +1,18 @@
 namespace Parties.Application.Dealers.Queries
 {
+    using Accounting.Contracts.Postings;
     using MediatR;
     using System.Net;
 
-    /// <summary>Customer Balance = Sum(Debit - Credit) of the JournalItems posted against the
-    /// customer's receivable account. A journal is treated as valid ledger history when its Status
-    /// isn't Deleted/Cancel AND it is either <c>Posted</c> (the manual Journal Draft→Post workflow)
-    /// OR carries a <c>RefranceTable</c> (an Invoice/Financial-sourced journal — these integrations
-    /// never set <c>Posted</c>, they're final at creation and governed by Status instead; confirmed by
-    /// reading InvoiceJournalIntegration.cs and TransactionJournalIntegration.cs). A literal
-    /// <c>Posted == true</c> filter would silently zero out every invoice-driven balance.</summary>
+    /// <summary>Customer Balance = Sum(Debit - Credit) of the ledger activity posted against the
+    /// customer's receivable account — resolved through Accounting.Contracts.Postings.GetAccountActivityQuery
+    /// (see that contract for the exact "valid ledger line" filter) instead of an
+    /// IRepository&lt;JournalItem&gt; reference across the module boundary.</summary>
     public sealed record GetDealerBalanceQuery(long DealerId, DateTime? AsOfDate) : IRequest<Result<decimal>>;
 
     public sealed class GetDealerBalanceQueryHandler(
         IRepository<Parties.Domain.Dealer> _DealerRepository,
-        IRepository<JournalItem> _JournalItemRepository) : IRequestHandler<GetDealerBalanceQuery, Result<decimal>>
+        ISender sender) : IRequestHandler<GetDealerBalanceQuery, Result<decimal>>
     {
         public async Task<Result<decimal>> Handle(GetDealerBalanceQuery request, CancellationToken cancellationToken)
         {
@@ -25,17 +23,9 @@ namespace Parties.Application.Dealers.Queries
             if (dealer.AccountId is not > 0)
                 return new Result<decimal>(HttpStatusCode.BadRequest, 0, [new Error($"Customer '{dealer.Name}' does not have a linked receivable account.")]);
 
-            var accountId = dealer.AccountId.Value;
-            var asOfDate = request.AsOfDate?.Date;
+            var items = (await sender.Send(new GetAccountActivityQuery(dealer.AccountId.Value, request.AsOfDate), cancellationToken)).Response ?? [];
 
-            var items = await _JournalItemRepository.GetListByFilterAsync(e =>
-                e.AccountId == accountId &&
-                e.Journal!.Status != Status.Deleted &&
-                e.Journal!.Status != Status.Cancel &&
-                (e.Journal!.Posted || (e.Journal!.RefranceTable != null && e.Journal!.RefranceTable != "")) &&
-                (asOfDate == null || e.Journal!.Date.Date <= asOfDate));
-
-            var balance = (items ?? []).Sum(e => e.Debit - e.Credit);
+            var balance = items.Sum(e => e.Debit - e.Credit);
             return new Result<decimal>(HttpStatusCode.OK, balance, null);
         }
     }

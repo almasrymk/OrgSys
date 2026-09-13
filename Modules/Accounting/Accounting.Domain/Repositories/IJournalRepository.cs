@@ -18,6 +18,9 @@ public interface IJournalRepository
     /// <summary>All journals posted against a source document, regardless of type — used by delete/status-sync, which (like the bridges they replace) do not filter by type.</summary>
     Task<IReadOnlyList<Journal>> GetAllBySourceDocumentAsync(string referenceTable, long sourceDocumentId, CancellationToken cancellationToken = default);
 
+    /// <summary>Resolves the single shared per-fiscal-year Opening Balance journal (not a source-document reference — RefranceTable stays empty on it), if one already exists and is not Deleted/Cancelled.</summary>
+    Task<Journal?> GetOpeningBalanceJournalAsync(long fiscalYearId, long journalTypeId, CancellationToken cancellationToken = default);
+
     /// <summary>Next sequential Code/CodeNumber for a given JournalTypeId — the same numbering scheme Create/Reverse always used.</summary>
     Task<long> GetNextCodeNumberAsync(long journalTypeId, CancellationToken cancellationToken = default);
 

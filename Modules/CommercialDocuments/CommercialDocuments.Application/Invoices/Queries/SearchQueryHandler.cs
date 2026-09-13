@@ -1,5 +1,6 @@
 ﻿namespace CommercialDocuments.Application.Invoices.Queries
 {
+    using Accounting.Contracts.Postings;
     using OrgSys.SharedKernel;
     using OrgSys.SharedKernel;
     using OrgSys.SharedKernel;
@@ -10,7 +11,7 @@
 
     public sealed record SearchInvoiceQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandPagination<InvoiceDto> ,ISearchQuery<ResultPagination<InvoiceDto>>;
 
-    public sealed class SearchQueryHandler(IRepository<CommercialDocuments.Domain.Invoice> _Repository, IRepository<Accounting.Domain.Journal> journalRepository, ISender sender, IMapper mapper) : SearchCommandHandler<SearchInvoiceQuery, CommercialDocuments.Domain.Invoice, InvoiceDto>(_Repository, mapper)
+    public sealed class SearchQueryHandler(IRepository<CommercialDocuments.Domain.Invoice> _Repository, ISender sender, IMapper mapper) : SearchCommandHandler<SearchInvoiceQuery, CommercialDocuments.Domain.Invoice, InvoiceDto>(_Repository, mapper)
     {
         public override async Task<ResultPagination<InvoiceDto>> Handle(SearchInvoiceQuery request, CancellationToken cancellationToken)
         {
@@ -19,13 +20,12 @@
             if (invoiceIds.Count == 0)
                 return result;
 
-            var journals = await journalRepository.GetListByFilterAsync(
-                e => e.RefranceTable == "invoice" && invoiceIds.Contains(e.RefranceId));
+            var journals = (await sender.Send(new GetAccountingDocumentJournalsQuery("invoice", invoiceIds), cancellationToken)).Response ?? [];
             foreach (var invoice in result.Response)
             {
-                var journal = journals?.FirstOrDefault(e => e.RefranceId == invoice.Id && e.RefranceTypeId == invoice.TypeId);
-                invoice.JournalId = journal?.Id;
-                invoice.JournalCode = journal?.Code;
+                var journal = journals.GetValueOrDefault(invoice.Id);
+                invoice.JournalId = journal?.JournalId;
+                invoice.JournalCode = journal?.JournalCode;
             }
 
             // Invoice.Stock navigation was dropped (Sales/Inventory module boundary — see

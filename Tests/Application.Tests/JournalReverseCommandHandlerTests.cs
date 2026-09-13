@@ -18,28 +18,42 @@ public class JournalReverseCommandHandlerTests
     private static FiscalPeriod OpenPeriod(long id = 20, long yearId = 10) => new()
     { Id = id, FiscalYearId = yearId, Name = "Current", PeriodNumber = 1, StartDate = Today.AddDays(-10), EndDate = Today.AddDays(10), FiscalPeriodStatus = FiscalPeriodStatus.Open };
 
-    private static Journal PostedOriginal(long id = 1) => new()
+    /// <summary>A Posted journal with two balanced lines — built through Journal.CreateDraft/AddLine
+    /// (while still a Draft) and then flipped Posted directly (still a public-setter MovementModel
+    /// field, unlike the header/line fields — see the Accounting DDD cleanup report), rather than
+    /// through Journal.Post itself, so these Application-handler tests stay independent of Post's
+    /// own invariants. Pass withLines:false for the "no lines to reverse" case.</summary>
+    private static Journal PostedOriginal(long id = 1, bool withLines = true)
     {
-        Id = id,
-        Code = "GJ-100",
-        CodeNumber = 100,
-        Date = Today.AddDays(-30),
-        Posted = true,
-        Status = Status.New,
-        JournalTypeId = 2,
-        CurrencyId = 1,
-        Rate = 1,
-        TypeId = 0,
-        ParentId = 0,
-        CreateUserId = 1,
-        FiscalYearId = 10,
-        FiscalPeriodId = 20,
-        JournalItems =
-        [
-            new JournalItem { Id = 1, AccountId = 101, Debit = 1000, Credit = 0, Note = "Cash" },
-            new JournalItem { Id = 2, AccountId = 102, Debit = 0, Credit = 1000, Note = "Capital" }
-        ]
-    };
+        var journal = Journal.CreateDraft(
+            journalTypeId: 2, typeId: 0, codeNumber: 100, code: "GJ-100", date: Today.AddDays(-30),
+            createUserId: 1, createDate: Today.AddDays(-30), branchId: null, shiftId: null,
+            currencyId: 1, rate: 1, note: null);
+        journal.Id = id;
+        journal.AssignFiscalPeriod(new FiscalYear { Id = 10 }, new FiscalPeriod { Id = 20 });
+
+        if (withLines)
+        {
+            journal.AddLine(new Account { Id = 101, IsPostable = true }, 1000, 0, "Cash").Id = 1;
+            journal.AddLine(new Account { Id = 102, IsPostable = true }, 0, 1000, "Capital").Id = 2;
+        }
+
+        journal.Posted = true;
+        return journal;
+    }
+
+    /// <summary>A journal owned by another module's source document (RefranceTable set) — the only
+    /// way to reach that state now that RefranceTable has a private setter.</summary>
+    private static Journal ResourceControlledPostedOriginal(long id = 1)
+    {
+        var journal = Journal.CreateForSourceDocument(
+            referenceTable: "invoice", sourceDocumentId: 1, sourceDocumentTypeId: 1, sourceDocumentCode: "INV-1",
+            journalTypeId: 2, codeNumber: 100, date: Today.AddDays(-30), createUserId: 1,
+            createDate: Today.AddDays(-30), branchId: null, shiftId: null, currencyId: 1, rate: 1, note: null);
+        journal.Id = id;
+        journal.Posted = true;
+        return journal;
+    }
 
     private static (ReverseJournalCommandHandler handler, Mock<IJournalRepository> repository, Mock<IUnitOfWork> unitOfWork, Mock<IAccountingPeriodService> accountingPeriodService) BuildHandler(Journal? existing)
     {
@@ -151,7 +165,9 @@ public class JournalReverseCommandHandlerTests
         // Belt-and-braces: Status somehow still New, but the relationship already shows a reversal exists.
         var original = PostedOriginal();
         original.Status = Status.New;
-        original.ReversalJournal = new Journal { Id = 99, Code = "GJ-101" };
+        var existingReversal = Journal.CreateDraft(2, 0, 101, "GJ-101", Today, 1, Today, null, null, 1, 1, null);
+        existingReversal.Id = 99;
+        original.ReversalJournal = existingReversal;
         var (handler, repository, unitOfWork, _) = BuildHandler(original);
 
         var result = await handler.Handle(new ReverseJournalCommand(original.Id), CancellationToken.None);
@@ -163,8 +179,7 @@ public class JournalReverseCommandHandlerTests
     [Fact]
     public async Task Handle_ResourceLinkedJournal_RejectsReversal()
     {
-        var original = PostedOriginal();
-        original.RefranceTable = "invoice";
+        var original = ResourceControlledPostedOriginal();
         var (handler, repository, unitOfWork, _) = BuildHandler(original);
 
         var result = await handler.Handle(new ReverseJournalCommand(original.Id), CancellationToken.None);
@@ -202,8 +217,7 @@ public class JournalReverseCommandHandlerTests
     [Fact]
     public async Task Handle_NoLines_RejectsReversal()
     {
-        var original = PostedOriginal();
-        original.JournalItems = [];
+        var original = PostedOriginal(withLines: false);
         var (handler, repository, unitOfWork, _) = BuildHandler(original);
 
         var result = await handler.Handle(new ReverseJournalCommand(original.Id), CancellationToken.None);

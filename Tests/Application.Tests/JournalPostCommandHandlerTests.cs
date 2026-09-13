@@ -17,6 +17,29 @@ public class JournalPostCommandHandlerTests
     private static FiscalPeriod Period(long id = 20, long yearId = 10, FiscalPeriodStatus status = FiscalPeriodStatus.Open) => new()
     { Id = id, FiscalYearId = yearId, Name = "August 2026", PeriodNumber = 8, StartDate = new DateTime(2026, 8, 1), EndDate = new DateTime(2026, 8, 31), FiscalPeriodStatus = status };
 
+    /// <summary>Draft journal already assigned to fiscal year 10 / period 20 — built through
+    /// Journal.CreateDraft/AssignFiscalPeriod since Journal's header fields have no public setters
+    /// (see the Accounting DDD cleanup report). No lines.</summary>
+    private static Journal DraftJournal(long id = 1)
+    {
+        var journal = Journal.CreateDraft(
+            journalTypeId: 1, typeId: 1, codeNumber: 1, code: "GJ-1", date: JournalDate,
+            createUserId: 1, createDate: JournalDate, branchId: null, shiftId: null,
+            currencyId: 1, rate: 1, note: null);
+        journal.Id = id;
+        journal.AssignFiscalPeriod(new FiscalYear { Id = 10 }, new FiscalPeriod { Id = 20 });
+        return journal;
+    }
+
+    /// <summary>Same as <see cref="DraftJournal"/> plus two balanced lines against accounts 101 (debit)/102 (credit).</summary>
+    private static Journal BalancedDraftJournal(long id = 1)
+    {
+        var journal = DraftJournal(id);
+        journal.AddLine(new Account { Id = 101, IsPostable = true }, 100, 0);
+        journal.AddLine(new Account { Id = 102, IsPostable = true }, 0, 100);
+        return journal;
+    }
+
     private static (PostJournalCommandHandler handler, Mock<IJournalRepository> repository, Mock<IUnitOfWork> unitOfWork, Mock<IAccountingPeriodService> accountingPeriodService) BuildHandler(Journal? existingJournal)
     {
         var repository = new Mock<IJournalRepository>();
@@ -46,15 +69,7 @@ public class JournalPostCommandHandlerTests
     [Fact]
     public async Task Handle_DraftInOpenPeriod_PostsSuccessfully()
     {
-        var existing = new Journal
-        {
-            Id = 1,
-            Date = JournalDate,
-            Posted = false,
-            FiscalYearId = 10,
-            FiscalPeriodId = 20,
-            JournalItems = [new JournalItem { AccountId = 101, Debit = 100, Credit = 0 }, new JournalItem { AccountId = 102, Debit = 0, Credit = 100 }]
-        };
+        var existing = BalancedDraftJournal();
         var (handler, repository, unitOfWork, accountingPeriodService) = BuildHandler(existing);
         var year = Year();
         var period = Period();
@@ -75,11 +90,7 @@ public class JournalPostCommandHandlerTests
     [Fact]
     public async Task Handle_PeriodClosedAfterDraftCreatedWhileOpen_RejectsPosting()
     {
-        var existing = new Journal
-        {
-            Id = 1, Date = JournalDate, Posted = false, FiscalYearId = 10, FiscalPeriodId = 20,
-            JournalItems = [new JournalItem { AccountId = 101, Debit = 100, Credit = 0 }, new JournalItem { AccountId = 102, Debit = 0, Credit = 100 }]
-        };
+        var existing = BalancedDraftJournal();
         var (handler, repository, unitOfWork, accountingPeriodService) = BuildHandler(existing);
         accountingPeriodService.Setup(s => s.ResolveAndValidateAsync(JournalDate, It.IsAny<CancellationToken>()))
             .ReturnsAsync(AccountingPeriodResult.Fail("Fiscal period August 2026 is closed. Journal entries cannot be created or posted."));
@@ -96,11 +107,7 @@ public class JournalPostCommandHandlerTests
     [Fact]
     public async Task Handle_PeriodLocked_RejectsPosting()
     {
-        var existing = new Journal
-        {
-            Id = 1, Date = JournalDate, Posted = false, FiscalYearId = 10, FiscalPeriodId = 20,
-            JournalItems = [new JournalItem { AccountId = 101, Debit = 100, Credit = 0 }, new JournalItem { AccountId = 102, Debit = 0, Credit = 100 }]
-        };
+        var existing = BalancedDraftJournal();
         var (handler, repository, unitOfWork, accountingPeriodService) = BuildHandler(existing);
         accountingPeriodService.Setup(s => s.ResolveAndValidateAsync(JournalDate, It.IsAny<CancellationToken>()))
             .ReturnsAsync(AccountingPeriodResult.Fail("Fiscal period August 2026 is locked. Journal entries cannot be created or posted."));
@@ -115,11 +122,7 @@ public class JournalPostCommandHandlerTests
     [Fact]
     public async Task Handle_FiscalYearClosedBeforePosting_RejectsPosting()
     {
-        var existing = new Journal
-        {
-            Id = 1, Date = JournalDate, Posted = false, FiscalYearId = 10, FiscalPeriodId = 20,
-            JournalItems = [new JournalItem { AccountId = 101, Debit = 100, Credit = 0 }, new JournalItem { AccountId = 102, Debit = 0, Credit = 100 }]
-        };
+        var existing = BalancedDraftJournal();
         var (handler, repository, unitOfWork, accountingPeriodService) = BuildHandler(existing);
         accountingPeriodService.Setup(s => s.ResolveAndValidateAsync(JournalDate, It.IsAny<CancellationToken>()))
             .ReturnsAsync(AccountingPeriodResult.Fail("Fiscal year 2026 is closed. Journal entries cannot be created or posted."));
@@ -133,15 +136,9 @@ public class JournalPostCommandHandlerTests
     [Fact]
     public async Task Handle_DebitDoesNotEqualCredit_RejectsPosting()
     {
-        var existing = new Journal
-        {
-            Id = 1,
-            Date = JournalDate,
-            Posted = false,
-            FiscalYearId = 10,
-            FiscalPeriodId = 20,
-            JournalItems = [new JournalItem { Debit = 100, Credit = 0 }, new JournalItem { Debit = 0, Credit = 50 }]
-        };
+        var existing = DraftJournal();
+        existing.AddLine(new Account { Id = 101, IsPostable = true }, 100, 0);
+        existing.AddLine(new Account { Id = 102, IsPostable = true }, 0, 50);
         var (handler, repository, unitOfWork, accountingPeriodService) = BuildHandler(existing);
 
         var result = await handler.Handle(new PostJournalCommand(1), CancellationToken.None);
@@ -156,7 +153,7 @@ public class JournalPostCommandHandlerTests
     public async Task Handle_NoValidLines_RejectsPosting_ZeroDoesNotCountAsBalanced()
     {
         // A journal with no lines at all (0 == 0) must never read as "balanced" and post.
-        var existing = new Journal { Id = 1, Date = JournalDate, Posted = false, FiscalYearId = 10, FiscalPeriodId = 20 };
+        var existing = DraftJournal();
         var (handler, repository, unitOfWork, accountingPeriodService) = BuildHandler(existing);
 
         var result = await handler.Handle(new PostJournalCommand(1), CancellationToken.None);
@@ -171,15 +168,9 @@ public class JournalPostCommandHandlerTests
     {
         // Two lines that are each individually 0/0 — an apparently-balanced 0==0 total that must
         // still be rejected, since neither line carries any real amount.
-        var existing = new Journal
-        {
-            Id = 1,
-            Date = JournalDate,
-            Posted = false,
-            FiscalYearId = 10,
-            FiscalPeriodId = 20,
-            JournalItems = [new JournalItem { AccountId = 101, Debit = 0, Credit = 0 }, new JournalItem { AccountId = 102, Debit = 0, Credit = 0 }]
-        };
+        var existing = DraftJournal();
+        existing.AddLine(new Account { Id = 101, IsPostable = true }, 0, 0);
+        existing.AddLine(new Account { Id = 102, IsPostable = true }, 0, 0);
         var (handler, repository, unitOfWork, accountingPeriodService) = BuildHandler(existing);
 
         var result = await handler.Handle(new PostJournalCommand(1), CancellationToken.None);
@@ -192,15 +183,7 @@ public class JournalPostCommandHandlerTests
     [Fact]
     public async Task Handle_DebitEqualsCredit_PostsSuccessfully()
     {
-        var existing = new Journal
-        {
-            Id = 1,
-            Date = JournalDate,
-            Posted = false,
-            FiscalYearId = 10,
-            FiscalPeriodId = 20,
-            JournalItems = [new JournalItem { AccountId = 101, Debit = 100, Credit = 0 }, new JournalItem { AccountId = 102, Debit = 0, Credit = 100 }]
-        };
+        var existing = BalancedDraftJournal();
         var (handler, repository, unitOfWork, accountingPeriodService) = BuildHandler(existing);
         var year = Year();
         var period = Period();
@@ -216,15 +199,7 @@ public class JournalPostCommandHandlerTests
     [Fact]
     public async Task Handle_LineReferencesNonPostableAccount_RejectsPosting()
     {
-        var existing = new Journal
-        {
-            Id = 1,
-            Date = JournalDate,
-            Posted = false,
-            FiscalYearId = 10,
-            FiscalPeriodId = 20,
-            JournalItems = [new JournalItem { AccountId = 101, Debit = 100, Credit = 0 }, new JournalItem { AccountId = 102, Debit = 0, Credit = 100 }]
-        };
+        var existing = BalancedDraftJournal();
         var (handler, repository, unitOfWork, accountingPeriodService) = BuildHandler(existing);
         accountingPeriodService.Setup(s => s.ResolveAndValidateAsync(JournalDate, It.IsAny<CancellationToken>()))
             .ReturnsAsync(AccountingPeriodResult.Ok(Year(), Period()));
@@ -249,8 +224,7 @@ public class JournalPostCommandHandlerTests
     [Fact]
     public async Task Handle_OpeningBalanceRuleViolated_RollsBackAndRejectsPosting()
     {
-        var existing = new Journal { Id = 1, Date = JournalDate, Posted = false, FiscalYearId = 10, FiscalPeriodId = 20,
-            JournalItems = [new JournalItem { AccountId = 101, Debit = 100, Credit = 0 }, new JournalItem { AccountId = 102, Debit = 0, Credit = 100 }] };
+        var existing = BalancedDraftJournal();
         var (handler, repository, unitOfWork, accountingPeriodService) = BuildHandler(existing);
         var year = Year();
         var period = Period();
@@ -271,7 +245,8 @@ public class JournalPostCommandHandlerTests
     [Fact]
     public async Task Handle_AlreadyPosted_RejectsWithClearMessage()
     {
-        var existing = new Journal { Id = 1, Date = JournalDate, Posted = true, FiscalYearId = 10, FiscalPeriodId = 20 };
+        var existing = DraftJournal();
+        existing.Posted = true;
         var (handler, repository, unitOfWork, accountingPeriodService) = BuildHandler(existing);
 
         var result = await handler.Handle(new PostJournalCommand(1), CancellationToken.None);

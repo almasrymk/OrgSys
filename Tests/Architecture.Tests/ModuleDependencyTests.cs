@@ -39,7 +39,6 @@ public class ModuleDependencyTests
     private static readonly (string Module, string DependsOnModule, string Reason)[] AcceptedDomainExceptions =
     [
         ("Administration", "Organization", "User.BranchId keeps its existing EF navigation to Branch rather than being redesigned to a Contracts lookup mid-migration — see analysis §13 Dealer/Country precedent."),
-        ("Accounting", "MasterData", "Journal.CurrencyId keeps its existing EF navigation to Currency for the same reason."),
         ("Treasury", "MasterData", "Bank/BankBranch/FinancialAccount/Financial/FinancialTransfer keep their existing EF navigations to Country/City/District/Currency/PaymentType."),
         ("Treasury", "Organization", "CashBox/BankAccount keep their existing EF navigation to Branch."),
         ("Treasury", "Administration", "CashBox.KeeperUserId keeps its existing EF navigation to User."),

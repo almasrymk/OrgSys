@@ -43,25 +43,10 @@ public sealed class PostAccountingDocumentCommandHandler(
         {
             var codeNumber = await journalRepository.GetNextCodeNumberAsync(request.JournalTypeId, cancellationToken);
 
-            journal = new Accounting.Domain.Journal
-            {
-                JournalTypeId = request.JournalTypeId,
-                TypeId = request.JournalTypeId,
-                CodeNumber = codeNumber,
-                Code = codeNumber.ToString(),
-                Date = request.Date,
-                CreateDate = request.CreateDate,
-                CreateUserId = request.CreateUserId,
-                BranchId = request.BranchId,
-                ShiftId = request.ShiftId,
-                CurrencyId = request.CurrencyId,
-                Rate = request.Rate,
-                RefranceId = request.SourceDocumentId,
-                RefranceCode = request.SourceDocumentCode,
-                RefranceTypeId = request.SourceDocumentTypeId,
-                RefranceTable = request.ReferenceTable,
-                Note = request.Note
-            };
+            journal = Accounting.Domain.Journal.CreateForSourceDocument(
+                request.ReferenceTable, request.SourceDocumentId, request.SourceDocumentTypeId, request.SourceDocumentCode,
+                request.JournalTypeId, codeNumber, request.Date, request.CreateUserId, request.CreateDate,
+                request.BranchId, request.ShiftId, request.CurrencyId, request.Rate, request.Note);
 
             journal.ReplaceLinesFromSourceDocument(lines);
             await journalRepository.AddAsync(journal, cancellationToken);
@@ -69,16 +54,9 @@ public sealed class PostAccountingDocumentCommandHandler(
         else
         {
             journal.ReplaceLinesFromSourceDocument(lines);
-
-            journal.Date = request.Date;
-            journal.ModifyDate = request.ModifyDate;
-            journal.ModifyUserId = request.ModifyUserId;
-            journal.BranchId = request.BranchId;
-            journal.ShiftId = request.ShiftId;
-            journal.CurrencyId = request.CurrencyId;
-            journal.Rate = request.Rate;
-            journal.RefranceCode = request.SourceDocumentCode;
-            journal.Note = request.Note;
+            journal.UpdateHeaderFromSourceDocument(
+                request.Date, request.ModifyDate, request.ModifyUserId, request.BranchId, request.ShiftId,
+                request.CurrencyId, request.Rate, request.SourceDocumentCode, request.Note);
         }
 
         // The caller's own UnitOfWork.SaveChangeAsync persists this together with its own

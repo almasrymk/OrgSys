@@ -65,6 +65,18 @@ public class AccountingPeriodServiceTests
         Status = Status.New
     };
 
+    private static Journal ExistingOpeningBalanceJournal(long id, long fiscalYearId, long journalTypeId, Status status)
+    {
+        var journal = Journal.CreateDraft(
+            journalTypeId: journalTypeId, typeId: journalTypeId, codeNumber: id, code: $"GJ-{id}", date: DateTime.Today,
+            createUserId: 1, createDate: DateTime.Today, branchId: null, shiftId: null, currencyId: 1, rate: 1, note: null);
+        journal.Id = id;
+        journal.AssignFiscalPeriod(new FiscalYear { Id = fiscalYearId }, new FiscalPeriod { Id = 1 });
+        journal.Status = status;
+        journal.Hide = false;
+        return journal;
+    }
+
     private static FiscalPeriod OpenPeriod(long yearId = 1, long id = 1) => new()
     {
         Id = id,
@@ -209,7 +221,7 @@ public class AccountingPeriodServiceTests
     {
         var year = OpenYear();
         var openingType = OpeningBalanceType();
-        var existingOpeningBalance = new Journal { Id = 5, FiscalYearId = year.Id, JournalTypeId = openingType.Id, Status = Status.New, Hide = false };
+        var existingOpeningBalance = ExistingOpeningBalanceJournal(5, year.Id, openingType.Id, Status.New);
         var service = BuildService(journalTypes: [openingType], journals: [existingOpeningBalance]);
 
         var errors = await service.ValidateOpeningBalanceAsync(openingType.Id, year.StartDate, year, journalId: 0);
@@ -222,7 +234,7 @@ public class AccountingPeriodServiceTests
     {
         var year = OpenYear();
         var openingType = OpeningBalanceType();
-        var existingOpeningBalance = new Journal { Id = 5, FiscalYearId = year.Id, JournalTypeId = openingType.Id, Status = Status.New, Hide = false };
+        var existingOpeningBalance = ExistingOpeningBalanceJournal(5, year.Id, openingType.Id, Status.New);
         var service = BuildService(journalTypes: [openingType], journals: [existingOpeningBalance]);
 
         var errors = await service.ValidateOpeningBalanceAsync(openingType.Id, year.StartDate, year, journalId: 5);
@@ -235,7 +247,7 @@ public class AccountingPeriodServiceTests
     {
         var year = OpenYear();
         var openingType = OpeningBalanceType();
-        var cancelledOpeningBalance = new Journal { Id = 5, FiscalYearId = year.Id, JournalTypeId = openingType.Id, Status = Status.Cancel, Hide = false };
+        var cancelledOpeningBalance = ExistingOpeningBalanceJournal(5, year.Id, openingType.Id, Status.Cancel);
         var service = BuildService(journalTypes: [openingType], journals: [cancelledOpeningBalance]);
 
         var errors = await service.ValidateOpeningBalanceAsync(openingType.Id, year.StartDate, year, journalId: 0);

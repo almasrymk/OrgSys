@@ -7,6 +7,7 @@ namespace Accounting.Domain
     public class Journal : MovementModel
     {
         private readonly List<IDomainEvent> _domainEvents = [];
+        private readonly List<JournalItem> _journalItems = [];
 
         /// <summary>
         /// Journal cannot inherit OrgSys.SharedKernel.AggregateRoot as well as MovementModel (C# has
@@ -21,73 +22,163 @@ namespace Accounting.Domain
 
         public void ClearDomainEvents() => _domainEvents.Clear();
 
-        [ForeignKey("JournalType")]
-        public virtual long JournalTypeId { get; set; }
+        /// <summary>EF materialization constructor only. Business code creates a Journal through
+        /// <see cref="CreateDraft"/> or <see cref="CreateForSourceDocument"/> — never via a bare
+        /// object initializer, which would leave header/lifecycle fields in an unvalidated state.</summary>
+        protected Journal() { }
+
+        public virtual long JournalTypeId { get; private set; }
 
         public virtual JournalType? JournalType { get; set; }
 
-        [ForeignKey("Currency")]
-        public virtual long CurrencyId { get; set; }
+        /// <summary>
+        /// Currency identity only — Accounting.Domain must not reference MasterData.Domain (see the
+        /// Accounting DDD cleanup report). Accounting.Application resolves/validates the Currency
+        /// this id refers to through MasterData.Contracts.Currencies (GetDefaultCurrencyQuery /
+        /// GetCurrencyNamesQuery), never through a MasterData.Domain.Currency navigation.
+        /// </summary>
+        public virtual long CurrencyId { get; private set; }
 
-        public virtual Currency? Currency { get; set; }
-
-        public virtual decimal Rate { get; set; }
+        public virtual decimal Rate { get; private set; }
 
         [ForeignKey("FiscalYear")]
-        public virtual long FiscalYearId { get; set; }
+        public virtual long FiscalYearId { get; private set; }
 
         public virtual FiscalYear? FiscalYear { get; set; }
 
         [ForeignKey("FiscalPeriod")]
-        public virtual long FiscalPeriodId { get; set; }
+        public virtual long FiscalPeriodId { get; private set; }
 
         public virtual FiscalPeriod? FiscalPeriod { get; set; }
 
-        public virtual long RefranceId { get; set; }
+        public virtual long RefranceId { get; private set; }
 
-        public virtual string? RefranceCode { get; set; }
+        public virtual string? RefranceCode { get; private set; }
 
-        public virtual long RefranceTypeId { get; set; }
+        public virtual long RefranceTypeId { get; private set; }
 
         /// <summary>Non-empty when this journal is owned/controlled by another module's document
         /// (e.g. an Invoice or inventory Transaction posting bridge) rather than created directly
         /// against the ledger — such a journal cannot be Posted/Cancelled/Reversed/edited/deleted
         /// through the direct Journal commands; only the owning module (via Accounting.Contracts)
         /// may touch it. See EnsureNotControlledByAnotherResource / SyncStatusFromSourceDocument.</summary>
-        public virtual string? RefranceTable { get; set; }
+        public virtual string? RefranceTable { get; private set; }
 
-        public virtual string? Note { get; set; }
+        public virtual string? Note { get; private set; }
 
         /// <summary>
-        /// Stays a normal EF-mapped public-setter collection — not a private backing field exposed
-        /// as IReadOnlyCollection — because several other bounded contexts (Treasury, and this
-        /// module's own Postings integration handlers) construct a Journal in one shot via object
-        /// initializer (`new Journal { JournalItems = [...] }`), a pre-existing, already-documented
-        /// cross-module pattern (see ModuleLayerDependencyTests' AcceptedApplicationDomainExceptions
-        /// and docs on Accounting.Contracts.Postings) that this phase does not redesign — see the
-        /// GeneralLedger migration report's "Remaining Technical Debt" section. Within this module,
-        /// AddLine/UpdateLine/RemoveLine are the sanctioned way to mutate lines once a Journal already
-        /// exists — enforced by JournalAggregateEncapsulationTests (Architecture.Tests).
+        /// Private backing field, exposed read-only — the collection cannot be replaced, cleared, or
+        /// added/removed to from outside Journal. AddLine/UpdateLine/RemoveLine/
+        /// ReplaceLinesFromSourceDocument are the only ways lines change; there is no
+        /// IJournalItemRepository and JournalItem has no public constructor (see the Accounting DDD
+        /// cleanup report and JournalAggregateEncapsulationTests in Architecture.Tests, which proves
+        /// this at the repo-scan level, and JournalEncapsulationTests in Accounting.Domain.Tests,
+        /// which proves it at compile time).
         /// </summary>
-        public virtual ICollection<JournalItem> JournalItems { get; set; } = new List<JournalItem>();
+        public virtual IReadOnlyCollection<JournalItem> JournalItems => _journalItems.AsReadOnly();
 
         /// <summary>Set only on a reversing entry — the Posted journal it reverses.</summary>
         [ForeignKey("OriginalJournal")]
-        public virtual long? OriginalJournalId { get; set; }
+        public virtual long? OriginalJournalId { get; private set; }
 
         public virtual Journal? OriginalJournal { get; set; }
 
         /// <summary>Inverse of <see cref="OriginalJournal"/> — set only on the original once reversed. No own column.</summary>
         public virtual Journal? ReversalJournal { get; set; }
 
-        public decimal TotalDebit => JournalItems.Where(i => i.IsValid).Sum(i => i.Debit);
+        public decimal TotalDebit => _journalItems.Where(i => i.IsValid).Sum(i => i.Debit);
 
-        public decimal TotalCredit => JournalItems.Where(i => i.IsValid).Sum(i => i.Credit);
+        public decimal TotalCredit => _journalItems.Where(i => i.IsValid).Sum(i => i.Credit);
 
         /// <summary>Double-entry is satisfied only when there is at least one valid (single-sided,
         /// non-zero) line and the valid lines balance — a journal made entirely of 0/0 lines must
         /// never read as "balanced" just because 0 == 0.</summary>
-        public bool IsBalanced => JournalItems.Any(i => i.IsValid) && TotalDebit == TotalCredit;
+        public bool IsBalanced => _journalItems.Any(i => i.IsValid) && TotalDebit == TotalCredit;
+
+        // ----- Construction -----
+
+        /// <summary>Creates a new, empty Draft journal entered directly against the ledger (the
+        /// "manual Journal" screen) — lines are added afterward via AddLine.</summary>
+        public static Journal CreateDraft(
+            long journalTypeId, long typeId, long codeNumber, string? code, DateTime date,
+            long createUserId, DateTime createDate, long? branchId, long? shiftId,
+            long currencyId, decimal rate, string? note)
+        {
+            return new Journal
+            {
+                JournalTypeId = journalTypeId,
+                TypeId = typeId,
+                CodeNumber = codeNumber,
+                Code = code,
+                Date = date,
+                CreateUserId = createUserId,
+                CreateDate = createDate,
+                BranchId = branchId,
+                ShiftId = shiftId,
+                CurrencyId = currencyId,
+                Rate = rate,
+                Note = note,
+                Status = Status.New,
+                Posted = false
+            };
+        }
+
+        /// <summary>Creates a new Draft journal owned by another module's source document (the
+        /// Accounting.Contracts.Postings bridge) — resource-controlled from the moment it exists, so
+        /// AddLine/UpdateLine/RemoveLine/Post/Cancel/Reverse/Redo never apply to it; only
+        /// ReplaceLinesFromSourceDocument and SyncStatusFromSourceDocument do.</summary>
+        public static Journal CreateForSourceDocument(
+            string referenceTable, long sourceDocumentId, long sourceDocumentTypeId, string? sourceDocumentCode,
+            long journalTypeId, long codeNumber, DateTime date, long createUserId, DateTime createDate,
+            long? branchId, long? shiftId, long currencyId, decimal rate, string? note)
+        {
+            return new Journal
+            {
+                RefranceTable = referenceTable,
+                RefranceId = sourceDocumentId,
+                RefranceTypeId = sourceDocumentTypeId,
+                RefranceCode = sourceDocumentCode,
+                JournalTypeId = journalTypeId,
+                TypeId = journalTypeId,
+                CodeNumber = codeNumber,
+                Code = codeNumber.ToString(),
+                Date = date,
+                CreateUserId = createUserId,
+                CreateDate = createDate,
+                BranchId = branchId,
+                ShiftId = shiftId,
+                CurrencyId = currencyId,
+                Rate = rate,
+                Note = note,
+                Status = Status.New,
+                Posted = false
+            };
+        }
+
+        /// <summary>Assigns the fiscal year/period a journal date resolves to. Resolution itself
+        /// requires querying every FiscalYear/FiscalPeriod and stays in Accounting.Application's
+        /// IAccountingPeriodService (a cross-aggregate concern); this method only records the result,
+        /// so FiscalYearId/FiscalPeriodId are never set except through it or Post/CreateReversal.</summary>
+        public void AssignFiscalPeriod(FiscalYear fiscalYear, FiscalPeriod fiscalPeriod)
+        {
+            FiscalYearId = fiscalYear.Id;
+            FiscalPeriodId = fiscalPeriod.Id;
+        }
+
+        /// <summary>Updates the header (non-lifecycle) fields of a Draft journal — the same fields
+        /// CreateDraft accepts. Guarded the same way line edits are.</summary>
+        public void UpdateHeader(long journalTypeId, DateTime date, long currencyId, decimal rate, string? note, long? branchId, long? shiftId)
+        {
+            EnsureEditable();
+
+            JournalTypeId = journalTypeId;
+            Date = date;
+            CurrencyId = currencyId;
+            Rate = rate;
+            Note = note;
+            BranchId = branchId;
+            ShiftId = shiftId;
+        }
 
         // ----- Line mutation (Draft only) -----
 
@@ -96,15 +187,8 @@ namespace Accounting.Domain
             EnsureEditable();
             account.EnsurePostable();
 
-            var line = new JournalItem
-            {
-                JournalId = Id,
-                AccountId = account.Id,
-                Debit = debit,
-                Credit = credit,
-                Note = note
-            };
-            JournalItems.Add(line);
+            var line = new JournalItem(account.Id, debit, credit, note) { JournalId = Id };
+            _journalItems.Add(line);
             return line;
         }
 
@@ -113,22 +197,19 @@ namespace Accounting.Domain
             EnsureEditable();
             account.EnsurePostable();
 
-            var line = JournalItems.FirstOrDefault(i => i.Id == lineId)
+            var line = _journalItems.FirstOrDefault(i => i.Id == lineId)
                 ?? throw new InvalidOperationException($"Journal line {lineId} does not belong to journal {Code}.");
 
-            line.AccountId = account.Id;
-            line.Debit = debit;
-            line.Credit = credit;
-            line.Note = note;
+            line.Update(account.Id, debit, credit, note);
         }
 
         public void RemoveLine(long lineId)
         {
             EnsureEditable();
 
-            var line = JournalItems.FirstOrDefault(i => i.Id == lineId);
+            var line = _journalItems.FirstOrDefault(i => i.Id == lineId);
             if (line is not null)
-                JournalItems.Remove(line);
+                _journalItems.Remove(line);
         }
 
         // ----- Lifecycle -----
@@ -144,14 +225,32 @@ namespace Accounting.Domain
         public void Post(FiscalYear fiscalYear, FiscalPeriod fiscalPeriod, IReadOnlyCollection<Account> referencedAccounts)
         {
             EnsureNotControlledByAnotherResource();
+            PostCore(fiscalYear, fiscalPeriod, referencedAccounts);
+        }
 
+        /// <summary>
+        /// The one sanctioned way the Accounting.Contracts.Postings bridge may Post a
+        /// resource-controlled journal immediately at creation — Treasury's Financial/
+        /// FinancialTransfer transactions must become genuinely Posted the moment they exist
+        /// (unlike Invoice/Transaction, which only track their source document's own Status over
+        /// time via SyncStatusFromSourceDocument and never set Posted). Deliberately bypasses
+        /// EnsureNotControlledByAnotherResource for the same reason SyncStatusFromSourceDocument/
+        /// ReplaceLinesFromSourceDocument/UpdateHeaderFromSourceDocument do: this IS the owning
+        /// resource acting on its own journal, not an outside caller reaching around it. Every other
+        /// invariant (balanced, postable accounts, open fiscal period) still applies.
+        /// </summary>
+        public void PostForSourceDocument(FiscalYear fiscalYear, FiscalPeriod fiscalPeriod, IReadOnlyCollection<Account> referencedAccounts)
+            => PostCore(fiscalYear, fiscalPeriod, referencedAccounts);
+
+        private void PostCore(FiscalYear fiscalYear, FiscalPeriod fiscalPeriod, IReadOnlyCollection<Account> referencedAccounts)
+        {
             if (Posted)
                 throw new JournalAlreadyPostedException("Journal entry is already posted.");
 
             if (!IsBalanced)
                 throw new JournalNotBalancedException("Total Debit must equal total Credit before posting.");
 
-            foreach (var line in JournalItems.Where(i => i.IsValid))
+            foreach (var line in _journalItems.Where(i => i.IsValid))
             {
                 var account = referencedAccounts.FirstOrDefault(a => a.Id == line.AccountId)
                     ?? throw new AccountNotPostableException($"Account {line.AccountId} referenced by journal line could not be resolved for posting.");
@@ -179,14 +278,31 @@ namespace Accounting.Domain
         public Journal CreateReversal(long reversalCodeNumber, DateTime reversalDate, FiscalYear fiscalYear, FiscalPeriod fiscalPeriod)
         {
             EnsureNotControlledByAnotherResource();
+            return CreateReversalCore(reversalCodeNumber, reversalDate, fiscalYear, fiscalPeriod, preserveSourceDocumentLink: false);
+        }
 
+        /// <summary>
+        /// The one sanctioned way the Accounting.Contracts.Postings bridge may reverse a
+        /// resource-controlled journal (ReverseAccountingDocumentJournalCommand, e.g. Treasury's
+        /// Financial/FinancialTransfer). Deliberately bypasses EnsureNotControlledByAnotherResource
+        /// for the same reason PostForSourceDocument does — this IS the owning resource acting on
+        /// its own journal. Unlike CreateReversal, the RefranceTable/RefranceId/RefranceCode/
+        /// RefranceTypeId link is carried onto the reversal too, so it stays exactly as
+        /// resource-controlled as the original — unreachable through the generic Journal commands,
+        /// matching the pre-migration integration bridges exactly.
+        /// </summary>
+        public Journal CreateReversalForSourceDocument(long reversalCodeNumber, DateTime reversalDate, FiscalYear fiscalYear, FiscalPeriod fiscalPeriod)
+            => CreateReversalCore(reversalCodeNumber, reversalDate, fiscalYear, fiscalPeriod, preserveSourceDocumentLink: true);
+
+        private Journal CreateReversalCore(long reversalCodeNumber, DateTime reversalDate, FiscalYear fiscalYear, FiscalPeriod fiscalPeriod, bool preserveSourceDocumentLink)
+        {
             if (!Posted)
                 throw new JournalCannotBeReversedException("Only a Posted journal entry can be reversed.");
 
             if (Status == Status.Reversed || ReversalJournal is not null)
                 throw new JournalCannotBeReversedException("This journal entry has already been reversed.");
 
-            if (JournalItems.Count == 0)
+            if (_journalItems.Count == 0)
                 throw new JournalCannotBeReversedException("Journal entry has no lines to reverse.");
 
             fiscalYear.EnsureOpenForPosting();
@@ -210,16 +326,15 @@ namespace Accounting.Domain
                 Posted = true,
                 Status = Status.New,
                 OriginalJournalId = Id,
-                JournalItems = JournalItems.Select(line => new JournalItem
-                {
-                    AccountId = line.AccountId,
-                    // The whole point of a reversal: swap Debit and Credit on every line.
-                    Debit = line.Credit,
-                    Credit = line.Debit,
-                    Note = line.Note,
-                    Status = Status.New
-                }).ToList()
+                RefranceTable = preserveSourceDocumentLink ? RefranceTable : null,
+                RefranceId = preserveSourceDocumentLink ? RefranceId : 0,
+                RefranceCode = preserveSourceDocumentLink ? RefranceCode : null,
+                RefranceTypeId = preserveSourceDocumentLink ? RefranceTypeId : 0
             };
+
+            // The whole point of a reversal: swap Debit and Credit on every line.
+            foreach (var line in _journalItems)
+                reversal._journalItems.Add(new JournalItem(line.AccountId, line.Credit, line.Debit, line.Note) { JournalId = reversal.Id });
 
             Status = Status.Reversed;
             return reversal;
@@ -282,9 +397,62 @@ namespace Accounting.Domain
             foreach (var line in lines)
                 line.Account.EnsurePostable();
 
-            JournalItems.Clear();
+            _journalItems.Clear();
             foreach (var line in lines)
-                JournalItems.Add(new JournalItem { AccountId = line.Account.Id, Debit = line.Debit, Credit = line.Credit, Note = line.Note });
+                _journalItems.Add(new JournalItem(line.Account.Id, line.Debit, line.Credit, line.Note) { JournalId = Id });
+        }
+
+        /// <summary>
+        /// Updates the header fields of an existing resource-controlled journal on every re-sync —
+        /// the one legal way Accounting.Contracts.Postings.PostAccountingDocumentCommandHandler may
+        /// update header fields on a journal owned by another module's source document. Does not
+        /// go through EnsureEditable (this journal IS resource-controlled by design), mirroring
+        /// ReplaceLinesFromSourceDocument.
+        /// </summary>
+        public void UpdateHeaderFromSourceDocument(DateTime date, DateTime? modifyDate, long? modifyUserId, long? branchId, long? shiftId, long currencyId, decimal rate, string? sourceDocumentCode, string? note)
+        {
+            Date = date;
+            ModifyDate = modifyDate;
+            ModifyUserId = modifyUserId;
+            BranchId = branchId;
+            ShiftId = shiftId;
+            CurrencyId = currencyId;
+            Rate = rate;
+            RefranceCode = sourceDocumentCode;
+            Note = note;
+        }
+
+        /// <summary>
+        /// Upserts this journal's own line for <paramref name="accountId"/> and rebalances a shared
+        /// clearing line — the one legal way a Receivables/Payables-style "one line per party inside
+        /// a shared per-fiscal-year Opening Balance journal" integration may touch lines on a journal
+        /// it does not exclusively own. Unlike ReplaceLinesFromSourceDocument this journal is NOT
+        /// resource-controlled (RefranceTable stays empty — the manual Journal screen must still be
+        /// able to show/edit it like any other Draft before it is posted), so the normal
+        /// EnsureEditable guard still applies.
+        /// </summary>
+        public void SetOpeningBalanceLine(Account account, decimal debit, decimal credit, string? note, Account clearingAccount)
+        {
+            EnsureEditable();
+            account.EnsurePostable();
+            clearingAccount.EnsurePostable();
+
+            var existing = _journalItems.FirstOrDefault(i => i.AccountId == account.Id);
+            if (existing is not null)
+                existing.Update(account.Id, debit, credit, note);
+            else
+                _journalItems.Add(new JournalItem(account.Id, debit, credit, note) { JournalId = Id });
+
+            var otherLines = _journalItems.Where(i => i.AccountId != clearingAccount.Id).ToList();
+            var net = otherLines.Sum(i => i.Debit) - otherLines.Sum(i => i.Credit);
+            var clearingDebit = net < 0 ? -net : 0;
+            var clearingCredit = net > 0 ? net : 0;
+
+            var clearingLine = _journalItems.FirstOrDefault(i => i.AccountId == clearingAccount.Id);
+            if (clearingLine is not null)
+                clearingLine.Update(clearingAccount.Id, clearingDebit, clearingCredit, "Opening balance clearing");
+            else if (clearingDebit != 0 || clearingCredit != 0)
+                _journalItems.Add(new JournalItem(clearingAccount.Id, clearingDebit, clearingCredit, "Opening balance clearing") { JournalId = Id });
         }
 
         /// <summary>Same rule as line editing (only an unposted, non-resource-controlled Draft may be
@@ -306,7 +474,7 @@ namespace Accounting.Domain
         public void PrepareForDeletion()
         {
             EnsureDeletable();
-            JournalItems.Clear();
+            _journalItems.Clear();
         }
 
         private void EnsureEditable()

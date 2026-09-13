@@ -8,7 +8,15 @@ public partial class MappingProfile : Profile
 
     public void JournalMappingProfile()
     {
+        // Journal -> JournalDto is the only direction AutoMapper handles for the aggregate itself.
+        // The opposite direction (DTO/Command -> Journal) no longer goes through AutoMapper at all:
+        // Create/Update build/mutate the aggregate explicitly via Journal.CreateDraft/UpdateHeader/
+        // AddLine/UpdateLine/RemoveLine (see CreateCommandHandler.cs/UpdateCommandHandler.cs) — a
+        // blind mapper.Map<Journal>(request) can no longer construct a valid aggregate now that
+        // JournalItems and the lifecycle/period fields are private-set. See the Accounting DDD
+        // cleanup report.
         CreateMap<Journal, JournalDto>()
+            .ForMember(dest => dest.CurrencyName, opt => opt.Ignore())
             .ForMember(dest => dest.JournalTypeName, opt => opt.MapFrom(src => src.JournalType!.Name))
             .ForMember(dest => dest.FiscalYearName, opt => opt.MapFrom(src => src.FiscalYear!.Name))
             .ForMember(dest => dest.FiscalPeriodName, opt => opt.MapFrom(src => src.FiscalPeriod!.Name))
@@ -16,44 +24,20 @@ public partial class MappingProfile : Profile
             .ForMember(dest => dest.ReversalJournalId, opt => opt.MapFrom(src => src.ReversalJournal!.Id))
             .ForMember(dest => dest.ReversalJournalCode, opt => opt.MapFrom(src => src.ReversalJournal!.Code))
             .ForMember(dest => dest.JournalItems, opt => opt.MapFrom(src => src.JournalItems));
-        CreateMap<JournalDto, Journal>()
-            .ForMember(dest => dest.FiscalYearId, opt => opt.Ignore())
-            .ForMember(dest => dest.FiscalPeriodId, opt => opt.Ignore())
-            .ForMember(dest => dest.Posted, opt => opt.Ignore())
-            // Never trust these from the client — only the Reverse handler is allowed to set them.
-            .ForMember(dest => dest.OriginalJournalId, opt => opt.Ignore());
 
         CreateMap<JournalType, JournalTypeDto>();
         CreateMap<JournalTypeDto, JournalType>();
 
         CreateMap<Journal, CreateJournalCommand>();
-
         CreateMap<Journal, UpdateJournalCommand>();
-
         CreateMap<Journal, DeleteJournalCommand>();
-        CreateMap<DeleteJournalCommand, Journal>();
 
         CreateMap<JournalItem, JournalItemDto>();
-        CreateMap<JournalItemDto, JournalItem>();
 
-        CreateMap<CreateJournalCommand, Journal>()
-            .ForMember(dest => dest.JournalItems, opt => opt.MapFrom(src => src.JournalItems))
-            .ForMember(dest => dest.FiscalYearId, opt => opt.Ignore())
-            .ForMember(dest => dest.FiscalPeriodId, opt => opt.Ignore())
-            .ForMember(dest => dest.Posted, opt => opt.Ignore())
-            .ForMember(dest => dest.OriginalJournalId, opt => opt.Ignore());
-        CreateMap<UpdateJournalCommand, Journal>()
-            .ForMember(dest => dest.JournalItems, opt => opt.MapFrom(src => src.JournalItems))
-            .ForMember(dest => dest.FiscalYearId, opt => opt.Ignore())
-            .ForMember(dest => dest.FiscalPeriodId, opt => opt.Ignore())
-            .ForMember(dest => dest.Posted, opt => opt.Ignore())
-            .ForMember(dest => dest.OriginalJournalId, opt => opt.Ignore());
-
-        CreateMap<JournalDto, UpdateJournalCommand>()
-            .ForMember(dest => dest.JournalItems, opt => opt.MapFrom(src => src.JournalItems));
-
+        CreateMap<JournalDto, CreateJournalCommand>();
         CreateMap<CreateJournalCommand, JournalDto>();
-        CreateMap<JournalDto, CreateJournalCommand>()
-            .ForMember(dest => dest.JournalItems, opt => opt.MapFrom(src => src.JournalItems));
+        CreateMap<JournalDto, UpdateJournalCommand>();
+        CreateMap<UpdateJournalCommand, JournalDto>();
+        CreateMap<CreateJournalCommand, JournalDto>();
     }
 }

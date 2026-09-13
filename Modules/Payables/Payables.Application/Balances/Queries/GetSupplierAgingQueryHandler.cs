@@ -1,7 +1,9 @@
 namespace Payables.Application.Balances.Queries
 {
+    using Accounting.Contracts.Accounts;
+    using Accounting.Contracts.Postings;
+    using MediatR;
     using OrgSys.SharedKernel;
-    using Accounting.Application;
     using Payables.Contracts.Balances;
     using System.Net;
 
@@ -15,7 +17,7 @@ namespace Payables.Application.Balances.Queries
     /// </summary>
     public sealed class GetSupplierAgingQueryHandler(
         IPayableAccountValidator _Validator,
-        IRepository<JournalItem> _JournalItemRepository) : IQueryHandler<GetSupplierAgingQuery, AgingBucketDto>
+        ISender sender) : IQueryHandler<GetSupplierAgingQuery, AgingBucketDto>
     {
         public async Task<Result<AgingBucketDto>> Handle(GetSupplierAgingQuery request, CancellationToken cancellationToken)
         {
@@ -23,19 +25,9 @@ namespace Payables.Application.Balances.Queries
             if (errors.Count > 0 || dealer?.AccountId is not > 0)
                 return new Result<AgingBucketDto>(HttpStatusCode.BadRequest, new AgingBucketDto(0, 0, 0, 0), errors.Count > 0 ? errors : [new Error("Supplier does not have a linked payable account.")]);
 
-            var accountId = dealer.AccountId.Value;
             var asOfDate = (request.AsOfDate ?? DateTime.Now).Date;
 
-            var items = (await _JournalItemRepository.GetListByFilterAsync(e =>
-                e.AccountId == accountId &&
-                e.Journal!.Status != Status.Deleted &&
-                e.Journal!.Status != Status.Cancel &&
-                (e.Journal!.Posted || (e.Journal!.RefranceTable != null && e.Journal!.RefranceTable != "")) &&
-                e.Journal!.Date.Date <= asOfDate,
-                "Journal"))?
-                .OrderBy(e => e.Journal!.Date)
-                .ThenBy(e => e.Id)
-                .ToList() ?? [];
+            var items = (await sender.Send(new GetAccountActivityQuery(dealer.AccountId.Value, asOfDate), cancellationToken)).Response ?? [];
 
             // FIFO-match each charge "lot" (Credit — an amount we now owe) against later payments
             // (Debit). Whatever remains open in each lot at the end is what's actually aged;
@@ -47,7 +39,7 @@ namespace Payables.Application.Balances.Queries
             foreach (var item in items)
             {
                 if (item.Credit > 0)
-                    openLots.AddLast((item.Journal!.Date.Date, item.Credit));
+                    openLots.AddLast((item.Date.Date, item.Credit));
 
                 var debit = item.Debit;
                 while (debit > 0)

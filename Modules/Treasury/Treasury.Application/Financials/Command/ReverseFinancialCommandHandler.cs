@@ -1,27 +1,26 @@
 namespace Treasury.Application.Financials.Commands
 {
-    using OrgSys.SharedKernel;
-    using Accounting.Application;
+    using Accounting.Contracts.Postings;
+    using MediatR;
     using OrgSys.SharedKernel;
     using Microsoft.Extensions.Logging;
-    using System.Linq;
     using System.Net;
 
     public sealed record ReverseFinancialCommand(long Id) : ICommand, IUpdateCommand<Result>;
 
     /// <summary>
     /// Reverse for a single-leg Posted <see cref="Financial"/> row (Receipt/Payment/Deposit/.../Opening
-    /// Balance): mirrors <c>Journal/Command/ReverseCommandHandler.cs</c> and
-    /// <c>FinancialTransfer/ReverseFinancialTransferCommandHandler.cs</c> — the original Journal and its
-    /// lines are never touched, a new Posted Journal is created with every line's Debit/Credit swapped,
-    /// and the original's Status flips to Reversed. A Transfer leg (which shares ONE Journal between TWO
+    /// Balance): delegates the Journal reversal itself to Accounting.Contracts.Postings.
+    /// ReverseAccountingDocumentJournalCommand (the original Journal and its lines are never touched;
+    /// a new Posted Journal is created with every line's Debit/Credit swapped, and the original's
+    /// Status flips to Reversed — see Journal.CreateReversalForSourceDocument) and only flips this
+    /// Financial row's own Status here. A Transfer leg (which shares ONE Journal between TWO
     /// Financial rows) is explicitly rejected here — use ReverseFinancialTransferCommand for that.
     /// </summary>
     public sealed class ReverseFinancialCommandHandler(
         IUnitOfWork unitOfWork,
+        ISender sender,
         IRepository<Financial> financialRepository,
-        IRepository<Journal> journalRepository,
-        IAccountingPeriodService accountingPeriodService,
         ILogger<ReverseFinancialCommandHandler> logger) : ICommandHandler<ReverseFinancialCommand>
     {
         public async Task<Result> Handle(ReverseFinancialCommand request, CancellationToken cancellationToken)
@@ -44,64 +43,15 @@ namespace Treasury.Application.Financials.Commands
                 if (financial.JournalId is not > 0)
                     return new Result(HttpStatusCode.BadRequest, [new Error("This financial transaction has no linked Journal Entry to reverse.")]);
 
-                var original = await journalRepository.GetByFilterAsync(e => e.Id == financial.JournalId, "JournalItems");
-                if (original is null || original.JournalItems is null || original.JournalItems.Count == 0)
-                    return new Result(HttpStatusCode.BadRequest, [new Error("The linked Journal Entry has no lines to reverse.")]);
-
-                if (original.Status == Status.Reversed || original.ReversalJournal is not null)
-                    return new Result(HttpStatusCode.BadRequest, [new Error("The linked Journal Entry has already been reversed.")]);
-
                 await unitOfWork.BeginTransactionAsync();
                 try
                 {
-                    var reversalDate = DateTime.Now.Date;
-                    var resolution = await accountingPeriodService.ResolveAndValidateAsync(reversalDate, cancellationToken);
-                    if (!resolution.Success)
+                    var reverseResult = await sender.Send(new ReverseAccountingDocumentJournalCommand("financialtransaction", financial.Id), cancellationToken);
+                    if (reverseResult.Response is null)
                     {
                         await unitOfWork.RollbackAsync();
-                        return new Result(HttpStatusCode.BadRequest, resolution.Errors);
+                        return new Result(reverseResult.StatusCode, reverseResult.Errors);
                     }
-
-                    var maxCodeNumber = await journalRepository.GetMaxByFilterAsync(e => e.TypeId == original.TypeId, e => e.CodeNumber);
-                    var codeNumber = maxCodeNumber + 1;
-
-                    var reversal = new Journal
-                    {
-                        JournalTypeId = original.JournalTypeId,
-                        CurrencyId = original.CurrencyId,
-                        Rate = original.Rate,
-                        Date = reversalDate,
-                        FiscalYearId = resolution.FiscalYear!.Id,
-                        FiscalPeriodId = resolution.FiscalPeriod!.Id,
-                        Note = $"Reversal of Journal Entry {original.Code}",
-                        TypeId = original.TypeId,
-                        CodeNumber = codeNumber,
-                        Code = codeNumber.ToString(),
-                        CreateUserId = original.CreateUserId,
-                        CreateDate = DateTime.Now,
-                        Posted = true,
-                        Status = Status.New,
-                        OriginalJournalId = original.Id,
-                        // Kept resource-controlled, like the original, so it can't be re-reversed or
-                        // manually Posted/Cancelled through the generic Journal endpoints.
-                        RefranceTable = original.RefranceTable,
-                        RefranceId = original.RefranceId,
-                        RefranceCode = original.RefranceCode,
-                        RefranceTypeId = original.RefranceTypeId,
-                        JournalItems = original.JournalItems.Select(line => new JournalItem
-                        {
-                            AccountId = line.AccountId,
-                            Debit = line.Credit,
-                            Credit = line.Debit,
-                            Note = line.Note,
-                            Status = Status.New
-                        }).ToList()
-                    };
-
-                    await journalRepository.CreateAsync(reversal);
-
-                    original.Status = Status.Reversed;
-                    await journalRepository.UpdateAsync(original);
 
                     financial.Status = Status.Reversed;
                     await financialRepository.UpdateAsync(financial);
@@ -113,7 +63,7 @@ namespace Treasury.Application.Financials.Commands
                     }
 
                     await unitOfWork.CommitAsync();
-                    logger.LogInformation("Financial {FinancialId} reversed by new Journal {ReversalId}", financial.Id, reversal.Id);
+                    logger.LogInformation("Financial {FinancialId} reversed by new Journal {ReversalId}", financial.Id, reverseResult.Response.ReversalJournalId);
                     return new Result(HttpStatusCode.OK, null);
                 }
                 catch

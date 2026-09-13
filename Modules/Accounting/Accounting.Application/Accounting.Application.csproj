@@ -21,6 +21,10 @@
          Receivables.Application/Payables.Application (opening balance commands) simply consume it
          like every other module does. -->
     <ProjectReference Include="../../Parties/Parties.Contracts/Parties.Contracts.csproj" />
+    <!-- Journal.CurrencyId is validated/displayed through MasterData.Contracts.Currencies
+         (GetDefaultCurrencyQuery/GetCurrencyNamesQuery) instead of a MasterData.Domain.Currency
+         navigation — see the Accounting DDD cleanup report. -->
+    <ProjectReference Include="../../MasterData/MasterData.Contracts/MasterData.Contracts.csproj" />
   </ItemGroup>
 
   <ItemGroup>

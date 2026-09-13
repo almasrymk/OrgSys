@@ -18,18 +18,13 @@
     <!-- Preference now owned by Administration (relocated from the legacy root Domain/Application
          projects). -->
     <ProjectReference Include="../../Administration/Administration.Domain/Administration.Domain.csproj" />
-    <!-- TransactionJournalPostingService posts Transaction journal entries through
-         Accounting.Contracts (PostAccountingDocumentCommand/DeleteAccountingDocumentJournalCommand/
-         SetAccountingDocumentJournalStatusCommand/GetAccountingDocumentJournalQuery) instead of
-         Accounting.Domain — replaces the legacy root Application project's
-         TransactionJournalIntegration, see the legacy-Application-elimination report. -->
+    <!-- TransactionJournalPostingService posts Transaction journal entries, and the Transaction
+         Get/Search handlers resolve JournalId/JournalCode, through Accounting.Contracts only
+         (PostAccountingDocumentCommand/DeleteAccountingDocumentJournalCommand/
+         SetAccountingDocumentJournalStatusCommand/GetAccountingDocumentJournalQuery) — replaces the
+         legacy root Application project's TransactionJournalIntegration, see the
+         legacy-Application-elimination report. -->
     <ProjectReference Include="../../Accounting/Accounting.Contracts/Accounting.Contracts.csproj" />
-    <!-- Transaction Get/Search handlers populate JournalId/JournalCode by reading
-         Accounting.Domain.Journal directly — a pre-existing accepted Application-layer exception
-         (see ModuleLayerDependencyTests), now a direct reference instead of the transitive one that
-         used to arrive via Inventory.Domain (removed — Inventory.Domain must not reference
-         Accounting.Domain, see the GeneralLedger migration report). -->
-    <ProjectReference Include="../../Accounting/Accounting.Domain/Accounting.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>

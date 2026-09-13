@@ -3,7 +3,6 @@ global using Inventory.Domain;
 global using Inventory.Application;
 global using MasterData.Domain;
 global using MasterData.Application;
-global using Accounting.Domain;
 global using Organization.Domain;
 global using Sales.Domain;
 global using CommercialDocuments.Domain;

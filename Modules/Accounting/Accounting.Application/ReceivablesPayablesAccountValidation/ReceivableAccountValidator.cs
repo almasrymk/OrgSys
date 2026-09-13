@@ -1,5 +1,7 @@
 namespace Accounting.Application
 {
+    using Accounting.Application.Accounts.Queries;
+    using Accounting.Contracts.Accounts;
     using MediatR;
     using Parties.Contracts.Dealers;
 
@@ -7,7 +9,7 @@ namespace Accounting.Application
         IRepository<Account> _AccountRepository,
         ISender _Sender) : IReceivableAccountValidator
     {
-        public async Task<(Account? Account, List<Error> Errors)> ValidateAccountAsync(long accountId, CancellationToken cancellationToken = default)
+        public async Task<(AccountLookupDto? Account, List<Error> Errors)> ValidateAccountAsync(long accountId, CancellationToken cancellationToken = default)
         {
             var errors = new List<Error>();
 
@@ -17,7 +19,7 @@ namespace Accounting.Application
                 return (null, errors);
             }
 
-            var account = await _AccountRepository.GetByFilterAsync(e => e.Id == accountId, string.Empty);
+            var account = await _AccountRepository.GetByFilterAsync(e => e.Id == accountId, "AccountType");
             if (account is null || account.Status == Status.Deleted || account.Hide)
             {
                 errors.Add(new Error("The selected account does not exist or is not active."));
@@ -27,10 +29,10 @@ namespace Accounting.Application
             if (!account.IsPostable)
                 errors.Add(new Error($"Account '{account.Name}' is a parent/group account and cannot receive postings. Select a detail account."));
 
-            return (account, errors);
+            return (GetAccountQueryHandler.ToDto(account), errors);
         }
 
-        public async Task<(DealerLookupDto? Dealer, Account? Account, List<Error> Errors)> ValidateCustomerAsync(long dealerId, CancellationToken cancellationToken = default)
+        public async Task<(DealerLookupDto? Dealer, AccountLookupDto? Account, List<Error> Errors)> ValidateCustomerAsync(long dealerId, CancellationToken cancellationToken = default)
         {
             var errors = new List<Error>();
 
@@ -59,7 +61,7 @@ namespace Accounting.Application
             return (dealer, account, errors);
         }
 
-        public async Task<(DealerLookupDto? Dealer, Account? Account, List<Error> Errors)> ValidateSupplierAsync(long dealerId, CancellationToken cancellationToken = default)
+        public async Task<(DealerLookupDto? Dealer, AccountLookupDto? Account, List<Error> Errors)> ValidateSupplierAsync(long dealerId, CancellationToken cancellationToken = default)
         {
             var errors = new List<Error>();
 

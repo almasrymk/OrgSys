@@ -8,6 +8,15 @@ namespace Application.Tests;
 
 public class JournalRedoCommandHandlerTests
 {
+    private static Journal NewJournal(long id, bool posted, Status status)
+    {
+        var journal = Journal.CreateDraft(1, 1, 1, "GJ-1", DateTime.Today, 1, DateTime.Today, null, null, 1, 1, null);
+        journal.Id = id;
+        journal.Posted = posted;
+        journal.Status = status;
+        return journal;
+    }
+
     private static (RedoJournalCommandHandler handler, Mock<IJournalRepository> repository, Mock<IUnitOfWork> unitOfWork) BuildHandler(Journal? existing)
     {
         var repository = new Mock<IJournalRepository>();
@@ -25,7 +34,7 @@ public class JournalRedoCommandHandlerTests
     [Fact]
     public async Task Handle_CancelledDraft_ReopensToNew()
     {
-        var journal = new Journal { Id = 1, Posted = false, Status = Status.Cancel };
+        var journal = NewJournal(1, posted: false, status: Status.Cancel);
         var (handler, repository, unitOfWork) = BuildHandler(journal);
 
         var result = await handler.Handle(new RedoJournalCommand(1), CancellationToken.None);
@@ -38,7 +47,7 @@ public class JournalRedoCommandHandlerTests
     public async Task Handle_PostedJournal_RejectsRedo_NeverReopened()
     {
         // A journal that somehow carries Posted=true — must never be reopened, regardless of Status.
-        var journal = new Journal { Id = 1, Posted = true, Status = Status.Cancel };
+        var journal = NewJournal(1, posted: true, status: Status.Cancel);
         var (handler, repository, unitOfWork) = BuildHandler(journal);
 
         var result = await handler.Handle(new RedoJournalCommand(1), CancellationToken.None);
@@ -51,7 +60,7 @@ public class JournalRedoCommandHandlerTests
     [Fact]
     public async Task Handle_ReversedJournal_RejectsRedo_AccountingHistoryStaysImmutable()
     {
-        var journal = new Journal { Id = 1, Posted = true, Status = Status.Reversed };
+        var journal = NewJournal(1, posted: true, status: Status.Reversed);
         var (handler, repository, unitOfWork) = BuildHandler(journal);
 
         var result = await handler.Handle(new RedoJournalCommand(1), CancellationToken.None);
@@ -63,7 +72,7 @@ public class JournalRedoCommandHandlerTests
     [Fact]
     public async Task Handle_JournalNotCancelled_NoOp()
     {
-        var journal = new Journal { Id = 1, Posted = false, Status = Status.New };
+        var journal = NewJournal(1, posted: false, status: Status.New);
         var (handler, repository, unitOfWork) = BuildHandler(journal);
 
         var result = await handler.Handle(new RedoJournalCommand(1), CancellationToken.None);

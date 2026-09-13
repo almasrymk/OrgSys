@@ -1,6 +1,8 @@
 namespace Treasury.Application.Financials.Commands
 {
-    using OrgSys.SharedKernel;
+    using Accounting.Contracts.Accounts;
+    using Accounting.Contracts.Postings;
+    using MediatR;
     using OrgSys.SharedKernel;
     using System.Net;
 
@@ -8,14 +10,12 @@ namespace Treasury.Application.Financials.Commands
 
     public sealed class PostTransactionCommandHandler(
         IUnitOfWork unitOfWork,
+        ISender sender,
         IRepository<Treasury.Domain.FinancialAccount> accountRepository,
         IRepository<FinancialType> typeRepository,
-        IRepository<Account> glRepository,
         IRepository<Treasury.Domain.Financial> transactionRepository,
         IRepository<CommercialDocuments.Domain.Invoice> invoiceRepository,
-        IRepository<Journal> journalRepository,
-        Accounting.Application.IReceivableAccountValidator referenceValidator,
-        Accounting.Application.IAccountingPeriodService accountingPeriodService) : ICommandHandler<PostFinancialTransactionCommand>
+        IReceivableAccountValidator referenceValidator) : ICommandHandler<PostFinancialTransactionCommand>
     {
         public async Task<Result> Handle(PostFinancialTransactionCommand request, CancellationToken cancellationToken)
         {
@@ -41,13 +41,9 @@ namespace Treasury.Application.Financials.Commands
                     return BadRequest(referenceError);
             }
 
-            var counter = await glRepository.GetByFilterAsync(e => e.Id == dto.CounterAccountId, string.Empty);
+            var counter = (await sender.Send(new GetAccountQuery(dto.CounterAccountId), cancellationToken)).Response;
             if (counter is null)
                 return BadRequest("Counter account must be valid.");
-
-            var resolution = await accountingPeriodService.ResolveAndValidateAsync(dto.TransactionDate, cancellationToken);
-            if (!resolution.Success)
-                return new Result(HttpStatusCode.BadRequest, resolution.Errors);
 
             await unitOfWork.BeginTransactionAsync();
             try
@@ -83,29 +79,37 @@ namespace Treasury.Application.Financials.Commands
                 await transactionRepository.CreateAsync(transaction);
                 await unitOfWork.SaveChangeAsync(cancellationToken);
 
-                var codeNumber = await journalRepository.AnyAsync(e => e.TypeId == 2, cancellationToken)
-                    ? await journalRepository.GetMaxByFilterAsync(e => e.TypeId == 2, e => e.CodeNumber) + 1 : 1;
-                var financialGlId = account.AccountId.Value;
+                var financialGlId = account.AccountId!.Value;
                 var debitId = dto.Direction == FinancialTransactionDirection.In ? financialGlId : counter.Id;
                 var creditId = dto.Direction == FinancialTransactionDirection.In ? counter.Id : financialGlId;
-                var journal = new Journal
-                {
-                    JournalTypeId = 2, TypeId = 2, CodeNumber = codeNumber, Code = codeNumber.ToString(),
-                    Date = dto.TransactionDate, CreateDate = now, CreateUserId = dto.CreateUserId,
-                    BranchId = dto.BranchId, ShiftId = dto.ShiftId, CurrencyId = dto.CurrencyId,
-                    Rate = dto.ExchangeRate, RefranceId = transaction.Id, RefranceCode = transaction.Code,
-                    RefranceTypeId = type.Id, RefranceTable = "financialtransaction", Note = dto.Description,
-                    FiscalYearId = resolution.FiscalYear!.Id, FiscalPeriodId = resolution.FiscalPeriod!.Id,
-                    Posted = true, Status = Status.Approved,
-                    JournalItems =
+
+                var postResult = await sender.Send(new PostAccountingEntryCommand(
+                    ReferenceTable: "financialtransaction",
+                    SourceDocumentId: transaction.Id,
+                    SourceDocumentTypeId: type.Id,
+                    SourceDocumentCode: transaction.Code,
+                    JournalTypeId: 2,
+                    Date: dto.TransactionDate,
+                    CreateDate: now,
+                    CreateUserId: dto.CreateUserId,
+                    BranchId: dto.BranchId,
+                    ShiftId: dto.ShiftId,
+                    CurrencyId: dto.CurrencyId,
+                    Rate: dto.ExchangeRate,
+                    Note: dto.Description,
+                    Lines:
                     [
-                        new JournalItem { AccountId = debitId, Debit = dto.Amount, Note = dto.Description },
-                        new JournalItem { AccountId = creditId, Credit = dto.Amount, Note = dto.Description }
-                    ]
-                };
-                await journalRepository.CreateAsync(journal);
-                await unitOfWork.SaveChangeAsync(cancellationToken);
-                transaction.JournalId = journal.Id;
+                        new AccountingPostingLine(debitId, dto.Amount, 0, dto.Description),
+                        new AccountingPostingLine(creditId, 0, dto.Amount, dto.Description)
+                    ]), cancellationToken);
+
+                if (postResult.Response is null)
+                {
+                    await unitOfWork.RollbackAsync();
+                    return new Result(postResult.StatusCode, postResult.Errors);
+                }
+
+                transaction.JournalId = postResult.Response.JournalId;
                 transaction.HasJournal = true;
                 await transactionRepository.UpdateAsync(transaction);
                 await unitOfWork.SaveChangeAsync(cancellationToken);
@@ -160,16 +164,16 @@ namespace Treasury.Application.Financials.Commands
                     if (dto.ReferenceId is not > 0)
                         return isExpense ? "An expense account reference is required." : "An income account reference is required.";
 
-                    // Needs AccountType.Name for the Expense/Revenue classification check — the shared
-                    // validator doesn't load that nav, so this queries directly instead of via ValidateAccountAsync.
-                    var refAccount = await glRepository.GetByFilterAsync(e => e.Id == dto.ReferenceId, "AccountType");
-                    if (refAccount is null || refAccount.Status == Status.Deleted || refAccount.Hide)
+                    // Needs the Expense/Revenue classification, which AccountLookupDto already carries
+                    // as AccountTypeName — no separate "with AccountType" include needed here.
+                    var refAccount = (await sender.Send(new GetAccountQuery(dto.ReferenceId.Value), cancellationToken)).Response;
+                    if (refAccount is null || !refAccount.IsActive)
                         return "The selected account does not exist or is not active.";
                     if (!refAccount.IsPostable)
                         return $"Account '{refAccount.Name}' is a parent/group account and cannot receive postings.";
 
                     var expectedTypeName = isExpense ? "Expense" : "Revenue";
-                    if (!string.Equals(refAccount.AccountType?.Name, expectedTypeName, StringComparison.OrdinalIgnoreCase))
+                    if (!string.Equals(refAccount.AccountTypeName, expectedTypeName, StringComparison.OrdinalIgnoreCase))
                         return isExpense
                             ? $"Account '{refAccount.Name}' is not classified as an expense account."
                             : $"Account '{refAccount.Name}' is not classified as a revenue account.";

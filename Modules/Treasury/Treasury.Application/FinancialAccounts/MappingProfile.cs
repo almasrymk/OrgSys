@@ -11,8 +11,8 @@ public partial class MappingProfile : Profile
         // AccountName/AccountCode are no longer populated via an EF navigation
         // (FinancialAccount.Account was removed — Treasury.Domain must not reference
         // Accounting.Domain, see the GeneralLedger migration report). The FinancialAccount query
-        // handlers patch them in after mapping, resolved through IRepository<Accounting.Domain.Account>
-        // (an already-accepted Application-layer cross-module read — see ModuleLayerDependencyTests).
+        // handlers patch them in after mapping, resolved through Accounting.Contracts.Accounts.
+        // GetAccountQuery — no Accounting.Domain/Accounting.Application reference at all.
         CreateMap<Treasury.Domain.FinancialAccount, FinancialAccountDto>()
             .ForMember(dest => dest.TypeId, opt => opt.MapFrom(src => (long)src.FinancialAccountType))
             .ForMember(dest => dest.AccountName, opt => opt.Ignore())

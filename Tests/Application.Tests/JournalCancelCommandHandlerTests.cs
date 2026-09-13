@@ -8,6 +8,15 @@ namespace Application.Tests;
 
 public class JournalCancelCommandHandlerTests
 {
+    private static Journal NewJournal(long id, bool posted, Status status)
+    {
+        var journal = Journal.CreateDraft(1, 1, 1, "GJ-1", DateTime.Today, 1, DateTime.Today, null, null, 1, 1, null);
+        journal.Id = id;
+        journal.Posted = posted;
+        journal.Status = status;
+        return journal;
+    }
+
     private static (CancelJournalCommandHandler handler, Mock<IJournalRepository> repository, Mock<IUnitOfWork> unitOfWork) BuildHandler(Journal? existing)
     {
         var repository = new Mock<IJournalRepository>();
@@ -27,7 +36,7 @@ public class JournalCancelCommandHandlerTests
     [Fact]
     public async Task Handle_DraftJournal_CancelsSuccessfully()
     {
-        var journal = new Journal { Id = 1, Posted = false, Status = Status.New };
+        var journal = NewJournal(1, posted: false, status: Status.New);
         var (handler, repository, unitOfWork) = BuildHandler(journal);
 
         var result = await handler.Handle(new CancelJournalCommand(1), CancellationToken.None);
@@ -39,7 +48,7 @@ public class JournalCancelCommandHandlerTests
     [Fact]
     public async Task Handle_PostedJournal_RejectsCancel_MustUseReverseInstead()
     {
-        var journal = new Journal { Id = 1, Posted = true, Status = Status.New };
+        var journal = NewJournal(1, posted: true, status: Status.New);
         var (handler, repository, unitOfWork) = BuildHandler(journal);
 
         var result = await handler.Handle(new CancelJournalCommand(1), CancellationToken.None);

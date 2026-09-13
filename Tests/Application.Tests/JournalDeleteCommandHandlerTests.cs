@@ -7,6 +7,14 @@ namespace Application.Tests;
 
 public class JournalDeleteCommandHandlerTests
 {
+    private static Journal NewJournal(long id, bool posted)
+    {
+        var journal = Journal.CreateDraft(1, 1, 1, "GJ-1", DateTime.Today, 1, DateTime.Today, null, null, 1, 1, null);
+        journal.Id = id;
+        journal.Posted = posted;
+        return journal;
+    }
+
     private static (DeleteCommandHandler handler, Mock<IRepository<Journal>> repository, Mock<IUnitOfWork> unitOfWork) BuildHandler(Journal? existingJournal)
     {
         var repository = new Mock<IRepository<Journal>>();
@@ -25,7 +33,7 @@ public class JournalDeleteCommandHandlerTests
     [Fact]
     public async Task Handle_PostedJournal_RejectsDeleteAndDoesNotShiftDelete()
     {
-        var existing = new Journal { Id = 1, Posted = true, RefranceTable = null };
+        var existing = NewJournal(1, posted: true);
         var (handler, repository, unitOfWork) = BuildHandler(existing);
 
         var result = await handler.Handle(new DeleteJournalCommand(1), CancellationToken.None);
@@ -38,7 +46,7 @@ public class JournalDeleteCommandHandlerTests
     [Fact]
     public async Task Handle_DraftJournal_DeletesSuccessfully()
     {
-        var existing = new Journal { Id = 1, Posted = false, RefranceTable = null, JournalItems = [] };
+        var existing = NewJournal(1, posted: false);
         var (handler, repository, unitOfWork) = BuildHandler(existing);
 
         var result = await handler.Handle(new DeleteJournalCommand(1), CancellationToken.None);

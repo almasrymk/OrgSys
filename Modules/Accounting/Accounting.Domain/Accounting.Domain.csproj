@@ -7,8 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <!-- Deliberately the ONLY ProjectReference — Accounting.Domain must not depend on any other
+         business module's Domain (see the Accounting DDD cleanup report). Currency is referenced
+         by CurrencyId only (a plain scalar, no MasterData.Domain.Currency navigation); the FK
+         constraint is preserved via a Fluent "no navigation" relationship in
+         BuildingBlocks/OrgSys.DatabaseMigrator/Persistence/OrgContext.cs instead. -->
     <ProjectReference Include="../../../BuildingBlocks/OrgSys.SharedKernel/OrgSys.SharedKernel.csproj" />
-    <ProjectReference Include="../../MasterData/MasterData.Domain/MasterData.Domain.csproj" />
   </ItemGroup>
 
 </Project>

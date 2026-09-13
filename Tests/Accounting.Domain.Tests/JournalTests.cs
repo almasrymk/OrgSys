@@ -18,8 +18,15 @@ public class JournalTests
     private static FiscalPeriod ClosedPeriod(long id = 20, long yearId = 10) => new()
     { Id = id, FiscalYearId = yearId, Name = "August 2026", PeriodNumber = 8, StartDate = new DateTime(2026, 8, 1), EndDate = new DateTime(2026, 8, 31), FiscalPeriodStatus = FiscalPeriodStatus.Closed };
 
-    private static Journal DraftJournal(long id = 1) => new()
-    { Id = id, Status = Status.New, Posted = false, Date = new DateTime(2026, 8, 17), TypeId = 2, JournalTypeId = 2, Code = "GJ-1", CodeNumber = 1 };
+    private static Journal DraftJournal(long id = 1)
+    {
+        var journal = Journal.CreateDraft(
+            journalTypeId: 2, typeId: 2, codeNumber: 1, code: "GJ-1", date: new DateTime(2026, 8, 17),
+            createUserId: 1, createDate: new DateTime(2026, 8, 17), branchId: null, shiftId: null,
+            currencyId: 1, rate: 1, note: null);
+        journal.Id = id;
+        return journal;
+    }
 
     private static Journal BalancedDraftWithLines(long id = 1)
     {
@@ -29,6 +36,20 @@ public class JournalTests
         // indistinguishable by Id in these pure in-memory Domain tests.
         journal.AddLine(PostableAccount(101), 100, 0, "Cash").Id = 1;
         journal.AddLine(PostableAccount(102), 0, 100, "Capital").Id = 2;
+        return journal;
+    }
+
+    /// <summary>A journal owned by another module's source document (RefranceTable set) — the only
+    /// way to reach that state now that RefranceTable has a private setter (see Journal.
+    /// CreateForSourceDocument). Has no lines; callers that need lines call
+    /// ReplaceLinesFromSourceDocument themselves (the only legal way to add lines to one of these).</summary>
+    private static Journal ResourceControlledDraftJournal(long id = 1)
+    {
+        var journal = Journal.CreateForSourceDocument(
+            referenceTable: "invoice", sourceDocumentId: 1, sourceDocumentTypeId: 1, sourceDocumentCode: "INV-1",
+            journalTypeId: 2, codeNumber: 1, date: new DateTime(2026, 8, 17), createUserId: 1,
+            createDate: new DateTime(2026, 8, 17), branchId: null, shiftId: null, currencyId: 1, rate: 1, note: null);
+        journal.Id = id;
         return journal;
     }
 
@@ -117,8 +138,8 @@ public class JournalTests
     public void Post_OnlyZeroValueLines_ThrowsJournalNotBalanced_ApparentZeroEqualsZeroIsRejected()
     {
         var journal = DraftJournal();
-        journal.JournalItems.Add(new JournalItem { AccountId = 101, Debit = 0, Credit = 0 });
-        journal.JournalItems.Add(new JournalItem { AccountId = 102, Debit = 0, Credit = 0 });
+        journal.AddLine(PostableAccount(101), 0, 0);
+        journal.AddLine(PostableAccount(102), 0, 0);
 
         Assert.Throws<JournalNotBalancedException>(
             () => journal.Post(OpenYear(), OpenPeriod(), [PostableAccount(101), PostableAccount(102)]));
@@ -180,8 +201,8 @@ public class JournalTests
     [Fact]
     public void Post_ResourceControlledJournal_ThrowsJournalControlledByResource()
     {
-        var journal = BalancedDraftWithLines();
-        journal.RefranceTable = "invoice";
+        var journal = ResourceControlledDraftJournal();
+        journal.ReplaceLinesFromSourceDocument([(PostableAccount(101), 100m, 0m, "Cash"), (PostableAccount(102), 0m, 100m, "Capital")]);
 
         Assert.Throws<JournalControlledByResourceException>(
             () => journal.Post(OpenYear(), OpenPeriod(), [PostableAccount(101), PostableAccount(102)]));
@@ -379,8 +400,7 @@ public class JournalTests
     [Fact]
     public void ResourceControlledJournal_CannotBeCancelledOrRedoneDirectly()
     {
-        var journal = DraftJournal();
-        journal.RefranceTable = "invoice";
+        var journal = ResourceControlledDraftJournal();
 
         Assert.Throws<JournalControlledByResourceException>(() => journal.Cancel());
         Assert.Throws<JournalControlledByResourceException>(() => journal.Redo());
@@ -389,8 +409,7 @@ public class JournalTests
     [Fact]
     public void SyncStatusFromSourceDocument_BypassesResourceControlGuard()
     {
-        var journal = DraftJournal();
-        journal.RefranceTable = "invoice";
+        var journal = ResourceControlledDraftJournal();
 
         journal.SyncStatusFromSourceDocument(Status.Cancel);
 
@@ -400,8 +419,7 @@ public class JournalTests
     [Fact]
     public void ReplaceLinesFromSourceDocument_OnResourceControlledJournal_ValidatesPostableAccounts()
     {
-        var journal = DraftJournal();
-        journal.RefranceTable = "invoice";
+        var journal = ResourceControlledDraftJournal();
 
         Assert.Throws<AccountNotPostableException>(() =>
             journal.ReplaceLinesFromSourceDocument([(NonPostableAccount(), 100m, 0m, (string?)null)]));
@@ -410,12 +428,80 @@ public class JournalTests
     [Fact]
     public void ReplaceLinesFromSourceDocument_ReplacesExistingLinesWholesale()
     {
-        var journal = BalancedDraftWithLines();
-        journal.RefranceTable = "invoice";
+        var journal = ResourceControlledDraftJournal();
+        journal.ReplaceLinesFromSourceDocument([(PostableAccount(101), 100m, 0m, "Cash"), (PostableAccount(102), 0m, 100m, "Capital")]);
 
         journal.ReplaceLinesFromSourceDocument([(PostableAccount(999), 50m, 0m, "Replaced"), (PostableAccount(998), 0m, 50m, "Replaced")]);
 
         Assert.Equal(2, journal.JournalItems.Count);
         Assert.All(journal.JournalItems, i => Assert.Contains(i.AccountId, new long[] { 999, 998 }));
+    }
+
+    // ----- Resource-controlled posting/reversal (Treasury's Financial/FinancialTransfer bridge) -----
+
+    [Fact]
+    public void PostForSourceDocument_OnResourceControlledJournal_PostsSuccessfully_BypassingResourceGuard()
+    {
+        var journal = ResourceControlledDraftJournal();
+        journal.ReplaceLinesFromSourceDocument([(PostableAccount(101), 100m, 0m, "Cash"), (PostableAccount(102), 0m, 100m, "Capital")]);
+
+        journal.PostForSourceDocument(OpenYear(), OpenPeriod(), [PostableAccount(101), PostableAccount(102)]);
+
+        Assert.True(journal.Posted);
+        var raised = Assert.Single(journal.DomainEvents.OfType<JournalPostedDomainEvent>());
+        Assert.Equal(journal.Id, raised.JournalId);
+    }
+
+    [Fact]
+    public void PostForSourceDocument_Unbalanced_ThrowsJournalNotBalanced()
+    {
+        var journal = ResourceControlledDraftJournal();
+        journal.ReplaceLinesFromSourceDocument([(PostableAccount(101), 100m, 0m, "Cash"), (PostableAccount(102), 0m, 50m, "Capital")]);
+
+        Assert.Throws<JournalNotBalancedException>(
+            () => journal.PostForSourceDocument(OpenYear(), OpenPeriod(), [PostableAccount(101), PostableAccount(102)]));
+    }
+
+    [Fact]
+    public void CreateReversalForSourceDocument_OfPostedJournal_ProducesSwappedLinesAndPreservesResourceLink()
+    {
+        var journal = ResourceControlledDraftJournal();
+        journal.ReplaceLinesFromSourceDocument([(PostableAccount(101), 100m, 0m, "Cash"), (PostableAccount(102), 0m, 100m, "Capital")]);
+        journal.PostForSourceDocument(OpenYear(), OpenPeriod(), [PostableAccount(101), PostableAccount(102)]);
+
+        var reversal = journal.CreateReversalForSourceDocument(2, new DateTime(2026, 8, 20), OpenYear(), OpenPeriod());
+
+        Assert.True(reversal.Posted);
+        Assert.Equal(journal.Id, reversal.OriginalJournalId);
+        Assert.Equal(Status.Reversed, journal.Status);
+        Assert.Equal("invoice", reversal.RefranceTable);
+        Assert.Equal(journal.RefranceId, reversal.RefranceId);
+
+        var reversedCashLine = reversal.JournalItems.Single(i => i.AccountId == 101);
+        Assert.Equal(0, reversedCashLine.Debit);
+        Assert.Equal(100, reversedCashLine.Credit);
+    }
+
+    [Fact]
+    public void CreateReversalForSourceDocument_ReversalStaysResourceControlled_CannotBeCancelledDirectly()
+    {
+        var journal = ResourceControlledDraftJournal();
+        journal.ReplaceLinesFromSourceDocument([(PostableAccount(101), 100m, 0m, "Cash"), (PostableAccount(102), 0m, 100m, "Capital")]);
+        journal.PostForSourceDocument(OpenYear(), OpenPeriod(), [PostableAccount(101), PostableAccount(102)]);
+
+        var reversal = journal.CreateReversalForSourceDocument(2, new DateTime(2026, 8, 20), OpenYear(), OpenPeriod());
+
+        Assert.Throws<JournalControlledByResourceException>(() => reversal.Cancel());
+    }
+
+    [Fact]
+    public void CreateReversal_DoesNotCarrySourceDocumentLink_UnlikeCreateReversalForSourceDocument()
+    {
+        var journal = BalancedDraftWithLines();
+        journal.Post(OpenYear(), OpenPeriod(), [PostableAccount(101), PostableAccount(102)]);
+
+        var reversal = journal.CreateReversal(2, new DateTime(2026, 8, 20), OpenYear(), OpenPeriod());
+
+        Assert.Null(reversal.RefranceTable);
     }
 }

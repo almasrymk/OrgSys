@@ -11,6 +11,10 @@
     <!-- IntegrationEvents/* implement OrgSys.SharedKernel.IntegrationEvent, whose MediatR-notification
          transport lives in OrgSys.EventBus (see that project's IIntegrationEvent.cs). -->
     <ProjectReference Include="../../../BuildingBlocks/OrgSys.EventBus/OrgSys.EventBus.csproj" />
+    <!-- IReceivableAccountValidator/IPayableAccountValidator return Parties.Contracts.Dealers.DealerLookupDto
+         alongside AccountLookupDto — a Contracts-to-Contracts reference, the lightest legal form of
+         cross-module coupling (see the Accounting DDD cleanup report). -->
+    <ProjectReference Include="../../Parties/Parties.Contracts/Parties.Contracts.csproj" />
   </ItemGroup>
 
 </Project>

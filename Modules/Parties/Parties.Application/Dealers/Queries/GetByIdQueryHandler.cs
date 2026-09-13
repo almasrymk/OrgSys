@@ -1,14 +1,16 @@
 namespace Parties.Application.Dealers.Queries
 {
+    using Accounting.Contracts.Accounts;
     using OrgSys.SharedKernel;
     using AutoMapper;
+    using MediatR;
     using System.Linq.Expressions;
 
     public sealed record GetByIdDealerQuery(long Id) : ICommand<DealerDto> , IGetByIdQuery<Result<DealerDto>>;
 
     public sealed class GetByIdQueryHandler(
         IRepository<Parties.Domain.Dealer> _Repository,
-        IRepository<Accounting.Domain.Account> accountRepository,
+        ISender sender,
         IMapper mapper) : GetCommandHandler<GetByIdDealerQuery, Parties.Domain.Dealer, DealerDto>(_Repository, mapper)
     {
         public override Expression<Func<Parties.Domain.Dealer, bool>> CreateFilter(GetByIdDealerQuery request)
@@ -31,7 +33,7 @@ namespace Parties.Application.Dealers.Queries
 
             if (result.Response?.AccountId is > 0)
             {
-                var account = await accountRepository.GetByFilterAsync(a => a.Id == result.Response.AccountId.Value, string.Empty);
+                var account = (await sender.Send(new GetAccountQuery(result.Response.AccountId.Value), cancellationToken)).Response;
                 result.Response.AccountCode = account?.Code;
                 result.Response.AccountName = account?.Name;
             }

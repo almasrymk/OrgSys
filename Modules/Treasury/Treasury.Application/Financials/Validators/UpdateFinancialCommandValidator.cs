@@ -1,5 +1,7 @@
 namespace Treasury.Application.Financials.Validators
 {
+    using Accounting.Contracts.Postings;
+    using MediatR;
     using Treasury.Application.Financials.Commands;
     using OrgSys.SharedKernel;
     using FluentValidation;
@@ -9,7 +11,7 @@ namespace Treasury.Application.Financials.Validators
     {
         public UpdateFinancialCommandValidator(
             IRepository<Treasury.Domain.Financial> repository,
-            IRepository<FiscalYear> fiscalYearRepository) : base(repository)
+            ISender sender) : base(repository)
         {
             When(c => c.FinancialTypeId == (long)FinancialTransactionType.OpeningBalance, () =>
             {
@@ -23,9 +25,7 @@ namespace Treasury.Application.Financials.Validators
                 RuleFor(c => c)
                     .MustAsync(async (command, cancellationToken) =>
                     {
-                        var fiscalYear = (await fiscalYearRepository.GetListByFilterAsync(
-                            e => e.StartDate.Date <= command.Date.Date && e.EndDate.Date >= command.Date.Date))
-                            ?.FirstOrDefault();
+                        var fiscalYear = (await sender.Send(new GetFiscalYearForDateQuery(command.Date), cancellationToken)).Response;
                         if (fiscalYear is null)
                             return true;
 

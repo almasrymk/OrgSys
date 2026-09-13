@@ -1,10 +1,7 @@
 namespace Accounting.Application.Journals.Commands;
 
+using Accounting.Domain.Repositories;
 using OrgSys.SharedKernel;
-using OrgSys.SharedKernel;
-using Accounting.Application;
-using OrgSys.SharedKernel;
-using AutoMapper;
 using Microsoft.Extensions.Logging;
 using System.Net;
 
@@ -12,12 +9,12 @@ public sealed class CreateJournalCommand : Accounting.Application.JournalDto, IC
 
 public sealed class CreateCommandHandler(
     IUnitOfWork _UnitOfWork,
-    IRepository<Accounting.Domain.Journal> _Repository,
+    IJournalRepository _JournalRepository,
+    IAccountRepository _AccountRepository,
     IAccountingPeriodService _AccountingPeriodService,
-    IMapper mapper,
-    ILogger<CreateCommandHandler> logger) : CreateCommandHandler<CreateJournalCommand, Accounting.Domain.Journal>(_UnitOfWork, _Repository , mapper)
+    ILogger<CreateCommandHandler> logger) : ICommandHandler<CreateJournalCommand>
 {
-    public override async Task<Result> Handle(CreateJournalCommand request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(CreateJournalCommand request, CancellationToken cancellationToken)
     {
         logger.LogInformation(
             "Creating Journal. Date: {Date}, JournalTypeId: {JournalTypeId}, Lines: {LinesCount}",
@@ -39,22 +36,40 @@ public sealed class CreateCommandHandler(
                 return new Result(HttpStatusCode.BadRequest, openingBalanceErrors);
             }
 
-            var ob = mapper.Map<Accounting.Domain.Journal>(request);
-            ob.FiscalYearId = resolution.FiscalYear!.Id;
-            ob.FiscalPeriodId = resolution.FiscalPeriod!.Id;
-            // Every journal is created as a Draft — the client cannot force Posted through Create.
-            ob.Posted = false;
+            var lines = request.JournalItems ?? [];
+            var accountIds = lines.Select(i => i.AccountId).Distinct().ToList();
+            var accounts = (await _AccountRepository.GetByIdsAsync(accountIds, cancellationToken)).ToDictionary(a => a.Id);
 
-            await _Repository.CreateAsync(ob);
+            // Every journal is created as a Draft — the client cannot force Posted through Create.
+            var journal = Accounting.Domain.Journal.CreateDraft(
+                request.JournalTypeId, request.TypeId, request.CodeNumber, request.Code, request.Date,
+                request.CreateUserId, request.CreateDate, request.BranchId, request.ShiftId,
+                request.CurrencyId, request.Rate, request.Note);
+
+            foreach (var line in lines)
+            {
+                if (!accounts.TryGetValue(line.AccountId, out var account))
+                    return new Result(HttpStatusCode.BadRequest, [new Error($"Account {line.AccountId} could not be resolved.")]);
+
+                journal.AddLine(account, line.Debit, line.Credit, line.Note);
+            }
+
+            journal.AssignFiscalPeriod(resolution.FiscalYear!, resolution.FiscalPeriod!);
+
+            await _JournalRepository.AddAsync(journal, cancellationToken);
 
             if (await _UnitOfWork.SaveChangeAsync(cancellationToken) > 0)
             {
-                logger.LogInformation("Journal {JournalId} saved successfully", ob.Id);
+                logger.LogInformation("Journal {JournalId} saved successfully", journal.Id);
                 return new Result(HttpStatusCode.OK, null);
             }
 
             logger.LogWarning("Journal creation did not persist any changes (SaveChangesAsync returned 0)");
             return new Result(HttpStatusCode.InternalServerError, [new Error("Error")]);
+        }
+        catch (Accounting.Domain.Exceptions.AccountingDomainException ex)
+        {
+            return new Result(HttpStatusCode.BadRequest, [new Error(ex.Message)]);
         }
         catch (Exception ex)
         {

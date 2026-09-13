@@ -1,5 +1,6 @@
 namespace Accounting.Application
 {
+    using Accounting.Contracts.Accounts;
     using MediatR;
     using Parties.Contracts.Dealers;
 
@@ -7,7 +8,7 @@ namespace Accounting.Application
         IReceivableAccountValidator _AccountValidator,
         ISender _Sender) : IPayableAccountValidator
     {
-        public async Task<(DealerLookupDto? Dealer, Account? Account, List<Error> Errors)> ValidateSupplierAsync(long dealerId, CancellationToken cancellationToken = default)
+        public async Task<(DealerLookupDto? Dealer, AccountLookupDto? Account, List<Error> Errors)> ValidateSupplierAsync(long dealerId, CancellationToken cancellationToken = default)
         {
             var errors = new List<Error>();
 

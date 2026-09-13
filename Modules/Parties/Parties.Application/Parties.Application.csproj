@@ -11,9 +11,11 @@
     <ProjectReference Include="../Parties.Contracts/Parties.Contracts.csproj" />
     <ProjectReference Include="../../../BuildingBlocks/OrgSys.EventBus/OrgSys.EventBus.csproj" />
     <!-- Dealer create/update GL-account provisioning (DealerPayableAccountProvisioning/
-         DealerReceivableAccountProvisioning) uses IReceivableAccountValidator, owned by
-         Accounting — moved here unchanged from Sales.Application, see that project's history. -->
-    <ProjectReference Include="../../Accounting/Accounting.Application/Accounting.Application.csproj" />
+         DealerReceivableAccountProvisioning) and the Dealer query handlers (AccountCode/AccountName)
+         use Accounting.Contracts only (IReceivableAccountValidator, GetAccountQuery,
+         GetAccountLookupsQuery, ProvisionSubAccountCommand) — no reference to Accounting.Domain or
+         Accounting.Application. -->
+    <ProjectReference Include="../../Accounting/Accounting.Contracts/Accounting.Contracts.csproj" />
     <!-- Preference now owned by Administration (relocated from the legacy root Domain project). -->
     <ProjectReference Include="../../Administration/Administration.Domain/Administration.Domain.csproj" />
   </ItemGroup>

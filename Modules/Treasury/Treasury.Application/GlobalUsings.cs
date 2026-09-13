@@ -2,8 +2,6 @@ global using OrgSys.SharedKernel;
 global using Treasury.Domain;
 global using Treasury.Application;
 global using MasterData.Domain;
-global using Accounting.Domain;
-global using Accounting.Application;
 global using CommercialDocuments.Domain;
 global using Parties.Domain;
 global using Administration.Domain;

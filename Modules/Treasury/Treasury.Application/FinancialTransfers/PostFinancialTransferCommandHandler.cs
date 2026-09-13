@@ -1,6 +1,6 @@
 namespace Treasury.Application.FinancialTransfers.Commands;
 
-using OrgSys.SharedKernel;
+using Accounting.Contracts.Postings;
 using OrgSys.SharedKernel;
 using System.Net;
 using MediatR;
@@ -12,18 +12,18 @@ public sealed record GetFinancialTransferQuery(long Id) : IRequest<Result<Financ
 
 public sealed class GetFinancialTransfersQueryHandler(
     IRepository<Treasury.Domain.FinancialTransfer> repository,
-    IRepository<Journal> journalRepository) : IRequestHandler<GetFinancialTransfersQuery, ResultCollection<FinancialTransferDto>>
+    ISender sender) : IRequestHandler<GetFinancialTransfersQuery, ResultCollection<FinancialTransferDto>>
 {
     public async Task<ResultCollection<FinancialTransferDto>> Handle(GetFinancialTransfersQuery request, CancellationToken token)
     {
         var rows = await repository.GetListByFilterAsync(e => e.Status != Status.Deleted,
             e => e.OrderByDescending(x => x.Date), "FromFinancialAccount,ToFinancialAccount", 1, 1000);
-        var result = new List<FinancialTransferDto>();
-        foreach (var row in rows ?? [])
-        {
-            var journal = await journalRepository.GetByFilterAsync(e => e.RefranceTable == "financialtransfer" && e.RefranceId == row.Id, string.Empty);
-            result.Add(Map(row, journal?.Id));
-        }
+        rows ??= [];
+
+        var journals = (await sender.Send(
+            new GetAccountingDocumentJournalsQuery("financialtransfer", rows.Select(r => r.Id).ToList()), token)).Response ?? [];
+
+        var result = rows.Select(row => Map(row, journals.GetValueOrDefault(row.Id)?.JournalId)).ToList();
         return new ResultCollection<FinancialTransferDto>(HttpStatusCode.OK, result, null);
     }
 
@@ -42,24 +42,23 @@ public sealed class GetFinancialTransfersQueryHandler(
 
 public sealed class GetFinancialTransferQueryHandler(
     IRepository<Treasury.Domain.FinancialTransfer> repository,
-    IRepository<Journal> journalRepository) : IRequestHandler<GetFinancialTransferQuery, Result<FinancialTransferDto>>
+    ISender sender) : IRequestHandler<GetFinancialTransferQuery, Result<FinancialTransferDto>>
 {
     public async Task<Result<FinancialTransferDto>> Handle(GetFinancialTransferQuery request, CancellationToken token)
     {
         var row = await repository.GetByFilterAsync(e => e.Id == request.Id, "FromFinancialAccount,ToFinancialAccount");
         if (row is null) return new Result<FinancialTransferDto>(HttpStatusCode.NotFound, null, [new Error("Transfer not found")]);
-        var journal = await journalRepository.GetByFilterAsync(e => e.RefranceTable == "financialtransfer" && e.RefranceId == row.Id, string.Empty);
-        return new Result<FinancialTransferDto>(HttpStatusCode.OK, GetFinancialTransfersQueryHandler.Map(row, journal?.Id), null);
+        var journal = (await sender.Send(new GetAccountingDocumentJournalQuery("financialtransfer", row.Id, 3), token)).Response;
+        return new Result<FinancialTransferDto>(HttpStatusCode.OK, GetFinancialTransfersQueryHandler.Map(row, journal?.JournalId), null);
     }
 }
 
 public sealed class PostFinancialTransferCommandHandler(
     IUnitOfWork unitOfWork,
+    ISender sender,
     IRepository<Treasury.Domain.FinancialTransfer> transferRepository,
     IRepository<FinancialAccount> accountRepository,
-    IRepository<Financial> transactionRepository,
-    IRepository<Journal> journalRepository,
-    Accounting.Application.IAccountingPeriodService accountingPeriodService) : ICommandHandler<PostFinancialTransferCommand>
+    IRepository<Financial> transactionRepository) : ICommandHandler<PostFinancialTransferCommand>
 {
     public async Task<Result> Handle(PostFinancialTransferCommand request, CancellationToken cancellationToken)
     {
@@ -79,10 +78,6 @@ public sealed class PostFinancialTransferCommandHandler(
             return BadRequest("Both financial accounts must exist and be active.");
         if (source.AccountId is not > 0 || destination.AccountId is not > 0)
             return BadRequest("Both financial accounts must be linked to general-ledger accounts.");
-
-        var resolution = await accountingPeriodService.ResolveAndValidateAsync(dto.TransactionDate, cancellationToken);
-        if (!resolution.Success)
-            return new Result(HttpStatusCode.BadRequest, resolution.Errors);
 
         await unitOfWork.BeginTransactionAsync();
         try
@@ -108,51 +103,44 @@ public sealed class PostFinancialTransferCommandHandler(
             await transferRepository.CreateAsync(transfer);
             await unitOfWork.SaveChangeAsync(cancellationToken);
 
-            var codeNumber = await journalRepository.AnyAsync(e => e.TypeId == 2, cancellationToken)
-                ? await journalRepository.GetMaxByFilterAsync(e => e.TypeId == 2, e => e.CodeNumber) + 1
-                : 1;
-            var journal = new Journal
-            {
-                JournalTypeId = 2,
-                TypeId = 2,
-                CodeNumber = codeNumber,
-                Code = codeNumber.ToString(),
-                Date = dto.TransactionDate,
-                CreateDate = now,
-                CreateUserId = dto.CreateUserId,
-                BranchId = dto.BranchId,
-                ShiftId = dto.ShiftId,
-                CurrencyId = dto.CurrencyId,
-                Rate = dto.ExchangeRate,
-                RefranceId = transfer.Id,
-                RefranceCode = transfer.Id.ToString(),
-                RefranceTypeId = 3,
-                RefranceTable = "financialtransfer",
-                Note = dto.Description,
-                FiscalYearId = resolution.FiscalYear!.Id,
-                FiscalPeriodId = resolution.FiscalPeriod!.Id,
-                Posted = true,
-                Status = Status.Approved,
-                JournalItems =
+            var postResult = await sender.Send(new PostAccountingEntryCommand(
+                ReferenceTable: "financialtransfer",
+                SourceDocumentId: transfer.Id,
+                SourceDocumentTypeId: 3,
+                SourceDocumentCode: transfer.Id.ToString(),
+                JournalTypeId: 2,
+                Date: dto.TransactionDate,
+                CreateDate: now,
+                CreateUserId: dto.CreateUserId,
+                BranchId: dto.BranchId,
+                ShiftId: dto.ShiftId,
+                CurrencyId: dto.CurrencyId,
+                Rate: dto.ExchangeRate,
+                Note: dto.Description,
+                Lines:
                 [
-                    new JournalItem { AccountId = destination.AccountId.Value, Debit = dto.Amount, Note = dto.Description },
-                    new JournalItem { AccountId = source.AccountId.Value, Credit = dto.Amount, Note = dto.Description }
-                ]
-            };
-            await journalRepository.CreateAsync(journal);
-            await unitOfWork.SaveChangeAsync(cancellationToken);
+                    new AccountingPostingLine(destination.AccountId!.Value, dto.Amount, 0, dto.Description),
+                    new AccountingPostingLine(source.AccountId!.Value, 0, dto.Amount, dto.Description)
+                ]), cancellationToken);
 
+            if (postResult.Response is null)
+            {
+                await unitOfWork.RollbackAsync();
+                return new Result(postResult.StatusCode, postResult.Errors);
+            }
+
+            var journalId = postResult.Response.JournalId;
             var common = new
             {
                 dto.CurrencyId, dto.ExchangeRate, dto.Description, dto.CreateUserId,
                 dto.BranchId, dto.ShiftId
             };
             var outgoing = CreateMovement(transfer, source.Id, destination.Id,
-                FinancialTransactionDirection.Out, Treasury.Domain.FinancialTransactionType.TransferOut, journal.Id,
+                FinancialTransactionDirection.Out, Treasury.Domain.FinancialTransactionType.TransferOut, journalId,
                 common.CurrencyId, common.ExchangeRate,
                 common.Description, common.CreateUserId, common.BranchId, common.ShiftId, now);
             var incoming = CreateMovement(transfer, destination.Id, source.Id,
-                FinancialTransactionDirection.In, Treasury.Domain.FinancialTransactionType.TransferIn, journal.Id,
+                FinancialTransactionDirection.In, Treasury.Domain.FinancialTransactionType.TransferIn, journalId,
                 common.CurrencyId, common.ExchangeRate,
                 common.Description, common.CreateUserId, common.BranchId, common.ShiftId, now);
             await transactionRepository.CreateAsync([outgoing, incoming]);

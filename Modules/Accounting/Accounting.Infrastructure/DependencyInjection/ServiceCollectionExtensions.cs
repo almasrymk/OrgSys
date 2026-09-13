@@ -21,8 +21,8 @@ public static class ServiceCollectionExtensions
         services.AddScoped<Accounting.Application.IAccountingPeriodService, Accounting.Application.AccountingPeriodService>();
         // Temporary home for the AR/AP account validators — see Accounting.Application.csproj's
         // own comment for why, and docs/modular-monolith-analysis.md §19 for when they move.
-        services.AddScoped<Accounting.Application.IReceivableAccountValidator, Accounting.Application.ReceivableAccountValidator>();
-        services.AddScoped<Accounting.Application.IPayableAccountValidator, Accounting.Application.PayableAccountValidator>();
+        services.AddScoped<Accounting.Contracts.Accounts.IReceivableAccountValidator, Accounting.Application.ReceivableAccountValidator>();
+        services.AddScoped<Accounting.Contracts.Accounts.IPayableAccountValidator, Accounting.Application.PayableAccountValidator>();
 
         // Aggregate-shaped repositories for the Journal/Account/FiscalPeriod write side — see
         // Accounting.Domain.Repositories and the GeneralLedger migration report.

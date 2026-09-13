@@ -1,15 +1,17 @@
 ﻿namespace Inventory.Application.Transactions.Queries
 {
+    using Accounting.Contracts.Postings;
     using OrgSys.SharedKernel;
     using OrgSys.SharedKernel;
     using OrgSys.SharedKernel;
     using OrgSys.SharedKernel;
     using AutoMapper;
+    using MediatR;
     using System.Linq.Expressions;
 
     public sealed record GetByIdTransactionQuery(long Id) : ICommand<TransactionDto> , IGetByIdQuery<Result<TransactionDto>>;
 
-    public sealed class GetByIdQueryHandler(IRepository<Inventory.Domain.Transaction> _Repository, IRepository<CommercialDocuments.Domain.Invoice> invoiceRepository, IRepository<Accounting.Domain.Journal> journalRepository, IMapper mapper) : GetCommandHandler<GetByIdTransactionQuery, Inventory.Domain.Transaction, TransactionDto>(_Repository, mapper)
+    public sealed class GetByIdQueryHandler(IRepository<Inventory.Domain.Transaction> _Repository, IRepository<CommercialDocuments.Domain.Invoice> invoiceRepository, ISender sender, IMapper mapper) : GetCommandHandler<GetByIdTransactionQuery, Inventory.Domain.Transaction, TransactionDto>(_Repository, mapper)
     {
         public override async Task<Result<TransactionDto>> Handle(GetByIdTransactionQuery request, CancellationToken cancellationToken)
         {
@@ -25,13 +27,9 @@
                 result.Response.SourceInvoiceTypeId = invoice.TypeId;
             }
 
-            var journal = await journalRepository.GetByFilterAsync(
-                e => e.RefranceTable == "transaction"
-                    && e.RefranceId == result.Response.Id
-                    && e.RefranceTypeId == result.Response.TypeId,
-                string.Empty);
-            result.Response.JournalId = journal?.Id;
-            result.Response.JournalCode = journal?.Code;
+            var journal = (await sender.Send(new GetAccountingDocumentJournalQuery("transaction", result.Response.Id, result.Response.TypeId), cancellationToken)).Response;
+            result.Response.JournalId = journal?.JournalId;
+            result.Response.JournalCode = journal?.JournalCode;
             return result;
         }
 
