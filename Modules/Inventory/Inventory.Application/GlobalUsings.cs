@@ -9,5 +9,3 @@ global using Sales.Domain;
 global using CommercialDocuments.Domain;
 global using Parties.Domain;
 global using Administration.Domain;
-// The Transaction->Journal posting bridge (Application.Commands.Org.Financials.Integration.
-// JournalTransaction.TransactionJournalIntegration) hasn't been extracted from the monolith yet.

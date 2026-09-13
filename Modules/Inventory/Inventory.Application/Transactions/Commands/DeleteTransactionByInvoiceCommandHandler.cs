@@ -2,7 +2,7 @@ namespace Inventory.Application.Transactions.Commands;
 
 using OrgSys.SharedKernel;
 using System.Net;
-using global::Application.Commands.Org.Financials.Integration.JournalTransaction;
+using Inventory.Application.Transactions.Integration;
 using Inventory.Contracts.Transactions;
 
 /// <summary>
@@ -23,7 +23,7 @@ public sealed class DeleteTransactionByInvoiceCommandHandler(
         if (transaction == null)
             return new Result(HttpStatusCode.OK, null);
 
-        await new TransactionJournalIntegration(provider).DeleteByTransactionIdAsync(transaction.Id);
+        await new TransactionJournalPostingService(provider).DeleteByTransactionIdAsync(transaction.Id);
         transaction.TransactionProducts?.Clear();
         await transactionRepository.ShiftDeleteAsync(t => t.Id == transaction.Id);
 

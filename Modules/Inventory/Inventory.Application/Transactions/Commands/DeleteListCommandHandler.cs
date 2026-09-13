@@ -5,7 +5,6 @@
     using OrgSys.SharedKernel;
     using AutoMapper;
     using System.Linq.Expressions;
-    using global::Application.Commands.Org.Financials.Integration.JournalTransaction;
     using Microsoft.Extensions.DependencyInjection;
     using Inventory.Application.Transactions.Integration;
 
@@ -39,7 +38,7 @@
             foreach (var transaction in transactions)
             {
                 await new TransferReceivedIntegration(_provider).DeleteReceivedAsync(transaction);
-                await new TransactionJournalIntegration(_provider).DeleteByTransactionIdAsync(transaction.Id);
+                await new TransactionJournalPostingService(_provider).DeleteByTransactionIdAsync(transaction.Id);
                 await transactionProductRepository.ShiftDeleteAsync(e => e.TransactionId == transaction.Id);
             }
             

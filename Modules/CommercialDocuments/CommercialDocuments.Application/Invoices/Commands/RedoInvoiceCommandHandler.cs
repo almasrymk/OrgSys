@@ -5,7 +5,7 @@ using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System.Net;
-using Application.Commands.Org.Financials.Integration.JournalInvoice;
+using CommercialDocuments.Application.Invoices.Integration;
 using Inventory.Contracts.Transactions;
 
 
@@ -35,7 +35,7 @@ namespace CommercialDocuments.Application.Invoices.Commands
                 }
 
                 invoice.Status = OrgSys.SharedKernel.Status.New;
-                await new InvoiceJournalIntegration(_provider)
+                await new InvoiceJournalPostingService(_provider)
                     .SetStatusByInvoiceIdAsync(invoice.Id, OrgSys.SharedKernel.Status.New);
 
                 if (invoice.TransactionId > 0)

@@ -6,7 +6,7 @@
     using AutoMapper;
     using Microsoft.Extensions.DependencyInjection;
     using System.Linq.Expressions;
-    using global::Application.Commands.Org.Financials.Integration.JournalInvoice;
+    using CommercialDocuments.Application.Invoices.Integration;
     using Inventory.Contracts.Transactions;
     using Treasury.Contracts.Financials;
     using MediatR;
@@ -29,7 +29,7 @@
             if (invoice == null)
                 return false;
 
-            await new InvoiceJournalIntegration(_provider).DeleteByInvoiceIdAsync(request.Id);
+            await new InvoiceJournalPostingService(_provider).DeleteByInvoiceIdAsync(request.Id);
             invoice.InvoiceProducts!.Clear();
 
             await sender.Send(new DeleteFinancialsByInvoiceCommand(request.Id));

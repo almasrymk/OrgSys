@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text;
 using System.Transactions;
-using Application.Commands.Org.Financials.Integration.JournalInvoice;
+using CommercialDocuments.Application.Invoices.Integration;
 using Inventory.Contracts.Transactions;
 
 namespace CommercialDocuments.Application.Invoices.Commands
@@ -35,7 +35,7 @@ namespace CommercialDocuments.Application.Invoices.Commands
                 }
 
                 invoice.Status = OrgSys.SharedKernel.Status.Cancel;
-                await new InvoiceJournalIntegration(_provider)
+                await new InvoiceJournalPostingService(_provider)
                     .SetStatusByInvoiceIdAsync(invoice.Id, OrgSys.SharedKernel.Status.Cancel);
 
                 if (invoice.TransactionId > 0)

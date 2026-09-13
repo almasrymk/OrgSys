@@ -27,7 +27,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Application\Application.csproj" />
     <ProjectReference Include="..\BuildingBlocks\OrgSys.Infrastructure\OrgSys.Infrastructure.csproj" />
     <ProjectReference Include="..\BuildingBlocks\OrgSys.DatabaseMigrator\OrgSys.DatabaseMigrator.csproj" />
     <ProjectReference Include="..\Modules\MasterData\MasterData.Infrastructure\MasterData.Infrastructure.csproj" />

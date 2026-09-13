@@ -4,7 +4,6 @@
     using OrgSys.SharedKernel;
     using OrgSys.SharedKernel;
     using AutoMapper;
-    using global::Application.Commands.Org.Financials.Integration.JournalTransaction;
     using Microsoft.Extensions.DependencyInjection;
     using Inventory.Application.Transactions.Integration;
 
@@ -52,7 +51,7 @@
 
             if (res)
             {
-                await new TransactionJournalIntegration(_provider).SyncAsync(request);
+                await new TransactionJournalPostingService(_provider).SyncAsync(request);
                 res = await _Repository.UpdateAsync(request);
             }
 

@@ -4,7 +4,6 @@
     using OrgSys.SharedKernel;
     using OrgSys.SharedKernel;
     using AutoMapper;
-    using global::Application.Commands.Org.Financials.Integration.JournalTransaction;
     using System.Net;
     using Inventory.Application.Transactions.Integration;
 
@@ -21,7 +20,7 @@
                 await _Repository.CreateAsync(transaction);
                 await _UnitOfWork.SaveChangeAsync(cancellationToken);
 
-                await new TransactionJournalIntegration(provider).SyncAsync(transaction);
+                await new TransactionJournalPostingService(provider).SyncAsync(transaction);
                 await new TransferReceivedIntegration(provider).SyncAsync(transaction, cancellationToken);
                 await _UnitOfWork.SaveChangeAsync(cancellationToken);
                 await _UnitOfWork.CommitAsync();

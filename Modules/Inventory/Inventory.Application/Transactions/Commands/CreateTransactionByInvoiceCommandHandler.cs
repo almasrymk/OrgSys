@@ -7,7 +7,7 @@
     using System.Net;
     using System.Threading;
     using System.Threading.Tasks;
-    using global::Application.Commands.Org.Financials.Integration.JournalTransaction;
+    using Inventory.Application.Transactions.Integration;
     using Inventory.Contracts.Transactions;
 
     public sealed class CreateTransactionByInvoiceCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Transaction> _Repository,
@@ -94,8 +94,8 @@
                     invoice.TransactionId = transaction.Id;
 
                     if (transactionTypeChanged)
-                        await new TransactionJournalIntegration(provider).DeleteByTransactionIdAsync(transaction.Id);
-                    await new TransactionJournalIntegration(provider).SyncAsync(transaction, invoice.TypeId);
+                        await new TransactionJournalPostingService(provider).DeleteByTransactionIdAsync(transaction.Id);
+                    await new TransactionJournalPostingService(provider).SyncAsync(transaction, invoice.TypeId);
                     await _Repository.UpdateAsync(transaction);
 
                     await _UnitOfWork.SaveChangeAsync(cancellationToken);

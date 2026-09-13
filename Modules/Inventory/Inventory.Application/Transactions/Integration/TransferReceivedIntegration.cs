@@ -1,6 +1,5 @@
 namespace Inventory.Application.Transactions.Integration;
 
-using global::Application.Commands.Org.Financials.Integration.JournalTransaction;
 using Microsoft.Extensions.DependencyInjection;
 
 internal sealed class TransferReceivedIntegration(IServiceProvider provider)
@@ -22,7 +21,7 @@ internal sealed class TransferReceivedIntegration(IServiceProvider provider)
         if (received is null)
             return;
 
-        await new TransactionJournalIntegration(provider).DeleteByTransactionIdAsync(received.Id);
+        await new TransactionJournalPostingService(provider).DeleteByTransactionIdAsync(received.Id);
         var productRepository = provider.GetRequiredService<IRepository<TransactionProduct>>();
         await productRepository.ShiftDeleteAsync(e => e.TransactionId == received.Id);
         await transactionRepository.ShiftDeleteAsync(e => e.Id == received.Id);
@@ -114,7 +113,7 @@ internal sealed class TransferReceivedIntegration(IServiceProvider provider)
         {
             // Keep this non-forced so incomplete account configuration does not roll back
             // the Transfer and its automatically generated Received transaction.
-            await new TransactionJournalIntegration(provider).SyncAsync(received);
+            await new TransactionJournalPostingService(provider).SyncAsync(received);
             await provider.GetRequiredService<IUnitOfWork>().SaveChangeAsync(cancellationToken);
         }
     }

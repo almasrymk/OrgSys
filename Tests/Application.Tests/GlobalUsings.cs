@@ -1,13 +1,3 @@
 global using OrgSys.SharedKernel;
-global using MasterData.Domain;
-global using MasterData.Application;
-global using Organization.Domain;
-global using Organization.Application;
-global using Administration.Domain;
-global using Administration.Application;
 global using Accounting.Domain;
 global using Accounting.Application;
-global using Treasury.Domain;
-global using Treasury.Application;
-global using Sales.Domain;
-global using Inventory.Domain;

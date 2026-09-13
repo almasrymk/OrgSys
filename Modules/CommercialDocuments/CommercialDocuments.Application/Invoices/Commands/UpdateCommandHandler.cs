@@ -4,7 +4,7 @@
     using OrgSys.SharedKernel;
     using OrgSys.SharedKernel;
     using AutoMapper;
-    using global::Application.Commands.Org.Financials.Integration.JournalInvoice;
+    using CommercialDocuments.Application.Invoices.Integration;
 
     public sealed class UpdateInvoiceCommand : InvoiceDto , ICommand, IUpdateCommand<Result>;
     public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork, 
@@ -28,7 +28,7 @@
 
             if (res)
             {
-                await new InvoiceJournalIntegration(_provider).SyncAsync(request);
+                await new InvoiceJournalPostingService(_provider).SyncAsync(request);
                 res = await _Repository.UpdateAsync(request);
             }
 

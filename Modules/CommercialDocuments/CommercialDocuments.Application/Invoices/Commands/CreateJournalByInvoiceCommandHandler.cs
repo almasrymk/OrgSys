@@ -1,7 +1,7 @@
 namespace CommercialDocuments.Application.Invoices.Commands;
 
 using OrgSys.SharedKernel;
-using global::Application.Commands.Org.Financials.Integration.JournalInvoice;
+using CommercialDocuments.Application.Invoices.Integration;
 using OrgSys.SharedKernel;
 using System.Net;
 
@@ -20,7 +20,7 @@ public sealed class CreateJournalByInvoiceCommandHandler(
 
         try
         {
-            await new InvoiceJournalIntegration(provider).SyncAsync(invoice, force: true);
+            await new InvoiceJournalPostingService(provider).SyncAsync(invoice, force: true);
             await repository.UpdateAsync(invoice);
             await unitOfWork.SaveChangeAsync(cancellationToken);
             return new Result(HttpStatusCode.OK, null);

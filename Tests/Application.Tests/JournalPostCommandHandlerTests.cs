@@ -14,7 +14,7 @@ public class JournalPostCommandHandlerTests
     {
         var services = new ServiceCollection();
         services.AddLogging();
-        services.AddAutoMapper(cfg => { cfg.AddProfile<global::MappingProfile>(); cfg.AddProfile<Accounting.Application.MappingProfile>(); });
+        services.AddAutoMapper(cfg => { cfg.AddProfile<Accounting.Application.MappingProfile>(); });
         return services.BuildServiceProvider().GetRequiredService<IMapper>();
     }
 

@@ -1,7 +1,7 @@
 namespace Inventory.Application.Transactions.Commands;
 
 using OrgSys.SharedKernel;
-using global::Application.Commands.Org.Financials.Integration.JournalTransaction;
+using Inventory.Application.Transactions.Integration;
 using OrgSys.SharedKernel;
 using System.Net;
 
@@ -22,7 +22,7 @@ public sealed class CreateJournalByTransactionCommandHandler(
 
         try
         {
-            await new TransactionJournalIntegration(provider).SyncAsync(transaction, force: true);
+            await new TransactionJournalPostingService(provider).SyncAsync(transaction, force: true);
             await repository.UpdateAsync(transaction);
             await unitOfWork.SaveChangeAsync(cancellationToken);
             return new Result(HttpStatusCode.OK, null);

@@ -20,13 +20,15 @@
          directly — the exact accepted exception this project inherits unchanged from
          Sales.Application (see docs/dependency-rules.md, "Phase 4-class" debt). -->
     <ProjectReference Include="../../Accounting/Accounting.Domain/Accounting.Domain.csproj" />
+    <!-- InvoiceJournalPostingService posts Invoice journal entries through Accounting.Contracts
+         (PostAccountingDocumentCommand/DeleteAccountingDocumentJournalCommand/
+         SetAccountingDocumentJournalStatusCommand/GetAccountingDocumentJournalQuery) instead of
+         Accounting.Domain — replaces the legacy root Application project's
+         InvoiceJournalIntegration, see the legacy-Application-elimination report. -->
+    <ProjectReference Include="../../Accounting/Accounting.Contracts/Accounting.Contracts.csproj" />
     <!-- Preference now owned by Administration (relocated from the legacy root Domain/Application
          projects — see docs/modular-monolith-analysis.md §21 history). -->
     <ProjectReference Include="../../Administration/Administration.Domain/Administration.Domain.csproj" />
-    <!-- Application.Commands.Org.Financials.Integration.JournalInvoice (the Invoice->Journal
-         posting bridge) hasn't been extracted from the monolith yet — moved unchanged from
-         Sales.Application. -->
-    <ProjectReference Include="../../../Application/Application.csproj" />
   </ItemGroup>
 
   <ItemGroup>

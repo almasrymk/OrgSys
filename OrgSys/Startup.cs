@@ -1,4 +1,3 @@
-using AutoMapper;
 using OrgSys.DatabaseMigrator.Persistence;
 using OrgSys.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -109,9 +108,7 @@ namespace OrgSys
                 options.Filters.Add(new AuthorizeFilter(p));
                 options.Filters.Add<OrgSys.Filters.ApiUnauthorizedFilter>();
             }).AddXmlSerializerFormatters();
-            //services.AddAutoMapper(cfg => { cfg.AddProfile<MapperConfig>(); });
-            services.AddAutoMapper(cfg => { cfg.AddProfile<MappingProfile>(); });
-           
+
             services.AddControllersWithViews();
            
             services.AddSession();

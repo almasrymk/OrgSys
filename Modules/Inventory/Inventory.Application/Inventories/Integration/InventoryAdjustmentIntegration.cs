@@ -1,6 +1,6 @@
 namespace Inventory.Application.Inventories.Integration;
 
-using global::Application.Commands.Org.Financials.Integration.JournalTransaction;
+using Inventory.Application.Transactions.Integration;
 using Microsoft.Extensions.DependencyInjection;
 
 internal sealed class InventoryAdjustmentIntegration(IServiceProvider provider)
@@ -54,7 +54,7 @@ internal sealed class InventoryAdjustmentIntegration(IServiceProvider provider)
         var transactions = await transactionRepository.GetListByFilterAsync(e => e.InventoryId == inventoryId);
         foreach (var transaction in transactions ?? [])
         {
-            await new TransactionJournalIntegration(provider).DeleteByTransactionIdAsync(transaction.Id);
+            await new TransactionJournalPostingService(provider).DeleteByTransactionIdAsync(transaction.Id);
             await transactionProductRepository.ShiftDeleteAsync(e => e.TransactionId == transaction.Id);
             await transactionRepository.ShiftDeleteAsync(e => e.Id == transaction.Id);
         }
@@ -73,7 +73,7 @@ internal sealed class InventoryAdjustmentIntegration(IServiceProvider provider)
         {
             if (transaction != null)
             {
-                await new TransactionJournalIntegration(provider).DeleteByTransactionIdAsync(transaction.Id);
+                await new TransactionJournalPostingService(provider).DeleteByTransactionIdAsync(transaction.Id);
                 await transactionProductRepository.ShiftDeleteAsync(e => e.TransactionId == transaction.Id);
                 await transactionRepository.ShiftDeleteAsync(e => e.Id == transaction.Id);
             }

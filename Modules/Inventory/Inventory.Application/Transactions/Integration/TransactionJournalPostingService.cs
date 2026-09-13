@@ -1,22 +1,29 @@
-namespace Application.Commands.Org.Financials.Integration.JournalTransaction;
+namespace Inventory.Application.Transactions.Integration;
 
+using Accounting.Contracts.Postings;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
-public sealed class TransactionJournalIntegration(IServiceProvider provider)
+/// <summary>
+/// Transaction -> Journal posting bridge. Determines posting intent (which stock/dealer/transit
+/// accounts, which currency) from Transaction/Preference/Stock/Currency/Invoice data —
+/// Inventory.Application already read these across module boundaries before this move (documented
+/// accepted exceptions, see docs/dependency-rules.md); Journal creation/update/deletion is owned by
+/// Accounting.Application and reached only through Accounting.Contracts. Replaces (behavior
+/// preserved) the legacy root Application project's Application.Commands.Org.Financials.Integration.
+/// JournalTransaction.TransactionJournalIntegration — see the legacy-Application-elimination report.
+/// </summary>
+public sealed class TransactionJournalPostingService(IServiceProvider provider)
 {
     private const string ReferenceTable = "transaction";
 
     public async Task SyncAsync(Transaction transaction, long? sourceInvoiceTypeId = null, bool force = false)
     {
-        var journalRepository = provider.GetRequiredService<IRepository<Journal>>();
-        var journalItemRepository = provider.GetRequiredService<IRepository<JournalItem>>();
+        var sender = provider.GetRequiredService<ISender>();
         var preferenceRepository = provider.GetRequiredService<IRepository<Preference>>();
 
-        var journal = await journalRepository.GetByFilterAsync(
-            e => e.RefranceTable == ReferenceTable
-                && e.RefranceId == transaction.Id
-                && e.RefranceTypeId == transaction.TypeId,
-            "JournalItems");
+        var existingJournal = (await sender.Send(
+            new GetAccountingDocumentJournalQuery(ReferenceTable, transaction.Id, transaction.TypeId))).Response;
 
         var preferenceTypeId = transaction.TypeId switch
         {
@@ -31,11 +38,11 @@ public sealed class TransactionJournalIntegration(IServiceProvider provider)
         var autoCreateJournalEnabled = preferences.FirstOrDefault(e => e.Key == "AutoCreateJournalEntry")?.Value == "1";
         var enabled = force
             || autoCreateJournalEnabled
-            || (accountsIntegrationEnabled && journal != null);
+            || (accountsIntegrationEnabled && existingJournal != null);
 
         if (!enabled)
         {
-            await DeleteAsync(journal, journalRepository, journalItemRepository);
+            await sender.Send(new DeleteAccountingDocumentJournalCommand(ReferenceTable, transaction.Id));
             transaction.HasJournal = false;
             return;
         }
@@ -46,7 +53,7 @@ public sealed class TransactionJournalIntegration(IServiceProvider provider)
             if (force)
                 throw new InvalidOperationException("The transaction accounts are not configured in transaction preferences or warehouse settings.");
 
-            await DeleteAsync(journal, journalRepository, journalItemRepository);
+            await sender.Send(new DeleteAccountingDocumentJournalCommand(ReferenceTable, transaction.Id));
             transaction.HasJournal = false;
             return;
         }
@@ -55,85 +62,45 @@ public sealed class TransactionJournalIntegration(IServiceProvider provider)
         var currency = await currencyRepository.GetByFilterAsync(e => e.IsDefault, "")
             ?? throw new InvalidOperationException("A default currency is required to create the transaction journal entry.");
 
-        var items = new List<JournalItem>
+        var lines = new List<AccountingPostingLine>
         {
-            new() { AccountId = debitAccountId, Debit = transaction.Total, Credit = 0, Note = transaction.Notes },
-            new() { AccountId = creditAccountId, Debit = 0, Credit = transaction.Total, Note = transaction.Notes }
+            new(debitAccountId, transaction.Total, 0, transaction.Notes),
+            new(creditAccountId, 0, transaction.Total, transaction.Notes)
         };
 
-        if (journal is null)
-        {
-            var journalTypeId = transaction.TypeId == 7 ? 1 : 2;
-            var codeNumber = await journalRepository.AnyAsync(e => e.TypeId == journalTypeId)
-                ? await journalRepository.GetMaxByFilterAsync(e => e.TypeId == journalTypeId, e => e.CodeNumber) + 1
-                : 1;
+        var journalTypeId = transaction.TypeId == 7 ? 1 : 2;
 
-            journal = new Journal
-            {
-                JournalTypeId = journalTypeId,
-                TypeId = journalTypeId,
-                CodeNumber = codeNumber,
-                Code = codeNumber.ToString(),
-                Date = transaction.Date,
-                CreateDate = transaction.CreateDate,
-                CreateUserId = transaction.CreateUserId,
-                BranchId = transaction.BranchId,
-                ShiftId = transaction.ShiftId,
-                CurrencyId = currency.Id,
-                Rate = currency.Rate,
-                RefranceId = transaction.Id,
-                RefranceCode = transaction.Code,
-                RefranceTypeId = transaction.TypeId,
-                RefranceTable = ReferenceTable,
-                Note = transaction.Notes,
-                JournalItems = items
-            };
-            await journalRepository.CreateAsync(journal);
-        }
-        else
-        {
-            await journalItemRepository.ShiftDeleteAsync(e => e.JournalId == journal.Id);
-            foreach (var item in items)
-                item.JournalId = journal.Id;
-            await journalItemRepository.CreateAsync(items);
+        var result = await sender.Send(new PostAccountingDocumentCommand(
+            ReferenceTable: ReferenceTable,
+            SourceDocumentId: transaction.Id,
+            SourceDocumentTypeId: transaction.TypeId,
+            SourceDocumentCode: transaction.Code,
+            JournalTypeId: journalTypeId,
+            Date: transaction.Date,
+            CreateDate: transaction.CreateDate,
+            CreateUserId: transaction.CreateUserId,
+            ModifyDate: transaction.ModifyDate,
+            ModifyUserId: transaction.ModifyUserId,
+            BranchId: transaction.BranchId,
+            ShiftId: transaction.ShiftId,
+            CurrencyId: currency.Id,
+            Rate: currency.Rate,
+            Note: transaction.Notes,
+            Lines: lines));
 
-            journal.Date = transaction.Date;
-            journal.ModifyDate = transaction.ModifyDate;
-            journal.ModifyUserId = transaction.ModifyUserId;
-            journal.BranchId = transaction.BranchId;
-            journal.ShiftId = transaction.ShiftId;
-            journal.CurrencyId = currency.Id;
-            journal.Rate = currency.Rate;
-            journal.RefranceCode = transaction.Code;
-            journal.Note = transaction.Notes;
-            await journalRepository.UpdateAsync(journal);
-        }
-
-        transaction.HasJournal = true;
+        transaction.HasJournal = result.Response?.HasJournal ?? false;
     }
 
     public async Task DeleteByTransactionIdAsync(long transactionId)
     {
-        var journalRepository = provider.GetRequiredService<IRepository<Journal>>();
-        var journalItemRepository = provider.GetRequiredService<IRepository<JournalItem>>();
-        var journals = await journalRepository.GetListByFilterAsync(
-            e => e.RefranceTable == ReferenceTable && e.RefranceId == transactionId);
-
-        foreach (var journal in journals ?? [])
-            await DeleteAsync(journal, journalRepository, journalItemRepository);
+        var sender = provider.GetRequiredService<ISender>();
+        await sender.Send(new DeleteAccountingDocumentJournalCommand(ReferenceTable, transactionId));
     }
 
     public async Task SetStatusByTransactionIdAsync(long transactionId, OrgSys.SharedKernel.Status status)
     {
-        var journalRepository = provider.GetRequiredService<IRepository<Journal>>();
-        var journals = await journalRepository.GetListByFilterAsync(
-            e => e.RefranceTable == ReferenceTable && e.RefranceId == transactionId);
-
-        foreach (var journal in journals ?? [])
-        {
-            journal.Status = status;
-            await journalRepository.UpdateAsync(journal);
-        }
+        var sender = provider.GetRequiredService<ISender>();
+        await sender.Send(new SetAccountingDocumentJournalStatusCommand(ReferenceTable, transactionId, status));
     }
 
     private async Task<(long DebitAccountId, long CreditAccountId)> ResolveAccountsAsync(
@@ -228,16 +195,4 @@ public sealed class TransactionJournalIntegration(IServiceProvider provider)
 
     private static long ParseAccountId(IEnumerable<Preference> preferences, string key) =>
         long.TryParse(preferences.FirstOrDefault(e => e.Key == key)?.Value, out var id) ? id : 0;
-
-    private static async Task DeleteAsync(
-        Journal? journal,
-        IRepository<Journal> journalRepository,
-        IRepository<JournalItem> journalItemRepository)
-    {
-        if (journal is null)
-            return;
-
-        await journalItemRepository.ShiftDeleteAsync(e => e.JournalId == journal.Id);
-        await journalRepository.ShiftDeleteAsync(e => e.Id == journal.Id);
-    }
 }

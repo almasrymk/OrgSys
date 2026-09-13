@@ -1,5 +1,5 @@
 using OrgSys.SharedKernel;
-using Application.Commands.Org.Financials.Integration.JournalTransaction;
+using Inventory.Application.Transactions.Integration;
 using OrgSys.SharedKernel;
 using OrgSys.SharedKernel;
 using AutoMapper;
@@ -41,7 +41,7 @@ public sealed class CancelTransactionCommandHandler(
             }
 
             transaction.Status = OrgSys.SharedKernel.Status.Cancel;
-            await new TransactionJournalIntegration(provider)
+            await new TransactionJournalPostingService(provider)
                 .SetStatusByTransactionIdAsync(transaction.Id, OrgSys.SharedKernel.Status.Cancel);
 
             if (await unitOfWork.SaveChangeAsync(cancellationToken) > 0)

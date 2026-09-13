@@ -2,7 +2,7 @@ namespace Inventory.Application.Transactions.Commands;
 
 using OrgSys.SharedKernel;
 using System.Net;
-using global::Application.Commands.Org.Financials.Integration.JournalTransaction;
+using Inventory.Application.Transactions.Integration;
 using Inventory.Contracts.Transactions;
 
 /// <summary>
@@ -23,7 +23,7 @@ public sealed class SetTransactionStatusCommandHandler(
             return new Result(HttpStatusCode.InternalServerError, [new Error("Transaction not found")]);
 
         transaction.Status = request.Status;
-        await new TransactionJournalIntegration(provider).SetStatusByTransactionIdAsync(transaction.Id, request.Status);
+        await new TransactionJournalPostingService(provider).SetStatusByTransactionIdAsync(transaction.Id, request.Status);
 
         return new Result(HttpStatusCode.OK, null);
     }

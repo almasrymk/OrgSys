@@ -6,7 +6,6 @@
     using AutoMapper;
     using Microsoft.Extensions.DependencyInjection;
     using System.Linq.Expressions;
-    using global::Application.Commands.Org.Financials.Integration.JournalTransaction;
     using Inventory.Application.Transactions.Integration;
 
     public sealed record DeleteTransactionCommand(long Id) : ICommand, IDeleteCommand<Result>;
@@ -38,7 +37,7 @@
                 return false;
 
             await new TransferReceivedIntegration(_provider).DeleteReceivedAsync(transactionProducts);
-            await new TransactionJournalIntegration(_provider).DeleteByTransactionIdAsync(request.Id);
+            await new TransactionJournalPostingService(_provider).DeleteByTransactionIdAsync(request.Id);
             return await _TransactionProductRepository.ShiftDeleteAsync(e => e.TransactionId == request.Id);
         }
     }

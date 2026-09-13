@@ -18,9 +18,12 @@
     <!-- Preference now owned by Administration (relocated from the legacy root Domain/Application
          projects). -->
     <ProjectReference Include="../../Administration/Administration.Domain/Administration.Domain.csproj" />
-    <!-- Application.Commands.Org.Financials.Integration.JournalTransaction (the Transaction->
-         Journal posting bridge) hasn't been extracted from the monolith yet. -->
-    <ProjectReference Include="../../../Application/Application.csproj" />
+    <!-- TransactionJournalPostingService posts Transaction journal entries through
+         Accounting.Contracts (PostAccountingDocumentCommand/DeleteAccountingDocumentJournalCommand/
+         SetAccountingDocumentJournalStatusCommand/GetAccountingDocumentJournalQuery) instead of
+         Accounting.Domain — replaces the legacy root Application project's
+         TransactionJournalIntegration, see the legacy-Application-elimination report. -->
+    <ProjectReference Include="../../Accounting/Accounting.Contracts/Accounting.Contracts.csproj" />
   </ItemGroup>
 
   <ItemGroup>

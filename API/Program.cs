@@ -85,23 +85,15 @@ builder.Services.AddDbContext<OrgContext>(options => options.UseSqlServer(builde
 
 builder.Services.AddScoped<IOrgContext>(provider => provider.GetRequiredService<OrgContext>());
 
-// Single Application-assembly anchor for MediatR/AutoMapper/FluentValidation scanning.
-// MappingProfile and FluentValidationFilter<,> both live in Application, so the two
-// AddMediatR calls this used to make were scanning the same assembly twice — collapsed here.
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(MappingProfile).Assembly));
-
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
 // IAccountingPeriodService, IReceivableAccountValidator, IPayableAccountValidator are all
 // registered by AddAccountingModule() below.
-builder.Services.AddAutoMapper(cfg => cfg.AddProfile<MappingProfile>());
 
 builder.Services.AddControllers()
     .AddJsonOptions(options => options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles);
-
-builder.Services.AddValidatorsFromAssembly(typeof(MappingProfile).Assembly);
 
 builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(FluentValidationFilter<,>));
 

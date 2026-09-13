@@ -20,11 +20,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Application\Application.csproj" />
     <ProjectReference Include="..\..\Modules\CommercialDocuments\CommercialDocuments.Application\CommercialDocuments.Application.csproj" />
     <ProjectReference Include="..\..\Modules\CommercialDocuments\CommercialDocuments.Contracts\CommercialDocuments.Contracts.csproj" />
     <ProjectReference Include="..\..\Modules\Purchasing\Purchasing.Application\Purchasing.Application.csproj" />
     <ProjectReference Include="..\..\Modules\Purchasing\Purchasing.Domain\Purchasing.Domain.csproj" />
+    <!-- Journal*/AccountingPeriodService tests exercise Accounting.Application directly — this
+         used to arrive transitively through the legacy root Application project. -->
+    <ProjectReference Include="..\..\Modules\Accounting\Accounting.Application\Accounting.Application.csproj" />
   </ItemGroup>
 
 </Project>

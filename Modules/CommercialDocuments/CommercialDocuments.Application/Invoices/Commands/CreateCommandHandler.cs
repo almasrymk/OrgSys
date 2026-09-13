@@ -5,7 +5,7 @@
     using OrgSys.SharedKernel;
     using AutoMapper;
     using System.Net;
-    using global::Application.Commands.Org.Financials.Integration.JournalInvoice;
+    using CommercialDocuments.Application.Invoices.Integration;
     using Inventory.Contracts.Transactions;
     using MediatR;
 
@@ -31,7 +31,7 @@
                 await _Repository.CreateAsync(invoice);
                 await _UnitOfWork.SaveChangeAsync(cancellationToken);
 
-                await new InvoiceJournalIntegration(provider).SyncAsync(invoice);
+                await new InvoiceJournalPostingService(provider).SyncAsync(invoice);
                 await _UnitOfWork.SaveChangeAsync(cancellationToken);
                 await _UnitOfWork.CommitAsync();
             }
