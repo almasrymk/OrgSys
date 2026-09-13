@@ -10,7 +10,6 @@
     <ProjectReference Include="../../../BuildingBlocks/OrgSys.SharedKernel/OrgSys.SharedKernel.csproj" />
     <ProjectReference Include="../../MasterData/MasterData.Domain/MasterData.Domain.csproj" />
     <ProjectReference Include="../../Organization/Organization.Domain/Organization.Domain.csproj" />
-    <ProjectReference Include="../../Accounting/Accounting.Domain/Accounting.Domain.csproj" />
     <!-- Transaction.Order keeps its existing EF navigation to Sales.Domain — the one surviving
          direction of what was a real bidirectional coupling; the Sales-side edges (Invoice.Stock,
          InvoiceProduct.Product/Stock, OrderProduct.Product) were redesigned away instead. See

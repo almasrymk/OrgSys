@@ -89,6 +89,12 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
+// Publishes cross-context Integration Events (e.g. Accounting.Contracts.IntegrationEvents.
+// JournalPostedIntegrationEvent) over the existing MediatR notification pipeline — see
+// OrgSys.EventBus/MediatrIntegrationEventPublisher.cs for why. First real consumer is the
+// GeneralLedger Journal Post/Reverse/Cancel handlers (see the GeneralLedger migration report).
+builder.Services.AddScoped<IIntegrationEventPublisher, MediatrIntegrationEventPublisher>();
+
 // IAccountingPeriodService, IReceivableAccountValidator, IPayableAccountValidator are all
 // registered by AddAccountingModule() below.
 

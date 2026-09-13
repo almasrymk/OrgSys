@@ -11,7 +11,6 @@
     <ProjectReference Include="../../MasterData/MasterData.Domain/MasterData.Domain.csproj" />
     <ProjectReference Include="../../Organization/Organization.Domain/Organization.Domain.csproj" />
     <ProjectReference Include="../../Administration/Administration.Domain/Administration.Domain.csproj" />
-    <ProjectReference Include="../../Accounting/Accounting.Domain/Accounting.Domain.csproj" />
     <!-- FinancialInvoice.InvoiceId keeps its existing EF navigation to Invoice, now owned by
          CommercialDocuments (relocated from Sales.Domain) — see
          docs/modular-monolith-analysis.md §21/§22 and the ModuleDependencyTests exceptions

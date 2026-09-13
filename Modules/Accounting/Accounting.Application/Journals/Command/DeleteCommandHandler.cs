@@ -21,13 +21,7 @@
             if (journal == null)
                 return false;
 
-            if (journal.Posted)
-                throw new InvalidOperationException("A posted journal entry cannot be deleted. Use Reverse instead.");
-
-            if (!string.IsNullOrEmpty(journal.RefranceTable))
-                throw new InvalidOperationException("A journal created from a resource cannot be deleted");
-
-            journal.JournalItems!.Clear();
+            journal.PrepareForDeletion();
 
             return await _UnitOfWork.SaveChangeAsync() > 0;
         }

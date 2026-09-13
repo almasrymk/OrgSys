@@ -11,9 +11,8 @@
 
         public virtual Branch? Branch { get; set; }
 
-        [ForeignKey("Account")]
+        // No navigation to Accounting.Domain.Account — see Dealer.cs (Parties.Domain) for why;
+        // same GeneralLedger bounded-context isolation rule applies here.
         public virtual long? AccountId { get; set; }
-
-        public virtual Account? Account { get; set; }
     }
 }

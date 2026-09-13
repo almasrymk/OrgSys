@@ -35,9 +35,14 @@
 
         public virtual District? District { get; set; }
 
-        [ForeignKey("Account")]
+        // No navigation to Accounting.Domain.Account — GeneralLedger bounded-context isolation
+        // forbids Parties.Domain from referencing Accounting.Domain (see the GeneralLedger
+        // migration report). The FK column/constraint is preserved via a Fluent "no navigation"
+        // relationship in OrgContext.OnModelCreating, same pattern as MovementModel's
+        // CreateUser/ModifyUser/Shift/Branch. Application code that needs the linked Account
+        // (e.g. DealerMappingProfile's AccountCode) resolves it via Accounting.Domain.Account
+        // directly at the Application layer, which already has an accepted cross-module
+        // dependency on Accounting.Domain (see ModuleLayerDependencyTests).
         public virtual long? AccountId { get; set; }
-
-        public virtual Account? Account { get; set; }
     }
 }

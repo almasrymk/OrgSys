@@ -1,14 +1,15 @@
 namespace Treasury.Application.FinancialAccounts.Queries
 {
     using OrgSys.SharedKernel;
-    using OrgSys.SharedKernel;
-    using OrgSys.SharedKernel;
     using AutoMapper;
     using System.Linq.Expressions;
 
     public sealed record GetListFinancialAccountQuery(string KeySearch, long ParentId, long TypeId, int Page, int PageSize) : ICommandCollection<FinancialAccountDto>, IListQuery<ResultCollection<FinancialAccountDto>>;
 
-    public sealed class GetListQueryHandler(IRepository<Treasury.Domain.FinancialAccount> _Repository, IMapper mapper) : ListCommandHandler<GetListFinancialAccountQuery, Treasury.Domain.FinancialAccount, FinancialAccountDto>(_Repository, mapper)
+    public sealed class GetListQueryHandler(
+        IRepository<Treasury.Domain.FinancialAccount> _Repository,
+        IRepository<Accounting.Domain.Account> accountRepository,
+        IMapper mapper) : ListCommandHandler<GetListFinancialAccountQuery, Treasury.Domain.FinancialAccount, FinancialAccountDto>(_Repository, mapper)
     {
         public override Expression<Func<Treasury.Domain.FinancialAccount, bool>> CreateFilter(GetListFinancialAccountQuery request)
         {
@@ -21,14 +22,35 @@ namespace Treasury.Application.FinancialAccounts.Queries
             e.Status != OrgSys.SharedKernel.Status.Deleted && e.Hide != true;
         }
 
+        // Account was removed from this list (see the GeneralLedger migration report) —
+        // AccountCode/AccountName are patched in below instead.
         public override string CreateInclude()
         {
-            return "CashBox,BankAccount.Bank,BankAccount.BankBranch,Account,Currency";
+            return "CashBox,BankAccount.Bank,BankAccount.BankBranch,Currency";
         }
 
         override public Func<IQueryable<Treasury.Domain.FinancialAccount>, IOrderedQueryable<Treasury.Domain.FinancialAccount>> CreateOrderBy(GetListFinancialAccountQuery request)
         {
             return q => q.OrderByDescending(e => e.Id);
+        }
+
+        public override async Task<ResultCollection<FinancialAccountDto>> Handle(GetListFinancialAccountQuery request, CancellationToken cancellationToken)
+        {
+            var result = await base.Handle(request, cancellationToken);
+
+            var accountIds = result.Response.Where(e => e.AccountId is > 0).Select(e => e.AccountId!.Value).Distinct().ToList();
+            if (accountIds.Count > 0)
+            {
+                var accounts = (await accountRepository.GetListByFilterAsync(a => accountIds.Contains(a.Id)))?.ToDictionary(a => a.Id) ?? [];
+                foreach (var dto in result.Response)
+                    if (dto.AccountId is > 0 && accounts.TryGetValue(dto.AccountId.Value, out var account))
+                    {
+                        dto.AccountCode = account.Code;
+                        dto.AccountName = account.Name;
+                    }
+            }
+
+            return result;
         }
     }
 }

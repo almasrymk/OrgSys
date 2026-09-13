@@ -22,10 +22,8 @@
 
         public virtual BankBranch? BankBranch { get; set; }
 
-        [ForeignKey("Account")]
+        // No navigation to Accounting.Domain.Account — see Parties.Domain/Entities/Dealer.cs for why.
         public virtual long? AccountId { get; set; }
-
-        public virtual Account? Account { get; set; }
 
         [ForeignKey(nameof(FinancialAccount))]
         public virtual long? FinancialAccountId { get; set; }

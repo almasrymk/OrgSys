@@ -1,24 +1,20 @@
 namespace Accounting.Application.Postings;
 
 using Accounting.Contracts.Postings;
+using Accounting.Domain.Repositories;
 using OrgSys.SharedKernel;
 using System.Net;
 
 public sealed class DeleteAccountingDocumentJournalCommandHandler(
-    IRepository<Accounting.Domain.Journal> journalRepository,
-    IRepository<Accounting.Domain.JournalItem> journalItemRepository)
+    IJournalRepository journalRepository)
     : ICommandHandler<DeleteAccountingDocumentJournalCommand>
 {
     public async Task<Result> Handle(DeleteAccountingDocumentJournalCommand request, CancellationToken cancellationToken)
     {
-        var journals = await journalRepository.GetListByFilterAsync(
-            e => e.RefranceTable == request.ReferenceTable && e.RefranceId == request.SourceDocumentId);
+        var journals = await journalRepository.GetAllBySourceDocumentAsync(request.ReferenceTable, request.SourceDocumentId, cancellationToken);
 
-        foreach (var journal in journals ?? [])
-        {
-            await journalItemRepository.ShiftDeleteAsync(e => e.JournalId == journal.Id);
-            await journalRepository.ShiftDeleteAsync(e => e.Id == journal.Id);
-        }
+        foreach (var journal in journals)
+            await journalRepository.RemoveAsync(journal, cancellationToken);
 
         return new Result(HttpStatusCode.OK, null);
     }

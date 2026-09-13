@@ -8,9 +8,8 @@ public class FinancialAccount : BaseModel
 
     public FinancialAccountType FinancialAccountType { get; set; }
 
-    [ForeignKey(nameof(Account))]
+    // No navigation to Accounting.Domain.Account — see Parties.Domain/Entities/Dealer.cs for why.
     public long? AccountId { get; set; }
-    public virtual Account? Account { get; set; }
 
     [ForeignKey(nameof(Currency))]
     public long? CurrencyId { get; set; }

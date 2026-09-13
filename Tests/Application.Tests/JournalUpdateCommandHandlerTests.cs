@@ -1,5 +1,6 @@
 using Accounting.Application.Journals.Commands;
 using Accounting.Application;
+using Accounting.Domain.Repositories;
 using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
@@ -44,13 +45,12 @@ public class JournalUpdateCommandHandlerTests
             .ReturnsAsync(existingJournal);
         repository.Setup(r => r.UpdateAsync(It.IsAny<Journal>())).ReturnsAsync(true);
 
-        var journalItemRepository = new Mock<IRepository<JournalItem>>();
-        journalItemRepository.Setup(r => r.GetListByFilterAsync(It.IsAny<System.Linq.Expressions.Expression<Func<JournalItem, bool>>>()))
-            .ReturnsAsync((IEnumerable<JournalItem>?)[]);
-        journalItemRepository.Setup(r => r.ShiftDeleteAsync(It.IsAny<System.Linq.Expressions.Expression<Func<JournalItem, bool>>>())).ReturnsAsync(true);
+        var accountRepository = new Mock<IAccountRepository>();
+        accountRepository
+            .Setup(r => r.GetByIdsAsync(It.IsAny<IReadOnlyCollection<long>>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync((IReadOnlyCollection<long> ids, CancellationToken _) => ids.Select(id => new Account { Id = id, IsPostable = true }).ToList());
 
         var serviceProvider = new Mock<IServiceProvider>();
-        serviceProvider.Setup(p => p.GetService(typeof(IRepository<JournalItem>))).Returns(journalItemRepository.Object);
 
         var unitOfWork = new Mock<IUnitOfWork>();
         unitOfWork.Setup(u => u.SaveChangeAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
@@ -58,7 +58,7 @@ public class JournalUpdateCommandHandlerTests
         var accountingPeriodService = new Mock<IAccountingPeriodService>();
 
         var handler = new UpdateCommandHandler(
-            unitOfWork.Object, repository.Object, journalItemRepository.Object,
+            unitOfWork.Object, repository.Object, accountRepository.Object,
             accountingPeriodService.Object, BuildMapper(), serviceProvider.Object);
 
         return (handler, repository, accountingPeriodService);

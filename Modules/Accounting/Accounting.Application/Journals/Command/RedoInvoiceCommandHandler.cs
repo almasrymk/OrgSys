@@ -1,52 +1,43 @@
-﻿using OrgSys.SharedKernel;
+using Accounting.Domain.Exceptions;
+using Accounting.Domain.Repositories;
 using OrgSys.SharedKernel;
-using OrgSys.SharedKernel;
-using AutoMapper;
 using System.Net;
 
 namespace Accounting.Application.Journals.Commands
 {
     public record RedoJournalCommand(long Id) : ICommand, IUpdateCommand<Result>;
 
-    public class RedoJournalCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Accounting.Domain.Journal> _Repository,   IMapper mapper, IServiceProvider _provider
-        ) : UpdateCommandHandler<RedoJournalCommand, Accounting.Domain.Journal>(_UnitOfWork, _Repository, mapper, _provider)
+    public class RedoJournalCommandHandler(
+        IUnitOfWork unitOfWork,
+        IJournalRepository journalRepository) : ICommandHandler<RedoJournalCommand>
     {
-        public override async Task<Result> Handle(RedoJournalCommand request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(RedoJournalCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                var journal = await _Repository.GetByFilterAsync(x => x.Id == request.Id, await CreateInclude());
-
-
+                var journal = await journalRepository.GetByIdAsync(request.Id, cancellationToken);
                 if (journal is null)
-                    return new Result(HttpStatusCode.NotFound, new List<Error> { new Error("Journal not found") });
+                    return new Result(HttpStatusCode.NotFound, [new Error("Journal not found")]);
 
-                if (!string.IsNullOrEmpty(journal.RefranceTable))
-                    return new Result(HttpStatusCode.Forbidden, new List<Error> { new Error("A journal created from a resource is controlled by that resource") });
+                var willTransition = journal.Status == Status.Cancel;
+                journal.Redo();
 
-                // Once a journal has been Posted, its accounting history is immutable — Redo can only
-                // reopen a Cancelled Draft (never posted). A Posted journal is corrected by reversing it,
-                // not by reopening it, and a Reversed journal's original accounting effect must stand.
-                if (journal.Posted || journal.Status == OrgSys.SharedKernel.Status.Reversed)
-                    return new Result(HttpStatusCode.Forbidden, new List<Error> { new Error("A posted or reversed journal entry cannot be redone.") });
-
-                if (journal.Status != OrgSys.SharedKernel.Status.Cancel)
+                if (!willTransition)
                     return new Result(HttpStatusCode.OK, null);
 
-                journal.Status = OrgSys.SharedKernel.Status.New;
-
-                var saved = await _UnitOfWork.SaveChangeAsync(cancellationToken);
-
-                return saved > 0 ? new Result(HttpStatusCode.OK, null) : new Result(HttpStatusCode.InternalServerError, new List<Error> { new Error("Error saving changes") });
+                var saved = await unitOfWork.SaveChangeAsync(cancellationToken);
+                return saved > 0
+                    ? new Result(HttpStatusCode.OK, null)
+                    : new Result(HttpStatusCode.InternalServerError, [new Error("Error saving changes")]);
             }
-            catch (Exception ex)
+            catch (AccountingDomainException ex)
             {
-
-                return new Result(HttpStatusCode.InternalServerError, new List<Error> { new Error("Error") });
-
+                return new Result(HttpStatusCode.Forbidden, [new Error(ex.Message)]);
             }
-
+            catch (Exception)
+            {
+                return new Result(HttpStatusCode.InternalServerError, [new Error("Error")]);
+            }
         }
-        
     }
 }

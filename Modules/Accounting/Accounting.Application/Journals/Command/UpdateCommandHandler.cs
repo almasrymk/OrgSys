@@ -1,16 +1,15 @@
 namespace Accounting.Application.Journals.Commands
 {
-    using OrgSys.SharedKernel;
-    using OrgSys.SharedKernel;
-    using Accounting.Application;
+    using Accounting.Domain.Repositories;
     using OrgSys.SharedKernel;
     using AutoMapper;
     using System.Net;
 
     public sealed class UpdateJournalCommand : Accounting.Application.JournalDto, ICommand, IUpdateCommand<Result>;
+
     public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork,
         IRepository<Accounting.Domain.Journal> _Repository,
-        IRepository<Accounting.Domain.JournalItem> _RepositoryJournalInvoice,
+        IAccountRepository _AccountRepository,
         IAccountingPeriodService _AccountingPeriodService,
         IMapper mapper, IServiceProvider _provider) : UpdateCommandHandler<UpdateJournalCommand, Accounting.Domain.Journal>(_UnitOfWork, _Repository, mapper, _provider)
     {
@@ -18,7 +17,7 @@ namespace Accounting.Application.Journals.Commands
         {
             try
             {
-                var journal = await _Repository.GetByFilterAsync(e => e.Id == request.Id, string.Empty);
+                var journal = await _Repository.GetByFilterAsync(e => e.Id == request.Id, "JournalItems");
                 if (journal is null)
                     return new Result(HttpStatusCode.NotFound, [new Error("Journal not found")]);
 
@@ -57,6 +56,9 @@ namespace Accounting.Application.Journals.Commands
                 if (openingBalanceErrors is { Count: > 0 })
                     return new Result(HttpStatusCode.BadRequest, openingBalanceErrors);
 
+                // Header (non-invariant) fields: a plain overwrite of the tracked entity, same as
+                // every other module's generic Update — Draft journals have no header-field
+                // invariant beyond the period/opening-balance checks already run above.
                 var ob = mapper.Map<Accounting.Domain.Journal>(request);
                 ob.FiscalYearId = fiscalYearId;
                 ob.FiscalPeriodId = fiscalPeriodId;
@@ -64,7 +66,11 @@ namespace Accounting.Application.Journals.Commands
                 ob.Posted = false;
 
                 var res = await _Repository.UpdateAsync(ob);
-                var resDetails = await SaveDetials(request);
+
+                // Lines are the protected part of the aggregate: mutated only through
+                // AddLine/UpdateLine/RemoveLine, never via a JournalItem repository directly —
+                // see Journal.JournalItems' doc comment and the GeneralLedger migration report.
+                var resDetails = await ApplyLineChangesAsync(journal, request, cancellationToken);
 
                 return res && resDetails && await _UnitOfWork.SaveChangeAsync(cancellationToken) > 0
                     ? new Result(HttpStatusCode.OK, null)
@@ -76,19 +82,27 @@ namespace Accounting.Application.Journals.Commands
             }
         }
 
-        override public async Task<bool> SaveDetials(UpdateJournalCommand request)
+        private async Task<bool> ApplyLineChangesAsync(Accounting.Domain.Journal journal, UpdateJournalCommand request, CancellationToken cancellationToken)
         {
-            #region UpdateProduct
-            var ids = request.JournalItems.Select(e => e.Id);
-            var removeList = await _RepositoryJournalInvoice.GetListByFilterAsync(e => e.JournalId == request.Id && !ids.Contains(e.Id));
+            var accountIds = request.JournalItems.Select(i => i.AccountId).Distinct().ToList();
+            var accounts = (await _AccountRepository.GetByIdsAsync(accountIds, cancellationToken)).ToDictionary(a => a.Id);
 
-            var res = await RemoveDetails<JournalItem>(removeList!);
-            if (!res) return false;
-            var ob = mapper.Map<List<JournalItem>>(request.JournalItems);
-            res = await UpdateDetails<JournalItem>(ob);
-            #endregion
+            var requestedIds = request.JournalItems.Where(i => i.Id > 0).Select(i => i.Id).ToHashSet();
+            foreach (var existingLine in journal.JournalItems.Where(l => !requestedIds.Contains(l.Id)).ToList())
+                journal.RemoveLine(existingLine.Id);
 
-            return res;
+            foreach (var line in request.JournalItems)
+            {
+                if (!accounts.TryGetValue(line.AccountId, out var account))
+                    return false;
+
+                if (line.Id > 0)
+                    journal.UpdateLine(line.Id, account, line.Debit, line.Credit, line.Note);
+                else
+                    journal.AddLine(account, line.Debit, line.Credit, line.Note);
+            }
+
+            return true;
         }
     }
 }

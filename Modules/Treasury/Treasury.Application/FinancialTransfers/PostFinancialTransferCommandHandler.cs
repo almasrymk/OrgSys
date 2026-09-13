@@ -69,8 +69,12 @@ public sealed class PostFinancialTransferCommandHandler(
         if (dto.Amount <= 0 || dto.ExchangeRate <= 0)
             return BadRequest("Amount and exchange rate must be greater than zero.");
 
-        var source = await accountRepository.GetByFilterAsync(e => e.Id == dto.FromFinancialAccountId, "Account");
-        var destination = await accountRepository.GetByFilterAsync(e => e.Id == dto.ToFinancialAccountId, "Account");
+        // "Account" (the linked Accounting.Domain.Account) was dropped from these includes — it was
+        // never dereferenced here, only source.AccountId/destination.AccountId (a plain scalar FK)
+        // are used below. See the GeneralLedger migration report on why FinancialAccount.Account
+        // (the navigation) was removed.
+        var source = await accountRepository.GetByFilterAsync(e => e.Id == dto.FromFinancialAccountId, string.Empty);
+        var destination = await accountRepository.GetByFilterAsync(e => e.Id == dto.ToFinancialAccountId, string.Empty);
         if (source is null || destination is null || !source.IsActive || !destination.IsActive)
             return BadRequest("Both financial accounts must exist and be active.");
         if (source.AccountId is not > 0 || destination.AccountId is not > 0)

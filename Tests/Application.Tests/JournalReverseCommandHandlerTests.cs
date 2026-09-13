@@ -1,7 +1,6 @@
 using Accounting.Application.Journals.Commands;
 using Accounting.Application;
-using AutoMapper;
-using Microsoft.Extensions.DependencyInjection;
+using Accounting.Domain.Repositories;
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using System.Net;
@@ -11,14 +10,6 @@ namespace Application.Tests;
 
 public class JournalReverseCommandHandlerTests
 {
-    private static IMapper BuildMapper()
-    {
-        var services = new ServiceCollection();
-        services.AddLogging();
-        services.AddAutoMapper(cfg => { cfg.AddProfile<Accounting.Application.MappingProfile>(); });
-        return services.BuildServiceProvider().GetRequiredService<IMapper>();
-    }
-
     private static readonly DateTime Today = DateTime.Now.Date;
 
     private static FiscalYear OpenYear(long id = 10) => new()
@@ -50,24 +41,24 @@ public class JournalReverseCommandHandlerTests
         ]
     };
 
-    private static (ReverseJournalCommandHandler handler, Mock<IRepository<Journal>> repository, Mock<IUnitOfWork> unitOfWork, Mock<IAccountingPeriodService> accountingPeriodService) BuildHandler(Journal? existing)
+    private static (ReverseJournalCommandHandler handler, Mock<IJournalRepository> repository, Mock<IUnitOfWork> unitOfWork, Mock<IAccountingPeriodService> accountingPeriodService) BuildHandler(Journal? existing)
     {
-        var repository = new Mock<IRepository<Journal>>();
-        repository.Setup(r => r.GetByFilterAsync(It.IsAny<System.Linq.Expressions.Expression<Func<Journal, bool>>>(), It.IsAny<string>()))
+        var repository = new Mock<IJournalRepository>();
+        repository.Setup(r => r.GetByIdAsync(It.IsAny<long>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(existing);
-        repository.Setup(r => r.UpdateAsync(It.IsAny<Journal>())).ReturnsAsync(true);
-        Journal? created = null;
-        repository.Setup(r => r.CreateAsync(It.IsAny<Journal>()))
-            .Returns((Journal j) => { created = j; return new ValueTask<Journal>(j); });
-        repository.Setup(r => r.GetMaxByFilterAsync(It.IsAny<System.Linq.Expressions.Expression<Func<Journal, bool>>>(), It.IsAny<System.Linq.Expressions.Expression<Func<Journal, long>>>()))
+        repository.Setup(r => r.GetNextCodeNumberAsync(It.IsAny<long>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(100L);
+        repository.Setup(r => r.AddAsync(It.IsAny<Journal>(), It.IsAny<CancellationToken>()))
+            .Returns(Task.CompletedTask);
 
         var unitOfWork = new Mock<IUnitOfWork>();
         unitOfWork.Setup(u => u.SaveChangeAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
 
         var accountingPeriodService = new Mock<IAccountingPeriodService>();
 
-        var handler = new ReverseJournalCommandHandler(unitOfWork.Object, repository.Object, accountingPeriodService.Object, BuildMapper(), Mock.Of<IServiceProvider>(), NullLogger<ReverseJournalCommandHandler>.Instance);
+        var handler = new ReverseJournalCommandHandler(
+            unitOfWork.Object, repository.Object, accountingPeriodService.Object,
+            Mock.Of<IIntegrationEventPublisher>(), NullLogger<ReverseJournalCommandHandler>.Instance);
 
         return (handler, repository, unitOfWork, accountingPeriodService);
     }
@@ -83,8 +74,9 @@ public class JournalReverseCommandHandlerTests
             .ReturnsAsync(AccountingPeriodResult.Ok(year, period));
 
         Journal? reversal = null;
-        repository.Setup(r => r.CreateAsync(It.IsAny<Journal>()))
-            .Returns((Journal j) => { reversal = j; return new ValueTask<Journal>(j); });
+        repository.Setup(r => r.AddAsync(It.IsAny<Journal>(), It.IsAny<CancellationToken>()))
+            .Callback((Journal j, CancellationToken _) => reversal = j)
+            .Returns(Task.CompletedTask);
 
         var result = await handler.Handle(new ReverseJournalCommand(original.Id), CancellationToken.None);
 
@@ -93,17 +85,17 @@ public class JournalReverseCommandHandlerTests
         Assert.True(reversal!.Posted);
         Assert.Equal(original.Id, reversal.OriginalJournalId);
         Assert.Contains(original.Code!, reversal.Note);
-        Assert.Equal(2, reversal.JournalItems!.Count);
+        Assert.Equal(2, reversal.JournalItems.Count);
 
-        var line1 = reversal.JournalItems!.Single(i => i.AccountId == 101);
+        var line1 = reversal.JournalItems.Single(i => i.AccountId == 101);
         Assert.Equal(0, line1.Debit);
         Assert.Equal(1000, line1.Credit);
 
-        var line2 = reversal.JournalItems!.Single(i => i.AccountId == 102);
+        var line2 = reversal.JournalItems.Single(i => i.AccountId == 102);
         Assert.Equal(1000, line2.Debit);
         Assert.Equal(0, line2.Credit);
 
-        Assert.Equal(reversal.JournalItems!.Sum(i => i.Debit), reversal.JournalItems!.Sum(i => i.Credit));
+        Assert.Equal(reversal.JournalItems.Sum(i => i.Debit), reversal.JournalItems.Sum(i => i.Credit));
         Assert.Equal(Status.Reversed, original.Status);
         unitOfWork.Verify(u => u.CommitAsync(), Times.Once);
         unitOfWork.Verify(u => u.RollbackAsync(), Times.Never);
@@ -114,7 +106,7 @@ public class JournalReverseCommandHandlerTests
     {
         var original = PostedOriginal();
         var originalDate = original.Date;
-        var originalLine1Debit = original.JournalItems!.First().Debit;
+        var originalLine1Debit = original.JournalItems.First().Debit;
         var (handler, repository, unitOfWork, accountingPeriodService) = BuildHandler(original);
         accountingPeriodService.Setup(s => s.ResolveAndValidateAsync(It.IsAny<DateTime>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(AccountingPeriodResult.Ok(OpenYear(), OpenPeriod()));
@@ -122,8 +114,8 @@ public class JournalReverseCommandHandlerTests
         await handler.Handle(new ReverseJournalCommand(original.Id), CancellationToken.None);
 
         Assert.Equal(originalDate, original.Date);
-        Assert.Equal(originalLine1Debit, original.JournalItems!.First().Debit);
-        Assert.Equal(2, original.JournalItems!.Count);
+        Assert.Equal(originalLine1Debit, original.JournalItems.First().Debit);
+        Assert.Equal(2, original.JournalItems.Count);
     }
 
     [Fact]
@@ -136,7 +128,7 @@ public class JournalReverseCommandHandlerTests
         var result = await handler.Handle(new ReverseJournalCommand(draft.Id), CancellationToken.None);
 
         Assert.Equal(HttpStatusCode.BadRequest, result.StatusCode);
-        repository.Verify(r => r.CreateAsync(It.IsAny<Journal>()), Times.Never);
+        repository.Verify(r => r.AddAsync(It.IsAny<Journal>(), It.IsAny<CancellationToken>()), Times.Never);
     }
 
     [Fact]
@@ -150,7 +142,7 @@ public class JournalReverseCommandHandlerTests
 
         Assert.Equal(HttpStatusCode.BadRequest, result.StatusCode);
         Assert.Contains("already been reversed", result.Errors!.Select(e => e.MessageError).First(), StringComparison.OrdinalIgnoreCase);
-        repository.Verify(r => r.CreateAsync(It.IsAny<Journal>()), Times.Never);
+        repository.Verify(r => r.AddAsync(It.IsAny<Journal>(), It.IsAny<CancellationToken>()), Times.Never);
     }
 
     [Fact]
@@ -165,7 +157,7 @@ public class JournalReverseCommandHandlerTests
         var result = await handler.Handle(new ReverseJournalCommand(original.Id), CancellationToken.None);
 
         Assert.Equal(HttpStatusCode.BadRequest, result.StatusCode);
-        repository.Verify(r => r.CreateAsync(It.IsAny<Journal>()), Times.Never);
+        repository.Verify(r => r.AddAsync(It.IsAny<Journal>(), It.IsAny<CancellationToken>()), Times.Never);
     }
 
     [Fact]
@@ -192,7 +184,7 @@ public class JournalReverseCommandHandlerTests
 
         Assert.Equal(HttpStatusCode.BadRequest, result.StatusCode);
         Assert.Equal(Status.New, original.Status);
-        repository.Verify(r => r.CreateAsync(It.IsAny<Journal>()), Times.Never);
+        repository.Verify(r => r.AddAsync(It.IsAny<Journal>(), It.IsAny<CancellationToken>()), Times.Never);
         unitOfWork.Verify(u => u.RollbackAsync(), Times.Once);
         unitOfWork.Verify(u => u.CommitAsync(), Times.Never);
     }

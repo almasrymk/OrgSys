@@ -59,9 +59,10 @@ namespace Treasury.Domain
         public long? FinancialTransferId { get; set; }
         public virtual FinancialTransfer? FinancialTransfer { get; set; }
 
-        [ForeignKey(nameof(Journal))]
+        // No navigation to Accounting.Domain.Journal — see Parties.Domain/Entities/Dealer.cs for
+        // why (same GeneralLedger bounded-context isolation rule; never actually dereferenced
+        // anywhere, confirmed before removal).
         public long? JournalId { get; set; }
-        public virtual Journal? Journal { get; set; }
 
         [StringLength(500)]
         public string? Notes { get; set; }

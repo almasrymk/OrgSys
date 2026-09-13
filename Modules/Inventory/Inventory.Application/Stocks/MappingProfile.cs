@@ -8,9 +8,13 @@ public partial class MappingProfile : Profile
     public void StockMappingProfile()
     {
         #region Stock
+        // AccountName is no longer populated via an EF navigation (Stock.Account was removed —
+        // Inventory.Domain must not reference Accounting.Domain, see the GeneralLedger migration
+        // report). GetListQueryHandler/SearchQueryHandler patch it in after mapping, resolved
+        // through Accounting.Contracts.Accounts.GetAccountNamesQuery.
         CreateMap<Stock, StockDto>()
         .ForMember(dest => dest.BranchName, opt => opt.MapFrom(src => src.Branch.Name))
-        .ForMember(dest => dest.AccountName, opt => opt.MapFrom(src => src.Account.Name));
+        .ForMember(dest => dest.AccountName, opt => opt.Ignore());
         CreateMap<StockDto, Stock>();
 
         CreateMap<Stock, CreateStockCommand>();

@@ -1,6 +1,5 @@
 using Accounting.Application.Journals.Commands;
-using AutoMapper;
-using Microsoft.Extensions.DependencyInjection;
+using Accounting.Domain.Repositories;
 using Moq;
 using System.Net;
 using Xunit;
@@ -9,25 +8,16 @@ namespace Application.Tests;
 
 public class JournalRedoCommandHandlerTests
 {
-    private static IMapper BuildMapper()
+    private static (RedoJournalCommandHandler handler, Mock<IJournalRepository> repository, Mock<IUnitOfWork> unitOfWork) BuildHandler(Journal? existing)
     {
-        var services = new ServiceCollection();
-        services.AddLogging();
-        services.AddAutoMapper(cfg => { cfg.AddProfile<Accounting.Application.MappingProfile>(); });
-        return services.BuildServiceProvider().GetRequiredService<IMapper>();
-    }
-
-    private static (RedoJournalCommandHandler handler, Mock<IRepository<Journal>> repository, Mock<IUnitOfWork> unitOfWork) BuildHandler(Journal? existing)
-    {
-        var repository = new Mock<IRepository<Journal>>();
-        repository.Setup(r => r.GetByFilterAsync(It.IsAny<System.Linq.Expressions.Expression<Func<Journal, bool>>>(), It.IsAny<string>()))
+        var repository = new Mock<IJournalRepository>();
+        repository.Setup(r => r.GetByIdAsync(It.IsAny<long>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(existing);
-        repository.Setup(r => r.UpdateAsync(It.IsAny<Journal>())).ReturnsAsync(true);
 
         var unitOfWork = new Mock<IUnitOfWork>();
         unitOfWork.Setup(u => u.SaveChangeAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
 
-        var handler = new RedoJournalCommandHandler(unitOfWork.Object, repository.Object, BuildMapper(), Mock.Of<IServiceProvider>());
+        var handler = new RedoJournalCommandHandler(unitOfWork.Object, repository.Object);
 
         return (handler, repository, unitOfWork);
     }
@@ -79,7 +69,7 @@ public class JournalRedoCommandHandlerTests
         var result = await handler.Handle(new RedoJournalCommand(1), CancellationToken.None);
 
         Assert.Equal(HttpStatusCode.OK, result.StatusCode);
-        repository.Verify(r => r.UpdateAsync(It.IsAny<Journal>()), Times.Never);
+        unitOfWork.Verify(u => u.SaveChangeAsync(It.IsAny<CancellationToken>()), Times.Never);
     }
 
     [Fact]

@@ -8,10 +8,15 @@ public partial class MappingProfile : Profile
     public void FinancialAccountMappingProfile()
     {
         #region FinancialAccount
+        // AccountName/AccountCode are no longer populated via an EF navigation
+        // (FinancialAccount.Account was removed — Treasury.Domain must not reference
+        // Accounting.Domain, see the GeneralLedger migration report). The FinancialAccount query
+        // handlers patch them in after mapping, resolved through IRepository<Accounting.Domain.Account>
+        // (an already-accepted Application-layer cross-module read — see ModuleLayerDependencyTests).
         CreateMap<Treasury.Domain.FinancialAccount, FinancialAccountDto>()
             .ForMember(dest => dest.TypeId, opt => opt.MapFrom(src => (long)src.FinancialAccountType))
-            .ForMember(dest => dest.AccountName, opt => opt.MapFrom(src => src.Account != null ? src.Account.Name : null))
-            .ForMember(dest => dest.AccountCode, opt => opt.MapFrom(src => src.Account != null ? src.Account.Code : null))
+            .ForMember(dest => dest.AccountName, opt => opt.Ignore())
+            .ForMember(dest => dest.AccountCode, opt => opt.Ignore())
             .ForMember(dest => dest.CurrencyName, opt => opt.MapFrom(src => src.Currency != null ? src.Currency.Name : null))
             .ForMember(dest => dest.BranchId, opt => opt.MapFrom(src => src.CashBox != null ? src.CashBox.BranchId : (src.BankAccount != null ? src.BankAccount.BranchId : null)))
             .ForMember(dest => dest.KeeperUserId, opt => opt.MapFrom(src => src.CashBox != null ? src.CashBox.KeeperUserId : null))

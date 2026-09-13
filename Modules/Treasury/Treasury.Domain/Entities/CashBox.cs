@@ -6,10 +6,8 @@ namespace Treasury.Domain
         [StringLength(50, MinimumLength = 3)]
         public virtual string? Name { get; set; }
 
-        [ForeignKey("Account")]
+        // No navigation to Accounting.Domain.Account — see Parties.Domain/Entities/Dealer.cs for why.
         public virtual long? AccountId { get; set; }
-
-        public virtual Account? Account { get; set; }
 
         [ForeignKey(nameof(FinancialAccount))]
         public virtual long? FinancialAccountId { get; set; }

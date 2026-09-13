@@ -109,6 +109,31 @@
                 .IsUnique()
                 .HasFilter("[OriginalJournalId] IS NOT NULL");
 
+            // GeneralLedger bounded-context isolation: Dealer/Stock/BankAccount/CashBox/
+            // FinancialAccount.AccountId and Financial.JournalId dropped their navigations to
+            // Accounting.Domain.Account/Journal (Parties.Domain/Inventory.Domain/Treasury.Domain
+            // must not reference Accounting.Domain — see the GeneralLedger migration report).
+            // These Fluent "no navigation" relationships keep the exact same FK columns and
+            // constraints, verified with `dotnet ef migrations has-pending-model-changes`.
+            modelBuilder.Entity<Dealer>()
+                .HasOne(typeof(Account)).WithMany()
+                .HasForeignKey("AccountId");
+            modelBuilder.Entity<Stock>()
+                .HasOne(typeof(Account)).WithMany()
+                .HasForeignKey("AccountId");
+            modelBuilder.Entity<BankAccount>()
+                .HasOne(typeof(Account)).WithMany()
+                .HasForeignKey("AccountId");
+            modelBuilder.Entity<CashBox>()
+                .HasOne(typeof(Account)).WithMany()
+                .HasForeignKey("AccountId");
+            modelBuilder.Entity<Treasury.Domain.FinancialAccount>()
+                .HasOne(typeof(Account)).WithMany()
+                .HasForeignKey("AccountId");
+            modelBuilder.Entity<Financial>()
+                .HasOne(typeof(Journal)).WithMany()
+                .HasForeignKey("JournalId");
+
             // MovementModel dropped its CreateUser/ModifyUser/Shift/Branch navigation properties
             // when it moved to SharedKernel (see BuildingBlocks/OrgSys.SharedKernel/MovementModel.cs
             // for why) — these Fluent "no navigation" relationships keep the exact same FK columns

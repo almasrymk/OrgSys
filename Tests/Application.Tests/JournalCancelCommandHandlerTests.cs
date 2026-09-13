@@ -1,6 +1,5 @@
 using Accounting.Application.Journals.Commands;
-using AutoMapper;
-using Microsoft.Extensions.DependencyInjection;
+using Accounting.Domain.Repositories;
 using Moq;
 using System.Net;
 using Xunit;
@@ -9,24 +8,18 @@ namespace Application.Tests;
 
 public class JournalCancelCommandHandlerTests
 {
-    private static IMapper BuildMapper()
+    private static (CancelJournalCommandHandler handler, Mock<IJournalRepository> repository, Mock<IUnitOfWork> unitOfWork) BuildHandler(Journal? existing)
     {
-        var services = new ServiceCollection();
-        services.AddLogging();
-        services.AddAutoMapper(cfg => { cfg.AddProfile<Accounting.Application.MappingProfile>(); });
-        return services.BuildServiceProvider().GetRequiredService<IMapper>();
-    }
-
-    private static (CancelJournalCommandHandler handler, Mock<IRepository<Journal>> repository, Mock<IUnitOfWork> unitOfWork) BuildHandler(Journal? existing)
-    {
-        var repository = new Mock<IRepository<Journal>>();
-        repository.Setup(r => r.GetByFilterAsync(It.IsAny<System.Linq.Expressions.Expression<Func<Journal, bool>>>(), It.IsAny<string>()))
+        var repository = new Mock<IJournalRepository>();
+        repository.Setup(r => r.GetByIdAsync(It.IsAny<long>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(existing);
 
         var unitOfWork = new Mock<IUnitOfWork>();
         unitOfWork.Setup(u => u.SaveChangeAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
 
-        var handler = new CancelJournalCommandHandler(unitOfWork.Object, repository.Object, BuildMapper(), Mock.Of<IServiceProvider>());
+        var integrationEventPublisher = new Mock<IIntegrationEventPublisher>();
+
+        var handler = new CancelJournalCommandHandler(unitOfWork.Object, repository.Object, integrationEventPublisher.Object);
 
         return (handler, repository, unitOfWork);
     }

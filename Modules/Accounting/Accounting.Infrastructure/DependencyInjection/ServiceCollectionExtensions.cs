@@ -1,3 +1,4 @@
+using Accounting.Infrastructure.Persistence;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,6 +23,12 @@ public static class ServiceCollectionExtensions
         // own comment for why, and docs/modular-monolith-analysis.md §19 for when they move.
         services.AddScoped<Accounting.Application.IReceivableAccountValidator, Accounting.Application.ReceivableAccountValidator>();
         services.AddScoped<Accounting.Application.IPayableAccountValidator, Accounting.Application.PayableAccountValidator>();
+
+        // Aggregate-shaped repositories for the Journal/Account/FiscalPeriod write side — see
+        // Accounting.Domain.Repositories and the GeneralLedger migration report.
+        services.AddScoped<Accounting.Domain.Repositories.IJournalRepository, JournalRepository>();
+        services.AddScoped<Accounting.Domain.Repositories.IAccountRepository, AccountRepository>();
+        services.AddScoped<Accounting.Domain.Repositories.IFiscalPeriodRepository, FiscalPeriodRepository>();
 
         return services;
     }
