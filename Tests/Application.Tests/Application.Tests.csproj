@@ -27,6 +27,8 @@
     <!-- Journal*/AccountingPeriodService tests exercise Accounting.Application directly — this
          used to arrive transitively through the legacy root Application project. -->
     <ProjectReference Include="..\..\Modules\Accounting\Accounting.Application\Accounting.Application.csproj" />
+    <!-- SalesInvoicePostedIntegrationEventHandlerTests exercises Receivables.Application directly. -->
+    <ProjectReference Include="..\..\Modules\Receivables\Receivables.Application\Receivables.Application.csproj" />
   </ItemGroup>
 
 </Project>

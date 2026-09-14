@@ -5,6 +5,7 @@ namespace Treasury.Application.Financials.Commands
     using MediatR;
     using OrgSys.SharedKernel;
     using System.Net;
+    using Treasury.Contracts.IntegrationEvents;
 
     public sealed record PostFinancialTransactionCommand(PostFinancialTransactionDto Transaction) : ICommand, ICreateCommand<Result>;
 
@@ -15,7 +16,8 @@ namespace Treasury.Application.Financials.Commands
         IRepository<FinancialType> typeRepository,
         IRepository<Treasury.Domain.Financial> transactionRepository,
         IRepository<CommercialDocuments.Domain.Invoice> invoiceRepository,
-        IReceivableAccountValidator referenceValidator) : ICommandHandler<PostFinancialTransactionCommand>
+        IReceivableAccountValidator referenceValidator,
+        IIntegrationEventPublisher integrationEventPublisher) : ICommandHandler<PostFinancialTransactionCommand>
     {
         public async Task<Result> Handle(PostFinancialTransactionCommand request, CancellationToken cancellationToken)
         {
@@ -113,6 +115,27 @@ namespace Treasury.Application.Financials.Commands
                 transaction.HasJournal = true;
                 await transactionRepository.UpdateAsync(transaction);
                 await unitOfWork.SaveChangeAsync(cancellationToken);
+
+                // Notify Receivables that money was received from a customer against their AR
+                // account — see docs/architecture/receivables-ddd-migration.md §9/§12 (Phase 6).
+                // Published before commit, same transaction (see SalesInvoicePostedIntegrationEvent's
+                // identical reasoning in CommercialDocuments). Only the "customer paid us" case:
+                // Direction.Out against a Customer reference (e.g. a refund) is out of scope for this
+                // pass — see the migration doc.
+                if (dto.ReferenceType == FinancialReferenceType.Customer && dto.Direction == FinancialTransactionDirection.In)
+                    await integrationEventPublisher.PublishAsync(
+                        new CustomerPaymentPostedIntegrationEvent(
+                            FinancialId: transaction.Id,
+                            CustomerId: dto.ReferenceId!.Value,
+                            Amount: dto.Amount,
+                            CurrencyId: dto.CurrencyId,
+                            Rate: dto.ExchangeRate,
+                            PaymentDate: dto.TransactionDate,
+                            CreateUserId: dto.CreateUserId,
+                            CreateDate: now,
+                            BranchId: dto.BranchId),
+                        cancellationToken);
+
                 await unitOfWork.CommitAsync();
                 return new Result(HttpStatusCode.OK, null);
             }

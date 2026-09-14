@@ -8,6 +8,10 @@
 
   <ItemGroup>
     <ProjectReference Include="../../../BuildingBlocks/OrgSys.SharedKernel/OrgSys.SharedKernel.csproj" />
+    <!-- IntegrationEvents/* implement OrgSys.SharedKernel.IntegrationEvent, whose MediatR-notification
+         transport lives in OrgSys.EventBus (see that project's IIntegrationEvent.cs) — mirrors
+         Accounting.Contracts.csproj's identical reference. -->
+    <ProjectReference Include="../../../BuildingBlocks/OrgSys.EventBus/OrgSys.EventBus.csproj" />
   </ItemGroup>
 
 </Project>

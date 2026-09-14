@@ -1,6 +1,8 @@
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using Receivables.Domain.Repositories;
+using Receivables.Infrastructure.Persistence;
 
 namespace Receivables.Infrastructure.DependencyInjection;
 
@@ -18,6 +20,9 @@ public static class ServiceCollectionExtensions
 
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(applicationAssembly));
         services.AddValidatorsFromAssembly(applicationAssembly);
+
+        services.AddScoped<IReceivableRepository, ReceivableRepository>();
+        services.AddScoped<IPaymentApplicationRepository, PaymentApplicationRepository>();
 
         return services;
     }

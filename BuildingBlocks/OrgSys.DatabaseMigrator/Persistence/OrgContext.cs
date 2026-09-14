@@ -120,6 +120,25 @@
                 .IsUnique()
                 .HasFilter("[OriginalJournalId] IS NOT NULL");
 
+            // Idempotency guard for the inbound Invoice-posted/OpeningBalance integrations (brief
+            // §8/§32) — the same source document must never create two Receivables for the same
+            // customer, enforced at the DB level, not just in the handler. CustomerId is included
+            // because OpeningBalance's SourceDocumentId is a FiscalYearId, shared across every
+            // customer's opening balance in that year (unlike SalesInvoice's SourceDocumentId, an
+            // InvoiceId that is already globally unique on its own).
+            modelBuilder.Entity<Receivable>()
+                .HasIndex(e => new { e.SourceDocumentType, e.SourceDocumentId, e.CustomerId })
+                .IsUnique();
+
+            // Idempotency guard for the inbound customer-payment integration (brief §32) — the same
+            // posted Financial must never be FIFO-applied twice.
+            modelBuilder.Entity<PaymentApplication>()
+                .HasIndex(e => e.SourceFinancialId)
+                .IsUnique();
+            modelBuilder.Entity<PaymentApplicationLine>()
+                .HasOne(l => l.PaymentApplication).WithMany(p => p.Lines)
+                .HasForeignKey(l => l.PaymentApplicationId).OnDelete(DeleteBehavior.Cascade);
+
             // GeneralLedger bounded-context isolation: Dealer/Stock/BankAccount/CashBox/
             // FinancialAccount.AccountId and Financial.JournalId dropped their navigations to
             // Accounting.Domain.Account/Journal (Parties.Domain/Inventory.Domain/Treasury.Domain
@@ -276,6 +295,9 @@
         public virtual DbSet<JournalItem> JournalItem { get; set; }
         public virtual DbSet<FiscalYear> FiscalYears { get; set; }
         public virtual DbSet<FiscalPeriod> FiscalPeriods { get; set; }
+        public virtual DbSet<Receivable> Receivables { get; set; }
+        public virtual DbSet<PaymentApplication> PaymentApplications { get; set; }
+        public virtual DbSet<PaymentApplicationLine> PaymentApplicationLines { get; set; }
 
 
         public void ResetDbContextState()
