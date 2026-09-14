@@ -61,6 +61,25 @@
                             BranchId: invoice.BranchId),
                         cancellationToken);
 
+                // Same reasoning, AP side: notify Payables that a Purchase Invoice reached
+                // AP-integrated GL posting — see docs/architecture/payables-ddd-migration.md.
+                // PurchaseReturn is not wired (deferred, same as SalesReturn on the AR side).
+                if (invoice.TypeId == (long)InvoiceTypeId.Purchase && invoice.HasJournal)
+                    await integrationEventPublisher.PublishAsync(
+                        new PurchaseInvoicePostedIntegrationEvent(
+                            InvoiceId: invoice.Id,
+                            InvoiceNumber: invoice.Code,
+                            SupplierId: invoice.DealerId,
+                            InvoiceDate: invoice.Date,
+                            DueDate: invoice.Date,
+                            CurrencyId: invoice.CurrencyId,
+                            Rate: invoice.Rate,
+                            Amount: invoice.Net,
+                            CreateUserId: invoice.CreateUserId,
+                            CreateDate: invoice.CreateDate,
+                            BranchId: invoice.BranchId),
+                        cancellationToken);
+
                 await _UnitOfWork.CommitAsync();
             }
             catch (Exception ex)

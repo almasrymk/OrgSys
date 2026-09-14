@@ -139,6 +139,17 @@
                 .HasOne(l => l.PaymentApplication).WithMany(p => p.Lines)
                 .HasForeignKey(l => l.PaymentApplicationId).OnDelete(DeleteBehavior.Cascade);
 
+            // Payables — mirrors the Receivable/PaymentApplication configuration above exactly.
+            modelBuilder.Entity<Payable>()
+                .HasIndex(e => new { e.SourceDocumentType, e.SourceDocumentId, e.SupplierId })
+                .IsUnique();
+            modelBuilder.Entity<SupplierPaymentApplication>()
+                .HasIndex(e => e.SourceFinancialId)
+                .IsUnique();
+            modelBuilder.Entity<SupplierPaymentApplicationLine>()
+                .HasOne(l => l.SupplierPaymentApplication).WithMany(p => p.Lines)
+                .HasForeignKey(l => l.SupplierPaymentApplicationId).OnDelete(DeleteBehavior.Cascade);
+
             // GeneralLedger bounded-context isolation: Dealer/Stock/BankAccount/CashBox/
             // FinancialAccount.AccountId and Financial.JournalId dropped their navigations to
             // Accounting.Domain.Account/Journal (Parties.Domain/Inventory.Domain/Treasury.Domain
@@ -298,6 +309,9 @@
         public virtual DbSet<Receivable> Receivables { get; set; }
         public virtual DbSet<PaymentApplication> PaymentApplications { get; set; }
         public virtual DbSet<PaymentApplicationLine> PaymentApplicationLines { get; set; }
+        public virtual DbSet<Payable> Payables { get; set; }
+        public virtual DbSet<SupplierPaymentApplication> SupplierPaymentApplications { get; set; }
+        public virtual DbSet<SupplierPaymentApplicationLine> SupplierPaymentApplicationLines { get; set; }
 
 
         public void ResetDbContextState()

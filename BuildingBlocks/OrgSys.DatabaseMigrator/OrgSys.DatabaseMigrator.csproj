@@ -29,6 +29,7 @@
     <ProjectReference Include="../../Modules/Inventory/Inventory.Domain/Inventory.Domain.csproj" />
     <ProjectReference Include="../../Modules/Purchasing/Purchasing.Domain/Purchasing.Domain.csproj" />
     <ProjectReference Include="../../Modules/Receivables/Receivables.Domain/Receivables.Domain.csproj" />
+    <ProjectReference Include="../../Modules/Payables/Payables.Domain/Payables.Domain.csproj" />
     <!-- Seed orchestration only (IDataSeederCoordinator calls into each module's own seeder) —
          no business/seed data lives in this project itself. -->
     <ProjectReference Include="../../Modules/MasterData/MasterData.Infrastructure/MasterData.Infrastructure.csproj" />

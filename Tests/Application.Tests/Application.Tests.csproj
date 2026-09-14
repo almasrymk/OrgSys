@@ -29,6 +29,8 @@
     <ProjectReference Include="..\..\Modules\Accounting\Accounting.Application\Accounting.Application.csproj" />
     <!-- SalesInvoicePostedIntegrationEventHandlerTests exercises Receivables.Application directly. -->
     <ProjectReference Include="..\..\Modules\Receivables\Receivables.Application\Receivables.Application.csproj" />
+    <!-- PurchaseInvoicePostedIntegrationEventHandlerTests/SupplierPaymentPostedIntegrationEventHandlerTests exercise Payables.Application directly. -->
+    <ProjectReference Include="..\..\Modules\Payables\Payables.Application\Payables.Application.csproj" />
   </ItemGroup>
 
 </Project>

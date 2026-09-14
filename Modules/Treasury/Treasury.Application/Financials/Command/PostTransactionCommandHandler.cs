@@ -136,6 +136,23 @@ namespace Treasury.Application.Financials.Commands
                             BranchId: dto.BranchId),
                         cancellationToken);
 
+                // Same reasoning, AP side: notify Payables that money was paid to a supplier against
+                // their AP account. Direction.In against a Supplier reference (e.g. a supplier
+                // refunding an overpayment) is out of scope for this pass.
+                if (dto.ReferenceType == FinancialReferenceType.Supplier && dto.Direction == FinancialTransactionDirection.Out)
+                    await integrationEventPublisher.PublishAsync(
+                        new SupplierPaymentPostedIntegrationEvent(
+                            FinancialId: transaction.Id,
+                            SupplierId: dto.ReferenceId!.Value,
+                            Amount: dto.Amount,
+                            CurrencyId: dto.CurrencyId,
+                            Rate: dto.ExchangeRate,
+                            PaymentDate: dto.TransactionDate,
+                            CreateUserId: dto.CreateUserId,
+                            CreateDate: now,
+                            BranchId: dto.BranchId),
+                        cancellationToken);
+
                 await unitOfWork.CommitAsync();
                 return new Result(HttpStatusCode.OK, null);
             }

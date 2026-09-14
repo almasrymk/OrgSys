@@ -2,9 +2,13 @@ namespace Payables.Application.OpeningBalance.Commands
 {
     using Accounting.Contracts.Accounts;
     using Accounting.Contracts.Postings;
+    using Administration.Contracts.Preferences;
+    using MasterData.Contracts.Currencies;
     using MediatR;
     using OrgSys.SharedKernel;
     using Parties.Contracts.Dealers;
+    using Payables.Domain;
+    using Payables.Domain.Repositories;
     using System.Net;
 
     /// <summary>Records/updates a supplier's opening payable balance by delegating the actual
@@ -20,10 +24,11 @@ namespace Payables.Application.OpeningBalance.Commands
         long CreateUserId) : ICommand, ICreateCommand<Result>;
 
     public sealed class SetSupplierOpeningBalanceCommandHandler(
-        IRepository<Preference> _PreferenceRepository,
         ISender _Sender,
         IPayableAccountValidator _Validator,
-        IReceivableAccountValidator _AccountValidator) : ICommandHandler<SetSupplierOpeningBalanceCommand>
+        IReceivableAccountValidator _AccountValidator,
+        IPayableRepository _PayableRepository,
+        IUnitOfWork _UnitOfWork) : ICommandHandler<SetSupplierOpeningBalanceCommand>
     {
         public async Task<Result> Handle(SetSupplierOpeningBalanceCommand request, CancellationToken cancellationToken)
         {
@@ -34,9 +39,9 @@ namespace Payables.Application.OpeningBalance.Commands
             if (supplierErrors.Count > 0)
                 return new Result(HttpStatusCode.BadRequest, supplierErrors);
 
-            var preferences = (await _PreferenceRepository.GetListByFilterAsync(
-                e => e.Reference == "Dealer" && e.TypeId == (long)DealerType.Supplier))?.ToList() ?? [];
-            var clearingAccountId = long.TryParse(preferences.FirstOrDefault(e => e.Key == "OpeningBalanceClearingAccountId")?.Value, out var cid) ? cid : 0;
+            var clearingAccountValue = (await _Sender.Send(
+                new GetPreferenceValueQuery("Dealer", (long)DealerType.Supplier, "OpeningBalanceClearingAccountId"), cancellationToken)).Response;
+            var clearingAccountId = long.TryParse(clearingAccountValue, out var cid) ? cid : 0;
             if (clearingAccountId <= 0)
                 return BadRequest("Opening balance clearing account is not configured (OpeningBalanceClearingAccountId preference).");
 
@@ -47,9 +52,42 @@ namespace Payables.Application.OpeningBalance.Commands
             var debit = request.SupplierIsDebit ? request.Amount : 0;
             var credit = request.SupplierIsDebit ? 0 : request.Amount;
 
-            return await _Sender.Send(new SetOpeningBalanceLineCommand(
+            var glResult = await _Sender.Send(new SetOpeningBalanceLineCommand(
                 request.FiscalYearId, account!.Id, debit, credit, $"Opening balance — {dealer!.Name}", clearingAccountId, request.CreateUserId),
                 cancellationToken);
+            if (glResult.StatusCode != HttpStatusCode.OK)
+                return glResult;
+
+            // AP open-item side of the opening balance — mirrors Receivables'
+            // SetCustomerOpeningBalanceCommandHandler exactly, mirrored for sign: a supplier's
+            // opening balance is an AP obligation when it posts as Credit (SupplierIsDebit == false)
+            // — a Debit opening balance is a prepayment/on-account credit from the supplier, not a
+            // liability, so no Payable is created for it (the "supplier advance" concept itself is
+            // out of scope, deferred).
+            if (!request.SupplierIsDebit
+                && !await _PayableRepository.ExistsForSourceDocumentAsync(SourceDocumentType.OpeningBalance, request.FiscalYearId, request.DealerId, cancellationToken))
+            {
+                var currency = (await _Sender.Send(new GetDefaultCurrencyQuery(), cancellationToken)).Response;
+                var openingDate = DateTime.Now;
+
+                var payable = Payable.Create(
+                    supplierId: request.DealerId,
+                    sourceDocumentType: SourceDocumentType.OpeningBalance,
+                    sourceDocumentId: request.FiscalYearId,
+                    sourceDocumentNumber: null,
+                    documentDate: openingDate,
+                    dueDate: openingDate,
+                    currencyId: currency?.Id ?? 0,
+                    rate: currency?.Rate ?? 1,
+                    originalAmount: request.Amount,
+                    createUserId: request.CreateUserId,
+                    createDate: openingDate);
+
+                await _PayableRepository.AddAsync(payable, cancellationToken);
+                await _UnitOfWork.SaveChangeAsync(cancellationToken);
+            }
+
+            return glResult;
         }
 
         private static Result BadRequest(string message) => new(HttpStatusCode.BadRequest, [new Error(message)]);

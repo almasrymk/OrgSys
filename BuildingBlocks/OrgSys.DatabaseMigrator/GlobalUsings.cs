@@ -9,3 +9,4 @@ global using CommercialDocuments.Domain;
 global using Parties.Domain;
 global using Inventory.Domain;
 global using Receivables.Domain;
+global using Payables.Domain;

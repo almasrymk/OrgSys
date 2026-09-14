@@ -18,8 +18,17 @@
     <!-- GetDefaultCurrencyQuery — resolves the default Currency for a new Opening Balance journal
          without an IRepository<Currency> injection across the module boundary. -->
     <ProjectReference Include="../../MasterData/MasterData.Contracts/MasterData.Contracts.csproj" />
-    <!-- Preference now owned by Administration (relocated from the legacy root Domain project). -->
-    <ProjectReference Include="../../Administration/Administration.Domain/Administration.Domain.csproj" />
+    <!-- GetPreferenceValueQuery — resolves the opening-balance clearing account preference without
+         an IRepository<Preference> injection across the module boundary. -->
+    <ProjectReference Include="../../Administration/Administration.Contracts/Administration.Contracts.csproj" />
+    <!-- PurchaseInvoicePostedIntegrationEvent — the inbound event that creates a Payable per posted
+         Purchase Invoice. Contracts-to-Contracts reference only; no CommercialDocuments.Domain/
+         .Application dependency. -->
+    <ProjectReference Include="../../CommercialDocuments/CommercialDocuments.Contracts/CommercialDocuments.Contracts.csproj" />
+    <!-- SupplierPaymentPostedIntegrationEvent — the inbound event that FIFO-applies a posted
+         supplier payment against open Payables. Contracts-to-Contracts reference only; no
+         Treasury.Domain/.Application dependency. -->
+    <ProjectReference Include="../../Treasury/Treasury.Contracts/Treasury.Contracts.csproj" />
   </ItemGroup>
 
   <ItemGroup>

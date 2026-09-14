@@ -1,6 +1,8 @@
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using Payables.Domain.Repositories;
+using Payables.Infrastructure.Persistence;
 
 namespace Payables.Infrastructure.DependencyInjection;
 
@@ -18,6 +20,9 @@ public static class ServiceCollectionExtensions
 
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(applicationAssembly));
         services.AddValidatorsFromAssembly(applicationAssembly);
+
+        services.AddScoped<IPayableRepository, PayableRepository>();
+        services.AddScoped<ISupplierPaymentApplicationRepository, SupplierPaymentApplicationRepository>();
 
         return services;
     }

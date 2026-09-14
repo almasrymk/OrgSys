@@ -59,7 +59,6 @@ public class ModuleLayerDependencyTests
         ("Inventory", "Administration", "InventoryAdjustmentIntegration/TransferReceivedIntegration/CreateTransactionByInvoiceCommandHandler read Preference directly — same relocation-not-rewrite as above."),
         ("Treasury", "Administration", "CreateFinancialPaidInvoiceCommandHandler reads Preference directly (DefaultCashBox lookup) — same relocation-not-rewrite as above."),
         ("Parties", "Administration", "Dealer Create/Update handlers and the GL-account provisioning helpers read Preference directly — same relocation-not-rewrite as above."),
-        ("Payables", "Administration", "SetSupplierOpeningBalanceCommandHandler reads Preference directly — same relocation-not-rewrite as above."),
         ("CommercialDocuments", "Parties", "GetCreditAllByDealerIdQueryHandler reads Invoice.Dealer.Name directly (Dealer owned by Parties). Moved unchanged from Sales.Application."),
         ("CommercialDocuments", "MasterData", "MappingProfile Unit/UnitDto mapping support. Moved unchanged from Sales.Application."),
         ("Parties", "MasterData", "DealerMappingProfile maps Country/City/District names directly (Dealer.Country/City/District navigations)."),
@@ -94,7 +93,6 @@ public class ModuleLayerDependencyTests
         ("Sales", "MasterData", "UnitDto mapping support."),
         ("CommercialDocuments", "MasterData", "UnitDto mapping support. Moved unchanged from Sales.Application."),
         ("Inventory", "MasterData", "UnitDto/ProductDto mapping support."),
-        ("Payables", "Receivables", "Shared IReceivableAccountValidator clearing-account check."),
     ];
 
     public static IEnumerable<object[]> AllApplicationToDomainPairs()
