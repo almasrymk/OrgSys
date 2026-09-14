@@ -1,37 +1,23 @@
 namespace Purchasing.Application;
 
 using AutoMapper;
-using Purchasing.Application.PurchaseOrders.Commands;
 
 public partial class MappingProfile : Profile
 {
     public void PurchaseOrderMappingProfile()
     {
         #region PurchaseOrder
+        // Read direction only — Create/Update now go through PurchaseOrder's own domain methods
+        // (see Purchasing.Application.PurchaseOrders.Commands.{Create,Update}CommandHandler), not
+        // AutoMapper, since PurchaseOrder has private setters. PurchaseOrderDto/
+        // PurchaseOrderProductDto are standalone classes (no longer inherit from the entity), so
+        // these are ordinary property-name-convention maps.
         CreateMap<PurchaseOrder, PurchaseOrderDto>()
         .ForMember(dest => dest.DealerName, opt => opt.MapFrom(src => src.Dealer!.Name))
         .ForMember(dest => dest.PurchaseOrderProductList,
         opt => opt.MapFrom(src => src.PurchaseOrderProducts));
-        CreateMap<PurchaseOrderDto, PurchaseOrder>();
 
         CreateMap<PurchaseOrderProduct, PurchaseOrderProductDto>();
-        CreateMap<PurchaseOrderProductDto, PurchaseOrderProduct>();
-
-        CreateMap<CreatePurchaseOrderCommand, PurchaseOrder>()
-        .ForMember(dest => dest.PurchaseOrderProducts,
-        opt => opt.MapFrom(src => src.PurchaseOrderProductList));
-
-        CreateMap<UpdatePurchaseOrderCommand, PurchaseOrder>()
-        .ForMember(dest => dest.PurchaseOrderProducts,
-        opt => opt.MapFrom(src => src.PurchaseOrderProductList));
-
-        CreateMap<PurchaseOrderDto, CreatePurchaseOrderCommand>()
-        .ForMember(dest => dest.PurchaseOrderProducts,
-        opt => opt.MapFrom(src => src.PurchaseOrderProductList));
-
-        CreateMap<PurchaseOrderDto, UpdatePurchaseOrderCommand>()
-        .ForMember(dest => dest.PurchaseOrderProducts,
-        opt => opt.MapFrom(src => src.PurchaseOrderProductList));
         #endregion
     }
 }

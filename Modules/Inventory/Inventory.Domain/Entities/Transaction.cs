@@ -18,11 +18,6 @@
 
         public virtual Stock? ToStock { get; set; }
 
-        [ForeignKey("Order")]
-        public virtual long? OrderId { get; set; }
-
-        public virtual Order? Order { get; set; }
-
         [ForeignKey("Inventory")]
         public virtual long? InventoryId { get; set; }
 

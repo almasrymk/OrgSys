@@ -11,6 +11,10 @@ namespace Application.Tests;
 
 public class LinkInvoiceCommandHandlerTests
 {
+    private static readonly DateTime CreateDate = new(2026, 9, 1);
+
+    private static PurchaseOrder NewOrder() => PurchaseOrder.Create(dealerId: 1, createUserId: 1, createDate: CreateDate);
+
     private static (LinkInvoiceCommandHandler handler, Mock<IRepository<PurchaseOrder>> orderRepository, Mock<ISender> sender, Mock<IUnitOfWork> unitOfWork)
         BuildHandler(PurchaseOrder? order, InvoiceReferenceDto? invoice)
     {
@@ -33,7 +37,7 @@ public class LinkInvoiceCommandHandlerTests
     [Fact]
     public async Task Handle_ValidPurchaseInvoice_LinksAndApprovesOrder()
     {
-        var order = new PurchaseOrder { Id = 1, Status = Status.New, InvoiceId = null };
+        var order = NewOrder();
         var invoice = new InvoiceReferenceDto(100, "INV-100", InvoiceTypeId.Purchase, 5, IsDeleted: false);
         var (handler, _, _, _) = BuildHandler(order, invoice);
 
@@ -47,7 +51,7 @@ public class LinkInvoiceCommandHandlerTests
     [Fact]
     public async Task Handle_ValidPurchaseReturnInvoice_LinksAndApprovesOrder()
     {
-        var order = new PurchaseOrder { Id = 1, Status = Status.New, InvoiceId = null };
+        var order = NewOrder();
         var invoice = new InvoiceReferenceDto(101, "INV-101", InvoiceTypeId.PurchaseReturn, 5, IsDeleted: false);
         var (handler, _, _, _) = BuildHandler(order, invoice);
 
@@ -60,7 +64,7 @@ public class LinkInvoiceCommandHandlerTests
     [Fact]
     public async Task Handle_SalesInvoice_IsRejected()
     {
-        var order = new PurchaseOrder { Id = 1, Status = Status.New, InvoiceId = null };
+        var order = NewOrder();
         var invoice = new InvoiceReferenceDto(200, "INV-200", InvoiceTypeId.Sales, 5, IsDeleted: false);
         var (handler, _, _, unitOfWork) = BuildHandler(order, invoice);
 
@@ -74,7 +78,7 @@ public class LinkInvoiceCommandHandlerTests
     [Fact]
     public async Task Handle_InvoiceNotFound_IsRejected()
     {
-        var order = new PurchaseOrder { Id = 1, Status = Status.New, InvoiceId = null };
+        var order = NewOrder();
         var (handler, _, _, _) = BuildHandler(order, invoice: null);
 
         var result = await handler.Handle(new LinkInvoiceCommand(1, 999), CancellationToken.None);
@@ -85,7 +89,8 @@ public class LinkInvoiceCommandHandlerTests
     [Fact]
     public async Task Handle_OrderAlreadyLinked_IsRejected()
     {
-        var order = new PurchaseOrder { Id = 1, Status = Status.Approved, InvoiceId = 50 };
+        var order = NewOrder();
+        order.LinkInvoice(50);
         var invoice = new InvoiceReferenceDto(100, "INV-100", InvoiceTypeId.Purchase, 5, IsDeleted: false);
         var (handler, _, sender, _) = BuildHandler(order, invoice);
 

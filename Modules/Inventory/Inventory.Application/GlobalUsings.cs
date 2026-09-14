@@ -4,7 +4,6 @@ global using Inventory.Application;
 global using MasterData.Domain;
 global using MasterData.Application;
 global using Organization.Domain;
-global using Sales.Domain;
 global using CommercialDocuments.Domain;
 global using Parties.Domain;
 global using Administration.Domain;

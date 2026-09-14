@@ -10,11 +10,6 @@
     <ProjectReference Include="../../../BuildingBlocks/OrgSys.SharedKernel/OrgSys.SharedKernel.csproj" />
     <ProjectReference Include="../../MasterData/MasterData.Domain/MasterData.Domain.csproj" />
     <ProjectReference Include="../../Organization/Organization.Domain/Organization.Domain.csproj" />
-    <!-- Transaction.Order keeps its existing EF navigation to Sales.Domain — the one surviving
-         direction of what was a real bidirectional coupling; the Sales-side edges (Invoice.Stock,
-         InvoiceProduct.Product/Stock, OrderProduct.Product) were redesigned away instead. See
-         docs/modular-monolith-analysis.md §21/§22 and the ModuleDependencyTests exceptions. -->
-    <ProjectReference Include="../../Sales/Sales.Domain/Sales.Domain.csproj" />
     <!-- Product.Dealer and Transaction.Dealer keep their existing EF navigation to Dealer, now
          owned by Parties (relocated from Sales.Domain — see
          docs/modular-monolith-target-architecture.md §13). -->

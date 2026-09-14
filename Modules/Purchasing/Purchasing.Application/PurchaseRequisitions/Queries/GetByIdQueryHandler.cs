@@ -1,22 +1,33 @@
 namespace Purchasing.Application.PurchaseRequisitions.Queries
 {
-    using OrgSys.SharedKernel;
     using AutoMapper;
-    using System.Linq.Expressions;
+    using MediatR;
+    using OrgSys.SharedKernel;
+    using System.Net;
 
     public sealed record GetByIdPurchaseRequisitionQuery(long Id) : ICommand<PurchaseRequisitionDto>, IGetByIdQuery<Result<PurchaseRequisitionDto>>;
 
-    public sealed class GetByIdQueryHandler(IRepository<PurchaseRequisition> _Repository, IMapper mapper)
-        : GetCommandHandler<GetByIdPurchaseRequisitionQuery, PurchaseRequisition, PurchaseRequisitionDto>(_Repository, mapper)
+    /// <summary>Bespoke handler — see Purchasing.Application.PurchaseOrders.Queries.GetByIdQueryHandler's
+    /// remark on why the generic OrgSys.SharedKernel.GetCommandHandler&lt;,,&gt; no longer applies.
+    /// Filter/include logic unchanged.</summary>
+    public sealed class GetByIdQueryHandler(IRepository<PurchaseRequisition> repository, IMapper mapper)
+        : ICommandHandler<GetByIdPurchaseRequisitionQuery, PurchaseRequisitionDto>
     {
-        public override Expression<Func<PurchaseRequisition, bool>> CreateFilter(GetByIdPurchaseRequisitionQuery request)
+        public async Task<Result<PurchaseRequisitionDto>> Handle(GetByIdPurchaseRequisitionQuery request, CancellationToken cancellationToken)
         {
-            return e => e.Id == request.Id && e.Status != Status.Deleted && e.Hide != true;
-        }
+            try
+            {
+                var requisition = await repository.GetByFilterAsync(
+                    e => e.Id == request.Id && e.Status != Status.Deleted && e.Hide != true,
+                    "PurchaseRequisitionProducts,PurchaseRequisitionProducts.Unit");
 
-        public override string CreateInclude()
-        {
-            return "PurchaseRequisitionProducts,PurchaseRequisitionProducts.Unit";
+                var dto = requisition is null ? new PurchaseRequisitionDto() : mapper.Map<PurchaseRequisitionDto>(requisition);
+                return new Result<PurchaseRequisitionDto>(HttpStatusCode.OK, dto, null);
+            }
+            catch (Exception ex)
+            {
+                return new Result<PurchaseRequisitionDto>(HttpStatusCode.InternalServerError, null, [new Error(ex.Message)]);
+            }
         }
     }
 }

@@ -1,7 +1,5 @@
 global using OrgSys.SharedKernel;
-global using MasterData.Domain;
-global using Organization.Domain;
-global using Parties.Domain;
-global using CommercialDocuments.Domain;
+global using Sales.Domain.Events;
+global using Sales.Domain.Exceptions;
 global using System.ComponentModel.DataAnnotations;
 global using System.ComponentModel.DataAnnotations.Schema;

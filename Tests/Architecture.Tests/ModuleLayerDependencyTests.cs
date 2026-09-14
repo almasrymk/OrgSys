@@ -64,7 +64,6 @@ public class ModuleLayerDependencyTests
         ("CommercialDocuments", "Parties", "GetCreditAllByDealerIdQueryHandler reads Invoice.Dealer.Name directly (Dealer owned by Parties). Moved unchanged from Sales.Application."),
         ("CommercialDocuments", "MasterData", "MappingProfile Unit/UnitDto mapping support. Moved unchanged from Sales.Application."),
         ("Parties", "MasterData", "DealerMappingProfile maps Country/City/District names directly (Dealer.Country/City/District navigations)."),
-        ("Inventory", "Sales", "Transaction Get/Search handlers and MappingProfile read Order directly (Transaction.Order — the resolved Sales<->Inventory circular coupling, now also visible at the Application layer)."),
         ("Inventory", "CommercialDocuments", "Transaction Delete/Update/GetById/Search handlers read the linked Invoice directly (IRepository<Invoice>), now owned by CommercialDocuments (relocated from Sales.Domain)."),
         ("Inventory", "Parties", "Transaction/Product Get/Search/Create/Delete/Update handlers and MappingProfile read Dealer directly (Product.Dealer/Transaction.Dealer, now owned by Parties — relocated from Sales.Domain)."),
         ("Inventory", "Organization", "MappingProfile Branch/Shift mapping support."),

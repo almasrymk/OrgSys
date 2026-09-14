@@ -43,21 +43,16 @@ public class ModuleDependencyTests
         ("Treasury", "MasterData", "Bank/BankBranch/FinancialAccount/Financial/FinancialTransfer keep their existing EF navigations to Country/City/District/Currency/PaymentType."),
         ("Treasury", "Organization", "CashBox/BankAccount keep their existing EF navigation to Branch."),
         ("Treasury", "Administration", "CashBox.KeeperUserId keeps its existing EF navigation to User."),
-        ("Inventory", "Sales", "Transaction.Order keeps its existing EF navigation. Sales and Inventory had a genuine bidirectional coupling (Invoice.Stock/InvoiceProduct.Product on one side, Product.Dealer/Transaction.Dealer on the other); the Sales-side navigations were dropped in favor of manual batch lookups so only this one direction survives."),
         ("Inventory", "Parties", "Product.Dealer and Transaction.Dealer keep their existing EF navigations to Dealer, now owned by Parties (relocated from Sales.Domain — see docs/modular-monolith-target-architecture.md §13)."),
         ("Treasury", "CommercialDocuments", "FinancialInvoice.Invoice keeps its existing EF navigation to Invoice, now owned by CommercialDocuments (relocated from Sales.Domain)."),
         ("Treasury", "Parties", "Financial.Dealer keeps its existing EF navigation to Dealer, now owned by Parties (relocated from Sales.Domain)."),
-        ("Sales", "Organization", "Order/Dealer keep their existing EF navigations to Branch/Shift/CompanyProfile."),
-        ("Sales", "MasterData", "OrderProduct.Unit keeps its existing EF navigation to Unit."),
-        ("Sales", "Parties", "Order.Dealer keeps its existing EF navigation to Dealer, now owned by Parties (relocated from this project)."),
-        ("Sales", "CommercialDocuments", "Order.Invoice keeps its existing EF navigation to Invoice, now owned by CommercialDocuments (relocated from this project)."),
         ("CommercialDocuments", "MasterData", "Invoice keeps its existing EF navigations to Currency/PaymentType."),
         ("CommercialDocuments", "Parties", "Invoice.Dealer keeps its existing EF navigation to Dealer, now owned by Parties (relocated from Sales.Domain along with Invoice itself)."),
         ("Parties", "MasterData", "Dealer keeps its existing EF navigations to Country/City/District."),
         ("Inventory", "Organization", "Stock/Transaction/Inventory keep their existing EF navigations to Branch/Shift."),
         ("Inventory", "MasterData", "Product/ProductUnit/Stock/Transaction keep their existing EF navigations to Unit/Classification/Country/City/District/Currency."),
         ("Purchasing", "Parties", "PurchaseOrder.Dealer (the supplier) keeps an EF navigation to Parties.Domain.Dealer, same convention as every other module's Dealer reference."),
-        ("Purchasing", "MasterData", "PurchaseRequisitionProduct.Unit / PurchaseOrderProduct.Unit keep an EF navigation to MasterData.Unit, same convention as CommercialDocuments.Domain.InvoiceProduct/Sales.Domain.OrderProduct."),
+        ("Purchasing", "MasterData", "PurchaseRequisitionProduct.Unit / PurchaseOrderProduct.Unit keep an EF navigation to MasterData.Unit, same convention as CommercialDocuments.Domain.InvoiceProduct."),
     ];
 
     public static IEnumerable<object[]> AllModulePairs()

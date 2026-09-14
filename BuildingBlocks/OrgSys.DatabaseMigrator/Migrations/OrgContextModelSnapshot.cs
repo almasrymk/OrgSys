@@ -1553,9 +1553,6 @@ namespace OrgSys.DatabaseMigrator.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<long?>("OrderId")
-                        .HasColumnType("bigint");
-
                     b.Property<long>("ParentId")
                         .HasColumnType("bigint");
 
@@ -1594,8 +1591,6 @@ namespace OrgSys.DatabaseMigrator.Migrations
                     b.HasIndex("InventoryId");
 
                     b.HasIndex("ModifyUserId");
-
-                    b.HasIndex("OrderId");
 
                     b.HasIndex("ShiftId");
 
@@ -2672,6 +2667,9 @@ namespace OrgSys.DatabaseMigrator.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
+                    b.Property<decimal>("CancelledQuantity")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<string>("Code")
                         .HasColumnType("nvarchar(max)");
 
@@ -2704,6 +2702,12 @@ namespace OrgSys.DatabaseMigrator.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<decimal>("Quantity")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("ReceivedQuantity")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("ReturnedQuantity")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<long>("RowNumber")
@@ -2827,6 +2831,9 @@ namespace OrgSys.DatabaseMigrator.Migrations
                     b.Property<string>("Notes")
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
+
+                    b.Property<decimal>("OrderedQuantity")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<long>("ParentId")
                         .HasColumnType("bigint");
@@ -3092,206 +3099,6 @@ namespace OrgSys.DatabaseMigrator.Migrations
                         .IsUnique();
 
                     b.ToTable("Receivable");
-                });
-
-            modelBuilder.Entity("Sales.Domain.Order", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<long?>("BranchId")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("CloseTable")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("CodeNumber")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long>("CreateUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long?>("DealerId")
-                        .HasColumnType("bigint");
-
-                    b.Property<decimal>("Discount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("DiscountType")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("HasJournal")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Hide")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ImgPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long?>("InvoiceId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("MaskText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("ModifyDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long?>("ModifyUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<decimal>("Net")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Notes")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<long>("ParentId")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("Posted")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Review")
-                        .HasColumnType("bit");
-
-                    b.Property<decimal>("Service")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("ServiceType")
-                        .HasColumnType("int");
-
-                    b.Property<long?>("ShiftId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<long?>("TableId")
-                        .HasColumnType("bigint");
-
-                    b.Property<decimal>("Tax")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("TaxType")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Total")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<long>("TypeId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BranchId");
-
-                    b.HasIndex("CreateUserId");
-
-                    b.HasIndex("DealerId");
-
-                    b.HasIndex("InvoiceId");
-
-                    b.HasIndex("ModifyUserId");
-
-                    b.HasIndex("ShiftId");
-
-                    b.HasIndex("TableId");
-
-                    b.ToTable("Order");
-                });
-
-            modelBuilder.Entity("Sales.Domain.OrderProduct", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("CodeNumber")
-                        .HasColumnType("bigint");
-
-                    b.Property<decimal>("Discount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<bool>("Hide")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ImgPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MaskText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Net")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Notes")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("OrderId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("ParentId")
-                        .HasColumnType("bigint");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<long>("ProductId")
-                        .HasColumnType("bigint");
-
-                    b.Property<decimal>("Quantity")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<long>("RowNumber")
-                        .HasColumnType("bigint");
-
-                    b.Property<decimal>("Service")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Tax")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("Total")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<long>("TypeId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("UnitId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrderId");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasIndex("UnitId");
-
-                    b.ToTable("OrderProduct");
                 });
 
             modelBuilder.Entity("Treasury.Domain.Bank", b =>
@@ -4383,10 +4190,6 @@ namespace OrgSys.DatabaseMigrator.Migrations
                         .WithMany()
                         .HasForeignKey("ModifyUserId");
 
-                    b.HasOne("Sales.Domain.Order", "Order")
-                        .WithMany()
-                        .HasForeignKey("OrderId");
-
                     b.HasOne("Organization.Domain.Shift", null)
                         .WithMany()
                         .HasForeignKey("ShiftId");
@@ -4402,8 +4205,6 @@ namespace OrgSys.DatabaseMigrator.Migrations
                     b.Navigation("Dealer");
 
                     b.Navigation("Inventory");
-
-                    b.Navigation("Order");
 
                     b.Navigation("Stock");
 
@@ -4573,70 +4374,6 @@ namespace OrgSys.DatabaseMigrator.Migrations
                         .IsRequired();
 
                     b.Navigation("PaymentApplication");
-                });
-
-            modelBuilder.Entity("Sales.Domain.Order", b =>
-                {
-                    b.HasOne("Organization.Domain.Branch", null)
-                        .WithMany()
-                        .HasForeignKey("BranchId");
-
-                    b.HasOne("Administration.Domain.User", null)
-                        .WithMany()
-                        .HasForeignKey("CreateUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Parties.Domain.Dealer", "Dealer")
-                        .WithMany()
-                        .HasForeignKey("DealerId");
-
-                    b.HasOne("CommercialDocuments.Domain.Invoice", "Invoice")
-                        .WithMany()
-                        .HasForeignKey("InvoiceId");
-
-                    b.HasOne("Administration.Domain.User", null)
-                        .WithMany()
-                        .HasForeignKey("ModifyUserId");
-
-                    b.HasOne("Organization.Domain.Shift", null)
-                        .WithMany()
-                        .HasForeignKey("ShiftId");
-
-                    b.HasOne("Organization.Domain.Table", "Table")
-                        .WithMany()
-                        .HasForeignKey("TableId");
-
-                    b.Navigation("Dealer");
-
-                    b.Navigation("Invoice");
-
-                    b.Navigation("Table");
-                });
-
-            modelBuilder.Entity("Sales.Domain.OrderProduct", b =>
-                {
-                    b.HasOne("Sales.Domain.Order", "Order")
-                        .WithMany("OrderProducts")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Inventory.Domain.Product", null)
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MasterData.Domain.Unit", "Unit")
-                        .WithMany()
-                        .HasForeignKey("UnitId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Order");
-
-                    b.Navigation("Unit");
                 });
 
             modelBuilder.Entity("Treasury.Domain.Bank", b =>
@@ -4958,11 +4695,6 @@ namespace OrgSys.DatabaseMigrator.Migrations
             modelBuilder.Entity("Receivables.Domain.PaymentApplication", b =>
                 {
                     b.Navigation("Lines");
-                });
-
-            modelBuilder.Entity("Sales.Domain.Order", b =>
-                {
-                    b.Navigation("OrderProducts");
                 });
 
             modelBuilder.Entity("Treasury.Domain.Financial", b =>

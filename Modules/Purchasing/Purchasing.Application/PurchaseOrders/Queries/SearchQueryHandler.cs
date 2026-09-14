@@ -1,33 +1,43 @@
 namespace Purchasing.Application.PurchaseOrders.Queries
 {
-    using OrgSys.SharedKernel;
     using AutoMapper;
-    using System.Linq.Expressions;
+    using MediatR;
+    using OrgSys.SharedKernel;
+    using System.Net;
 
     public sealed record SearchPurchaseOrderQuery(string KeySearch, long ParentId, long TypeId, int Page, int PageSize)
         : ICommandPagination<PurchaseOrderDto>, ISearchQuery<ResultPagination<PurchaseOrderDto>>;
 
-    public sealed class SearchQueryHandler(IRepository<PurchaseOrder> _Repository, IMapper mapper)
-        : SearchCommandHandler<SearchPurchaseOrderQuery, PurchaseOrder, PurchaseOrderDto>(_Repository, mapper)
+    /// <summary>Bespoke handler — see GetByIdQueryHandler's remark on why the generic
+    /// OrgSys.SharedKernel.SearchCommandHandler&lt;,,&gt; no longer applies. Filter/order logic unchanged.</summary>
+    public sealed class SearchQueryHandler(IRepository<PurchaseOrder> repository, IMapper mapper)
+        : ICommandPaginationHandler<SearchPurchaseOrderQuery, PurchaseOrderDto>
     {
-        public override Expression<Func<PurchaseOrder, bool>> CreateFilter(SearchPurchaseOrderQuery request)
+        public async Task<ResultPagination<PurchaseOrderDto>> Handle(SearchPurchaseOrderQuery request, CancellationToken cancellationToken)
         {
-            Page = request.Page;
-            PageSize = request.PageSize;
+            try
+            {
+                var page = await repository.GetPaginationByFilterAsync(
+                    e => (string.IsNullOrEmpty(request.KeySearch) || e.Code!.Contains(request.KeySearch) || e.Dealer!.Name.Contains(request.KeySearch)) &&
+                         e.Status != Status.Deleted && e.Hide != true,
+                    q => q.OrderByDescending(e => e.Id),
+                    "Dealer",
+                    request.Page,
+                    request.PageSize);
 
-            return e =>
-            (string.IsNullOrEmpty(request.KeySearch) || e.Code!.Contains(request.KeySearch) || e.Dealer!.Name.Contains(request.KeySearch)) &&
-            e.Status != Status.Deleted && e.Hide != true;
-        }
+                if (page is null || page.Items is null)
+                    return new ResultPagination<PurchaseOrderDto>(HttpStatusCode.InternalServerError, [], 0, 0, 0, [new Error("Error")]);
 
-        public override Func<IQueryable<PurchaseOrder>, IOrderedQueryable<PurchaseOrder>> CreateOrderBy(SearchPurchaseOrderQuery request)
-        {
-            return q => q.OrderByDescending(e => e.Id);
-        }
-
-        public override string CreateInclude()
-        {
-            return "Dealer";
+                return new ResultPagination<PurchaseOrderDto>(
+                    HttpStatusCode.OK,
+                    page.Items.Select(mapper.Map<PurchaseOrderDto>).ToList(),
+                    page.Page, page.PageSize, page.TotalPages,
+                    null);
+            }
+            catch (Exception ex)
+            {
+                return new ResultPagination<PurchaseOrderDto>(HttpStatusCode.InternalServerError, [], 0, 0, 0, [new Error(ex.Message)]);
+            }
         }
     }
 }

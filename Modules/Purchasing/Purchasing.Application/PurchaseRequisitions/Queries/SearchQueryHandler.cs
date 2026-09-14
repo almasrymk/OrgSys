@@ -1,28 +1,43 @@
 namespace Purchasing.Application.PurchaseRequisitions.Queries
 {
-    using OrgSys.SharedKernel;
     using AutoMapper;
-    using System.Linq.Expressions;
+    using MediatR;
+    using OrgSys.SharedKernel;
+    using System.Net;
 
     public sealed record SearchPurchaseRequisitionQuery(string KeySearch, long ParentId, long TypeId, int Page, int PageSize)
         : ICommandPagination<PurchaseRequisitionDto>, ISearchQuery<ResultPagination<PurchaseRequisitionDto>>;
 
-    public sealed class SearchQueryHandler(IRepository<PurchaseRequisition> _Repository, IMapper mapper)
-        : SearchCommandHandler<SearchPurchaseRequisitionQuery, PurchaseRequisition, PurchaseRequisitionDto>(_Repository, mapper)
+    /// <summary>Bespoke handler — see Purchasing.Application.PurchaseOrders.Queries.SearchQueryHandler's
+    /// remark. Filter/order logic unchanged.</summary>
+    public sealed class SearchQueryHandler(IRepository<PurchaseRequisition> repository, IMapper mapper)
+        : ICommandPaginationHandler<SearchPurchaseRequisitionQuery, PurchaseRequisitionDto>
     {
-        public override Expression<Func<PurchaseRequisition, bool>> CreateFilter(SearchPurchaseRequisitionQuery request)
+        public async Task<ResultPagination<PurchaseRequisitionDto>> Handle(SearchPurchaseRequisitionQuery request, CancellationToken cancellationToken)
         {
-            Page = request.Page;
-            PageSize = request.PageSize;
+            try
+            {
+                var page = await repository.GetPaginationByFilterAsync(
+                    e => (string.IsNullOrEmpty(request.KeySearch) || e.Code!.Contains(request.KeySearch) || (e.Notes != null && e.Notes.Contains(request.KeySearch))) &&
+                         e.Status != Status.Deleted && e.Hide != true,
+                    q => q.OrderByDescending(e => e.Id),
+                    string.Empty,
+                    request.Page,
+                    request.PageSize);
 
-            return e =>
-            (string.IsNullOrEmpty(request.KeySearch) || e.Code!.Contains(request.KeySearch) || (e.Notes != null && e.Notes.Contains(request.KeySearch))) &&
-            e.Status != Status.Deleted && e.Hide != true;
-        }
+                if (page is null || page.Items is null)
+                    return new ResultPagination<PurchaseRequisitionDto>(HttpStatusCode.InternalServerError, [], 0, 0, 0, [new Error("Error")]);
 
-        public override Func<IQueryable<PurchaseRequisition>, IOrderedQueryable<PurchaseRequisition>> CreateOrderBy(SearchPurchaseRequisitionQuery request)
-        {
-            return q => q.OrderByDescending(e => e.Id);
+                return new ResultPagination<PurchaseRequisitionDto>(
+                    HttpStatusCode.OK,
+                    page.Items.Select(mapper.Map<PurchaseRequisitionDto>).ToList(),
+                    page.Page, page.PageSize, page.TotalPages,
+                    null);
+            }
+            catch (Exception ex)
+            {
+                return new ResultPagination<PurchaseRequisitionDto>(HttpStatusCode.InternalServerError, [], 0, 0, 0, [new Error(ex.Message)]);
+            }
         }
     }
 }

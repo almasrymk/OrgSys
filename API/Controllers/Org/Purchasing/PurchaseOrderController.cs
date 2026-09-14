@@ -17,5 +17,9 @@ namespace API.Controllers.Org.Purchasing
         [HttpPut("LinkInvoice")]
         public async Task<Result> LinkInvoice(long Id, long InvoiceId, CancellationToken cancellationToken) =>
             await Sender.Send(new LinkInvoiceCommand(Id, InvoiceId), cancellationToken);
+
+        [HttpPut("Cancel")]
+        public async Task<Result> Cancel(long Id, CancellationToken cancellationToken) =>
+            await Sender.Send(new CancelPurchaseOrderCommand(Id), cancellationToken);
     }
 }

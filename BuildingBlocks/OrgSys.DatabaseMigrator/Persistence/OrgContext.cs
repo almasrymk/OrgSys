@@ -183,7 +183,7 @@
             foreach (var movementEntityType in new[]
                      {
                          typeof(Financial), typeof(FinancialTransfer), typeof(Invoice),
-                         typeof(Journal), typeof(Order), typeof(Transaction), typeof(global::Inventory.Domain.Inventory)
+                         typeof(Journal), typeof(Transaction), typeof(global::Inventory.Domain.Inventory)
                      })
             {
                 modelBuilder.Entity(movementEntityType)
@@ -202,11 +202,11 @@
                     .HasForeignKey("BranchId");
             }
 
-            // Invoice/InvoiceProduct/OrderProduct dropped their Stock/Product navigation
-            // properties for the same Sales/Inventory module-boundary reason (Invoice.Transaction
-            // too, confirmed dead) — these Fluent "no navigation" relationships keep the exact
-            // same FK columns and constraints, verified with `dotnet ef migrations
-            // has-pending-model-changes`. See docs/modular-monolith-analysis.md §21.
+            // Invoice/InvoiceProduct dropped their Stock/Product navigation properties for the
+            // same Sales/Inventory module-boundary reason (Invoice.Transaction too, confirmed
+            // dead) — these Fluent "no navigation" relationships keep the exact same FK columns
+            // and constraints, verified with `dotnet ef migrations has-pending-model-changes`.
+            // See docs/modular-monolith-analysis.md §21.
             modelBuilder.Entity<Invoice>()
                 .HasOne(typeof(Stock)).WithMany()
                 .HasForeignKey("StockId");
@@ -221,11 +221,6 @@
             modelBuilder.Entity<InvoiceProduct>()
                 .HasOne(typeof(Stock)).WithMany()
                 .HasForeignKey("StockId");
-            modelBuilder.Entity<OrderProduct>()
-                .HasOne(typeof(Product)).WithMany()
-                .HasForeignKey("ProductId")
-                .OnDelete(DeleteBehavior.Cascade)
-                .IsRequired();
             modelBuilder.Entity<global::Inventory.Domain.Inventory>()
                 .HasOne(typeof(User)).WithMany()
                 .HasForeignKey("UserId");
@@ -262,8 +257,6 @@
         public virtual DbSet<Invoice> Invoices { get; set; }
         public virtual DbSet<InvoiceProduct> InvoiceProducts { get; set; }
         public virtual DbSet<InvoiceType> InvoiceTypes { get; set; }
-        //public virtual DbSet<Order> Orders { get; set; }
-        //public virtual DbSet<OrderProduct> OrderProducts { get; set; }
         public virtual DbSet<Purchasing.Domain.PurchaseRequisition> PurchaseRequisitions { get; set; }
         public virtual DbSet<Purchasing.Domain.PurchaseRequisitionProduct> PurchaseRequisitionProducts { get; set; }
         public virtual DbSet<Purchasing.Domain.PurchaseOrder> PurchaseOrders { get; set; }
@@ -281,7 +274,6 @@
         public virtual DbSet<TransactionProduct> TransactionProducts { get; set; }
         public virtual DbSet<global::Inventory.Domain.Inventory> Inventories { get; set; }
         public virtual DbSet<InventoryProduct> InventoryProducts { get; set; }
-        //public virtual DbSet<OrderType> OrderTypes { get; set; }
         public virtual DbSet<Table> Tables { get; set; }
         public virtual DbSet<CashBox> CashBoxes { get; set; }
         public virtual DbSet<Financial> Financials { get; set; }
