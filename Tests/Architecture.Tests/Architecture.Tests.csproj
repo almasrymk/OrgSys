@@ -32,6 +32,7 @@
     <ProjectReference Include="..\..\Modules\Accounting\Accounting.Domain\Accounting.Domain.csproj" />
     <ProjectReference Include="..\..\Modules\Receivables\Receivables.Domain\Receivables.Domain.csproj" />
     <ProjectReference Include="..\..\Modules\Payables\Payables.Domain\Payables.Domain.csproj" />
+    <ProjectReference Include="..\..\Modules\Advances\Advances.Domain\Advances.Domain.csproj" />
     <ProjectReference Include="..\..\Modules\Administration\Administration.Domain\Administration.Domain.csproj" />
     <ProjectReference Include="..\..\Modules\Organization\Organization.Domain\Organization.Domain.csproj" />
     <ProjectReference Include="..\..\Modules\MasterData\MasterData.Domain\MasterData.Domain.csproj" />
@@ -44,6 +45,7 @@
     <ProjectReference Include="..\..\Modules\Accounting\Accounting.Application\Accounting.Application.csproj" />
     <ProjectReference Include="..\..\Modules\Receivables\Receivables.Application\Receivables.Application.csproj" />
     <ProjectReference Include="..\..\Modules\Payables\Payables.Application\Payables.Application.csproj" />
+    <ProjectReference Include="..\..\Modules\Advances\Advances.Application\Advances.Application.csproj" />
     <ProjectReference Include="..\..\Modules\Administration\Administration.Application\Administration.Application.csproj" />
     <ProjectReference Include="..\..\Modules\Organization\Organization.Application\Organization.Application.csproj" />
     <ProjectReference Include="..\..\Modules\MasterData\MasterData.Application\MasterData.Application.csproj" />
@@ -57,6 +59,7 @@
     <ProjectReference Include="..\..\Modules\Accounting\Accounting.Infrastructure\Accounting.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Modules\Receivables\Receivables.Infrastructure\Receivables.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Modules\Payables\Payables.Infrastructure\Payables.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Modules\Advances\Advances.Infrastructure\Advances.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Modules\Administration\Administration.Infrastructure\Administration.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Modules\Organization\Organization.Infrastructure\Organization.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Modules\MasterData\MasterData.Infrastructure\MasterData.Infrastructure.csproj" />

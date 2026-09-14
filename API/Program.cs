@@ -17,6 +17,7 @@ using Inventory.Infrastructure.DependencyInjection;
 using Purchasing.Infrastructure.DependencyInjection;
 using Receivables.Infrastructure.DependencyInjection;
 using Payables.Infrastructure.DependencyInjection;
+using Advances.Infrastructure.DependencyInjection;
 using Reporting.Infrastructure.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -118,6 +119,7 @@ builder.Services.AddInventoryModule();
 builder.Services.AddPurchasingModule();
 builder.Services.AddReceivablesModule();
 builder.Services.AddPayablesModule();
+builder.Services.AddAdvancesModule();
 builder.Services.AddReportingModule();
 
 var app = builder.Build();

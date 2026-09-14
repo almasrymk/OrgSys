@@ -24,6 +24,7 @@ public class ModuleDependencyTests
         ("Accounting", typeof(Accounting.Domain.AssemblyMarker).Assembly),
         ("Receivables", typeof(Receivables.Domain.AssemblyMarker).Assembly),
         ("Payables", typeof(Payables.Domain.AssemblyMarker).Assembly),
+        ("Advances", typeof(Advances.Domain.AssemblyMarker).Assembly),
         ("Administration", typeof(Administration.Domain.AssemblyMarker).Assembly),
         ("Organization", typeof(Organization.Domain.AssemblyMarker).Assembly),
         ("MasterData", typeof(MasterData.Domain.AssemblyMarker).Assembly),

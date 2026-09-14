@@ -41,6 +41,7 @@
     <ProjectReference Include="..\Modules\Purchasing\Purchasing.Infrastructure\Purchasing.Infrastructure.csproj" />
     <ProjectReference Include="..\Modules\Receivables\Receivables.Infrastructure\Receivables.Infrastructure.csproj" />
     <ProjectReference Include="..\Modules\Payables\Payables.Infrastructure\Payables.Infrastructure.csproj" />
+    <ProjectReference Include="..\Modules\Advances\Advances.Infrastructure\Advances.Infrastructure.csproj" />
     <ProjectReference Include="..\Modules\Reporting\Reporting.Infrastructure\Reporting.Infrastructure.csproj" />
   </ItemGroup>
 
