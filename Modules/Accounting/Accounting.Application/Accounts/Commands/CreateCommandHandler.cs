@@ -1,8 +1,6 @@
 ﻿namespace Accounting.Application.Accounts.Commands
 {
-    using OrgSys.SharedKernel;
-    using OrgSys.SharedKernel;
-    using OrgSys.SharedKernel;
+    using OrgSys.SharedKernel;   
     using AutoMapper;
 
     public sealed class CreateAccountCommand : Accounting.Application.AccountDto, ICommand , ICreateCommand<Result>;
