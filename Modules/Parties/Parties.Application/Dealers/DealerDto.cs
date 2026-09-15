@@ -15,6 +15,14 @@ namespace Parties.Application
         [StringLength(500, MinimumLength = 3)]
         public virtual string? Address { get; set; }
 
+        public virtual Parties.Domain.PartyType? PartyType { get; set; }
+
+        [StringLength(50)]
+        public virtual string? TaxRegistrationNumber { get; set; }
+
+        [StringLength(50)]
+        public virtual string? CommercialRegistrationNumber { get; set; }
+
         public virtual long? DealerGroupId { get; set; }
 
         public virtual string? DealerGroupName { get; set; }

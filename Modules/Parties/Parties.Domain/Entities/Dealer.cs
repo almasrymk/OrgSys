@@ -15,6 +15,30 @@
         [StringLength(500, MinimumLength = 3)]
         public virtual string? Address { get; set; }
 
+        /// <summary>Person vs Organization (brief §2.2) — nullable, additive; not backfilled for
+        /// existing rows (see docs/parties/party-target-architecture.md §1).</summary>
+        public virtual PartyType? PartyType { get; set; }
+
+        [StringLength(50)]
+        public virtual string? TaxRegistrationNumber { get; set; }
+
+        [StringLength(50)]
+        public virtual string? CommercialRegistrationNumber { get; set; }
+
+        /// <summary>A Dealer may hold a Customer role, a Supplier role, or both simultaneously
+        /// (brief §2.9's mandatory scenario) — <see cref="TypeId"/> (inherited from BaseModel,
+        /// interpreted as <see cref="DealerType"/>) remains the Dealer's *original/primary* role for
+        /// every pre-existing screen, query, and uniqueness rule; these two profiles are the
+        /// additive mechanism through which a Dealer gains the *other* role without a duplicate
+        /// row. See AssignCustomerRoleCommand/AssignSupplierRoleCommand.</summary>
+        public virtual CustomerProfile? CustomerProfile { get; set; }
+
+        public virtual SupplierProfile? SupplierProfile { get; set; }
+
+        public virtual ICollection<PartyContact> Contacts { get; set; } = new List<PartyContact>();
+
+        public virtual ICollection<PartyAddress> Addresses { get; set; } = new List<PartyAddress>();
+
         [ForeignKey("DealerGroup")]
         public virtual long? DealerGroupId { get; set; }
 

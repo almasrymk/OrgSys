@@ -8,5 +8,9 @@ public partial class MappingProfile : Profile
     {
         DealerGroupMappingProfile();
         DealerMappingProfile();
+        CustomerProfileMappingProfile();
+        SupplierProfileMappingProfile();
+        PartyContactMappingProfile();
+        PartyAddressMappingProfile();
     }
 }

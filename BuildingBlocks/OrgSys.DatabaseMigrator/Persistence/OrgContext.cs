@@ -228,6 +228,44 @@
             ConfigureInventoryHardening(modelBuilder);
             ConfigureCatalog(modelBuilder);
             ConfigureOrganization(modelBuilder);
+            ConfigureParties(modelBuilder);
+        }
+
+        /// <summary>
+        /// EF configuration for the Parties module's new CustomerProfile/SupplierProfile/
+        /// PartyContact/PartyAddress additions (docs/parties/party-target-architecture.md). Dealer
+        /// itself keeps its existing shape/table — these are additive child tables, not a
+        /// relocation. AccountId on both profiles mirrors Dealer.AccountId's own scalar-only "no
+        /// navigation" FK into Accounting.Domain.Account (GeneralLedger bounded-context isolation).
+        /// </summary>
+        private static void ConfigureParties(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Dealer>()
+                .HasMany(e => e.Contacts).WithOne(e => e.Dealer)
+                .HasForeignKey(e => e.DealerId).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<Dealer>()
+                .HasMany(e => e.Addresses).WithOne(e => e.Dealer)
+                .HasForeignKey(e => e.DealerId).OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Parties.Domain.CustomerProfile>()
+                .HasOne(e => e.Dealer).WithOne(e => e.CustomerProfile)
+                .HasForeignKey<Parties.Domain.CustomerProfile>(e => e.DealerId)
+                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<Parties.Domain.CustomerProfile>()
+                .HasIndex(e => e.DealerId).IsUnique();
+            modelBuilder.Entity<Parties.Domain.CustomerProfile>()
+                .HasOne(typeof(Account)).WithMany()
+                .HasForeignKey("AccountId");
+
+            modelBuilder.Entity<Parties.Domain.SupplierProfile>()
+                .HasOne(e => e.Dealer).WithOne(e => e.SupplierProfile)
+                .HasForeignKey<Parties.Domain.SupplierProfile>(e => e.DealerId)
+                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<Parties.Domain.SupplierProfile>()
+                .HasIndex(e => e.DealerId).IsUnique();
+            modelBuilder.Entity<Parties.Domain.SupplierProfile>()
+                .HasOne(typeof(Account)).WithMany()
+                .HasForeignKey("AccountId");
         }
 
         /// <summary>
@@ -425,6 +463,10 @@
         public virtual DbSet<Property> Properties { get; set; }
         public virtual DbSet<DealerGroup> DealerGroups { get; set; }
         public virtual DbSet<Dealer> Dealers { get; set; }
+        public virtual DbSet<Parties.Domain.CustomerProfile> CustomerProfiles { get; set; }
+        public virtual DbSet<Parties.Domain.SupplierProfile> SupplierProfiles { get; set; }
+        public virtual DbSet<Parties.Domain.PartyContact> PartyContacts { get; set; }
+        public virtual DbSet<Parties.Domain.PartyAddress> PartyAddresses { get; set; }
         public virtual DbSet<Classification> Classifications { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<ProductUnit> ProductUnits { get; set; }

@@ -38,6 +38,9 @@
     <ProjectReference Include="..\..\Modules\Organization\Organization.Application\Organization.Application.csproj" />
     <ProjectReference Include="..\..\Modules\Organization\Organization.Domain\Organization.Domain.csproj" />
     <ProjectReference Include="..\..\Modules\MasterData\MasterData.Domain\MasterData.Domain.csproj" />
+    <!-- AssignCustomerRole/AssignSupplierRoleCommandHandlerTests exercise Parties.Application directly. -->
+    <ProjectReference Include="..\..\Modules\Parties\Parties.Application\Parties.Application.csproj" />
+    <ProjectReference Include="..\..\Modules\Parties\Parties.Domain\Parties.Domain.csproj" />
   </ItemGroup>
 
 </Project>

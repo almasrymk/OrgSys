@@ -10,8 +10,9 @@ namespace Parties.Application.Dealers.Commands
     /// Accounting.Contracts.Accounts.ProvisionSubAccountCommand) inside its own transaction and link the
     /// freshly-generated Id to the Dealer before saving it. Account creation itself (code generation,
     /// parent validity) is Accounting's own concern — see ProvisionSubAccountCommand.
-    /// Mirrors <see cref="DealerReceivableAccountProvisioning"/> for the AP (Supplier) side — Client
-    /// dealers are untouched here.
+    /// Mirrors <see cref="DealerReceivableAccountProvisioning"/> for the AP (Supplier) side — see
+    /// that type's doc comment for why neither helper guards on dealer.TypeId internally (the
+    /// dual-role AssignSupplierRoleCommand may run against a Dealer whose primary TypeId is Client).
     /// </summary>
     internal static class DealerPayableAccountProvisioning
     {
@@ -25,9 +26,6 @@ namespace Parties.Application.Dealers.Commands
             CancellationToken cancellationToken)
         {
             var errors = new List<Error>();
-
-            if (dealer.TypeId != (long)DealerType.Supplier)
-                return (requestedAccountId, null, errors);
 
             if (requestedAccountId is > 0)
             {

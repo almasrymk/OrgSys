@@ -10,7 +10,10 @@ namespace Parties.Application.Dealers.Commands
     /// Accounting.Contracts.Accounts.ProvisionSubAccountCommand) inside its own transaction and link the
     /// freshly-generated Id to the Dealer before saving it. Account creation itself (code generation,
     /// parent validity) is Accounting's own concern — see ProvisionSubAccountCommand.
-    /// Suppliers are untouched (AP is out of scope) — only Client dealers participate in these rules.
+    /// Called both from Dealer's own Create/Update (only when dealer.TypeId == Client — the caller
+    /// branches before invoking this, so no internal TypeId guard is needed there) and from
+    /// AssignCustomerRoleCommand (which may run against a Dealer whose primary TypeId is Supplier —
+    /// brief §2.9's dual-role scenario — so this helper must not assume TypeId == Client either).
     /// </summary>
     internal static class DealerReceivableAccountProvisioning
     {
@@ -24,9 +27,6 @@ namespace Parties.Application.Dealers.Commands
             CancellationToken cancellationToken)
         {
             var errors = new List<Error>();
-
-            if (dealer.TypeId != (long)DealerType.Client)
-                return (requestedAccountId, null, errors);
 
             if (requestedAccountId is > 0)
             {
