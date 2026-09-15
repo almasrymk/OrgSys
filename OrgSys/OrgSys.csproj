@@ -411,6 +411,7 @@
     <ProjectReference Include="..\Modules\CommercialDocuments\CommercialDocuments.Application\CommercialDocuments.Application.csproj" />
     <ProjectReference Include="..\Modules\Parties\Parties.Application\Parties.Application.csproj" />
     <ProjectReference Include="..\Modules\Inventory\Inventory.Application\Inventory.Application.csproj" />
+    <ProjectReference Include="..\Modules\Catalog\Catalog.Application\Catalog.Application.csproj" />
     <ProjectReference Include="..\BuildingBlocks\OrgSys.Localization\OrgSys.Localization.csproj" />
   </ItemGroup>
 

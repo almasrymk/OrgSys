@@ -1,5 +1,5 @@
-using Inventory.Application.Properties.Commands;
-using Inventory.Application.Properties.Queries;
+using Catalog.Application.Attributes.Commands;
+using Catalog.Application.Attributes.Queries;
 using OrgSys.SharedKernel;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

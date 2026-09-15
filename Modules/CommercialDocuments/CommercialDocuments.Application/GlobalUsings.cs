@@ -5,5 +5,7 @@ global using CommercialDocuments.Contracts;
 global using Parties.Domain;
 global using MasterData.Domain;
 global using MasterData.Application;
+global using Catalog.Domain;
+global using Catalog.Application;
 global using Organization.Domain;
 global using Administration.Domain;

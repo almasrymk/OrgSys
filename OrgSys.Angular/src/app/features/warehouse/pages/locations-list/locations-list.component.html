@@ -1,0 +1,47 @@
+<app-page-header title="Warehouse Locations" [breadcrumbs]="[{ label: 'Home', route: '/' }, { label: 'Warehouse' }, { label: 'Locations' }]">
+  <div class="d-flex justify-content-between align-items-center flex-wrap">
+    <a [routerLink]="['new']" [queryParams]="{ stockId: stockId() }" class="btn btn-outline-primary">
+      <i class="bi bi-plus-lg"></i> Add
+    </a>
+
+    <div class="form-group mb-0" style="min-width: 220px;">
+      <select class="form-control" [ngModel]="stockId()" (ngModelChange)="stockId.set($event); onStockChange()">
+        <option *ngFor="let stock of stocks()" [ngValue]="stock.id">{{ stock.name }}</option>
+      </select>
+    </div>
+  </div>
+</app-page-header>
+
+<div class="card">
+  <div class="card-body p-0">
+    <table class="table table-hover m-0" *ngIf="locations().length; else emptyState">
+      <thead>
+        <tr>
+          <th>Code</th>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Receivable</th>
+          <th>Pickable</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let location of locations()" [class.text-muted]="!location.isActive">
+          <td>{{ location.code }}</td>
+          <td>{{ location.name }}</td>
+          <td>{{ location.locationType }}</td>
+          <td><i class="bi" [class.bi-check-circle-fill]="location.isReceivable" [class.text-success]="location.isReceivable" [class.bi-x-circle]="!location.isReceivable"></i></td>
+          <td><i class="bi" [class.bi-check-circle-fill]="location.isPickable" [class.text-success]="location.isPickable" [class.bi-x-circle]="!location.isPickable"></i></td>
+          <td>
+            <span *ngIf="location.isActive" class="badge badge-success">Active</span>
+            <span *ngIf="!location.isActive" class="badge badge-warning">Inactive</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <ng-template #emptyState>
+      <p class="text-center text-muted p-4 mb-0">{{ loading() ? 'Loading...' : 'No locations found for this warehouse.' }}</p>
+    </ng-template>
+  </div>
+</div>

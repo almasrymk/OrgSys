@@ -1,0 +1,58 @@
+<app-page-header title="Inventory Balance" [breadcrumbs]="[{ label: 'Home', route: '/' }, { label: 'Warehouse' }, { label: 'Balance' }]"></app-page-header>
+
+<div class="card mb-3">
+  <div class="card-body">
+    <div class="row align-items-end">
+      <div class="form-group col-6 col-md-4">
+        <label>Warehouse</label>
+        <select class="form-control" [ngModel]="stockId()" (ngModelChange)="stockId.set($event)">
+          <option [ngValue]="0">All warehouses</option>
+          <option *ngFor="let stock of stocks()" [ngValue]="stock.id">{{ stock.name }}</option>
+        </select>
+      </div>
+      <div class="form-group col-6 col-md-4">
+        <label>Product</label>
+        <select class="form-control" [ngModel]="productId()" (ngModelChange)="productId.set($event)">
+          <option [ngValue]="0">All products</option>
+          <option *ngFor="let product of products()" [ngValue]="product.id">{{ product.code }} {{ product.name }}</option>
+        </select>
+      </div>
+      <div class="form-group col-12 col-md-2">
+        <button type="button" class="btn btn-primary w-100" (click)="search()">Search</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-body p-0">
+    <table class="table table-hover m-0" *ngIf="balances().length; else emptyState">
+      <thead>
+        <tr>
+          <th>Warehouse</th>
+          <th>Product</th>
+          <th class="text-right">On Hand</th>
+          <th class="text-right">Reserved</th>
+          <th class="text-right">Available</th>
+          <th class="text-right">Avg. Cost</th>
+          <th class="text-right">Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of balances()">
+          <td>{{ stockName(row.stockId) }}</td>
+          <td>{{ productName(row.productId) }}</td>
+          <td class="text-right" [class.text-danger]="row.quantityOnHand < 0">{{ row.quantityOnHand | number: '1.0-3' }}</td>
+          <td class="text-right">{{ row.quantityReserved | number: '1.0-3' }}</td>
+          <td class="text-right" [class.text-danger]="row.quantityAvailable < 0">{{ row.quantityAvailable | number: '1.0-3' }}</td>
+          <td class="text-right">{{ row.averageCost | number: '1.2-4' }}</td>
+          <td class="text-right">{{ row.inventoryValue | number: '1.2-2' }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <ng-template #emptyState>
+      <p class="text-center text-muted p-4 mb-0">{{ loading() ? 'Loading...' : 'No balance rows found for this filter.' }}</p>
+    </ng-template>
+  </div>
+</div>

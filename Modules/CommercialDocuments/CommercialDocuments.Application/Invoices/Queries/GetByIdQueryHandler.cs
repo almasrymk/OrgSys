@@ -8,7 +8,7 @@
     using AutoMapper;
     using MediatR;
     using System.Linq.Expressions;
-    using Inventory.Contracts.Products;
+    using Catalog.Contracts.Products;
 
     public sealed record GetByIdInvoiceQuery(long Id) : ICommand<InvoiceDto> , IGetByIdQuery<Result<InvoiceDto>>;
 

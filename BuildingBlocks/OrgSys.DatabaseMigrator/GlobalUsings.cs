@@ -8,5 +8,6 @@ global using Sales.Domain;
 global using CommercialDocuments.Domain;
 global using Parties.Domain;
 global using Inventory.Domain;
+global using Catalog.Domain;
 global using Receivables.Domain;
 global using Payables.Domain;

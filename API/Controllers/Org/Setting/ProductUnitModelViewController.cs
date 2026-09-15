@@ -1,4 +1,4 @@
-﻿using Inventory.Application.ProductUnits.Queries;
+﻿using Catalog.Application.ProductUnits.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

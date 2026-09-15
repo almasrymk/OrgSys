@@ -224,6 +224,186 @@
             modelBuilder.Entity<global::Inventory.Domain.Inventory>()
                 .HasOne(typeof(User)).WithMany()
                 .HasForeignKey("UserId");
+
+            ConfigureInventoryHardening(modelBuilder);
+            ConfigureCatalog(modelBuilder);
+            ConfigureOrganization(modelBuilder);
+        }
+
+        /// <summary>
+        /// EF configuration for the Organization module's new Company/OrganizationSettings aggregates
+        /// and the new Branch.CompanyId FK (docs/organization/organization-target-architecture.md).
+        /// Company/Branch stay in Organization.Domain; Currency/Country/City/District ownership was
+        /// deliberately left in MasterData this pass, so Company/OrganizationSettings reference them
+        /// as scalar-only "no navigation" FKs, same pattern as Journal.CurrencyId above.
+        /// </summary>
+        private static void ConfigureOrganization(ModelBuilder modelBuilder)
+        {
+            // A Branch must belong to a Company (brief §1.4) — Restrict, not Cascade: deleting a
+            // Company must never silently delete every Branch (and everything a Branch is
+            // transitively referenced by) underneath it.
+            modelBuilder.Entity<Branch>()
+                .HasOne(e => e.Company).WithMany(e => e.Branches)
+                .HasForeignKey(e => e.CompanyId)
+                .OnDelete(DeleteBehavior.Restrict)
+                .IsRequired();
+
+            modelBuilder.Entity<Company>()
+                .HasOne(typeof(Currency)).WithMany()
+                .HasForeignKey("DefaultCurrencyId");
+            modelBuilder.Entity<Company>()
+                .HasOne(typeof(Country)).WithMany()
+                .HasForeignKey("CountryId");
+
+            // One settings row per Company.
+            modelBuilder.Entity<Organization.Domain.OrganizationSettings>()
+                .HasOne(e => e.Company).WithOne()
+                .HasForeignKey<Organization.Domain.OrganizationSettings>(e => e.CompanyId)
+                .OnDelete(DeleteBehavior.Restrict)
+                .IsRequired();
+            modelBuilder.Entity<Organization.Domain.OrganizationSettings>()
+                .HasIndex(e => e.CompanyId)
+                .IsUnique();
+            modelBuilder.Entity<Organization.Domain.OrganizationSettings>()
+                .HasOne(typeof(Currency)).WithMany()
+                .HasForeignKey("DefaultCurrencyId");
+            modelBuilder.Entity<Organization.Domain.OrganizationSettings>()
+                .HasOne(typeof(Country)).WithMany()
+                .HasForeignKey("DefaultCountryId");
+        }
+
+        /// <summary>
+        /// EF configuration for the Catalog module (docs/catalog/catalog-target-architecture.md).
+        /// Product/ProductUnit/Classification/Unit/Property/PropertyElement/ProductPropertyElement
+        /// were relocated here unchanged from Inventory.Domain/MasterData.Domain (same table names,
+        /// same columns, same [Table]/[ForeignKey] attributes on the entities themselves) — only
+        /// Brand/PriceList/PriceListEntry and Product.BrandId are genuinely new configuration.
+        /// </summary>
+        private static void ConfigureCatalog(ModelBuilder modelBuilder)
+        {
+            // Brand deletion must never cascade-delete every Product that references it (brief's
+            // own "avoid cascade deletes on master data" guidance) — deactivate the Brand instead.
+            modelBuilder.Entity<Product>()
+                .HasOne(p => p.Brand).WithMany()
+                .HasForeignKey(p => p.BrandId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Brand>().HasIndex(e => e.Code).IsUnique();
+
+            modelBuilder.Entity<PriceList>()
+                .HasMany(pl => pl.Entries).WithOne(e => e.PriceList)
+                .HasForeignKey(e => e.PriceListId)
+                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<PriceListEntry>()
+                .HasOne(e => e.Product).WithMany()
+                .HasForeignKey(e => e.ProductId)
+                .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<PriceListEntry>()
+                .HasOne(e => e.Unit).WithMany()
+                .HasForeignKey(e => e.UnitId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // ProductRecipe.ProductId lost its implicit relationship-by-convention once
+            // Product.ProductRecipes was dropped during the Catalog relocation (ProductRecipe
+            // itself stays Inventory-owned — docs/catalog/catalog-ownership.md). Restored as an
+            // explicit Fluent "no navigation" FK, same shape as InvoiceProduct->Product below, so
+            // the DB-level constraint is preserved unchanged rather than silently dropped.
+            modelBuilder.Entity<Inventory.Domain.ProductRecipe>()
+                .HasOne(typeof(Product)).WithMany()
+                .HasForeignKey("ProductId")
+                .OnDelete(DeleteBehavior.Cascade)
+                .IsRequired();
+        }
+
+        /// <summary>
+        /// EF configuration for the new Inventory aggregates (docs/ddd/inventory-target-architecture.md
+        /// §6) — mirrors the Payables/Receivables "child collection via private backing field" pattern
+        /// used a few lines above for SupplierPaymentApplication.Lines, plus the invariants the brief
+        /// calls out explicitly (§58 unique constraints, §61 concurrency tokens).
+        /// </summary>
+        private static void ConfigureInventoryHardening(ModelBuilder modelBuilder)
+        {
+            // One warehouse code per company (brief §4.1). Nullable Code (inherited from BaseModel)
+            // is fine — SQL Server unique indexes allow multiple NULLs.
+            modelBuilder.Entity<Stock>().HasIndex(e => e.Code).IsUnique();
+            // Property initializers (`= true`) are a C#-only default — EF does NOT infer a SQL
+            // DEFAULT constraint from them, so without this explicit HasDefaultValue the AddColumn
+            // migration would default every EXISTING Stock row's new IsActive column to false
+            // (CLR default(bool)), deactivating every warehouse that already exists. Confirmed by
+            // generating the migration once and inspecting it before wiring this in.
+            modelBuilder.Entity<Stock>().Property(e => e.IsActive).HasDefaultValue(true);
+            modelBuilder.Entity<Product>().Property(e => e.IsActive).HasDefaultValue(true);
+
+            modelBuilder.Entity<WarehouseLocation>()
+                .HasOne(l => l.ParentLocation).WithMany()
+                .HasForeignKey(l => l.ParentLocationId)
+                // Self-referencing FK: cascade delete would create a cycle SQL Server rejects.
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // The optimized current-state projection (brief §8) — one row per Item+Warehouse
+            // (+Location)(+Batch); RowVersion (see InventoryBalance.cs's [Timestamp]) is EF's
+            // concurrency token, picked up automatically from the Data Annotation.
+            //
+            // SQL Server treats every NULL in a unique index as distinct from every other NULL, so a
+            // single filtered `.IsUnique()` on all four columns (EF's own default filter is
+            // "LocationId IS NOT NULL AND BatchId IS NOT NULL") only guards the one case where both
+            // are set — the common Location=NULL/Batch=NULL case would silently allow duplicate
+            // balance rows for the same Item+Warehouse, which is exactly the "competing stock truth"
+            // brief §70 forbids. Four filtered indexes, one per null-pattern, close all of them.
+            modelBuilder.Entity<InventoryBalance>()
+                .HasIndex(e => new { e.ProductId, e.StockId, e.LocationId, e.BatchId })
+                .IsUnique()
+                .HasFilter("[LocationId] IS NOT NULL AND [BatchId] IS NOT NULL")
+                .HasDatabaseName("IX_InventoryBalance_Product_Stock_Location_Batch");
+            modelBuilder.Entity<InventoryBalance>()
+                .HasIndex(e => new { e.ProductId, e.StockId, e.LocationId })
+                .IsUnique()
+                .HasFilter("[LocationId] IS NOT NULL AND [BatchId] IS NULL")
+                .HasDatabaseName("IX_InventoryBalance_Product_Stock_Location_NoBatch");
+            modelBuilder.Entity<InventoryBalance>()
+                .HasIndex(e => new { e.ProductId, e.StockId, e.BatchId })
+                .IsUnique()
+                .HasFilter("[LocationId] IS NULL AND [BatchId] IS NOT NULL")
+                .HasDatabaseName("IX_InventoryBalance_Product_Stock_Batch_NoLocation");
+            modelBuilder.Entity<InventoryBalance>()
+                .HasIndex(e => new { e.ProductId, e.StockId })
+                .IsUnique()
+                .HasFilter("[LocationId] IS NULL AND [BatchId] IS NULL")
+                .HasDatabaseName("IX_InventoryBalance_Product_Stock_NoLocation_NoBatch");
+
+            modelBuilder.Entity<InventoryReceipt>()
+                .HasMany(r => r.Lines).WithOne(l => l.InventoryReceipt)
+                .HasForeignKey(l => l.InventoryReceiptId).OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<InventoryIssue>()
+                .HasMany(i => i.Lines).WithOne(l => l.InventoryIssue)
+                .HasForeignKey(l => l.InventoryIssueId).OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<StockTransfer>()
+                .HasMany(t => t.Lines).WithOne(l => l.StockTransfer)
+                .HasForeignKey(l => l.StockTransferId).OnDelete(DeleteBehavior.Cascade);
+            // A transfer references two warehouses (From/To) — EF can't infer which FK belongs to
+            // which navigation without both being told explicitly; Restrict avoids SQL Server's
+            // "multiple cascade paths" error from two FKs into the same Stock table.
+            modelBuilder.Entity<StockTransfer>()
+                .HasOne(t => t.FromStock).WithMany()
+                .HasForeignKey(t => t.FromStockId).OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<StockTransfer>()
+                .HasOne(t => t.ToStock).WithMany()
+                .HasForeignKey(t => t.ToStockId).OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<StockAdjustment>()
+                .HasMany(a => a.Lines).WithOne(l => l.StockAdjustment)
+                .HasForeignKey(l => l.StockAdjustmentId).OnDelete(DeleteBehavior.Cascade);
+
+            // Idempotency guard (brief §31) — the same SourceDocumentType+SourceDocumentId+
+            // SourceDocumentLineId (or an explicit IdempotencyKey) must never produce two movements.
+            // Nullable, so historical/unrelated Transaction rows are unaffected.
+            modelBuilder.Entity<Transaction>().HasIndex(e => e.IdempotencyKey).IsUnique();
+
+            // Batch/serial identity (brief §16/§17).
+            modelBuilder.Entity<InventoryBatch>().HasIndex(e => new { e.ProductId, e.BatchNumber }).IsUnique();
+            modelBuilder.Entity<InventorySerial>().HasIndex(e => new { e.ProductId, e.SerialNumber }).IsUnique();
         }
 
         public Task BeginTransactionAsync()
@@ -248,7 +428,12 @@
         public virtual DbSet<Classification> Classifications { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<ProductUnit> ProductUnits { get; set; }
+        public virtual DbSet<Brand> Brands { get; set; }
+        public virtual DbSet<PriceList> PriceLists { get; set; }
+        public virtual DbSet<PriceListEntry> PriceListEntries { get; set; }
         public virtual DbSet<Branch> Branches { get; set; }
+        public virtual DbSet<Organization.Domain.Company> Companies { get; set; }
+        public virtual DbSet<Organization.Domain.OrganizationSettings> OrganizationSettings { get; set; }
         public virtual DbSet<Stock> Stocks { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Shift> Shifts { get; set; }
@@ -265,7 +450,12 @@
 
         public virtual DbSet<ReferenceType> ReferenceTypes { get; set; }
         //public virtual DbSet<LogSys> LogSys { get; set; }
-        //public virtual DbSet<ProductRecipe> ProductRecipes { get; set; }
+        // Explicit DbSet needed now that Product moved to Catalog.Domain and dropped its
+        // ProductRecipes navigation (ProductRecipe stays Inventory-owned — see
+        // docs/catalog/catalog-ownership.md); without this, EF no longer discovers the type via
+        // any navigation and would drop the table. ProductId is a scalar-only reference into
+        // Catalog, same convention as every other Inventory entity.
+        public virtual DbSet<Inventory.Domain.ProductRecipe> ProductRecipes { get; set; }
         //public virtual DbSet<PropertyElement> PropertyElements { get; set; }
         //public virtual DbSet<ProductPropertyElement> ProductPropertyElements { get; set; }
         public virtual DbSet<Preference> Preferences { get; set; }
@@ -304,6 +494,24 @@
         public virtual DbSet<Payable> Payables { get; set; }
         public virtual DbSet<SupplierPaymentApplication> SupplierPaymentApplications { get; set; }
         public virtual DbSet<SupplierPaymentApplicationLine> SupplierPaymentApplicationLines { get; set; }
+
+        // Inventory bounded-context hardening (docs/ddd/inventory-target-architecture.md) — additive
+        // tables alongside the existing Product/Stock/Transaction/Inventory ones, never replacing them.
+        public virtual DbSet<WarehouseLocation> WarehouseLocations { get; set; }
+        public virtual DbSet<InventoryBalance> InventoryBalances { get; set; }
+        public virtual DbSet<InventoryReceipt> InventoryReceipts { get; set; }
+        public virtual DbSet<InventoryReceiptLine> InventoryReceiptLines { get; set; }
+        public virtual DbSet<InventoryIssue> InventoryIssues { get; set; }
+        public virtual DbSet<InventoryIssueLine> InventoryIssueLines { get; set; }
+        public virtual DbSet<StockTransfer> StockTransfers { get; set; }
+        public virtual DbSet<StockTransferLine> StockTransferLines { get; set; }
+        public virtual DbSet<StockAdjustment> StockAdjustments { get; set; }
+        public virtual DbSet<StockAdjustmentLine> StockAdjustmentLines { get; set; }
+        public virtual DbSet<StockAdjustmentReason> StockAdjustmentReasons { get; set; }
+        public virtual DbSet<StockReservation> StockReservations { get; set; }
+        public virtual DbSet<InventoryBatch> InventoryBatches { get; set; }
+        public virtual DbSet<InventorySerial> InventorySerials { get; set; }
+        public virtual DbSet<InventoryCostLayer> InventoryCostLayers { get; set; }
 
 
         public void ResetDbContextState()

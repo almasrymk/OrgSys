@@ -19,6 +19,7 @@ public class ModuleLayerDependencyTests
         ("Parties", typeof(Parties.Application.AssemblyMarker).Assembly),
         ("CommercialDocuments", typeof(CommercialDocuments.Application.MappingProfile).Assembly),
         ("Purchasing", typeof(Purchasing.Application.AssemblyMarker).Assembly),
+        ("Catalog", typeof(Catalog.Application.MappingProfile).Assembly),
         ("Inventory", typeof(Inventory.Application.MappingProfile).Assembly),
         ("Treasury", typeof(Treasury.Application.MappingProfile).Assembly),
         ("Accounting", typeof(Accounting.Application.MappingProfile).Assembly),
@@ -37,6 +38,7 @@ public class ModuleLayerDependencyTests
         ("Parties", typeof(Parties.Domain.AssemblyMarker).Assembly),
         ("CommercialDocuments", typeof(CommercialDocuments.Domain.AssemblyMarker).Assembly),
         ("Purchasing", typeof(Purchasing.Domain.AssemblyMarker).Assembly),
+        ("Catalog", typeof(Catalog.Domain.AssemblyMarker).Assembly),
         ("Inventory", typeof(Inventory.Domain.AssemblyMarker).Assembly),
         ("Treasury", typeof(Treasury.Domain.AssemblyMarker).Assembly),
         ("Accounting", typeof(Accounting.Domain.AssemblyMarker).Assembly),
@@ -62,12 +64,13 @@ public class ModuleLayerDependencyTests
         ("Treasury", "Administration", "CreateFinancialPaidInvoiceCommandHandler reads Preference directly (DefaultCashBox lookup) — same relocation-not-rewrite as above."),
         ("Parties", "Administration", "Dealer Create/Update handlers and the GL-account provisioning helpers read Preference directly — same relocation-not-rewrite as above."),
         ("CommercialDocuments", "Parties", "GetCreditAllByDealerIdQueryHandler reads Invoice.Dealer.Name directly (Dealer owned by Parties). Moved unchanged from Sales.Application."),
-        ("CommercialDocuments", "MasterData", "MappingProfile Unit/UnitDto mapping support. Moved unchanged from Sales.Application."),
+        ("CommercialDocuments", "Catalog", "Invoices/MappingProfile Unit/UnitDto mapping support (Unit relocated from MasterData to Catalog); GetByIdQueryHandler's GetProductNamesQuery lookup now lives in Catalog.Contracts (relocated from Inventory.Contracts along with Product itself)."),
         ("Parties", "MasterData", "DealerMappingProfile maps Country/City/District names directly (Dealer.Country/City/District navigations)."),
         ("Inventory", "CommercialDocuments", "Transaction Delete/Update/GetById/Search handlers read the linked Invoice directly (IRepository<Invoice>), now owned by CommercialDocuments (relocated from Sales.Domain)."),
         ("Inventory", "Parties", "Transaction/Product Get/Search/Create/Delete/Update handlers and MappingProfile read Dealer directly (Product.Dealer/Transaction.Dealer, now owned by Parties — relocated from Sales.Domain)."),
         ("Inventory", "Organization", "MappingProfile Branch/Shift mapping support."),
-        ("Inventory", "MasterData", "MappingProfile Unit/Classification mapping support."),
+        ("Inventory", "Catalog", "Product/ProductDto, ProductUnit, Property CQRS now live in Catalog.Application (relocated from Inventory.Application/MasterData.Application); GetListByBalanceQueryHandler reads Catalog.Domain.Product/Catalog.Application.ProductDto directly to compute an Inventory-side stock balance — see docs/catalog/catalog-target-architecture.md §4."),
+        ("Inventory", "MasterData", "TransactionJournalPostingService resolves IRepository<Currency> directly to pick the posting currency."),
         ("Treasury", "CommercialDocuments", "CancelFinancialCommandHandler/CreateFinancialPaidInvoiceCommandHandler/DeleteListCommandHandler/PostTransactionCommandHandler/RedoInvoiceCommandHandler/UpdateCommandHandler read Invoice directly (IRepository<Invoice>), now owned by CommercialDocuments (relocated from Sales.Domain). A Contracts-based rewrite of these handlers is out of scope for the Invoice-ownership move itself."),
         ("Treasury", "Parties", "Financial Create/Update/Delete/Cancel/Redo/PostTransaction handlers and MappingProfile read Dealer directly (Financial.Dealer, now owned by Parties — relocated from Sales.Domain)."),
         ("Treasury", "MasterData", "MappingProfile and CreateFinancialPaidInvoiceCommandHandler read Currency directly."),
@@ -76,8 +79,11 @@ public class ModuleLayerDependencyTests
         ("Reporting", "Parties", "Same reasoning — Dealer balance/statement reports read Dealer/DealerType directly (now owned by Parties, relocated from Sales.Domain)."),
         ("Reporting", "Treasury", "Same reasoning — reads Financial/FinancialType directly."),
         ("Reporting", "Inventory", "Same reasoning — reads TransactionProduct/TransactionType directly."),
-        ("Reporting", "MasterData", "Same reasoning — Warehouse/Financial report queries read Classification/Currency directly."),
+        ("Reporting", "MasterData", "Same reasoning — Warehouse/Financial report queries read Currency directly."),
+        ("Reporting", "Catalog", "Same reasoning — Warehouse report queries read Product/Classification directly via TransactionProduct.Product, now owned by Catalog (relocated from Inventory.Domain/MasterData.Domain)."),
         ("Purchasing", "Parties", "PurchaseOrder Create/Update/Get/Search handlers and MappingProfile read Dealer directly (PurchaseOrder.Dealer navigation, same as the existing Purchasing.Domain -> Parties.Domain exception, now also visible at the Application layer)."),
+        ("Catalog", "Parties", "ProductDto/MappingProfile read Product.Dealer.Name directly (Dealer owned by Parties) — same relocation-not-rewrite as this mapping had before Product moved out of Inventory.Application."),
+        ("Organization", "MasterData", "Company/Branch/OrganizationSettings Create/Update validators check CountryId/DefaultCurrencyId existence via IRepository<Country>/IRepository<Currency> directly. Company.CountryId/DefaultCurrencyId are scalar-only (no Domain navigation, unlike Bank/Dealer) since Currency/Country/City/District ownership was deliberately left in MasterData this pass rather than relocated into Organization — see docs/organization/organization-target-architecture.md."),
     ];
 
     /// <summary>
@@ -92,8 +98,8 @@ public class ModuleLayerDependencyTests
     private static readonly (string Module, string DependsOnModule, string Reason)[] AcceptedApplicationApplicationExceptions =
     [
         ("Sales", "MasterData", "UnitDto mapping support."),
-        ("CommercialDocuments", "MasterData", "UnitDto mapping support. Moved unchanged from Sales.Application."),
-        ("Inventory", "MasterData", "UnitDto/ProductDto mapping support."),
+        ("CommercialDocuments", "Catalog", "UnitDto mapping support (relocated from MasterData.Application)."),
+        ("Inventory", "Catalog", "ProductDto/UnitDto mapping support (Product/Unit CQRS relocated from Inventory.Application/MasterData.Application)."),
     ];
 
     public static IEnumerable<object[]> AllApplicationToDomainPairs()

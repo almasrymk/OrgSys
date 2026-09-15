@@ -1,5 +1,4 @@
-﻿using Inventory.Application.Products.Commands;
-using Inventory.Application.Transactions.Commands;
+﻿using Inventory.Application.Transactions.Commands;
 using Inventory.Application.TransactionTypes.Commands;
 using AutoMapper;
 using System.Net.Http;

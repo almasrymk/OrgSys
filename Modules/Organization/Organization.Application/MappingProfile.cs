@@ -9,5 +9,7 @@ public partial class MappingProfile : Profile
         BranchMappingProfile();
         ShiftMappingProfile();
         TableMappingProfile();
+        CompanyMappingProfile();
+        OrganizationSettingsMappingProfile();
     }
 }

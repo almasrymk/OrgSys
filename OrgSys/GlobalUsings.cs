@@ -17,3 +17,5 @@ global using Parties.Domain;
 global using Parties.Application;
 global using Inventory.Domain;
 global using Inventory.Application;
+global using Catalog.Domain;
+global using Catalog.Application;

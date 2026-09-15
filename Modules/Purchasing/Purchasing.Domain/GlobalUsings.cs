@@ -1,5 +1,5 @@
 global using OrgSys.SharedKernel;
-global using MasterData.Domain;
+global using Catalog.Domain;
 global using Parties.Domain;
 global using Purchasing.Domain.Events;
 global using Purchasing.Domain.Exceptions;

@@ -1,0 +1,66 @@
+<app-page-header title="Stock Reservations" [breadcrumbs]="[{ label: 'Home', route: '/' }, { label: 'Warehouse' }, { label: 'Reservations' }]">
+  <div class="form-group mb-0" style="max-width: 220px;">
+    <select class="form-control" [ngModel]="status()" (ngModelChange)="status.set($event); search()">
+      <option [ngValue]="null">All statuses</option>
+      <option [ngValue]="ReservationStatus.Active">Active</option>
+      <option [ngValue]="ReservationStatus.Released">Released</option>
+      <option [ngValue]="ReservationStatus.Fulfilled">Fulfilled</option>
+      <option [ngValue]="ReservationStatus.Expired">Expired</option>
+      <option [ngValue]="ReservationStatus.Cancelled">Cancelled</option>
+    </select>
+  </div>
+</app-page-header>
+
+<div class="card">
+  <div class="card-body p-0">
+    <table class="table table-hover m-0" *ngIf="reservations().length; else emptyState">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Warehouse</th>
+          <th>Product</th>
+          <th class="text-right">Quantity</th>
+          <th>Source</th>
+          <th>Status</th>
+          <th>Created</th>
+          <th style="width: 120px;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let r of reservations()">
+          <td>{{ r.id }}</td>
+          <td>{{ stockName(r.stockId) }}</td>
+          <td>{{ productName(r.productId) }}</td>
+          <td class="text-right">{{ r.quantity | number: '1.0-3' }}</td>
+          <td>{{ r.sourceType }} #{{ r.sourceId }}</td>
+          <td>
+            <span
+              class="badge"
+              [class.badge-success]="r.reservationStatus === ReservationStatus.Active"
+              [class.badge-primary]="r.reservationStatus === ReservationStatus.Fulfilled"
+              [class.badge-secondary]="r.reservationStatus === ReservationStatus.Released || r.reservationStatus === ReservationStatus.Cancelled"
+              [class.badge-warning]="r.reservationStatus === ReservationStatus.Expired"
+            >
+              {{ ReservationStatus[r.reservationStatus] }}
+            </span>
+          </td>
+          <td>{{ r.createDate | date: 'yyyy-MM-dd HH:mm' }}</td>
+          <td class="text-right text-nowrap">
+            <ng-container *ngIf="r.reservationStatus === ReservationStatus.Active">
+              <a href="javascript:void(0)" class="mr-2" title="Fulfill" (click)="fulfill(r)">
+                <i class="bi bi-check-circle text-success"></i>
+              </a>
+              <a href="javascript:void(0)" title="Release" (click)="release(r)">
+                <i class="bi bi-x-circle text-warning"></i>
+              </a>
+            </ng-container>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <ng-template #emptyState>
+      <p class="text-center text-muted p-4 mb-0">{{ loading() ? 'Loading...' : 'No reservations found.' }}</p>
+    </ng-template>
+  </div>
+</div>

@@ -20,7 +20,23 @@ namespace Organization.Infrastructure.Seeding
         public void Seed(DbContext dbContext)
         {
             InitialCompanyProfile(dbContext);
+            InitialCompany(dbContext);
             InitialBranch(dbContext);
+        }
+
+        /// <summary>Seeds one default Company for a fresh database (mirrors InitialBranch's
+        /// "add if none exist" idempotency). The live/existing database's Branch rows are backfilled
+        /// by the AddOrganizationCompanyAndSettings migration itself, not here — this seeder only
+        /// ever runs against a database that already has the CompanyId column/constraint in place.</summary>
+        public void InitialCompany(Microsoft.EntityFrameworkCore.DbContext orgContext)
+        {
+            List<Company> list = new List<Company> {
+                 new Company { Code = "MAIN", CodeNumber = 1, LegalName = "Main Company", Hide = false }
+            };
+
+            if (!orgContext.Set<Company>().Any())
+                orgContext.Set<Company>().AddRange(list);
+            orgContext.SaveChanges();
         }
 
         public void InitialCompanyProfile(Microsoft.EntityFrameworkCore.DbContext orgContext)
@@ -42,12 +58,19 @@ namespace Organization.Infrastructure.Seeding
 
         public void InitialBranch(Microsoft.EntityFrameworkCore.DbContext orgContext)
         {
+            if (orgContext.Set<Branch>().Any())
+            {
+                orgContext.SaveChanges();
+                return;
+            }
+
+            var companyId = orgContext.Set<Company>().OrderBy(e => e.Id).Select(e => e.Id).FirstOrDefault();
+
             List<Branch> list = new List<Branch> {
-                 new Branch {Name = "Main Branch", Hide = false }
+                 new Branch {Name = "Main Branch", Hide = false, CompanyId = companyId }
             };
 
-            if (!orgContext.Set<Branch>().Any())
-                orgContext.Set<Branch>().AddRange(list);
+            orgContext.Set<Branch>().AddRange(list);
             orgContext.SaveChanges();
         }
 

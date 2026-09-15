@@ -28,6 +28,7 @@
     <ProjectReference Include="..\..\Modules\CommercialDocuments\CommercialDocuments.Domain\CommercialDocuments.Domain.csproj" />
     <ProjectReference Include="..\..\Modules\Purchasing\Purchasing.Domain\Purchasing.Domain.csproj" />
     <ProjectReference Include="..\..\Modules\Inventory\Inventory.Domain\Inventory.Domain.csproj" />
+    <ProjectReference Include="..\..\Modules\Catalog\Catalog.Domain\Catalog.Domain.csproj" />
     <ProjectReference Include="..\..\Modules\Treasury\Treasury.Domain\Treasury.Domain.csproj" />
     <ProjectReference Include="..\..\Modules\Accounting\Accounting.Domain\Accounting.Domain.csproj" />
     <ProjectReference Include="..\..\Modules\Receivables\Receivables.Domain\Receivables.Domain.csproj" />
@@ -41,6 +42,7 @@
     <ProjectReference Include="..\..\Modules\CommercialDocuments\CommercialDocuments.Application\CommercialDocuments.Application.csproj" />
     <ProjectReference Include="..\..\Modules\Purchasing\Purchasing.Application\Purchasing.Application.csproj" />
     <ProjectReference Include="..\..\Modules\Inventory\Inventory.Application\Inventory.Application.csproj" />
+    <ProjectReference Include="..\..\Modules\Catalog\Catalog.Application\Catalog.Application.csproj" />
     <ProjectReference Include="..\..\Modules\Treasury\Treasury.Application\Treasury.Application.csproj" />
     <ProjectReference Include="..\..\Modules\Accounting\Accounting.Application\Accounting.Application.csproj" />
     <ProjectReference Include="..\..\Modules\Receivables\Receivables.Application\Receivables.Application.csproj" />
@@ -55,6 +57,7 @@
     <ProjectReference Include="..\..\Modules\CommercialDocuments\CommercialDocuments.Infrastructure\CommercialDocuments.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Modules\Purchasing\Purchasing.Infrastructure\Purchasing.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Modules\Inventory\Inventory.Infrastructure\Inventory.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Modules\Catalog\Catalog.Infrastructure\Catalog.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Modules\Treasury\Treasury.Infrastructure\Treasury.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Modules\Accounting\Accounting.Infrastructure\Accounting.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Modules\Receivables\Receivables.Infrastructure\Receivables.Infrastructure.csproj" />

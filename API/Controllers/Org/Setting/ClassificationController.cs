@@ -1,5 +1,5 @@
-using MasterData.Application.Classifications.Commands;
-using MasterData.Application.Classifications.Queries;
+using Catalog.Application.Categories.Commands;
+using Catalog.Application.Categories.Queries;
 using OrgSys.SharedKernel;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

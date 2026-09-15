@@ -10,6 +10,9 @@
     <ProjectReference Include="../../../BuildingBlocks/OrgSys.SharedKernel/OrgSys.SharedKernel.csproj" />
     <!-- Invoice keeps its existing EF navigations to Currency/PaymentType. -->
     <ProjectReference Include="../../MasterData/MasterData.Domain/MasterData.Domain.csproj" />
+    <!-- InvoiceProduct.Unit keeps its existing EF navigation, now owned by Catalog (relocated from
+         MasterData.Domain — see docs/catalog/catalog-target-architecture.md §4). -->
+    <ProjectReference Include="../../Catalog/Catalog.Domain/Catalog.Domain.csproj" />
     <!-- Invoice.Dealer keeps its existing EF navigation to Dealer, owned by Parties (relocated
          from Sales.Domain — see docs/modular-monolith-target-architecture.md §13). -->
     <ProjectReference Include="../../Parties/Parties.Domain/Parties.Domain.csproj" />

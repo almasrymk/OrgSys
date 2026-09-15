@@ -31,6 +31,13 @@
     <ProjectReference Include="..\..\Modules\Receivables\Receivables.Application\Receivables.Application.csproj" />
     <!-- PurchaseInvoicePostedIntegrationEventHandlerTests/SupplierPaymentPostedIntegrationEventHandlerTests exercise Payables.Application directly. -->
     <ProjectReference Include="..\..\Modules\Payables\Payables.Application\Payables.Application.csproj" />
+    <!-- ResolvePriceQueryHandlerTests exercises Catalog.Application directly. -->
+    <ProjectReference Include="..\..\Modules\Catalog\Catalog.Application\Catalog.Application.csproj" />
+    <ProjectReference Include="..\..\Modules\Catalog\Catalog.Contracts\Catalog.Contracts.csproj" />
+    <!-- OrganizationCompanyBranchValidatorTests exercises Organization.Application directly. -->
+    <ProjectReference Include="..\..\Modules\Organization\Organization.Application\Organization.Application.csproj" />
+    <ProjectReference Include="..\..\Modules\Organization\Organization.Domain\Organization.Domain.csproj" />
+    <ProjectReference Include="..\..\Modules\MasterData\MasterData.Domain\MasterData.Domain.csproj" />
   </ItemGroup>
 
 </Project>

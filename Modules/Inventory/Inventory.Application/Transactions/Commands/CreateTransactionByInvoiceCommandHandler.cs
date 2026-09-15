@@ -9,10 +9,21 @@
     using System.Threading.Tasks;
     using Inventory.Application.Transactions.Integration;
     using Inventory.Contracts.Transactions;
+    using Inventory.Domain.Enums;
+    using Inventory.Domain.Repositories;
 
+    /// <summary>
+    /// Note on InventoryBalance (docs/ddd/inventory-target-architecture.md §6): only the first-time
+    /// "create" branch below updates InventoryBalance. The "re-sync an already-linked transaction"
+    /// branch (invoice.TransactionId > 0) clears and rebuilds TransactionProducts from the invoice's
+    /// current lines without keeping the old quantities, so correctly reversing the old balance
+    /// effect before applying the new one needs its own dedicated pass — deliberately not attempted
+    /// here to avoid guessing at a balance delta from data that's already been overwritten by the
+    /// time this handler runs. Flagged as known follow-up work (Phase 11/12), not silently dropped.
+    /// </summary>
     public sealed class CreateTransactionByInvoiceCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Transaction> _Repository,
         IRepository<Invoice> _InvoiceRepository, IRepository<Preference> preferenceRepository, IMapper mapper,
-        IServiceProvider provider) : CreateCommandHandler<CreateTransactionByInvoiceCommand, Transaction>(_UnitOfWork, _Repository, mapper)
+        IServiceProvider provider, IInventoryBalanceRepository balanceRepository) : CreateCommandHandler<CreateTransactionByInvoiceCommand, Transaction>(_UnitOfWork, _Repository, mapper)
     {
         public override async Task<Result> Handle(CreateTransactionByInvoiceCommand request, CancellationToken cancellationToken)
         {
@@ -45,6 +56,7 @@
                 Transaction transaction;
                 var expectedTransactionTypeId = invoice.TypeId == 2 || invoice.TypeId == 3 ? 1L : 2L;
                 var transactionTypeChanged = false;
+                var isFirstTimeCreate = invoice.TransactionId is not > 0;
 
                 if (invoice.TransactionId > 0)
                 {
@@ -97,6 +109,26 @@
                         await new TransactionJournalPostingService(provider).DeleteByTransactionIdAsync(transaction.Id);
                     await new TransactionJournalPostingService(provider).SyncAsync(transaction, invoice.TypeId);
                     await _Repository.UpdateAsync(transaction);
+
+                    // Keep InventoryBalance in sync for the common (first-time) case — see this
+                    // class's doc comment for why the re-sync branch is deliberately not covered yet.
+                    if (isFirstTimeCreate)
+                    {
+                        var movementType = MovementTypeExtensions.FromTransactionTypeId(transaction.TypeId);
+                        var allowNegativeStock = false;
+                        foreach (var product in transaction.TransactionProducts ?? [])
+                        {
+                            var targetStockId = product.StockId ?? transaction.StockId;
+                            if (targetStockId is not > 0)
+                                continue;
+
+                            var balance = await balanceRepository.GetOrCreateTrackedAsync(product.ProductId, targetStockId.Value, null, null, cancellationToken);
+                            if (movementType.Direction() == MovementDirection.In)
+                                balance.Receive(product.Quantity, product.Cost);
+                            else
+                                balance.IssueOut(product.Quantity, allowNegativeStock);
+                        }
+                    }
 
                     await _UnitOfWork.SaveChangeAsync(cancellationToken);
                     await _UnitOfWork.CommitAsync();

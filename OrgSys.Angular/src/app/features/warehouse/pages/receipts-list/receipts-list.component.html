@@ -1,0 +1,58 @@
+<app-page-header title="Inventory Receipts" [breadcrumbs]="[{ label: 'Home', route: '/' }, { label: 'Warehouse' }, { label: 'Receipts' }]">
+  <div class="d-flex justify-content-between align-items-center flex-wrap">
+    <a [routerLink]="['new']" class="btn btn-outline-primary">
+      <i class="bi bi-plus-lg"></i> Add
+    </a>
+
+    <div class="form-group mb-0" style="min-width: 220px;">
+      <select class="form-control" [ngModel]="stockId()" (ngModelChange)="stockId.set($event); search()">
+        <option [ngValue]="0">All warehouses</option>
+        <option *ngFor="let stock of stocks()" [ngValue]="stock.id">{{ stock.name }}</option>
+      </select>
+    </div>
+  </div>
+</app-page-header>
+
+<div class="card">
+  <div class="card-body p-0">
+    <table class="table table-hover m-0" *ngIf="receipts().length; else emptyState">
+      <thead>
+        <tr>
+          <th>Code</th>
+          <th>Date</th>
+          <th>Warehouse</th>
+          <th>Lines</th>
+          <th>Status</th>
+          <th style="width: 100px;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let receipt of receipts()">
+          <td>{{ receipt.code }}</td>
+          <td>{{ receipt.date | date: 'yyyy-MM-dd' }}</td>
+          <td>{{ stockName(receipt.stockId) }}</td>
+          <td>{{ receipt.lines.length }}</td>
+          <td>
+            <span class="badge" [class.badge-secondary]="receipt.lifecycleStatus === DocumentStatus.Draft" [class.badge-info]="receipt.lifecycleStatus === DocumentStatus.Confirmed" [class.badge-success]="receipt.lifecycleStatus === DocumentStatus.Posted" [class.badge-warning]="receipt.lifecycleStatus === DocumentStatus.Cancelled">
+              {{ DocumentStatus[receipt.lifecycleStatus] }}
+            </span>
+          </td>
+          <td class="text-right text-nowrap">
+            <ng-container *ngIf="receipt.lifecycleStatus === DocumentStatus.Draft || receipt.lifecycleStatus === DocumentStatus.Confirmed">
+              <a href="javascript:void(0)" class="mr-2" title="Post" (click)="post(receipt)">
+                <i class="bi bi-check-circle text-success"></i>
+              </a>
+              <a href="javascript:void(0)" title="Cancel" (click)="cancel(receipt)">
+                <i class="bi bi-x-circle text-warning"></i>
+              </a>
+            </ng-container>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <ng-template #emptyState>
+      <p class="text-center text-muted p-4 mb-0">{{ loading() ? 'Loading...' : 'No receipts found.' }}</p>
+    </ng-template>
+  </div>
+</div>

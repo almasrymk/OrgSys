@@ -3,8 +3,8 @@ namespace Sales.Domain;
 using System.ComponentModel.DataAnnotations.Schema;
 
 /// <summary>
-/// One line within a Quotation. ProductId/UnitId are opaque references to Inventory.Domain.Product/
-/// MasterData.Domain.Unit — no navigation (brief §6/§8). ProductName is a commercial snapshot taken
+/// One line within a Quotation. ProductId/UnitId are opaque references to Catalog.Domain.Product/
+/// Catalog.Domain.Unit — no navigation (brief §6/§8). ProductName is a commercial snapshot taken
 /// at the moment the line is added, so a historical quotation's wording never changes if the
 /// product's master-data name changes later (brief §8/§35). No public constructor — only reachable
 /// through Quotation.AddLine, mirroring Payables.Domain.SupplierPaymentApplicationLine.

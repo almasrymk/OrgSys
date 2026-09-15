@@ -1,6 +1,6 @@
 ﻿namespace OrgSys.Areas.Setting.Controllers
 {
-    using global::Inventory.Application.Properties.Commands;
+    using global::Catalog.Application.Attributes.Commands;
     using AutoMapper;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;

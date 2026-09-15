@@ -9,6 +9,10 @@
   <ItemGroup>
     <ProjectReference Include="../../../BuildingBlocks/OrgSys.SharedKernel/OrgSys.SharedKernel.csproj" />
     <ProjectReference Include="../../MasterData/MasterData.Domain/MasterData.Domain.csproj" />
+    <!-- Stock/Transaction/InventoryBalance/etc. keep their existing EF navigations to
+         Product/ProductUnit/Unit, now owned by Catalog (relocated from Inventory.Domain/
+         MasterData.Domain — see docs/catalog/catalog-target-architecture.md §4). -->
+    <ProjectReference Include="../../Catalog/Catalog.Domain/Catalog.Domain.csproj" />
     <ProjectReference Include="../../Organization/Organization.Domain/Organization.Domain.csproj" />
     <!-- Product.Dealer and Transaction.Dealer keep their existing EF navigation to Dealer, now
          owned by Parties (relocated from Sales.Domain — see

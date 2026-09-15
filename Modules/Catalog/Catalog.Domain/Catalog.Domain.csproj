@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../../../BuildingBlocks/OrgSys.SharedKernel/OrgSys.SharedKernel.csproj" />
+    <!-- Product.Dealer keeps its existing EF navigation to Dealer, now owned by Parties — this
+         exception carries forward unchanged from when Product lived in Inventory.Domain (see
+         docs/catalog/catalog-target-architecture.md §4). -->
+    <ProjectReference Include="../../Parties/Parties.Domain/Parties.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

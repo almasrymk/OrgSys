@@ -9,8 +9,6 @@ public partial class MappingProfile : Profile
         CountryMappingProfile();
         CityMappingProfile();
         DistrictMappingProfile();
-        UnitMappingProfile();
-        ClassificationMappingProfile();
         CurrencyMappingProfile();
         ReferenceTypeMappingProfile();
         PaymentTypeMappingProfile();

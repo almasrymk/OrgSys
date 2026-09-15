@@ -27,6 +27,7 @@
     <ProjectReference Include="../../Modules/CommercialDocuments/CommercialDocuments.Domain/CommercialDocuments.Domain.csproj" />
     <ProjectReference Include="../../Modules/Parties/Parties.Domain/Parties.Domain.csproj" />
     <ProjectReference Include="../../Modules/Inventory/Inventory.Domain/Inventory.Domain.csproj" />
+    <ProjectReference Include="../../Modules/Catalog/Catalog.Domain/Catalog.Domain.csproj" />
     <ProjectReference Include="../../Modules/Purchasing/Purchasing.Domain/Purchasing.Domain.csproj" />
     <ProjectReference Include="../../Modules/Receivables/Receivables.Domain/Receivables.Domain.csproj" />
     <ProjectReference Include="../../Modules/Payables/Payables.Domain/Payables.Domain.csproj" />

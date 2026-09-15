@@ -1,4 +1,7 @@
 using FluentValidation;
+using Inventory.Application.Postings;
+using Inventory.Domain.Repositories;
+using Inventory.Infrastructure.Persistence;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -17,6 +20,10 @@ public static class ServiceCollectionExtensions
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(applicationAssembly));
         services.AddAutoMapper(cfg => cfg.AddProfile<Inventory.Application.MappingProfile>());
         services.AddValidatorsFromAssembly(applicationAssembly);
+
+        services.AddScoped<IInventoryBalanceRepository, InventoryBalanceRepository>();
+        services.AddScoped<InventoryLedgerPoster>();
+        services.AddScoped<StockReservationService>();
 
         return services;
     }

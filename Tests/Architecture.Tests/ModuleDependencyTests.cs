@@ -19,6 +19,7 @@ public class ModuleDependencyTests
         ("Parties", typeof(Parties.Domain.AssemblyMarker).Assembly),
         ("CommercialDocuments", typeof(CommercialDocuments.Domain.AssemblyMarker).Assembly),
         ("Purchasing", typeof(Purchasing.Domain.AssemblyMarker).Assembly),
+        ("Catalog", typeof(Catalog.Domain.AssemblyMarker).Assembly),
         ("Inventory", typeof(Inventory.Domain.AssemblyMarker).Assembly),
         ("Treasury", typeof(Treasury.Domain.AssemblyMarker).Assembly),
         ("Accounting", typeof(Accounting.Domain.AssemblyMarker).Assembly),
@@ -48,11 +49,14 @@ public class ModuleDependencyTests
         ("Treasury", "Parties", "Financial.Dealer keeps its existing EF navigation to Dealer, now owned by Parties (relocated from Sales.Domain)."),
         ("CommercialDocuments", "MasterData", "Invoice keeps its existing EF navigations to Currency/PaymentType."),
         ("CommercialDocuments", "Parties", "Invoice.Dealer keeps its existing EF navigation to Dealer, now owned by Parties (relocated from Sales.Domain along with Invoice itself)."),
+        ("CommercialDocuments", "Catalog", "InvoiceProduct.Unit keeps its existing EF navigation, now owned by Catalog (relocated from MasterData.Domain — see docs/catalog/catalog-target-architecture.md §4)."),
         ("Parties", "MasterData", "Dealer keeps its existing EF navigations to Country/City/District."),
         ("Inventory", "Organization", "Stock/Transaction/Inventory keep their existing EF navigations to Branch/Shift."),
-        ("Inventory", "MasterData", "Product/ProductUnit/Stock/Transaction keep their existing EF navigations to Unit/Classification/Country/City/District/Currency."),
+        ("Inventory", "MasterData", "Product/ProductUnit/Stock/Transaction keep their existing EF navigations to Country/City/District/Currency (Unit/Classification relocated to Catalog)."),
+        ("Inventory", "Catalog", "Stock/Transaction/InventoryBalance/etc. keep their existing EF navigations to Product/ProductUnit/Unit, now owned by Catalog (relocated from Inventory.Domain/MasterData.Domain — see docs/catalog/catalog-target-architecture.md §4)."),
         ("Purchasing", "Parties", "PurchaseOrder.Dealer (the supplier) keeps an EF navigation to Parties.Domain.Dealer, same convention as every other module's Dealer reference."),
-        ("Purchasing", "MasterData", "PurchaseRequisitionProduct.Unit / PurchaseOrderProduct.Unit keep an EF navigation to MasterData.Unit, same convention as CommercialDocuments.Domain.InvoiceProduct."),
+        ("Purchasing", "Catalog", "PurchaseRequisitionProduct.Unit / PurchaseOrderProduct.Unit keep an EF navigation, now owned by Catalog (relocated from MasterData.Domain — same convention as CommercialDocuments.Domain.InvoiceProduct)."),
+        ("Catalog", "Parties", "Product.Dealer keeps its existing EF navigation to Dealer, now owned by Parties — this exception carries forward unchanged from when Product lived in Inventory.Domain (see docs/catalog/catalog-target-architecture.md §4)."),
     ];
 
     public static IEnumerable<object[]> AllModulePairs()

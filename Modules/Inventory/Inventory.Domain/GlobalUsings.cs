@@ -1,6 +1,10 @@
 global using OrgSys.SharedKernel;
 global using MasterData.Domain;
+global using Catalog.Domain;
 global using Organization.Domain;
 global using Parties.Domain;
+global using Inventory.Domain.Enums;
+global using Inventory.Domain.Events;
+global using Inventory.Domain.Exceptions;
 global using System.ComponentModel.DataAnnotations;
 global using System.ComponentModel.DataAnnotations.Schema;

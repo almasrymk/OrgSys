@@ -162,6 +162,18 @@ export const MENU: MenuItem[] = [
     ],
   },
   {
+    // New screens for the hardened Inventory bounded context (docs/ddd/inventory-target-architecture.md) —
+    // alongside, not replacing, the legacy "Inventory" group above.
+    labelKey: 'Warehouse',
+    icon: 'iconsminds-shop-4',
+    children: [
+      { labelKey: 'Locations', icon: 'iconsminds-map-marker-2', route: '/warehouse/locations' },
+      { labelKey: 'Receipts', icon: 'iconsminds-down-1', route: '/warehouse/receipts' },
+      { labelKey: 'Balance', icon: 'iconsminds-data-center', route: '/warehouse/balance' },
+      { labelKey: 'Reservations', icon: 'iconsminds-lock-2', route: '/warehouse/reservations' },
+    ],
+  },
+  {
     labelKey: 'Reports',
     icon: 'simple-icon-list',
     children: [

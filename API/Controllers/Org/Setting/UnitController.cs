@@ -1,5 +1,5 @@
-using MasterData.Application.Units.Commands;
-using MasterData.Application.Units.Queries;
+using Catalog.Application.Units.Commands;
+using Catalog.Application.Units.Queries;
 using OrgSys.SharedKernel;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

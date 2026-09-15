@@ -1,8 +1,12 @@
 global using OrgSys.SharedKernel;
 global using Inventory.Domain;
+global using Inventory.Domain.Enums;
+global using Inventory.Domain.Exceptions;
 global using Inventory.Application;
 global using MasterData.Domain;
 global using MasterData.Application;
+global using Catalog.Domain;
+global using Catalog.Application;
 global using Organization.Domain;
 global using CommercialDocuments.Domain;
 global using Parties.Domain;
