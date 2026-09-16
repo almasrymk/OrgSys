@@ -44,6 +44,7 @@
     <ProjectReference Include="..\Modules\Payables\Payables.Infrastructure\Payables.Infrastructure.csproj" />
     <ProjectReference Include="..\Modules\Advances\Advances.Infrastructure\Advances.Infrastructure.csproj" />
     <ProjectReference Include="..\Modules\Reporting\Reporting.Infrastructure\Reporting.Infrastructure.csproj" />
+    <ProjectReference Include="..\Modules\SaaS\SaaS.Infrastructure\SaaS.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

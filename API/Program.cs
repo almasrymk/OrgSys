@@ -20,6 +20,7 @@ using Receivables.Infrastructure.DependencyInjection;
 using Payables.Infrastructure.DependencyInjection;
 using Advances.Infrastructure.DependencyInjection;
 using Reporting.Infrastructure.DependencyInjection;
+using SaaS.Infrastructure.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -108,6 +109,7 @@ builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(FluentValidat
 // Extracted modules register their own MediatR/AutoMapper/FluentValidation slice here — see
 // docs/modular-monolith-target-architecture.md §9. Country/City/District/Unit/Classification/
 // Currency/ReferenceType/PaymentType moved out of Application into MasterData in this pass.
+builder.Services.AddSaaSModule();
 builder.Services.AddMasterDataModule();
 builder.Services.AddOrganizationModule();
 builder.Services.AddAdministrationModule();

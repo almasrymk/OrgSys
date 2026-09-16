@@ -30,8 +30,13 @@ namespace Organization.Infrastructure.Seeding
         /// ever runs against a database that already has the CompanyId column/constraint in place.</summary>
         public void InitialCompany(Microsoft.EntityFrameworkCore.DbContext orgContext)
         {
+            // SaaSDataSeeder runs before this one (see DataSeederCoordinator.Seed) specifically so
+            // the Default Tenant it seeds is available here — see
+            // docs/architecture/adr/tenant-vs-company.md stage-2 backfill.
+            var defaultTenantId = orgContext.Set<SaaS.Domain.Tenant>().OrderBy(e => e.Id).Select(e => (long?)e.Id).FirstOrDefault();
+
             List<Company> list = new List<Company> {
-                 new Company { Code = "MAIN", CodeNumber = 1, LegalName = "Main Company", Hide = false }
+                 new Company { Code = "MAIN", CodeNumber = 1, LegalName = "Main Company", Hide = false, TenantId = defaultTenantId }
             };
 
             if (!orgContext.Set<Company>().Any())

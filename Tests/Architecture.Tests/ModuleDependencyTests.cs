@@ -29,6 +29,7 @@ public class ModuleDependencyTests
         ("Administration", typeof(Administration.Domain.AssemblyMarker).Assembly),
         ("Organization", typeof(Organization.Domain.AssemblyMarker).Assembly),
         ("MasterData", typeof(MasterData.Domain.AssemblyMarker).Assembly),
+        ("SaaS", typeof(SaaS.Domain.AssemblyMarker).Assembly),
     ];
 
     /// <summary>

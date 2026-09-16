@@ -17,8 +17,13 @@ namespace Organization.Application.Companies.Validators
         public CreateCompanyCommandValidator(
             IRepository<Organization.Domain.Company> _Repository,
             IRepository<MasterData.Domain.Country> _CountryRepository,
-            IRepository<MasterData.Domain.Currency> _CurrencyRepository) : base(_Repository)
+            IRepository<MasterData.Domain.Currency> _CurrencyRepository,
+            IRepository<SaaS.Domain.Tenant> _TenantRepository) : base(_Repository)
         {
+            RuleFor(c => c.TenantId)
+            .MustAsync(async (TenantId, cancellationToken) => TenantId == null || await _TenantRepository.AnyAsync(e => e.Id == TenantId, cancellationToken))
+            .WithMessage("The tenant not found");
+
             RuleFor(c => c.LegalName)
             .NotEmpty().WithMessage("The legal name field is required");
 

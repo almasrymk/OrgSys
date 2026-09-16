@@ -4,6 +4,8 @@ namespace Organization.Application
 
     public class CompanyDto : BaseModel
     {
+        public long? TenantId { get; set; }
+
         [StringLength(150, MinimumLength = 3)]
         public string? LegalName { get; set; }
 

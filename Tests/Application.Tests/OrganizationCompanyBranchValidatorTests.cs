@@ -54,6 +54,14 @@ public class OrganizationCompanyBranchValidatorTests
         return repository;
     }
 
+    private static Mock<IRepository<SaaS.Domain.Tenant>> TenantRepository(params SaaS.Domain.Tenant[] existing)
+    {
+        var repository = new Mock<IRepository<SaaS.Domain.Tenant>>();
+        repository.Setup(r => r.AnyAsync(It.IsAny<Expression<Func<SaaS.Domain.Tenant, bool>>>(), It.IsAny<CancellationToken>()))
+            .Returns<Expression<Func<SaaS.Domain.Tenant, bool>>, CancellationToken>((expr, _) => new ValueTask<bool>(existing.AsQueryable().Any(expr)));
+        return repository;
+    }
+
     [Fact]
     public async Task CreateBranch_UnderActiveCompany_UniqueName_IsValid()
     {
@@ -144,7 +152,7 @@ public class OrganizationCompanyBranchValidatorTests
     public async Task CreateCompany_DuplicateLegalName_IsInvalid()
     {
         var existing = new Company { Id = 1, LegalName = "ABC" };
-        var validator = new CreateCompanyCommandValidator(CompanyRepository(existing).Object, CountryRepository().Object, CurrencyRepository().Object);
+        var validator = new CreateCompanyCommandValidator(CompanyRepository(existing).Object, CountryRepository().Object, CurrencyRepository().Object, TenantRepository().Object);
 
         var result = await validator.ValidateAsync(new CreateCompanyCommand { LegalName = "ABC" });
 
@@ -155,7 +163,7 @@ public class OrganizationCompanyBranchValidatorTests
     [Fact]
     public async Task CreateCompany_UnknownDefaultCurrency_IsInvalid()
     {
-        var validator = new CreateCompanyCommandValidator(CompanyRepository().Object, CountryRepository().Object, CurrencyRepository().Object);
+        var validator = new CreateCompanyCommandValidator(CompanyRepository().Object, CountryRepository().Object, CurrencyRepository().Object, TenantRepository().Object);
 
         var result = await validator.ValidateAsync(new CreateCompanyCommand { LegalName = "New Co", DefaultCurrencyId = 999 });
 

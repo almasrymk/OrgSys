@@ -11,3 +11,4 @@ global using Inventory.Domain;
 global using Catalog.Domain;
 global using Receivables.Domain;
 global using Payables.Domain;
+global using SaaS.Domain;

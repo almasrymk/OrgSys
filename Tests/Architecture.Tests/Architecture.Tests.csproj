@@ -52,6 +52,9 @@
     <ProjectReference Include="..\..\Modules\Organization\Organization.Application\Organization.Application.csproj" />
     <ProjectReference Include="..\..\Modules\MasterData\MasterData.Application\MasterData.Application.csproj" />
     <ProjectReference Include="..\..\Modules\Reporting\Reporting.Application\Reporting.Application.csproj" />
+    <ProjectReference Include="..\..\Modules\SaaS\SaaS.Domain\SaaS.Domain.csproj" />
+    <ProjectReference Include="..\..\Modules\SaaS\SaaS.Application\SaaS.Application.csproj" />
+    <ProjectReference Include="..\..\Modules\SaaS\SaaS.Infrastructure\SaaS.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Modules\Sales\Sales.Infrastructure\Sales.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Modules\Parties\Parties.Infrastructure\Parties.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Modules\CommercialDocuments\CommercialDocuments.Infrastructure\CommercialDocuments.Infrastructure.csproj" />
@@ -68,5 +71,7 @@
     <ProjectReference Include="..\..\Modules\MasterData\MasterData.Infrastructure\MasterData.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Modules\Reporting\Reporting.Infrastructure\Reporting.Infrastructure.csproj" />
   </ItemGroup>
+
+
 
 </Project>

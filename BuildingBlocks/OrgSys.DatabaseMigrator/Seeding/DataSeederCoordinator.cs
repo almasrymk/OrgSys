@@ -10,6 +10,7 @@ namespace OrgSys.DatabaseMigrator.Seeding
     using Organization.Infrastructure.Seeding;
     using Parties.Infrastructure.Seeding;
     using Treasury.Infrastructure.Seeding;
+    using SaaS.Infrastructure.Seeding;
 
     public interface IDataSeederCoordinator
     {
@@ -35,10 +36,15 @@ namespace OrgSys.DatabaseMigrator.Seeding
         IMasterDataDataSeeder masterDataSeeder,
         IOrganizationDataSeeder organizationSeeder,
         IPartiesDataSeeder partiesSeeder,
-        ITreasuryDataSeeder treasurySeeder) : IDataSeederCoordinator
+        ITreasuryDataSeeder treasurySeeder,
+        ISaaSDataSeeder saaSSeeder) : IDataSeederCoordinator
     {
         public void Seed(DbContext dbContext)
         {
+            // SaaS seeds the Default Tenant first — Organization's InitialCompany (and every future
+            // module's backfill-to-default-tenant step) needs a TenantId to assign, per
+            // docs/architecture/adr/tenant-vs-company.md.
+            saaSSeeder.Seed(dbContext);
             administrationSeeder.Seed(dbContext);
             salesSeeder.Seed(dbContext);
             accountingSeeder.Seed(dbContext);

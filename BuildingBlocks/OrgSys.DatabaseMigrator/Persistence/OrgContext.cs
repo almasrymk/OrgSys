@@ -18,6 +18,7 @@
     using Organization.Infrastructure.Seeding;
     using Parties.Infrastructure.Seeding;
     using Treasury.Infrastructure.Seeding;
+    using SaaS.Infrastructure.Seeding;
 
     public class OrgContext : DbContext , IOrgContext
     {
@@ -64,7 +65,8 @@
                 new MasterDataDataSeeder(),
                 new OrganizationDataSeeder(),
                 new PartiesDataSeeder(),
-                new TreasuryDataSeeder());
+                new TreasuryDataSeeder(),
+                new SaaSDataSeeder());
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -229,6 +231,62 @@
             ConfigureCatalog(modelBuilder);
             ConfigureOrganization(modelBuilder);
             ConfigureParties(modelBuilder);
+            ConfigureSaaS(modelBuilder);
+        }
+
+        /// <summary>
+        /// EF configuration for the new SaaS module (docs/architecture/adr/tenant-vs-company.md).
+        /// Tenant/Plan/Feature/PlanFeature/Subscription all live in SaaS.Domain; Plan/Feature/
+        /// Subscription use real intra-module navigations (same module), matching this codebase's
+        /// "no navigation only across module boundaries" convention. Company.TenantId (added below,
+        /// in ConfigureOrganization) is the retrofit's stage-1 nullable scalar-only FK — no
+        /// Organization.Domain -> SaaS.Domain navigation, same pattern as Company.CountryId into
+        /// MasterData.
+        /// </summary>
+        private static void ConfigureSaaS(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<SaaS.Domain.Tenant>()
+                .HasIndex(e => e.Name)
+                .IsUnique();
+
+            modelBuilder.Entity<SaaS.Domain.PlanFeature>()
+                .HasOne(e => e.Plan).WithMany(e => e.PlanFeatures)
+                .HasForeignKey(e => e.PlanId)
+                .OnDelete(DeleteBehavior.Cascade)
+                .IsRequired();
+            modelBuilder.Entity<SaaS.Domain.PlanFeature>()
+                .HasOne(e => e.Feature).WithMany()
+                .HasForeignKey(e => e.FeatureId)
+                .OnDelete(DeleteBehavior.Restrict)
+                .IsRequired();
+            modelBuilder.Entity<SaaS.Domain.PlanFeature>()
+                .HasIndex(e => new { e.PlanId, e.FeatureId })
+                .IsUnique();
+
+            modelBuilder.Entity<SaaS.Domain.Feature>()
+                .HasIndex(e => e.Key)
+                .IsUnique();
+
+            // A Subscription must never survive its Tenant/Plan being deleted out from under it —
+            // Restrict, not Cascade: Tenant/Plan deletion must be blocked while billing history
+            // exists, same "don't cascade-delete master data with history" rule Branch->Company uses.
+            modelBuilder.Entity<SaaS.Domain.Subscription>()
+                .HasOne(e => e.Tenant).WithMany()
+                .HasForeignKey(e => e.TenantId)
+                .OnDelete(DeleteBehavior.Restrict)
+                .IsRequired();
+            modelBuilder.Entity<SaaS.Domain.Subscription>()
+                .HasOne(e => e.Plan).WithMany()
+                .HasForeignKey(e => e.PlanId)
+                .OnDelete(DeleteBehavior.Restrict)
+                .IsRequired();
+
+            // Tenant retrofit stage 1 (ADR): nullable scalar-only FK into SaaS.Domain.Tenant, no
+            // Organization.Domain -> SaaS.Domain navigation/reference at all — wired centrally here,
+            // same "no navigation" convention as Company.CountryId/DefaultCurrencyId into MasterData.
+            modelBuilder.Entity<Company>()
+                .HasOne(typeof(SaaS.Domain.Tenant)).WithMany()
+                .HasForeignKey("TenantId");
         }
 
         /// <summary>
@@ -476,6 +534,11 @@
         public virtual DbSet<Branch> Branches { get; set; }
         public virtual DbSet<Organization.Domain.Company> Companies { get; set; }
         public virtual DbSet<Organization.Domain.OrganizationSettings> OrganizationSettings { get; set; }
+        public virtual DbSet<SaaS.Domain.Tenant> Tenants { get; set; }
+        public virtual DbSet<SaaS.Domain.Plan> Plans { get; set; }
+        public virtual DbSet<SaaS.Domain.Feature> Features { get; set; }
+        public virtual DbSet<SaaS.Domain.PlanFeature> PlanFeatures { get; set; }
+        public virtual DbSet<SaaS.Domain.Subscription> Subscriptions { get; set; }
         public virtual DbSet<Stock> Stocks { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Shift> Shifts { get; set; }

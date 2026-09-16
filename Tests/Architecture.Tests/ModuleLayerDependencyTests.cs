@@ -30,6 +30,7 @@ public class ModuleLayerDependencyTests
         ("Organization", typeof(Organization.Application.MappingProfile).Assembly),
         ("MasterData", typeof(MasterData.Application.MappingProfile).Assembly),
         ("Reporting", typeof(Reporting.Application.DealerBalance).Assembly),
+        ("SaaS", typeof(SaaS.Application.MappingProfile).Assembly),
     ];
 
     private static readonly (string Module, Assembly Domain)[] ModuleDomains =
@@ -48,6 +49,7 @@ public class ModuleLayerDependencyTests
         ("Administration", typeof(Administration.Domain.AssemblyMarker).Assembly),
         ("Organization", typeof(Organization.Domain.AssemblyMarker).Assembly),
         ("MasterData", typeof(MasterData.Domain.AssemblyMarker).Assembly),
+        ("SaaS", typeof(SaaS.Domain.AssemblyMarker).Assembly),
     ];
 
     /// <summary>
@@ -84,6 +86,7 @@ public class ModuleLayerDependencyTests
         ("Purchasing", "Parties", "PurchaseOrder Create/Update/Get/Search handlers and MappingProfile read Dealer directly (PurchaseOrder.Dealer navigation, same as the existing Purchasing.Domain -> Parties.Domain exception, now also visible at the Application layer)."),
         ("Catalog", "Parties", "ProductDto/MappingProfile read Product.Dealer.Name directly (Dealer owned by Parties) — same relocation-not-rewrite as this mapping had before Product moved out of Inventory.Application."),
         ("Organization", "MasterData", "Company/Branch/OrganizationSettings Create/Update validators check CountryId/DefaultCurrencyId existence via IRepository<Country>/IRepository<Currency> directly. Company.CountryId/DefaultCurrencyId are scalar-only (no Domain navigation, unlike Bank/Dealer) since Currency/Country/City/District ownership was deliberately left in MasterData this pass rather than relocated into Organization — see docs/organization/organization-target-architecture.md."),
+        ("Organization", "SaaS", "Company Create/Update validators check TenantId existence via IRepository<SaaS.Domain.Tenant> directly, same shape as the MasterData exception above. Company.TenantId is scalar-only (no Domain navigation) — stage 1 of the multi-tenant retrofit, see docs/architecture/adr/tenant-vs-company.md."),
     ];
 
     /// <summary>

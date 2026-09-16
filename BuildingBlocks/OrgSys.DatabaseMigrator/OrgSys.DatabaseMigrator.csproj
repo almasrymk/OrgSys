@@ -31,6 +31,7 @@
     <ProjectReference Include="../../Modules/Purchasing/Purchasing.Domain/Purchasing.Domain.csproj" />
     <ProjectReference Include="../../Modules/Receivables/Receivables.Domain/Receivables.Domain.csproj" />
     <ProjectReference Include="../../Modules/Payables/Payables.Domain/Payables.Domain.csproj" />
+    <ProjectReference Include="../../Modules/SaaS/SaaS.Domain/SaaS.Domain.csproj" />
     <!-- Seed orchestration only (IDataSeederCoordinator calls into each module's own seeder) —
          no business/seed data lives in this project itself. -->
     <ProjectReference Include="../../Modules/MasterData/MasterData.Infrastructure/MasterData.Infrastructure.csproj" />
@@ -42,6 +43,7 @@
     <ProjectReference Include="../../Modules/CommercialDocuments/CommercialDocuments.Infrastructure/CommercialDocuments.Infrastructure.csproj" />
     <ProjectReference Include="../../Modules/Parties/Parties.Infrastructure/Parties.Infrastructure.csproj" />
     <ProjectReference Include="../../Modules/Inventory/Inventory.Infrastructure/Inventory.Infrastructure.csproj" />
+    <ProjectReference Include="../../Modules/SaaS/SaaS.Infrastructure/SaaS.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
