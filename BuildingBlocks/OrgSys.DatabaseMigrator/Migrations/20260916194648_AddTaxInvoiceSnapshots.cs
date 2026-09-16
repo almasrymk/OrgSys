@@ -50,13 +50,13 @@ namespace OrgSys.DatabaseMigrator.Migrations
                         column: x => x.CurrencyId,
                         principalTable: "Currency",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_InvoiceTaxSnapshot_Invoice_InvoiceId",
                         column: x => x.InvoiceId,
                         principalTable: "Invoice",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(

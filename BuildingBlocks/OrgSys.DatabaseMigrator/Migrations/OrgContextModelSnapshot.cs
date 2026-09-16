@@ -8499,13 +8499,13 @@ namespace OrgSys.DatabaseMigrator.Migrations
                     b.HasOne("MasterData.Domain.Currency", null)
                         .WithMany()
                         .HasForeignKey("CurrencyId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("CommercialDocuments.Domain.Invoice", null)
                         .WithMany()
                         .HasForeignKey("InvoiceId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 

@@ -196,10 +196,12 @@
                 .HasIndex(s => s.InvoiceId).IsUnique();
             modelBuilder.Entity<InvoiceTaxSnapshot>()
                 .HasOne(typeof(Invoice)).WithMany()
-                .HasForeignKey("InvoiceId");
+                .HasForeignKey("InvoiceId")
+                .OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<InvoiceTaxSnapshot>()
                 .HasOne(typeof(Currency)).WithMany()
-                .HasForeignKey("CurrencyId");
+                .HasForeignKey("CurrencyId")
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<FixedAsset>()
                 .HasMany(a => a.Entries).WithOne(e => e.Asset)
