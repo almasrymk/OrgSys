@@ -1,5 +1,6 @@
 using CommercialDocuments.Contracts.IntegrationEvents;
 using Moq;
+using OrgSys.SharedKernel;
 using Receivables.Application.Invoices.Integration;
 using Receivables.Domain;
 using Receivables.Domain.Repositories;
@@ -31,7 +32,7 @@ public class SalesInvoicePostedIntegrationEventHandlerTests
         var unitOfWork = new Mock<IUnitOfWork>();
         unitOfWork.Setup(u => u.SaveChangeAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
 
-        var handler = new SalesInvoicePostedIntegrationEventHandler(repository.Object, unitOfWork.Object);
+        var handler = new SalesInvoicePostedIntegrationEventHandler(repository.Object, unitOfWork.Object, InboxTestDoubles.AlwaysClaim());
         return (handler, repository, unitOfWork);
     }
 
@@ -71,6 +72,18 @@ public class SalesInvoicePostedIntegrationEventHandlerTests
         var (handler, repository, unitOfWork) = BuildHandler();
 
         await handler.Handle(Event(amount: 0), CancellationToken.None);
+
+        repository.Verify(r => r.AddAsync(It.IsAny<Receivable>(), It.IsAny<CancellationToken>()), Times.Never);
+    }
+
+    [Fact]
+    public async Task Handle_DuplicateEventId_DoesNotCreateReceivable()
+    {
+        var repository = new Mock<IReceivableRepository>();
+        var unitOfWork = new Mock<IUnitOfWork>();
+        var handler = new SalesInvoicePostedIntegrationEventHandler(repository.Object, unitOfWork.Object, InboxTestDoubles.AlreadyClaimed());
+
+        await handler.Handle(Event(), CancellationToken.None);
 
         repository.Verify(r => r.AddAsync(It.IsAny<Receivable>(), It.IsAny<CancellationToken>()), Times.Never);
     }

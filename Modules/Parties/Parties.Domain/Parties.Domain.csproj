@@ -8,8 +8,6 @@
 
   <ItemGroup>
     <ProjectReference Include="../../../BuildingBlocks/OrgSys.SharedKernel/OrgSys.SharedKernel.csproj" />
-    <!-- Dealer.Country/City/District keep their existing EF navigations to MasterData. -->
-    <ProjectReference Include="../../MasterData/MasterData.Domain/MasterData.Domain.csproj" />
   </ItemGroup>
 
 </Project>

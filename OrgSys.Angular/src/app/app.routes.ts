@@ -1,5 +1,7 @@
 import { Routes, UrlSegment } from '@angular/router';
 import { authGuard } from './core/guards/auth.guard';
+import { permissionGuard } from './core/guards/permission.guard';
+import { PermissionKeys } from './core/permissions/permission-keys';
 import { INVOICE_TYPE_PATHS } from './features/commercial-documents/models/invoice-lookups.model';
 import { INVENTORY_MOVEMENT_PATHS } from './features/inventory/models/transaction.model';
 
@@ -60,11 +62,61 @@ export const routes: Routes = [
         path: 'reporting',
         loadChildren: () => import('./features/reporting/reporting.routes').then((m) => m.REPORTING_ROUTES),
       },
+      {
+        path: 'advances',
+        loadChildren: () => import('./features/advances/advances.routes').then((m) => m.ADVANCES_ROUTES),
+      },
+      {
+        path: 'purchasing',
+        loadChildren: () => import('./features/purchasing/purchasing.routes').then((m) => m.PURCHASING_ROUTES),
+      },
+      {
+        path: 'sales',
+        loadChildren: () => import('./features/sales/sales.routes').then((m) => m.SALES_ROUTES),
+      },
+      {
+        path: 'receivables',
+        loadChildren: () => import('./features/subledger/subledger.routes').then((m) => m.RECEIVABLES_ROUTES),
+      },
+      {
+        path: 'payables',
+        loadChildren: () => import('./features/subledger/subledger.routes').then((m) => m.PAYABLES_ROUTES),
+      },
+      {
+        path: 'saas',
+        loadChildren: () => import('./features/saas/saas.routes').then((m) => m.SAAS_ROUTES),
+      },
+      {
+        path: 'budgeting',
+        loadChildren: () => import('./features/operations/operations.routes').then((m) => m.BUDGETING_ROUTES),
+      },
+      {
+        path: 'workflow',
+        loadChildren: () => import('./features/operations/operations.routes').then((m) => m.WORKFLOW_ROUTES),
+      },
+      {
+        path: 'tax',
+        loadChildren: () => import('./features/operations/operations.routes').then((m) => m.TAX_ROUTES),
+      },
+      {
+        path: 'fixed-assets',
+        loadChildren: () => import('./features/operations/operations.routes').then((m) => m.FIXED_ASSETS_ROUTES),
+      },
 
       // --- Legacy compatibility redirects (bookmarked / menu URLs) ---
       {
         path: 'administration',
         children: [
+          {
+            path: 'users',
+            canActivate: [permissionGuard(PermissionKeys.UsersAll)],
+            loadChildren: () => import('./features/administration/users/users.routes').then((m) => m.USERS_ROUTES),
+          },
+          {
+            path: 'roles',
+            canActivate: [permissionGuard(PermissionKeys.RolesAll)],
+            loadChildren: () => import('./features/administration/roles/roles.routes').then((m) => m.ROLES_ROUTES),
+          },
           {
             path: '**',
             redirectTo: ({ url }) => {

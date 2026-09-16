@@ -8,10 +8,6 @@
 
   <ItemGroup>
     <ProjectReference Include="../../../BuildingBlocks/OrgSys.SharedKernel/OrgSys.SharedKernel.csproj" />
-    <!-- PurchaseRequisitionProduct.Unit / PurchaseOrderProduct.Unit keep an EF navigation, now
-         owned by Catalog (relocated from MasterData.Domain — same convention as
-         CommercialDocuments.Domain.InvoiceProduct/Sales.Domain.OrderProduct). -->
-    <ProjectReference Include="../../Catalog/Catalog.Domain/Catalog.Domain.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,6 +1,7 @@
 namespace Treasury.Application.FinancialAccounts.Queries
 {
     using Accounting.Contracts.Accounts;
+    using MasterData.Contracts.Currencies;
     using OrgSys.SharedKernel;
     using AutoMapper;
     using MediatR;
@@ -22,18 +23,27 @@ namespace Treasury.Application.FinancialAccounts.Queries
         // AccountCode/AccountName are patched in below instead.
         public override string CreateInclude()
         {
-            return "CashBox,BankAccount.Bank,BankAccount.BankBranch,Currency";
+            return "CashBox,BankAccount.Bank,BankAccount.BankBranch";
         }
 
         public override async Task<Result<FinancialAccountDto>> Handle(GetByIdFinancialAccountQuery request, CancellationToken cancellationToken)
         {
             var result = await base.Handle(request, cancellationToken);
 
-            if (result.Response?.AccountId is > 0)
+            if (result.Response is null)
+                return result;
+
+            if (result.Response.AccountId is > 0)
             {
                 var account = (await sender.Send(new GetAccountQuery(result.Response.AccountId.Value), cancellationToken)).Response;
                 result.Response.AccountCode = account?.Code;
                 result.Response.AccountName = account?.Name;
+            }
+
+            if (result.Response.CurrencyId is > 0)
+            {
+                var names = (await sender.Send(new GetCurrencyNamesQuery([result.Response.CurrencyId.Value]), cancellationToken)).Response ?? [];
+                result.Response.CurrencyName = names.GetValueOrDefault(result.Response.CurrencyId.Value);
             }
 
             return result;

@@ -12,10 +12,8 @@ namespace Inventory.Domain
     {
         protected InventoryCostLayer() { }
 
-        [ForeignKey("Product")]
+        /// <summary>Scalar-only Catalog Product reference. FK preserved in OrgContext.</summary>
         public virtual long ProductId { get; private set; }
-
-        public virtual Product? Product { get; set; }
 
         [ForeignKey("Stock")]
         public virtual long StockId { get; private set; }

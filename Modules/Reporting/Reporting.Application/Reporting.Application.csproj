@@ -9,16 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="../Reporting.Contracts/Reporting.Contracts.csproj" />
     <ProjectReference Include="../../../BuildingBlocks/OrgSys.EventBus/OrgSys.EventBus.csproj" />
-    <!-- Reporting is a pure read-side aggregator (docs/modular-monolith-target-architecture.md §3):
-         it has no Domain of its own and legitimately reads every module's Domain directly.
-         Invoice/InvoiceType now owned by CommercialDocuments (relocated from Sales.Domain). -->
-    <ProjectReference Include="../../CommercialDocuments/CommercialDocuments.Domain/CommercialDocuments.Domain.csproj" />
-    <ProjectReference Include="../../Treasury/Treasury.Domain/Treasury.Domain.csproj" />
-    <ProjectReference Include="../../Inventory/Inventory.Domain/Inventory.Domain.csproj" />
-    <!-- Dealer/Dealer.TypeId reports (GetDealerBalanceReportQueryHandler/
-         GetDealerStatementReportQueryHandler) read Parties.Domain.Dealer directly — same
-         read-only-aggregator reasoning as the other Domain references above. -->
-    <ProjectReference Include="../../Parties/Parties.Domain/Parties.Domain.csproj" />
+    <ProjectReference Include="../../CommercialDocuments/CommercialDocuments.Contracts/CommercialDocuments.Contracts.csproj" />
   </ItemGroup>
 
   <ItemGroup>

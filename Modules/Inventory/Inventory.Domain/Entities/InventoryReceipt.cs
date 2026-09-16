@@ -49,10 +49,15 @@ namespace Inventory.Domain
 
         public virtual long? SourceId { get; private set; }
 
+        /// <summary>Scalar-only Purchasing.PurchaseOrder link. No Domain navigation.
+        /// FK via Fluent HasOne(typeof(PurchaseOrder)) in OrgContext.</summary>
+        public virtual long? PurchaseOrderId { get; private set; }
+
         public static InventoryReceipt Create(
             long stockId, long? locationId, long? dealerId, DateTime date,
             long createUserId, DateTime createDate, long? branchId, string? notes,
-            SourceDocumentType? sourceType = null, long? sourceId = null)
+            SourceDocumentType? sourceType = null, long? sourceId = null,
+            long? purchaseOrderId = null)
         {
             if (stockId <= 0)
                 throw new InventoryDocumentLineRequiredException("A receipt must target a valid warehouse.");
@@ -69,7 +74,8 @@ namespace Inventory.Domain
                 Notes = notes,
                 LifecycleStatus = DocumentStatus.Draft,
                 SourceType = sourceType,
-                SourceId = sourceId
+                SourceId = sourceId,
+                PurchaseOrderId = purchaseOrderId
             };
         }
 

@@ -1,0 +1,58 @@
+<app-page-header
+  title="Organization Settings"
+  [breadcrumbs]="[{ label: 'Home', route: '/' }, { label: 'Companies', route: '/organization/companies' }, { label: 'Settings' }]"
+></app-page-header>
+
+<div class="card">
+  <div class="card-body">
+    <div class="d-flex justify-content-end mb-3">
+      <a routerLink="/organization/companies" class="btn btn-primary">
+        <i class="bi bi-arrow-return-left"></i> Back
+      </a>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+      <div class="row">
+        <div class="form-group col-12 col-md-6">
+          <label>Company</label>
+          <select class="form-control" formControlName="companyId">
+            <option [ngValue]="0" disabled>Select a company</option>
+            <option *ngFor="let company of companies()" [ngValue]="company.id">{{ company.legalName || company.tradeName }}</option>
+          </select>
+        </div>
+        <div class="form-group col-12 col-md-6">
+          <label>Default time zone</label>
+          <input type="text" class="form-control" formControlName="defaultTimeZone" placeholder="Africa/Cairo" />
+        </div>
+        <div class="form-group col-12 col-md-6">
+          <label>Default currency</label>
+          <select class="form-control" formControlName="defaultCurrencyId">
+            <option [ngValue]="0">(none)</option>
+            <option *ngFor="let currency of currencies()" [ngValue]="currency.id">{{ currency.name }}</option>
+          </select>
+        </div>
+        <div class="form-group col-12 col-md-6">
+          <label>Default country</label>
+          <select class="form-control" formControlName="defaultCountryId">
+            <option [ngValue]="0">(none)</option>
+            <option *ngFor="let country of countries()" [ngValue]="country.id">{{ country.name }}</option>
+          </select>
+        </div>
+        <div class="form-group col-12 col-md-6">
+          <label>Fiscal year start month</label>
+          <input type="number" min="1" max="12" class="form-control" formControlName="fiscalYearStartMonth" />
+        </div>
+        <div class="form-group col-12 col-md-6">
+          <label>Fiscal year start day</label>
+          <input type="number" min="1" max="31" class="form-control" formControlName="fiscalYearStartDay" />
+        </div>
+      </div>
+
+      <div class="mt-3">
+        <button type="submit" class="btn btn-primary" [disabled]="saving()">
+          {{ saving() ? 'Saving...' : 'Save' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

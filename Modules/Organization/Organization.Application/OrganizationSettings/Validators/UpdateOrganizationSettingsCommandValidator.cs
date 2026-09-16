@@ -2,13 +2,15 @@ namespace Organization.Application.OrganizationSettings.Validators
 {
     using Organization.Application.OrganizationSettings.Commands;
     using FluentValidation;
+    using MasterData.Contracts.Lookups;
+    using MediatR;
+    using OrgSys.SharedKernel;
 
     public class UpdateOrganizationSettingsCommandValidator : AbstractValidator<UpdateOrganizationSettingsCommand>
     {
         public UpdateOrganizationSettingsCommandValidator(
-            OrgSys.SharedKernel.IRepository<Organization.Domain.Company> _CompanyRepository,
-            OrgSys.SharedKernel.IRepository<MasterData.Domain.Country> _CountryRepository,
-            OrgSys.SharedKernel.IRepository<MasterData.Domain.Currency> _CurrencyRepository)
+            IRepository<Organization.Domain.Company> _CompanyRepository,
+            ISender sender)
         {
             RuleFor(c => c.CompanyId)
             .GreaterThan(0).WithMessage("The company field is required");
@@ -18,11 +20,13 @@ namespace Organization.Application.OrganizationSettings.Validators
             .WithMessage("The company not found");
 
             RuleFor(c => c.DefaultCountryId)
-            .MustAsync(async (CountryId, cancellationToken) => CountryId == null || await _CountryRepository.AnyAsync(e => e.Id == CountryId, cancellationToken))
+            .MustAsync(async (CountryId, cancellationToken) =>
+                CountryId == null || (await sender.Send(new ExistsCountryQuery(CountryId.Value), cancellationToken)).Response)
             .WithMessage("The default country not found");
 
             RuleFor(c => c.DefaultCurrencyId)
-            .MustAsync(async (CurrencyId, cancellationToken) => CurrencyId == null || await _CurrencyRepository.AnyAsync(e => e.Id == CurrencyId, cancellationToken))
+            .MustAsync(async (CurrencyId, cancellationToken) =>
+                CurrencyId == null || (await sender.Send(new ExistsCurrencyQuery(CurrencyId.Value), cancellationToken)).Response)
             .WithMessage("The default currency not found");
         }
     }

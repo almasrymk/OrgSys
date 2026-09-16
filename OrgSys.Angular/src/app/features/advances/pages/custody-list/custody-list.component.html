@@ -1,0 +1,64 @@
+<app-page-header title="Custodies" [breadcrumbs]="[{ label: 'Home', route: '/' }, { label: 'Advances' }, { label: 'Custodies' }]">
+  <div class="d-flex justify-content-between align-items-center flex-wrap">
+    <a [routerLink]="['new']" class="btn btn-outline-primary">
+      <i class="bi bi-plus-lg"></i> Add
+    </a>
+    <div class="form-group mb-0" style="min-width: 220px;">
+      <select class="form-control" [ngModel]="statusFilter()" (ngModelChange)="statusFilter.set($event); search()">
+        <option [ngValue]="0">All statuses</option>
+        <option [ngValue]="CustodyStatus.Draft">Draft</option>
+        <option [ngValue]="CustodyStatus.Approved">Approved</option>
+        <option [ngValue]="CustodyStatus.Issued">Issued</option>
+        <option [ngValue]="CustodyStatus.PartiallySettled">Partially settled</option>
+        <option [ngValue]="CustodyStatus.Settled">Settled</option>
+        <option [ngValue]="CustodyStatus.Closed">Closed</option>
+        <option [ngValue]="CustodyStatus.Cancelled">Cancelled</option>
+      </select>
+    </div>
+  </div>
+</app-page-header>
+
+<div class="card">
+  <div class="card-body p-0">
+    <table class="table table-hover m-0" *ngIf="rows().length; else emptyState">
+      <thead>
+        <tr>
+          <th>Code</th>
+          <th>Holder</th>
+          <th>Purpose</th>
+          <th>Issued</th>
+          <th>Outstanding</th>
+          <th>Status</th>
+          <th style="width: 120px;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of rows()">
+          <td>
+            <a [routerLink]="[row.id]">{{ row.code || row.id }}</a>
+          </td>
+          <td>{{ row.holderId }}</td>
+          <td>{{ row.purpose }}</td>
+          <td>{{ row.issuedAmount | number: '1.2-2' }}</td>
+          <td>{{ row.outstandingAmount | number: '1.2-2' }}</td>
+          <td>
+            <span class="badge badge-secondary">{{ statusLabel[row.lifecycleStatus] }}</span>
+          </td>
+          <td class="text-right text-nowrap">
+            <ng-container *ngIf="row.lifecycleStatus === CustodyStatus.Draft">
+              <a href="javascript:void(0)" class="mr-2" title="Approve" (click)="approve(row)">
+                <i class="bi bi-check-circle text-success"></i>
+              </a>
+              <a href="javascript:void(0)" title="Cancel" (click)="cancel(row)">
+                <i class="bi bi-x-circle text-warning"></i>
+              </a>
+            </ng-container>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <ng-template #emptyState>
+      <p class="text-center text-muted p-4 mb-0">{{ loading() ? 'Loading...' : 'No custodies found.' }}</p>
+    </ng-template>
+  </div>
+</div>

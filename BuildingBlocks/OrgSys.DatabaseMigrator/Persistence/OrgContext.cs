@@ -166,6 +166,103 @@
                 .HasOne(l => l.SupplierPaymentApplication).WithMany(p => p.Lines)
                 .HasForeignKey(l => l.SupplierPaymentApplicationId).OnDelete(DeleteBehavior.Cascade);
 
+            modelBuilder.Entity<ApprovalRequest>()
+                .HasMany(r => r.Decisions).WithOne(d => d.ApprovalRequest)
+                .HasForeignKey(d => d.ApprovalRequestId).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<ApprovalRequest>()
+                .Navigation(r => r.Decisions).UsePropertyAccessMode(PropertyAccessMode.Field);
+
+            modelBuilder.Entity<Budget>()
+                .HasMany(b => b.Lines).WithOne(l => l.Budget)
+                .HasForeignKey(l => l.BudgetId).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<Budget>()
+                .Navigation(b => b.Lines).UsePropertyAccessMode(PropertyAccessMode.Field);
+            modelBuilder.Entity<Budget>()
+                .HasOne(typeof(FiscalYear)).WithMany()
+                .HasForeignKey("FiscalYearId");
+            modelBuilder.Entity<Budget>()
+                .HasOne(typeof(Department)).WithMany()
+                .HasForeignKey("DepartmentId");
+            modelBuilder.Entity<BudgetLine>()
+                .HasOne(typeof(Account)).WithMany()
+                .HasForeignKey("AccountId");
+
+            modelBuilder.Entity<InvoiceTaxSnapshot>()
+                .HasMany(s => s.Lines).WithOne(l => l.Snapshot)
+                .HasForeignKey(l => l.SnapshotId).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<InvoiceTaxSnapshot>()
+                .Navigation(s => s.Lines).UsePropertyAccessMode(PropertyAccessMode.Field);
+            modelBuilder.Entity<InvoiceTaxSnapshot>()
+                .HasIndex(s => s.InvoiceId).IsUnique();
+            modelBuilder.Entity<InvoiceTaxSnapshot>()
+                .HasOne(typeof(Invoice)).WithMany()
+                .HasForeignKey("InvoiceId");
+            modelBuilder.Entity<InvoiceTaxSnapshot>()
+                .HasOne(typeof(Currency)).WithMany()
+                .HasForeignKey("CurrencyId");
+
+            modelBuilder.Entity<FixedAsset>()
+                .HasMany(a => a.Entries).WithOne(e => e.Asset)
+                .HasForeignKey(e => e.AssetId).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<FixedAsset>()
+                .Navigation(a => a.Entries).UsePropertyAccessMode(PropertyAccessMode.Field);
+            modelBuilder.Entity<FixedAsset>()
+                .HasOne(typeof(FixedAssetCategory)).WithMany()
+                .HasForeignKey("CategoryId");
+            modelBuilder.Entity<FixedAsset>()
+                .HasOne(typeof(Currency)).WithMany()
+                .HasForeignKey("CurrencyId");
+            modelBuilder.Entity<DepreciationEntry>()
+                .HasIndex(e => new { e.AssetId, e.PeriodYear, e.PeriodMonth }).IsUnique();
+            modelBuilder.Entity<FixedAssetCategory>()
+                .HasOne(typeof(Account)).WithMany().HasForeignKey("AssetAccountId")
+                .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<FixedAssetCategory>()
+                .HasOne(typeof(Account)).WithMany().HasForeignKey("AccumulatedDepreciationAccountId")
+                .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<FixedAssetCategory>()
+                .HasOne(typeof(Account)).WithMany().HasForeignKey("DepreciationExpenseAccountId")
+                .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<InboxMessage>()
+                .HasIndex(e => new { e.EventId, e.HandlerName }).IsUnique();
+            modelBuilder.Entity<Reporting.Infrastructure.Projections.CustomerAgingReadModel>()
+                .HasIndex(e => e.InvoiceId).IsUnique();
+            modelBuilder.Entity<Reporting.Infrastructure.Projections.SalesSummaryReadModel>()
+                .HasIndex(e => new { e.SummaryDate, e.BranchId });
+
+            modelBuilder.Entity<Custody>()
+                .HasMany(c => c.Handovers).WithOne(h => h.Custody)
+                .HasForeignKey(h => h.CustodyId).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<Custody>()
+                .HasOne(typeof(Currency)).WithMany()
+                .HasForeignKey("CurrencyId");
+
+            modelBuilder.Entity<Quotation>()
+                .HasMany(q => q.Lines).WithOne(l => l.Quotation)
+                .HasForeignKey(l => l.QuotationId).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<Quotation>()
+                .HasOne(typeof(Currency)).WithMany()
+                .HasForeignKey("CurrencyId");
+            modelBuilder.Entity<QuotationLine>()
+                .HasOne(typeof(Product)).WithMany()
+                .HasForeignKey("ProductId");
+            modelBuilder.Entity<QuotationLine>()
+                .HasOne(typeof(Catalog.Domain.Unit)).WithMany()
+                .HasForeignKey("UnitId");
+
+            modelBuilder.Entity<SalesOrder>()
+                .HasMany(o => o.Lines).WithOne(l => l.SalesOrder)
+                .HasForeignKey(l => l.SalesOrderId).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<SalesOrder>()
+                .HasOne(typeof(Currency)).WithMany()
+                .HasForeignKey("CurrencyId");
+            modelBuilder.Entity<SalesOrderLine>()
+                .HasOne(typeof(Product)).WithMany()
+                .HasForeignKey("ProductId");
+            modelBuilder.Entity<SalesOrderLine>()
+                .HasOne(typeof(Catalog.Domain.Unit)).WithMany()
+                .HasForeignKey("UnitId");
+
             // GeneralLedger bounded-context isolation: Dealer/Stock/BankAccount/CashBox/
             // FinancialAccount.AccountId and Financial.JournalId dropped their navigations to
             // Accounting.Domain.Account/Journal (Parties.Domain/Inventory.Domain/Treasury.Domain
@@ -237,6 +334,143 @@
             modelBuilder.Entity<InvoiceProduct>()
                 .HasOne(typeof(Stock)).WithMany()
                 .HasForeignKey("StockId");
+            modelBuilder.Entity<InvoiceProduct>()
+                .HasOne(typeof(Unit)).WithMany()
+                .HasForeignKey("UnitId")
+                .IsRequired();
+            modelBuilder.Entity<Invoice>()
+                .HasOne(typeof(PaymentType)).WithMany()
+                .HasForeignKey("PaymentTypeId")
+                .IsRequired();
+            modelBuilder.Entity<Invoice>()
+                .HasOne(typeof(Currency)).WithMany()
+                .HasForeignKey("CurrencyId")
+                .IsRequired();
+            modelBuilder.Entity<Bank>()
+                .HasOne(typeof(Country)).WithMany()
+                .HasForeignKey("CountryId");
+            modelBuilder.Entity<BankBranch>()
+                .HasOne(typeof(Country)).WithMany()
+                .HasForeignKey("CountryId")
+                .IsRequired();
+            modelBuilder.Entity<BankBranch>()
+                .HasOne(typeof(City)).WithMany()
+                .HasForeignKey("CityId")
+                .IsRequired();
+            modelBuilder.Entity<BankBranch>()
+                .HasOne(typeof(District)).WithMany()
+                .HasForeignKey("DistrictId")
+                .IsRequired();
+            modelBuilder.Entity<Treasury.Domain.FinancialAccount>()
+                .HasOne(typeof(Currency)).WithMany()
+                .HasForeignKey("CurrencyId");
+            modelBuilder.Entity<Financial>()
+                .HasOne(typeof(PaymentType)).WithMany()
+                .HasForeignKey("PaymentTypeId")
+                .IsRequired();
+            modelBuilder.Entity<Financial>()
+                .HasOne(typeof(Currency)).WithMany()
+                .HasForeignKey("CurrencyId")
+                .IsRequired();
+            modelBuilder.Entity<FinancialTransfer>()
+                .HasOne(typeof(Currency)).WithMany()
+                .HasForeignKey("CurrencyId")
+                .IsRequired();
+            modelBuilder.Entity<Dealer>()
+                .HasOne(typeof(Country)).WithMany()
+                .HasForeignKey("CountryId");
+            modelBuilder.Entity<Dealer>()
+                .HasOne(typeof(City)).WithMany()
+                .HasForeignKey("CityId");
+            modelBuilder.Entity<Dealer>()
+                .HasOne(typeof(District)).WithMany()
+                .HasForeignKey("DistrictId");
+            modelBuilder.Entity<PartyAddress>()
+                .HasOne(typeof(Country)).WithMany()
+                .HasForeignKey("CountryId");
+            modelBuilder.Entity<PartyAddress>()
+                .HasOne(typeof(City)).WithMany()
+                .HasForeignKey("CityId");
+            modelBuilder.Entity<PartyAddress>()
+                .HasOne(typeof(District)).WithMany()
+                .HasForeignKey("DistrictId");
+            modelBuilder.Entity<Purchasing.Domain.PurchaseRequisitionProduct>()
+                .HasOne(typeof(Unit)).WithMany()
+                .HasForeignKey("UnitId")
+                .IsRequired();
+            modelBuilder.Entity<Purchasing.Domain.PurchaseOrderProduct>()
+                .HasOne(typeof(Unit)).WithMany()
+                .HasForeignKey("UnitId")
+                .IsRequired();
+            modelBuilder.Entity<TransactionProduct>()
+                .HasOne(typeof(Product)).WithMany()
+                .HasForeignKey("ProductId")
+                .OnDelete(DeleteBehavior.Cascade)
+                .IsRequired();
+            modelBuilder.Entity<TransactionProduct>()
+                .HasOne(typeof(Unit)).WithMany()
+                .HasForeignKey("UnitId")
+                .IsRequired();
+            modelBuilder.Entity<InventoryProduct>()
+                .HasOne(typeof(Product)).WithMany()
+                .HasForeignKey("ProductId")
+                .IsRequired();
+            modelBuilder.Entity<InventoryProduct>()
+                .HasOne(typeof(Unit)).WithMany()
+                .HasForeignKey("UnitId")
+                .IsRequired();
+            modelBuilder.Entity<InventoryBalance>()
+                .HasOne(typeof(Product)).WithMany()
+                .HasForeignKey("ProductId")
+                .IsRequired();
+            modelBuilder.Entity<InventoryReceiptLine>()
+                .HasOne(typeof(Product)).WithMany()
+                .HasForeignKey("ProductId")
+                .IsRequired();
+            modelBuilder.Entity<InventoryReceiptLine>()
+                .HasOne(typeof(Unit)).WithMany()
+                .HasForeignKey("UnitId")
+                .IsRequired();
+            modelBuilder.Entity<InventoryIssueLine>()
+                .HasOne(typeof(Product)).WithMany()
+                .HasForeignKey("ProductId")
+                .IsRequired();
+            modelBuilder.Entity<InventoryIssueLine>()
+                .HasOne(typeof(Unit)).WithMany()
+                .HasForeignKey("UnitId")
+                .IsRequired();
+            modelBuilder.Entity<StockTransferLine>()
+                .HasOne(typeof(Product)).WithMany()
+                .HasForeignKey("ProductId")
+                .IsRequired();
+            modelBuilder.Entity<StockTransferLine>()
+                .HasOne(typeof(Unit)).WithMany()
+                .HasForeignKey("UnitId")
+                .IsRequired();
+            modelBuilder.Entity<StockAdjustmentLine>()
+                .HasOne(typeof(Product)).WithMany()
+                .HasForeignKey("ProductId")
+                .IsRequired();
+            modelBuilder.Entity<StockAdjustmentLine>()
+                .HasOne(typeof(Unit)).WithMany()
+                .HasForeignKey("UnitId")
+                .IsRequired();
+            modelBuilder.Entity<StockReservation>()
+                .HasOne(typeof(Product)).WithMany()
+                .HasForeignKey("ProductId")
+                .IsRequired();
+            modelBuilder.Entity<InventoryBatch>()
+                .HasOne(typeof(Product)).WithMany()
+                .HasForeignKey("ProductId")
+                .IsRequired();
+            modelBuilder.Entity<InventorySerial>()
+                .HasOne(typeof(Product)).WithMany()
+                .HasForeignKey("ProductId")
+                .IsRequired();
+            modelBuilder.Entity<InventoryCostLayer>()
+                .HasOne(typeof(Product)).WithMany()
+                .HasForeignKey("ProductId")
+                .IsRequired();
             modelBuilder.Entity<global::Inventory.Domain.Inventory>()
                 .HasOne(typeof(User)).WithMany()
                 .HasForeignKey("UserId");
@@ -394,6 +628,12 @@
                 .OnDelete(DeleteBehavior.Restrict)
                 .IsRequired();
 
+            modelBuilder.Entity<Department>()
+                .HasOne(e => e.Company).WithMany()
+                .HasForeignKey(e => e.CompanyId)
+                .OnDelete(DeleteBehavior.Restrict)
+                .IsRequired();
+
             modelBuilder.Entity<Company>()
                 .HasOne(typeof(Currency)).WithMany()
                 .HasForeignKey("DefaultCurrencyId");
@@ -520,6 +760,11 @@
             modelBuilder.Entity<InventoryReceipt>()
                 .HasMany(r => r.Lines).WithOne(l => l.InventoryReceipt)
                 .HasForeignKey(l => l.InventoryReceiptId).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<InventoryReceipt>()
+                .HasOne(typeof(PurchaseOrder)).WithMany()
+                .HasForeignKey("PurchaseOrderId")
+                .OnDelete(DeleteBehavior.Restrict)
+                .IsRequired(false);
 
             modelBuilder.Entity<InventoryIssue>()
                 .HasMany(i => i.Lines).WithOne(l => l.InventoryIssue)
@@ -582,6 +827,18 @@
         public virtual DbSet<PriceList> PriceLists { get; set; }
         public virtual DbSet<PriceListEntry> PriceListEntries { get; set; }
         public virtual DbSet<Branch> Branches { get; set; }
+        public virtual DbSet<Department> Departments { get; set; }
+        public virtual DbSet<Budget> Budgets { get; set; }
+        public virtual DbSet<BudgetLine> BudgetLines { get; set; }
+        public virtual DbSet<InvoiceTaxSnapshot> InvoiceTaxSnapshots { get; set; }
+        public virtual DbSet<InvoiceTaxSnapshotLine> InvoiceTaxSnapshotLines { get; set; }
+        public virtual DbSet<FixedAssetCategory> FixedAssetCategories { get; set; }
+        public virtual DbSet<FixedAsset> FixedAssets { get; set; }
+        public virtual DbSet<DepreciationEntry> DepreciationEntries { get; set; }
+        public virtual DbSet<OutboxMessage> OutboxMessages { get; set; }
+        public virtual DbSet<InboxMessage> InboxMessages { get; set; }
+        public virtual DbSet<Reporting.Infrastructure.Projections.CustomerAgingReadModel> CustomerAgingReadModels { get; set; }
+        public virtual DbSet<Reporting.Infrastructure.Projections.SalesSummaryReadModel> SalesSummaryReadModels { get; set; }
         public virtual DbSet<Organization.Domain.Company> Companies { get; set; }
         public virtual DbSet<Organization.Domain.OrganizationSettings> OrganizationSettings { get; set; }
         public virtual DbSet<SaaS.Domain.Tenant> Tenants { get; set; }
@@ -649,6 +906,14 @@
         public virtual DbSet<Payable> Payables { get; set; }
         public virtual DbSet<SupplierPaymentApplication> SupplierPaymentApplications { get; set; }
         public virtual DbSet<SupplierPaymentApplicationLine> SupplierPaymentApplicationLines { get; set; }
+        public virtual DbSet<Custody> Custodies { get; set; }
+        public virtual DbSet<CustodyHandover> CustodyHandovers { get; set; }
+        public virtual DbSet<ApprovalRequest> ApprovalRequests { get; set; }
+        public virtual DbSet<ApprovalDecision> ApprovalDecisions { get; set; }
+        public virtual DbSet<Quotation> SalesQuotations { get; set; }
+        public virtual DbSet<QuotationLine> SalesQuotationLines { get; set; }
+        public virtual DbSet<SalesOrder> SalesOrders { get; set; }
+        public virtual DbSet<SalesOrderLine> SalesOrderLines { get; set; }
 
         // Inventory bounded-context hardening (docs/ddd/inventory-target-architecture.md) — additive
         // tables alongside the existing Product/Stock/Transaction/Inventory ones, never replacing them.

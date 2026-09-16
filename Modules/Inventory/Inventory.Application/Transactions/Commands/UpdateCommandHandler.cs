@@ -1,9 +1,8 @@
 ﻿namespace Inventory.Application.Transactions.Commands
 {
-    using OrgSys.SharedKernel;
-    using OrgSys.SharedKernel;
-    using OrgSys.SharedKernel;
     using AutoMapper;
+    using CommercialDocuments.Contracts.Invoices;
+    using MediatR;
     using Microsoft.Extensions.DependencyInjection;
     using Inventory.Application.Transactions.Integration;
 
@@ -19,9 +18,9 @@
             if (transaction?.InventoryId is > 0)
                 return new Result(System.Net.HttpStatusCode.Forbidden, [new Error("A transaction created from an inventory is read-only")]);
 
-            var sourceInvoice = await _provider.GetRequiredService<IRepository<CommercialDocuments.Domain.Invoice>>()
-                .GetByFilterAsync(e => e.TransactionId == request.Id, string.Empty);
-            if (sourceInvoice != null)
+            var sourceInvoice = await _provider.GetRequiredService<ISender>()
+                .Send(new GetInvoiceByLinkedTransactionQuery(request.Id), cancellationToken);
+            if (sourceInvoice.Response != null)
                 return new Result(System.Net.HttpStatusCode.Forbidden, [new Error("A transaction created from an invoice is read-only")]);
 
             var result = await base.Handle(request, cancellationToken);

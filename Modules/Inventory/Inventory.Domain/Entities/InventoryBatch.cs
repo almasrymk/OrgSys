@@ -18,10 +18,8 @@ namespace Inventory.Domain
 
         protected InventoryBatch() { }
 
-        [ForeignKey("Product")]
+        /// <summary>Scalar-only Catalog Product reference. FK preserved in OrgContext.</summary>
         public virtual long ProductId { get; private set; }
-
-        public virtual Product? Product { get; set; }
 
         [Required, StringLength(100)]
         public virtual string BatchNumber { get; private set; } = string.Empty;

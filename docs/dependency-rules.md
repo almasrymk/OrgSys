@@ -37,78 +37,25 @@ Sales.Application  ──▶  Inventory.Infrastructure
 <any>.Domain        ──▶  <any other>.Domain/Application/Infrastructure
 ```
 
-## 3. Accepted exceptions (documented, tested, not silently allowed)
+## 3. Accepted exceptions
 
-Every exception below is enforced as an explicit allow-list entry in
-`Tests/Architecture.Tests` (`ModuleDependencyTests.AcceptedDomainExceptions` for Domain→Domain,
-`ModuleLayerDependencyTests.AcceptedApplicationDomainExceptions` /
-`AcceptedApplicationApplicationExceptions` for the Application-layer rules added in Phase 1) —
-remove the entity/logic and the corresponding test entry should be deleted in the same change,
-not left stale. Running the full Phase 1 sweep surfaced substantially more Application→Domain
-coupling than the original (pre-Phase-1) audit had caught — the table below reflects what
-actually exists today, not just what Phase 2 touched.
+Architecture.Tests allow-lists are **empty** (Stage 1, 2026-09-17):
 
-### Domain→Domain
+| List | File | Count |
+|------|------|-------|
+| Domain → Domain | `ModuleDependencyTests.AcceptedDomainExceptions` | 0 |
+| Application → other Domain | `ModuleLayerDependencyTests.AcceptedApplicationDomainExceptions` | 0 |
+| Application → other Application | `ModuleLayerDependencyTests.AcceptedApplicationApplicationExceptions` | 0 |
 
-| From | To | Reason |
-|---|---|---|
-| `Treasury.Domain` | `Sales.Domain` | `Financial.Dealer`, `FinancialInvoice.Invoice` EF navigations |
-| `Inventory.Domain` | `Sales.Domain` | `Product.Dealer`, `Transaction.Dealer`, `Transaction.Order` EF navigations (the resolved Sales/Inventory circular coupling) |
-| `Treasury.Domain`, `Accounting.Domain`, `Sales.Domain`, `Inventory.Domain` | `MasterData.Domain`, `Organization.Domain`, `Administration.Domain`, `Accounting.Domain` | Various EF navigations kept from the original schema (Branch, Shift, Currency, Account, etc.) |
+Cross-module communication is Contracts-only (`ICommand` / `IQuery` / integration events). SQL FKs remain via Fluent `HasOne(typeof(X)).WithMany().HasForeignKey("XId")` without Domain navigations.
 
-### Application→Domain
+Do **not** add an allow-list entry to make a test green. Add a Contracts query/command or drop the ProjectReference.
 
-| From | To | Reason |
-|---|---|---|
-| `Accounting.Application` | `Sales.Domain` | `IReceivableAccountValidator`/`IPayableAccountValidator` need `Dealer`/`DealerType`; kept in Accounting because Sales/Treasury/Payables/Receivables Application *and* the two validators mutually depend on it — moving it would add new edges for no benefit (see `Accounting.Application.csproj` comment) |
-| `Sales.Application` | `MasterData.Domain` | `MappingProfile` `Unit`/`UnitDto` mapping. **Closed 2026-09-16 / earlier:** `Sales.Application → Accounting.Domain` — invoices/dealers moved to CommercialDocuments/Parties and talk to Accounting only through `Accounting.Contracts`. |
-| `Inventory.Application` | `Sales.Domain` | Transaction handlers/`MappingProfile` read `Dealer`/`Order` — mirrors the existing Domain-level exception, now visible at the Application layer too |
-| `Inventory.Application` | `Accounting.Domain` | Transaction Get/Search handlers populate `JournalId`/`JournalCode`, same pattern as Sales — Phase-4-class debt |
-| `Inventory.Application` | `Organization.Domain`, `MasterData.Domain` | `MappingProfile` Branch/Shift/Unit/Classification mapping |
-| `Treasury.Application` | `Sales.Domain` | Financial handlers/`MappingProfile` read `Dealer` directly (mirrors `Treasury.Domain -> Sales.Domain`) |
-| `Treasury.Application` | `Accounting.Domain` | FinancialTransfer/Financial Post/Reverse handlers and validators read `Account`/`Journal` directly — Phase-4-class debt |
-| `Treasury.Application` | `MasterData.Domain` | `MappingProfile` and `CreateFinancialPaidInvoiceCommandHandler` read `Currency` |
-| `Receivables.Application`, `Payables.Application` | `Accounting.Domain`, `Sales.Domain`, `MasterData.Domain` | The opening-balance handlers read `Journal`/`JournalType`/`Currency`/`DealerType` directly |
-| `Administration.Application` | `Organization.Domain` | `MappingProfile` reads `Branch` (`User.BranchId`) — mirrors the existing Domain-level exception |
-| `Reporting.Application` | `Sales.Domain`, `Treasury.Domain`, `Inventory.Domain`, `MasterData.Domain` | Reporting is a read-only cross-module aggregator by design (no `Reporting.Domain`) — reads every module's entities directly rather than duplicating read models yet |
+### Historical notes (closed)
 
-### Application→Application
+Former Domain navigations (Dealer, Branch, Invoice, KeeperUser, Unit) were replaced with scalar IDs. Preference reads go through `GetPreferenceValueQuery`. Accounting posting goes through `Accounting.Contracts`. Reporting Application is Domain-free; live SQL lives in `Reporting.Infrastructure`.
 
-| From | To | Reason |
-|---|---|---|
-| `Sales.Application` | `MasterData.Application` | `UnitDto` mapping support. **Closed:** `Sales.Application → Accounting.Application` (validators now live on `Accounting.Contracts`; dealer provisioning is in Parties). |
-| `Inventory.Application` | `MasterData.Application` | `UnitDto`/`ProductDto` mapping support |
-| `Payables.Application` | `Accounting.Application`, `Receivables.Application` | Opening-balance validators |
-| `Receivables.Application`, `Treasury.Application` | `Accounting.Application` | Same validators / posting-period checks |
-
-### Legacy root
-
-| From | To | Reason |
-|---|---|---|
-| `Sales.Application`, `Inventory.Application`, `Receivables.Application`, `Payables.Application`, `Reporting.Application` | root `Domain`/`Application` (legacy monolith) | `Preference`, `IOrgContext`, the Journal-posting integration bridges — not yet extracted (Phase 8) |
-
-**Cleared (2026-09-17, Domain ID-only):** Cross-module `Dealer` / `Branch` / `Invoice` navigations dropped (scalar FKs + Fluent `HasOne(typeof(...))`). Architecture.Tests Domain exceptions deleted for Administration→Organization, Treasury→Organization/Parties/CommercialDocuments, Inventory→Parties/Organization, CommercialDocuments→Parties, Purchasing→Parties, Catalog→Parties. Matching Application→Domain exceptions for those Dealer/Branch mapping reads were deleted; names go through `GetDealerNamesQuery` / `GetBranchNamesQuery` / `GetInvoiceNetsQuery`.
-
-**Cleared (2026-09-16, continuation):** `Inventory.Application`, `Treasury.Application`, and `Parties.Application` no longer read `Administration.Domain.Preference` — they use `GetPreferenceValueQuery` / `GetPreferenceValuesQuery`. Matching Architecture.Tests Application→Domain exceptions were deleted.
-
-**Cleared (2026-09-16, Domain):** `Treasury.Domain → Administration.Domain` — `CashBox.KeeperUser` navigation dropped; `KeeperUserId` FK kept via Fluent `HasOne(typeof(User))` in `OrgContext`.
-
-**Cleared (2026-09-16):** `CommercialDocuments.Application -> Administration.Domain` — invoice
-create/posting now uses `GetPreferenceValueQuery` / `GetPreferenceValuesQuery` instead of
-`IRepository<Preference>`. Architecture.Tests' matching exception entry was deleted in the same
-change.
-
-**Cleared by the earlier Sales.Application pass:** `Sales.Application -> Inventory.Domain`,
-`Sales.Application -> Inventory.Application`, `Sales.Application -> Treasury.Domain` — all three
-removed; replaced with `Sales.Application -> Inventory.Contracts` /
-`Sales.Application -> Treasury.Contracts`. These three are **not** in the accepted-exceptions
-list above — Architecture.Tests will fail immediately if they regress.
-
-**Not touched by this pass, listed above only to keep the exception table honest:** every
-Application→Domain/Application edge involving Accounting, Treasury, Inventory-to-Sales,
-Receivables, Payables, Administration, or Reporting. These are real, pre-existing coupling that
-Phase 1's new tests newly caught — fixing them is Phases 3-8 (per the brief's own phase
-ordering), not this pass.
+There is no remaining legacy root `Domain`/`Application` project.
 
 ## 4. Definition of "violation" for CI purposes
 
@@ -119,7 +66,4 @@ A dependency is a violation if and only if:
 2. It is not listed in §3 above with a corresponding `Tests/Architecture.Tests` allow-list entry.
 
 `.Contracts` references are never violations. References to `OrgSys.SharedKernel` /
-`OrgSys.EventBus` are never violations. References to the legacy root `Domain`/`Application`
-projects are tracked (§3, last row) but not failed by Architecture.Tests today — they will start
-being enforced once Phase 8 begins moving that code out, at which point each newly-empty
-dependency should be removed from the exception list in the same change.
+`OrgSys.EventBus` are never violations. The legacy root `Domain`/`Application` projects no longer exist.

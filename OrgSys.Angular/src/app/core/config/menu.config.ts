@@ -58,6 +58,21 @@ export const MENU: MenuItem[] = [
         route: '/organization/branches',
         permissionKeys: permissionList(PermissionKeys.BranchesAll, PermissionKeys.BranchesView),
       },
+      {
+        labelKey: 'Companies',
+        icon: 'iconsminds-building',
+        route: '/organization/companies',
+      },
+      {
+        labelKey: 'Settings',
+        icon: 'simple-icon-settings',
+        route: '/organization/settings',
+      },
+      {
+        labelKey: 'Departments',
+        icon: 'iconsminds-network',
+        route: '/organization/departments',
+      },
     ],
   },
   {
@@ -70,6 +85,9 @@ export const MENU: MenuItem[] = [
         route: '/catalog/products',
         permissionKeys: permissionList(PermissionKeys.ProductsAll, PermissionKeys.ProductsView),
       },
+      { labelKey: 'Brands', icon: 'iconsminds-tag-3', route: '/catalog/brands' },
+      { labelKey: 'Price Lists', icon: 'iconsminds-receipt-4', route: '/catalog/price-lists' },
+      { labelKey: 'Properties', icon: 'iconsminds-check', route: '/catalog/properties' },
     ],
   },
   {
@@ -154,6 +172,70 @@ export const MENU: MenuItem[] = [
       { labelKey: 'Receipts', icon: 'iconsminds-down-1', route: '/inventory/receipts' },
       { labelKey: 'Balance', icon: 'iconsminds-data-center', route: '/inventory/balances' },
       { labelKey: 'Reservations', icon: 'iconsminds-lock-2', route: '/inventory/reservations' },
+      { labelKey: 'Batches', icon: 'iconsminds-box-close', route: '/inventory/batches' },
+      { labelKey: 'Serials', icon: 'iconsminds-barcode-scanner', route: '/inventory/serials' },
+    ],
+  },
+  {
+    labelKey: 'Purchasing',
+    icon: 'simple-icon-basket',
+    children: [
+      { labelKey: 'Requisitions', icon: 'iconsminds-file', route: '/purchasing/requisitions' },
+      { labelKey: 'Purchase Orders', icon: 'simple-icon-basket', route: '/purchasing/orders' },
+      { labelKey: 'Three-way match', icon: 'iconsminds-check', route: '/purchasing/match' },
+    ],
+  },
+  {
+    labelKey: 'Sales',
+    icon: 'simple-icon-tag',
+    children: [
+      { labelKey: 'Quotations', icon: 'iconsminds-letter-open', route: '/sales/quotations' },
+      { labelKey: 'Sales Orders', icon: 'simple-icon-tag', route: '/sales/orders' },
+    ],
+  },
+  {
+    labelKey: 'Receivables',
+    icon: 'iconsminds-financial',
+    children: [{ labelKey: 'Outstanding', icon: 'iconsminds-financial', route: '/receivables/outstanding' }],
+  },
+  {
+    labelKey: 'Payables',
+    icon: 'iconsminds-handshake',
+    children: [{ labelKey: 'Outstanding', icon: 'iconsminds-handshake', route: '/payables/outstanding' }],
+  },
+  {
+    labelKey: 'SaaS',
+    icon: 'iconsminds-cloud',
+    children: [
+      { labelKey: 'Tenants', icon: 'iconsminds-building', route: '/saas/tenants' },
+      { labelKey: 'Plans', icon: 'iconsminds-receipt-4', route: '/saas/plans' },
+      { labelKey: 'Features', icon: 'iconsminds-check', route: '/saas/features' },
+      { labelKey: 'Subscriptions', icon: 'iconsminds-repeat-3', route: '/saas/subscriptions' },
+    ],
+  },
+  {
+    labelKey: 'Operations',
+    icon: 'iconsminds-gear',
+    children: [
+      { labelKey: 'Budgets', icon: 'iconsminds-calculator', route: '/budgeting' },
+      { labelKey: 'Approvals', icon: 'simple-icon-check', route: '/workflow' },
+      { labelKey: 'Tax Snapshots', icon: 'iconsminds-receipt-4', route: '/tax' },
+      { labelKey: 'Fixed Assets', icon: 'iconsminds-factory', route: '/fixed-assets' },
+    ],
+  },
+  {
+    labelKey: 'Advances',
+    icon: 'iconsminds-handshake',
+    children: [
+      { labelKey: 'Custodies', icon: 'iconsminds-handshake', route: '/advances/custodies' },
+    ],
+  },
+  {
+    labelKey: 'Administration',
+    icon: 'simple-icon-people',
+    children: [
+      { labelKey: 'Users', icon: 'simple-icon-user', route: '/administration/users', permissionKeys: permissionList(PermissionKeys.UsersAll, PermissionKeys.UsersView) },
+      { labelKey: 'Roles', icon: 'simple-icon-shield', route: '/administration/roles', permissionKeys: permissionList(PermissionKeys.RolesAll, PermissionKeys.RolesView) },
     ],
   },
   {
@@ -169,6 +251,8 @@ export const MENU: MenuItem[] = [
       { labelKey: 'Safe Movement', icon: 'simple-icon-list', route: '/reporting/finance/safe-movement' },
       { labelKey: 'Safe Balance', icon: 'iconsminds-wallet', route: '/reporting/finance/safe-balance' },
       { labelKey: 'Sales Balance', icon: 'iconsminds-profile', route: '/reporting/sales/balance' },
+      { labelKey: 'Customer Aging (projection)', icon: 'iconsminds-clock', route: '/reporting/projections/aging' },
+      { labelKey: 'Sales Summary (projection)', icon: 'iconsminds-line-chart-1', route: '/reporting/projections/sales-summary' },
     ],
   },
 ];

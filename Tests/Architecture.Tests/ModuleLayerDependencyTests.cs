@@ -26,6 +26,10 @@ public class ModuleLayerDependencyTests
         ("Receivables", typeof(Receivables.Application.OpeningBalance.Commands.SetCustomerOpeningBalanceCommand).Assembly),
         ("Payables", typeof(Payables.Application.OpeningBalance.Commands.SetSupplierOpeningBalanceCommand).Assembly),
         ("Advances", typeof(Advances.Application.AssemblyMarker).Assembly),
+        ("Workflow", typeof(Workflow.Application.AssemblyMarker).Assembly),
+        ("Budgeting", typeof(Budgeting.Application.AssemblyMarker).Assembly),
+        ("Tax", typeof(Tax.Application.AssemblyMarker).Assembly),
+        ("FixedAssets", typeof(FixedAssets.Application.AssemblyMarker).Assembly),
         ("Administration", typeof(Administration.Application.MappingProfile).Assembly),
         ("Organization", typeof(Organization.Application.MappingProfile).Assembly),
         ("MasterData", typeof(MasterData.Application.MappingProfile).Assembly),
@@ -46,6 +50,10 @@ public class ModuleLayerDependencyTests
         ("Receivables", typeof(Receivables.Domain.AssemblyMarker).Assembly),
         ("Payables", typeof(Payables.Domain.AssemblyMarker).Assembly),
         ("Advances", typeof(Advances.Domain.AssemblyMarker).Assembly),
+        ("Workflow", typeof(Workflow.Domain.AssemblyMarker).Assembly),
+        ("Budgeting", typeof(Budgeting.Domain.AssemblyMarker).Assembly),
+        ("Tax", typeof(Tax.Domain.AssemblyMarker).Assembly),
+        ("FixedAssets", typeof(FixedAssets.Domain.AssemblyMarker).Assembly),
         ("Administration", typeof(Administration.Domain.AssemblyMarker).Assembly),
         ("Organization", typeof(Organization.Domain.AssemblyMarker).Assembly),
         ("MasterData", typeof(MasterData.Domain.AssemblyMarker).Assembly),
@@ -60,22 +68,6 @@ public class ModuleLayerDependencyTests
     /// </summary>
     private static readonly (string Module, string DependsOnModule, string Reason)[] AcceptedApplicationDomainExceptions =
     [
-        ("Sales", "MasterData", "MappingProfile Unit/UnitDto mapping support."),
-        ("CommercialDocuments", "Catalog", "Invoices/MappingProfile Unit/UnitDto mapping support (Unit relocated from MasterData to Catalog); GetByIdQueryHandler's GetProductNamesQuery lookup now lives in Catalog.Contracts (relocated from Inventory.Contracts along with Product itself)."),
-        ("Parties", "MasterData", "DealerMappingProfile maps Country/City/District names directly (Dealer.Country/City/District navigations)."),
-        ("Inventory", "CommercialDocuments", "Transaction Delete/Update/GetById/Search handlers read the linked Invoice directly (IRepository<Invoice>), now owned by CommercialDocuments (relocated from Sales.Domain)."),
-        ("Inventory", "Catalog", "Product/ProductDto, ProductUnit, Property CQRS now live in Catalog.Application (relocated from Inventory.Application/MasterData.Application); GetListByBalanceQueryHandler reads Catalog.Domain.Product/Catalog.Application.ProductDto directly to compute an Inventory-side stock balance — see docs/catalog/catalog-target-architecture.md §4."),
-        ("Inventory", "MasterData", "TransactionJournalPostingService resolves IRepository<Currency> directly to pick the posting currency."),
-        ("Treasury", "CommercialDocuments", "CancelFinancialCommandHandler/CreateFinancialPaidInvoiceCommandHandler/DeleteListCommandHandler/PostTransactionCommandHandler/RedoInvoiceCommandHandler/UpdateCommandHandler read Invoice directly (IRepository<Invoice>), now owned by CommercialDocuments (relocated from Sales.Domain). A Contracts-based rewrite of these handlers is out of scope for the Invoice-ownership move itself."),
-        ("Treasury", "MasterData", "MappingProfile and CreateFinancialPaidInvoiceCommandHandler read Currency directly."),
-        ("Reporting", "CommercialDocuments", "Reporting is a read-only cross-module aggregator by design (no Reporting.Domain) — reads Invoice/InvoiceType directly rather than duplicating a read model. Invoice/InvoiceType now owned by CommercialDocuments (relocated from Sales.Domain)."),
-        ("Reporting", "Parties", "Same reasoning — Dealer balance/statement reports read Dealer/DealerType directly (now owned by Parties, relocated from Sales.Domain)."),
-        ("Reporting", "Treasury", "Same reasoning — reads Financial/FinancialType directly."),
-        ("Reporting", "Inventory", "Same reasoning — reads TransactionProduct/TransactionType directly."),
-        ("Reporting", "MasterData", "Same reasoning — Warehouse/Financial report queries read Currency directly."),
-        ("Reporting", "Catalog", "Same reasoning — Warehouse report queries read Product/Classification directly via TransactionProduct.Product, now owned by Catalog (relocated from Inventory.Domain/MasterData.Domain)."),
-        ("Organization", "MasterData", "Company/Branch/OrganizationSettings Create/Update validators check CountryId/DefaultCurrencyId existence via IRepository<Country>/IRepository<Currency> directly. Company.CountryId/DefaultCurrencyId are scalar-only (no Domain navigation, unlike Bank/Dealer) since Currency/Country/City/District ownership was deliberately left in MasterData this pass rather than relocated into Organization — see docs/organization/organization-target-architecture.md."),
-        ("Organization", "SaaS", "Company Create/Update validators check TenantId existence via IRepository<SaaS.Domain.Tenant> directly, same shape as the MasterData exception above. Company.TenantId is scalar-only (no Domain navigation) — stage 1 of the multi-tenant retrofit, see docs/architecture/adr/tenant-vs-company.md."),
     ];
 
     /// <summary>
@@ -89,9 +81,6 @@ public class ModuleLayerDependencyTests
     /// </summary>
     private static readonly (string Module, string DependsOnModule, string Reason)[] AcceptedApplicationApplicationExceptions =
     [
-        ("Sales", "MasterData", "UnitDto mapping support."),
-        ("CommercialDocuments", "Catalog", "UnitDto mapping support (relocated from MasterData.Application)."),
-        ("Inventory", "Catalog", "ProductDto/UnitDto mapping support (Product/Unit CQRS relocated from Inventory.Application/MasterData.Application)."),
     ];
 
     public static IEnumerable<object[]> AllApplicationToDomainPairs()

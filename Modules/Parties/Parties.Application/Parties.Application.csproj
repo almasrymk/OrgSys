@@ -10,13 +10,9 @@
     <ProjectReference Include="../Parties.Domain/Parties.Domain.csproj" />
     <ProjectReference Include="../Parties.Contracts/Parties.Contracts.csproj" />
     <ProjectReference Include="../../../BuildingBlocks/OrgSys.EventBus/OrgSys.EventBus.csproj" />
-    <!-- Dealer create/update GL-account provisioning (DealerPayableAccountProvisioning/
-         DealerReceivableAccountProvisioning) and the Dealer query handlers (AccountCode/AccountName)
-         use Accounting.Contracts only (IReceivableAccountValidator, GetAccountQuery,
-         GetAccountLookupsQuery, ProvisionSubAccountCommand) — no reference to Accounting.Domain or
-         Accounting.Application. Preference lookups go through Administration.Contracts. -->
     <ProjectReference Include="../../Accounting/Accounting.Contracts/Accounting.Contracts.csproj" />
     <ProjectReference Include="../../Administration/Administration.Contracts/Administration.Contracts.csproj" />
+    <ProjectReference Include="../../MasterData/MasterData.Contracts/MasterData.Contracts.csproj" />
   </ItemGroup>
 
   <ItemGroup>

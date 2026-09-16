@@ -11,9 +11,8 @@ public class FinancialAccount : BaseModel
     // No navigation to Accounting.Domain.Account — see Parties.Domain/Entities/Dealer.cs for why.
     public long? AccountId { get; set; }
 
-    [ForeignKey(nameof(Currency))]
+    /// <summary>Scalar-only MasterData Currency reference. FK preserved in OrgContext.</summary>
     public long? CurrencyId { get; set; }
-    public virtual Currency? Currency { get; set; }
 
     public bool IsActive { get; set; } = true;
 

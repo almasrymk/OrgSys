@@ -46,7 +46,7 @@ public class CustomerPaymentPostedIntegrationEventHandlerTests
         var unitOfWork = new Mock<IUnitOfWork>();
         unitOfWork.Setup(u => u.SaveChangeAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
 
-        var handler = new CustomerPaymentPostedIntegrationEventHandler(receivableRepository.Object, paymentApplicationRepository.Object, unitOfWork.Object);
+        var handler = new CustomerPaymentPostedIntegrationEventHandler(receivableRepository.Object, paymentApplicationRepository.Object, unitOfWork.Object, InboxTestDoubles.AlwaysClaim());
         return (handler, receivableRepository, paymentApplicationRepository, unitOfWork);
     }
 

@@ -34,6 +34,10 @@
     <ProjectReference Include="..\..\Modules\Receivables\Receivables.Domain\Receivables.Domain.csproj" />
     <ProjectReference Include="..\..\Modules\Payables\Payables.Domain\Payables.Domain.csproj" />
     <ProjectReference Include="..\..\Modules\Advances\Advances.Domain\Advances.Domain.csproj" />
+    <ProjectReference Include="..\..\Modules\Workflow\Workflow.Domain\Workflow.Domain.csproj" />
+    <ProjectReference Include="..\..\Modules\Budgeting\Budgeting.Domain\Budgeting.Domain.csproj" />
+    <ProjectReference Include="..\..\Modules\Tax\Tax.Domain\Tax.Domain.csproj" />
+    <ProjectReference Include="..\..\Modules\FixedAssets\FixedAssets.Domain\FixedAssets.Domain.csproj" />
     <ProjectReference Include="..\..\Modules\Administration\Administration.Domain\Administration.Domain.csproj" />
     <ProjectReference Include="..\..\Modules\Organization\Organization.Domain\Organization.Domain.csproj" />
     <ProjectReference Include="..\..\Modules\MasterData\MasterData.Domain\MasterData.Domain.csproj" />
@@ -48,6 +52,10 @@
     <ProjectReference Include="..\..\Modules\Receivables\Receivables.Application\Receivables.Application.csproj" />
     <ProjectReference Include="..\..\Modules\Payables\Payables.Application\Payables.Application.csproj" />
     <ProjectReference Include="..\..\Modules\Advances\Advances.Application\Advances.Application.csproj" />
+    <ProjectReference Include="..\..\Modules\Workflow\Workflow.Application\Workflow.Application.csproj" />
+    <ProjectReference Include="..\..\Modules\Budgeting\Budgeting.Application\Budgeting.Application.csproj" />
+    <ProjectReference Include="..\..\Modules\Tax\Tax.Application\Tax.Application.csproj" />
+    <ProjectReference Include="..\..\Modules\FixedAssets\FixedAssets.Application\FixedAssets.Application.csproj" />
     <ProjectReference Include="..\..\Modules\Administration\Administration.Application\Administration.Application.csproj" />
     <ProjectReference Include="..\..\Modules\Organization\Organization.Application\Organization.Application.csproj" />
     <ProjectReference Include="..\..\Modules\MasterData\MasterData.Application\MasterData.Application.csproj" />
@@ -66,6 +74,10 @@
     <ProjectReference Include="..\..\Modules\Receivables\Receivables.Infrastructure\Receivables.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Modules\Payables\Payables.Infrastructure\Payables.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Modules\Advances\Advances.Infrastructure\Advances.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Modules\Workflow\Workflow.Infrastructure\Workflow.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Modules\Budgeting\Budgeting.Infrastructure\Budgeting.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Modules\Tax\Tax.Infrastructure\Tax.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Modules\FixedAssets\FixedAssets.Infrastructure\FixedAssets.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Modules\Administration\Administration.Infrastructure\Administration.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Modules\Organization\Organization.Infrastructure\Organization.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Modules\MasterData\MasterData.Infrastructure\MasterData.Infrastructure.csproj" />

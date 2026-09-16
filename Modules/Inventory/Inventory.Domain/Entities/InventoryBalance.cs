@@ -29,10 +29,8 @@ namespace Inventory.Domain
         /// existing Product-balance query implicitly treats "no transactions yet" as zero.</summary>
         protected InventoryBalance() { }
 
-        [ForeignKey("Product")]
+        /// <summary>Scalar-only Catalog Product reference. FK preserved in OrgContext.</summary>
         public virtual long ProductId { get; private set; }
-
-        public virtual Product? Product { get; set; }
 
         [ForeignKey("Stock")]
         public virtual long StockId { get; private set; }

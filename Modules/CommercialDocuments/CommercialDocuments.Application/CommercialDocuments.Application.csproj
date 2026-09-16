@@ -10,23 +10,14 @@
     <ProjectReference Include="../CommercialDocuments.Domain/CommercialDocuments.Domain.csproj" />
     <ProjectReference Include="../CommercialDocuments.Contracts/CommercialDocuments.Contracts.csproj" />
     <ProjectReference Include="../../../BuildingBlocks/OrgSys.EventBus/OrgSys.EventBus.csproj" />
-    <ProjectReference Include="../../MasterData/MasterData.Application/MasterData.Application.csproj" />
-    <!-- Invoices/MappingProfile.cs Unit/UnitDto mapping support (Unit relocated from MasterData to
-         Catalog — docs/catalog/catalog-target-architecture.md §4), and
-         GetByIdQueryHandler.cs's GetProductNamesQuery lookup (now Catalog.Contracts, relocated
-         from Inventory.Contracts along with Product itself). -->
-    <ProjectReference Include="../../Catalog/Catalog.Application/Catalog.Application.csproj" />
-    <!-- Invoice delete/cancel/redo/create handlers reach Inventory (linked Transaction) and
-         Treasury (linked Financial) through Contracts only — moved unchanged from
-         Sales.Application, see docs/dependency-rules.md. -->
+    <ProjectReference Include="../../Catalog/Catalog.Contracts/Catalog.Contracts.csproj" />
+    <ProjectReference Include="../../MasterData/MasterData.Contracts/MasterData.Contracts.csproj" />
     <ProjectReference Include="../../Treasury/Treasury.Contracts/Treasury.Contracts.csproj" />
     <ProjectReference Include="../../Inventory/Inventory.Contracts/Inventory.Contracts.csproj" />
-    <!-- InvoiceJournalPostingService posts Invoice journal entries through Accounting.Contracts
-         and resolves Preference/Dealer via Administration.Contracts/Parties.Contracts (no
-         Administration.Domain or Parties.Domain reads on this path). -->
     <ProjectReference Include="../../Accounting/Accounting.Contracts/Accounting.Contracts.csproj" />
     <ProjectReference Include="../../Administration/Administration.Contracts/Administration.Contracts.csproj" />
     <ProjectReference Include="../../Parties/Parties.Contracts/Parties.Contracts.csproj" />
+    <ProjectReference Include="../../Tax/Tax.Contracts/Tax.Contracts.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -43,6 +43,7 @@ export class ReceiptsFormComponent {
     date: [new Date().toISOString().slice(0, 10), Validators.required],
     stockId: [0, [Validators.required, Validators.min(1)]],
     dealerId: [0],
+    purchaseOrderId: [0],
     notes: [''],
     lines: this.fb.array<ReturnType<typeof this.buildLine>>([]),
   });
@@ -113,6 +114,7 @@ export class ReceiptsFormComponent {
         createUserId: currentUserId,
         branchId: null,
         notes: value.notes || null,
+        purchaseOrderId: value.purchaseOrderId || null,
         lines: value.lines.map((l) => ({
           productId: l.productId,
           unitId: l.unitId,

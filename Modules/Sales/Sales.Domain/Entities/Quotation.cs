@@ -21,6 +21,7 @@ public class Quotation : MovementModel
     private readonly List<IDomainEvent> _domainEvents = [];
     private readonly List<QuotationLine> _lines = [];
 
+    [NotMapped]
     public IReadOnlyList<IDomainEvent> DomainEvents => _domainEvents.AsReadOnly();
 
     public void ClearDomainEvents() => _domainEvents.Clear();

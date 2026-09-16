@@ -15,10 +15,13 @@ using Receivables.Domain.Repositories;
 /// </summary>
 public sealed class SalesInvoicePostedIntegrationEventHandler(
     IReceivableRepository receivableRepository,
-    IUnitOfWork unitOfWork) : INotificationHandler<SalesInvoicePostedIntegrationEvent>
+    IUnitOfWork unitOfWork,
+    IInboxStore inbox) : INotificationHandler<SalesInvoicePostedIntegrationEvent>
 {
     public async Task Handle(SalesInvoicePostedIntegrationEvent notification, CancellationToken cancellationToken)
     {
+        if (!await inbox.TryClaimAsync(notification.EventId, nameof(SalesInvoicePostedIntegrationEventHandler), cancellationToken))
+            return;
         // Duplicate delivery of the same posted invoice must create exactly one Receivable (brief
         // §32) — the DB unique index on (SourceDocumentType, SourceDocumentId) is the final
         // safety net; this check is the fast path that avoids hitting it in the common case.

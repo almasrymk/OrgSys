@@ -6,8 +6,12 @@ using Organization.Application.Companies.Commands;
 using Organization.Application.Companies.Validators;
 using Organization.Application.OrganizationSettings.Commands;
 using OrgSys.SharedKernel;
+using MasterData.Contracts.Lookups;
+using MediatR;
 using Moq;
+using SaaS.Contracts.Tenants;
 using System.Linq.Expressions;
+using System.Net;
 using Xunit;
 
 namespace Application.Tests;
@@ -38,28 +42,19 @@ public class OrganizationCompanyBranchValidatorTests
         return repository;
     }
 
-    private static Mock<IRepository<MasterData.Domain.Country>> CountryRepository(params MasterData.Domain.Country[] existing)
+    private static Mock<ISender> LookupSender(bool currencyExists = true, bool countryExists = true, bool tenantExists = true)
     {
-        var repository = new Mock<IRepository<MasterData.Domain.Country>>();
-        repository.Setup(r => r.AnyAsync(It.IsAny<Expression<Func<MasterData.Domain.Country, bool>>>(), It.IsAny<CancellationToken>()))
-            .Returns<Expression<Func<MasterData.Domain.Country, bool>>, CancellationToken>((expr, _) => new ValueTask<bool>(existing.AsQueryable().Any(expr)));
-        return repository;
-    }
-
-    private static Mock<IRepository<MasterData.Domain.Currency>> CurrencyRepository(params MasterData.Domain.Currency[] existing)
-    {
-        var repository = new Mock<IRepository<MasterData.Domain.Currency>>();
-        repository.Setup(r => r.AnyAsync(It.IsAny<Expression<Func<MasterData.Domain.Currency, bool>>>(), It.IsAny<CancellationToken>()))
-            .Returns<Expression<Func<MasterData.Domain.Currency, bool>>, CancellationToken>((expr, _) => new ValueTask<bool>(existing.AsQueryable().Any(expr)));
-        return repository;
-    }
-
-    private static Mock<IRepository<SaaS.Domain.Tenant>> TenantRepository(params SaaS.Domain.Tenant[] existing)
-    {
-        var repository = new Mock<IRepository<SaaS.Domain.Tenant>>();
-        repository.Setup(r => r.AnyAsync(It.IsAny<Expression<Func<SaaS.Domain.Tenant, bool>>>(), It.IsAny<CancellationToken>()))
-            .Returns<Expression<Func<SaaS.Domain.Tenant, bool>>, CancellationToken>((expr, _) => new ValueTask<bool>(existing.AsQueryable().Any(expr)));
-        return repository;
+        var sender = new Mock<ISender>();
+        sender.Setup(s => s.Send(It.IsAny<ExistsCurrencyQuery>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync((ExistsCurrencyQuery query, CancellationToken _) =>
+                new Result<bool>(HttpStatusCode.OK, currencyExists && query.Id != 999, null));
+        sender.Setup(s => s.Send(It.IsAny<ExistsCountryQuery>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync((ExistsCountryQuery query, CancellationToken _) =>
+                new Result<bool>(HttpStatusCode.OK, countryExists, null));
+        sender.Setup(s => s.Send(It.IsAny<TenantExistsQuery>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync((TenantExistsQuery query, CancellationToken _) =>
+                new Result<bool>(HttpStatusCode.OK, tenantExists, null));
+        return sender;
     }
 
     [Fact]
@@ -152,7 +147,7 @@ public class OrganizationCompanyBranchValidatorTests
     public async Task CreateCompany_DuplicateLegalName_IsInvalid()
     {
         var existing = new Company { Id = 1, LegalName = "ABC" };
-        var validator = new CreateCompanyCommandValidator(CompanyRepository(existing).Object, CountryRepository().Object, CurrencyRepository().Object, TenantRepository().Object);
+        var validator = new CreateCompanyCommandValidator(CompanyRepository(existing).Object, LookupSender().Object);
 
         var result = await validator.ValidateAsync(new CreateCompanyCommand { LegalName = "ABC" });
 
@@ -163,7 +158,7 @@ public class OrganizationCompanyBranchValidatorTests
     [Fact]
     public async Task CreateCompany_UnknownDefaultCurrency_IsInvalid()
     {
-        var validator = new CreateCompanyCommandValidator(CompanyRepository().Object, CountryRepository().Object, CurrencyRepository().Object, TenantRepository().Object);
+        var validator = new CreateCompanyCommandValidator(CompanyRepository().Object, LookupSender(currencyExists: false).Object);
 
         var result = await validator.ValidateAsync(new CreateCompanyCommand { LegalName = "New Co", DefaultCurrencyId = 999 });
 

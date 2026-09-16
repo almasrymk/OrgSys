@@ -2,6 +2,8 @@ namespace Inventory.Application.Transactions.Integration;
 
 using Accounting.Contracts.Postings;
 using Administration.Contracts.Preferences;
+using CommercialDocuments.Contracts.Invoices;
+using MasterData.Contracts.Currencies;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -58,8 +60,7 @@ public sealed class TransactionJournalPostingService(IServiceProvider provider)
             return;
         }
 
-        var currencyRepository = provider.GetRequiredService<IRepository<Currency>>();
-        var currency = await currencyRepository.GetByFilterAsync(e => e.IsDefault, "")
+        var currency = (await sender.Send(new GetDefaultCurrencyQuery())).Response
             ?? throw new InvalidOperationException("A default currency is required to create the transaction journal entry.");
 
         var lines = new List<AccountingPostingLine>
@@ -178,9 +179,9 @@ public sealed class TransactionJournalPostingService(IServiceProvider provider)
         string returnAccountKey,
         string defaultAccountKey)
     {
-        var invoiceRepository = provider.GetRequiredService<IRepository<Invoice>>();
-        var invoice = await invoiceRepository.GetByFilterAsync(e => e.TransactionId == transactionId, "");
-        return invoice?.TypeId == returnInvoiceTypeId ? returnAccountKey : defaultAccountKey;
+        var sender = provider.GetRequiredService<ISender>();
+        var invoice = (await sender.Send(new GetInvoiceByLinkedTransactionQuery(transactionId))).Response;
+        return invoice?.TypeId == (InvoiceTypeId)returnInvoiceTypeId ? returnAccountKey : defaultAccountKey;
     }
 
     private async Task<long> GetStockAccountIdAsync(long? stockId)

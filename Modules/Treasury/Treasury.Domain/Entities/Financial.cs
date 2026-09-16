@@ -7,20 +7,16 @@ namespace Treasury.Domain
         /// FK preserved via Fluent HasOne(typeof(Dealer)) in OrgContext.</summary>
         public virtual long? DealerId { get; set; }
 
-        [ForeignKey("PaymentType")]
+        /// <summary>Scalar-only MasterData PaymentType reference. FK preserved in OrgContext.</summary>
         public virtual long PaymentTypeId { get; set; }
-
-        public virtual PaymentType? PaymentType { get; set; }
 
         [ForeignKey("Outlay")]
         public virtual long? OutlayId { get; set; }
 
         public virtual Outlay? Outlay { get; set; }
 
-        [ForeignKey("CurrencyId")]
+        /// <summary>Scalar-only MasterData Currency reference. FK preserved in OrgContext.</summary>
         public long CurrencyId { get; set; }
-
-        public Currency? Currency { get; set; }
 
         [Column(TypeName = "decimal(18,2)")]
         public decimal Rate { get; set; }

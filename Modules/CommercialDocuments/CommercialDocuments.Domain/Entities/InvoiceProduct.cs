@@ -16,10 +16,8 @@
         // docs/modular-monolith-analysis.md §21.
         public virtual long ProductId { get; set; }
 
-        [ForeignKey("Unit")]
+        /// <summary>Scalar-only Catalog Unit reference. FK preserved in OrgContext.</summary>
         public virtual long UnitId { get; set; }
-
-        public virtual Unit? Unit { get; set; }
 
         public virtual long? StockId { get; set; }
 

@@ -1,5 +1,6 @@
 ﻿using Catalog.Application.Products.Commands;
 using Catalog.Application.Products.Queries;
+using Inventory.Application;
 using Inventory.Application.Products.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -11,7 +12,7 @@ namespace API.Controllers.Org.Setting
     public class ProductController(ISender sender) : BaseController<GetByIdProductQuery, SearchProductQuery , GetListProductQuery, CreateProductCommand, UpdateProductCommand, DeleteProductCommand, DeleteListProductCommand , GetMaxProductQuery , ProductDto>(sender)
     {
         [HttpGet("GetAllByBalance")]
-        public virtual async Task<ResultCollection<ProductDto>> GetAllByBalance(long StockId, DateTime date, CancellationToken cancellationToken)
+        public virtual async Task<ResultCollection<ProductBalanceDto>> GetAllByBalance(long StockId, DateTime date, CancellationToken cancellationToken)
         {
             return await Sender.Send(new GetListProductByBalanceQuery(StockId, date), cancellationToken);
         }

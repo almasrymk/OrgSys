@@ -1,0 +1,130 @@
+<app-page-header
+  [title]="isNew ? 'New Custody' : 'Custody'"
+  [breadcrumbs]="[{ label: 'Home', route: '/' }, { label: 'Advances', route: '/advances/custodies' }, { label: isNew ? 'New' : 'Detail' }]">
+</app-page-header>
+
+<form [formGroup]="form" (ngSubmit)="submit()" class="card">
+  <div class="card-body">
+    <div class="row" *ngIf="custody() as current">
+      <div class="col-md-4 mb-3">
+        <label class="form-group has-float-label mb-0">
+          <span>Status</span>
+          <input class="form-control" [value]="statusLabel[current.lifecycleStatus]" disabled />
+        </label>
+      </div>
+      <div class="col-md-4 mb-3">
+        <label class="form-group has-float-label mb-0">
+          <span>Outstanding</span>
+          <input class="form-control" [value]="current.outstandingAmount" disabled />
+        </label>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4 mb-3">
+        <label class="form-group has-float-label mb-0">
+          <span>Holder Id</span>
+          <input class="form-control" type="number" formControlName="holderId" />
+        </label>
+      </div>
+      <div class="col-md-8 mb-3">
+        <label class="form-group has-float-label mb-0">
+          <span>Purpose</span>
+          <input class="form-control" formControlName="purpose" />
+        </label>
+      </div>
+      <div class="col-md-4 mb-3">
+        <label class="form-group has-float-label mb-0">
+          <span>Currency</span>
+          <select class="form-control" formControlName="currencyId">
+            <option [ngValue]="0">Select</option>
+            <option *ngFor="let currency of currencies()" [ngValue]="currency.id">{{ currency.name }}</option>
+          </select>
+        </label>
+      </div>
+      <div class="col-md-4 mb-3">
+        <label class="form-group has-float-label mb-0">
+          <span>Rate</span>
+          <input class="form-control" type="number" formControlName="rate" />
+        </label>
+      </div>
+      <div class="col-md-4 mb-3">
+        <label class="form-group has-float-label mb-0">
+          <span>Issued amount</span>
+          <input class="form-control" type="number" formControlName="issuedAmount" />
+        </label>
+      </div>
+      <div class="col-md-4 mb-3">
+        <label class="form-group has-float-label mb-0">
+          <span>Due date</span>
+          <input class="form-control" type="date" formControlName="dueDate" />
+        </label>
+      </div>
+      <div class="col-md-4 mb-3">
+        <label class="form-group has-float-label mb-0">
+          <span>Code</span>
+          <input class="form-control" formControlName="code" />
+        </label>
+      </div>
+      <div class="col-md-12 mb-3">
+        <label class="form-group has-float-label mb-0">
+          <span>Notes</span>
+          <textarea class="form-control" formControlName="notes" rows="2"></textarea>
+        </label>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="!isNew">
+      <div class="col-md-6 mb-3">
+        <label class="form-group has-float-label mb-0">
+          <span>Financial account</span>
+          <select class="form-control" formControlName="financialAccountId">
+            <option [ngValue]="0">Select</option>
+            <option *ngFor="let account of financialAccounts()" [ngValue]="account.id">{{ account.name }}</option>
+          </select>
+        </label>
+      </div>
+      <div class="col-md-6 mb-3">
+        <label class="form-group has-float-label mb-0">
+          <span>Counter GL account Id</span>
+          <input class="form-control" type="number" formControlName="counterAccountId" />
+        </label>
+      </div>
+      <div class="col-md-4 mb-3">
+        <label class="form-group has-float-label mb-0">
+          <span>Settle amount</span>
+          <input class="form-control" type="number" formControlName="settleAmount" />
+        </label>
+      </div>
+      <div class="col-md-4 mb-3">
+        <label class="form-group has-float-label mb-0">
+          <span>Return amount</span>
+          <input class="form-control" type="number" formControlName="returnAmount" />
+        </label>
+      </div>
+      <div class="col-md-4 mb-3">
+        <label class="form-group has-float-label mb-0">
+          <span>Transfer to holder Id</span>
+          <input class="form-control" type="number" formControlName="toHolderId" />
+        </label>
+      </div>
+      <div class="col-md-12 mb-3">
+        <label class="form-group has-float-label mb-0">
+          <span>Transfer reason</span>
+          <input class="form-control" formControlName="transferReason" />
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="card-footer d-flex flex-wrap">
+    <button *ngIf="isNew" type="submit" class="btn btn-primary mr-2" [disabled]="saving()">Save draft</button>
+    <button *ngIf="custody()?.lifecycleStatus === CustodyStatus.Draft" type="button" class="btn btn-success mr-2" (click)="approve()">Approve</button>
+    <button *ngIf="custody()?.lifecycleStatus === CustodyStatus.Approved" type="button" class="btn btn-success mr-2" (click)="issue()">Issue</button>
+    <button *ngIf="custody()?.lifecycleStatus === CustodyStatus.Issued || custody()?.lifecycleStatus === CustodyStatus.PartiallySettled" type="button" class="btn btn-outline-primary mr-2" (click)="settle()">Settle</button>
+    <button *ngIf="custody()?.lifecycleStatus === CustodyStatus.Issued || custody()?.lifecycleStatus === CustodyStatus.PartiallySettled" type="button" class="btn btn-outline-primary mr-2" (click)="returnAmount()">Return</button>
+    <button *ngIf="custody()?.lifecycleStatus === CustodyStatus.Issued || custody()?.lifecycleStatus === CustodyStatus.PartiallySettled" type="button" class="btn btn-outline-secondary mr-2" (click)="transfer()">Transfer</button>
+    <button *ngIf="custody()?.lifecycleStatus === CustodyStatus.Settled" type="button" class="btn btn-outline-success mr-2" (click)="close()">Close</button>
+    <button *ngIf="custody()?.lifecycleStatus === CustodyStatus.Draft" type="button" class="btn btn-outline-warning mr-2" (click)="cancel()">Cancel</button>
+    <a class="btn btn-light" routerLink="/advances/custodies">Back</a>
+  </div>
+</form>

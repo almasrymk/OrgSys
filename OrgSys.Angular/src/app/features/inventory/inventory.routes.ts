@@ -53,6 +53,26 @@ export const INVENTORY_ROUTES: Routes = [
     path: 'receipts/new',
     loadComponent: () => import('./pages/receipts-form/receipts-form.component').then((m) => m.ReceiptsFormComponent),
   },
+  {
+    path: 'batches',
+    loadComponent: () =>
+      import('../../shared/components/crud-search-list/crud-search-list.component').then((m) => m.CrudSearchListComponent),
+    data: { title: 'Expiring Batches', entityRoute: 'InventoryBatches', listMode: 'action', action: 'Expiring', extraParams: { withinDays: 30 } },
+  },
+  {
+    path: 'serials',
+    loadComponent: () =>
+      import('../../shared/components/query-workspace/query-workspace.component').then((m) => m.QueryWorkspaceComponent),
+    data: {
+      title: 'Serial History',
+      entityRoute: 'InventorySerials',
+      action: 'History',
+      fields: [
+        { name: 'productId', label: 'Product Id', type: 'number' },
+        { name: 'serialNumber', label: 'Serial Number' },
+      ],
+    },
+  },
   ...movementRoutes(`movements/${INVENTORY_MOVEMENT_PATHS[1]}`, 1),
   ...movementRoutes(`movements/${INVENTORY_MOVEMENT_PATHS[2]}`, 2),
   ...movementRoutes(`movements/${INVENTORY_MOVEMENT_PATHS[3]}`, 3),

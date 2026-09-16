@@ -17,7 +17,7 @@ public partial class MappingProfile : Profile
             .ForMember(dest => dest.TypeId, opt => opt.MapFrom(src => (long)src.FinancialAccountType))
             .ForMember(dest => dest.AccountName, opt => opt.Ignore())
             .ForMember(dest => dest.AccountCode, opt => opt.Ignore())
-            .ForMember(dest => dest.CurrencyName, opt => opt.MapFrom(src => src.Currency != null ? src.Currency.Name : null))
+            .ForMember(dest => dest.CurrencyName, opt => opt.Ignore())
             .ForMember(dest => dest.BranchId, opt => opt.MapFrom(src => src.CashBox != null ? src.CashBox.BranchId : (src.BankAccount != null ? src.BankAccount.BranchId : null)))
             .ForMember(dest => dest.KeeperUserId, opt => opt.MapFrom(src => src.CashBox != null ? src.CashBox.KeeperUserId : null))
             .ForMember(dest => dest.BankId, opt => opt.MapFrom(src => src.BankAccount != null ? (long?)src.BankAccount.BankId : null))

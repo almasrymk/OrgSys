@@ -29,4 +29,32 @@ export const REPORTING_ROUTES: Routes = [
     path: 'sales/balance',
     loadComponent: () => import('./pages/sales-balance/sales-balance.component').then((m) => m.SalesBalanceComponent),
   },
+  {
+    path: 'projections/aging',
+    loadComponent: () =>
+      import('../../shared/components/query-workspace/query-workspace.component').then((m) => m.QueryWorkspaceComponent),
+    data: {
+      title: 'Customer Aging Projection',
+      entityRoute: 'ProjectionReport',
+      action: 'Aging',
+      fields: [
+        { name: 'customerId', label: 'Customer Id', type: 'number' },
+        { name: 'asOfDate', label: 'As of', type: 'date' },
+      ],
+    },
+  },
+  {
+    path: 'projections/sales-summary',
+    loadComponent: () =>
+      import('../../shared/components/query-workspace/query-workspace.component').then((m) => m.QueryWorkspaceComponent),
+    data: {
+      title: 'Sales Summary Projection',
+      entityRoute: 'ProjectionReport',
+      action: 'SalesSummary',
+      fields: [
+        { name: 'fromDate', label: 'From', type: 'date' },
+        { name: 'toDate', label: 'To', type: 'date' },
+      ],
+    },
+  },
 ];

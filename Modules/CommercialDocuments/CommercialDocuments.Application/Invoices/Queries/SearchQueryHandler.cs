@@ -9,6 +9,8 @@
     using MediatR;
     using System.Linq.Expressions;
     using Inventory.Contracts.Stocks;
+    using MasterData.Contracts.Currencies;
+    using MasterData.Contracts.Lookups;
 
     public sealed record SearchInvoiceQuery(string KeySearch, long ParentId, long TypeId, int Page , int PageSize) : ICommandPagination<InvoiceDto> ,ISearchQuery<ResultPagination<InvoiceDto>>;
 
@@ -51,6 +53,22 @@
                     invoice.DealerName = names.GetValueOrDefault(invoice.DealerId);
             }
 
+            var paymentTypeIds = result.Response.Select(e => e.PaymentTypeId).Distinct().ToList();
+            if (paymentTypeIds.Count > 0)
+            {
+                var names = (await sender.Send(new GetPaymentTypeNamesQuery(paymentTypeIds), cancellationToken)).Response ?? [];
+                foreach (var invoice in result.Response)
+                    invoice.PaymentTypeName = names.GetValueOrDefault(invoice.PaymentTypeId);
+            }
+
+            var currencyIds = result.Response.Select(e => e.CurrencyId).Distinct().ToList();
+            if (currencyIds.Count > 0)
+            {
+                var names = (await sender.Send(new GetCurrencyNamesQuery(currencyIds), cancellationToken)).Response ?? [];
+                foreach (var invoice in result.Response)
+                    invoice.CurrencyName = names.GetValueOrDefault(invoice.CurrencyId);
+            }
+
             return result;
         }
 
@@ -71,7 +89,7 @@
             // Stock and Transaction dropped: Stock is handled via the manual batch lookup above
             // (module-boundary reasons); Transaction was never actually read from the mapped DTO
             // (confirmed dead — docs/modular-monolith-analysis.md §21) so it is dropped outright.
-            return "PaymentType,Currency";
+            return string.Empty;
         }
 
         override public Func<IQueryable<CommercialDocuments.Domain.Invoice>, IOrderedQueryable<CommercialDocuments.Domain.Invoice>> CreateOrderBy(SearchInvoiceQuery request)

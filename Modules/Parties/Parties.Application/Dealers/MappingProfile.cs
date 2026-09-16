@@ -14,12 +14,12 @@ public partial class MappingProfile : Profile
         // through Accounting.Contracts.Accounts.GetAccountQuery/GetAccountLookupsQuery — no direct
         // reference to Accounting.Domain or Accounting.Application.
         CreateMap<Dealer, DealerDto>()
-        .ForMember(dest => dest.DealerGroupName, opt => opt.MapFrom(src => src.DealerGroup.Name))
-        .ForMember(dest => dest.CountryName, opt => opt.MapFrom(src => src.Country.Name))
-        .ForMember(dest => dest.CityName, opt => opt.MapFrom(src => src.City.Name))
+        .ForMember(dest => dest.DealerGroupName, opt => opt.MapFrom(src => src.DealerGroup != null ? src.DealerGroup.Name : null))
+        .ForMember(dest => dest.CountryName, opt => opt.Ignore())
+        .ForMember(dest => dest.CityName, opt => opt.Ignore())
         .ForMember(dest => dest.AccountCode, opt => opt.Ignore())
         .ForMember(dest => dest.AccountName, opt => opt.Ignore())
-        .ForMember(dest => dest.DistrictName, opt => opt.MapFrom(src => src.District.Name));
+        .ForMember(dest => dest.DistrictName, opt => opt.Ignore());
         CreateMap<DealerDto, Dealer>();
 
         CreateMap<Dealer, CreateDealerCommand>();

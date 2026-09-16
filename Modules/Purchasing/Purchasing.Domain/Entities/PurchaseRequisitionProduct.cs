@@ -38,10 +38,8 @@ namespace Purchasing.Domain
         // convention as CommercialDocuments.Domain.InvoiceProduct/Sales.Domain.OrderProduct.
         public virtual long ProductId { get; private set; }
 
-        [ForeignKey("Unit")]
+        /// <summary>Scalar-only Catalog Unit reference. FK preserved in OrgContext.</summary>
         public virtual long UnitId { get; private set; }
-
-        public virtual Unit? Unit { get; set; }
 
         [Column(TypeName = "decimal(18,2)")]
         public virtual decimal Quantity { get; private set; }

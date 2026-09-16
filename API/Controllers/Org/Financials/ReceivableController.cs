@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Receivables.Contracts.Balances;
 using Receivables.Contracts.Receivables;
@@ -14,6 +15,7 @@ namespace API.Controllers.Org.Financials;
 /// Opening balance posting lives on <c>FinancialController</c>
 /// ("Financial/Receivable/OpeningBalance") alongside the unified Financial/Journal Receipt path —
 /// not duplicated here.</summary>
+[Authorize]
 [Route("[controller]")]
 [ApiController]
 public sealed class ReceivableController(ISender sender) : ControllerBase

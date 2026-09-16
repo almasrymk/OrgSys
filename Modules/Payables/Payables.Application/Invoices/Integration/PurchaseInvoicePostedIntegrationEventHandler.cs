@@ -16,10 +16,13 @@ using Payables.Domain.Repositories;
 /// </summary>
 public sealed class PurchaseInvoicePostedIntegrationEventHandler(
     IPayableRepository payableRepository,
-    IUnitOfWork unitOfWork) : INotificationHandler<PurchaseInvoicePostedIntegrationEvent>
+    IUnitOfWork unitOfWork,
+    IInboxStore inbox) : INotificationHandler<PurchaseInvoicePostedIntegrationEvent>
 {
     public async Task Handle(PurchaseInvoicePostedIntegrationEvent notification, CancellationToken cancellationToken)
     {
+        if (!await inbox.TryClaimAsync(notification.EventId, nameof(PurchaseInvoicePostedIntegrationEventHandler), cancellationToken))
+            return;
         // Duplicate delivery of the same posted invoice must create exactly one Payable — the DB
         // unique index on (SourceDocumentType, SourceDocumentId, SupplierId) is the final safety
         // net; this check is the fast path that avoids hitting it in the common case.

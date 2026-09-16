@@ -10,36 +10,20 @@
     <ProjectReference Include="../Inventory.Domain/Inventory.Domain.csproj" />
     <ProjectReference Include="../Inventory.Contracts/Inventory.Contracts.csproj" />
     <ProjectReference Include="../../../BuildingBlocks/OrgSys.EventBus/OrgSys.EventBus.csproj" />
-    <ProjectReference Include="../../MasterData/MasterData.Application/MasterData.Application.csproj" />
-    <!-- Product/ProductDto, Classification/Unit and their DTOs, now owned by Catalog (relocated
-         from Inventory.Application/MasterData.Application — see
-         docs/catalog/catalog-target-architecture.md §4). -->
-    <ProjectReference Include="../../Catalog/Catalog.Application/Catalog.Application.csproj" />
-    <!-- Delete/Update/GetById/Search Transaction handlers read the linked Invoice directly
-         (IRepository<Invoice>), now owned by CommercialDocuments (relocated from Sales.Domain —
-         see docs/commercial-documents-module.md). -->
-    <ProjectReference Include="../../CommercialDocuments/CommercialDocuments.Domain/CommercialDocuments.Domain.csproj" />
-    <!-- InvoiceJournalPostingService posts Transaction journal entries, and the Transaction
-         Get/Search handlers resolve JournalId/JournalCode, through Accounting.Contracts only
-         (PostAccountingDocumentCommand/DeleteAccountingDocumentJournalCommand/
-         SetAccountingDocumentJournalStatusCommand/GetAccountingDocumentJournalQuery) — replaces the
-         legacy root Application project's TransactionJournalIntegration, see the
-         legacy-Application-elimination report. Preference lookups go through
-         Administration.Contracts (GetPreferenceValueQuery / GetPreferenceValuesQuery). -->
+    <ProjectReference Include="../../Catalog/Catalog.Contracts/Catalog.Contracts.csproj" />
+    <ProjectReference Include="../../CommercialDocuments/CommercialDocuments.Contracts/CommercialDocuments.Contracts.csproj" />
     <ProjectReference Include="../../Accounting/Accounting.Contracts/Accounting.Contracts.csproj" />
     <ProjectReference Include="../../Administration/Administration.Contracts/Administration.Contracts.csproj" />
     <ProjectReference Include="../../Parties/Parties.Contracts/Parties.Contracts.csproj" />
     <ProjectReference Include="../../Organization/Organization.Contracts/Organization.Contracts.csproj" />
+    <ProjectReference Include="../../SaaS/SaaS.Contracts/SaaS.Contracts.csproj" />
+    <ProjectReference Include="../../MasterData/MasterData.Contracts/MasterData.Contracts.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="MediatR" Version="14.1.0" />
     <PackageReference Include="AutoMapper" Version="16.1.1" />
     <PackageReference Include="FluentValidation" Version="12.1.1" />
-    <!-- Only for catching Microsoft.EntityFrameworkCore.DbUpdateConcurrencyException in
-         ReserveStockCommandHandler's retry loop (brief §15) — the retry-on-conflict flow is a
-         business rule (reservations must not oversell under concurrency), not persistence wiring,
-         so it belongs in Application even though the exception type is EF's. -->
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.9" />
   </ItemGroup>
 

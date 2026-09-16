@@ -46,6 +46,10 @@ export const PermissionKeys = {
   TransactionsAll: 'Transactions.All',
   InventoryAll: 'Inventory.All',
   InventoryView: 'Inventory.View',
+  UsersAll: 'Users.All',
+  UsersView: 'Users.View',
+  RolesAll: 'Roles.All',
+  RolesView: 'Roles.View',
 } as const;
 
 export function permissionList(...keys: string[]): string {

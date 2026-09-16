@@ -1,5 +1,3 @@
 global using OrgSys.SharedKernel;
 global using Treasury.Domain;
 global using Treasury.Application;
-global using MasterData.Domain;
-global using CommercialDocuments.Domain;

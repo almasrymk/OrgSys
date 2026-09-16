@@ -1,9 +1,8 @@
 ﻿namespace Inventory.Application.Transactions.Commands
 {
-    using OrgSys.SharedKernel;
-    using OrgSys.SharedKernel;
-    using OrgSys.SharedKernel;
     using AutoMapper;
+    using CommercialDocuments.Contracts.Invoices;
+    using MediatR;
     using System.Linq.Expressions;
     using Microsoft.Extensions.DependencyInjection;
     using Inventory.Application.Transactions.Integration;
@@ -19,9 +18,9 @@
 
         public override async Task<bool> RemoveDetails(DeleteListTransactionCommand request)
         {
-            var invoiceRepository = _provider.GetRequiredService<IRepository<CommercialDocuments.Domain.Invoice>>();
-            var sourceInvoices = await invoiceRepository.GetListByFilterAsync(e => e.TransactionId.HasValue && request.Ids.Contains(e.TransactionId.Value));
-            if (sourceInvoices?.Any() == true)
+            var invoices = (await _provider.GetRequiredService<ISender>()
+                .Send(new GetInvoicesByLinkedTransactionsQuery(request.Ids))).Response ?? [];
+            if (invoices.Count > 0)
                 throw new InvalidOperationException("Transactions created from invoices cannot be deleted");
 
             var transactions = await _Repository.GetListByFilterAsync(t => request.Ids.Contains(t.Id), "TransactionProducts");

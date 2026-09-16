@@ -37,12 +37,33 @@
     <!-- OrganizationCompanyBranchValidatorTests exercises Organization.Application directly. -->
     <ProjectReference Include="..\..\Modules\Organization\Organization.Application\Organization.Application.csproj" />
     <ProjectReference Include="..\..\Modules\Organization\Organization.Domain\Organization.Domain.csproj" />
-    <ProjectReference Include="..\..\Modules\MasterData\MasterData.Domain\MasterData.Domain.csproj" />
     <!-- AssignCustomerRole/AssignSupplierRoleCommandHandlerTests exercise Parties.Application directly. -->
     <ProjectReference Include="..\..\Modules\Parties\Parties.Application\Parties.Application.csproj" />
     <ProjectReference Include="..\..\Modules\Parties\Parties.Domain\Parties.Domain.csproj" />
-    <!-- PasswordHasherTests exercise Administration.Application.Security. -->
+    <!-- PasswordHasherTests / AccessQueryHandlerTests exercise Administration. -->
     <ProjectReference Include="..\..\Modules\Administration\Administration.Application\Administration.Application.csproj" />
+    <ProjectReference Include="..\..\Modules\Administration\Administration.Contracts\Administration.Contracts.csproj" />
+    <ProjectReference Include="..\..\Modules\Administration\Administration.Domain\Administration.Domain.csproj" />
+    <!-- CustodyCommandHandlerTests exercise Advances.Application. -->
+    <ProjectReference Include="..\..\Modules\Advances\Advances.Application\Advances.Application.csproj" />
+    <!-- ConfirmSalesOrderCommandHandlerTests / EndToEndFlowTests exercise Sales.Application. -->
+    <ProjectReference Include="..\..\Modules\Sales\Sales.Application\Sales.Application.csproj" />
+    <ProjectReference Include="..\..\Modules\Inventory\Inventory.Application\Inventory.Application.csproj" />
+    <ProjectReference Include="..\..\Modules\Inventory\Inventory.Domain\Inventory.Domain.csproj" />
+    <ProjectReference Include="..\..\Modules\Workflow\Workflow.Application\Workflow.Application.csproj" />
+    <ProjectReference Include="..\..\Modules\Workflow\Workflow.Contracts\Workflow.Contracts.csproj" />
+    <ProjectReference Include="..\..\Modules\Workflow\Workflow.Domain\Workflow.Domain.csproj" />
+    <ProjectReference Include="..\..\Modules\Budgeting\Budgeting.Application\Budgeting.Application.csproj" />
+    <ProjectReference Include="..\..\Modules\Reporting\Reporting.Application\Reporting.Application.csproj" />
+    <ProjectReference Include="..\..\Modules\Reporting\Reporting.Contracts\Reporting.Contracts.csproj" />
+    <ProjectReference Include="..\..\Modules\Budgeting\Budgeting.Contracts\Budgeting.Contracts.csproj" />
+    <ProjectReference Include="..\..\Modules\Budgeting\Budgeting.Domain\Budgeting.Domain.csproj" />
+    <ProjectReference Include="..\..\Modules\Tax\Tax.Application\Tax.Application.csproj" />
+    <ProjectReference Include="..\..\Modules\Tax\Tax.Contracts\Tax.Contracts.csproj" />
+    <ProjectReference Include="..\..\Modules\Tax\Tax.Domain\Tax.Domain.csproj" />
+    <ProjectReference Include="..\..\Modules\FixedAssets\FixedAssets.Application\FixedAssets.Application.csproj" />
+    <ProjectReference Include="..\..\Modules\FixedAssets\FixedAssets.Contracts\FixedAssets.Contracts.csproj" />
+    <ProjectReference Include="..\..\Modules\FixedAssets\FixedAssets.Domain\FixedAssets.Domain.csproj" />
   </ItemGroup>
 
 </Project>

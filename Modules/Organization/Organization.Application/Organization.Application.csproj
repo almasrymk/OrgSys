@@ -10,17 +10,8 @@
     <ProjectReference Include="../Organization.Domain/Organization.Domain.csproj" />
     <ProjectReference Include="../Organization.Contracts/Organization.Contracts.csproj" />
     <ProjectReference Include="../../../BuildingBlocks/OrgSys.EventBus/OrgSys.EventBus.csproj" />
-    <!-- Company/Branch/OrganizationSettings validators check CountryId/DefaultCurrencyId existence
-         via IRepository<MasterData.Domain.Country/Currency> directly — accepted Application-layer
-         exception (see Tests/Architecture.Tests/ModuleLayerDependencyTests.cs
-         AcceptedApplicationDomainExceptions, ("Organization", "MasterData", ...)); Currency/Country
-         ownership stays in MasterData this pass — see docs/organization/organization-target-architecture.md. -->
-    <ProjectReference Include="../../MasterData/MasterData.Domain/MasterData.Domain.csproj" />
-    <!-- Company.TenantId existence check — same Application-layer-only exception shape as the
-         MasterData reference above (see Tests/Architecture.Tests/ModuleLayerDependencyTests.cs
-         AcceptedApplicationDomainExceptions, ("Organization", "SaaS", ...)); Company.TenantId stays
-         scalar-only (no Domain navigation) — see docs/architecture/adr/tenant-vs-company.md. -->
-    <ProjectReference Include="../../SaaS/SaaS.Domain/SaaS.Domain.csproj" />
+    <ProjectReference Include="../../MasterData/MasterData.Contracts/MasterData.Contracts.csproj" />
+    <ProjectReference Include="../../SaaS/SaaS.Contracts/SaaS.Contracts.csproj" />
   </ItemGroup>
 
   <ItemGroup>

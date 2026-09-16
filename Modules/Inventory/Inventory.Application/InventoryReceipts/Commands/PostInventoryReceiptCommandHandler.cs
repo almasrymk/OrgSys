@@ -1,6 +1,8 @@
 namespace Inventory.Application.InventoryReceipts.Commands;
 
 using Inventory.Application.Postings;
+using Inventory.Contracts.Receipts;
+using OrgSys.SharedKernel;
 using System.Net;
 
 public sealed record PostInventoryReceiptCommand(long InventoryReceiptId) : ICommand;
@@ -8,7 +10,8 @@ public sealed record PostInventoryReceiptCommand(long InventoryReceiptId) : ICom
 public sealed class PostInventoryReceiptCommandHandler(
     IRepository<InventoryReceipt> receiptRepository,
     InventoryLedgerPoster poster,
-    IUnitOfWork unitOfWork) : ICommandHandler<PostInventoryReceiptCommand>
+    IUnitOfWork unitOfWork,
+    IIntegrationEventPublisher integrationEventPublisher) : ICommandHandler<PostInventoryReceiptCommand>
 {
     public async Task<Result> Handle(PostInventoryReceiptCommand request, CancellationToken cancellationToken)
     {
@@ -23,6 +26,15 @@ public sealed class PostInventoryReceiptCommandHandler(
             await poster.PostReceiptAsync(receipt, cancellationToken);
 
             await receiptRepository.UpdateAsync(receipt);
+            await integrationEventPublisher.PublishAsync(
+                new GoodsReceiptPostedIntegrationEvent(
+                    receipt.Id,
+                    receipt.StockId,
+                    receipt.SourceId,
+                    DateTime.UtcNow,
+                    receipt.PurchaseOrderId,
+                    receipt.Lines.Select(l => new GoodsReceiptPostedLine(l.ProductId, l.UnitId, l.Quantity)).ToList()),
+                cancellationToken);
             await unitOfWork.SaveChangeAsync(cancellationToken);
             await unitOfWork.CommitAsync();
             return new Result(HttpStatusCode.OK, null);

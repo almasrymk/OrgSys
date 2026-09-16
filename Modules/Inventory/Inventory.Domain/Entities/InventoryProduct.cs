@@ -11,15 +11,10 @@
 
         public virtual Inventory? Inventory { get; set; }
 
-        [ForeignKey("Product")]
+        /// <summary>Scalar-only Catalog Product/Unit references. FKs preserved in OrgContext.</summary>
         public virtual long ProductId { get; set; }
 
-        public virtual Product? Product { get; set; }
-
-        [ForeignKey("Unit")]
         public virtual long UnitId { get; set; }
-
-        public virtual Unit? Unit { get; set; }
 
         [Column(TypeName = "decimal(18,2)")]
         public virtual decimal CalcBalance { get; set; }

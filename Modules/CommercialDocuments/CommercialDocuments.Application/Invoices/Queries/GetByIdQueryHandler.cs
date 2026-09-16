@@ -10,6 +10,9 @@
     using MediatR;
     using System.Linq.Expressions;
     using Catalog.Contracts.Products;
+    using Catalog.Contracts.Units;
+    using MasterData.Contracts.Currencies;
+    using MasterData.Contracts.Lookups;
 
     public sealed record GetByIdInvoiceQuery(long Id) : ICommand<InvoiceDto> , IGetByIdQuery<Result<InvoiceDto>>;
 
@@ -34,14 +37,23 @@
                 var productIds = lineItems.Select(e => e.ProductId).Distinct().ToList();
                 var namesResult = await sender.Send(new GetProductNamesQuery(productIds), cancellationToken);
                 var names = namesResult.Response ?? [];
+                var unitIds = lineItems.Select(e => e.UnitId).Distinct().ToList();
+                var unitNames = (await sender.Send(new GetUnitNamesQuery(unitIds), cancellationToken)).Response ?? [];
                 foreach (var line in lineItems)
                 {
                     line.ProductName = names.GetValueOrDefault(line.ProductId);
+                    line.UnitName = unitNames.GetValueOrDefault(line.UnitId);
                 }
             }
 
             var dealerNames = (await sender.Send(new GetDealerNamesQuery([result.Response.DealerId]), cancellationToken)).Response ?? [];
             result.Response.DealerName = dealerNames.GetValueOrDefault(result.Response.DealerId);
+
+            var paymentTypes = (await sender.Send(new GetPaymentTypeNamesQuery([result.Response.PaymentTypeId]), cancellationToken)).Response ?? [];
+            result.Response.PaymentTypeName = paymentTypes.GetValueOrDefault(result.Response.PaymentTypeId);
+
+            var currencies = (await sender.Send(new GetCurrencyNamesQuery([result.Response.CurrencyId]), cancellationToken)).Response ?? [];
+            result.Response.CurrencyName = currencies.GetValueOrDefault(result.Response.CurrencyId);
 
             return result;
         }

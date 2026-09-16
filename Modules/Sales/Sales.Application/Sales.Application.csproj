@@ -10,7 +10,8 @@
     <ProjectReference Include="../Sales.Domain/Sales.Domain.csproj" />
     <ProjectReference Include="../Sales.Contracts/Sales.Contracts.csproj" />
     <ProjectReference Include="../../../BuildingBlocks/OrgSys.EventBus/OrgSys.EventBus.csproj" />
-    <ProjectReference Include="../../MasterData/MasterData.Application/MasterData.Application.csproj" />
+    <ProjectReference Include="../../Catalog/Catalog.Contracts/Catalog.Contracts.csproj" />
+    <ProjectReference Include="../../Inventory/Inventory.Contracts/Inventory.Contracts.csproj" />
   </ItemGroup>
 
   <ItemGroup>

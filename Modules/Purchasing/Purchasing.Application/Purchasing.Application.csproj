@@ -16,6 +16,9 @@
          CommercialDocuments or Sales needed. See docs/commercial-documents-module.md. -->
     <ProjectReference Include="../../CommercialDocuments/CommercialDocuments.Contracts/CommercialDocuments.Contracts.csproj" />
     <ProjectReference Include="../../Parties/Parties.Contracts/Parties.Contracts.csproj" />
+    <ProjectReference Include="../../Catalog/Catalog.Contracts/Catalog.Contracts.csproj" />
+    <ProjectReference Include="../../Workflow/Workflow.Contracts/Workflow.Contracts.csproj" />
+    <ProjectReference Include="../../Inventory/Inventory.Contracts/Inventory.Contracts.csproj" />
   </ItemGroup>
 
   <ItemGroup>

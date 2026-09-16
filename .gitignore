@@ -348,3 +348,6 @@ healthchecksdb
 # editing tracked appsettings.json.
 **/appsettings.Local.json
 **/appsettings.*.Local.json
+
+# Archives (Stage 18). Do not commit Domain.zip or other dump zips.
+*.zip

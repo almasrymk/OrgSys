@@ -20,6 +20,11 @@
     <PackageReference Include="MediatR" Version="14.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.9" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.9" />
+    <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="10.0.9" />
+    <PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.12.0" />
+    <PackageReference Include="OpenTelemetry.Extensions.Hosting" Version="1.12.0" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.12.0" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.Http" Version="1.12.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.9">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -46,6 +51,10 @@
     <ProjectReference Include="..\Modules\Advances\Advances.Infrastructure\Advances.Infrastructure.csproj" />
     <ProjectReference Include="..\Modules\Reporting\Reporting.Infrastructure\Reporting.Infrastructure.csproj" />
     <ProjectReference Include="..\Modules\SaaS\SaaS.Infrastructure\SaaS.Infrastructure.csproj" />
+    <ProjectReference Include="..\Modules\Workflow\Workflow.Infrastructure\Workflow.Infrastructure.csproj" />
+    <ProjectReference Include="..\Modules\Budgeting\Budgeting.Infrastructure\Budgeting.Infrastructure.csproj" />
+    <ProjectReference Include="..\Modules\Tax\Tax.Infrastructure\Tax.Infrastructure.csproj" />
+    <ProjectReference Include="..\Modules\FixedAssets\FixedAssets.Infrastructure\FixedAssets.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

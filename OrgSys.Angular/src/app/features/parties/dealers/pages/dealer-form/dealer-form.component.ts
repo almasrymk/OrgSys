@@ -17,12 +17,13 @@ import { DealerGroup } from '../../../dealer-groups/models/dealer-group.model';
 import { DealerGroupService } from '../../../dealer-groups/services/dealer-group.service';
 import { DealerType } from '../../models/dealer.model';
 import { DealerService } from '../../services/dealer.service';
+import { DealerPartyDetailsComponent } from './dealer-party-details.component';
 
 /** Replaces Areas/Setting/Views/Dealer/Save.cshtml. */
 @Component({
   selector: 'app-dealer-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule, PageHeaderComponent],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, PageHeaderComponent, DealerPartyDetailsComponent],
   templateUrl: './dealer-form.component.html',
 })
 export class DealerFormComponent {

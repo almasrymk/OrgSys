@@ -41,9 +41,6 @@ public partial class MappingProfile : Profile
         opt => opt.MapFrom(src => src.InvoiceProductList)); 
 
         CreateMap<InvoiceProductDto, InvoiceProduct>();
-
-        CreateMap<Unit, UnitDto>();
-        CreateMap<UnitDto, Unit>();           
         #endregion
     }
 }

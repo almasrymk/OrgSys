@@ -4,6 +4,7 @@ namespace Purchasing.Application.PurchaseRequisitions.Commands
     using OrgSys.SharedKernel;
     using Purchasing.Domain.Exceptions;
     using System.Net;
+    using Workflow.Contracts.Approvals;
 
     /// <summary>Moves a draft requisition (Status.New) into Status.UnderReview — "submitted",
     /// ready for someone with permission to convert it into a PurchaseOrder. No approval gate is
@@ -11,7 +12,7 @@ namespace Purchasing.Application.PurchaseRequisitions.Commands
     /// as no longer a private draft.</summary>
     public sealed record SubmitPurchaseRequisitionCommand(long Id) : IRequest<Result>;
 
-    public sealed class SubmitCommandHandler(IUnitOfWork unitOfWork, IRepository<PurchaseRequisition> repository)
+    public sealed class SubmitCommandHandler(IUnitOfWork unitOfWork, IRepository<PurchaseRequisition> repository, ISender sender)
         : IRequestHandler<SubmitPurchaseRequisitionCommand, Result>
     {
         public async Task<Result> Handle(SubmitPurchaseRequisitionCommand request, CancellationToken cancellationToken)
@@ -32,6 +33,16 @@ namespace Purchasing.Application.PurchaseRequisitions.Commands
             await repository.UpdateAsync(requisition);
             if (await unitOfWork.SaveChangeAsync(cancellationToken) <= 0)
                 return new Result(HttpStatusCode.InternalServerError, [new Error("Error saving changes")]);
+
+            var start = await sender.Send(
+                new StartApprovalCommand(
+                    WorkflowDocumentTypeCode.PurchaseRequisition,
+                    requisition.Id,
+                    requisition.CreateUserId,
+                    DateTime.UtcNow),
+                cancellationToken);
+            if (start.StatusCode != HttpStatusCode.OK)
+                return start;
 
             return new Result(HttpStatusCode.OK, null);
         }

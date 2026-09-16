@@ -32,7 +32,14 @@
     <ProjectReference Include="../../Modules/Purchasing/Purchasing.Domain/Purchasing.Domain.csproj" />
     <ProjectReference Include="../../Modules/Receivables/Receivables.Domain/Receivables.Domain.csproj" />
     <ProjectReference Include="../../Modules/Payables/Payables.Domain/Payables.Domain.csproj" />
+    <ProjectReference Include="../../Modules/Advances/Advances.Domain/Advances.Domain.csproj" />
     <ProjectReference Include="../../Modules/SaaS/SaaS.Domain/SaaS.Domain.csproj" />
+    <ProjectReference Include="../../Modules/Workflow/Workflow.Domain/Workflow.Domain.csproj" />
+    <ProjectReference Include="../../Modules/Budgeting/Budgeting.Domain/Budgeting.Domain.csproj" />
+    <ProjectReference Include="../../Modules/Tax/Tax.Domain/Tax.Domain.csproj" />
+    <ProjectReference Include="../../Modules/FixedAssets/FixedAssets.Domain/FixedAssets.Domain.csproj" />
+    <ProjectReference Include="../../BuildingBlocks/OrgSys.EventBus/OrgSys.EventBus.csproj" />
+    <ProjectReference Include="../../Modules/Reporting/Reporting.Infrastructure/Reporting.Infrastructure.csproj" />
     <!-- Seed orchestration only (IDataSeederCoordinator calls into each module's own seeder) —
          no business/seed data lives in this project itself. -->
     <ProjectReference Include="../../Modules/MasterData/MasterData.Infrastructure/MasterData.Infrastructure.csproj" />

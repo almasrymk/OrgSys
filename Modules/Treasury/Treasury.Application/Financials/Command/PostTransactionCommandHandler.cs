@@ -2,6 +2,7 @@ namespace Treasury.Application.Financials.Commands
 {
     using Accounting.Contracts.Accounts;
     using Accounting.Contracts.Postings;
+    using CommercialDocuments.Contracts.Invoices;
     using MediatR;
     using OrgSys.SharedKernel;
     using System.Net;
@@ -15,7 +16,6 @@ namespace Treasury.Application.Financials.Commands
         IRepository<Treasury.Domain.FinancialAccount> accountRepository,
         IRepository<FinancialType> typeRepository,
         IRepository<Treasury.Domain.Financial> transactionRepository,
-        IRepository<CommercialDocuments.Domain.Invoice> invoiceRepository,
         IReceivableAccountValidator referenceValidator,
         IIntegrationEventPublisher integrationEventPublisher) : ICommandHandler<PostFinancialTransactionCommand>
     {
@@ -226,8 +226,8 @@ namespace Treasury.Application.Financials.Commands
                 {
                     if (dto.ReferenceId is not > 0)
                         return "An invoice reference is required.";
-                    var invoice = await invoiceRepository.GetByFilterAsync(e => e.Id == dto.ReferenceId, string.Empty);
-                    if (invoice is null || invoice.Status == Status.Deleted || invoice.Hide)
+                    var invoice = (await sender.Send(new GetInvoiceReferenceQuery(dto.ReferenceId.Value), cancellationToken)).Response;
+                    if (invoice is null || invoice.IsDeleted)
                         return "The selected invoice does not exist.";
                     // No linked GL account on an invoice reference — CounterAccountId stays client-supplied.
                     return null;

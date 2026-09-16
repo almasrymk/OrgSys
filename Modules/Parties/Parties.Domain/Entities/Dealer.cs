@@ -44,20 +44,12 @@
 
         public virtual DealerGroup? DealerGroup { get; set; }
 
-        [ForeignKey("Country")]
+        /// <summary>Scalar-only MasterData geo references. FKs preserved in OrgContext.</summary>
         public virtual long? CountryId { get; set; }
 
-        public virtual Country? Country { get; set; }
-
-        [ForeignKey("City")]
         public virtual long? CityId { get; set; }
 
-        public virtual City? City { get; set; }
-
-        [ForeignKey("District")]
         public virtual long? DistrictId { get; set; }
-
-        public virtual District? District { get; set; }
 
         // No navigation to Accounting.Domain.Account — GeneralLedger bounded-context isolation
         // forbids Parties.Domain from referencing Accounting.Domain (see the GeneralLedger

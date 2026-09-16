@@ -1,6 +1,8 @@
 ﻿namespace CommercialDocuments.Application.Invoices.Queries
 {
     using Parties.Contracts.Dealers;
+    using MasterData.Contracts.Currencies;
+    using MasterData.Contracts.Lookups;
     using OrgSys.SharedKernel;
     using AutoMapper;
     using MediatR;
@@ -36,6 +38,22 @@
                 var names = (await sender.Send(new GetDealerNamesQuery(dealerIds), cancellationToken)).Response ?? [];
                 foreach (var dto in result.Response)
                     dto.DealerName = names.GetValueOrDefault(dto.DealerId);
+            }
+
+            var paymentTypeIds = result.Response.Select(e => e.PaymentTypeId).Distinct().ToList();
+            if (paymentTypeIds.Count > 0)
+            {
+                var names = (await sender.Send(new GetPaymentTypeNamesQuery(paymentTypeIds), cancellationToken)).Response ?? [];
+                foreach (var dto in result.Response)
+                    dto.PaymentTypeName = names.GetValueOrDefault(dto.PaymentTypeId);
+            }
+
+            var currencyIds = result.Response.Select(e => e.CurrencyId).Distinct().ToList();
+            if (currencyIds.Count > 0)
+            {
+                var names = (await sender.Send(new GetCurrencyNamesQuery(currencyIds), cancellationToken)).Response ?? [];
+                foreach (var dto in result.Response)
+                    dto.CurrencyName = names.GetValueOrDefault(dto.CurrencyId);
             }
 
             return result;

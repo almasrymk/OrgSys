@@ -22,6 +22,10 @@
             <option *ngFor="let dealer of dealers()" [ngValue]="dealer.id">{{ dealer.name }}</option>
           </select>
         </div>
+        <div class="form-group col-12 col-md-4">
+          <label>Purchase order Id (optional)</label>
+          <input type="number" class="form-control" formControlName="purchaseOrderId" min="0" step="1" />
+        </div>
         <div class="form-group col-12">
           <label>Notes</label>
           <textarea class="form-control" rows="2" formControlName="notes"></textarea>

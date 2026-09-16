@@ -11,19 +11,11 @@
 
         public virtual Bank? Bank { get; set; }
 
-        [ForeignKey("Country")]
+        /// <summary>Scalar-only MasterData geo references. FKs preserved in OrgContext.</summary>
         public virtual long CountryId { get; set; }
 
-        public virtual Country? Country { get; set; }
-
-        [ForeignKey("City")]
         public virtual long CityId { get; set; }
 
-        public virtual City? City { get; set; }
-
-        [ForeignKey("District")]
         public virtual long DistrictId { get; set; }
-
-        public virtual District? District { get; set; }
     }
 }

@@ -24,6 +24,10 @@ namespace API.Authentication
 
             if (user.BranchId.HasValue)
                 claims.Add(new Claim("branchId", user.BranchId.Value.ToString()));
+            if (user.CompanyId.HasValue)
+                claims.Add(new Claim("companyId", user.CompanyId.Value.ToString()));
+            if (user.TenantId.HasValue)
+                claims.Add(new Claim("tenantId", user.TenantId.Value.ToString()));
 
             if (user.Permissions is not null)
             {

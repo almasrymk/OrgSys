@@ -1,9 +1,8 @@
 ﻿namespace Inventory.Application.Transactions.Commands
 {
-    using OrgSys.SharedKernel;
-    using OrgSys.SharedKernel;
-    using OrgSys.SharedKernel;
     using AutoMapper;
+    using CommercialDocuments.Contracts.Invoices;
+    using MediatR;
     using Microsoft.Extensions.DependencyInjection;
     using System.Linq.Expressions;
     using Inventory.Application.Transactions.Integration;
@@ -26,9 +25,9 @@
             if (sourceTransaction?.InventoryId is > 0)
                 throw new InvalidOperationException("A transaction created from an inventory cannot be deleted");
 
-            var sourceInvoice = await _provider.GetRequiredService<IRepository<CommercialDocuments.Domain.Invoice>>()
-                .GetByFilterAsync(e => e.TransactionId == request.Id, string.Empty);
-            if (sourceInvoice != null)
+            var sourceInvoice = await _provider.GetRequiredService<ISender>()
+                .Send(new GetInvoiceByLinkedTransactionQuery(request.Id));
+            if (sourceInvoice.Response != null)
                 throw new InvalidOperationException("A transaction created from an invoice cannot be deleted");
 
           var transactionProducts =  await _Repository.GetByFilterAsync(t => t.Id == request.Id, "TransactionProducts");

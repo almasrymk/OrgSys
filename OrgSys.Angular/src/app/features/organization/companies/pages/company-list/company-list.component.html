@@ -1,0 +1,61 @@
+<app-page-header title="Companies" [breadcrumbs]="[{ label: 'Home', route: '/' }, { label: 'Organization' }, { label: 'Companies' }]">
+  <div class="d-flex justify-content-between align-items-center flex-wrap">
+    <a routerLink="new" class="btn btn-outline-primary">
+      <i class="bi bi-plus-lg"></i> Add
+    </a>
+
+    <div class="search-text" style="max-width: 260px;">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Search..."
+        [ngModel]="keySearch()"
+        (ngModelChange)="keySearch.set($event)"
+        (keyup.enter)="onSearch()"
+      />
+    </div>
+  </div>
+</app-page-header>
+
+<div class="card">
+  <div class="card-body p-0">
+    <table class="table table-hover m-0" *ngIf="companies().length; else emptyState">
+      <thead>
+        <tr>
+          <th class="text-center" style="width: 60px;">#</th>
+          <th>Legal name</th>
+          <th>Trade name</th>
+          <th>Tax number</th>
+          <th style="width: 160px;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let company of companies(); let i = index" [class.text-muted]="company.status === Status.Cancel">
+          <td class="text-center">{{ (page() - 1) * 20 + i + 1 }}</td>
+          <td>{{ company.legalName }}</td>
+          <td>{{ company.tradeName }}</td>
+          <td>{{ company.taxRegistrationNumber }}</td>
+          <td class="text-right">
+            <a [routerLink]="['/organization/settings']" [queryParams]="{ companyId: company.id }" class="mr-2" title="Settings">
+              <i class="bi bi-gear text-primary"></i>
+            </a>
+            <a [routerLink]="[company.id, 'edit']" class="mr-2">
+              <i class="bi bi-pencil-square text-success"></i>
+            </a>
+            <a href="javascript:void(0)" (click)="onDelete(company)">
+              <i class="bi bi-trash text-danger"></i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <ng-template #emptyState>
+      <p class="text-center text-muted p-4 mb-0">{{ loading() ? 'Loading...' : 'No companies found.' }}</p>
+    </ng-template>
+  </div>
+</div>
+
+<div class="mt-3">
+  <app-pagination [page]="page()" [pageCount]="pageCount()" (pageChange)="onPageChange($event)"></app-pagination>
+</div>

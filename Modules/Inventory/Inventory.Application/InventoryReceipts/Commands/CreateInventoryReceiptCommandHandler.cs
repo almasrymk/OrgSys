@@ -6,7 +6,7 @@ public sealed record InventoryReceiptLineInput(long ProductId, long UnitId, deci
 
 public sealed record CreateInventoryReceiptCommand(
     long StockId, long? LocationId, long? DealerId, DateTime Date, long CreateUserId, long? BranchId,
-    string? Notes, List<InventoryReceiptLineInput> Lines) : ICommand<long>;
+    string? Notes, List<InventoryReceiptLineInput> Lines, long? PurchaseOrderId = null) : ICommand<long>;
 
 public sealed class CreateInventoryReceiptCommandHandler(
     IRepository<InventoryReceipt> receiptRepository, IUnitOfWork unitOfWork) : ICommandHandler<CreateInventoryReceiptCommand, long>
@@ -17,7 +17,8 @@ public sealed class CreateInventoryReceiptCommandHandler(
         {
             var receipt = InventoryReceipt.Create(
                 request.StockId, request.LocationId, request.DealerId, request.Date,
-                request.CreateUserId, DateTime.Now, request.BranchId, request.Notes);
+                request.CreateUserId, DateTime.Now, request.BranchId, request.Notes,
+                purchaseOrderId: request.PurchaseOrderId);
 
             foreach (var line in request.Lines)
                 receipt.AddLine(line.ProductId, line.UnitId, line.Quantity, line.UnitCost, line.BatchId, line.Notes);

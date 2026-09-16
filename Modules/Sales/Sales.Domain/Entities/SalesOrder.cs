@@ -19,6 +19,7 @@ public class SalesOrder : MovementModel
     private readonly List<IDomainEvent> _domainEvents = [];
     private readonly List<SalesOrderLine> _lines = [];
 
+    [NotMapped]
     public IReadOnlyList<IDomainEvent> DomainEvents => _domainEvents.AsReadOnly();
 
     public void ClearDomainEvents() => _domainEvents.Clear();

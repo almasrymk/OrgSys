@@ -18,6 +18,6 @@ public sealed class GetInventoryReceiptByIdQueryHandler(IRepository<InventoryRec
 
     internal static InventoryReceiptDto ToDto(InventoryReceipt receipt) => new(
         receipt.Id, receipt.Code, receipt.StockId, receipt.LocationId, receipt.DealerId, receipt.Date,
-        receipt.LifecycleStatus, receipt.Notes,
+        receipt.LifecycleStatus, receipt.Notes, receipt.PurchaseOrderId,
         receipt.Lines.Select(l => new InventoryReceiptLineDto(l.Id, l.RowNumber, l.ProductId, l.UnitId, l.Quantity, l.UnitCost, l.BatchId, l.Notes)).ToList());
 }

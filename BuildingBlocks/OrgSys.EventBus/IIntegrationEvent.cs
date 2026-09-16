@@ -12,11 +12,15 @@ namespace OrgSys.SharedKernel;
 /// </summary>
 public interface IIntegrationEvent : INotification
 {
+    Guid EventId { get; }
+
     DateTime OccurredOn { get; }
 }
 
-/// <summary>Convenience base implementing <see cref="OccurredOn"/>.</summary>
+/// <summary>Convenience base implementing <see cref="OccurredOn"/> and <see cref="EventId"/>.</summary>
 public abstract record IntegrationEvent : IIntegrationEvent
 {
-    public DateTime OccurredOn { get; } = DateTime.UtcNow;
+    public Guid EventId { get; init; } = Guid.NewGuid();
+
+    public DateTime OccurredOn { get; init; } = DateTime.UtcNow;
 }

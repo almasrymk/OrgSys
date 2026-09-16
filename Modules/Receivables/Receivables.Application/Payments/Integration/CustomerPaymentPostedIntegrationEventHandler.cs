@@ -16,10 +16,13 @@ using Treasury.Contracts.IntegrationEvents;
 public sealed class CustomerPaymentPostedIntegrationEventHandler(
     IReceivableRepository receivableRepository,
     IPaymentApplicationRepository paymentApplicationRepository,
-    IUnitOfWork unitOfWork) : INotificationHandler<CustomerPaymentPostedIntegrationEvent>
+    IUnitOfWork unitOfWork,
+    IInboxStore inbox) : INotificationHandler<CustomerPaymentPostedIntegrationEvent>
 {
     public async Task Handle(CustomerPaymentPostedIntegrationEvent notification, CancellationToken cancellationToken)
     {
+        if (!await inbox.TryClaimAsync(notification.EventId, nameof(CustomerPaymentPostedIntegrationEventHandler), cancellationToken))
+            return;
         // Duplicate delivery of the same posted receipt must apply exactly once (brief §32) — the DB
         // unique index on PaymentApplication.SourceFinancialId is the final safety net.
         if (await paymentApplicationRepository.ExistsForSourceFinancialAsync(notification.FinancialId, cancellationToken))

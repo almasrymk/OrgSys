@@ -1,6 +1,7 @@
 namespace Parties.Application.Dealers.Queries
 {
     using Accounting.Contracts.Accounts;
+    using MasterData.Contracts.Lookups;
     using OrgSys.SharedKernel;
     using AutoMapper;
     using MediatR;
@@ -24,18 +25,39 @@ namespace Parties.Application.Dealers.Queries
         // migration report) — AccountCode/AccountName are patched in below instead.
         public override string CreateInclude()
         {
-            return "DealerGroup,Country,City,District";
+            return "DealerGroup";
         }
 
         public override async Task<Result<DealerDto>> Handle(GetByIdDealerQuery request, CancellationToken cancellationToken)
         {
             var result = await base.Handle(request, cancellationToken);
 
-            if (result.Response?.AccountId is > 0)
+            if (result.Response is null)
+                return result;
+
+            if (result.Response.AccountId is > 0)
             {
                 var account = (await sender.Send(new GetAccountQuery(result.Response.AccountId.Value), cancellationToken)).Response;
                 result.Response.AccountCode = account?.Code;
                 result.Response.AccountName = account?.Name;
+            }
+
+            if (result.Response.CountryId is > 0)
+            {
+                var names = (await sender.Send(new GetCountryNamesQuery([result.Response.CountryId.Value]), cancellationToken)).Response ?? [];
+                result.Response.CountryName = names.GetValueOrDefault(result.Response.CountryId.Value);
+            }
+
+            if (result.Response.CityId is > 0)
+            {
+                var names = (await sender.Send(new GetCityNamesQuery([result.Response.CityId.Value]), cancellationToken)).Response ?? [];
+                result.Response.CityName = names.GetValueOrDefault(result.Response.CityId.Value);
+            }
+
+            if (result.Response.DistrictId is > 0)
+            {
+                var names = (await sender.Send(new GetDistrictNamesQuery([result.Response.DistrictId.Value]), cancellationToken)).Response ?? [];
+                result.Response.DistrictName = names.GetValueOrDefault(result.Response.DistrictId.Value);
             }
 
             return result;

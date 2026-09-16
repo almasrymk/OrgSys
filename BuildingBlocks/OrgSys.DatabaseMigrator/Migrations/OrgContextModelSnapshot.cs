@@ -696,6 +696,288 @@ namespace OrgSys.DatabaseMigrator.Migrations
                     b.ToTable("User");
                 });
 
+            modelBuilder.Entity("Advances.Domain.Custody", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long?>("BranchId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("CreateUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("CurrencyId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DueDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("HasJournal")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<long>("HolderId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("IssueDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("IssuedAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long?>("IssuingFinancialTransactionId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("LifecycleStatus")
+                        .HasColumnType("int");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifyDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("ModifyUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<decimal>("OutstandingAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Posted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Purpose")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<decimal>("Rate")
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<long?>("ReturnFinancialTransactionId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("ReturnedAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<bool>("Review")
+                        .HasColumnType("bit");
+
+                    b.Property<decimal>("SettledAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long?>("ShiftId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CurrencyId");
+
+                    b.ToTable("Custody");
+                });
+
+            modelBuilder.Entity("Advances.Domain.CustodyHandover", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("ApprovedByUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("CustodyId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("FromHolderId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Reason")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("ToHolderId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("TransferDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("TransferredAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustodyId");
+
+                    b.ToTable("CustodyHandover");
+                });
+
+            modelBuilder.Entity("Budgeting.Domain.Budget", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("DepartmentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("FiscalYearId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("PeriodEnd")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("PeriodStart")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DepartmentId");
+
+                    b.HasIndex("FiscalYearId");
+
+                    b.ToTable("Budget");
+                });
+
+            modelBuilder.Entity("Budgeting.Domain.BudgetLine", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("AccountId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long>("BudgetId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccountId");
+
+                    b.HasIndex("BudgetId");
+
+                    b.ToTable("BudgetLine");
+                });
+
             modelBuilder.Entity("Catalog.Domain.Brand", b =>
                 {
                     b.Property<long>("Id")
@@ -1531,6 +1813,198 @@ namespace OrgSys.DatabaseMigrator.Migrations
                     b.ToTable("InvoiceType");
                 });
 
+            modelBuilder.Entity("FixedAssets.Domain.DepreciationEntry", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long>("AssetId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("JournalId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("PeriodMonth")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PeriodYear")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("PostedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssetId", "PeriodYear", "PeriodMonth")
+                        .IsUnique();
+
+                    b.ToTable("DepreciationEntry");
+                });
+
+            modelBuilder.Entity("FixedAssets.Domain.FixedAsset", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<decimal>("AccumulatedDepreciation")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("AcquisitionCost")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("AcquisitionDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("BranchId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("CategoryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("CurrencyId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("LifecycleStatus")
+                        .HasColumnType("int");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("ResidualValue")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("UsefulLifeMonths")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("CurrencyId");
+
+                    b.ToTable("FixedAsset");
+                });
+
+            modelBuilder.Entity("FixedAssets.Domain.FixedAssetCategory", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("AccumulatedDepreciationAccountId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("AssetAccountId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("DepreciationExpenseAccountId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("ResidualPercent")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("UsefulLifeMonths")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccumulatedDepreciationAccountId");
+
+                    b.HasIndex("AssetAccountId");
+
+                    b.HasIndex("DepreciationExpenseAccountId");
+
+                    b.ToTable("FixedAssetCategory");
+                });
+
             modelBuilder.Entity("Inventory.Domain.Inventory", b =>
                 {
                     b.Property<long>("Id")
@@ -2140,6 +2614,9 @@ namespace OrgSys.DatabaseMigrator.Migrations
                     b.Property<bool>("Posted")
                         .HasColumnType("bit");
 
+                    b.Property<long?>("PurchaseOrderId")
+                        .HasColumnType("bigint");
+
                     b.Property<bool>("Review")
                         .HasColumnType("bit");
 
@@ -2166,6 +2643,8 @@ namespace OrgSys.DatabaseMigrator.Migrations
                     b.HasIndex("DealerId");
 
                     b.HasIndex("LocationId");
+
+                    b.HasIndex("PurchaseOrderId");
 
                     b.HasIndex("StockId");
 
@@ -3443,6 +3922,116 @@ namespace OrgSys.DatabaseMigrator.Migrations
                     b.ToTable("ReferenceType");
                 });
 
+            modelBuilder.Entity("OrgSys.Messaging.InboxMessage", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<Guid>("EventId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("HandlerName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("ProcessedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EventId", "HandlerName")
+                        .IsUnique();
+
+                    b.ToTable("InboxMessage");
+                });
+
+            modelBuilder.Entity("OrgSys.Messaging.OutboxMessage", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Error")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<Guid>("EventId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("EventType")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("OccurredOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Payload")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ProcessedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("OutboxMessage");
+                });
+
             modelBuilder.Entity("Organization.Domain.Branch", b =>
                 {
                     b.Property<long>("Id")
@@ -3571,6 +4160,52 @@ namespace OrgSys.DatabaseMigrator.Migrations
                     b.HasIndex("TenantId");
 
                     b.ToTable("Company");
+                });
+
+            modelBuilder.Entity("Organization.Domain.Department", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("CompanyId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.ToTable("Department");
                 });
 
             modelBuilder.Entity("Organization.Domain.OrganizationSettings", b =>
@@ -4897,6 +5532,112 @@ namespace OrgSys.DatabaseMigrator.Migrations
                     b.ToTable("Receivable");
                 });
 
+            modelBuilder.Entity("Reporting.Infrastructure.Projections.CustomerAgingReadModel", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("CustomerId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("InvoiceDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("InvoiceId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("OriginalAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("OutstandingAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InvoiceId")
+                        .IsUnique();
+
+                    b.ToTable("CustomerAgingReadModel");
+                });
+
+            modelBuilder.Entity("Reporting.Infrastructure.Projections.SalesSummaryReadModel", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long?>("BranchId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("InvoiceCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("NetAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("SummaryDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SummaryDate", "BranchId");
+
+                    b.ToTable("SalesSummaryReadModel");
+                });
+
             modelBuilder.Entity("SaaS.Domain.Feature", b =>
                 {
                     b.Property<long>("Id")
@@ -5179,6 +5920,532 @@ namespace OrgSys.DatabaseMigrator.Migrations
                         .IsUnique();
 
                     b.ToTable("Tenant");
+                });
+
+            modelBuilder.Entity("Sales.Domain.Quotation", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long?>("BranchId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("ConvertedToSalesOrderId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("CreateUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("CurrencyId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("CustomerId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("DiscountAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<bool>("HasJournal")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("LifecycleStatus")
+                        .HasColumnType("int");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifyDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("ModifyUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Posted")
+                        .HasColumnType("bit");
+
+                    b.Property<decimal>("Rate")
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<bool>("Review")
+                        .HasColumnType("bit");
+
+                    b.Property<long?>("ShiftId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Subtotal")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("TaxAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("TotalAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("ValidUntil")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CurrencyId");
+
+                    b.ToTable("SalesQuotation");
+                });
+
+            modelBuilder.Entity("Sales.Domain.QuotationLine", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("DiscountAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("LineTotal")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("ProductName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<decimal>("Quantity")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long>("QuotationId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("RequestedDeliveryDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("TaxAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("UnitId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("UnitPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("QuotationId");
+
+                    b.HasIndex("UnitId");
+
+                    b.ToTable("SalesQuotationLine");
+                });
+
+            modelBuilder.Entity("Sales.Domain.SalesOrder", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long?>("BranchId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("CreateUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("CurrencyId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("CustomerId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("DiscountAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<bool>("HasJournal")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("LifecycleStatus")
+                        .HasColumnType("int");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifyDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("ModifyUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Posted")
+                        .HasColumnType("bit");
+
+                    b.Property<decimal>("Rate")
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<DateTime?>("RequestedDeliveryDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Review")
+                        .HasColumnType("bit");
+
+                    b.Property<long?>("ShiftId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("SourceQuotationId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Subtotal")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("TaxAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("TotalAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CurrencyId");
+
+                    b.ToTable("SalesOrder");
+                });
+
+            modelBuilder.Entity("Sales.Domain.SalesOrderLine", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<decimal>("CancelledQuantity")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("DeliveredQuantity")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("DiscountAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("LineTotal")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<decimal>("OrderedQuantity")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("ProductName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<DateTime?>("RequestedDeliveryDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("ReturnedQuantity")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long>("SalesOrderId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("TaxAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("UnitId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("UnitPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("SalesOrderId");
+
+                    b.HasIndex("UnitId");
+
+                    b.ToTable("SalesOrderLine");
+                });
+
+            modelBuilder.Entity("Tax.Domain.InvoiceTaxSnapshot", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CapturedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("CurrencyId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("Discount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("DiscountType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ExternalReference")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("InvoiceId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("InvoiceNumber")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<long>("InvoiceTypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Net")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SubmissionChannel")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SubmissionError")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<int>("SubmissionStatus")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("TaxAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("TaxInput")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("TaxType")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Total")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CurrencyId");
+
+                    b.HasIndex("InvoiceId")
+                        .IsUnique();
+
+                    b.ToTable("InvoiceTaxSnapshot");
+                });
+
+            modelBuilder.Entity("Tax.Domain.InvoiceTaxSnapshotLine", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Net")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("Quantity")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long>("SnapshotId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Tax")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Total")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SnapshotId");
+
+                    b.ToTable("InvoiceTaxSnapshotLine");
                 });
 
             modelBuilder.Entity("Treasury.Domain.Bank", b =>
@@ -5879,6 +7146,113 @@ namespace OrgSys.DatabaseMigrator.Migrations
                     b.ToTable("Outlay");
                 });
 
+            modelBuilder.Entity("Workflow.Domain.ApprovalDecision", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("ApprovalRequestId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("ApproverUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Comment")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<DateTime>("DecidedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsApproved")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApprovalRequestId");
+
+                    b.ToTable("ApprovalDecision");
+                });
+
+            modelBuilder.Entity("Workflow.Domain.ApprovalRequest", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CodeNumber")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("DocumentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("DocumentType")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Hide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("LifecycleStatus")
+                        .HasColumnType("int");
+
+                    b.Property<string>("MaskText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ParentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("RequestedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("RequestedByUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("TypeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ApprovalRequest");
+                });
+
             modelBuilder.Entity("Accounting.Domain.Account", b =>
                 {
                     b.HasOne("Accounting.Domain.AccountType", "AccountType")
@@ -5999,7 +7373,7 @@ namespace OrgSys.DatabaseMigrator.Migrations
 
             modelBuilder.Entity("Administration.Domain.User", b =>
                 {
-                    b.HasOne("Organization.Domain.Branch", "Branch")
+                    b.HasOne("Organization.Domain.Branch", null)
                         .WithMany()
                         .HasForeignKey("BranchId");
 
@@ -6009,9 +7383,57 @@ namespace OrgSys.DatabaseMigrator.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Branch");
-
                     b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("Advances.Domain.Custody", b =>
+                {
+                    b.HasOne("MasterData.Domain.Currency", null)
+                        .WithMany()
+                        .HasForeignKey("CurrencyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Advances.Domain.CustodyHandover", b =>
+                {
+                    b.HasOne("Advances.Domain.Custody", "Custody")
+                        .WithMany("Handovers")
+                        .HasForeignKey("CustodyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Custody");
+                });
+
+            modelBuilder.Entity("Budgeting.Domain.Budget", b =>
+                {
+                    b.HasOne("Organization.Domain.Department", null)
+                        .WithMany()
+                        .HasForeignKey("DepartmentId");
+
+                    b.HasOne("Accounting.Domain.FiscalYear", null)
+                        .WithMany()
+                        .HasForeignKey("FiscalYearId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Budgeting.Domain.BudgetLine", b =>
+                {
+                    b.HasOne("Accounting.Domain.Account", null)
+                        .WithMany()
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Budgeting.Domain.Budget", "Budget")
+                        .WithMany("Lines")
+                        .HasForeignKey("BudgetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Budget");
                 });
 
             modelBuilder.Entity("Catalog.Domain.PriceListEntry", b =>
@@ -6053,15 +7475,13 @@ namespace OrgSys.DatabaseMigrator.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Parties.Domain.Dealer", "Dealer")
+                    b.HasOne("Parties.Domain.Dealer", null)
                         .WithMany()
                         .HasForeignKey("DealerId");
 
                     b.Navigation("Brand");
 
                     b.Navigation("Classification");
-
-                    b.Navigation("Dealer");
                 });
 
             modelBuilder.Entity("Catalog.Domain.ProductPropertyElement", b =>
@@ -6127,13 +7547,13 @@ namespace OrgSys.DatabaseMigrator.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MasterData.Domain.Currency", "Currency")
+                    b.HasOne("MasterData.Domain.Currency", null)
                         .WithMany()
                         .HasForeignKey("CurrencyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Parties.Domain.Dealer", "Dealer")
+                    b.HasOne("Parties.Domain.Dealer", null)
                         .WithMany()
                         .HasForeignKey("DealerId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -6143,7 +7563,7 @@ namespace OrgSys.DatabaseMigrator.Migrations
                         .WithMany()
                         .HasForeignKey("ModifyUserId");
 
-                    b.HasOne("MasterData.Domain.PaymentType", "PaymentType")
+                    b.HasOne("MasterData.Domain.PaymentType", null)
                         .WithMany()
                         .HasForeignKey("PaymentTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -6160,12 +7580,6 @@ namespace OrgSys.DatabaseMigrator.Migrations
                     b.HasOne("Inventory.Domain.Transaction", null)
                         .WithMany()
                         .HasForeignKey("TransactionId");
-
-                    b.Navigation("Currency");
-
-                    b.Navigation("Dealer");
-
-                    b.Navigation("PaymentType");
                 });
 
             modelBuilder.Entity("CommercialDocuments.Domain.InvoiceProduct", b =>
@@ -6186,15 +7600,60 @@ namespace OrgSys.DatabaseMigrator.Migrations
                         .WithMany()
                         .HasForeignKey("StockId");
 
-                    b.HasOne("Catalog.Domain.Unit", "Unit")
+                    b.HasOne("Catalog.Domain.Unit", null)
                         .WithMany()
                         .HasForeignKey("UnitId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Invoice");
+                });
 
-                    b.Navigation("Unit");
+            modelBuilder.Entity("FixedAssets.Domain.DepreciationEntry", b =>
+                {
+                    b.HasOne("FixedAssets.Domain.FixedAsset", "Asset")
+                        .WithMany("Entries")
+                        .HasForeignKey("AssetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Asset");
+                });
+
+            modelBuilder.Entity("FixedAssets.Domain.FixedAsset", b =>
+                {
+                    b.HasOne("FixedAssets.Domain.FixedAssetCategory", null)
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MasterData.Domain.Currency", null)
+                        .WithMany()
+                        .HasForeignKey("CurrencyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("FixedAssets.Domain.FixedAssetCategory", b =>
+                {
+                    b.HasOne("Accounting.Domain.Account", null)
+                        .WithMany()
+                        .HasForeignKey("AccumulatedDepreciationAccountId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Accounting.Domain.Account", null)
+                        .WithMany()
+                        .HasForeignKey("AssetAccountId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Accounting.Domain.Account", null)
+                        .WithMany()
+                        .HasForeignKey("DepreciationExpenseAccountId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Inventory.Domain.Inventory", b =>
@@ -6238,7 +7697,7 @@ namespace OrgSys.DatabaseMigrator.Migrations
                         .WithMany()
                         .HasForeignKey("LocationId");
 
-                    b.HasOne("Catalog.Domain.Product", "Product")
+                    b.HasOne("Catalog.Domain.Product", null)
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -6254,20 +7713,16 @@ namespace OrgSys.DatabaseMigrator.Migrations
 
                     b.Navigation("Location");
 
-                    b.Navigation("Product");
-
                     b.Navigation("Stock");
                 });
 
             modelBuilder.Entity("Inventory.Domain.InventoryBatch", b =>
                 {
-                    b.HasOne("Catalog.Domain.Product", "Product")
+                    b.HasOne("Catalog.Domain.Product", null)
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Inventory.Domain.InventoryCostLayer", b =>
@@ -6276,7 +7731,7 @@ namespace OrgSys.DatabaseMigrator.Migrations
                         .WithMany()
                         .HasForeignKey("BatchId");
 
-                    b.HasOne("Catalog.Domain.Product", "Product")
+                    b.HasOne("Catalog.Domain.Product", null)
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -6290,14 +7745,12 @@ namespace OrgSys.DatabaseMigrator.Migrations
 
                     b.Navigation("Batch");
 
-                    b.Navigation("Product");
-
                     b.Navigation("Stock");
                 });
 
             modelBuilder.Entity("Inventory.Domain.InventoryIssue", b =>
                 {
-                    b.HasOne("Parties.Domain.Dealer", "Dealer")
+                    b.HasOne("Parties.Domain.Dealer", null)
                         .WithMany()
                         .HasForeignKey("DealerId");
 
@@ -6310,8 +7763,6 @@ namespace OrgSys.DatabaseMigrator.Migrations
                         .HasForeignKey("StockId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Dealer");
 
                     b.Navigation("Location");
 
@@ -6330,7 +7781,7 @@ namespace OrgSys.DatabaseMigrator.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Catalog.Domain.Product", "Product")
+                    b.HasOne("Catalog.Domain.Product", null)
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -6340,7 +7791,7 @@ namespace OrgSys.DatabaseMigrator.Migrations
                         .WithMany()
                         .HasForeignKey("SerialId");
 
-                    b.HasOne("Catalog.Domain.Unit", "Unit")
+                    b.HasOne("Catalog.Domain.Unit", null)
                         .WithMany()
                         .HasForeignKey("UnitId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -6350,11 +7801,7 @@ namespace OrgSys.DatabaseMigrator.Migrations
 
                     b.Navigation("InventoryIssue");
 
-                    b.Navigation("Product");
-
                     b.Navigation("Serial");
-
-                    b.Navigation("Unit");
                 });
 
             modelBuilder.Entity("Inventory.Domain.InventoryProduct", b =>
@@ -6365,28 +7812,24 @@ namespace OrgSys.DatabaseMigrator.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Catalog.Domain.Product", "Product")
+                    b.HasOne("Catalog.Domain.Product", null)
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Catalog.Domain.Unit", "Unit")
+                    b.HasOne("Catalog.Domain.Unit", null)
                         .WithMany()
                         .HasForeignKey("UnitId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Inventory");
-
-                    b.Navigation("Product");
-
-                    b.Navigation("Unit");
                 });
 
             modelBuilder.Entity("Inventory.Domain.InventoryReceipt", b =>
                 {
-                    b.HasOne("Parties.Domain.Dealer", "Dealer")
+                    b.HasOne("Parties.Domain.Dealer", null)
                         .WithMany()
                         .HasForeignKey("DealerId");
 
@@ -6394,13 +7837,16 @@ namespace OrgSys.DatabaseMigrator.Migrations
                         .WithMany()
                         .HasForeignKey("LocationId");
 
+                    b.HasOne("Purchasing.Domain.PurchaseOrder", null)
+                        .WithMany()
+                        .HasForeignKey("PurchaseOrderId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("Inventory.Domain.Stock", "Stock")
                         .WithMany()
                         .HasForeignKey("StockId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Dealer");
 
                     b.Navigation("Location");
 
@@ -6419,13 +7865,13 @@ namespace OrgSys.DatabaseMigrator.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Catalog.Domain.Product", "Product")
+                    b.HasOne("Catalog.Domain.Product", null)
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Catalog.Domain.Unit", "Unit")
+                    b.HasOne("Catalog.Domain.Unit", null)
                         .WithMany()
                         .HasForeignKey("UnitId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -6434,10 +7880,6 @@ namespace OrgSys.DatabaseMigrator.Migrations
                     b.Navigation("Batch");
 
                     b.Navigation("InventoryReceipt");
-
-                    b.Navigation("Product");
-
-                    b.Navigation("Unit");
                 });
 
             modelBuilder.Entity("Inventory.Domain.InventorySerial", b =>
@@ -6454,7 +7896,7 @@ namespace OrgSys.DatabaseMigrator.Migrations
                         .WithMany()
                         .HasForeignKey("CurrentStockId");
 
-                    b.HasOne("Catalog.Domain.Product", "Product")
+                    b.HasOne("Catalog.Domain.Product", null)
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -6465,8 +7907,6 @@ namespace OrgSys.DatabaseMigrator.Migrations
                     b.Navigation("CurrentLocation");
 
                     b.Navigation("CurrentStock");
-
-                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Inventory.Domain.ProductRecipe", b =>
@@ -6484,13 +7924,11 @@ namespace OrgSys.DatabaseMigrator.Migrations
                         .WithMany()
                         .HasForeignKey("AccountId");
 
-                    b.HasOne("Organization.Domain.Branch", "Branch")
+                    b.HasOne("Organization.Domain.Branch", null)
                         .WithMany()
                         .HasForeignKey("BranchId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Branch");
                 });
 
             modelBuilder.Entity("Inventory.Domain.StockAdjustment", b =>
@@ -6518,7 +7956,7 @@ namespace OrgSys.DatabaseMigrator.Migrations
                         .WithMany()
                         .HasForeignKey("BatchId");
 
-                    b.HasOne("Catalog.Domain.Product", "Product")
+                    b.HasOne("Catalog.Domain.Product", null)
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -6530,7 +7968,7 @@ namespace OrgSys.DatabaseMigrator.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Catalog.Domain.Unit", "Unit")
+                    b.HasOne("Catalog.Domain.Unit", null)
                         .WithMany()
                         .HasForeignKey("UnitId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -6538,11 +7976,7 @@ namespace OrgSys.DatabaseMigrator.Migrations
 
                     b.Navigation("Batch");
 
-                    b.Navigation("Product");
-
                     b.Navigation("StockAdjustment");
-
-                    b.Navigation("Unit");
                 });
 
             modelBuilder.Entity("Inventory.Domain.StockReservation", b =>
@@ -6555,7 +7989,7 @@ namespace OrgSys.DatabaseMigrator.Migrations
                         .WithMany()
                         .HasForeignKey("LocationId");
 
-                    b.HasOne("Catalog.Domain.Product", "Product")
+                    b.HasOne("Catalog.Domain.Product", null)
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -6574,8 +8008,6 @@ namespace OrgSys.DatabaseMigrator.Migrations
                     b.Navigation("Batch");
 
                     b.Navigation("Location");
-
-                    b.Navigation("Product");
 
                     b.Navigation("Serial");
 
@@ -6607,7 +8039,7 @@ namespace OrgSys.DatabaseMigrator.Migrations
                         .WithMany()
                         .HasForeignKey("BatchId");
 
-                    b.HasOne("Catalog.Domain.Product", "Product")
+                    b.HasOne("Catalog.Domain.Product", null)
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -6619,7 +8051,7 @@ namespace OrgSys.DatabaseMigrator.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Catalog.Domain.Unit", "Unit")
+                    b.HasOne("Catalog.Domain.Unit", null)
                         .WithMany()
                         .HasForeignKey("UnitId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -6627,11 +8059,7 @@ namespace OrgSys.DatabaseMigrator.Migrations
 
                     b.Navigation("Batch");
 
-                    b.Navigation("Product");
-
                     b.Navigation("StockTransfer");
-
-                    b.Navigation("Unit");
                 });
 
             modelBuilder.Entity("Inventory.Domain.Transaction", b =>
@@ -6646,7 +8074,7 @@ namespace OrgSys.DatabaseMigrator.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Parties.Domain.Dealer", "Dealer")
+                    b.HasOne("Parties.Domain.Dealer", null)
                         .WithMany()
                         .HasForeignKey("DealerId");
 
@@ -6670,8 +8098,6 @@ namespace OrgSys.DatabaseMigrator.Migrations
                         .WithMany()
                         .HasForeignKey("ToStockId");
 
-                    b.Navigation("Dealer");
-
                     b.Navigation("Inventory");
 
                     b.Navigation("Stock");
@@ -6681,7 +8107,7 @@ namespace OrgSys.DatabaseMigrator.Migrations
 
             modelBuilder.Entity("Inventory.Domain.TransactionProduct", b =>
                 {
-                    b.HasOne("Catalog.Domain.Product", "Product")
+                    b.HasOne("Catalog.Domain.Product", null)
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -6697,19 +8123,15 @@ namespace OrgSys.DatabaseMigrator.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Catalog.Domain.Unit", "Unit")
+                    b.HasOne("Catalog.Domain.Unit", null)
                         .WithMany()
                         .HasForeignKey("UnitId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Product");
-
                     b.Navigation("Stock");
 
                     b.Navigation("Transaction");
-
-                    b.Navigation("Unit");
                 });
 
             modelBuilder.Entity("Inventory.Domain.WarehouseLocation", b =>
@@ -6780,6 +8202,17 @@ namespace OrgSys.DatabaseMigrator.Migrations
                         .HasForeignKey("TenantId");
                 });
 
+            modelBuilder.Entity("Organization.Domain.Department", b =>
+                {
+                    b.HasOne("Organization.Domain.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Company");
+                });
+
             modelBuilder.Entity("Organization.Domain.OrganizationSettings", b =>
                 {
                     b.HasOne("Organization.Domain.Company", "Company")
@@ -6820,11 +8253,11 @@ namespace OrgSys.DatabaseMigrator.Migrations
                         .WithMany()
                         .HasForeignKey("AccountId");
 
-                    b.HasOne("MasterData.Domain.City", "City")
+                    b.HasOne("MasterData.Domain.City", null)
                         .WithMany()
                         .HasForeignKey("CityId");
 
-                    b.HasOne("MasterData.Domain.Country", "Country")
+                    b.HasOne("MasterData.Domain.Country", null)
                         .WithMany()
                         .HasForeignKey("CountryId");
 
@@ -6832,26 +8265,20 @@ namespace OrgSys.DatabaseMigrator.Migrations
                         .WithMany()
                         .HasForeignKey("DealerGroupId");
 
-                    b.HasOne("MasterData.Domain.District", "District")
+                    b.HasOne("MasterData.Domain.District", null)
                         .WithMany()
                         .HasForeignKey("DistrictId");
 
-                    b.Navigation("City");
-
-                    b.Navigation("Country");
-
                     b.Navigation("DealerGroup");
-
-                    b.Navigation("District");
                 });
 
             modelBuilder.Entity("Parties.Domain.PartyAddress", b =>
                 {
-                    b.HasOne("MasterData.Domain.City", "City")
+                    b.HasOne("MasterData.Domain.City", null)
                         .WithMany()
                         .HasForeignKey("CityId");
 
-                    b.HasOne("MasterData.Domain.Country", "Country")
+                    b.HasOne("MasterData.Domain.Country", null)
                         .WithMany()
                         .HasForeignKey("CountryId");
 
@@ -6861,17 +8288,11 @@ namespace OrgSys.DatabaseMigrator.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MasterData.Domain.District", "District")
+                    b.HasOne("MasterData.Domain.District", null)
                         .WithMany()
                         .HasForeignKey("DistrictId");
 
-                    b.Navigation("City");
-
-                    b.Navigation("Country");
-
                     b.Navigation("Dealer");
-
-                    b.Navigation("District");
                 });
 
             modelBuilder.Entity("Parties.Domain.PartyContact", b =>
@@ -6913,7 +8334,7 @@ namespace OrgSys.DatabaseMigrator.Migrations
 
             modelBuilder.Entity("Purchasing.Domain.PurchaseOrder", b =>
                 {
-                    b.HasOne("Parties.Domain.Dealer", "Dealer")
+                    b.HasOne("Parties.Domain.Dealer", null)
                         .WithMany()
                         .HasForeignKey("DealerId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -6922,8 +8343,6 @@ namespace OrgSys.DatabaseMigrator.Migrations
                     b.HasOne("Purchasing.Domain.PurchaseRequisition", "PurchaseRequisition")
                         .WithMany()
                         .HasForeignKey("PurchaseRequisitionId");
-
-                    b.Navigation("Dealer");
 
                     b.Navigation("PurchaseRequisition");
                 });
@@ -6936,15 +8355,13 @@ namespace OrgSys.DatabaseMigrator.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Catalog.Domain.Unit", "Unit")
+                    b.HasOne("Catalog.Domain.Unit", null)
                         .WithMany()
                         .HasForeignKey("UnitId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("PurchaseOrder");
-
-                    b.Navigation("Unit");
                 });
 
             modelBuilder.Entity("Purchasing.Domain.PurchaseRequisitionProduct", b =>
@@ -6955,15 +8372,13 @@ namespace OrgSys.DatabaseMigrator.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Catalog.Domain.Unit", "Unit")
+                    b.HasOne("Catalog.Domain.Unit", null)
                         .WithMany()
                         .HasForeignKey("UnitId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("PurchaseRequisition");
-
-                    b.Navigation("Unit");
                 });
 
             modelBuilder.Entity("Receivables.Domain.PaymentApplicationLine", b =>
@@ -7015,13 +8430,101 @@ namespace OrgSys.DatabaseMigrator.Migrations
                     b.Navigation("Tenant");
                 });
 
+            modelBuilder.Entity("Sales.Domain.Quotation", b =>
+                {
+                    b.HasOne("MasterData.Domain.Currency", null)
+                        .WithMany()
+                        .HasForeignKey("CurrencyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Sales.Domain.QuotationLine", b =>
+                {
+                    b.HasOne("Catalog.Domain.Product", null)
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Sales.Domain.Quotation", "Quotation")
+                        .WithMany("Lines")
+                        .HasForeignKey("QuotationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Catalog.Domain.Unit", null)
+                        .WithMany()
+                        .HasForeignKey("UnitId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Quotation");
+                });
+
+            modelBuilder.Entity("Sales.Domain.SalesOrder", b =>
+                {
+                    b.HasOne("MasterData.Domain.Currency", null)
+                        .WithMany()
+                        .HasForeignKey("CurrencyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Sales.Domain.SalesOrderLine", b =>
+                {
+                    b.HasOne("Catalog.Domain.Product", null)
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Sales.Domain.SalesOrder", "SalesOrder")
+                        .WithMany("Lines")
+                        .HasForeignKey("SalesOrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Catalog.Domain.Unit", null)
+                        .WithMany()
+                        .HasForeignKey("UnitId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("SalesOrder");
+                });
+
+            modelBuilder.Entity("Tax.Domain.InvoiceTaxSnapshot", b =>
+                {
+                    b.HasOne("MasterData.Domain.Currency", null)
+                        .WithMany()
+                        .HasForeignKey("CurrencyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CommercialDocuments.Domain.Invoice", null)
+                        .WithMany()
+                        .HasForeignKey("InvoiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Tax.Domain.InvoiceTaxSnapshotLine", b =>
+                {
+                    b.HasOne("Tax.Domain.InvoiceTaxSnapshot", "Snapshot")
+                        .WithMany("Lines")
+                        .HasForeignKey("SnapshotId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Snapshot");
+                });
+
             modelBuilder.Entity("Treasury.Domain.Bank", b =>
                 {
-                    b.HasOne("MasterData.Domain.Country", "Country")
+                    b.HasOne("MasterData.Domain.Country", null)
                         .WithMany()
                         .HasForeignKey("CountryId");
-
-                    b.Navigation("Country");
                 });
 
             modelBuilder.Entity("Treasury.Domain.BankAccount", b =>
@@ -7040,7 +8543,7 @@ namespace OrgSys.DatabaseMigrator.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Organization.Domain.Branch", "Branch")
+                    b.HasOne("Organization.Domain.Branch", null)
                         .WithMany()
                         .HasForeignKey("BranchId");
 
@@ -7053,8 +8556,6 @@ namespace OrgSys.DatabaseMigrator.Migrations
 
                     b.Navigation("BankBranch");
 
-                    b.Navigation("Branch");
-
                     b.Navigation("FinancialAccount");
                 });
 
@@ -7066,31 +8567,25 @@ namespace OrgSys.DatabaseMigrator.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MasterData.Domain.City", "City")
+                    b.HasOne("MasterData.Domain.City", null)
                         .WithMany()
                         .HasForeignKey("CityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MasterData.Domain.Country", "Country")
+                    b.HasOne("MasterData.Domain.Country", null)
                         .WithMany()
                         .HasForeignKey("CountryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MasterData.Domain.District", "District")
+                    b.HasOne("MasterData.Domain.District", null)
                         .WithMany()
                         .HasForeignKey("DistrictId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Bank");
-
-                    b.Navigation("City");
-
-                    b.Navigation("Country");
-
-                    b.Navigation("District");
                 });
 
             modelBuilder.Entity("Treasury.Domain.CashBox", b =>
@@ -7099,7 +8594,7 @@ namespace OrgSys.DatabaseMigrator.Migrations
                         .WithMany()
                         .HasForeignKey("AccountId");
 
-                    b.HasOne("Organization.Domain.Branch", "Branch")
+                    b.HasOne("Organization.Domain.Branch", null)
                         .WithMany()
                         .HasForeignKey("BranchId");
 
@@ -7108,15 +8603,11 @@ namespace OrgSys.DatabaseMigrator.Migrations
                         .HasForeignKey("Treasury.Domain.CashBox", "FinancialAccountId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("Administration.Domain.User", "KeeperUser")
+                    b.HasOne("Administration.Domain.User", null)
                         .WithMany()
                         .HasForeignKey("KeeperUserId");
 
-                    b.Navigation("Branch");
-
                     b.Navigation("FinancialAccount");
-
-                    b.Navigation("KeeperUser");
                 });
 
             modelBuilder.Entity("Treasury.Domain.Financial", b =>
@@ -7136,13 +8627,13 @@ namespace OrgSys.DatabaseMigrator.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MasterData.Domain.Currency", "Currency")
+                    b.HasOne("MasterData.Domain.Currency", null)
                         .WithMany()
                         .HasForeignKey("CurrencyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Parties.Domain.Dealer", "Dealer")
+                    b.HasOne("Parties.Domain.Dealer", null)
                         .WithMany()
                         .HasForeignKey("DealerId");
 
@@ -7171,7 +8662,7 @@ namespace OrgSys.DatabaseMigrator.Migrations
                         .WithMany()
                         .HasForeignKey("OutlayId");
 
-                    b.HasOne("MasterData.Domain.PaymentType", "PaymentType")
+                    b.HasOne("MasterData.Domain.PaymentType", null)
                         .WithMany()
                         .HasForeignKey("PaymentTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -7183,10 +8674,6 @@ namespace OrgSys.DatabaseMigrator.Migrations
 
                     b.Navigation("ContraFinancialAccount");
 
-                    b.Navigation("Currency");
-
-                    b.Navigation("Dealer");
-
                     b.Navigation("FinancialAccount");
 
                     b.Navigation("FinancialTransfer");
@@ -7194,8 +8681,6 @@ namespace OrgSys.DatabaseMigrator.Migrations
                     b.Navigation("FinancialType");
 
                     b.Navigation("Outlay");
-
-                    b.Navigation("PaymentType");
                 });
 
             modelBuilder.Entity("Treasury.Domain.FinancialAccount", b =>
@@ -7204,11 +8689,9 @@ namespace OrgSys.DatabaseMigrator.Migrations
                         .WithMany()
                         .HasForeignKey("AccountId");
 
-                    b.HasOne("MasterData.Domain.Currency", "Currency")
+                    b.HasOne("MasterData.Domain.Currency", null)
                         .WithMany()
                         .HasForeignKey("CurrencyId");
-
-                    b.Navigation("Currency");
                 });
 
             modelBuilder.Entity("Treasury.Domain.FinancialInvoice", b =>
@@ -7219,13 +8702,11 @@ namespace OrgSys.DatabaseMigrator.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CommercialDocuments.Domain.Invoice", "Invoice")
+                    b.HasOne("CommercialDocuments.Domain.Invoice", null)
                         .WithMany()
                         .HasForeignKey("InvoiceId");
 
                     b.Navigation("Financial");
-
-                    b.Navigation("Invoice");
                 });
 
             modelBuilder.Entity("Treasury.Domain.FinancialTransfer", b =>
@@ -7240,7 +8721,7 @@ namespace OrgSys.DatabaseMigrator.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MasterData.Domain.Currency", "Currency")
+                    b.HasOne("MasterData.Domain.Currency", null)
                         .WithMany()
                         .HasForeignKey("CurrencyId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -7266,11 +8747,20 @@ namespace OrgSys.DatabaseMigrator.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Currency");
-
                     b.Navigation("FromFinancialAccount");
 
                     b.Navigation("ToFinancialAccount");
+                });
+
+            modelBuilder.Entity("Workflow.Domain.ApprovalDecision", b =>
+                {
+                    b.HasOne("Workflow.Domain.ApprovalRequest", "ApprovalRequest")
+                        .WithMany("Decisions")
+                        .HasForeignKey("ApprovalRequestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ApprovalRequest");
                 });
 
             modelBuilder.Entity("Accounting.Domain.FiscalYear", b =>
@@ -7283,6 +8773,16 @@ namespace OrgSys.DatabaseMigrator.Migrations
                     b.Navigation("JournalItems");
 
                     b.Navigation("ReversalJournal");
+                });
+
+            modelBuilder.Entity("Advances.Domain.Custody", b =>
+                {
+                    b.Navigation("Handovers");
+                });
+
+            modelBuilder.Entity("Budgeting.Domain.Budget", b =>
+                {
+                    b.Navigation("Lines");
                 });
 
             modelBuilder.Entity("Catalog.Domain.PriceList", b =>
@@ -7305,6 +8805,11 @@ namespace OrgSys.DatabaseMigrator.Migrations
             modelBuilder.Entity("CommercialDocuments.Domain.Invoice", b =>
                 {
                     b.Navigation("InvoiceProducts");
+                });
+
+            modelBuilder.Entity("FixedAssets.Domain.FixedAsset", b =>
+                {
+                    b.Navigation("Entries");
                 });
 
             modelBuilder.Entity("Inventory.Domain.Inventory", b =>
@@ -7380,6 +8885,21 @@ namespace OrgSys.DatabaseMigrator.Migrations
                     b.Navigation("PlanFeatures");
                 });
 
+            modelBuilder.Entity("Sales.Domain.Quotation", b =>
+                {
+                    b.Navigation("Lines");
+                });
+
+            modelBuilder.Entity("Sales.Domain.SalesOrder", b =>
+                {
+                    b.Navigation("Lines");
+                });
+
+            modelBuilder.Entity("Tax.Domain.InvoiceTaxSnapshot", b =>
+                {
+                    b.Navigation("Lines");
+                });
+
             modelBuilder.Entity("Treasury.Domain.Financial", b =>
                 {
                     b.Navigation("FinancialInvoices");
@@ -7395,6 +8915,11 @@ namespace OrgSys.DatabaseMigrator.Migrations
             modelBuilder.Entity("Treasury.Domain.FinancialTransfer", b =>
                 {
                     b.Navigation("Transactions");
+                });
+
+            modelBuilder.Entity("Workflow.Domain.ApprovalRequest", b =>
+                {
+                    b.Navigation("Decisions");
                 });
 #pragma warning restore 612, 618
         }

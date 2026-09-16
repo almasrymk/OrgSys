@@ -1,6 +1,7 @@
 ﻿using API.Authentication;
 using API.Middlewares;
 using OrgSys.SharedKernel;
+using OrgSys.Messaging;
 using FluentValidation;
 using OrgSys.Infrastructure.Persistence;
 using OrgSys.DatabaseMigrator.Persistence;
@@ -21,9 +22,15 @@ using Payables.Infrastructure.DependencyInjection;
 using Advances.Infrastructure.DependencyInjection;
 using Reporting.Infrastructure.DependencyInjection;
 using SaaS.Infrastructure.DependencyInjection;
+using Workflow.Infrastructure.DependencyInjection;
+using Budgeting.Infrastructure.DependencyInjection;
+using Tax.Infrastructure.DependencyInjection;
+using FixedAssets.Infrastructure.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -45,18 +52,37 @@ if (!EF.IsDesignTime)
 
 const string AngularClientCorsPolicy = "AngularClient";
 
+var corsOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>()
+    ?? ["http://localhost:4200", "https://localhost:4200"];
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(AngularClientCorsPolicy, policy =>
     {
-        policy.WithOrigins("http://localhost:4200", "https://localhost:4200")
+        policy.WithOrigins(corsOrigins)
             .AllowAnyHeader()
             .AllowAnyMethod();
     });
 });
 
+builder.Services.AddHealthChecks()
+    .AddDbContextCheck<OrgContext>("org-db");
+
+builder.Services.AddOpenTelemetry()
+    .ConfigureResource(resource => resource.AddService("OrgSys.API"))
+    .WithTracing(tracing =>
+    {
+        tracing.AddAspNetCoreInstrumentation();
+        tracing.AddHttpClientInstrumentation();
+        var otlpEndpoint = builder.Configuration["OpenTelemetry:OtlpEndpoint"];
+        if (!string.IsNullOrWhiteSpace(otlpEndpoint))
+            tracing.AddOtlpExporter(options => options.Endpoint = new Uri(otlpEndpoint));
+    });
+
 builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection(JwtOptions.SectionName));
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
+builder.Services.AddScoped<SaaS.Contracts.Tenancy.ICurrentTenant, HttpContextCurrentTenant>();
 
 var jwtOptions = builder.Configuration.GetSection(JwtOptions.SectionName).Get<JwtOptions>()
     ?? throw new InvalidOperationException("The Jwt configuration section is missing.");
@@ -120,7 +146,9 @@ builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 // JournalPostedIntegrationEvent) over the existing MediatR notification pipeline — see
 // OrgSys.EventBus/MediatrIntegrationEventPublisher.cs for why. First real consumer is the
 // GeneralLedger Journal Post/Reverse/Cancel handlers (see the GeneralLedger migration report).
-builder.Services.AddScoped<IIntegrationEventPublisher, MediatrIntegrationEventPublisher>();
+builder.Services.AddScoped<IIntegrationEventPublisher, OutboxIntegrationEventPublisher>();
+builder.Services.AddScoped<IInboxStore, InboxStore>();
+builder.Services.AddHostedService<OutboxDispatcher>();
 
 // IAccountingPeriodService, IReceivableAccountValidator, IPayableAccountValidator are all
 // registered by AddAccountingModule() below.
@@ -148,6 +176,10 @@ builder.Services.AddPurchasingModule();
 builder.Services.AddReceivablesModule();
 builder.Services.AddPayablesModule();
 builder.Services.AddAdvancesModule();
+builder.Services.AddWorkflowModule();
+builder.Services.AddBudgetingModule();
+builder.Services.AddTaxModule();
+builder.Services.AddFixedAssetsModule();
 builder.Services.AddReportingModule();
 
 var app = builder.Build();
@@ -162,6 +194,7 @@ if (app.Environment.IsDevelopment())
 // Moved ahead of auth/routing so it wraps the whole request pipeline, including exceptions
 // thrown by authentication/authorization handlers — it used to run after MapControllers(),
 // which meant it never actually surrounded those stages (see docs/modular-monolith-analysis.md §9).
+app.UseMiddleware<CorrelationIdMiddleware>();
 app.UseMiddleware<GlobalExceptionMiddleware>();
 
 app.UseHttpsRedirection();
@@ -173,5 +206,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHealthChecks("/health");
 
 app.Run();

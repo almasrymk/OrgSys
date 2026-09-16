@@ -1,9 +1,11 @@
 using Treasury.Application.FinancialTransfers.Commands;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.Org.Financials;
 
+[Authorize]
 [Route("[controller]")]
 [ApiController]
 public sealed class FinancialTransferController(ISender sender) : ControllerBase

@@ -26,7 +26,7 @@ public partial class MappingProfile : Profile
         CreateMap<PriceList, UpdatePriceListCommand>()
         .ForMember(dest => dest.Entries, opt => opt.MapFrom(src => src.Entries));
         CreateMap<UpdatePriceListCommand, PriceList>()
-        .ForMember(dest => dest.Entries, opt => opt.MapFrom(src => src.Entries));
+        .ForMember(dest => dest.Entries, opt => opt.Ignore());
         CreateMap<PriceList, DeletePriceListCommand>();
         CreateMap<DeletePriceListCommand, PriceList>();
 

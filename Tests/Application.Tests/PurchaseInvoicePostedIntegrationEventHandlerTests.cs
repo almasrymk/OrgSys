@@ -31,7 +31,7 @@ public class PurchaseInvoicePostedIntegrationEventHandlerTests
         var unitOfWork = new Mock<IUnitOfWork>();
         unitOfWork.Setup(u => u.SaveChangeAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
 
-        var handler = new PurchaseInvoicePostedIntegrationEventHandler(repository.Object, unitOfWork.Object);
+        var handler = new PurchaseInvoicePostedIntegrationEventHandler(repository.Object, unitOfWork.Object, InboxTestDoubles.AlwaysClaim());
         return (handler, repository, unitOfWork);
     }
 

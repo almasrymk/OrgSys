@@ -29,6 +29,13 @@ public class ModuleInfrastructureDependencyTests
         ("Organization", typeof(Organization.Infrastructure.DependencyInjection.ServiceCollectionExtensions).Assembly),
         ("MasterData", typeof(MasterData.Infrastructure.DependencyInjection.ServiceCollectionExtensions).Assembly),
         ("Reporting", typeof(Reporting.Infrastructure.DependencyInjection.ServiceCollectionExtensions).Assembly),
+        ("Catalog", typeof(Catalog.Infrastructure.DependencyInjection.ServiceCollectionExtensions).Assembly),
+        ("SaaS", typeof(SaaS.Infrastructure.DependencyInjection.ServiceCollectionExtensions).Assembly),
+        ("Advances", typeof(Advances.Infrastructure.DependencyInjection.ServiceCollectionExtensions).Assembly),
+        ("Workflow", typeof(Workflow.Infrastructure.DependencyInjection.ServiceCollectionExtensions).Assembly),
+        ("Budgeting", typeof(Budgeting.Infrastructure.DependencyInjection.ServiceCollectionExtensions).Assembly),
+        ("Tax", typeof(Tax.Infrastructure.DependencyInjection.ServiceCollectionExtensions).Assembly),
+        ("FixedAssets", typeof(FixedAssets.Infrastructure.DependencyInjection.ServiceCollectionExtensions).Assembly),
     ];
 
     public static IEnumerable<object[]> AllModuleInfrastructurePairs()

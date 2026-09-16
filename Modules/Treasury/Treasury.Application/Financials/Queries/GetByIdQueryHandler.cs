@@ -1,6 +1,8 @@
 ﻿namespace Treasury.Application.Financials.Queries
 {
     using CommercialDocuments.Contracts.Invoices;
+    using MasterData.Contracts.Currencies;
+    using MasterData.Contracts.Lookups;
     using Parties.Contracts.Dealers;
     using OrgSys.SharedKernel;
     using AutoMapper;
@@ -33,6 +35,12 @@
                 var names = (await sender.Send(new GetDealerNamesQuery([result.Response.DealerId.Value]), cancellationToken)).Response ?? [];
                 result.Response.DealerName = names.GetValueOrDefault(result.Response.DealerId.Value);
             }
+
+            var paymentTypes = (await sender.Send(new GetPaymentTypeNamesQuery([result.Response.PaymentTypeId]), cancellationToken)).Response ?? [];
+            result.Response.PaymentTypeName = paymentTypes.GetValueOrDefault(result.Response.PaymentTypeId);
+
+            var currencies = (await sender.Send(new GetCurrencyNamesQuery([result.Response.CurrencyId]), cancellationToken)).Response ?? [];
+            result.Response.CurrencyName = currencies.GetValueOrDefault(result.Response.CurrencyId);
 
             var invoiceIds = (result.Response.FinancialInvoiceList ?? [])
                 .Where(e => e.InvoiceId is > 0)

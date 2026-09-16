@@ -1,5 +1,7 @@
 ﻿namespace Treasury.Application.Financials.Commands
 {
+    using MasterData.Contracts.Currencies;
+    using MasterData.Contracts.Lookups;
     using Parties.Contracts.Dealers;
     using OrgSys.SharedKernel;
     using AutoMapper;
@@ -28,7 +30,7 @@
 
         public override string CreateInclude()
         {
-            return "Currency,FinancialAccount,ContraFinancialAccount,FinancialType";
+            return "FinancialAccount,ContraFinancialAccount,FinancialType";
         }
 
         override public Func<IQueryable<Treasury.Domain.Financial>, IOrderedQueryable<Treasury.Domain.Financial>> CreateOrderBy(SearchFinancialQuery request)
@@ -46,6 +48,22 @@
                 foreach (var dto in result.Response)
                     if (dto.DealerId is > 0)
                         dto.DealerName = names.GetValueOrDefault(dto.DealerId.Value);
+            }
+
+            var paymentTypeIds = result.Response.Select(e => e.PaymentTypeId).Distinct().ToList();
+            if (paymentTypeIds.Count > 0)
+            {
+                var names = (await sender.Send(new GetPaymentTypeNamesQuery(paymentTypeIds), cancellationToken)).Response ?? [];
+                foreach (var dto in result.Response)
+                    dto.PaymentTypeName = names.GetValueOrDefault(dto.PaymentTypeId);
+            }
+
+            var currencyIds = result.Response.Select(e => e.CurrencyId).Distinct().ToList();
+            if (currencyIds.Count > 0)
+            {
+                var names = (await sender.Send(new GetCurrencyNamesQuery(currencyIds), cancellationToken)).Response ?? [];
+                foreach (var dto in result.Response)
+                    dto.CurrencyName = names.GetValueOrDefault(dto.CurrencyId);
             }
 
             return result;

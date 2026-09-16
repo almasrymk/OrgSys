@@ -4,4 +4,4 @@ public sealed record InventoryReceiptLineDto(long Id, long RowNumber, long Produ
 
 public sealed record InventoryReceiptDto(
     long Id, string? Code, long StockId, long? LocationId, long? DealerId, DateTime Date,
-    DocumentStatus LifecycleStatus, string? Notes, List<InventoryReceiptLineDto> Lines);
+    DocumentStatus LifecycleStatus, string? Notes, long? PurchaseOrderId, List<InventoryReceiptLineDto> Lines);

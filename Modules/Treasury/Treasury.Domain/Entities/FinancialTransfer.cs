@@ -14,9 +14,8 @@ public class FinancialTransfer : MovementModel
     [Column(TypeName = "decimal(18,2)")]
     public decimal Amount { get; set; }
 
-    [ForeignKey(nameof(Currency))]
+    /// <summary>Scalar-only MasterData Currency reference. FK preserved in OrgContext.</summary>
     public long CurrencyId { get; set; }
-    public virtual Currency? Currency { get; set; }
 
     [Column(TypeName = "decimal(18,6)")]
     public decimal ExchangeRate { get; set; } = 1;

@@ -20,6 +20,7 @@ public class Custody : MovementModel
     private readonly List<IDomainEvent> _domainEvents = [];
     private readonly List<CustodyHandover> _handovers = [];
 
+    [NotMapped]
     public IReadOnlyList<IDomainEvent> DomainEvents => _domainEvents.AsReadOnly();
 
     public void ClearDomainEvents() => _domainEvents.Clear();
@@ -99,7 +100,8 @@ public class Custody : MovementModel
         DateTime? dueDate,
         long createUserId,
         DateTime createDate,
-        long? branchId = null)
+        long? branchId = null,
+        string? notes = null)
     {
         if (string.IsNullOrWhiteSpace(purpose))
             throw new CustodyPurposeRequiredException("A custody's purpose is required.");
@@ -120,7 +122,9 @@ public class Custody : MovementModel
             LifecycleStatus = CustodyStatus.Draft,
             CreateUserId = createUserId,
             CreateDate = createDate,
-            BranchId = branchId
+            Date = createDate,
+            BranchId = branchId,
+            Notes = notes
         };
 
         custody.Raise(new CustodyCreatedDomainEvent(custody.Id, holderId, issuedAmount));

@@ -6,9 +6,7 @@
         [StringLength(50, MinimumLength = 3)]
         public virtual string? Name { get; set; }
 
-        [ForeignKey("Country")]
+        /// <summary>Scalar-only MasterData Country reference. FK preserved in OrgContext.</summary>
         public virtual long? CountryId { get; set; }
-
-        public virtual Country? Country { get; set; }
     }
 }

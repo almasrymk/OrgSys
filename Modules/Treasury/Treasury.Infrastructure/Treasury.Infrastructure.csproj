@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="../Treasury.Application/Treasury.Application.csproj" />
+    <ProjectReference Include="../../MasterData/MasterData.Domain/MasterData.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>

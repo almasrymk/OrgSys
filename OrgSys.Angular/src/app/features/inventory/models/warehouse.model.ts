@@ -206,6 +206,7 @@ export interface CreateInventoryReceiptRequest {
   createUserId: number;
   branchId: number | null;
   notes: string | null;
+  purchaseOrderId?: number | null;
   lines: InventoryReceiptLineInput[];
 }
 
@@ -229,6 +230,7 @@ export interface InventoryReceipt {
   date: string;
   lifecycleStatus: DocumentStatus;
   notes: string | null;
+  purchaseOrderId: number | null;
   lines: InventoryReceiptLine[];
 }
 

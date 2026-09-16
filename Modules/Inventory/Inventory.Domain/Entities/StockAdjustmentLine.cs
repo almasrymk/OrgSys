@@ -27,13 +27,10 @@ namespace Inventory.Domain
 
         public virtual StockAdjustment? StockAdjustment { get; set; }
 
+        /// <summary>Scalar-only Catalog Product/Unit references. FKs preserved in OrgContext.</summary>
         public virtual long ProductId { get; private set; }
 
-        public virtual Product? Product { get; set; }
-
         public virtual long UnitId { get; private set; }
-
-        public virtual Unit? Unit { get; set; }
 
         public virtual MovementDirection Direction { get; private set; }
 

@@ -2,7 +2,9 @@ using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using SaaS.Application.Features;
+using SaaS.Application.Tenancy;
 using SaaS.Contracts.Features;
+using SaaS.Contracts.Tenancy;
 
 namespace SaaS.Infrastructure.DependencyInjection;
 
@@ -22,6 +24,7 @@ public static class ServiceCollectionExtensions
         services.AddValidatorsFromAssembly(applicationAssembly);
 
         services.AddScoped<ITenantFeatureService, TenantFeatureService>();
+        services.AddScoped<ICurrentTenant, UnresolvedCurrentTenant>();
 
         return services;
     }

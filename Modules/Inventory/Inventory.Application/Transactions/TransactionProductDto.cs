@@ -1,4 +1,3 @@
-
 namespace Inventory.Application
 {
     public class TransactionProductDto : TransactionProduct
@@ -9,6 +8,6 @@ namespace Inventory.Application
 
         public string? StockName { get; set; }
 
-        public List<UnitDto>? UnitList { get; set; }
+        public List<UnitNameDto>? UnitList { get; set; }
     }
 }

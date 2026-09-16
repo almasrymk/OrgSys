@@ -1,6 +1,7 @@
 namespace Treasury.Application.FinancialAccounts.Queries
 {
     using Accounting.Contracts.Accounts;
+    using MasterData.Contracts.Currencies;
     using OrgSys.SharedKernel;
     using AutoMapper;
     using MediatR;
@@ -28,7 +29,7 @@ namespace Treasury.Application.FinancialAccounts.Queries
         // AccountCode/AccountName are patched in below instead.
         public override string CreateInclude()
         {
-            return "CashBox,BankAccount.Bank,BankAccount.BankBranch,Currency";
+            return "CashBox,BankAccount.Bank,BankAccount.BankBranch";
         }
 
         override public Func<IQueryable<Treasury.Domain.FinancialAccount>, IOrderedQueryable<Treasury.Domain.FinancialAccount>> CreateOrderBy(SearchFinancialAccountQuery request)
@@ -50,6 +51,15 @@ namespace Treasury.Application.FinancialAccounts.Queries
                         dto.AccountCode = account.Code;
                         dto.AccountName = account.Name;
                     }
+            }
+
+            var currencyIds = result.Response.Where(e => e.CurrencyId is > 0).Select(e => e.CurrencyId!.Value).Distinct().ToList();
+            if (currencyIds.Count > 0)
+            {
+                var names = (await sender.Send(new GetCurrencyNamesQuery(currencyIds), cancellationToken)).Response ?? [];
+                foreach (var dto in result.Response)
+                    if (dto.CurrencyId is > 0)
+                        dto.CurrencyName = names.GetValueOrDefault(dto.CurrencyId.Value);
             }
 
             return result;

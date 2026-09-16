@@ -11,5 +11,6 @@ public partial class MappingProfile : Profile
         TableMappingProfile();
         CompanyMappingProfile();
         OrganizationSettingsMappingProfile();
+        DepartmentMappingProfile();
     }
 }

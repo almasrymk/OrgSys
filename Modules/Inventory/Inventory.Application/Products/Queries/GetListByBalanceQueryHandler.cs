@@ -1,67 +1,49 @@
 ﻿namespace Inventory.Application.Products.Queries
 {
+    using Catalog.Contracts.Products;
+    using MediatR;
     using OrgSys.SharedKernel;
-    using AutoMapper;
     using System.Net;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using Catalog.Application;
 
-    /// <summary>
-    /// Stays in Inventory.Application (not Catalog) because it reads Inventory-owned
-    /// TransactionProduct/Transaction data to compute a per-product stock balance — a genuinely
-    /// Inventory-side computation, even though Product itself is now Catalog-owned. Reaches
-    /// Catalog.Domain.Product/ProductDto for the product side, same accepted-exception shape
-    /// Inventory already has for other relocated master data (see
-    /// docs/catalog/catalog-target-architecture.md §4).
-    /// </summary>
-    public sealed record GetListProductByBalanceQuery(long StockId, DateTime date) : ICommandCollection<ProductDto>;
+    public sealed record GetListProductByBalanceQuery(long StockId, DateTime date) : ICommandCollection<ProductBalanceDto>;
 
     public sealed class GetListByBalanceQueryHandler(
         IRepository<Inventory.Domain.TransactionProduct> _trnsRepository,
-        IRepository<Catalog.Domain.Product> productRepository,
-        IMapper mapper) : ICommandCollectionHandler<GetListProductByBalanceQuery, ProductDto>
+        ISender sender) : ICommandCollectionHandler<GetListProductByBalanceQuery, ProductBalanceDto>
     {
-        public async Task<ResultCollection<ProductDto>> Handle(GetListProductByBalanceQuery request, CancellationToken cancellationToken)
+        public async Task<ResultCollection<ProductBalanceDto>> Handle(GetListProductByBalanceQuery request, CancellationToken cancellationToken)
         {
             try
             {
-                List<ProductDto> list = new List<ProductDto>();
+                var catalog = (await sender.Send(new GetProductCatalogQuery(), cancellationToken)).Response ?? [];
                 var trns = (await _trnsRepository.GetListByFilterAsync(
                     e => e.StockId == request.StockId && e.Transaction!.Date <= request.date,
-                    "Transaction,Product,Unit"))?.ToList() ?? [];
-                var products = (await productRepository.GetListByFilterAsync(
-                    e => true,
-                    "ProductUnits,ProductUnits.Unit"))?.ToList() ?? [];
+                    "Transaction"))?.ToList() ?? [];
 
-                foreach (var product in products)
+                var list = catalog.Select(product => new ProductBalanceDto
                 {
-                    var ob = mapper.Map<ProductDto>(product);
-                    ob.Balance = trns.Where(e => e.ProductId == product.Id)
+                    Id = product.Id,
+                    Name = product.Name,
+                    Nickname = product.Nickname,
+                    Barcode = product.Barcode,
+                    Price = product.Price,
+                    Cost = product.Cost,
+                    ClassificationId = product.ClassificationId,
+                    ClassificationName = product.ClassificationName,
+                    ProductUnits = product.Units,
+                    Balance = trns.Where(e => e.ProductId == product.Id)
                         .Sum(e => e.Transaction!.TypeId == 2 || e.Transaction.TypeId == 3 || e.Transaction.TypeId == 6 || e.Transaction.TypeId == 8
                             ? -e.Quantity
-                            : e.Quantity);
-                    list.Add(ob);
-                }
+                            : e.Quantity)
+                }).ToList();
 
-                if (list != null)
-                {
-                    return new ResultCollection<ProductDto>(
-                    HttpStatusCode.OK,
-                    list.ToList(),
-                    null);
-                }
-
-                return new ResultCollection<ProductDto>(
-                    HttpStatusCode.InternalServerError,
-                    new List<ProductDto>(),
-                    new List<Error> { new Error("Error") });
+                return new ResultCollection<ProductBalanceDto>(HttpStatusCode.OK, list, null);
             }
             catch (Exception ex)
             {
-                return new ResultCollection<ProductDto>(
+                return new ResultCollection<ProductBalanceDto>(
                     HttpStatusCode.InternalServerError,
-                    new List<ProductDto>(),
+                    new List<ProductBalanceDto>(),
                     new List<Error> { new Error(ex.Message) });
             }
         }

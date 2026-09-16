@@ -7,10 +7,8 @@
         /// FK preserved via Fluent HasOne(typeof(Dealer)) in OrgContext.</summary>
         public virtual long DealerId { get; set; } 
 
-        [ForeignKey("PaymentType")]
+        /// <summary>Scalar-only MasterData PaymentType reference. FK preserved in OrgContext.</summary>
         public virtual long PaymentTypeId { get; set; }
-
-        public virtual PaymentType? PaymentType { get; set; }
 
         // Stock/Transaction navigations dropped — Sales/Inventory module boundary. StockId stays
         // a plain scalar FK (Fluent "no navigation" config in OrgContext preserves the DB
@@ -39,10 +37,8 @@
 
         public virtual int ServiceType { get; set; }
 
-        [ForeignKey("Currency")]
+        /// <summary>Scalar-only MasterData Currency reference. FK preserved in OrgContext.</summary>
         public virtual long CurrencyId { get; set; }
-
-        public virtual Currency? Currency { get; set; }
 
         [Column(TypeName = "decimal(18,2)")]
         public virtual decimal Rate { get; set; }

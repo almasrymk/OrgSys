@@ -29,13 +29,10 @@ namespace Inventory.Domain
 
         public virtual InventoryIssue? InventoryIssue { get; set; }
 
+        /// <summary>Scalar-only Catalog Product/Unit references. FKs preserved in OrgContext.</summary>
         public virtual long ProductId { get; private set; }
 
-        public virtual Product? Product { get; set; }
-
         public virtual long UnitId { get; private set; }
-
-        public virtual Unit? Unit { get; set; }
 
         [Column(TypeName = "decimal(18,3)")]
         public virtual decimal Quantity { get; private set; }

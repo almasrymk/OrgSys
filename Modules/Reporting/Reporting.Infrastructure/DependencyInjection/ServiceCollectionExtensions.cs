@@ -1,5 +1,6 @@
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using Reporting.Application;
 
 namespace Reporting.Infrastructure.DependencyInjection;
 
@@ -14,6 +15,8 @@ public static class ServiceCollectionExtensions
     {
         var applicationAssembly = typeof(Reporting.Application.DealerBalance).Assembly;
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(applicationAssembly));
+        services.AddScoped<IReportingReadStore, ReportingReadStore>();
+        services.AddScoped<IReportingProjectionStore, Reporting.Infrastructure.Projections.ReportingProjectionStore>();
         return services;
     }
 }

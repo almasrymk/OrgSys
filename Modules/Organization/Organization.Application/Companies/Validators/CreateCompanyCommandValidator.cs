@@ -3,25 +3,19 @@ namespace Organization.Application.Companies.Validators
     using Organization.Application.Companies.Commands;
     using OrgSys.SharedKernel;
     using FluentValidation;
+    using MasterData.Contracts.Lookups;
+    using MediatR;
+    using SaaS.Contracts.Tenants;
 
-    /// <summary>
-    /// CountryId/DefaultCurrencyId existence checks read MasterData.Domain directly via
-    /// IRepository&lt;T&gt; — Company.CountryId/DefaultCurrencyId stay scalar-only (no Domain
-    /// navigation, unlike Bank/Dealer), so this is an Application-layer-only cross-module read,
-    /// the same accepted-exception shape already used elsewhere (see
-    /// Tests/Architecture.Tests/ModuleLayerDependencyTests.cs AcceptedApplicationDomainExceptions
-    /// — ("Organization", "MasterData", ...)).
-    /// </summary>
     public class CreateCompanyCommandValidator : Validator<CreateCompanyCommand, Organization.Domain.Company>
     {
         public CreateCompanyCommandValidator(
             IRepository<Organization.Domain.Company> _Repository,
-            IRepository<MasterData.Domain.Country> _CountryRepository,
-            IRepository<MasterData.Domain.Currency> _CurrencyRepository,
-            IRepository<SaaS.Domain.Tenant> _TenantRepository) : base(_Repository)
+            ISender sender) : base(_Repository)
         {
             RuleFor(c => c.TenantId)
-            .MustAsync(async (TenantId, cancellationToken) => TenantId == null || await _TenantRepository.AnyAsync(e => e.Id == TenantId, cancellationToken))
+            .MustAsync(async (TenantId, cancellationToken) =>
+                TenantId == null || (await sender.Send(new TenantExistsQuery(TenantId.Value), cancellationToken)).Response)
             .WithMessage("The tenant not found");
 
             RuleFor(c => c.LegalName)
@@ -36,11 +30,13 @@ namespace Organization.Application.Companies.Validators
             .OverridePropertyName(nameof(CreateCompanyCommand.LegalName));
 
             RuleFor(c => c.CountryId)
-            .MustAsync(async (CountryId, cancellationToken) => CountryId == null || await _CountryRepository.AnyAsync(e => e.Id == CountryId, cancellationToken))
+            .MustAsync(async (CountryId, cancellationToken) =>
+                CountryId == null || (await sender.Send(new ExistsCountryQuery(CountryId.Value), cancellationToken)).Response)
             .WithMessage("The country not found");
 
             RuleFor(c => c.DefaultCurrencyId)
-            .MustAsync(async (CurrencyId, cancellationToken) => CurrencyId == null || await _CurrencyRepository.AnyAsync(e => e.Id == CurrencyId, cancellationToken))
+            .MustAsync(async (CurrencyId, cancellationToken) =>
+                CurrencyId == null || (await sender.Send(new ExistsCurrencyQuery(CurrencyId.Value), cancellationToken)).Response)
             .WithMessage("The default currency not found");
         }
     }

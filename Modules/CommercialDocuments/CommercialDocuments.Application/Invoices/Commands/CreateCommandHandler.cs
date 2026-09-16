@@ -10,6 +10,7 @@
     using CommercialDocuments.Contracts.IntegrationEvents;
     using Inventory.Contracts.Transactions;
     using MediatR;
+    using Tax.Contracts.Snapshots;
 
     public sealed class CreateInvoiceCommand : InvoiceDto, ICommand , ICreateCommand<Result>;
 
@@ -77,6 +78,30 @@
                             CreateDate: invoice.CreateDate,
                             BranchId: invoice.BranchId),
                         cancellationToken);
+
+                if (invoice.HasJournal)
+                {
+                    var taxSnapshot = await sender.Send(
+                        new SnapshotInvoiceTaxCommand(
+                            invoice.Id,
+                            invoice.Code,
+                            invoice.TypeId,
+                            invoice.TaxType,
+                            invoice.Tax,
+                            invoice.DiscountType,
+                            invoice.Discount,
+                            invoice.Total,
+                            invoice.Net,
+                            invoice.CurrencyId,
+                            invoice.InvoiceProducts?
+                                .Select(p => new InvoiceTaxLineInput(
+                                    p.ProductId, p.Quantity, p.Price, p.Tax, p.Net, p.Total))
+                                .ToList() ?? [],
+                            DateTime.UtcNow),
+                        cancellationToken);
+                    if (taxSnapshot.StatusCode != HttpStatusCode.OK)
+                        throw new InvalidOperationException(taxSnapshot.Errors?[0].ToString() ?? "Tax snapshot failed.");
+                }
 
                 await _UnitOfWork.CommitAsync();
             }

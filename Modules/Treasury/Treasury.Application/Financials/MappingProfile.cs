@@ -31,9 +31,6 @@ public partial class MappingProfile : Profile
         CreateMap<Financial, DeleteFinancialCommand>();
         CreateMap<DeleteFinancialCommand, Financial>();
 
-        CreateMap<Invoice, Financial>();
-        CreateMap<Financial, Invoice>();
-
         CreateMap<FinancialInvoice, FinancialInvoiceDto>()
             .ForMember(dest => dest.Net, opt => opt.Ignore());
         CreateMap<FinancialInvoiceDto, FinancialInvoice>();

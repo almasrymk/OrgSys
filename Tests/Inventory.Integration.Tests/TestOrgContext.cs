@@ -20,7 +20,6 @@ public sealed class TestOrgContext(DbContextOptions<TestOrgContext> options) : D
     {
         modelBuilder.Entity<InventoryBalance>(b =>
         {
-            b.Ignore(e => e.Product);
             b.Ignore(e => e.Stock);
             b.Ignore(e => e.Location);
             b.Ignore(e => e.Batch);
@@ -37,7 +36,6 @@ public sealed class TestOrgContext(DbContextOptions<TestOrgContext> options) : D
 
         modelBuilder.Entity<StockReservation>(b =>
         {
-            b.Ignore(e => e.Product);
             b.Ignore(e => e.Stock);
             b.Ignore(e => e.Location);
             b.Ignore(e => e.Batch);

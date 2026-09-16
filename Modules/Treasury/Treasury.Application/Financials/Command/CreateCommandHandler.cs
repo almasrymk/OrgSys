@@ -2,6 +2,7 @@
 
 using Administration.Contracts.Preferences;
 using AutoMapper;
+using CommercialDocuments.Contracts.Invoices;
 using System.Net;
 using MediatR;
 
@@ -9,7 +10,6 @@ public sealed class CreateFinancialCommand : Treasury.Application.FinancialDto, 
 
 public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork,
     IRepository<Treasury.Domain.Financial> _Repository,
-    IRepository<Invoice> _RepositoryInvoice,
     IRepository<FinancialInvoice> _RepositoryFinancialInvoice,
     IMapper mapper,
     ISender sender) : CreateCommandHandler<CreateFinancialCommand, Treasury.Domain.Financial>(_UnitOfWork, _Repository , mapper)
@@ -21,35 +21,15 @@ public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork,
 
         try
         {
-            var ids = (request.FinancialInvoices ?? []).Select(x => x.InvoiceId).ToList();
-
-            var invs = await _RepositoryInvoice
-                .GetListByFilterAsync(e => ids.Contains(e.Id), "");
-
-            if (invs == null)
-                invs = new List<Invoice>();
-
-            foreach (var inv in invs)
+            foreach (var item in request.FinancialInvoices ?? [])
             {
-                var amount = request.FinancialInvoices
-                    .Where(e => e.InvoiceId == inv.Id)
-                    .Sum(e => e.Amount);
-
-                inv.Credit = (inv.Net - amount) - inv.Paid;
-                inv.Paid = (inv.Net - inv.Credit);
-
-                await _RepositoryInvoice.UpdateAsync(inv);
+                await sender.Send(new SetInvoiceSettlementFromAllocationCommand(item.InvoiceId ?? 0, item.Amount), cancellationToken);
             }
 
             var result = await base.Handle(request, cancellationToken);
 
             await _UnitOfWork.CommitAsync();
 
-            // Opening Balance only: when Preferences > Financial > Opening Balance has "Auto-Create
-            // Journal Entry" on, post immediately instead of leaving the Draft for a separate manual
-            // Post click — same idea as Invoice's own AutoCreateJournalEntry preference. Runs after the
-            // Draft's own transaction commits, in a new transaction of its own (PostFinancialOpeningBalanceCommandHandler
-            // manages that itself), so a failed auto-post never rolls back the successfully-saved Draft.
             if (result.StatusCode == HttpStatusCode.OK
                 && CreatedEntity is not null
                 && request.FinancialTypeId == (long)Treasury.Domain.FinancialTransactionType.OpeningBalance)

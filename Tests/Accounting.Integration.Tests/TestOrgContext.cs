@@ -51,9 +51,6 @@ public sealed class TestOrgContext(DbContextOptions<TestOrgContext> options) : D
 
         modelBuilder.Entity<Dealer>(b =>
         {
-            b.Ignore(e => e.Country);
-            b.Ignore(e => e.City);
-            b.Ignore(e => e.District);
             b.Ignore(e => e.CustomerProfile);
             b.Ignore(e => e.SupplierProfile);
             b.Ignore(e => e.Contacts);
@@ -63,8 +60,6 @@ public sealed class TestOrgContext(DbContextOptions<TestOrgContext> options) : D
 
         modelBuilder.Entity<Invoice>(b =>
         {
-            b.Ignore(e => e.PaymentType);
-            b.Ignore(e => e.Currency);
             b.Ignore(e => e.InvoiceProducts);
             b.Property(e => e.Rate).HasPrecision(18, 2);
             b.Property(e => e.Net).HasPrecision(18, 2);

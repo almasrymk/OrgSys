@@ -17,6 +17,10 @@ namespace Administration.Application
         public virtual long RoleId { get; set; }
  
         public virtual long? BranchId { get; set; }
+
+        public virtual long? CompanyId { get; set; }
+
+        public virtual long? TenantId { get; set; }
          
         public virtual long LoginUserId { get; set; }
 

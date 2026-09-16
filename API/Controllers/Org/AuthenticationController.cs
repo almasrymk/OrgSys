@@ -13,7 +13,7 @@ namespace API.Controllers.Org
 {
     [Route("api/[controller]")]
     [ApiController]
-    [AllowAnonymous]
+    [Authorize]
     public class AuthController : ControllerBase
     {
         private readonly ISender _sender;
@@ -25,6 +25,7 @@ namespace API.Controllers.Org
             _tokenService = tokenService;
         }
 
+        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginCommand command)
         {
@@ -38,6 +39,7 @@ namespace API.Controllers.Org
             return Ok(new Result<LoginResponseDto>(result.StatusCode, new LoginResponseDto(result.Response, token), result.Errors));
         }
 
+        [AllowAnonymous]
         [HttpGet("CheckEmail")]
         public async Task<IActionResult> CheckEmail([FromQuery] string email)
         {

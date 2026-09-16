@@ -8,6 +8,12 @@
 
   <ItemGroup>
     <ProjectReference Include="../Reporting.Application/Reporting.Application.csproj" />
+    <ProjectReference Include="../../CommercialDocuments/CommercialDocuments.Domain/CommercialDocuments.Domain.csproj" />
+    <ProjectReference Include="../../Treasury/Treasury.Domain/Treasury.Domain.csproj" />
+    <ProjectReference Include="../../Inventory/Inventory.Domain/Inventory.Domain.csproj" />
+    <ProjectReference Include="../../Parties/Parties.Domain/Parties.Domain.csproj" />
+    <ProjectReference Include="../../Catalog/Catalog.Domain/Catalog.Domain.csproj" />
+    <ProjectReference Include="../../MasterData/MasterData.Domain/MasterData.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>

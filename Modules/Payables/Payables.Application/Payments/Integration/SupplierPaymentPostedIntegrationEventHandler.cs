@@ -18,10 +18,13 @@ using Treasury.Contracts.IntegrationEvents;
 public sealed class SupplierPaymentPostedIntegrationEventHandler(
     IPayableRepository payableRepository,
     ISupplierPaymentApplicationRepository paymentApplicationRepository,
-    IUnitOfWork unitOfWork) : INotificationHandler<SupplierPaymentPostedIntegrationEvent>
+    IUnitOfWork unitOfWork,
+    IInboxStore inbox) : INotificationHandler<SupplierPaymentPostedIntegrationEvent>
 {
     public async Task Handle(SupplierPaymentPostedIntegrationEvent notification, CancellationToken cancellationToken)
     {
+        if (!await inbox.TryClaimAsync(notification.EventId, nameof(SupplierPaymentPostedIntegrationEventHandler), cancellationToken))
+            return;
         // Duplicate delivery of the same posted payment must apply exactly once — the DB unique
         // index on SupplierPaymentApplication.SourceFinancialId is the final safety net.
         if (await paymentApplicationRepository.ExistsForSourceFinancialAsync(notification.FinancialId, cancellationToken))

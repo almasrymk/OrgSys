@@ -26,6 +26,10 @@ public class ModuleDependencyTests
         ("Receivables", typeof(Receivables.Domain.AssemblyMarker).Assembly),
         ("Payables", typeof(Payables.Domain.AssemblyMarker).Assembly),
         ("Advances", typeof(Advances.Domain.AssemblyMarker).Assembly),
+        ("Workflow", typeof(Workflow.Domain.AssemblyMarker).Assembly),
+        ("Budgeting", typeof(Budgeting.Domain.AssemblyMarker).Assembly),
+        ("Tax", typeof(Tax.Domain.AssemblyMarker).Assembly),
+        ("FixedAssets", typeof(FixedAssets.Domain.AssemblyMarker).Assembly),
         ("Administration", typeof(Administration.Domain.AssemblyMarker).Assembly),
         ("Organization", typeof(Organization.Domain.AssemblyMarker).Assembly),
         ("MasterData", typeof(MasterData.Domain.AssemblyMarker).Assembly),
@@ -41,13 +45,6 @@ public class ModuleDependencyTests
     /// </summary>
     private static readonly (string Module, string DependsOnModule, string Reason)[] AcceptedDomainExceptions =
     [
-        ("Treasury", "MasterData", "Bank/BankBranch/FinancialAccount/Financial/FinancialTransfer keep their existing EF navigations to Country/City/District/Currency/PaymentType."),
-        ("CommercialDocuments", "MasterData", "Invoice keeps its existing EF navigations to Currency/PaymentType."),
-        ("CommercialDocuments", "Catalog", "InvoiceProduct.Unit keeps its existing EF navigation, now owned by Catalog (relocated from MasterData.Domain — see docs/catalog/catalog-target-architecture.md §4)."),
-        ("Parties", "MasterData", "Dealer keeps its existing EF navigations to Country/City/District."),
-        ("Inventory", "MasterData", "Product/ProductUnit/Stock/Transaction keep their existing EF navigations to Country/City/District/Currency (Unit/Classification relocated to Catalog)."),
-        ("Inventory", "Catalog", "Stock/Transaction/InventoryBalance/etc. keep their existing EF navigations to Product/ProductUnit/Unit, now owned by Catalog (relocated from Inventory.Domain/MasterData.Domain — see docs/catalog/catalog-target-architecture.md §4)."),
-        ("Purchasing", "Catalog", "PurchaseRequisitionProduct.Unit / PurchaseOrderProduct.Unit keep an EF navigation, now owned by Catalog (relocated from MasterData.Domain — same convention as CommercialDocuments.Domain.InvoiceProduct)."),
     ];
 
     public static IEnumerable<object[]> AllModulePairs()

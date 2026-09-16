@@ -1,6 +1,8 @@
 ﻿using OrgSys.SharedKernel;
 using Administration.Application.Security;
 using AutoMapper;
+using MediatR;
+using Organization.Contracts.Companies;
 using System.Net;
 
 namespace Administration.Application.Auth.Commands
@@ -11,6 +13,7 @@ namespace Administration.Application.Auth.Commands
         IRepository<Permission> PermissionRepository
         , IMapper mapper
         , IPasswordHasher passwordHasher
+        , ISender sender
         ) : ICommandHandler<LoginCommand, UserDto>
     {
         public async Task<Result<UserDto>> Handle(
@@ -48,6 +51,16 @@ namespace Administration.Application.Auth.Commands
                 return new Result<UserDto>(HttpStatusCode.NotFound, result, null);
 
             result.Permissions = permissions.ToList();
+
+            if (result.BranchId is > 0)
+            {
+                var ownership = (await sender.Send(new GetBranchOwnershipQuery(result.BranchId.Value), cancellationToken)).Response;
+                if (ownership is not null)
+                {
+                    result.CompanyId = ownership.CompanyId;
+                    result.TenantId = ownership.TenantId;
+                }
+            }
    
             return new Result<UserDto>(HttpStatusCode.OK, result, null);
         }
