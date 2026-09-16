@@ -1,5 +1,6 @@
 namespace Administration.Infrastructure.Seeding
 {
+    using Administration.Application.Security;
     using Microsoft.EntityFrameworkCore;
     using OrgSys.SharedKernel;
 
@@ -795,9 +796,9 @@ namespace Administration.Infrastructure.Seeding
         public void InitialUser(Microsoft.EntityFrameworkCore.DbContext orgContext)
         {
             List<User> list = new List<User> {
-                 new User {Name = "Owner", UserName = "Owner", Password = Security.Encrypt("P@ssw0rd"), RoleId = orgContext.Set<Role>().FirstOrDefault(e => e.Name == "Owner").Id, LoginUserId = 1, Hide = true },
-                 new User {Name = "Admin", UserName = "Admin", Password = Security.Encrypt("P@ssw0rd"), RoleId = orgContext.Set<Role>().FirstOrDefault(e => e.Name == "Admin").Id, LoginUserId = 2, Hide = false },
-                 new User {Name = "Emp", UserName = "Admin2", RoleId = 2, Hide = false }
+                 new User {Name = "Owner", UserName = "Owner", Password = new PasswordHasher().HashPassword("P@ssw0rd"), MustResetPassword = false, RoleId = orgContext.Set<Role>().FirstOrDefault(e => e.Name == "Owner").Id, LoginUserId = 1, Hide = true },
+                 new User {Name = "Admin", UserName = "Admin", Password = new PasswordHasher().HashPassword("P@ssw0rd"), MustResetPassword = false, RoleId = orgContext.Set<Role>().FirstOrDefault(e => e.Name == "Admin").Id, LoginUserId = 2, Hide = false },
+                 new User {Name = "Emp", UserName = "Admin2", RoleId = 2, Hide = false, MustResetPassword = true }
             };
 
             foreach (var ob in list)

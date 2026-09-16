@@ -12,9 +12,6 @@
          owned by Catalog (relocated from MasterData.Domain — same convention as
          CommercialDocuments.Domain.InvoiceProduct/Sales.Domain.OrderProduct). -->
     <ProjectReference Include="../../Catalog/Catalog.Domain/Catalog.Domain.csproj" />
-    <!-- PurchaseOrder.Dealer (the supplier) keeps an EF navigation to Parties.Domain.Dealer, same
-         convention as every other module's Dealer reference. -->
-    <ProjectReference Include="../../Parties/Parties.Domain/Parties.Domain.csproj" />
   </ItemGroup>
 
 </Project>

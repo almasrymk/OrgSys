@@ -33,7 +33,7 @@ export class TransactionListComponent {
 
   readonly Status = Status;
   readonly TransactionTypeId = TransactionTypeId;
-  readonly typeId = Number(this.route.snapshot.paramMap.get('typeId'));
+  readonly typeId = Number(this.route.snapshot.data['typeId'] ?? this.route.snapshot.paramMap.get('typeId'));
 
   readonly title = signal('Transactions');
   readonly transactions = signal<Transaction[]>([]);

@@ -6,8 +6,8 @@ import { isApiSuccess } from '../../../../core/models/api-result.model';
 import { ConfirmDialogService } from '../../../../shared/components/confirm-dialog/confirm-dialog.service';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header.component';
 import { ToastService } from '../../../../shared/components/toast/toast.service';
-import { Stock } from '../../../invoices/models/invoice-lookups.model';
-import { StockService } from '../../../invoices/services/invoice-lookups.service';
+import { Stock } from '../../models/stock.model';
+import { StockService } from '../../services/stock.service';
 import { DocumentStatus, InventoryReceipt } from '../../models/warehouse.model';
 import { InventoryReceiptService } from '../../services/inventory-receipt.service';
 

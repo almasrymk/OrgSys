@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 
-export const REPORTS_ROUTES: Routes = [
+export const REPORTING_ROUTES: Routes = [
   {
     path: 'warehouse/movement',
     loadComponent: () => import('./pages/stock-movement/stock-movement.component').then((m) => m.StockMovementComponent),

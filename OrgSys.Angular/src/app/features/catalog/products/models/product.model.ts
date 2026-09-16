@@ -27,6 +27,8 @@ export interface Product extends BaseEntity {
   dealerId: number | null;
   dealerName: string | null;
   productUnits: ProductUnit[];
+  /** Populated only by GET /Product/GetAllByBalance (Inventory query on the Product controller). */
+  balance?: number;
 }
 
 export interface SaveProductUnitRequest {

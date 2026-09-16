@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <ProjectReference Include="../../../BuildingBlocks/OrgSys.SharedKernel/OrgSys.SharedKernel.csproj" />
-    <ProjectReference Include="../../Organization/Organization.Domain/Organization.Domain.csproj" />
   </ItemGroup>
 
 </Project>

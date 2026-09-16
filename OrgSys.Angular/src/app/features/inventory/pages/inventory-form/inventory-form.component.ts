@@ -6,8 +6,9 @@ import { AuthService } from '../../../../core/auth/auth.service';
 import { isApiSuccess } from '../../../../core/models/api-result.model';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header.component';
 import { ToastService } from '../../../../shared/components/toast/toast.service';
-import { Product, Stock, Unit } from '../../../invoices/models/invoice-lookups.model';
-import { ProductService, StockService, UnitService } from '../../../invoices/services/invoice-lookups.service';
+import { Product, ProductService, Unit, UnitService } from '../../../catalog';
+import { Stock } from '../../models/stock.model';
+import { StockService } from '../../services/stock.service';
 import { InventoryService } from '../../services/inventory.service';
 
 /**
@@ -212,7 +213,7 @@ export class InventoryFormComponent {
         this.saving.set(false);
         if (isApiSuccess(result)) {
           this.toast.success('Inventory count saved.');
-          this.router.navigate(['/inventory']);
+          this.router.navigate(['/inventory/count']);
         } else {
           this.toast.error(result.errors?.[0]?.messageError ?? 'Save failed.');
         }

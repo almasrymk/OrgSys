@@ -10,7 +10,10 @@ public partial class MappingProfile : Profile
         #region User
         CreateMap<User, UserDto>()
         .ForMember(dest => dest.RoleName, opt => opt.MapFrom(src => src.Role.Name))
-        .ForMember(dest => dest.BranchName, opt => opt.MapFrom(src => src.Branch.Name));
+        .ForMember(dest => dest.BranchName, opt => opt.Ignore())
+        .ForMember(dest => dest.Password, opt => opt.Ignore())
+        .ForMember(dest => dest.NewPassword, opt => opt.Ignore())
+        .ForMember(dest => dest.ConfirmPassword, opt => opt.Ignore());
         CreateMap<UserDto, User>();
 
         CreateMap<User, CreateUserCommand>();

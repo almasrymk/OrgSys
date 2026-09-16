@@ -33,10 +33,9 @@ namespace Inventory.Domain
 
         public virtual WarehouseLocation? Location { get; set; }
 
-        [ForeignKey("Dealer")]
+        /// <summary>Scalar-only reference into Parties.Domain.Dealer — no EF navigation.
+        /// FK preserved via Fluent HasOne(typeof(Dealer)) in OrgContext.</summary>
         public virtual long? DealerId { get; private set; }
-
-        public virtual Dealer? Dealer { get; set; }
 
         public virtual DocumentStatus LifecycleStatus { get; private set; }
 

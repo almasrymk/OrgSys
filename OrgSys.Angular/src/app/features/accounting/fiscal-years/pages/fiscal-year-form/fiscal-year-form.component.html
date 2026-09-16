@@ -1,12 +1,12 @@
 <app-page-header
   [title]="id() ? 'Edit Fiscal Year' : 'New Fiscal Year'"
-  [breadcrumbs]="[{ label: 'Home', route: '/' }, { label: 'Fiscal Years', route: '/administration/fiscal-years' }, { label: id() ? 'Edit' : 'New' }]"
+  [breadcrumbs]="[{ label: 'Home', route: '/' }, { label: 'Fiscal Years', route: '/accounting/fiscal-years' }, { label: id() ? 'Edit' : 'New' }]"
 ></app-page-header>
 
 <div class="card">
   <div class="card-body">
     <div class="d-flex justify-content-end mb-3">
-      <a routerLink="/administration/fiscal-years" class="btn btn-primary">
+      <a routerLink="/accounting/fiscal-years" class="btn btn-primary">
         <i class="bi bi-arrow-return-left"></i> Back
       </a>
     </div>

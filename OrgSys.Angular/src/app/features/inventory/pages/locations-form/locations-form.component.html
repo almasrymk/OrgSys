@@ -1,4 +1,4 @@
-<app-page-header title="New Warehouse Location" [breadcrumbs]="[{ label: 'Home', route: '/' }, { label: 'Warehouse' }, { label: 'Locations', route: '/warehouse/locations' }, { label: 'New' }]"></app-page-header>
+<app-page-header title="New Warehouse Location" [breadcrumbs]="[{ label: 'Home', route: '/' }, { label: 'Inventory' }, { label: 'Locations', route: '/inventory/locations' }, { label: 'New' }]"></app-page-header>
 
 <div class="card">
   <div class="card-body">
@@ -40,7 +40,7 @@
       <button type="button" class="btn btn-primary" [disabled]="saving()" (click)="save()">
         <span *ngIf="saving()" class="spinner-border spinner-border-sm mr-1"></span> Save
       </button>
-      <a routerLink="/warehouse/locations" class="btn btn-outline-secondary ml-2">Cancel</a>
+      <a routerLink="/inventory/locations" class="btn btn-outline-secondary ml-2">Cancel</a>
     </div>
   </div>
 </div>

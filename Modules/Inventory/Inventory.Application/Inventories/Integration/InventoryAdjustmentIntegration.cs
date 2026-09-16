@@ -1,6 +1,8 @@
 namespace Inventory.Application.Inventories.Integration;
 
+using Administration.Contracts.Preferences;
 using Inventory.Application.Transactions.Integration;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
 internal sealed class InventoryAdjustmentIntegration(IServiceProvider provider)
@@ -10,14 +12,13 @@ internal sealed class InventoryAdjustmentIntegration(IServiceProvider provider)
 
     public async Task SyncAsync(global::Inventory.Domain.Inventory inventory, CancellationToken cancellationToken = default, bool force = false)
     {
-        var preferenceRepository = provider.GetRequiredService<IRepository<Preference>>();
-        var preference = await preferenceRepository.GetByFilterAsync(
-            e => e.Reference == "Inventory"
-                && e.Key == "AutoCreateAdjustment"
-                && (e.TypeId == inventory.TypeId || e.TypeId == 0),
-            string.Empty);
+        var sender = provider.GetRequiredService<ISender>();
+        var typePref = (await sender.Send(new GetPreferenceValueQuery("Inventory", inventory.TypeId, "AutoCreateAdjustment"))).Response;
+        var fallbackPref = inventory.TypeId == 0
+            ? typePref
+            : (await sender.Send(new GetPreferenceValueQuery("Inventory", 0, "AutoCreateAdjustment"))).Response;
 
-        if (!force && preference?.Value != "1")
+        if (!force && typePref != "1" && fallbackPref != "1")
             return;
 
         var transactionRepository = provider.GetRequiredService<IRepository<Transaction>>();

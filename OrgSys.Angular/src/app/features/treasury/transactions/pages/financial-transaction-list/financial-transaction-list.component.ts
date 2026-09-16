@@ -37,7 +37,7 @@ export class FinancialTransactionListComponent {
   readonly permissionService = inject(PermissionService);
 
   readonly Status = Status;
-  readonly financialTypeId = Number(this.route.snapshot.paramMap.get('typeId'));
+  readonly financialTypeId = Number(this.route.snapshot.data['typeId'] ?? this.route.snapshot.paramMap.get('typeId'));
 
   readonly title = signal('Financial');
   readonly transactions = signal<Financial[]>([]);

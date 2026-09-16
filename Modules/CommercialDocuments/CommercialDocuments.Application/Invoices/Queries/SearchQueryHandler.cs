@@ -1,6 +1,7 @@
 ﻿namespace CommercialDocuments.Application.Invoices.Queries
 {
     using Accounting.Contracts.Postings;
+    using Parties.Contracts.Dealers;
     using OrgSys.SharedKernel;
     using OrgSys.SharedKernel;
     using OrgSys.SharedKernel;
@@ -42,6 +43,14 @@
                 }
             }
 
+            var dealerIds = result.Response.Select(e => e.DealerId).Distinct().ToList();
+            if (dealerIds.Count > 0)
+            {
+                var names = (await sender.Send(new GetDealerNamesQuery(dealerIds), cancellationToken)).Response ?? [];
+                foreach (var invoice in result.Response)
+                    invoice.DealerName = names.GetValueOrDefault(invoice.DealerId);
+            }
+
             return result;
         }
 
@@ -62,7 +71,7 @@
             // Stock and Transaction dropped: Stock is handled via the manual batch lookup above
             // (module-boundary reasons); Transaction was never actually read from the mapped DTO
             // (confirmed dead — docs/modular-monolith-analysis.md §21) so it is dropped outright.
-            return "Dealer,PaymentType,Currency";
+            return "PaymentType,Currency";
         }
 
         override public Func<IQueryable<CommercialDocuments.Domain.Invoice>, IOrderedQueryable<CommercialDocuments.Domain.Invoice>> CreateOrderBy(SearchInvoiceQuery request)

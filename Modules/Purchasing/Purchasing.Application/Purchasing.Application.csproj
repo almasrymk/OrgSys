@@ -15,6 +15,7 @@
          CommercialDocuments.Contracts (GetInvoiceReferenceQuery) — no Domain-level reference to
          CommercialDocuments or Sales needed. See docs/commercial-documents-module.md. -->
     <ProjectReference Include="../../CommercialDocuments/CommercialDocuments.Contracts/CommercialDocuments.Contracts.csproj" />
+    <ProjectReference Include="../../Parties/Parties.Contracts/Parties.Contracts.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -51,7 +51,7 @@ namespace CommercialDocuments.Application.Invoices.Queries
         {
             //return repo.GetList(e => !ids.Contains(e.Id.ToString()) && e.TypeId == TypeId && e.DealerId == dealerId && e.CurrencyId == currencyId && e.Credit > 0 && ("" + textSearch == "" || e.Code.Contains("" + textSearch) || e.Dealer.Name.Contains("" + textSearch)), e => e.OrderByDescending(e => e.Id), Includes, Utility.Status.New).Select(e => e.Map<InvoiceModelView>()).ToPagedList(page, pageSize);
 
-            return e => !request.Ids.Contains(e.Id.ToString()) && e.TypeId == request.TypeId && e.DealerId == request.DealerId && e.CurrencyId == request.CurrencyId && e.Credit > 0 && (request.KeySearch == "" || e.Code!.Contains(request.KeySearch) || e.Dealer!.Name.Contains(request.KeySearch));
+            return e => !request.Ids.Contains(e.Id.ToString()) && e.TypeId == request.TypeId && e.DealerId == request.DealerId && e.CurrencyId == request.CurrencyId && e.Credit > 0 && (request.KeySearch == "" || e.Code!.Contains(request.KeySearch));
         }
     }
 

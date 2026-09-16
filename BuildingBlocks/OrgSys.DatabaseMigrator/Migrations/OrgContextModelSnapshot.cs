@@ -661,6 +661,9 @@ namespace OrgSys.DatabaseMigrator.Migrations
                     b.Property<string>("MaskText")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("MustResetPassword")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");

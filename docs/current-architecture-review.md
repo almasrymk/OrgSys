@@ -1,5 +1,66 @@
 # OrgSys Current Architecture Review
 
+Date: 2026-09-17 (Domain ID-only navigations). Previous snapshot: 2026-09-16.
+
+## 0. 2026-09-17 update
+
+**Architecture score: 8.0 / 10** (was 7.5 after the Preference/KeeperUser pass). Security remains **6.5 / 10** (human-only secret rotation / git history scrub still outstanding).
+
+### Domain ID-only FKs
+
+Cross-module EF navigations for Dealer / Branch / Invoice were dropped. Scalar FKs stay; Fluent `HasOne(typeof(...))` in `OrgContext` preserves the same columns/constraints (`dotnet ef migrations has-pending-model-changes` reports no schema change). Display names are patched through Contracts (`GetDealerNamesQuery`, `GetBranchNamesQuery`, `GetInvoiceNetsQuery`).
+
+Cleared Architecture.Tests Domain exceptions: Administration→Organization, Treasury→Organization/Parties/CommercialDocuments, Inventory→Parties/Organization, CommercialDocuments→Parties, Purchasing→Parties, Catalog→Parties.
+
+Cleared Application→Domain exceptions for those same Dealer/Branch reads. Remaining Application→Domain exceptions are MasterData/Catalog Unit mapping, Inventory/Treasury `IRepository<Invoice>`, Reporting as a read aggregator, and Organization validators.
+
+Still open: MasterData/Catalog Unit/Currency Domain navigations; Treasury.Application still injects `IRepository<Invoice>` (accepted); event-driven GL posting (`PostAccountingDocumentCommand` — `SalesInvoicePostedIntegrationEvent` is reserved for AR).
+
+### OrgSys MVC (`OrgSys/OrgSys.csproj`)
+
+The Razor MVC host **stays in the solution**. Owner instruction: do not delete it. Angular is the replacement UI; MVC remains the original host.
+
+Closed earlier (2026-09-16): Preference Contracts, `CashBox.KeeperUser`, Domain.Tests for Treasury/Parties/Organization/Catalog, Angular leftover folders.
+
+---
+
+## 0b. 2026-09-16 update (previous)
+
+**Architecture score at that date: 7.5 / 10**. Security **6.5 / 10**.
+
+### Security: **6.5 / 10** (new section)
+
+What landed:
+- Tracked `appsettings*.json` no longer contain live `OrgConnection` or `Jwt:Key` values. Real secrets come from `dotnet user-secrets`, `appsettings.Local.json` (gitignored), or env vars `ConnectionStrings__OrgConnection` / `Jwt__Key`. See `docs/local-setup.md`.
+- User passwords are hashed with ASP.NET Identity `PasswordHasher<T>` (per-hash salt). The reversible AES helper `OrgSys.SharedKernel.Security` was deleted. Login verifies hashes; seed Owner/Admin get Identity hashes. Migration `AddUserPasswordHashing` adds `User.MustResetPassword` and backfills existing rows to `true`.
+
+What still needs a human:
+- Rotate the production SQL password and JWT signing key that were previously committed (listed in the Phase 1 changelog).
+- Scrub git history (`git filter-repo` / BFG) — requires an owner force-push decision.
+- Communicate the forced password reset to existing users. Seed Owner/Admin can log in after migrate+seed; every other stored AES ciphertext cannot be verified.
+
+### Module boundaries
+
+`Sales.Application → Accounting.*` (the 2026-09-11 Phase 4 item) was already closed in later work: invoices live in CommercialDocuments, dealers in Parties, both talk to Accounting only through `Accounting.Contracts`. This pass additionally:
+- Routed `InvoiceJournalPostingService` Preference/Dealer reads through `Administration.Contracts` / `Parties.Contracts`.
+- Deleted the `CommercialDocuments → Administration` Application→Domain exception.
+- Added `Tests/Accounting.Integration.Tests` covering sales-invoice GL posting (balanced debit/credit) and cancel/redo status mirroring against a real SQLite DbContext.
+
+Still open at that date (closed 2026-09-17 for Dealer/Invoice/Branch): remaining Domain→Domain EF navigations (Dealer/Invoice/Currency/Branch); Invoice/Dealer Application reads that still map full entities; event-driven GL posting (kept as `PostAccountingDocumentCommand` because `SalesInvoicePostedIntegrationEvent` is reserved for AR — see `docs/architecture/receivables-ddd-migration.md`).
+
+Closed in this continuation:
+- Inventory/Treasury/Parties Preference reads now go through `GetPreferenceValueQuery` / `GetPreferenceValuesQuery`. Architecture.Tests exceptions `Inventory|Treasury|Parties → Administration` (Application→Domain) were deleted.
+- `CashBox.KeeperUser` navigation dropped; FK kept via Fluent `HasOne(typeof(User))`. Architecture.Tests exception `Treasury.Domain → Administration.Domain` deleted.
+- Domain unit tests added for Treasury, Parties, Organization, Catalog.
+- Legacy root `Domain`/`Application` business code is gone (empty leftover folders only). Journal posting lives in `InvoiceJournalPostingService` / `TransactionJournalPostingService`.
+- Angular `features/` already mirrors the backend modules that have UI (`docs/angular-backend-alignment.md`). Empty leftover folders `administration`/`transactions`/`warehouse` are removed.
+
+### OrgSys MVC (`OrgSys/OrgSys.csproj`)
+
+The Razor MVC host **stays in the solution**. Owner instruction (2026-09-17): do not delete it. Angular is the replacement; MVC remains the original host.
+
+---
+
 Date: 2026-09-11, branch `Latest`, HEAD `723ad0f9`.
 
 > This review reflects the repository **as it stands right now**, including the Sales.Application
@@ -69,9 +130,9 @@ assertions passing.
 Full detail with per-entry justification, cause entity, target solution, and phase is in
 `docs/module-dependency-map.md` §3-5 (this review only counts them). As of this commit:
 
-- `ModuleDependencyTests.AcceptedDomainExceptions` (Domain→Domain): **9 entries**
-- `ModuleLayerDependencyTests.AcceptedApplicationDomainExceptions` (Application→Domain): **20 entries**
-- `ModuleLayerDependencyTests.AcceptedApplicationApplicationExceptions` (Application→Application): **6 entries**
+- `ModuleDependencyTests.AcceptedDomainExceptions` (Domain→Domain): **7 entries**
+- `ModuleLayerDependencyTests.AcceptedApplicationDomainExceptions` (Application→Domain): **16 entries**
+- `ModuleLayerDependencyTests.AcceptedApplicationApplicationExceptions` (Application→Application): **3 entries**
 
 None of these were added by this review — they were already present (added when
 `ModuleLayerDependencyTests` was written) and reflect real, pre-existing coupling, not new

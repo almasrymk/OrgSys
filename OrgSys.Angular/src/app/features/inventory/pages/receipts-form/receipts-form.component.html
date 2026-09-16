@@ -1,4 +1,4 @@
-<app-page-header title="New Inventory Receipt" [breadcrumbs]="[{ label: 'Home', route: '/' }, { label: 'Warehouse' }, { label: 'Receipts', route: '/warehouse/receipts' }, { label: 'New' }]"></app-page-header>
+<app-page-header title="New Inventory Receipt" [breadcrumbs]="[{ label: 'Home', route: '/' }, { label: 'Inventory' }, { label: 'Receipts', route: '/inventory/receipts' }, { label: 'New' }]"></app-page-header>
 
 <form [formGroup]="form" (ngSubmit)="submit()">
   <div class="card mb-3">
@@ -86,5 +86,5 @@
   <button type="submit" class="btn btn-primary" [disabled]="saving()">
     <span *ngIf="saving()" class="spinner-border spinner-border-sm mr-1"></span> Save as Draft
   </button>
-  <a routerLink="/warehouse/receipts" class="btn btn-outline-secondary ml-2">Cancel</a>
+  <a routerLink="/inventory/receipts" class="btn btn-outline-secondary ml-2">Cancel</a>
 </form>

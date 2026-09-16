@@ -6,11 +6,12 @@ import { AuthService } from '../../../../core/auth/auth.service';
 import { isApiSuccess } from '../../../../core/models/api-result.model';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header.component';
 import { ToastService } from '../../../../shared/components/toast/toast.service';
-import { Dealer } from '../../../customers-suppliers/dealers/models/dealer.model';
-import { DealerService } from '../../../customers-suppliers/dealers/services/dealer.service';
-import { Product, Stock, Unit } from '../../../invoices/models/invoice-lookups.model';
-import { ProductService, StockService, UnitService } from '../../../invoices/services/invoice-lookups.service';
-import { TransactionType, TransactionTypeId } from '../../models/transaction.model';
+import { Dealer } from '../../../parties';
+import { DealerService } from '../../../parties';
+import { Product, ProductService, Unit, UnitService } from '../../../catalog';
+import { Stock } from '../../models/stock.model';
+import { StockService } from '../../services/stock.service';
+import { inventoryMovementPath, TransactionType, TransactionTypeId } from '../../models/transaction.model';
 import { TransactionService } from '../../services/transaction.service';
 import { TransactionTypeService } from '../../services/transaction-type.service';
 
@@ -41,7 +42,8 @@ export class TransactionFormComponent {
   private readonly productService = inject(ProductService);
 
   readonly TransactionTypeId = TransactionTypeId;
-  readonly typeId = Number(this.route.snapshot.paramMap.get('typeId'));
+  readonly typeId = Number(this.route.snapshot.data['typeId'] ?? this.route.snapshot.paramMap.get('typeId'));
+  readonly listPath = inventoryMovementPath(this.typeId);
   readonly transactionType = signal<TransactionType | null>(null);
   readonly id = signal<number | null>(null);
   readonly code = signal<string | null>(null);
@@ -210,7 +212,7 @@ export class TransactionFormComponent {
         this.saving.set(false);
         if (isApiSuccess(result)) {
           this.toast.success('Transaction saved.');
-          this.router.navigate(['/transactions', this.typeId]);
+          this.router.navigateByUrl(this.listPath);
         } else {
           this.toast.error(result.errors?.[0]?.messageError ?? 'Save failed.');
         }

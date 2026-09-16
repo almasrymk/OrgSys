@@ -13,10 +13,15 @@
     <!-- Financial's Post/Reverse handlers reach Accounting purely through Accounting.Contracts —
          PostAccountingEntryCommand/ReverseAccountingDocumentJournalCommand/GetAccountingDocumentJournalQuery/
          GetFiscalYearForDateQuery/GetAccountQuery/IReceivableAccountValidator — no reference to
-         Accounting.Domain or Accounting.Application (see the Accounting DDD cleanup report). -->
+         Accounting.Domain or Accounting.Application (see the Accounting DDD cleanup report).
+         Preference lookups go through Administration.Contracts. -->
     <ProjectReference Include="../../Accounting/Accounting.Contracts/Accounting.Contracts.csproj" />
-    <!-- Preference now owned by Administration (relocated from the legacy root Domain project). -->
-    <ProjectReference Include="../../Administration/Administration.Domain/Administration.Domain.csproj" />
+    <ProjectReference Include="../../Administration/Administration.Contracts/Administration.Contracts.csproj" />
+    <!-- Invoice reads stay on CommercialDocuments.Domain (accepted Application exception). Names/Nets
+         go through CommercialDocuments.Contracts / Parties.Contracts. -->
+    <ProjectReference Include="../../CommercialDocuments/CommercialDocuments.Domain/CommercialDocuments.Domain.csproj" />
+    <ProjectReference Include="../../CommercialDocuments/CommercialDocuments.Contracts/CommercialDocuments.Contracts.csproj" />
+    <ProjectReference Include="../../Parties/Parties.Contracts/Parties.Contracts.csproj" />
   </ItemGroup>
 
   <ItemGroup>

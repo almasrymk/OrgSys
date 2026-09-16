@@ -20,13 +20,38 @@ export enum FinancialTransactionDirection {
   Out = 2,
 }
 
-/** Only the reference types PostTransactionCommandHandler actually resolves against a linked GL account. */
+/** Mirrors Modules/Treasury/Treasury.Domain/Enums/FinancialReferenceType.cs exactly. */
 export enum FinancialReferenceType {
   Other = 0,
   Customer = 1,
   Supplier = 2,
+  Employee = 3,
   Expense = 4,
   Income = 5,
+  Invoice = 6,
+  Payment = 7,
+  Loan = 8,
+  Cheque = 9,
+  PaymentGateway = 10,
+  Transfer = 11,
+}
+
+/** Business URL segments under /treasury for FinancialTransactionType 2–11. */
+export const TREASURY_TRANSACTION_PATHS: Record<number, string> = {
+  2: 'receipts',
+  3: 'payments',
+  4: 'transfer-in',
+  5: 'deposits',
+  6: 'withdrawals',
+  7: 'fees',
+  8: 'interest',
+  9: 'cheques',
+  10: 'adjustments',
+  11: 'transfer-out',
+};
+
+export function treasuryTransactionPath(typeId: number): string {
+  return `/treasury/${TREASURY_TRANSACTION_PATHS[typeId] ?? `transactions/${typeId}`}`;
 }
 
 /** Mirrors Application.DTOs.FinancialTypeDto (Domain.Entities.FinancialType). */

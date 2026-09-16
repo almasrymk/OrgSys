@@ -1,6 +1,7 @@
 namespace Parties.Application.Dealers.Commands
 {
     using Accounting.Contracts.Accounts;
+    using Administration.Contracts.Preferences;
     using MediatR;
 
     /// <summary>
@@ -21,7 +22,6 @@ namespace Parties.Application.Dealers.Commands
             long? requestedAccountId,
             bool? autoCreate,
             IReceivableAccountValidator validator,
-            IRepository<Preference> preferenceRepository,
             ISender sender,
             CancellationToken cancellationToken)
         {
@@ -40,9 +40,11 @@ namespace Parties.Application.Dealers.Commands
                 return (null, null, errors);
             }
 
-            var preferences = (await preferenceRepository.GetListByFilterAsync(
-                e => e.Reference == "Dealer" && e.TypeId == (long)DealerType.Supplier))?.ToList() ?? [];
-            var parentAccountId = long.TryParse(preferences.FirstOrDefault(e => e.Key == "PayableParentAccountId")?.Value, out var id) ? id : 0;
+            var preferences = (await sender.Send(
+                new GetPreferenceValuesQuery("Dealer", (long)DealerType.Supplier), cancellationToken)).Response
+                ?? new Dictionary<string, string?>();
+            var parentAccountId = preferences.TryGetValue("PayableParentAccountId", out var raw)
+                && long.TryParse(raw, out var id) ? id : 0;
             if (parentAccountId <= 0)
             {
                 errors.Add(new Error("Auto-create payable account is not configured (PayableParentAccountId preference)."));

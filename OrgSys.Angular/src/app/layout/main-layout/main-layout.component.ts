@@ -1,4 +1,4 @@
-import { Component, HostBinding } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog/confirm-dialog.component';
 import { ToastContainerComponent } from '../../shared/components/toast/toast-container.component';
@@ -17,13 +17,12 @@ import { SidebarComponent } from '../sidebar/sidebar.component';
   standalone: true,
   imports: [RouterOutlet, HeaderComponent, SidebarComponent, FooterComponent, ToastContainerComponent, ConfirmDialogComponent],
   templateUrl: './main-layout.component.html',
+  host: {
+    id: 'app-container',
+    '[class]': 'layout.appContainerClass()',
+    'attr.dir': 'ltr',
+  },
 })
 export class MainLayoutComponent {
-  @HostBinding('id') readonly id = 'app-container';
-  @HostBinding('class') get hostClass(): string {
-    return this.layout.appContainerClass();
-  }
-  @HostBinding('attr.dir') readonly dir = 'ltr';
-
   constructor(readonly layout: LayoutService) {}
 }

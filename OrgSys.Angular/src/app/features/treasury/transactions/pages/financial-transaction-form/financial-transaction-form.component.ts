@@ -8,13 +8,13 @@ import { PageHeaderComponent } from '../../../../../shared/components/page-heade
 import { ToastService } from '../../../../../shared/components/toast/toast.service';
 import { Account } from '../../../../accounting/accounts/models/account.model';
 import { AccountService } from '../../../../accounting/accounts/services/account.service';
-import { Currency } from '../../../../administration/currencies/models/currency.model';
-import { CurrencyService } from '../../../../administration/currencies/services/currency.service';
+import { Currency } from '../../../../master-data/currencies/models/currency.model';
+import { CurrencyService } from '../../../../master-data/currencies/services/currency.service';
 import { FinancialAccount } from '../../../financial-accounts/models/financial-account.model';
 import { FinancialAccountService } from '../../../financial-accounts/services/financial-account.service';
-import { Dealer, DealerType } from '../../../../customers-suppliers/dealers/models/dealer.model';
-import { DealerService } from '../../../../customers-suppliers/dealers/services/dealer.service';
-import { FinancialReferenceType, FinancialTransactionDirection, FinancialType } from '../../models/financial.model';
+import { Dealer, DealerType } from '../../../../parties';
+import { DealerService } from '../../../../parties';
+import { FinancialReferenceType, FinancialTransactionDirection, FinancialType, treasuryTransactionPath } from '../../models/financial.model';
 import { FinancialService } from '../../services/financial.service';
 import { FinancialTypeService } from '../../services/financial-type.service';
 
@@ -53,7 +53,8 @@ export class FinancialTransactionFormComponent {
   readonly FinancialReferenceType = FinancialReferenceType;
   readonly FinancialTransactionDirection = FinancialTransactionDirection;
 
-  readonly financialTypeId = Number(this.route.snapshot.paramMap.get('typeId'));
+  readonly financialTypeId = Number(this.route.snapshot.data['typeId'] ?? this.route.snapshot.paramMap.get('typeId'));
+  readonly listPath = treasuryTransactionPath(this.financialTypeId);
   readonly financialType = signal<FinancialType | null>(null);
   readonly saving = signal(false);
 
@@ -186,7 +187,7 @@ export class FinancialTransactionFormComponent {
           this.saving.set(false);
           if (isApiSuccess(result)) {
             this.toast.success('Transaction posted.');
-            this.router.navigate(['/financial/transactions', this.financialTypeId]);
+            this.router.navigateByUrl(this.listPath);
           } else {
             this.toast.error(result.errors?.[0]?.messageError ?? 'Post failed.');
           }

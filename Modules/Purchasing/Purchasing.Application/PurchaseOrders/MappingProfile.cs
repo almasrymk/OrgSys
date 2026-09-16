@@ -13,7 +13,7 @@ public partial class MappingProfile : Profile
         // PurchaseOrderProductDto are standalone classes (no longer inherit from the entity), so
         // these are ordinary property-name-convention maps.
         CreateMap<PurchaseOrder, PurchaseOrderDto>()
-        .ForMember(dest => dest.DealerName, opt => opt.MapFrom(src => src.Dealer!.Name))
+        .ForMember(dest => dest.DealerName, opt => opt.Ignore())
         .ForMember(dest => dest.PurchaseOrderProductList,
         opt => opt.MapFrom(src => src.PurchaseOrderProducts));
 

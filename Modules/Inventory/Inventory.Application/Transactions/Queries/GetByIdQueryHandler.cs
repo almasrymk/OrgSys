@@ -1,6 +1,7 @@
 ﻿namespace Inventory.Application.Transactions.Queries
 {
     using Accounting.Contracts.Postings;
+    using Parties.Contracts.Dealers;
     using OrgSys.SharedKernel;
     using OrgSys.SharedKernel;
     using OrgSys.SharedKernel;
@@ -30,6 +31,11 @@
             var journal = (await sender.Send(new GetAccountingDocumentJournalQuery("transaction", result.Response.Id, result.Response.TypeId), cancellationToken)).Response;
             result.Response.JournalId = journal?.JournalId;
             result.Response.JournalCode = journal?.JournalCode;
+            if (result.Response.DealerId is > 0)
+            {
+                var names = (await sender.Send(new GetDealerNamesQuery([result.Response.DealerId.Value]), cancellationToken)).Response ?? [];
+                result.Response.DealerName = names.GetValueOrDefault(result.Response.DealerId.Value);
+            }
             return result;
         }
 

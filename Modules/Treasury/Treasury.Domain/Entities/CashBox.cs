@@ -13,12 +13,13 @@ namespace Treasury.Domain
         public virtual long? FinancialAccountId { get; set; }
         public virtual FinancialAccount? FinancialAccount { get; set; }
 
-        [ForeignKey(nameof(Branch))]
+        /// <summary>Scalar-only reference into Organization.Domain.Branch — no EF navigation.
+        /// FK preserved via Fluent HasOne(typeof(Branch)) in OrgContext.</summary>
         public virtual long? BranchId { get; set; }
-        public virtual Branch? Branch { get; set; }
 
-        [ForeignKey(nameof(KeeperUser))]
+        /// <summary>Scalar-only reference into Administration.Domain.User — no EF navigation.
+        /// FK preserved via Fluent HasOne(typeof(User)) in OrgContext, same pattern as
+        /// MovementModel.CreateUserId.</summary>
         public virtual long? KeeperUserId { get; set; }
-        public virtual User? KeeperUser { get; set; }
     }
 }

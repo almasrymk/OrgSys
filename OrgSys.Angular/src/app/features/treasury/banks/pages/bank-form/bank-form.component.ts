@@ -5,8 +5,8 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { isApiSuccess } from '../../../../../core/models/api-result.model';
 import { PageHeaderComponent } from '../../../../../shared/components/page-header/page-header.component';
 import { ToastService } from '../../../../../shared/components/toast/toast.service';
-import { Country } from '../../../countries/models/country.model';
-import { CountryService } from '../../../countries/services/country.service';
+import { Country } from '../../../../master-data/countries/models/country.model';
+import { CountryService } from '../../../../master-data/countries/services/country.service';
 import { BankService } from '../../services/bank.service';
 
 /** Replaces Areas/Setting/Views/Bank/Save.cshtml. */
@@ -65,7 +65,7 @@ export class BankFormComponent {
         this.saving.set(false);
         if (isApiSuccess(result)) {
           this.toast.success('Bank saved.');
-          this.router.navigateByUrl('/administration/banks');
+          this.router.navigateByUrl('/treasury/banks');
         } else {
           this.toast.error(result.errors?.[0]?.messageError ?? 'Save failed.');
         }

@@ -1,15 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Product, Stock } from '../../../invoices/models/invoice-lookups.model';
-import { ProductService, StockService } from '../../../invoices/services/invoice-lookups.service';
+import { Classification, ClassificationService, Product, ProductService } from '../../../catalog';
+import { Stock, StockService } from '../../../inventory';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header.component';
 import { PaginationComponent } from '../../../../shared/components/pagination/pagination.component';
 import { ToastService } from '../../../../shared/components/toast/toast.service';
 import { BalanceRow } from '../../models/report.model';
-import { Classification } from '../../models/report-lookups.model';
 import { WarehouseReportService } from '../../services/report.service';
-import { ClassificationService } from '../../services/report-lookups.service';
 
 const PAGE_SIZE = 25;
 

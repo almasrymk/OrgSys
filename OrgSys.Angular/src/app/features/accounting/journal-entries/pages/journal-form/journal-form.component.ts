@@ -9,8 +9,8 @@ import { ToastService } from '../../../../../shared/components/toast/toast.servi
 import { Status } from '../../../../../shared/models/status.enum';
 import { Account } from '../../../accounts/models/account.model';
 import { AccountService } from '../../../accounts/services/account.service';
-import { Currency } from '../../../../administration/currencies/models/currency.model';
-import { CurrencyService } from '../../../../administration/currencies/services/currency.service';
+import { Currency } from '../../../../master-data/currencies/models/currency.model';
+import { CurrencyService } from '../../../../master-data/currencies/services/currency.service';
 import { JournalType } from '../../models/journal.model';
 import { JournalService } from '../../services/journal.service';
 import { JournalTypeService } from '../../services/journal-type.service';

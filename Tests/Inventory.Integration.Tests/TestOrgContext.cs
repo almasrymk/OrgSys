@@ -45,10 +45,7 @@ public sealed class TestOrgContext(DbContextOptions<TestOrgContext> options) : D
             b.Ignore(e => e.DomainEvents);
         });
 
-        modelBuilder.Entity<Stock>(b =>
-        {
-            b.Ignore(e => e.Branch);
-        });
+        modelBuilder.Entity<Stock>();
     }
 
     public void ResetDbContextState()

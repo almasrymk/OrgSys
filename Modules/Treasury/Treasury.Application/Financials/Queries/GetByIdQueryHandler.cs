@@ -1,30 +1,53 @@
 ﻿namespace Treasury.Application.Financials.Queries
 {
-    using OrgSys.SharedKernel;
-    using OrgSys.SharedKernel;
-    using OrgSys.SharedKernel;
+    using CommercialDocuments.Contracts.Invoices;
+    using Parties.Contracts.Dealers;
     using OrgSys.SharedKernel;
     using AutoMapper;
+    using MediatR;
     using System.Linq.Expressions;
 
     public sealed record GetByIdFinancialQuery(long Id) : ICommand<FinancialDto> , IGetByIdQuery<Result<FinancialDto>>;
 
-    public sealed class GetByIdQueryHandler(IRepository<Treasury.Domain.Financial> _Repository, IMapper mapper) :
+    public sealed class GetByIdQueryHandler(IRepository<Treasury.Domain.Financial> _Repository, IMapper mapper, ISender sender) :
         GetCommandHandler<GetByIdFinancialQuery, Treasury.Domain.Financial, FinancialDto>(_Repository, mapper)
     {
         public override string CreateInclude()
         {
-            // FinancialAccount/FinancialType aren't read from these navs anywhere on the Save screen —
-            // its dropdowns/names come from separate API calls — and FinancialAccount in particular
-            // pulls in CashBox/BankAccount's circular back-reference to their own FinancialAccount, which
-            // silently failed the query (GetCommandHandler<> swallows the exception into a null Response,
-            // which this screen's edit-load then misreads as "record not found" and shows a blank Draft).
-            return "FinancialInvoices,FinancialInvoices.Invoice";
+            return "FinancialInvoices";
         }
 
         public override Expression<Func<Treasury.Domain.Financial, bool>> CreateFilter(GetByIdFinancialQuery request)
         {           
             return e => e.Id == request.Id && e.Status !=OrgSys.SharedKernel.Status.Deleted && e.Hide != true;
+        }
+
+        public override async Task<Result<FinancialDto>> Handle(GetByIdFinancialQuery request, CancellationToken cancellationToken)
+        {
+            var result = await base.Handle(request, cancellationToken);
+            if (result.Response is null || result.Response.Id == 0)
+                return result;
+
+            if (result.Response.DealerId is > 0)
+            {
+                var names = (await sender.Send(new GetDealerNamesQuery([result.Response.DealerId.Value]), cancellationToken)).Response ?? [];
+                result.Response.DealerName = names.GetValueOrDefault(result.Response.DealerId.Value);
+            }
+
+            var invoiceIds = (result.Response.FinancialInvoiceList ?? [])
+                .Where(e => e.InvoiceId is > 0)
+                .Select(e => e.InvoiceId!.Value)
+                .Distinct()
+                .ToList();
+            if (invoiceIds.Count > 0)
+            {
+                var nets = (await sender.Send(new GetInvoiceNetsQuery(invoiceIds), cancellationToken)).Response ?? [];
+                foreach (var line in result.Response.FinancialInvoiceList!)
+                    if (line.InvoiceId is > 0 && nets.TryGetValue(line.InvoiceId.Value, out var net))
+                        line.Net = net;
+            }
+
+            return result;
         }
     }
 }

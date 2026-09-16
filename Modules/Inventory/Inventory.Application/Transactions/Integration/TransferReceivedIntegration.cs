@@ -1,5 +1,7 @@
 namespace Inventory.Application.Transactions.Integration;
 
+using Administration.Contracts.Preferences;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
 internal sealed class TransferReceivedIntegration(IServiceProvider provider)
@@ -32,11 +34,9 @@ internal sealed class TransferReceivedIntegration(IServiceProvider provider)
         if (transfer.TypeId != 3)
             return;
 
-        var preferenceRepository = provider.GetRequiredService<IRepository<Preference>>();
-        var autoReceived = await preferenceRepository.GetByFilterAsync(
-            e => e.Reference == "Transaction" && e.TypeId == 3 && e.Key == "AutoReceived",
-            string.Empty);
-        if (!force && autoReceived?.Value != "1")
+        var sender = provider.GetRequiredService<ISender>();
+        var autoReceived = (await sender.Send(new GetPreferenceValueQuery("Transaction", 3, "AutoReceived"))).Response;
+        if (!force && autoReceived != "1")
             return;
 
         var transactionRepository = provider.GetRequiredService<IRepository<Transaction>>();
@@ -104,12 +104,9 @@ internal sealed class TransferReceivedIntegration(IServiceProvider provider)
         await transactionRepository.UpdateAsync(transfer);
         await transactionRepository.UpdateAsync(received);
 
-        var autoCreateReceivedJournal = await preferenceRepository.GetByFilterAsync(
-            e => e.Reference == "Transaction"
-                && e.TypeId == 4
-                && e.Key == "AutoCreateJournalEntry",
-            string.Empty);
-        if (autoCreateReceivedJournal?.Value == "1")
+        var autoCreateReceivedJournal = (await sender.Send(
+            new GetPreferenceValueQuery("Transaction", 4, "AutoCreateJournalEntry"))).Response;
+        if (autoCreateReceivedJournal == "1")
         {
             // Keep this non-forced so incomplete account configuration does not roll back
             // the Transfer and its automatically generated Received transaction.

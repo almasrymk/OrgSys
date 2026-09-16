@@ -5,8 +5,8 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { isApiSuccess } from '../../../../core/models/api-result.model';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header.component';
 import { ToastService } from '../../../../shared/components/toast/toast.service';
-import { Stock } from '../../../invoices/models/invoice-lookups.model';
-import { StockService } from '../../../invoices/services/invoice-lookups.service';
+import { Stock } from '../../models/stock.model';
+import { StockService } from '../../services/stock.service';
 import { CreateWarehouseLocationRequest } from '../../models/warehouse.model';
 import { WarehouseLocationService } from '../../services/warehouse-location.service';
 
@@ -55,7 +55,7 @@ export class LocationsFormComponent {
         this.saving.set(false);
         if (isApiSuccess(result)) {
           this.toast.success('Location created.');
-          this.router.navigate(['/warehouse/locations']);
+          this.router.navigate(['/inventory/locations']);
         } else {
           this.toast.error(result.errors?.[0]?.messageError ?? 'Could not create the location.');
         }

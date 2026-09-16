@@ -5,6 +5,7 @@
     <LangVersion>latest</LangVersion>
     <AspNetCoreModuleName>AspNetCoreModuleV2</AspNetCoreModuleName>
     <AspNetCoreHostingModel>OutOfProcess</AspNetCoreHostingModel>
+    <UserSecretsId>orgsys-mvc-4d8e2a6c-9b1f-47e3-8c5a-0f2d7b9e3a16</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

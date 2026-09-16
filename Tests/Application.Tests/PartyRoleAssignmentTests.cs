@@ -1,5 +1,4 @@
 using Accounting.Contracts.Accounts;
-using Administration.Domain;
 using Parties.Application.CustomerProfiles.Commands;
 using Parties.Application.SupplierProfiles.Commands;
 using Parties.Domain;
@@ -57,7 +56,6 @@ public class PartyRoleAssignmentTests
             WorkingUnitOfWork().Object,
             DealerRepository(null).Object,
             new Mock<IRepository<CustomerProfile>>().Object,
-            new Mock<IRepository<Preference>>().Object,
             PassingAccountValidator().Object,
             new Mock<MediatR.ISender>().Object);
 
@@ -78,7 +76,6 @@ public class PartyRoleAssignmentTests
             WorkingUnitOfWork().Object,
             DealerRepository(Client()).Object,
             customerProfileRepository.Object,
-            new Mock<IRepository<Preference>>().Object,
             PassingAccountValidator().Object,
             new Mock<MediatR.ISender>().Object);
 
@@ -106,7 +103,6 @@ public class PartyRoleAssignmentTests
             WorkingUnitOfWork().Object,
             DealerRepository(Supplier()).Object,
             customerProfileRepository.Object,
-            new Mock<IRepository<Preference>>().Object,
             PassingAccountValidator().Object,
             new Mock<MediatR.ISender>().Object);
 
@@ -131,7 +127,6 @@ public class PartyRoleAssignmentTests
             WorkingUnitOfWork().Object,
             DealerRepository(Client()).Object,
             customerProfileRepository.Object,
-            new Mock<IRepository<Preference>>().Object,
             AccountValidator([new Error("Account is not postable.")]).Object,
             new Mock<MediatR.ISender>().Object);
 
@@ -153,7 +148,6 @@ public class PartyRoleAssignmentTests
             WorkingUnitOfWork().Object,
             DealerRepository(Client()).Object,
             customerProfileRepository.Object,
-            new Mock<IRepository<Preference>>().Object,
             PassingAccountValidator().Object,
             new Mock<MediatR.ISender>().Object);
 
@@ -181,7 +175,6 @@ public class PartyRoleAssignmentTests
             WorkingUnitOfWork().Object,
             DealerRepository(Client()).Object,
             supplierProfileRepository.Object,
-            new Mock<IRepository<Preference>>().Object,
             PassingAccountValidator().Object,
             new Mock<MediatR.ISender>().Object);
 
@@ -205,7 +198,6 @@ public class PartyRoleAssignmentTests
             WorkingUnitOfWork().Object,
             DealerRepository(Supplier()).Object,
             supplierProfileRepository.Object,
-            new Mock<IRepository<Preference>>().Object,
             PassingAccountValidator().Object,
             new Mock<MediatR.ISender>().Object);
 

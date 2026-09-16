@@ -80,7 +80,7 @@ export class FiscalYearFormComponent {
         this.saving.set(false);
         if (isApiSuccess(result)) {
           this.toast.success('Fiscal year saved.');
-          this.router.navigateByUrl('/administration/fiscal-years');
+          this.router.navigateByUrl('/accounting/fiscal-years');
         } else {
           this.toast.error(result.errors?.[0]?.messageError ?? 'Save failed.');
         }

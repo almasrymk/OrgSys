@@ -6,8 +6,8 @@ import { AuthService } from '../../../../../core/auth/auth.service';
 import { isApiSuccess } from '../../../../../core/models/api-result.model';
 import { PageHeaderComponent } from '../../../../../shared/components/page-header/page-header.component';
 import { ToastService } from '../../../../../shared/components/toast/toast.service';
-import { Currency } from '../../../../administration/currencies/models/currency.model';
-import { CurrencyService } from '../../../../administration/currencies/services/currency.service';
+import { Currency } from '../../../../master-data/currencies/models/currency.model';
+import { CurrencyService } from '../../../../master-data/currencies/services/currency.service';
 import { FinancialAccount } from '../../../financial-accounts/models/financial-account.model';
 import { FinancialAccountService } from '../../../financial-accounts/services/financial-account.service';
 import { FinancialTransferService } from '../../services/financial-transfer.service';
@@ -84,7 +84,7 @@ export class FinancialTransferFormComponent {
           this.saving.set(false);
           if (isApiSuccess(result)) {
             this.toast.success('Transfer posted.');
-            this.router.navigateByUrl('/financial/transfers');
+            this.router.navigateByUrl('/treasury/transfers');
           } else {
             this.toast.error(result.errors?.[0]?.messageError ?? 'Post failed.');
           }

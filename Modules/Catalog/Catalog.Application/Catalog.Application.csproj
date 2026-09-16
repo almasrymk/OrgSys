@@ -9,6 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="../Catalog.Domain/Catalog.Domain.csproj" />
     <ProjectReference Include="../Catalog.Contracts/Catalog.Contracts.csproj" />
+    <ProjectReference Include="../../Parties/Parties.Contracts/Parties.Contracts.csproj" />
     <ProjectReference Include="../../../BuildingBlocks/OrgSys.EventBus/OrgSys.EventBus.csproj" />
   </ItemGroup>
 

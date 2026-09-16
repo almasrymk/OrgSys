@@ -38,9 +38,8 @@
         [StringLength(11)]
         public string? SwiftCode { get; set; }
 
-        [ForeignKey(nameof(Branch))]
+        /// <summary>Scalar-only reference into Organization.Domain.Branch — no EF navigation.
+        /// FK preserved via Fluent HasOne(typeof(Branch)) in OrgContext.</summary>
         public virtual long? BranchId { get; set; }
-
-        public virtual Branch? Branch { get; set; }
     }
 }

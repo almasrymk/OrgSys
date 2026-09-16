@@ -8,8 +8,8 @@ import { PageHeaderComponent } from '../../../../../shared/components/page-heade
 import { ToastService } from '../../../../../shared/components/toast/toast.service';
 import { FinancialAccount } from '../../../financial-accounts/models/financial-account.model';
 import { FinancialAccountService } from '../../../financial-accounts/services/financial-account.service';
-import { Currency } from '../../../../administration/currencies/models/currency.model';
-import { CurrencyService } from '../../../../administration/currencies/services/currency.service';
+import { Currency } from '../../../../master-data/currencies/models/currency.model';
+import { CurrencyService } from '../../../../master-data/currencies/services/currency.service';
 import { OpeningBalanceService } from '../../services/opening-balance.service';
 
 /**
@@ -122,7 +122,7 @@ export class OpeningBalanceFormComponent {
         this.saving.set(false);
         if (isApiSuccess(result)) {
           this.toast.success('Opening balance saved as Draft.');
-          this.router.navigateByUrl('/financial/opening-balances');
+          this.router.navigateByUrl('/treasury/opening-balances');
         } else {
           this.toast.error(result.errors?.[0]?.messageError ?? 'Save failed.');
         }

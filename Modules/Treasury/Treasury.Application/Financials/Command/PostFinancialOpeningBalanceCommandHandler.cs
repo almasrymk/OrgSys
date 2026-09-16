@@ -1,6 +1,7 @@
 namespace Treasury.Application.Financials.Commands
 {
     using Accounting.Contracts.Postings;
+    using Administration.Contracts.Preferences;
     using MediatR;
     using OrgSys.SharedKernel;
     using System.Net;
@@ -20,8 +21,7 @@ namespace Treasury.Application.Financials.Commands
         IUnitOfWork unitOfWork,
         ISender sender,
         IRepository<Financial> financialRepository,
-        IRepository<FinancialAccount> accountRepository,
-        IRepository<Preference> preferenceRepository) : ICommandHandler<PostFinancialOpeningBalanceCommand>
+        IRepository<FinancialAccount> accountRepository) : ICommandHandler<PostFinancialOpeningBalanceCommand>
     {
         public async Task<Result> Handle(PostFinancialOpeningBalanceCommand request, CancellationToken cancellationToken)
         {
@@ -48,8 +48,9 @@ namespace Treasury.Application.Financials.Commands
             if (account is null || !account.IsActive)
                 return new Result(HttpStatusCode.BadRequest, [new Error("Financial account is invalid or inactive.")]);
 
-            var preferences = (await preferenceRepository.GetListByFilterAsync(
-                e => e.Reference == "Financial" && e.TypeId == (long)FinancialTransactionType.OpeningBalance))?.ToList() ?? [];
+            var preferences = (await sender.Send(
+                new GetPreferenceValuesQuery("Financial", (long)FinancialTransactionType.OpeningBalance),
+                cancellationToken)).Response ?? new Dictionary<string, string?>();
 
             // Accounts Integration on: Debit the preference-configured Cash Box/Bank GL account (by the
             // FinancialAccount's own type) instead of requiring each Cash Box/Bank record to carry its
@@ -57,10 +58,10 @@ namespace Treasury.Application.Financials.Commands
             // preferences already use. Off (or unconfigured): fall back to the FinancialAccount's own
             // AccountId, the original behavior.
             long debitAccountId;
-            if (preferences.FirstOrDefault(e => e.Key == "AccountsIntegration")?.Value == "1")
+            if (preferences.TryGetValue("AccountsIntegration", out var accountsIntegration) && accountsIntegration == "1")
             {
                 var isBank = account.FinancialAccountType == FinancialAccountType.Bank;
-                var integrationAccountRaw = preferences.FirstOrDefault(e => e.Key == (isBank ? "BankAccount" : "CashBoxAccount"))?.Value;
+                preferences.TryGetValue(isBank ? "BankAccount" : "CashBoxAccount", out var integrationAccountRaw);
                 if (!long.TryParse(integrationAccountRaw, out debitAccountId) || debitAccountId <= 0)
                     return new Result(HttpStatusCode.BadRequest, [new Error(
                         $"Accounts Integration is enabled but the {(isBank ? "Bank" : "Cash Box")} Account is not configured (Preferences > Financial > Opening Balance).")]);
@@ -72,7 +73,7 @@ namespace Treasury.Application.Financials.Commands
                 debitAccountId = account.AccountId.Value;
             }
 
-            var equityAccountIdRaw = preferences.FirstOrDefault(e => e.Key == "OpeningBalanceEquityAccountId")?.Value;
+            preferences.TryGetValue("OpeningBalanceEquityAccountId", out var equityAccountIdRaw);
             if (!long.TryParse(equityAccountIdRaw, out var equityAccountId) || equityAccountId <= 0)
                 return new Result(HttpStatusCode.BadRequest, [new Error("Opening Balance equity account is not configured (Preferences > Financial > Opening Balance Equity Account).")]);
 

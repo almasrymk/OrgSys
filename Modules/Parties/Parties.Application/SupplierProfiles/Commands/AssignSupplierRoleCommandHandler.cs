@@ -17,7 +17,6 @@ namespace Parties.Application.SupplierProfiles.Commands
         IUnitOfWork _UnitOfWork,
         IRepository<Parties.Domain.Dealer> _DealerRepository,
         IRepository<Parties.Domain.SupplierProfile> _Repository,
-        IRepository<Preference> _PreferenceRepository,
         IReceivableAccountValidator _Validator,
         ISender sender) : ICommandHandler<AssignSupplierRoleCommand>
     {
@@ -34,7 +33,7 @@ namespace Parties.Application.SupplierProfiles.Commands
 
             var (existingAccountId, provisionParentAccountId, errors) = await DealerPayableAccountProvisioning.ResolveAsync(
                 dealer, request.AccountId, request.AutoCreatePayableAccount,
-                _Validator, _PreferenceRepository, sender, cancellationToken);
+                _Validator, sender, cancellationToken);
             if (errors.Count > 0)
                 return new Result(HttpStatusCode.BadRequest, errors);
 

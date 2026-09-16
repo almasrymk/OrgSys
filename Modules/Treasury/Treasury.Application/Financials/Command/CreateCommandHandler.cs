@@ -1,8 +1,6 @@
 ﻿namespace Treasury.Application.Financials.Commands;
 
-using OrgSys.SharedKernel;
-using OrgSys.SharedKernel;
-using OrgSys.SharedKernel;
+using Administration.Contracts.Preferences;
 using AutoMapper;
 using System.Net;
 using MediatR;
@@ -13,7 +11,6 @@ public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork,
     IRepository<Treasury.Domain.Financial> _Repository,
     IRepository<Invoice> _RepositoryInvoice,
     IRepository<FinancialInvoice> _RepositoryFinancialInvoice,
-    IRepository<Preference> _PreferenceRepository,
     IMapper mapper,
     ISender sender) : CreateCommandHandler<CreateFinancialCommand, Treasury.Domain.Financial>(_UnitOfWork, _Repository , mapper)
 {
@@ -57,9 +54,9 @@ public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork,
                 && CreatedEntity is not null
                 && request.FinancialTypeId == (long)Treasury.Domain.FinancialTransactionType.OpeningBalance)
             {
-                var autoPost = await _PreferenceRepository.GetByFilterAsync(
-                    e => e.Reference == "Financial" && e.TypeId == request.TypeId && e.Key == "AutoCreateJournalEntry", "");
-                if (autoPost?.Value == "1")
+                var autoPost = (await sender.Send(
+                    new GetPreferenceValueQuery("Financial", request.TypeId, "AutoCreateJournalEntry"), cancellationToken)).Response;
+                if (autoPost == "1")
                     return await sender.Send(new PostFinancialOpeningBalanceCommand(CreatedEntity.Id, request.CreateUserId), cancellationToken);
             }
 

@@ -1,4 +1,4 @@
-<app-page-header title="Stock Reservations" [breadcrumbs]="[{ label: 'Home', route: '/' }, { label: 'Warehouse' }, { label: 'Reservations' }]">
+<app-page-header title="Stock Reservations" [breadcrumbs]="[{ label: 'Home', route: '/' }, { label: 'Inventory' }, { label: 'Reservations' }]">
   <div class="form-group mb-0" style="max-width: 220px;">
     <select class="form-control" [ngModel]="status()" (ngModelChange)="status.set($event); search()">
       <option [ngValue]="null">All statuses</option>

@@ -6,12 +6,16 @@ import { AuthService } from '../../../../core/auth/auth.service';
 import { isApiSuccess } from '../../../../core/models/api-result.model';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header.component';
 import { ToastService } from '../../../../shared/components/toast/toast.service';
-import { Currency } from '../../../administration/currencies/models/currency.model';
-import { CurrencyService } from '../../../administration/currencies/services/currency.service';
-import { Dealer, DealerType } from '../../../customers-suppliers/dealers/models/dealer.model';
-import { DealerService } from '../../../customers-suppliers/dealers/services/dealer.service';
-import { InvoiceType, PaymentType, Product, Stock, Unit } from '../../models/invoice-lookups.model';
-import { InvoiceTypeService, PaymentTypeService, ProductService, StockService, UnitService } from '../../services/invoice-lookups.service';
+import { Currency } from '../../../master-data/currencies/models/currency.model';
+import { CurrencyService } from '../../../master-data/currencies/services/currency.service';
+import { Dealer, DealerType } from '../../../parties';
+import { DealerService } from '../../../parties';
+import { commercialDocumentPath, InvoiceType } from '../../models/invoice-lookups.model';
+import { InvoiceTypeService } from '../../services/invoice-type.service';
+import { PaymentType } from '../../../master-data';
+import { PaymentTypeService } from '../../../master-data';
+import { Product, ProductService, Unit, UnitService } from '../../../catalog';
+import { Stock, StockService } from '../../../inventory';
 import { InvoiceService } from '../../services/invoice.service';
 
 /**
@@ -43,7 +47,8 @@ export class InvoiceFormComponent {
   private readonly productService = inject(ProductService);
   private readonly currencyService = inject(CurrencyService);
 
-  readonly typeId = Number(this.route.snapshot.paramMap.get('typeId'));
+  readonly typeId = Number(this.route.snapshot.data['typeId'] ?? this.route.snapshot.paramMap.get('typeId'));
+  readonly listPath = commercialDocumentPath(this.typeId);
   readonly invoiceType = signal<InvoiceType | null>(null);
   readonly id = signal<number | null>(null);
   readonly code = signal<string | null>(null);
@@ -260,7 +265,7 @@ export class InvoiceFormComponent {
         this.saving.set(false);
         if (isApiSuccess(result)) {
           this.toast.success('Invoice saved.');
-          this.router.navigate(['/invoices', this.typeId]);
+          this.router.navigateByUrl(this.listPath);
         } else {
           this.toast.error(result.errors?.[0]?.messageError ?? 'Save failed.');
         }

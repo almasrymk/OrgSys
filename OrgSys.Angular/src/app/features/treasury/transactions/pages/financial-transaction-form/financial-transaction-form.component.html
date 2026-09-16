@@ -1,12 +1,12 @@
 <app-page-header
   [title]="'New ' + (financialType()?.name ?? 'Transaction')"
-  [breadcrumbs]="[{ label: 'Home', route: '/' }, { label: 'Financial' }, { label: financialType()?.name ?? '', route: '/financial/transactions/' + financialTypeId }, { label: 'New' }]"
+  [breadcrumbs]="[{ label: 'Home', route: '/' }, { label: 'Treasury' }, { label: financialType()?.name ?? '', route: listPath }, { label: 'New' }]"
 ></app-page-header>
 
 <div class="card">
   <div class="card-body">
     <div class="d-flex justify-content-end mb-3">
-      <a [routerLink]="['/financial/transactions', financialTypeId]" class="btn btn-primary">
+      <a [routerLink]="listPath" class="btn btn-primary">
         <i class="bi bi-arrow-return-left"></i> Back
       </a>
     </div>

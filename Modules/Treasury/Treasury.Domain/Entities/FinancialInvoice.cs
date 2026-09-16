@@ -11,10 +11,9 @@
 
         public virtual Financial? Financial { get; set; }
 
-        [ForeignKey("Invoice")]
+        /// <summary>Scalar-only reference into CommercialDocuments.Domain.Invoice — no EF
+        /// navigation. FK preserved via Fluent HasOne(typeof(Invoice)) in OrgContext.</summary>
         public virtual long? InvoiceId { get; set; }
-
-        public virtual Invoice? Invoice { get; set; }
 
         [Column(TypeName = "decimal(18,2)")]
         public virtual decimal Amount { get; set; }        

@@ -1,12 +1,9 @@
 ﻿namespace Inventory.Application.Transactions.Commands
 {
-    using OrgSys.SharedKernel;
-    using OrgSys.SharedKernel;
-    using OrgSys.SharedKernel;
+    using Administration.Contracts.Preferences;
     using AutoMapper;
+    using MediatR;
     using System.Net;
-    using System.Threading;
-    using System.Threading.Tasks;
     using Inventory.Application.Transactions.Integration;
     using Inventory.Contracts.Transactions;
     using Inventory.Domain.Enums;
@@ -22,7 +19,7 @@
     /// time this handler runs. Flagged as known follow-up work (Phase 11/12), not silently dropped.
     /// </summary>
     public sealed class CreateTransactionByInvoiceCommandHandler(IUnitOfWork _UnitOfWork, IRepository<Transaction> _Repository,
-        IRepository<Invoice> _InvoiceRepository, IRepository<Preference> preferenceRepository, IMapper mapper,
+        IRepository<Invoice> _InvoiceRepository, ISender sender, IMapper mapper,
         IServiceProvider provider, IInventoryBalanceRepository balanceRepository) : CreateCommandHandler<CreateTransactionByInvoiceCommand, Transaction>(_UnitOfWork, _Repository, mapper)
     {
         public override async Task<Result> Handle(CreateTransactionByInvoiceCommand request, CancellationToken cancellationToken)
@@ -40,13 +37,11 @@
 
                 if (request.RespectAutoCreatePreference && invoice.TransactionId is not > 0)
                 {
-                    var autoCreateTransaction = await preferenceRepository.GetByFilterAsync(
-                        e => e.Reference == "Invoice"
-                            && e.TypeId == invoice.TypeId
-                            && e.Key == "AutoCreateTransaction",
-                        "");
+                    var autoCreateTransaction = (await sender.Send(
+                        new GetPreferenceValueQuery("Invoice", invoice.TypeId, "AutoCreateTransaction"),
+                        cancellationToken)).Response;
 
-                    if (autoCreateTransaction?.Value != "1")
+                    if (autoCreateTransaction != "1")
                     {
                         await _UnitOfWork.RollbackAsync();
                         return new Result(HttpStatusCode.OK, null);

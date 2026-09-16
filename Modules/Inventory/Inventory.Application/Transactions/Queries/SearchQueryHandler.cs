@@ -1,6 +1,7 @@
 ﻿namespace Inventory.Application.Transactions.Queries
 {
     using Accounting.Contracts.Postings;
+    using Parties.Contracts.Dealers;
     using OrgSys.SharedKernel;
     using OrgSys.SharedKernel;
     using OrgSys.SharedKernel;
@@ -46,6 +47,15 @@
                 transaction.JournalId = journal?.JournalId;
                 transaction.JournalCode = journal?.JournalCode;
             }
+
+            var dealerIds = result.Response.Where(e => e.DealerId is > 0).Select(e => e.DealerId!.Value).Distinct().ToList();
+            if (dealerIds.Count > 0)
+            {
+                var names = (await sender.Send(new GetDealerNamesQuery(dealerIds), cancellationToken)).Response ?? [];
+                foreach (var transaction in result.Response)
+                    if (transaction.DealerId is > 0)
+                        transaction.DealerName = names.GetValueOrDefault(transaction.DealerId.Value);
+            }
             return result;
         }
 
@@ -66,7 +76,7 @@
 
         public override string CreateInclude()
         {
-            return "Dealer,Stock,ToStock";
+            return "Stock,ToStock";
         }
 
         override public Func<IQueryable<Inventory.Domain.Transaction>, IOrderedQueryable<Inventory.Domain.Transaction>> CreateOrderBy(SearchTransactionQuery request)

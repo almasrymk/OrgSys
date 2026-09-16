@@ -1,16 +1,27 @@
 # OrgSys Legacy Migration Map
 
-**Update (2026-09-12)**: `LogSys`, `Notification` (+ their `LogType`/`LogStatus`/`LogAccessLevel`
+**Update (2026-09-16)**: Every row in the original table has been relocated or deleted.
+
+- `Preference` (+ CRUD + DTO) lives in `Modules/Administration`. Other modules read values through `Administration.Contracts` (`GetPreferenceValueQuery` / `GetPreferenceValuesQuery`).
+- `LogSys`, `Notification`, and `CheckEmailAndPasswordDto` live in Administration (moved 2026-09-12).
+- `CompanyProfileDto` / `OrderTypeDto` were dead duplicates and were deleted.
+- Invoice→Journal posting is `CommercialDocuments.Application.Invoices.Integration.InvoiceJournalPostingService` (Accounting.Contracts only).
+- Transaction→Journal posting is `Inventory.Application.Transactions.Integration.TransactionJournalPostingService` (Accounting.Contracts only).
+- Root `Domain/` and `Application/` folders no longer contain business source files.
+
+The Razor MVC project `OrgSys/OrgSys.csproj` remains in the solution as the legacy UI. Owner instruction (2026-09-17): **do not delete it**.
+
+---
+
+**Earlier update (2026-09-12)**: `LogSys`, `Notification` (+ their `LogType`/`LogStatus`/`LogAccessLevel`
 enums), and `CheckEmailAndPasswordDto` have been relocated to `Modules/Administration` — all three
 had zero CQRS handlers/API surface (confirmed dead-but-schema-present tables), so this was a pure,
 zero-risk namespace move (verified: `dotnet build`/`dotnet test` green, `dotnet ef
 migrations has-pending-model-changes` reports no schema change). `CompanyProfileDto.cs` and
 `OrderTypeDto.cs` — flagged below as likely dead duplicates — were confirmed to have zero
-references anywhere in the codebase and were deleted outright rather than moved. **Not done**:
-`Preferences.cs`/`PreferenceDto.cs`/the Preference CRUD slice (used by 8 modules — this needs its
-own ownership decision, SharedKernel vs. a settings-service Contracts API, not a quick move) and
-the two Journal-posting integration bridges (explicitly separate, high-risk items tied to Phase 4/8
-of the modular-monolith work, not "legacy relocation").
+references anywhere in the codebase and were deleted outright rather than moved. **Not done at that
+date**: Preference ownership and the two Journal-posting integration bridges. Both are done as of
+2026-09-16 (see the update above).
 
 
 Every business-relevant class still living in the root `Domain`/`Application` projects, classified

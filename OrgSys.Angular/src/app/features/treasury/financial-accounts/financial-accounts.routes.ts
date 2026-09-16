@@ -11,31 +11,31 @@ export const FINANCIAL_ACCOUNTS_ROUTES: Routes = [
   {
     path: 'cash-boxes',
     loadComponent: listComponent,
-    data: { financialAccountType: FinancialAccountType.CashBox, title: 'Cash Boxes', permissionPrefix: 'CashBoxes', basePath: '/financial/financial-accounts/cash-boxes' },
+    data: { financialAccountType: FinancialAccountType.CashBox, title: 'Cash Boxes', permissionPrefix: 'CashBoxes', basePath: '/treasury/financial-accounts/cash-boxes' },
   },
   {
     path: 'cash-boxes/new',
     loadComponent: formComponent,
-    data: { financialAccountType: FinancialAccountType.CashBox, title: 'Cash Boxes', basePath: '/financial/financial-accounts/cash-boxes' },
+    data: { financialAccountType: FinancialAccountType.CashBox, title: 'Cash Boxes', basePath: '/treasury/financial-accounts/cash-boxes' },
   },
   {
     path: 'cash-boxes/:id/edit',
     loadComponent: formComponent,
-    data: { financialAccountType: FinancialAccountType.CashBox, title: 'Cash Boxes', basePath: '/financial/financial-accounts/cash-boxes' },
+    data: { financialAccountType: FinancialAccountType.CashBox, title: 'Cash Boxes', basePath: '/treasury/financial-accounts/cash-boxes' },
   },
   {
     path: 'bank-accounts',
     loadComponent: listComponent,
-    data: { financialAccountType: FinancialAccountType.Bank, title: 'Bank Accounts', permissionPrefix: 'BankAccounts', basePath: '/financial/financial-accounts/bank-accounts' },
+    data: { financialAccountType: FinancialAccountType.Bank, title: 'Bank Accounts', permissionPrefix: 'BankAccounts', basePath: '/treasury/financial-accounts/bank-accounts' },
   },
   {
     path: 'bank-accounts/new',
     loadComponent: formComponent,
-    data: { financialAccountType: FinancialAccountType.Bank, title: 'Bank Accounts', basePath: '/financial/financial-accounts/bank-accounts' },
+    data: { financialAccountType: FinancialAccountType.Bank, title: 'Bank Accounts', basePath: '/treasury/financial-accounts/bank-accounts' },
   },
   {
     path: 'bank-accounts/:id/edit',
     loadComponent: formComponent,
-    data: { financialAccountType: FinancialAccountType.Bank, title: 'Bank Accounts', basePath: '/financial/financial-accounts/bank-accounts' },
+    data: { financialAccountType: FinancialAccountType.Bank, title: 'Bank Accounts', basePath: '/treasury/financial-accounts/bank-accounts' },
   },
 ];

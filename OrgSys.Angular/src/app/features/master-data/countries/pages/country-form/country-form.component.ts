@@ -57,7 +57,7 @@ export class CountryFormComponent {
         this.saving.set(false);
         if (isApiSuccess(result)) {
           this.toast.success('Country saved.');
-          this.router.navigateByUrl('/administration/countries');
+          this.router.navigateByUrl('/master-data/countries');
         } else {
           this.toast.error(result.errors?.[0]?.messageError ?? 'Save failed.');
         }

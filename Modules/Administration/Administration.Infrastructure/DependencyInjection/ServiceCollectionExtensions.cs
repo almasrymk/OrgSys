@@ -17,6 +17,7 @@ public static class ServiceCollectionExtensions
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(applicationAssembly));
         services.AddAutoMapper(cfg => cfg.AddProfile<Administration.Application.MappingProfile>());
         services.AddValidatorsFromAssembly(applicationAssembly);
+        services.AddSingleton<Administration.Application.Security.IPasswordHasher, Administration.Application.Security.PasswordHasher>();
 
         return services;
     }

@@ -3,8 +3,9 @@ import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header.component';
 import { ToastService } from '../../../../shared/components/toast/toast.service';
-import { Product, Stock } from '../../../invoices/models/invoice-lookups.model';
-import { ProductService, StockService } from '../../../invoices/services/invoice-lookups.service';
+import { Product, ProductService } from '../../../catalog';
+import { Stock } from '../../models/stock.model';
+import { StockService } from '../../services/stock.service';
 import { StockBalance } from '../../models/warehouse.model';
 import { StockBalanceService } from '../../services/stock-balance.service';
 

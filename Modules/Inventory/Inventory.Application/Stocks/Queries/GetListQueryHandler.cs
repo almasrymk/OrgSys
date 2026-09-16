@@ -1,6 +1,7 @@
 namespace Inventory.Application.Stocks.Queries
 {
     using Accounting.Contracts.Accounts;
+    using Organization.Contracts.Branches;
     using OrgSys.SharedKernel;
     using OrgSys.SharedKernel;
     using OrgSys.SharedKernel;
@@ -29,7 +30,7 @@ namespace Inventory.Application.Stocks.Queries
 
         public override string CreateInclude()
         {
-            return "Branch";
+            return string.Empty;
         }
 
         public override async Task<ResultCollection<StockDto>> Handle(GetListStockQuery request, CancellationToken cancellationToken)
@@ -43,6 +44,14 @@ namespace Inventory.Application.Stocks.Queries
                 foreach (var dto in result.Response)
                     if (dto.AccountId is > 0 && names.TryGetValue(dto.AccountId.Value, out var name))
                         dto.AccountName = name;
+            }
+
+            var branchIds = result.Response.Select(e => e.BranchId).Distinct().ToList();
+            if (branchIds.Count > 0)
+            {
+                var names = (await sender.Send(new GetBranchNamesQuery(branchIds), cancellationToken)).Response ?? [];
+                foreach (var dto in result.Response)
+                    dto.BranchName = names.GetValueOrDefault(dto.BranchId);
             }
 
             return result;

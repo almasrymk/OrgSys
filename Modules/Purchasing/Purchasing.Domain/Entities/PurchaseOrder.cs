@@ -8,9 +8,7 @@ namespace Purchasing.Domain
     /// (CommercialDocuments.Domain.Invoice, InvoiceType=Purchase) has been created the normal way
     /// and linked here, at which point Status becomes Approved. No automatic Invoice generation
     /// happens anywhere in this module (brief §40) — Purchasing never owns the financial invoice.
-    /// DealerId/Dealer keep their existing EF navigation to Parties.Domain.Dealer — an
-    /// already-accepted architecture exception, same convention every other module's Dealer
-    /// reference uses; not something this hardening pass removes. Cancel and the
+    /// DealerId is scalar-only (no EF navigation to Parties.Domain.Dealer). Cancel and the
     /// RecordReceipt/RecordReturn/CancelLine quantity-tracking methods are new, additive capability
     /// (brief §26/§33/§43) that did not exist as reachable operations previously — actual Inventory
     /// stock-movement integration remains a separate, later phase (brief §37), mirroring how
@@ -33,10 +31,9 @@ namespace Purchasing.Domain
         /// through <see cref="Create"/>.</summary>
         protected PurchaseOrder() { }
 
-        [ForeignKey("Dealer")]
+        /// <summary>Scalar-only reference into Parties.Domain.Dealer — no EF navigation.
+        /// FK preserved via Fluent HasOne(typeof(Dealer)) in OrgContext.</summary>
         public virtual long DealerId { get; private set; }
-
-        public virtual Dealer? Dealer { get; set; }
 
         /// <summary>Optional provenance link back to the requisition this order was raised from.</summary>
         public virtual long? PurchaseRequisitionId { get; private set; }

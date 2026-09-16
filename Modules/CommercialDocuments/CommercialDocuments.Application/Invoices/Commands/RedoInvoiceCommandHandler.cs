@@ -35,7 +35,7 @@ namespace CommercialDocuments.Application.Invoices.Commands
                 }
 
                 invoice.Status = OrgSys.SharedKernel.Status.New;
-                await new InvoiceJournalPostingService(_provider)
+                await new InvoiceJournalPostingService(sender)
                     .SetStatusByInvoiceIdAsync(invoice.Id, OrgSys.SharedKernel.Status.New);
 
                 if (invoice.TransactionId > 0)

@@ -32,7 +32,10 @@
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-            var builder = new ConfigurationBuilder().AddJsonFile("appsettings.json", optional: true, reloadOnChange: false);
+            var builder = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: false)
+                .AddJsonFile("appsettings.Local.json", optional: true, reloadOnChange: false)
+                .AddEnvironmentVariables();
             IConfigurationRoot config = builder.Build();
             string assemblyName = "" + typeof(OrgContext).Namespace;
             optionsBuilder
@@ -89,6 +92,17 @@
             modelBuilder.Entity<CashBox>()
                 .HasOne(e => e.FinancialAccount).WithOne(e => e.CashBox)
                 .HasForeignKey<CashBox>(e => e.FinancialAccountId).OnDelete(DeleteBehavior.Restrict);
+            // CashBox.KeeperUser navigation dropped (Treasury.Domain must not reference
+            // Administration.Domain). Fluent "no navigation" FK keeps the same column/constraint.
+            modelBuilder.Entity<CashBox>()
+                .HasOne(typeof(User)).WithMany()
+                .HasForeignKey("KeeperUserId");
+            modelBuilder.Entity<CashBox>()
+                .HasOne(typeof(Branch)).WithMany()
+                .HasForeignKey("BranchId");
+            modelBuilder.Entity<BankAccount>()
+                .HasOne(typeof(Branch)).WithMany()
+                .HasForeignKey("BranchId");
             modelBuilder.Entity<BankAccount>()
                 .HasOne(e => e.FinancialAccount).WithOne(e => e.BankAccount)
                 .HasForeignKey<BankAccount>(e => e.FinancialAccountId).OnDelete(DeleteBehavior.Restrict);
@@ -226,6 +240,42 @@
             modelBuilder.Entity<global::Inventory.Domain.Inventory>()
                 .HasOne(typeof(User)).WithMany()
                 .HasForeignKey("UserId");
+
+            // Cross-module Dealer/Branch/Invoice navigations dropped (Domain must not reference
+            // another module's Domain). Fluent "no navigation" FKs keep the same columns/constraints.
+            modelBuilder.Entity<User>()
+                .HasOne(typeof(Branch)).WithMany()
+                .HasForeignKey("BranchId");
+            modelBuilder.Entity<Product>()
+                .HasOne(typeof(Dealer)).WithMany()
+                .HasForeignKey("DealerId");
+            modelBuilder.Entity<Transaction>()
+                .HasOne(typeof(Dealer)).WithMany()
+                .HasForeignKey("DealerId");
+            modelBuilder.Entity<InventoryReceipt>()
+                .HasOne(typeof(Dealer)).WithMany()
+                .HasForeignKey("DealerId");
+            modelBuilder.Entity<InventoryIssue>()
+                .HasOne(typeof(Dealer)).WithMany()
+                .HasForeignKey("DealerId");
+            modelBuilder.Entity<Invoice>()
+                .HasOne(typeof(Dealer)).WithMany()
+                .HasForeignKey("DealerId")
+                .IsRequired();
+            modelBuilder.Entity<Financial>()
+                .HasOne(typeof(Dealer)).WithMany()
+                .HasForeignKey("DealerId");
+            modelBuilder.Entity<FinancialInvoice>()
+                .HasOne(typeof(Invoice)).WithMany()
+                .HasForeignKey("InvoiceId");
+            modelBuilder.Entity<Purchasing.Domain.PurchaseOrder>()
+                .HasOne(typeof(Dealer)).WithMany()
+                .HasForeignKey("DealerId")
+                .IsRequired();
+            modelBuilder.Entity<Stock>()
+                .HasOne(typeof(Branch)).WithMany()
+                .HasForeignKey("BranchId")
+                .IsRequired();
 
             ConfigureInventoryHardening(modelBuilder);
             ConfigureCatalog(modelBuilder);

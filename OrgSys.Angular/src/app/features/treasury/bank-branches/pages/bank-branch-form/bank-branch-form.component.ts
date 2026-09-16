@@ -5,12 +5,12 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { isApiSuccess } from '../../../../../core/models/api-result.model';
 import { PageHeaderComponent } from '../../../../../shared/components/page-header/page-header.component';
 import { ToastService } from '../../../../../shared/components/toast/toast.service';
-import { City } from '../../../cities/models/city.model';
-import { CityService } from '../../../cities/services/city.service';
-import { Country } from '../../../countries/models/country.model';
-import { CountryService } from '../../../countries/services/country.service';
-import { District } from '../../../districts/models/district.model';
-import { DistrictService } from '../../../districts/services/district.service';
+import { City } from '../../../../master-data/cities/models/city.model';
+import { CityService } from '../../../../master-data/cities/services/city.service';
+import { Country } from '../../../../master-data/countries/models/country.model';
+import { CountryService } from '../../../../master-data/countries/services/country.service';
+import { District } from '../../../../master-data/districts/models/district.model';
+import { DistrictService } from '../../../../master-data/districts/services/district.service';
 import { Bank } from '../../../banks/models/bank.model';
 import { BankService } from '../../../banks/services/bank.service';
 import { BankBranchService } from '../../services/bank-branch.service';
@@ -139,7 +139,7 @@ export class BankBranchFormComponent {
         this.saving.set(false);
         if (isApiSuccess(result)) {
           this.toast.success('Bank branch saved.');
-          this.router.navigateByUrl('/administration/bank-branches');
+          this.router.navigateByUrl('/treasury/bank-branches');
         } else {
           this.toast.error(result.errors?.[0]?.messageError ?? 'Save failed.');
         }

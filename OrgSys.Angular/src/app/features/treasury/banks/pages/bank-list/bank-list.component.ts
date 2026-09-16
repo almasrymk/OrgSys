@@ -9,8 +9,8 @@ import { PageHeaderComponent } from '../../../../../shared/components/page-heade
 import { PaginationComponent } from '../../../../../shared/components/pagination/pagination.component';
 import { ToastService } from '../../../../../shared/components/toast/toast.service';
 import { Status } from '../../../../../shared/models/status.enum';
-import { Country } from '../../../countries/models/country.model';
-import { CountryService } from '../../../countries/services/country.service';
+import { Country } from '../../../../master-data/countries/models/country.model';
+import { CountryService } from '../../../../master-data/countries/services/country.service';
 import { Bank } from '../../models/bank.model';
 import { BankService } from '../../services/bank.service';
 

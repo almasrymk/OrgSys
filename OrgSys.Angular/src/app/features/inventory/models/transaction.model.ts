@@ -12,6 +12,21 @@ export enum TransactionTypeId {
   Damaged = 8,
 }
 
+/** Business URL segments under /inventory/movements. Received (4) has no standalone screen. */
+export const INVENTORY_MOVEMENT_PATHS: Record<number, string> = {
+  1: 'addition',
+  2: 'issue',
+  3: 'transfer',
+  5: 'adjustment-in',
+  6: 'adjustment-out',
+  7: 'opening-balance',
+  8: 'damaged',
+};
+
+export function inventoryMovementPath(typeId: number): string {
+  return `/inventory/movements/${INVENTORY_MOVEMENT_PATHS[typeId] ?? String(typeId)}`;
+}
+
 export interface TransactionType extends BaseEntity {
   name: string | null;
   inOut: number;

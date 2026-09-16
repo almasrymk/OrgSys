@@ -41,6 +41,8 @@
     <!-- AssignCustomerRole/AssignSupplierRoleCommandHandlerTests exercise Parties.Application directly. -->
     <ProjectReference Include="..\..\Modules\Parties\Parties.Application\Parties.Application.csproj" />
     <ProjectReference Include="..\..\Modules\Parties\Parties.Domain\Parties.Domain.csproj" />
+    <!-- PasswordHasherTests exercise Administration.Application.Security. -->
+    <ProjectReference Include="..\..\Modules\Administration\Administration.Application\Administration.Application.csproj" />
   </ItemGroup>
 
 </Project>

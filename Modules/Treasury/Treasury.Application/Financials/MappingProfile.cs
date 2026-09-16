@@ -35,7 +35,7 @@ public partial class MappingProfile : Profile
         CreateMap<Financial, Invoice>();
 
         CreateMap<FinancialInvoice, FinancialInvoiceDto>()
-            .ForMember(dest => dest.Net , src => src.MapFrom(s => s.Invoice!.Net));
+            .ForMember(dest => dest.Net, opt => opt.Ignore());
         CreateMap<FinancialInvoiceDto, FinancialInvoice>();
 
 

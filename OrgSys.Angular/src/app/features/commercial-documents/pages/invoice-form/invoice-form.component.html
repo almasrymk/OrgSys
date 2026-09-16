@@ -1,12 +1,12 @@
 <app-page-header
   [title]="(id() ? 'Invoice ' + (code() ?? '') : 'New Invoice') + (invoiceType()?.name ? ' — ' + invoiceType()!.name : '')"
-  [breadcrumbs]="[{ label: 'Home', route: '/' }, { label: 'Invoices', route: '/invoices/' + typeId }, { label: id() ? 'Edit' : 'New' }]"
+  [breadcrumbs]="[{ label: 'Home', route: '/' }, { label: 'Commercial Documents', route: listPath }, { label: id() ? 'Edit' : 'New' }]"
 ></app-page-header>
 
 <div class="card">
   <div class="card-body">
     <div class="d-flex justify-content-end mb-3">
-      <a [routerLink]="['/invoices', typeId]" class="btn btn-primary">
+      <a [routerLink]="listPath" class="btn btn-primary">
         <i class="bi bi-arrow-return-left"></i> Back
       </a>
     </div>

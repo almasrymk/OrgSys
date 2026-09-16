@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 
-/** Root delegates here; this delegates to each accounting sub-feature's own routes. */
 export const ACCOUNTING_ROUTES: Routes = [
   {
     path: 'accounts',
@@ -9,5 +8,9 @@ export const ACCOUNTING_ROUTES: Routes = [
   {
     path: 'journal-entries',
     loadChildren: () => import('./journal-entries/journal-entries.routes').then((m) => m.JOURNAL_ENTRIES_ROUTES),
+  },
+  {
+    path: 'fiscal-years',
+    loadChildren: () => import('./fiscal-years/fiscal-years.routes').then((m) => m.FISCAL_YEARS_ROUTES),
   },
 ];

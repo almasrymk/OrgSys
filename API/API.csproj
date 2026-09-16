@@ -6,6 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <!-- Keep offline/local restores from failing when NuGet's audit service is unreachable. -->
     <NuGetAudit>false</NuGetAudit>
+    <UserSecretsId>orgsys-api-6a2f0c8e-1b3d-4e5f-9a7c-2d8e4f6a1b3c</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

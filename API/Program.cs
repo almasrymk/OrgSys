@@ -28,6 +28,21 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Configuration.AddJsonFile("appsettings.Local.json", optional: true, reloadOnChange: true);
+builder.Configuration.AddEnvironmentVariables();
+
+if (!EF.IsDesignTime)
+{
+    var orgConnection = builder.Configuration.GetConnectionString("OrgConnection");
+    if (string.IsNullOrWhiteSpace(orgConnection)
+        || orgConnection.Contains("CHANGE_ME", StringComparison.Ordinal)
+        || orgConnection.Contains("REPLACE_WITH_ENV_VAR", StringComparison.Ordinal))
+    {
+        throw new InvalidOperationException(
+            "ConnectionStrings:OrgConnection must be supplied via user-secrets, appsettings.Local.json, or the ConnectionStrings__OrgConnection environment variable. See docs/local-setup.md.");
+    }
+}
+
 const string AngularClientCorsPolicy = "AngularClient";
 
 builder.Services.AddCors(options =>
@@ -43,7 +58,16 @@ builder.Services.AddCors(options =>
 builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection(JwtOptions.SectionName));
 builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
 
-var jwtOptions = builder.Configuration.GetSection(JwtOptions.SectionName).Get<JwtOptions>()!;
+var jwtOptions = builder.Configuration.GetSection(JwtOptions.SectionName).Get<JwtOptions>()
+    ?? throw new InvalidOperationException("The Jwt configuration section is missing.");
+
+if (!EF.IsDesignTime
+    && (string.IsNullOrWhiteSpace(jwtOptions.Key)
+        || jwtOptions.Key.Contains("REPLACE_WITH_ENV_VAR", StringComparison.Ordinal)))
+{
+    throw new InvalidOperationException(
+        "Jwt:Key must be supplied via user-secrets, appsettings.Local.json, or the Jwt__Key environment variable. See docs/local-setup.md.");
+}
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>

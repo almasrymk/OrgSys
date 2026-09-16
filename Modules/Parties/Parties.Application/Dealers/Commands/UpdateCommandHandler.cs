@@ -13,7 +13,6 @@ namespace Parties.Application.Dealers.Commands
     public sealed class UpdateCommandHandler(
         IUnitOfWork _UnitOfWork,
         IRepository<Parties.Domain.Dealer> _Repository,
-        IRepository<Preference> _PreferenceRepository,
         IReceivableAccountValidator _Validator,
         ISender sender,
         IMapper mapper,
@@ -26,10 +25,10 @@ namespace Parties.Application.Dealers.Commands
             var (existingAccountId, provisionParentAccountId, errors) = dealer.TypeId == (long)Parties.Domain.DealerType.Supplier
                 ? await DealerPayableAccountProvisioning.ResolveAsync(
                     dealer, request.AccountId, request.AutoCreatePayableAccount,
-                    _Validator, _PreferenceRepository, sender, cancellationToken)
+                    _Validator, sender, cancellationToken)
                 : await DealerReceivableAccountProvisioning.ResolveAsync(
                     dealer, request.AccountId, request.AutoCreateReceivableAccount,
-                    _Validator, _PreferenceRepository, sender, cancellationToken);
+                    _Validator, sender, cancellationToken);
             if (errors.Count > 0)
                 return new Result(HttpStatusCode.BadRequest, errors);
 

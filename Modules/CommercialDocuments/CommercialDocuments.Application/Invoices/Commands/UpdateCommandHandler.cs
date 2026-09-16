@@ -5,6 +5,8 @@
     using OrgSys.SharedKernel;
     using AutoMapper;
     using CommercialDocuments.Application.Invoices.Integration;
+    using MediatR;
+    using Microsoft.Extensions.DependencyInjection;
 
     public sealed class UpdateInvoiceCommand : InvoiceDto , ICommand, IUpdateCommand<Result>;
     public sealed class UpdateCommandHandler(IUnitOfWork _UnitOfWork, 
@@ -28,7 +30,7 @@
 
             if (res)
             {
-                await new InvoiceJournalPostingService(_provider).SyncAsync(request);
+                await new InvoiceJournalPostingService(_provider.GetRequiredService<ISender>()).SyncAsync(request);
                 res = await _Repository.UpdateAsync(request);
             }
 

@@ -1,39 +1,34 @@
 namespace CommercialDocuments.Application.Invoices.Integration;
 
 using Accounting.Contracts.Postings;
-using Administration.Domain;
+using Administration.Contracts.Preferences;
+using CommercialDocuments.Contracts.Invoices;
 using MediatR;
-using Microsoft.Extensions.DependencyInjection;
-using Parties.Domain;
+using Parties.Contracts.Dealers;
 
 /// <summary>
-/// Invoice -> Journal posting bridge. Determines posting intent (which accounts, what amounts)
-/// from Invoice/Preference/Dealer data — the same cross-module Application reads this bridge
-/// always made (Preference: Administration, Dealer: Parties, see docs/dependency-rules.md); Journal
-/// creation/update/deletion is owned by Accounting.Application and reached only through
-/// Accounting.Contracts. Replaces (behavior preserved) the legacy root Application project's
-/// Application.Commands.Org.Financials.Integration.JournalInvoice.InvoiceJournalIntegration — see
-/// the legacy-Application-elimination report.
+/// Invoice → Journal posting bridge. Determines posting intent (which accounts, what amounts)
+/// from Invoice facts plus Contracts lookups (Administration preferences, Parties dealer account);
+/// Journal creation/update/deletion is owned by Accounting.Application and reached only through
+/// Accounting.Contracts. Replaces the legacy root Application project's InvoiceJournalIntegration.
 /// </summary>
-public sealed class InvoiceJournalPostingService(IServiceProvider provider)
+public sealed class InvoiceJournalPostingService(ISender sender)
 {
     private const string ReferenceTable = "invoice";
 
     public async Task SyncAsync(CommercialDocuments.Domain.Invoice invoice, bool force = false)
     {
-        var sender = provider.GetRequiredService<ISender>();
-        var preferenceRepository = provider.GetRequiredService<IRepository<Preference>>();
-
         var existingJournal = (await sender.Send(
             new GetAccountingDocumentJournalQuery(ReferenceTable, invoice.Id, invoice.TypeId))).Response;
 
-        var preferences = (await preferenceRepository.GetListByFilterAsync(
-            e => e.Reference == "Invoice" && e.TypeId == invoice.TypeId))?.ToList() ?? [];
+        var preferences = (await sender.Send(
+            new GetPreferenceValuesQuery("Invoice", invoice.TypeId))).Response
+            ?? new Dictionary<string, string?>();
 
-        var enabled = preferences.FirstOrDefault(e => e.Key == "AccountsIntegration")?.Value == "1"
+        var enabled = PreferenceEquals(preferences, "AccountsIntegration", "1")
             && (force
                 || existingJournal != null
-                || preferences.FirstOrDefault(e => e.Key == "AutoCreateJournalEntry")?.Value == "1");
+                || PreferenceEquals(preferences, "AutoCreateJournalEntry", "1"));
 
         if (!enabled)
         {
@@ -42,10 +37,11 @@ public sealed class InvoiceJournalPostingService(IServiceProvider provider)
             return;
         }
 
-        var invoiceAccountKey = invoice.TypeId is 2 or 4 ? "PurchaseAccount" : "SalesAccount";
+        var invoiceAccountKey = invoice.TypeId is (long)InvoiceTypeId.Purchase or (long)InvoiceTypeId.PurchaseReturn
+            ? "PurchaseAccount"
+            : "SalesAccount";
         var invoiceAccountId = ParseAccountId(preferences, invoiceAccountKey);
-        var dealerRepository = provider.GetRequiredService<IRepository<Dealer>>();
-        var dealer = await dealerRepository.GetByFilterAsync(e => e.Id == invoice.DealerId, "");
+        var dealer = (await sender.Send(new GetDealerByIdQuery(invoice.DealerId))).Response;
         var dealerAccountId = dealer?.AccountId is > 0
             ? dealer.AccountId.Value
             : ParseAccountId(preferences, "DealerAccount");
@@ -59,7 +55,7 @@ public sealed class InvoiceJournalPostingService(IServiceProvider provider)
         if (taxAmount != 0 && taxAccountId <= 0)
             throw new InvalidOperationException("The tax account is not configured in invoice preferences.");
 
-        var dealerIsDebit = invoice.TypeId is 1 or 4;
+        var dealerIsDebit = invoice.TypeId is (long)InvoiceTypeId.Sales or (long)InvoiceTypeId.PurchaseReturn;
         var amount = invoice.Net;
         var invoiceAmount = amount - taxAmount;
         var lines = new List<AccountingPostingLine>
@@ -94,18 +90,19 @@ public sealed class InvoiceJournalPostingService(IServiceProvider provider)
 
     public async Task DeleteByInvoiceIdAsync(long invoiceId)
     {
-        var sender = provider.GetRequiredService<ISender>();
         await sender.Send(new DeleteAccountingDocumentJournalCommand(ReferenceTable, invoiceId));
     }
 
     public async Task SetStatusByInvoiceIdAsync(long invoiceId, OrgSys.SharedKernel.Status status)
     {
-        var sender = provider.GetRequiredService<ISender>();
         await sender.Send(new SetAccountingDocumentJournalStatusCommand(ReferenceTable, invoiceId, status));
     }
 
-    private static long ParseAccountId(IEnumerable<Preference> preferences, string key) =>
-        long.TryParse(preferences.FirstOrDefault(e => e.Key == key)?.Value, out var id) ? id : 0;
+    private static bool PreferenceEquals(IReadOnlyDictionary<string, string?> preferences, string key, string expected) =>
+        preferences.TryGetValue(key, out var value) && value == expected;
+
+    private static long ParseAccountId(IReadOnlyDictionary<string, string?> preferences, string key) =>
+        preferences.TryGetValue(key, out var value) && long.TryParse(value, out var id) ? id : 0;
 
     private static decimal CalculateTaxAmount(CommercialDocuments.Domain.Invoice invoice)
     {

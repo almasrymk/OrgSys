@@ -67,7 +67,7 @@ export class CityFormComponent {
         this.saving.set(false);
         if (isApiSuccess(result)) {
           this.toast.success('City saved.');
-          this.router.navigateByUrl('/administration/cities');
+          this.router.navigateByUrl('/master-data/cities');
         } else {
           this.toast.error(result.errors?.[0]?.messageError ?? 'Save failed.');
         }

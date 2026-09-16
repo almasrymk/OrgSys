@@ -65,7 +65,7 @@ export class CurrencyFormComponent {
         this.saving.set(false);
         if (isApiSuccess(result)) {
           this.toast.success('Currency saved.');
-          this.router.navigateByUrl('/administration/currencies');
+          this.router.navigateByUrl('/master-data/currencies');
         } else {
           this.toast.error(result.errors?.[0]?.messageError ?? 'Save failed.');
         }

@@ -23,7 +23,6 @@ namespace Parties.Application.CustomerProfiles.Commands
         IUnitOfWork _UnitOfWork,
         IRepository<Parties.Domain.Dealer> _DealerRepository,
         IRepository<Parties.Domain.CustomerProfile> _Repository,
-        IRepository<Preference> _PreferenceRepository,
         IReceivableAccountValidator _Validator,
         ISender sender) : ICommandHandler<AssignCustomerRoleCommand>
     {
@@ -40,7 +39,7 @@ namespace Parties.Application.CustomerProfiles.Commands
 
             var (existingAccountId, provisionParentAccountId, errors) = await DealerReceivableAccountProvisioning.ResolveAsync(
                 dealer, request.AccountId, request.AutoCreateReceivableAccount,
-                _Validator, _PreferenceRepository, sender, cancellationToken);
+                _Validator, sender, cancellationToken);
             if (errors.Count > 0)
                 return new Result(HttpStatusCode.BadRequest, errors);
 

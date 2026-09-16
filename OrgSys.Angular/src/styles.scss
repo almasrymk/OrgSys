@@ -36,3 +36,56 @@ body {
 .menu .main-menu ul li a {
   height: 80px !important;
 }
+
+/* Dore's .scroll areas were driven by PerfectScrollbar in MVC (dore.script.js).
+   Angular never initializes that plugin, so overflowing rail/sub-menu items were clipped
+   with no scrollbar — especially after Treasury/Inventory gained more children. */
+.menu .main-menu,
+.menu .sub-menu {
+  overflow: hidden;
+  top: 100px;
+  height: calc(100vh - 100px);
+}
+
+.menu .main-menu .scroll,
+.menu .sub-menu .scroll {
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #d7d7d7 transparent;
+}
+
+.menu .main-menu .scroll::-webkit-scrollbar,
+.menu .sub-menu .scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.menu .main-menu .scroll::-webkit-scrollbar-thumb,
+.menu .sub-menu .scroll::-webkit-scrollbar-thumb {
+  background: #d7d7d7;
+  border-radius: 10px;
+}
+
+@media (max-width: 1439px) {
+  .menu .main-menu,
+  .menu .sub-menu {
+    top: 90px;
+    height: calc(100vh - 90px);
+  }
+}
+
+@media (max-width: 1199px) {
+  .menu .main-menu,
+  .menu .sub-menu {
+    top: 80px;
+    height: calc(100vh - 80px);
+  }
+}
+
+@media (max-width: 767px) {
+  .menu .main-menu,
+  .menu .sub-menu {
+    top: 70px;
+    height: calc(100vh - 70px);
+  }
+}

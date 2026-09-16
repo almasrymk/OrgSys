@@ -5,12 +5,12 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { isApiSuccess } from '../../../../../core/models/api-result.model';
 import { PageHeaderComponent } from '../../../../../shared/components/page-header/page-header.component';
 import { ToastService } from '../../../../../shared/components/toast/toast.service';
-import { Dealer } from '../../../../customers-suppliers/dealers/models/dealer.model';
-import { DealerService } from '../../../../customers-suppliers/dealers/services/dealer.service';
-import { Unit } from '../../../../invoices/models/invoice-lookups.model';
-import { UnitService } from '../../../../invoices/services/invoice-lookups.service';
-import { Classification } from '../../../../reports/models/report-lookups.model';
-import { ClassificationService } from '../../../../reports/services/report-lookups.service';
+import { Dealer } from '../../../../parties';
+import { DealerService } from '../../../../parties';
+import { Unit } from '../../../models/unit.model';
+import { UnitService } from '../../../data-access/unit.service';
+import { Classification } from '../../../models/classification.model';
+import { ClassificationService } from '../../../data-access/classification.service';
 import { ProductService } from '../../services/product.service';
 
 /**
@@ -153,7 +153,7 @@ export class ProductFormComponent {
         this.saving.set(false);
         if (isApiSuccess(result)) {
           this.toast.success('Product saved.');
-          this.router.navigateByUrl('/administration/products');
+          this.router.navigateByUrl('/catalog/products');
         } else {
           this.toast.error(result.errors?.[0]?.messageError ?? 'Save failed.');
         }

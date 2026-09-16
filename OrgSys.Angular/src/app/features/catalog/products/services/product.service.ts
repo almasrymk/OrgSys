@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { ApiResultCollection } from '../../../../core/models/api-result.model';
 import { Product, SaveProductRequest } from '../models/product.model';
 import { BaseApiService } from '../../../../core/services/base-api.service';
 
@@ -22,5 +23,11 @@ export class ProductService extends BaseApiService<Product, SaveProductRequest, 
   getMaxCodeNumber(): Observable<number> {
     const params = new HttpParams().set('ParentId', 0).set('TypeId', 0);
     return this.http.get<number>(`${this.baseUrl}/GetMax`, { params });
+  }
+
+  /** Dispatches Inventory `GetListProductByBalanceQuery` via GET /Product/GetAllByBalance. */
+  getAllByBalance(stockId: number, date: string): Observable<ApiResultCollection<Product>> {
+    const params = new HttpParams().set('StockId', stockId).set('date', date);
+    return this.http.get<ApiResultCollection<Product>>(`${this.baseUrl}/GetAllByBalance`, { params });
   }
 }

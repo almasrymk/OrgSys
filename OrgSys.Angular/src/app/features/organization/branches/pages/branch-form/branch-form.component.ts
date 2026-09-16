@@ -57,7 +57,7 @@ export class BranchFormComponent {
         this.saving.set(false);
         if (isApiSuccess(result)) {
           this.toast.success('Branch saved.');
-          this.router.navigateByUrl('/administration/branches');
+          this.router.navigateByUrl('/organization/branches');
         } else {
           this.toast.error(result.errors?.[0]?.messageError ?? 'Save failed.');
         }

@@ -1,6 +1,7 @@
 namespace Reporting.Application.Dealer.Queries
 {
     using OrgSys.SharedKernel;
+    using Parties.Domain;
     using Treasury.Domain;
     using System.Net;
 
@@ -23,7 +24,8 @@ namespace Reporting.Application.Dealer.Queries
     public sealed class GetDealerStatementReportQueryHandler(
         IRepository<Invoice> invoiceRepository,
         IRepository<Financial> financialRepository,
-        IRepository<global::CommercialDocuments.Domain.InvoiceType> invoiceTypeRepository)
+        IRepository<global::CommercialDocuments.Domain.InvoiceType> invoiceTypeRepository,
+        IRepository<Dealer> dealerRepository)
         : ICommandPaginationHandler<GetDealerStatementReportQuery, DealerStatment>
     {
         private sealed record Row(long DealerId, string? DealerName, string? DealerImgPath, DateTime Date, int Type, string? TypeName, string? Code, long? ReferenceId, decimal DisplayAmount, int DisplayInOut, decimal SignedAmount);
@@ -35,37 +37,45 @@ namespace Reporting.Application.Dealer.Queries
             var invoiceTypeIds = invoiceTypes.Where(e => e.Group == group).Select(e => e.Id).ToHashSet();
             var invoiceTypeById = invoiceTypes.ToDictionary(e => e.Id, e => e);
 
+            var dealers = (await dealerRepository.GetListByFilterAsync(
+                e => e.TypeId == request.DealerTypeId
+                    && (request.DealerId == 0 || e.Id == request.DealerId)
+                    && e.Status != Status.Deleted && !e.Hide,
+                string.Empty))?.ToList() ?? [];
+            var dealerById = dealers.ToDictionary(e => e.Id);
+            var dealerIdsFilter = dealerById.Keys.ToHashSet();
+
             var invoices = (await invoiceRepository.GetListByFilterAsync(
                 e => invoiceTypeIds.Contains(e.TypeId)
-                    && e.Dealer!.TypeId == request.DealerTypeId
-                    && (request.DealerId == 0 || e.DealerId == request.DealerId)
+                    && dealerIdsFilter.Contains(e.DealerId)
                     && (request.ShiftId == 0 || e.ShiftId == request.ShiftId)
                     && (request.BranchId == 0 || e.BranchId == request.BranchId)
                     && (request.UserId == 0 || e.CreateUserId == request.UserId)
                     && e.Status != Status.Deleted && !e.Hide,
-                "Dealer"))?.ToList() ?? [];
+                string.Empty))?.ToList() ?? [];
 
             var financials = (await financialRepository.GetListByFilterAsync(
-                e => e.Dealer != null && e.Dealer.TypeId == request.DealerTypeId
-                    && (request.DealerId == 0 || e.DealerId == request.DealerId)
+                e => e.DealerId.HasValue && dealerIdsFilter.Contains(e.DealerId.Value)
                     && (request.ShiftId == 0 || e.ShiftId == request.ShiftId)
                     && (request.BranchId == 0 || e.BranchId == request.BranchId)
                     && (request.UserId == 0 || e.CreateUserId == request.UserId)
                     && e.Status != Status.Deleted && !e.Hide,
-                "Dealer,FinancialType"))?.ToList() ?? [];
+                "FinancialType"))?.ToList() ?? [];
 
             var invoiceRows = invoices.Select(e =>
             {
+                dealerById.TryGetValue(e.DealerId, out var dealer);
                 var invoiceType = invoiceTypeById.GetValueOrDefault(e.TypeId);
-                return new Row(e.DealerId, e.Dealer?.Name, e.Dealer?.ImgPath, e.Date, 1,
+                return new Row(e.DealerId, dealer?.Name, dealer?.ImgPath, e.Date, 1,
                     invoiceType != null ? $"{invoiceType.Group} {invoiceType.Name}" : null,
                     e.Code, e.Id, e.NetByDefaultCurrency, invoiceType?.InOut ?? 0, e.NetByDefaultCurrency * (invoiceType?.InOut ?? 0));
             });
 
             var financialRows = financials.Where(e => e.DealerId.HasValue).Select(e =>
             {
+                dealerById.TryGetValue(e.DealerId!.Value, out var dealer);
                 var inOut = e.FinancialType?.InOut ?? 0;
-                return new Row(e.DealerId!.Value, e.Dealer?.Name, e.Dealer?.ImgPath, e.Date, 2,
+                return new Row(e.DealerId.Value, dealer?.Name, dealer?.ImgPath, e.Date, 2,
                     e.FinancialType?.Name, e.Code, e.Id, e.AmountByDefaultCurrency, -1, -Math.Abs(e.AmountByDefaultCurrency * inOut));
             });
 

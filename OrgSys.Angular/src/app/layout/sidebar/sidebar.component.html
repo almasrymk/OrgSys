@@ -5,7 +5,7 @@
         <ng-container *ngFor="let item of menu; let i = index">
           <li *appHasPermission="item.permissionKeys ?? ''"
               routerLinkActive="active"
-              [class.active]="!item.route && activeGroupIndex() === i">
+              [class.active]="isRailActive(item, i)">
             <a [routerLink]="item.route ?? null" (click)="onRailClick(item, i, $event)">
               <i [class]="item.icon"></i>
               <span>{{ item.labelKey }}</span>
@@ -18,7 +18,7 @@
   <div class="sub-menu">
     <div class="scroll">
       <ng-container *ngFor="let item of menu; let i = index">
-        <ul class="list-unstyled" *ngIf="item.children" [class.d-block]="activeGroupIndex() === i">
+        <ul class="list-unstyled" *ngIf="item.children" [class.d-block]="openedGroupIndex() === i">
           <ng-container *ngFor="let child of item.children">
             <li *appHasPermission="child.permissionKeys ?? ''" routerLinkActive="active">
               <a [routerLink]="child.route">

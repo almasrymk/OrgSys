@@ -6,10 +6,9 @@
         [StringLength(50, MinimumLength = 3)]
         public virtual string? Name { get; set; }
 
-        [ForeignKey("Branch")]
+        /// <summary>Scalar-only reference into Organization.Domain.Branch — no EF navigation.
+        /// FK preserved via Fluent HasOne(typeof(Branch)) in OrgContext.</summary>
         public virtual long BranchId { get; set; }
-
-        public virtual Branch? Branch { get; set; }
 
         // No navigation to Accounting.Domain.Account — see Dealer.cs (Parties.Domain) for why;
         // same GeneralLedger bounded-context isolation rule applies here.

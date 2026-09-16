@@ -35,7 +35,7 @@ namespace CommercialDocuments.Application.Invoices.Commands
                 }
 
                 invoice.Status = OrgSys.SharedKernel.Status.Cancel;
-                await new InvoiceJournalPostingService(_provider)
+                await new InvoiceJournalPostingService(sender)
                     .SetStatusByInvoiceIdAsync(invoice.Id, OrgSys.SharedKernel.Status.Cancel);
 
                 if (invoice.TransactionId > 0)

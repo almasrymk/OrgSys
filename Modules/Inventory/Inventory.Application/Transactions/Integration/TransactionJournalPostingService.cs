@@ -1,6 +1,7 @@
 namespace Inventory.Application.Transactions.Integration;
 
 using Accounting.Contracts.Postings;
+using Administration.Contracts.Preferences;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -20,7 +21,6 @@ public sealed class TransactionJournalPostingService(IServiceProvider provider)
     public async Task SyncAsync(Transaction transaction, long? sourceInvoiceTypeId = null, bool force = false)
     {
         var sender = provider.GetRequiredService<ISender>();
-        var preferenceRepository = provider.GetRequiredService<IRepository<Preference>>();
 
         var existingJournal = (await sender.Send(
             new GetAccountingDocumentJournalQuery(ReferenceTable, transaction.Id, transaction.TypeId))).Response;
@@ -31,11 +31,11 @@ public sealed class TransactionJournalPostingService(IServiceProvider provider)
             6 => 2,
             _ => transaction.TypeId
         };
-        var preferences = (await preferenceRepository.GetListByFilterAsync(
-            e => e.Reference == "Transaction" && e.TypeId == preferenceTypeId))?.ToList() ?? [];
+        var preferences = (await sender.Send(new GetPreferenceValuesQuery("Transaction", preferenceTypeId))).Response
+            ?? new Dictionary<string, string?>();
 
-        var accountsIntegrationEnabled = preferences.FirstOrDefault(e => e.Key == "AccountsIntegration")?.Value == "1";
-        var autoCreateJournalEnabled = preferences.FirstOrDefault(e => e.Key == "AutoCreateJournalEntry")?.Value == "1";
+        var accountsIntegrationEnabled = PreferenceEquals(preferences, "AccountsIntegration", "1");
+        var autoCreateJournalEnabled = PreferenceEquals(preferences, "AutoCreateJournalEntry", "1");
         var enabled = force
             || autoCreateJournalEnabled
             || (accountsIntegrationEnabled && existingJournal != null);
@@ -105,7 +105,7 @@ public sealed class TransactionJournalPostingService(IServiceProvider provider)
 
     private async Task<(long DebitAccountId, long CreditAccountId)> ResolveAccountsAsync(
         Transaction transaction,
-        IEnumerable<Preference> preferences,
+        IReadOnlyDictionary<string, string?> preferences,
         long? sourceInvoiceTypeId)
     {
         return transaction.TypeId switch
@@ -123,16 +123,16 @@ public sealed class TransactionJournalPostingService(IServiceProvider provider)
     }
 
     private static (long DebitAccountId, long CreditAccountId) ResolveOpeningBalanceAccounts(
-        IEnumerable<Preference> preferences) =>
+        IReadOnlyDictionary<string, string?> preferences) =>
         (ParseAccountId(preferences, "StockAccount"), ParseAccountId(preferences, "OpeningBalanceAccount"));
 
     private static (long DebitAccountId, long CreditAccountId) ResolveInventoryDamageAccounts(
-        IEnumerable<Preference> preferences) =>
+        IReadOnlyDictionary<string, string?> preferences) =>
         (ParseAccountId(preferences, "InventoryDamageExpenseAccount"), ParseAccountId(preferences, "StockAccount"));
 
     private async Task<(long DebitAccountId, long CreditAccountId)> ResolveAdditionAccountsAsync(
         Transaction transaction,
-        IEnumerable<Preference> preferences,
+        IReadOnlyDictionary<string, string?> preferences,
         long? sourceInvoiceTypeId)
     {
         var counterKey = sourceInvoiceTypeId == 3
@@ -143,7 +143,7 @@ public sealed class TransactionJournalPostingService(IServiceProvider provider)
 
     private async Task<(long DebitAccountId, long CreditAccountId)> ResolveIssueAccountsAsync(
         Transaction transaction,
-        IEnumerable<Preference> preferences,
+        IReadOnlyDictionary<string, string?> preferences,
         long? sourceInvoiceTypeId)
     {
         var counterKey = sourceInvoiceTypeId == 4
@@ -154,7 +154,7 @@ public sealed class TransactionJournalPostingService(IServiceProvider provider)
 
     private async Task<(long DebitAccountId, long CreditAccountId)> ResolveTransferAccountsAsync(
         Transaction transaction,
-        IEnumerable<Preference> preferences)
+        IReadOnlyDictionary<string, string?> preferences)
     {
         var sourceAccountId = await GetStockAccountIdAsync(transaction.StockId);
         return (
@@ -164,7 +164,7 @@ public sealed class TransactionJournalPostingService(IServiceProvider provider)
 
     private async Task<(long DebitAccountId, long CreditAccountId)> ResolveReceivedAccountsAsync(
         Transaction transaction,
-        IEnumerable<Preference> preferences)
+        IReadOnlyDictionary<string, string?> preferences)
     {
         var destinationAccountId = await GetStockAccountIdAsync(transaction.StockId);
         return (
@@ -193,6 +193,9 @@ public sealed class TransactionJournalPostingService(IServiceProvider provider)
         return stock?.AccountId ?? 0;
     }
 
-    private static long ParseAccountId(IEnumerable<Preference> preferences, string key) =>
-        long.TryParse(preferences.FirstOrDefault(e => e.Key == key)?.Value, out var id) ? id : 0;
+    private static bool PreferenceEquals(IReadOnlyDictionary<string, string?> preferences, string key, string expected) =>
+        preferences.TryGetValue(key, out var value) && value == expected;
+
+    private static long ParseAccountId(IReadOnlyDictionary<string, string?> preferences, string key) =>
+        preferences.TryGetValue(key, out var value) && long.TryParse(value, out var id) ? id : 0;
 }

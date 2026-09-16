@@ -14,16 +14,14 @@
     public sealed class CreateInvoiceCommand : InvoiceDto, ICommand , ICreateCommand<Result>;
 
     public sealed class CreateCommandHandler(IUnitOfWork _UnitOfWork, IRepository<CommercialDocuments.Domain.Invoice> _Repository,
-        IRepository<Administration.Domain.Preference> preferenceRepository, IMapper mapper, IServiceProvider provider,
+        IMapper mapper,
         ISender sender, IIntegrationEventPublisher integrationEventPublisher) : CreateCommandHandler<CreateInvoiceCommand, CommercialDocuments.Domain.Invoice>(_UnitOfWork, _Repository , mapper)
     {
         public override async Task<Result> Handle(CreateInvoiceCommand request, CancellationToken cancellationToken)
         {
-            var autoCreateTransaction = await preferenceRepository.GetByFilterAsync(
-                e => e.Reference == "Invoice"
-                    && e.TypeId == request.TypeId
-                    && e.Key == "AutoCreateTransaction",
-                "");
+            var autoCreateTransaction = (await sender.Send(
+                new Administration.Contracts.Preferences.GetPreferenceValueQuery("Invoice", request.TypeId, "AutoCreateTransaction"),
+                cancellationToken)).Response;
 
             CommercialDocuments.Domain.Invoice invoice;
             await _UnitOfWork.BeginTransactionAsync();
@@ -33,7 +31,7 @@
                 await _Repository.CreateAsync(invoice);
                 await _UnitOfWork.SaveChangeAsync(cancellationToken);
 
-                await new InvoiceJournalPostingService(provider).SyncAsync(invoice);
+                await new InvoiceJournalPostingService(sender).SyncAsync(invoice);
                 await _UnitOfWork.SaveChangeAsync(cancellationToken);
 
                 // Notify Receivables that a Sales Invoice reached AR-integrated GL posting — see
@@ -88,7 +86,7 @@
                 return new Result(HttpStatusCode.InternalServerError, [new Error(ex.Message)]);
             }
 
-            if (autoCreateTransaction?.Value == "1")
+            if (autoCreateTransaction == "1")
                 return await sender.Send(new CreateTransactionByInvoiceCommand(invoice.Id), cancellationToken);
 
             return new Result(HttpStatusCode.OK, null);

@@ -103,7 +103,7 @@ export class DistrictFormComponent {
         this.saving.set(false);
         if (isApiSuccess(result)) {
           this.toast.success('District saved.');
-          this.router.navigateByUrl('/administration/districts');
+          this.router.navigateByUrl('/master-data/districts');
         } else {
           this.toast.error(result.errors?.[0]?.messageError ?? 'Save failed.');
         }

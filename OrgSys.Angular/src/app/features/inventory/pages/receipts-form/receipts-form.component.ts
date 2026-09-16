@@ -6,10 +6,11 @@ import { AuthService } from '../../../../core/auth/auth.service';
 import { isApiSuccess } from '../../../../core/models/api-result.model';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header.component';
 import { ToastService } from '../../../../shared/components/toast/toast.service';
-import { Dealer } from '../../../customers-suppliers/dealers/models/dealer.model';
-import { DealerService } from '../../../customers-suppliers/dealers/services/dealer.service';
-import { Product, Stock, Unit } from '../../../invoices/models/invoice-lookups.model';
-import { ProductService, StockService, UnitService } from '../../../invoices/services/invoice-lookups.service';
+import { Dealer } from '../../../parties';
+import { DealerService } from '../../../parties';
+import { Product, ProductService, Unit, UnitService } from '../../../catalog';
+import { Stock } from '../../models/stock.model';
+import { StockService } from '../../services/stock.service';
 import { InventoryReceiptService } from '../../services/inventory-receipt.service';
 
 /** New screen (brief §9) — Draft creation only; Post/Cancel happen from receipts-list. Mirrors
@@ -126,7 +127,7 @@ export class ReceiptsFormComponent {
           this.saving.set(false);
           if (isApiSuccess(result)) {
             this.toast.success('Receipt created as Draft.');
-            this.router.navigate(['/warehouse/receipts']);
+            this.router.navigate(['/inventory/receipts']);
           } else {
             this.toast.error(result.errors?.[0]?.messageError ?? 'Could not create the receipt.');
           }

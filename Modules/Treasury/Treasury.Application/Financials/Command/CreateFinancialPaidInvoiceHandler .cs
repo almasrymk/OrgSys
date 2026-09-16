@@ -1,19 +1,8 @@
-﻿using OrgSys.SharedKernel;
-using OrgSys.SharedKernel;
-using OrgSys.SharedKernel;
+﻿using Administration.Contracts.Preferences;
 using AutoMapper;
 using MediatR;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.VisualBasic;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.Design;
 using System.Net;
-using System.Security.Cryptography.Xml;
-using System.Text;
-using System.Transactions;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Treasury.Application.Financials.Command
 {
@@ -21,7 +10,7 @@ namespace Treasury.Application.Financials.Command
 
 
     public sealed class CreateFinancialPaidInvoiceCommandHandler(IUnitOfWork _UnitOfWork, 
-        IRepository<Treasury.Domain.Financial> _Repository, IServiceProvider _Provider, IMapper mapper) :
+        IRepository<Treasury.Domain.Financial> _Repository, IServiceProvider _Provider, IMapper mapper, ISender sender) :
         CreateCommandHandler<CreateFinancialPaidInvoiceCommand, Treasury.Domain.Financial>(_UnitOfWork, _Repository, mapper)
     {
 
@@ -42,24 +31,18 @@ namespace Treasury.Application.Financials.Command
                 {
                     var financial = mapper.Map<Treasury.Domain.Financial>(invoice);
                     financial.Id = 0;
-                    financial.Dealer = null;
                     financial.Amount = invoice.Credit;
                     financial.Rate = invoice.Rate > 0 ? invoice.Rate : (invoice.Currency?.Rate ?? 0);
                     financial.AmountByDefaultCurrency = invoice.Credit * financial.Rate;
                     financial.CreateDate = DateTime.Now;
                     financial.TypeId = invoice.TypeId == 1 || invoice.TypeId == 4 ? 1 : 2;
 
-                    var prefRepo = _Provider.GetRequiredService<IRepository<Administration.Domain.Preference>>();
+                    var financialTypeId = invoice.TypeId == 1 || invoice.TypeId == 4 ? 1L : 2L;
+                    var cashBoxPref = (await sender.Send(
+                        new GetPreferenceValueQuery("Financial", financialTypeId, "DefaultCashBox"),
+                        cancellationToken)).Response;
 
-                    var cashBoxPref = await prefRepo.GetByFilterAsync(
-                        e => e.Key == "DefaultCashBox"
-                        && (e.TypeId == (invoice.TypeId == 1 || invoice.TypeId == 4 ? 1 : 2)
-                            || (invoice.TypeId == 1 || invoice.TypeId == 4 ? 1 : 2) == 0)
-                        && (e.Reference == "Financial" || "Financial" == ""),
-                        ""
-                    );
-
-                    financial.FinancialAccountId = int.Parse(cashBoxPref?.Value ?? "0");
+                    financial.FinancialAccountId = int.Parse(cashBoxPref ?? "0");
 
                     //invoice.CodeNumber = await _Repository.GetMaxByFilterAsync(e => e.TypeId == invoice.TypeId, e => e.CodeNumber) + 1;
 

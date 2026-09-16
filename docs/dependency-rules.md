@@ -61,8 +61,7 @@ actually exists today, not just what Phase 2 touched.
 | From | To | Reason |
 |---|---|---|
 | `Accounting.Application` | `Sales.Domain` | `IReceivableAccountValidator`/`IPayableAccountValidator` need `Dealer`/`DealerType`; kept in Accounting because Sales/Treasury/Payables/Receivables Application *and* the two validators mutually depend on it — moving it would add new edges for no benefit (see `Accounting.Application.csproj` comment) |
-| `Sales.Application` | `Accounting.Domain` | Invoice/Dealer Get/Search handlers populate `JournalId`/`JournalCode` and GL-account provisioning reads `Account`/`Journal` directly — **Phase 4** ("Fix Sales -> Accounting integration") replaces this with `Accounting.Contracts` |
-| `Sales.Application` | `MasterData.Domain` | `MappingProfile` `Unit`/`UnitDto` mapping |
+| `Sales.Application` | `MasterData.Domain` | `MappingProfile` `Unit`/`UnitDto` mapping. **Closed 2026-09-16 / earlier:** `Sales.Application → Accounting.Domain` — invoices/dealers moved to CommercialDocuments/Parties and talk to Accounting only through `Accounting.Contracts`. |
 | `Inventory.Application` | `Sales.Domain` | Transaction handlers/`MappingProfile` read `Dealer`/`Order` — mirrors the existing Domain-level exception, now visible at the Application layer too |
 | `Inventory.Application` | `Accounting.Domain` | Transaction Get/Search handlers populate `JournalId`/`JournalCode`, same pattern as Sales — Phase-4-class debt |
 | `Inventory.Application` | `Organization.Domain`, `MasterData.Domain` | `MappingProfile` Branch/Shift/Unit/Classification mapping |
@@ -77,8 +76,7 @@ actually exists today, not just what Phase 2 touched.
 
 | From | To | Reason |
 |---|---|---|
-| `Sales.Application` | `MasterData.Application` | `UnitDto` mapping support |
-| `Sales.Application` | `Accounting.Application` | Dealer create/update GL-account provisioning (`DealerPayableAccountProvisioning`/`DealerReceivableAccountProvisioning`) uses `IPayableAccountValidator`/`IReceivableAccountValidator` — Phase-4-class debt |
+| `Sales.Application` | `MasterData.Application` | `UnitDto` mapping support. **Closed:** `Sales.Application → Accounting.Application` (validators now live on `Accounting.Contracts`; dealer provisioning is in Parties). |
 | `Inventory.Application` | `MasterData.Application` | `UnitDto`/`ProductDto` mapping support |
 | `Payables.Application` | `Accounting.Application`, `Receivables.Application` | Opening-balance validators |
 | `Receivables.Application`, `Treasury.Application` | `Accounting.Application` | Same validators / posting-period checks |
@@ -89,7 +87,18 @@ actually exists today, not just what Phase 2 touched.
 |---|---|---|
 | `Sales.Application`, `Inventory.Application`, `Receivables.Application`, `Payables.Application`, `Reporting.Application` | root `Domain`/`Application` (legacy monolith) | `Preference`, `IOrgContext`, the Journal-posting integration bridges — not yet extracted (Phase 8) |
 
-**Cleared by this pass (Phase 2):** `Sales.Application -> Inventory.Domain`,
+**Cleared (2026-09-17, Domain ID-only):** Cross-module `Dealer` / `Branch` / `Invoice` navigations dropped (scalar FKs + Fluent `HasOne(typeof(...))`). Architecture.Tests Domain exceptions deleted for Administration→Organization, Treasury→Organization/Parties/CommercialDocuments, Inventory→Parties/Organization, CommercialDocuments→Parties, Purchasing→Parties, Catalog→Parties. Matching Application→Domain exceptions for those Dealer/Branch mapping reads were deleted; names go through `GetDealerNamesQuery` / `GetBranchNamesQuery` / `GetInvoiceNetsQuery`.
+
+**Cleared (2026-09-16, continuation):** `Inventory.Application`, `Treasury.Application`, and `Parties.Application` no longer read `Administration.Domain.Preference` — they use `GetPreferenceValueQuery` / `GetPreferenceValuesQuery`. Matching Architecture.Tests Application→Domain exceptions were deleted.
+
+**Cleared (2026-09-16, Domain):** `Treasury.Domain → Administration.Domain` — `CashBox.KeeperUser` navigation dropped; `KeeperUserId` FK kept via Fluent `HasOne(typeof(User))` in `OrgContext`.
+
+**Cleared (2026-09-16):** `CommercialDocuments.Application -> Administration.Domain` — invoice
+create/posting now uses `GetPreferenceValueQuery` / `GetPreferenceValuesQuery` instead of
+`IRepository<Preference>`. Architecture.Tests' matching exception entry was deleted in the same
+change.
+
+**Cleared by the earlier Sales.Application pass:** `Sales.Application -> Inventory.Domain`,
 `Sales.Application -> Inventory.Application`, `Sales.Application -> Treasury.Domain` — all three
 removed; replaced with `Sales.Application -> Inventory.Contracts` /
 `Sales.Application -> Treasury.Contracts`. These three are **not** in the accepted-exceptions

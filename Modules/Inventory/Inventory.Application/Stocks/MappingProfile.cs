@@ -13,7 +13,7 @@ public partial class MappingProfile : Profile
         // report). GetListQueryHandler/SearchQueryHandler patch it in after mapping, resolved
         // through Accounting.Contracts.Accounts.GetAccountNamesQuery.
         CreateMap<Stock, StockDto>()
-        .ForMember(dest => dest.BranchName, opt => opt.MapFrom(src => src.Branch.Name))
+        .ForMember(dest => dest.BranchName, opt => opt.Ignore())
         .ForMember(dest => dest.AccountName, opt => opt.Ignore());
         CreateMap<StockDto, Stock>();
 

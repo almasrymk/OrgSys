@@ -1,12 +1,12 @@
 <app-page-header
   [title]="id() ? 'Edit City' : 'New City'"
-  [breadcrumbs]="[{ label: 'Home', route: '/' }, { label: 'Cities', route: '/administration/cities' }, { label: id() ? 'Edit' : 'New' }]"
+  [breadcrumbs]="[{ label: 'Home', route: '/' }, { label: 'Cities', route: '/master-data/cities' }, { label: id() ? 'Edit' : 'New' }]"
 ></app-page-header>
 
 <div class="card">
   <div class="card-body">
     <div class="d-flex justify-content-end mb-3">
-      <a routerLink="/administration/cities" class="btn btn-primary">
+      <a routerLink="/master-data/cities" class="btn btn-primary">
         <i class="bi bi-arrow-return-left"></i> Back
       </a>
     </div>

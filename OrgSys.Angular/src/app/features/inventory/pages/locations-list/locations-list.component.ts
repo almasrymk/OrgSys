@@ -4,8 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header.component';
 import { ToastService } from '../../../../shared/components/toast/toast.service';
-import { Stock } from '../../../invoices/models/invoice-lookups.model';
-import { StockService } from '../../../invoices/services/invoice-lookups.service';
+import { Stock } from '../../models/stock.model';
+import { StockService } from '../../services/stock.service';
 import { WarehouseLocation } from '../../models/warehouse.model';
 import { WarehouseLocationService } from '../../services/warehouse-location.service';
 

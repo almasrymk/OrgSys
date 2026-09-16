@@ -1,9 +1,8 @@
 import { BaseEntity } from '../../../shared/models/base-entity.model';
 
 /**
- * Models for the hardened Inventory bounded context (docs/ddd/inventory-target-architecture.md).
- * These are additive — they sit alongside the existing features/inventory (stock count) and
- * features/transactions (stock movement) models/screens, which are untouched.
+ * Models for Inventory warehouse locations, receipts, reservations and balances.
+ * Stock-count documents live in inventory.model.ts; stock movements live in transaction.model.ts.
  */
 
 // ----- Warehouse Location -----

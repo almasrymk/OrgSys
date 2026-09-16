@@ -12,7 +12,7 @@ import { ToastService } from '../../../../shared/components/toast/toast.service'
 import { Status } from '../../../../shared/models/status.enum';
 import { Invoice } from '../../models/invoice.model';
 import { InvoiceService } from '../../services/invoice.service';
-import { InvoiceTypeService } from '../../services/invoice-lookups.service';
+import { InvoiceTypeService } from '../../services/invoice-type.service';
 
 const PAGE_SIZE = 20;
 
@@ -32,7 +32,7 @@ export class InvoiceListComponent {
   readonly permissionService = inject(PermissionService);
 
   readonly Status = Status;
-  readonly typeId = Number(this.route.snapshot.paramMap.get('typeId'));
+  readonly typeId = Number(this.route.snapshot.data['typeId'] ?? this.route.snapshot.paramMap.get('typeId'));
 
   readonly title = signal('Invoices');
   readonly invoices = signal<Invoice[]>([]);

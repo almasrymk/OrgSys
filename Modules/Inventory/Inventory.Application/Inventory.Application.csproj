@@ -19,16 +19,17 @@
          (IRepository<Invoice>), now owned by CommercialDocuments (relocated from Sales.Domain —
          see docs/commercial-documents-module.md). -->
     <ProjectReference Include="../../CommercialDocuments/CommercialDocuments.Domain/CommercialDocuments.Domain.csproj" />
-    <!-- Preference now owned by Administration (relocated from the legacy root Domain/Application
-         projects). -->
-    <ProjectReference Include="../../Administration/Administration.Domain/Administration.Domain.csproj" />
-    <!-- TransactionJournalPostingService posts Transaction journal entries, and the Transaction
+    <!-- InvoiceJournalPostingService posts Transaction journal entries, and the Transaction
          Get/Search handlers resolve JournalId/JournalCode, through Accounting.Contracts only
          (PostAccountingDocumentCommand/DeleteAccountingDocumentJournalCommand/
          SetAccountingDocumentJournalStatusCommand/GetAccountingDocumentJournalQuery) — replaces the
          legacy root Application project's TransactionJournalIntegration, see the
-         legacy-Application-elimination report. -->
+         legacy-Application-elimination report. Preference lookups go through
+         Administration.Contracts (GetPreferenceValueQuery / GetPreferenceValuesQuery). -->
     <ProjectReference Include="../../Accounting/Accounting.Contracts/Accounting.Contracts.csproj" />
+    <ProjectReference Include="../../Administration/Administration.Contracts/Administration.Contracts.csproj" />
+    <ProjectReference Include="../../Parties/Parties.Contracts/Parties.Contracts.csproj" />
+    <ProjectReference Include="../../Organization/Organization.Contracts/Organization.Contracts.csproj" />
   </ItemGroup>
 
   <ItemGroup>

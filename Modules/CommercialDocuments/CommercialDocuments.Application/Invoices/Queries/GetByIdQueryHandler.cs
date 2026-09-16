@@ -1,6 +1,7 @@
 ﻿namespace CommercialDocuments.Application.Invoices.Queries
 {
     using Accounting.Contracts.Postings;
+    using Parties.Contracts.Dealers;
     using OrgSys.SharedKernel;
     using OrgSys.SharedKernel;
     using OrgSys.SharedKernel;
@@ -38,6 +39,9 @@
                     line.ProductName = names.GetValueOrDefault(line.ProductId);
                 }
             }
+
+            var dealerNames = (await sender.Send(new GetDealerNamesQuery([result.Response.DealerId]), cancellationToken)).Response ?? [];
+            result.Response.DealerName = dealerNames.GetValueOrDefault(result.Response.DealerId);
 
             return result;
         }

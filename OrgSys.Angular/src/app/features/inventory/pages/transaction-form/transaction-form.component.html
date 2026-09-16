@@ -1,12 +1,12 @@
 <app-page-header
   [title]="(id() ? 'Transaction ' + (code() ?? '') : 'New Transaction') + (transactionType()?.name ? ' — ' + transactionType()!.name : '')"
-  [breadcrumbs]="[{ label: 'Home', route: '/' }, { label: 'Inventory', route: '/transactions/' + typeId }, { label: id() ? 'Edit' : 'New' }]"
+  [breadcrumbs]="[{ label: 'Home', route: '/' }, { label: 'Inventory', route: listPath }, { label: id() ? 'Edit' : 'New' }]"
 ></app-page-header>
 
 <div class="card">
   <div class="card-body">
     <div class="d-flex justify-content-end mb-3">
-      <a [routerLink]="['/transactions', typeId]" class="btn btn-primary">
+      <a [routerLink]="listPath" class="btn btn-primary">
         <i class="bi bi-arrow-return-left"></i> Back
       </a>
     </div>

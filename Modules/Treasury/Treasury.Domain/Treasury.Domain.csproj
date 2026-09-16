@@ -9,16 +9,6 @@
   <ItemGroup>
     <ProjectReference Include="../../../BuildingBlocks/OrgSys.SharedKernel/OrgSys.SharedKernel.csproj" />
     <ProjectReference Include="../../MasterData/MasterData.Domain/MasterData.Domain.csproj" />
-    <ProjectReference Include="../../Organization/Organization.Domain/Organization.Domain.csproj" />
-    <ProjectReference Include="../../Administration/Administration.Domain/Administration.Domain.csproj" />
-    <!-- FinancialInvoice.InvoiceId keeps its existing EF navigation to Invoice, now owned by
-         CommercialDocuments (relocated from Sales.Domain) — see
-         docs/modular-monolith-analysis.md §21/§22 and the ModuleDependencyTests exceptions
-         for why this one-directional edge is accepted. -->
-    <ProjectReference Include="../../CommercialDocuments/CommercialDocuments.Domain/CommercialDocuments.Domain.csproj" />
-    <!-- Financial.DealerId keeps its existing EF navigation to Dealer, now owned by Parties
-         (relocated from Sales.Domain — see docs/modular-monolith-target-architecture.md §13). -->
-    <ProjectReference Include="../../Parties/Parties.Domain/Parties.Domain.csproj" />
   </ItemGroup>
 
 </Project>

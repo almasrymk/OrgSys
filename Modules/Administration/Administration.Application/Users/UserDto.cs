@@ -12,6 +12,8 @@ namespace Administration.Application
 
         public virtual string? Password { get; set; }
 
+        public bool MustResetPassword { get; set; }
+
         public virtual long RoleId { get; set; }
  
         public virtual long? BranchId { get; set; }

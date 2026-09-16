@@ -21,16 +21,12 @@
          Sales.Application, see docs/dependency-rules.md. -->
     <ProjectReference Include="../../Treasury/Treasury.Contracts/Treasury.Contracts.csproj" />
     <ProjectReference Include="../../Inventory/Inventory.Contracts/Inventory.Contracts.csproj" />
-    <!-- InvoiceJournalPostingService posts Invoice journal entries, and the Invoice Get/Search
-         handlers resolve JournalId/JournalCode, through Accounting.Contracts only
-         (PostAccountingDocumentCommand/DeleteAccountingDocumentJournalCommand/
-         SetAccountingDocumentJournalStatusCommand/GetAccountingDocumentJournalQuery) instead of
-         Accounting.Domain — replaces the legacy root Application project's
-         InvoiceJournalIntegration, see the legacy-Application-elimination report. -->
+    <!-- InvoiceJournalPostingService posts Invoice journal entries through Accounting.Contracts
+         and resolves Preference/Dealer via Administration.Contracts/Parties.Contracts (no
+         Administration.Domain or Parties.Domain reads on this path). -->
     <ProjectReference Include="../../Accounting/Accounting.Contracts/Accounting.Contracts.csproj" />
-    <!-- Preference now owned by Administration (relocated from the legacy root Domain/Application
-         projects — see docs/modular-monolith-analysis.md §21 history). -->
-    <ProjectReference Include="../../Administration/Administration.Domain/Administration.Domain.csproj" />
+    <ProjectReference Include="../../Administration/Administration.Contracts/Administration.Contracts.csproj" />
+    <ProjectReference Include="../../Parties/Parties.Contracts/Parties.Contracts.csproj" />
   </ItemGroup>
 
   <ItemGroup>

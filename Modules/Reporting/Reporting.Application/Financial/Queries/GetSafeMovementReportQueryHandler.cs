@@ -18,7 +18,8 @@ namespace Reporting.Application.Financial.Queries
     public sealed class GetSafeMovementReportQueryHandler(
         IRepository<Treasury.Domain.Financial> financialRepository,
         IRepository<CashBox> cashBoxRepository,
-        IRepository<Treasury.Domain.FinancialType> financialTypeRepository)
+        IRepository<Treasury.Domain.FinancialType> financialTypeRepository,
+        IRepository<Parties.Domain.Dealer> dealerRepository)
         : ICommandPaginationHandler<GetSafeMovementReportQuery, SafeStatment>
     {
         public async Task<ResultPagination<SafeStatment>> Handle(GetSafeMovementReportQuery request, CancellationToken cancellationToken)
@@ -38,15 +39,23 @@ namespace Reporting.Application.Financial.Queries
                     && (request.DealerId == 0 || e.DealerId == request.DealerId)
                     && (financialAccountId == null || e.FinancialAccountId == financialAccountId)
                     && e.Status != Status.Deleted && !e.Hide,
-                "Dealer,Currency"))?.ToList() ?? [];
+                "Currency"))?.ToList() ?? [];
 
             var relevant = financials.Where(e => cashBoxByFinancialAccountId.ContainsKey(e.FinancialAccountId!.Value)).ToList();
 
             var ordered = relevant.OrderByDescending(e => e.Id).ThenBy(e => e.FinancialAccountId).ToList();
 
-            var page = ordered
+            var pageDealers = ordered
                 .Skip((request.Page - 1) * request.PageSize)
                 .Take(request.PageSize)
+                .ToList();
+            var dealerIds = pageDealers.Where(e => e.DealerId.HasValue).Select(e => e.DealerId!.Value).Distinct().ToList();
+            var dealerNames = dealerIds.Count == 0
+                ? []
+                : ((await dealerRepository.GetListByFilterAsync(e => dealerIds.Contains(e.Id), string.Empty)) ?? [])
+                    .ToDictionary(e => e.Id, e => e.Name);
+
+            var page = pageDealers
                 .Select(e =>
                 {
                     var cashBox = cashBoxByFinancialAccountId[e.FinancialAccountId!.Value];
@@ -62,7 +71,7 @@ namespace Reporting.Application.Financial.Queries
                         SafeId = cashBox.Id,
                         SafeName = cashBox.Name,
                         DealerId = e.DealerId ?? 0,
-                        DealerName = e.Dealer?.Name,
+                        DealerName = e.DealerId is long did ? dealerNames.GetValueOrDefault(did) : null,
                         CurrencyId = e.CurrencyId,
                         CurrencyName = e.Currency?.Name,
                     };

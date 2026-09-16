@@ -7,8 +7,8 @@ import { PageHeaderComponent } from '../../../../../shared/components/page-heade
 import { ToastService } from '../../../../../shared/components/toast/toast.service';
 import { Account } from '../../../../accounting/accounts/models/account.model';
 import { AccountService } from '../../../../accounting/accounts/services/account.service';
-import { Currency } from '../../../../administration/currencies/models/currency.model';
-import { CurrencyService } from '../../../../administration/currencies/services/currency.service';
+import { Currency } from '../../../../master-data/currencies/models/currency.model';
+import { CurrencyService } from '../../../../master-data/currencies/services/currency.service';
 import { FinancialAccountType } from '../../models/financial-account.model';
 import { Bank, BankBranch } from '../../models/bank-lookup.model';
 import { FinancialAccountService } from '../../services/financial-account.service';

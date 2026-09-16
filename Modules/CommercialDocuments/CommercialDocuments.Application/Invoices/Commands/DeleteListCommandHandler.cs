@@ -30,7 +30,7 @@
                 if (invoice == null)
                     continue;
 
-                await new InvoiceJournalPostingService(_provider).DeleteByInvoiceIdAsync(invoiceId);
+                await new InvoiceJournalPostingService(sender).DeleteByInvoiceIdAsync(invoiceId);
                 invoice.InvoiceProducts!.Clear();
 
                 await sender.Send(new DeleteFinancialsByInvoiceCommand(invoiceId));
